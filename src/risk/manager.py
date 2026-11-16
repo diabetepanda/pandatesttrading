@@ -23,6 +23,11 @@ class RiskCheckResult:
     risk_event: dict[str, Any] | None = None
 
 
+def is_short_term_strategy(strategy: str) -> bool:
+    """Classify short-term strategies (S1-S3, plus legacy test fixture id 'A')."""
+    return strategy in ("S1", "S2", "S3", "A")
+
+
 class RiskManager:
     """Enforces all account, pool, group, margin, drawdown, and liquidation rules."""
 
@@ -33,8 +38,6 @@ class RiskManager:
         self.pools_cfg = self.acct_cfg.get("pools", {})
         self.groups_cfg = config.get("correlation_groups", {})
         self.signals_cfg = config.get("signals", {})
-        self.strat_a_cfg = config.get("strategy_a", {})
-        self.strat_b_cfg = config.get("strategy_b", {})
 
     def evaluate_drawdown_state(
         self,
@@ -146,27 +149,27 @@ class RiskManager:
         rew1 = (tp1 - entry_price) if direction == "long" else (entry_price - tp1)
         rr1 = rew1 / risk
 
-        if strategy == "A":
-            tp1_min = float(self.strat_a_cfg.get("tp1_rr_min", 1.5))
-            tp2_min = float(self.strat_a_cfg.get("tp2_rr_min", 2.0))
+        if is_short_term_strategy(strategy):
+            tp1_min = float(self.risk_cfg.get("short_term_tp1_rr_min", 1.5))
+            tp2_min = float(self.risk_cfg.get("short_term_tp2_rr_min", 2.0))
             if rr1 < tp1_min - 1e-9:
-                return False, rr1, f"策略 A TP1 風報比 {rr1:.2f} 低於下限 {tp1_min}"
+                return False, rr1, f"短線策略 {strategy} TP1 風報比 {rr1:.2f} 低於下限 {tp1_min}"
             if isinstance(tp2, (int, float)):
                 rew2 = (float(tp2) - entry_price) if direction == "long" else (entry_price - float(tp2))
                 rr2 = rew2 / risk
                 if rr2 < tp2_min - 1e-9:
-                    return False, rr2, f"策略 A TP2 風報比 {rr2:.2f} 低於下限 {tp2_min}"
+                    return False, rr2, f"短線策略 {strategy} TP2 風報比 {rr2:.2f} 低於下限 {tp2_min}"
                 return True, rr2, "ok"
             return True, rr1, "ok"
 
-        min_rr_b = float(self.strat_b_cfg.get("min_rr", 2.0))
+        min_rr_b = float(self.risk_cfg.get("long_term_min_rr", 2.0))
         if isinstance(tp2, (int, float)):
             rew2 = (float(tp2) - entry_price) if direction == "long" else (entry_price - float(tp2))
             rr_best = max(rr1, rew2 / risk)
         else:
             rr_best = rr1
         if rr_best < min_rr_b - 1e-9:
-            return False, rr_best, f"策略 B 風報比 {rr_best:.2f} 低於下限 {min_rr_b}"
+            return False, rr_best, f"長線策略 {strategy} 風報比 {rr_best:.2f} 低於下限 {min_rr_b}"
         return True, rr_best, "ok"
 
     def check_new_signal(
@@ -253,7 +256,7 @@ class RiskManager:
             return RiskCheckResult(False, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, risk_status, rr_msg)
 
         # Pool constraints
-        pool_name = "short_term" if strategy == "A" else "long_term"
+        pool_name = "short_term" if is_short_term_strategy(strategy) else "long_term"
         pool_cfg = self.pools_cfg.get(pool_name, {})
         max_concurrent = int(pool_cfg.get("max_concurrent_trades", 10))
         pool_open_trades = int(account_state.get(f"{pool_name}_open_trades", 0))
@@ -263,7 +266,7 @@ class RiskManager:
                 f"{pool_name} 資金池同時持倉數已達上限 ({max_concurrent})",
             )
 
-        pool_target_notional = float(pool_cfg.get("target_notional_usd", 2000.0 if strategy == "A" else 8000.0))
+        pool_target_notional = float(pool_cfg.get("target_notional_usd", 1500.0 if pool_name == "short_term" else 4000.0))
         pool_remaining_cap = float(account_state.get(f"{pool_name}_remaining_capital", pool_cfg.get("capital_usd", 20000.0)))
         if pool_remaining_cap <= 0:
             return RiskCheckResult(

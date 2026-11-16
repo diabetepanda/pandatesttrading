@@ -698,10 +698,12 @@
 
   function renderResultsTable() {
     const tbody = document.getElementById("results-tbody");
-    const fStrat = document.getElementById("res-filter-strategy").value;
-    const fMkt = document.getElementById("res-filter-market").value;
-    const fDir = document.getElementById("res-filter-direction").value;
-    const fReason = document.getElementById("res-filter-reason").value;
+    const fStratEl = document.getElementById("res-filter-strategy");
+    if (!tbody || !fStratEl) return;
+    const fStrat = fStratEl.value;
+    const fMkt = document.getElementById("res-filter-market")?.value || "all";
+    const fDir = document.getElementById("res-filter-direction")?.value || "all";
+    const fReason = document.getElementById("res-filter-reason")?.value || "all";
 
     const rows = cachedSignals.filter((s) => {
       if (s.lifecycle_state !== "closed" && s.lifecycle_state !== "cancelled") return false;
@@ -1023,75 +1025,65 @@
   function renderBacktestResults() {
     const tbody = document.getElementById("backtest-tbody");
     const metaEl = document.getElementById("bt-summary-meta");
-    const nearBox = document.getElementById("bt-near-box");
     if (!tbody || !metaEl) return;
 
-    if (!cachedBacktest || !Array.isArray(cachedBacktest.results) || cachedBacktest.results.length === 0) {
-      metaEl.textContent = "目前尚無策略 B 回測結果（等待每週自動排程或手動執行 Strategy B Weekly Backtest）。";
-      if (nearBox) nearBox.classList.add("hidden");
-      tbody.innerHTML = '<tr><td colspan="5" class="muted center">目前尚無策略 B 回測結果。</td></tr>';
+    const list = cachedBacktest
+      ? (Array.isArray(cachedBacktest.strategies) ? cachedBacktest.strategies : cachedBacktest.results)
+      : null;
+
+    if (!list || !Array.isArray(list) || list.length === 0) {
+      metaEl.textContent = "目前尚無六個策略回測結果（等待執行 Weekly Backtest）。";
+      tbody.innerHTML = '<tr><td colspan="8" class="muted center">目前尚無策略回測結果。</td></tr>';
       return;
     }
 
     const s = cachedBacktest.summary || {};
-    metaEl.textContent = `最新回測 (UTC+8)：${formatTaipeiTime(cachedBacktest.generated_at_utc)}｜總計 ${s.total ?? cachedBacktest.results.length} 個｜通過 ${s.passed ?? 0} 個｜未通過 ${s.failed ?? 0} 個｜歷史不足 ${s.insufficient_history ?? 0} 個（歷史不代表未來）`;
+    metaEl.textContent = `最新回測 (UTC+8)：${formatTaipeiTime(cachedBacktest.generated_at_utc)}｜共 ${s.total_strategies ?? list.length} 個策略｜通過 ${s.passed ?? 0} 個｜未通過 ${s.failed ?? 0} 個｜歷史不足 5 年 ${s.insufficient_history ?? 0} 個（歷史不代表未來）`;
 
-    if (nearBox) {
-      const nearTop = cachedBacktest.results
-        .filter((r) => r.status === "ok" && !r.passed && r.out_of_sample && Number(r.out_of_sample.expectancy_r) > 0 && Number(r.out_of_sample.profit_factor) > 1.3)
-        .sort((a, b) => (Number(b.out_of_sample.trades || 0) - Number(a.out_of_sample.trades || 0)) || (Number(b.out_of_sample.profit_factor || 0) - Number(a.out_of_sample.profit_factor || 0)))
-        .slice(0, 3);
-      if (nearTop.length > 0) {
-        const listTxt = nearTop
-          .map((r) => `<strong>${escapeHtml(r.symbol)}</strong>（${r.out_of_sample.trades} 筆，+${Number(r.out_of_sample.expectancy_r).toFixed(3)}R，PF ${Number(r.out_of_sample.profit_factor).toFixed(2)}）`)
-          .join("、");
-        nearBox.innerHTML = `<strong>最接近通過前 3 檔</strong>（期望值 &gt; 0 且 PF &gt; 1.3，僅差交易筆數）：${listTxt}`;
-        nearBox.classList.remove("hidden");
-      } else {
-        nearBox.classList.add("hidden");
-      }
-    }
-
-    tbody.innerHTML = cachedBacktest.results
+    tbody.innerHTML = list
       .map((item) => {
         let statusBadge = '<span class="pill pill-fail">未通過</span>';
         if (item.status === "insufficient_history") {
           statusBadge = '<span class="pill pill-warn">歷史不足 (&lt;5年)</span>';
-        } else if (item.status === "data_failed") {
-          statusBadge = '<span class="pill pill-fail">抓取失敗</span>';
-        } else if (item.passed) {
+        }
+        if (item.passed) {
           statusBadge = '<span class="pill pill-ok">通過驗證</span>';
         }
 
-        const oos = item.out_of_sample;
-        const oosBrief = oos && typeof oos.trades === "number"
-          ? `${oos.trades} 筆｜${Number(oos.expectancy_r || 0).toFixed(3)}R｜PF ${Number(oos.profit_factor || 0).toFixed(2)}`
-          : "--";
-        const yrsText = item.history_years !== undefined && item.history_years !== null
-          ? `${Number(item.history_years).toFixed(2)} 年 (${item.bar_count || 0} 根)`
-          : "--";
-        const stratHtml = item.chosen_strategy
-          ? `${strategyZhLabel(item.chosen_strategy)}（${formatParamsZh(item.chosen_params)}）`
+        const oos = item.out_of_sample || {};
+        const tradesTxt = typeof oos.trades === "number" ? `${oos.trades} 筆` : "--";
+        const expVal = oos.expectancy_r !== undefined && oos.expectancy_r !== null ? `${Number(oos.expectancy_r).toFixed(3)}R` : "--";
+        const pfVal = oos.profit_factor !== undefined && oos.profit_factor !== null ? Number(oos.profit_factor).toFixed(2) : "--";
+        const ddVal = oos.max_drawdown_pct !== undefined && oos.max_drawdown_pct !== null ? `${Number(oos.max_drawdown_pct).toFixed(2)}%` : "--";
+        const yrsNum = Number(item.history_years || 0);
+        const yrsText = yrsNum > 0 ? `${yrsNum < 0.1 ? yrsNum.toFixed(4) : yrsNum.toFixed(2)} 年` : "--";
+        const appTxt = `${item.eligible_instruments ?? 0} / ${item.applicable_instruments ?? 0} 檔（可用 ${yrsText}）`;
+        const poolLabel = item.pool === "short_term" ? "短線" : "長線";
+        const paramsText = item.chosen_params && Object.keys(item.chosen_params).length > 0
+          ? Object.entries(item.chosen_params).map(([k, v]) => `${k}=${v}`).join(", ")
           : "--";
         const detailHtml = `
+          <div>${escapeHtml(item.reason || "--")}</div>
           <details class="bt-details">
-            <summary>詳細</summary>
+            <summary>參數與樣本內詳細</summary>
             <div class="bt-details-body">
-              <div>歷史長度：${yrsText}</div>
-              <div>策略與參數：${stratHtml}</div>
+              <div>資金配置：${formatUsd(item.capital_usd)}（週期 ${escapeHtml(item.interval || "")}）</div>
+              <div>樣本內選出參數：<code>${escapeHtml(paramsText)}</code></div>
               <div>樣本內 (IS)：${formatMetricSummary(item.in_sample)}</div>
-              <div>樣本外 (OOS) 完整：${formatMetricSummary(item.out_of_sample)}</div>
             </div>
           </details>
         `;
 
         return `
           <tr>
-            <td data-label="標的"><strong>${escapeHtml(item.symbol)}</strong><br><span class="muted">${marketLabel(item.market || "")}</span></td>
+            <td data-label="策略"><strong>${escapeHtml(item.strategy_id || item.symbol)}</strong> ${escapeHtml(item.name || "")}<br><span class="muted">${poolLabel}・${escapeHtml(item.interval || "")}</span></td>
             <td data-label="通過狀態">${statusBadge}</td>
-            <td data-label="未通過原因">${escapeHtml(item.reason || "--")}</td>
-            <td data-label="樣本外 (筆數/期望/PF)">${oosBrief}</td>
-            <td data-label="詳細">${detailHtml}</td>
+            <td data-label="樣本外交易數">${tradesTxt}</td>
+            <td data-label="期望值">${expVal}</td>
+            <td data-label="獲利因子 (PF)">${pfVal}</td>
+            <td data-label="最大回撤">${ddVal}</td>
+            <td data-label="適用標的數">${appTxt}</td>
+            <td data-label="原因／詳細">${detailHtml}</td>
           </tr>
         `;
       })
@@ -1623,7 +1615,7 @@
   });
 
   ["res-filter-strategy", "res-filter-market", "res-filter-direction", "res-filter-reason"].forEach((id) => {
-    document.getElementById(id).addEventListener("change", renderResultsTable);
+    document.getElementById(id)?.addEventListener("change", renderResultsTable);
   });
 
   document.getElementById("watch-summary-bar")?.addEventListener("click", (e) => {

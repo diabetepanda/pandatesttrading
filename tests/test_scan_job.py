@@ -128,9 +128,9 @@ def test_run_scan_excludes_unstable_1m_instruments_in_watch_today(tmp_path: Path
     for sym in ("AUDUSD", "NZDUSD", "NATGAS"):
         assert sym in by_sym
         assert "資料不穩" in by_sym[sym]["reason"]
-    # Even when BTCUSDT is blocked early by non-low-liquidity session, derivatives must still be recorded
+    # Even in Phase 1 watch-only mode, derivatives must still be recorded for crypto
     btc_item = by_sym["BTCUSDT"]
-    assert "非低流動性時段" in btc_item["reason"]
+    assert "第一階段" in btc_item["reason"]
     assert btc_item["derivatives"]["status"] == "ok"
     assert btc_item["derivatives"]["funding_rate"] == 0.0001
     assert btc_item["derivatives"]["oi_change"] == 1.0
@@ -143,7 +143,6 @@ def test_run_scan_logs_insufficient_derivatives_data_when_missing(tmp_path: Path
         for k in ("binance_vision", "okx", "bybit", "kraken", "coinbase", "yfinance", "stooq")
     }
     fetcher = FallbackDataFetcher(adapters=adapters)
-    # Saturday 12:00 UTC -> crypto is in low-liquidity weekend candidate window
     now = datetime(2026, 11, 14, 12, 0, tzinfo=timezone.utc)
     run_scan(
         out_dir=tmp_path,
@@ -154,5 +153,5 @@ def test_run_scan_logs_insufficient_derivatives_data_when_missing(tmp_path: Path
     )
     watch = json.loads((tmp_path / "watch_today.json").read_text(encoding="utf-8"))
     by_sym = {item["symbol"]: item for item in watch["items"]}
-    assert "資料不足" in by_sym["BTCUSDT"]["reason"]
+    assert "抓取失敗" in by_sym["BTCUSDT"]["reason"]
     assert by_sym["BTCUSDT"]["derivatives"]["status"] == "抓取失敗"

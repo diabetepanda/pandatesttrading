@@ -14,7 +14,7 @@ from src.engine.analytics import (
     build_shadow_comparison,
     export_equity_curve,
 )
-from src.risk.manager import RiskManager
+from src.risk.manager import RiskManager, is_short_term_strategy
 from src.scaling.policies import (
     TradeStage,
     compute_weighted_avg_cost,
@@ -310,10 +310,13 @@ class Ledger:
         marks = mark_prices or {}
         base = self.short_term_capital if pool_name == "short_term" else self.long_term_capital
         realized = self.short_term_realized_pnl if pool_name == "short_term" else self.long_term_realized_pnl
-        strat = "A" if pool_name == "short_term" else "B"
+        want_short = pool_name == "short_term"
         unrealized = 0.0
         for tr in self.trades.values():
-            if tr.strategy == strat and tr.state in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
+            if is_short_term_strategy(tr.strategy) == want_short and tr.state in (
+                LifecycleState.ACTIVE,
+                LifecycleState.TP1_HIT,
+            ):
                 mp = marks.get(tr.symbol, tr.avg_entry_price)
                 unrealized += tr.unrealized_pnl_usd(mp)
         return base + realized + unrealized
@@ -348,7 +351,7 @@ class Ledger:
                 total_stop_risk += risk_val
                 group_stop_risk[tr.correlation_group] = group_stop_risk.get(tr.correlation_group, 0.0) + risk_val
                 used_margin += tr.current_margin_usd()
-                if tr.strategy == "A":
+                if is_short_term_strategy(tr.strategy):
                     short_open += 1
                     short_used_cap += tr.current_notional_usd()
                 else:
@@ -482,7 +485,7 @@ class SimulationEngine:
 
         marks = mark_prices or self.latest_marks
         entry_mid = (candidate.entry_low + candidate.entry_high) / 2.0
-        pool_name = "short_term" if candidate.strategy == "A" else "long_term"
+        pool_name = "short_term" if is_short_term_strategy(candidate.strategy) else "long_term"
         pool_cfg = self.config.get("account", {}).get("pools", {}).get(pool_name, {})
         target_notional = float(pool_cfg.get("target_notional_usd", 2000.0))
 
@@ -538,7 +541,7 @@ class SimulationEngine:
         time_stop_bars = (
             candidate.time_stop_bars
             if candidate.time_stop_bars is not None
-            else int(self.config.get("strategy_a", {}).get("max_hold_bars_15m", 24))
+            else int(self.config.get("signals", {}).get("max_hold_bars_15m", 24))
         )
 
         _, rr_val, _ = self.risk_manager.check_rr_requirements(
@@ -749,7 +752,7 @@ class SimulationEngine:
         trade.total_overnight_usd += overnight_usd
         trade.remaining_qty = max(0.0, trade.remaining_qty - qty)
 
-        if trade.strategy == "A":
+        if is_short_term_strategy(trade.strategy):
             ledger.short_term_realized_pnl += net_pnl
         else:
             ledger.long_term_realized_pnl += net_pnl
@@ -884,7 +887,7 @@ class SimulationEngine:
             fee_usd = stage1_notional * trade.fee_rate
             trade.total_fees_usd += fee_usd
             trade.realized_pnl_usd -= fee_usd
-            if trade.strategy == "A":
+            if is_short_term_strategy(trade.strategy):
                 ledger.short_term_realized_pnl -= fee_usd
             else:
                 ledger.long_term_realized_pnl -= fee_usd
@@ -943,10 +946,10 @@ class SimulationEngine:
                 )
                 return
 
-        # 3) Breakout protection (SPEC 11.6)
-        strat_a_cfg = self.config.get("strategy_a", {})
-        bo_bar_mult = float(strat_a_cfg.get("breakout_bar_atr_mult", 2.5))
-        bo_atr_trig = float(strat_a_cfg.get("breakout_atr_ratio_trigger", 1.8))
+        # 3) Breakout protection
+        signals_cfg = self.config.get("signals", {})
+        bo_bar_mult = float(signals_cfg.get("breakout_bar_atr_mult", 2.5))
+        bo_atr_trig = float(signals_cfg.get("breakout_atr_ratio_trigger", 1.8))
         bar_range = bar.high - bar.low
         breakout_hit = (atr is not None and atr > 0 and bar_range > bo_bar_mult * atr) or (
             atr_ratio is not None and atr_ratio >= bo_atr_trig
@@ -972,7 +975,7 @@ class SimulationEngine:
 
         # 5) Session-end stop (<= 30 min before low-liquidity session end)
         if session_end_utc is not None:
-            pre_end_min = int(strat_a_cfg.get("pre_session_end_close_minutes", 30))
+            pre_end_min = int(signals_cfg.get("pre_session_end_close_minutes", 30))
             if bar_close_dt >= _parse_utc(session_end_utc) - timedelta(minutes=pre_end_min):
                 close_px = (
                     _bid_price(bar.close, spread) * (1.0 - slip)
@@ -1102,7 +1105,7 @@ class SimulationEngine:
                             fee_usd = plan.notional_usd * trade.fee_rate
                             trade.total_fees_usd += fee_usd
                             trade.realized_pnl_usd -= fee_usd
-                            if trade.strategy == "A":
+                            if is_short_term_strategy(trade.strategy):
                                 ledger.short_term_realized_pnl -= fee_usd
                             else:
                                 ledger.long_term_realized_pnl -= fee_usd

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261116d" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261116e" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -155,91 +155,34 @@
       <div id="signal-detail-root"></div>
     </section>
 
-    <!-- 頁面 3：成績總表 -->
+    <!-- 頁面 3：成績總表（六個策略回測比較） -->
     <section id="view-results" class="route-view hidden">
-      <section class="card">
-        <div class="section-header">
-          <div>
-            <h1>成績總表</h1>
-            <p class="subtitle">所有已結束報單的模擬驗證成績（以 R 值、美元損益、持倉時間與出場原因呈現）。</p>
-          </div>
-        </div>
-        <div class="filter-controls">
-          <select id="res-filter-strategy" aria-label="成績策略篩選">
-            <option value="all">全部策略</option>
-            <option value="A">策略 A（短線）</option>
-            <option value="B">策略 B（長線）</option>
-          </select>
-          <select id="res-filter-market" aria-label="成績市場篩選">
-            <option value="all">全部市場</option>
-            <option value="crypto">加密貨幣</option>
-            <option value="forex">外匯</option>
-            <option value="commodity">商品</option>
-          </select>
-          <select id="res-filter-direction" aria-label="成績方向篩選">
-            <option value="all">全部方向</option>
-            <option value="long">做多</option>
-            <option value="short">做空</option>
-          </select>
-          <select id="res-filter-reason" aria-label="出場原因篩選">
-            <option value="all">全部出場原因</option>
-            <option value="tp2">tp2</option>
-            <option value="stop_loss">stop_loss</option>
-            <option value="trailing_stop">trailing_stop</option>
-            <option value="time_stop">time_stop</option>
-            <option value="session_stop">session_stop</option>
-            <option value="breakout_protection">breakout_protection</option>
-            <option value="expired">expired</option>
-          </select>
-        </div>
-        <div class="table-wrap">
-          <table class="data-table mobile-cards" id="results-table">
-            <thead>
-              <tr>
-                <th>報單編號</th>
-                <th>策略</th>
-                <th>標的</th>
-                <th>方向</th>
-                <th>R 值</th>
-                <th>美元損益</th>
-                <th>持倉時間</th>
-                <th>出場原因</th>
-                <th>結束時間 (UTC+8)</th>
-              </tr>
-            </thead>
-            <tbody id="results-tbody">
-              <tr>
-                <td colspan="9" class="muted center">目前尚無已結束報單。</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
       <section class="card" id="backtest-section">
         <div class="section-header">
           <div>
-            <h2>策略 B 歷史回測與樣本外篩選結果</h2>
-            <p class="subtitle">依 SPEC 12.1 嚴格切分樣本內（70%）選參數與樣本外（30% Out-of-Sample）驗證；含手續費、點差、滑價與隔夜成本。</p>
+            <h1>成績總表（六個策略回測比較）</h1>
+            <p class="subtitle">依同一套規則與手續費／點差／滑價／隔夜成本進行 70% 樣本內選參數與 30% 樣本外（Out-of-Sample）組合驗證；門檻不放寬。</p>
           </div>
           <div class="badge badge-warn">歷史不代表未來</div>
         </div>
-        <p id="bt-summary-meta" class="muted">目前尚無策略 B 回測結果（等待每週自動排程或手動執行 Strategy B Weekly Backtest）。</p>
-        <div id="bt-near-box" class="bt-near-box hidden"></div>
+        <p id="bt-summary-meta" class="muted">目前尚無策略回測結果（等待執行 Weekly Backtest）。</p>
         <div class="table-wrap">
           <table class="data-table mobile-cards" id="backtest-table">
             <thead>
               <tr>
-                <th>標的</th>
+                <th>策略</th>
                 <th>通過狀態</th>
-                <th>未通過原因</th>
-                <th>樣本外（筆數 / 期望值 / PF）</th>
-                <th>詳細</th>
+                <th>樣本外交易數</th>
+                <th>期望值</th>
+                <th>獲利因子 (PF)</th>
+                <th>最大回撤</th>
+                <th>適用標的數（可用年數）</th>
+                <th>未通過原因／參數詳細</th>
               </tr>
             </thead>
             <tbody id="backtest-tbody">
               <tr>
-                <td colspan="5" class="muted center">目前尚無策略 B 回測結果。</td>
+                <td colspan="8" class="muted center">目前尚無策略回測結果。</td>
               </tr>
             </tbody>
           </table>
@@ -528,7 +471,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261116d"></script>
-  <script src="./assets/app.js?v=20261116d"></script>
+  <script src="./assets/config.js?v=20261116e"></script>
+  <script src="./assets/app.js?v=20261116e"></script>
 </body>
 </html>

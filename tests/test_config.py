@@ -10,8 +10,13 @@ def test_config_has_required_sections() -> None:
     assert cfg["project"]["github_owner"] == "diabetepanda"
     assert cfg["project"]["github_repo"] == "pandatesttrading"
     assert cfg["account"]["initial_capital_usd"] == 100000.0
-    assert cfg["account"]["pools"]["short_term"]["capital_usd"] == 20000.0
-    assert cfg["account"]["pools"]["long_term"]["capital_usd"] == 80000.0
+    assert cfg["account"]["pools"]["short_term"]["capital_usd"] == 30000.0
+    assert cfg["account"]["pools"]["long_term"]["capital_usd"] == 70000.0
+    assert "strategy_a" not in cfg
+    assert "strategy_b" not in cfg
+    assert set(cfg["strategies"].keys()) == {"S1", "S2", "S3", "L1", "L2", "L3"}
+    total_sub = sum(float(v["capital_usd"]) for v in cfg["strategies"].values())
+    assert abs(total_sub - 100000.0) < 0.05
     assert cfg["risk"]["drawdown_warning_pct"] == 8.0
     assert cfg["risk"]["drawdown_pause_pct"] == 12.0
     enabled = [inst for inst in cfg["instruments"] if inst.get("enabled", True)]
@@ -104,7 +109,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped
-    assert "?v=20261116d" in index_html
+    assert "?v=20261116e" in index_html
 
     # Mobile responsive card table + horizontal nav scroll rules
     assert "@media (max-width: 640px)" in style_css
@@ -112,15 +117,14 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     assert "overflow-x: auto" in style_css
     assert "flex-wrap: nowrap" in style_css
 
-    # UI feature hooks
+    # UI feature hooks & Phase 1 6-strategy results table
     assert "watch-summary-bar" in index_html
     assert "watch-toggle-btn" in index_html
-    assert "bt-near-box" in index_html
+    assert "六個策略回測比較" in index_html
+    assert "樣本外交易數" in index_html
+    assert "適用標的數" in index_html
     assert "next-scan-est" in index_html
     assert "此時段不計算" in app_js
-    assert "唐奇安通道突破" in app_js
-    assert "均線交叉" in app_js
-    assert "週線趨勢＋ATR" in app_js
     assert "ageMin > 40" in app_js
     assert "排程延遲" in app_js
     assert "convertReasonUtcToTaipei" in app_js

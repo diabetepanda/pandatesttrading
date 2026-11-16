@@ -16,13 +16,13 @@ account:
   initial_capital_usd: 100000.0
   pools:
     short_term:
-      capital_usd: 20000.0
-      target_notional_usd: 2000.0
+      capital_usd: 30000.0
+      target_notional_usd: 1500.0
       max_concurrent_trades: 10
     long_term:
-      capital_usd: 80000.0
-      target_notional_usd: 8000.0
-      max_concurrent_trades: 10
+      capital_usd: 70000.0
+      target_notional_usd: 4000.0
+      max_concurrent_trades: 15
 
 risk:
   max_risk_per_trade_usd:
@@ -39,6 +39,9 @@ risk:
   stop_to_liquidation_max_ratio: 0.5
   maintenance_margin_ratio: 0.50
   default_slippage_bps: 1.0
+  short_term_tp1_rr_min: 1.5
+  short_term_tp2_rr_min: 2.0
+  long_term_min_rr: 2.0
 
 scaling:
   default_policy: E
@@ -69,60 +72,95 @@ signals:
   breakeven_trigger_r: 1.0
   trailing_stop_trigger_r: 2.0
   trailing_stop_atr_mult: 2.0
-
-strategy_a:
-  enabled_markets: ["crypto", "forex", "commodity"]
-  lookback_days_liquidity: 45
-  low_liquidity_percentile: 33.33
-  settlement_avoid_minutes: 30
-  adx_period: 14
-  adx_max: 20.0
-  bb_percentile_max: 30.0
-  atr_period: 14
-  atr_ratio_max: 1.2
-  event_before_hours: 4
-  event_after_minutes: 60
-  range_bars_15m: 48
-  min_edge_touches: 2
-  range_height_atr_min: 1.0
-  range_height_atr_max: 2.5
-  entry_edge_pct: 15.0
-  rsi_period: 14
-  rsi_overbought: 65.0
-  rsi_oversold: 35.0
-  sl_atr_buffer: 0.5
-  tp1_rr_min: 1.5
-  tp2_rr_min: 2.0
   max_hold_bars_15m: 24
-  pre_session_end_close_minutes: 30
   breakout_bar_atr_mult: 2.5
   breakout_atr_ratio_trigger: 1.8
-  bb_period: 20
-  bb_std: 2.0
-  atr_baseline_days: 20
-  edge_touch_tolerance_pct: 15.0
-  add_atr_mult: 0.35
-  max_abs_funding_rate: 0.001
-  max_oi_surge_pct: 10.0
 
-strategy_b:
-  min_history_years: 5
+backtest:
+  min_history_years: 5.0
   in_sample_ratio: 0.7
   out_sample_ratio: 0.3
   min_oos_trades: 30
   max_oos_drawdown_pct: 25.0
   min_oos_profit_factor: 1.3
-  sl_atr_min_mult: 2.0
-  sl_atr_max_mult: 3.0
-  min_rr: 2.0
   atr_period: 14
-  walk_forward_windows: 3
-  default_notional_usd: 8000.0
-  candidates:
-    donchian_periods: [20, 55, 100]
-    ema_fast_slow: [[20, 100], [50, 200]]
-    weekly_ema_periods: [10, 20]
-    sl_atr_mults: [2.0, 2.5, 3.0]
+
+strategies:
+  S1:
+    name: RSI(2) 回檔買進
+    pool: short_term
+    capital_usd: 10000.0
+    interval: 1h
+    markets: ["crypto", "forex", "commodity"]
+    allow_short: true
+    candidates:
+      trend_ma_periods: [200]
+      exit_ma_periods: [5]
+      rsi_period: 2
+      rsi_long_thresholds: [10.0, 15.0]
+      rsi_short_thresholds: [90.0, 85.0]
+      sl_atr_mults: [2.0, 2.5]
+  S2:
+    name: 波動突破
+    pool: short_term
+    capital_usd: 10000.0
+    interval: 15m
+    markets: ["crypto", "forex", "commodity"]
+    allow_short: true
+    candidates:
+      bb_period: 20
+      bb_std: 2.0
+      squeeze_lookbacks: [48, 96]
+      squeeze_percentiles: [20.0, 30.0]
+      sl_atr_mults: [1.2, 1.5]
+  S3:
+    name: 區間來回
+    pool: short_term
+    capital_usd: 10000.0
+    interval: 15m
+    markets: ["crypto", "forex", "commodity"]
+    allow_short: true
+    candidates:
+      range_bars: [32, 48]
+      min_edge_touches: 2
+      edge_zone_pcts: [15.0, 20.0]
+      rsi_period: 14
+      rsi_oversold_levels: [30.0, 35.0]
+      rsi_overbought_levels: [70.0, 65.0]
+      sl_atr_buffers: [0.5]
+  L1:
+    name: 多標的趨勢跟隨
+    pool: long_term
+    capital_usd: 23333.33
+    interval: 1d
+    markets: ["crypto", "forex", "commodity"]
+    allow_short: true
+    candidates:
+      entry_periods: [20, 55]
+      exit_periods: [10, 20]
+      sl_atr_mults: [2.0, 2.5, 3.0]
+  L2:
+    name: 加密強弱輪動
+    pool: long_term
+    capital_usd: 23333.33
+    interval: 1d
+    markets: ["crypto"]
+    allow_short: false
+    candidates:
+      lookback_days: [14, 28, 56]
+      top_k_list: [3, 5]
+      rebalance_days: 7
+      sl_atr_mults: [2.5, 3.0]
+  L3:
+    name: 200 日均線趨勢過濾
+    pool: long_term
+    capital_usd: 23333.34
+    interval: 1d
+    markets: ["crypto", "forex", "commodity"]
+    allow_short: true
+    candidates:
+      ma_periods: [150, 200]
+      sl_atr_mults: [2.5, 3.0]
 
 data_quality:
   max_missing_ratio: 0.10

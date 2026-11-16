@@ -1,19 +1,28 @@
-"""Strategy B historical backtester and strict IS/OOS screener (SPEC Section 12.1)."""
+"""Portfolio-level 6-strategy backtester & strict IS/OOS screener (S1-S3, L1-L3)."""
 
 from __future__ import annotations
 
+import itertools
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from typing import Any
 
 from src.data.models import OHLCVBar
 from src.indicators.technical import compute_atr_series
+from src.strategies.six_strategies import (
+    SignalAction,
+    decide_l2_rotation_step,
+    decide_strategy_bar,
+    precompute_series,
+)
 
 
 @dataclass(frozen=True)
 class BacktestTrade:
-    """Single closed simulated trade in Strategy B historical backtest."""
+    """Single closed simulated trade in strategy historical backtest."""
 
+    symbol: str
+    strategy_id: str
     entry_ts_utc: str
     exit_ts_utc: str
     direction: str  # "long" or "short"
@@ -31,17 +40,7 @@ def _parse_dt(ts: str) -> datetime:
     return datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
 
 
-def _ema_series(closes: list[float], period: int) -> list[float]:
-    if not closes:
-        return []
-    k = 2.0 / (period + 1.0)
-    out = [closes[0]]
-    for val in closes[1:]:
-        out.append(val * k + out[-1] * (1.0 - k))
-    return out
-
-
-def compute_metrics(trades: list[BacktestTrade], pool_capital: float = 80000.0) -> dict[str, Any]:
+def compute_metrics(trades: list[BacktestTrade], pool_capital: float) -> dict[str, Any]:
     """Compute trade count, win rate, expectancy, profit factor, and max drawdown %."""
     n = len(trades)
     if n == 0:
@@ -56,8 +55,9 @@ def compute_metrics(trades: list[BacktestTrade], pool_capital: float = 80000.0) 
             "total_pnl_usd": 0.0,
         }
 
-    wins = [t for t in trades if t.net_pnl_usd > 0]
-    losses = [t for t in trades if t.net_pnl_usd <= 0]
+    ordered = sorted(trades, key=lambda t: (t.exit_ts_utc, t.entry_ts_utc, t.symbol))
+    wins = [t for t in ordered if t.net_pnl_usd > 0]
+    losses = [t for t in ordered if t.net_pnl_usd <= 0]
     gross_win = sum(t.net_pnl_usd for t in wins)
     gross_loss = abs(sum(t.net_pnl_usd for t in losses))
     if gross_loss > 1e-9:
@@ -68,7 +68,7 @@ def compute_metrics(trades: list[BacktestTrade], pool_capital: float = 80000.0) 
     equity = pool_capital
     peak = pool_capital
     max_dd_pct = 0.0
-    for t in trades:
+    for t in ordered:
         equity += t.net_pnl_usd
         if equity > peak:
             peak = equity
@@ -76,8 +76,8 @@ def compute_metrics(trades: list[BacktestTrade], pool_capital: float = 80000.0) 
         if dd > max_dd_pct:
             max_dd_pct = dd
 
-    total_pnl = sum(t.net_pnl_usd for t in trades)
-    avg_r = sum(t.r_multiple for t in trades) / n
+    total_pnl = sum(t.net_pnl_usd for t in ordered)
+    avg_r = sum(t.r_multiple for t in ordered) / n
     avg_usd = total_pnl / n
 
     return {
@@ -92,374 +92,674 @@ def compute_metrics(trades: list[BacktestTrade], pool_capital: float = 80000.0) 
     }
 
 
-def _simulate_candidate(
+def _calc_trade_costs(
+    direction: str,
+    raw_entry: float,
+    raw_exit: float,
+    qty: float,
+    entry_dt_str: str,
+    exit_dt_str: str,
+    fee_rate: float,
+    overnight_bps: float,
+) -> tuple[float, float, float]:
+    """Compute net PnL USD and total costs USD including fees & overnight carry."""
+    entry_notional = raw_entry * qty
+    exit_notional = raw_exit * qty
+    entry_fee = entry_notional * fee_rate
+    exit_fee = exit_notional * fee_rate
+    days = max(0.0, (_parse_dt(exit_dt_str) - _parse_dt(entry_dt_str)).total_seconds() / 86400.0)
+    overnight_usd = entry_notional * (overnight_bps / 10000.0) * days
+    gross = (raw_exit - raw_entry) * qty if direction == "long" else (raw_entry - raw_exit) * qty
+    total_cost = entry_fee + exit_fee + overnight_usd
+    return gross - total_cost, total_cost, entry_fee
+
+
+def simulate_single_symbol(
     bars: list[OHLCVBar],
-    strategy_name: str,
+    strategy_id: str,
     params: dict[str, Any],
     instrument: dict[str, Any],
     config: dict[str, Any],
-    start_trade_idx: int = 0,
-) -> list[BacktestTrade]:
-    """Run deterministic daily simulation with fees, spread, slippage, and overnight costs."""
-    if len(bars) < 60:
-        return []
+    interval: str,
+    allow_short: bool = True,
+    start_idx: int = 0,
+) -> tuple[list[BacktestTrade], list[tuple[str, str, str, float | None]]]:
+    """Simulate a single symbol using the exact shared decide_strategy_bar logic.
 
-    sb_cfg = config.get("strategy_b", {})
+    Returns (closed_trades, signal_trace) where signal_trace logs every non-hold
+    SignalAction emitted on closed bars so parity tests can compare 1-for-1 with live calls.
+    """
+    if len(bars) < 30:
+        return [], []
+
+    bt_cfg = config.get("backtest", {})
     risk_cfg = config.get("risk", {})
-    acct_cfg = config.get("account", {}).get("pools", {}).get("long_term", {})
-
-    atr_period = int(sb_cfg.get("atr_period", 14))
-    risk_usd = float(risk_cfg.get("max_risk_per_trade_usd", {}).get("long_term", 500.0))
-    max_notional = float(sb_cfg.get("default_notional_usd", acct_cfg.get("target_notional_usd", 8000.0)))
+    strat_cfg = config.get("strategies", {}).get(strategy_id, {})
+    pool_name = strat_cfg.get("pool", "short_term" if strategy_id.startswith("S") else "long_term")
+    atr_period = int(bt_cfg.get("atr_period", 14))
+    risk_usd = float(risk_cfg.get("max_risk_per_trade_usd", {}).get(pool_name, 250.0))
+    sub_cap = float(strat_cfg.get("capital_usd", 10000.0))
+    pool_cap = float(config.get("account", {}).get("pools", {}).get(pool_name, {}).get("capital_usd", 30000.0))
+    max_notional = min(
+        sub_cap,
+        float(config.get("account", {}).get("pools", {}).get(pool_name, {}).get("target_notional_usd", 4000.0)),
+    )
 
     spread_bps = float(instrument.get("assumed_spread_bps", 2.0))
     fee_rate = float(instrument.get("fee_rate", 0.0005))
     slippage_bps = float(risk_cfg.get("default_slippage_bps", 1.0))
     overnight_bps = float(instrument.get("overnight_cost_daily_bps", 0.0))
     slip = slippage_bps / 10000.0
-
     market = instrument.get("market", "crypto")
-    atr_raw = compute_atr_series(bars, period=atr_period, market=market, interval="1d")
-    # Align ATR series to bar index i (atr_raw[0] corresponds to bar index `atr_period`)
-    atr_by_idx: dict[int, float] = {atr_period + k: val for k, val in enumerate(atr_raw)}
 
-    closes = [b.close for b in bars]
-    highs = [b.high for b in bars]
-    lows = [b.low for b in bars]
-
-    sl_mult = float(params["sl_atr_mult"])
-
-    # Precompute indicator arrays strictly up to each bar index i
-    ema_fast: list[float] = []
-    ema_slow: list[float] = []
-    weekly_ema: list[float] = []
-    if strategy_name == "ema_cross":
-        ema_fast = _ema_series(closes, int(params["fast"]))
-        ema_slow = _ema_series(closes, int(params["slow"]))
-    elif strategy_name == "weekly_trend_atr":
-        weekly_ema = _ema_series(closes, int(params["weekly_ema"]) * 5)
-
-    warmup = max(atr_period + 5, int(params.get("period", params.get("slow", params.get("weekly_ema", 20) * 5))) + 1)
-    effective_start = max(warmup, start_trade_idx)
+    series = precompute_series(
+        strategy_id=strategy_id,
+        bars=bars,
+        params=params,
+        market=market,
+        interval=interval,
+        atr_period=atr_period,
+    )
 
     trades: list[BacktestTrade] = []
-    in_pos = False
-    pos_dir = "long"
-    entry_px = 0.0
-    entry_dt_str = ""
-    qty = 0.0
-    stop_loss = 0.0
-    entry_fee = 0.0
+    trace: list[tuple[str, str, str, float | None]] = []
 
+    in_pos = False
+    pos_dir = ""
+    entry_px = 0.0
+    entry_ts = ""
+    qty = 0.0
+    sl_px: float | None = None
+    tp_px: float | None = None
+
+    effective_start = max(1, start_idx)
     for i in range(effective_start, len(bars) - 1):
         bar = bars[i]
         next_bar = bars[i + 1]
-        atr_val = atr_by_idx.get(i)
-        if atr_val is None or atr_val <= 0:
-            continue
 
+        # 1) Check intra-bar protective stop loss or fixed target on current closed bar
         if in_pos:
-            # 1) Gap open beyond trailing stop
+            exited = False
+            raw_exit = 0.0
             if pos_dir == "long":
-                open_bid = bar.open * (1.0 - spread_bps / 20000.0)
-                if open_bid <= stop_loss:
-                    exit_px = open_bid * (1.0 - slip)
-                    in_pos = False
-                elif bar.low * (1.0 - spread_bps / 20000.0) <= stop_loss:
-                    exit_px = stop_loss * (1.0 - slip)
-                    in_pos = False
+                if sl_px is not None:
+                    open_bid = bar.open * (1.0 - spread_bps / 20000.0)
+                    if open_bid <= sl_px:
+                        raw_exit = open_bid * (1.0 - slip)
+                        exited = True
+                    elif bar.low * (1.0 - spread_bps / 20000.0) <= sl_px:
+                        raw_exit = sl_px * (1.0 - slip)
+                        exited = True
+                if not exited and tp_px is not None:
+                    if bar.high * (1.0 - spread_bps / 20000.0) >= tp_px:
+                        raw_exit = tp_px * (1.0 - slip)
+                        exited = True
             else:
-                open_ask = bar.open * (1.0 + spread_bps / 20000.0)
-                if open_ask >= stop_loss:
-                    exit_px = open_ask * (1.0 + slip)
-                    in_pos = False
-                elif bar.high * (1.0 + spread_bps / 20000.0) >= stop_loss:
-                    exit_px = stop_loss * (1.0 + slip)
-                    in_pos = False
+                if sl_px is not None:
+                    open_ask = bar.open * (1.0 + spread_bps / 20000.0)
+                    if open_ask >= sl_px:
+                        raw_exit = open_ask * (1.0 + slip)
+                        exited = True
+                    elif bar.high * (1.0 + spread_bps / 20000.0) >= sl_px:
+                        raw_exit = sl_px * (1.0 + slip)
+                        exited = True
+                if not exited and tp_px is not None:
+                    if bar.low * (1.0 + spread_bps / 20000.0) <= tp_px:
+                        raw_exit = tp_px * (1.0 + slip)
+                        exited = True
 
-            # 2) Trend reversal exit on closed bar -> fill next bar open
-            if in_pos:
-                rev = False
-                if strategy_name == "donchian":
-                    exit_p = max(10, int(params["period"]) // 2)
-                    if pos_dir == "long" and bar.close < min(lows[i - exit_p : i]):
-                        rev = True
-                    elif pos_dir == "short" and bar.close > max(highs[i - exit_p : i]):
-                        rev = True
-                elif strategy_name == "ema_cross":
-                    if pos_dir == "long" and ema_fast[i] < ema_slow[i]:
-                        rev = True
-                    elif pos_dir == "short" and ema_fast[i] > ema_slow[i]:
-                        rev = True
-                elif strategy_name == "weekly_trend_atr":
-                    if pos_dir == "long" and bar.close < weekly_ema[i]:
-                        rev = True
-                    elif pos_dir == "short" and bar.close > weekly_ema[i]:
-                        rev = True
-
-                if rev:
-                    if pos_dir == "long":
-                        exit_px = next_bar.open * (1.0 - spread_bps / 20000.0) * (1.0 - slip)
-                    else:
-                        exit_px = next_bar.open * (1.0 + spread_bps / 20000.0) * (1.0 + slip)
-                    in_pos = False
-                    exit_dt_str = next_bar.ts_utc
-                else:
-                    exit_dt_str = bar.ts_utc
-            else:
-                exit_dt_str = bar.ts_utc
-
-            if not in_pos:
-                hold_days = max(0.0, (_parse_dt(exit_dt_str) - _parse_dt(entry_dt_str)).total_seconds() / 86400.0)
-                exit_fee = (exit_px * qty) * fee_rate
-                overnight_cost = (entry_px * qty) * (overnight_bps / 10000.0) * hold_days
-                gross = (exit_px - entry_px) * qty if pos_dir == "long" else (entry_px - exit_px) * qty
-                total_cost = entry_fee + exit_fee + overnight_cost
-                net_pnl = gross - total_cost
+            if exited:
+                net_pnl, cost_usd, _ = _calc_trade_costs(
+                    pos_dir, entry_px, raw_exit, qty, entry_ts, bar.ts_utc, fee_rate, overnight_bps
+                )
                 trades.append(
                     BacktestTrade(
-                        entry_ts_utc=entry_dt_str,
-                        exit_ts_utc=exit_dt_str,
+                        symbol=instrument["symbol"],
+                        strategy_id=strategy_id,
+                        entry_ts_utc=entry_ts,
+                        exit_ts_utc=bar.ts_utc,
                         direction=pos_dir,
                         entry_price=round(entry_px, 6),
-                        exit_price=round(exit_px, 6),
+                        exit_price=round(raw_exit, 6),
                         r_multiple=round(net_pnl / max(1e-9, risk_usd), 4),
                         net_pnl_usd=round(net_pnl, 4),
-                        cost_usd=round(total_cost, 4),
+                        cost_usd=round(cost_usd, 4),
                     )
                 )
+                in_pos = False
+                pos_dir = ""
                 continue
 
-            # Update ATR trailing stop favorably only
-            if pos_dir == "long":
-                stop_loss = max(stop_loss, bar.high - sl_mult * atr_val)
-            else:
-                stop_loss = min(stop_loss, bar.low + sl_mult * atr_val)
-            continue
+        # 2) Run the exact shared strategy bar decision at closed bar i
+        act: SignalAction = decide_strategy_bar(
+            strategy_id=strategy_id,
+            series=series,
+            idx=i,
+            position_dir=pos_dir,
+            params=params,
+            allow_short=allow_short,
+        )
+        if act.action != "hold":
+            sl_round = round(act.stop_loss, 6) if act.stop_loss is not None else None
+            trace.append((bar.ts_utc, act.action, act.direction, sl_round))
 
-        # Entry check strictly on closed bar i -> execute at next_bar.open
-        sig_dir: str | None = None
-        if strategy_name == "donchian":
-            p = int(params["period"])
-            if bar.close > max(highs[i - p : i]):
-                sig_dir = "long"
-            elif bar.close < min(lows[i - p : i]):
-                sig_dir = "short"
-        elif strategy_name == "ema_cross":
-            bull = ema_fast[i] > ema_slow[i]
-            bear = ema_fast[i] < ema_slow[i]
-            crossed_up = ema_fast[i - 1] <= ema_slow[i - 1] and bull
-            crossed_dn = ema_fast[i - 1] >= ema_slow[i - 1] and bear
-            touched_fast_down = any(lows[k] <= ema_fast[k] for k in range(max(0, i - 5), i))
-            touched_fast_up = any(highs[k] >= ema_fast[k] for k in range(max(0, i - 5), i))
-            if bull and (crossed_up or (touched_fast_down and bar.close > ema_fast[i] and bars[i - 1].close <= ema_fast[i - 1])):
-                sig_dir = "long"
-            elif bear and (crossed_dn or (touched_fast_up and bar.close < ema_fast[i] and bars[i - 1].close >= ema_fast[i - 1])):
-                sig_dir = "short"
-        elif strategy_name == "weekly_trend_atr":
-            p_break = 20
-            if bar.close > weekly_ema[i] and bar.close > max(highs[i - p_break : i]):
-                sig_dir = "long"
-            elif bar.close < weekly_ema[i] and bar.close < min(lows[i - p_break : i]):
-                sig_dir = "short"
+        if in_pos and act.action == "exit":
+            raw_exit = (
+                next_bar.open * (1.0 - spread_bps / 20000.0) * (1.0 - slip)
+                if pos_dir == "long"
+                else next_bar.open * (1.0 + spread_bps / 20000.0) * (1.0 + slip)
+            )
+            net_pnl, cost_usd, _ = _calc_trade_costs(
+                pos_dir, entry_px, raw_exit, qty, entry_ts, next_bar.ts_utc, fee_rate, overnight_bps
+            )
+            trades.append(
+                BacktestTrade(
+                    symbol=instrument["symbol"],
+                    strategy_id=strategy_id,
+                    entry_ts_utc=entry_ts,
+                    exit_ts_utc=next_bar.ts_utc,
+                    direction=pos_dir,
+                    entry_price=round(entry_px, 6),
+                    exit_price=round(raw_exit, 6),
+                    r_multiple=round(net_pnl / max(1e-9, risk_usd), 4),
+                    net_pnl_usd=round(net_pnl, 4),
+                    cost_usd=round(cost_usd, 4),
+                )
+            )
+            in_pos = False
+            pos_dir = ""
 
-        if sig_dir is not None:
-            if sig_dir == "long":
-                raw_open = next_bar.open * (1.0 + spread_bps / 20000.0) * (1.0 + slip)
-                sl_init = raw_open - sl_mult * atr_val
-            else:
-                raw_open = next_bar.open * (1.0 - spread_bps / 20000.0) * (1.0 - slip)
-                sl_init = raw_open + sl_mult * atr_val
-
-            stop_dist_pct = abs(raw_open - sl_init) / max(1e-9, raw_open)
-            if stop_dist_pct <= 0:
+        elif not in_pos and act.action in ("enter_long", "enter_short"):
+            direction = act.direction
+            raw_entry = (
+                next_bar.open * (1.0 + spread_bps / 20000.0) * (1.0 + slip)
+                if direction == "long"
+                else next_bar.open * (1.0 - spread_bps / 20000.0) * (1.0 - slip)
+            )
+            if raw_entry <= 0:
                 continue
-            notional = min(max_notional, risk_usd / stop_dist_pct)
-            qty = notional / raw_open
-            entry_fee = notional * fee_rate
-            entry_px = raw_open
-            entry_dt_str = next_bar.ts_utc
-            pos_dir = sig_dir
-            stop_loss = sl_init
+            atr_val = series["atr"][i] or (raw_entry * 0.02)
+            sl_dist = abs(raw_entry - act.stop_loss) if act.stop_loss is not None else (2.0 * atr_val)
+            sl_dist_pct = max(0.002, sl_dist / raw_entry)
+            cost_pct = 2.0 * (fee_rate + slippage_bps / 10000.0)
+            notional = min(max_notional, risk_usd / (sl_dist_pct + cost_pct))
+            if notional <= 0:
+                continue
+
+            qty = notional / raw_entry
+            entry_px = raw_entry
+            entry_ts = next_bar.ts_utc
+            pos_dir = direction
+            sl_px = act.stop_loss
+            tp_px = act.take_profit
             in_pos = True
 
-    return trades
+    return trades, trace
 
 
-def _build_candidate_grid(config: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
-    cand_cfg = config.get("strategy_b", {}).get("candidates", {})
-    donchian_periods = cand_cfg.get("donchian_periods", [20, 55, 100])
-    ema_pairs = cand_cfg.get("ema_fast_slow", [[20, 100], [50, 200]])
-    weekly_emas = cand_cfg.get("weekly_ema_periods", [10, 20])
-    sl_mults = cand_cfg.get("sl_atr_mults", [2.0, 2.5, 3.0])
-
-    grid: list[tuple[str, dict[str, Any]]] = []
-    for p in donchian_periods:
-        for slm in sl_mults:
-            grid.append(("donchian", {"period": int(p), "sl_atr_mult": float(slm)}))
-    for pair in ema_pairs:
-        for slm in sl_mults:
-            grid.append(("ema_cross", {"fast": int(pair[0]), "slow": int(pair[1]), "sl_atr_mult": float(slm)}))
-    for w_ema in weekly_emas:
-        for slm in sl_mults:
-            grid.append(("weekly_trend_atr", {"weekly_ema": int(w_ema), "sl_atr_mult": float(slm)}))
-    return grid
-
-
-def _select_best_in_sample(
-    is_bars: list[OHLCVBar],
-    instrument: dict[str, Any],
+def simulate_l2_portfolio(
+    bars_by_symbol: dict[str, list[OHLCVBar]],
+    instruments_by_sym: dict[str, dict[str, Any]],
+    params: dict[str, Any],
     config: dict[str, Any],
-    pool_capital: float,
-) -> tuple[str, dict[str, Any], dict[str, Any]]:
-    """Select optimal Strategy B candidate using strictly in-sample bars ONLY."""
-    grid = _build_candidate_grid(config)
-    best_score = -1e18
-    best_strat = grid[0][0]
-    best_params = grid[0][1]
-    best_metrics = compute_metrics([], pool_capital)
+    start_date: str | None = None,
+) -> tuple[list[BacktestTrade], list[tuple[str, str, str, str]]]:
+    """Cross-sectional simulation for L2 weekly crypto momentum rotation."""
+    lookback = int(params.get("lookback_days", 28))
+    top_k = int(params.get("top_k", 3))
+    rebalance_days = int(params.get("rebalance_days", 7))
+    sl_mult = float(params.get("sl_atr_mult", 2.5))
 
-    for strat_name, params in grid:
-        trades = _simulate_candidate(is_bars, strat_name, params, instrument, config, start_trade_idx=0)
-        m = compute_metrics(trades, pool_capital=pool_capital)
-        # Prefer candidates with meaningful trade sample (>= 30, or >= 15) and positive expectancy
-        sample_bonus = 100.0 if m["trades"] >= 30 else (20.0 if m["trades"] >= 15 else 0.0)
-        score = sample_bonus + m["expectancy_r"] * 10.0 + min(m["profit_factor"], 5.0) - m["max_drawdown_pct"] * 0.1
-        if m["trades"] == 0:
-            score = -1e9
-        if score > best_score:
-            best_score = score
-            best_strat = strat_name
-            best_params = params
-            best_metrics = m
+    bt_cfg = config.get("backtest", {})
+    risk_cfg = config.get("risk", {})
+    strat_cfg = config.get("strategies", {}).get("L2", {})
+    atr_period = int(bt_cfg.get("atr_period", 14))
+    risk_usd = float(risk_cfg.get("max_risk_per_trade_usd", {}).get("long_term", 500.0))
+    sub_cap = float(strat_cfg.get("capital_usd", 23333.33))
+    per_pos_cap = sub_cap / max(1, top_k)
+    slip_bps = float(risk_cfg.get("default_slippage_bps", 1.0))
+    slip = slip_bps / 10000.0
 
-    return best_strat, best_params, best_metrics
+    # Index bars by YYYY-MM-DD and precompute causal ATR lookup
+    date_bars: dict[str, dict[str, int]] = {}
+    atr_lookup: dict[str, list[float | None]] = {}
+    all_dates_set: set[str] = set()
+    for sym, bars in bars_by_symbol.items():
+        if not bars:
+            continue
+        atr_raw = compute_atr_series(bars, period=atr_period, market="crypto", interval="1d")
+        atr_s: list[float | None] = [None] * len(bars)
+        for k, val in enumerate(atr_raw):
+            if atr_period + k < len(atr_s):
+                atr_s[atr_period + k] = val
+        atr_lookup[sym] = atr_s
+        sym_map: dict[str, int] = {}
+        for idx, b in enumerate(bars):
+            d = b.ts_utc[:10]
+            sym_map[d] = idx
+            all_dates_set.add(d)
+        date_bars[sym] = sym_map
+
+    sorted_dates = sorted(all_dates_set)
+    if len(sorted_dates) < lookback + 10:
+        return [], []
+
+    start_pos = 0
+    if start_date:
+        for idx, d in enumerate(sorted_dates):
+            if d >= start_date:
+                start_pos = idx
+                break
+
+    trades: list[BacktestTrade] = []
+    trace: list[tuple[str, str, str, str]] = []
+    held: dict[str, dict[str, Any]] = {}  # sym -> {entry_px, entry_ts, qty, sl_px, fee_rate, overnight_bps, spread_bps}
+
+    for d_idx in range(max(1, start_pos), len(sorted_dates) - 1):
+        d = sorted_dates[d_idx]
+        next_d = sorted_dates[d_idx + 1]
+
+        # Check intra-day SL first for held coins
+        for sym in list(held.keys()):
+            b_idx = date_bars.get(sym, {}).get(d)
+            if b_idx is None:
+                continue
+            bar = bars_by_symbol[sym][b_idx]
+            pos = held[sym]
+            spread_bps = pos["spread_bps"]
+            open_bid = bar.open * (1.0 - spread_bps / 20000.0)
+            sl_hit = open_bid <= pos["sl_px"] or bar.low * (1.0 - spread_bps / 20000.0) <= pos["sl_px"]
+            if sl_hit:
+                raw_exit = (open_bid * (1.0 - slip)) if open_bid <= pos["sl_px"] else (pos["sl_px"] * (1.0 - slip))
+                net_pnl, cost_usd, _ = _calc_trade_costs(
+                    "long", pos["entry_px"], raw_exit, pos["qty"], pos["entry_ts"], bar.ts_utc, pos["fee_rate"], pos["overnight_bps"]
+                )
+                trades.append(
+                    BacktestTrade(
+                        symbol=sym,
+                        strategy_id="L2",
+                        entry_ts_utc=pos["entry_ts"],
+                        exit_ts_utc=bar.ts_utc,
+                        direction="long",
+                        entry_price=round(pos["entry_px"], 6),
+                        exit_price=round(raw_exit, 6),
+                        r_multiple=round(net_pnl / max(1e-9, risk_usd), 4),
+                        net_pnl_usd=round(net_pnl, 4),
+                        cost_usd=round(cost_usd, 4),
+                    )
+                )
+                del held[sym]
+
+        if (d_idx - start_pos) % rebalance_days != 0:
+            continue
+
+        up_to_date: dict[str, list[OHLCVBar]] = {}
+        pre_atr: dict[str, float | None] = {}
+        for sym, sym_map in date_bars.items():
+            b_idx = sym_map.get(d)
+            if b_idx is not None:
+                up_to_date[sym] = bars_by_symbol[sym][: b_idx + 1]
+                pre_atr[sym] = atr_lookup[sym][b_idx]
+
+        actions = decide_l2_rotation_step(
+            closes_up_to_date=up_to_date,
+            held_symbols=set(held.keys()),
+            lookback_days=lookback,
+            top_k=top_k,
+            sl_atr_mult=sl_mult,
+            atr_period=atr_period,
+            precomputed_atr_by_sym=pre_atr,
+        )
+
+        for sym, act in actions.items():
+            nxt_idx = date_bars.get(sym, {}).get(next_d)
+            if nxt_idx is None:
+                continue
+            nxt_bar = bars_by_symbol[sym][nxt_idx]
+            inst = instruments_by_sym[sym]
+            spread_bps = float(inst.get("assumed_spread_bps", 5.0))
+            fee_rate = float(inst.get("fee_rate", 0.0005))
+            overnight_bps = float(inst.get("overnight_cost_daily_bps", 3.0))
+
+            if act.action == "exit" and sym in held:
+                trace.append((d, sym, "exit", "long"))
+                pos = held.pop(sym)
+                raw_exit = nxt_bar.open * (1.0 - spread_bps / 20000.0) * (1.0 - slip)
+                net_pnl, cost_usd, _ = _calc_trade_costs(
+                    "long", pos["entry_px"], raw_exit, pos["qty"], pos["entry_ts"], nxt_bar.ts_utc, fee_rate, overnight_bps
+                )
+                trades.append(
+                    BacktestTrade(
+                        symbol=sym,
+                        strategy_id="L2",
+                        entry_ts_utc=pos["entry_ts"],
+                        exit_ts_utc=nxt_bar.ts_utc,
+                        direction="long",
+                        entry_price=round(pos["entry_px"], 6),
+                        exit_price=round(raw_exit, 6),
+                        r_multiple=round(net_pnl / max(1e-9, risk_usd), 4),
+                        net_pnl_usd=round(net_pnl, 4),
+                        cost_usd=round(cost_usd, 4),
+                    )
+                )
+            elif act.action == "enter_long" and sym not in held:
+                trace.append((d, sym, "enter_long", "long"))
+                raw_entry = nxt_bar.open * (1.0 + spread_bps / 20000.0) * (1.0 + slip)
+                if raw_entry <= 0:
+                    continue
+                sl_dist_pct = max(0.002, abs(raw_entry - (act.stop_loss or raw_entry * 0.95)) / raw_entry)
+                cost_pct = 2.0 * (fee_rate + slippage_bps_val(risk_cfg) / 10000.0)
+                notional = min(per_pos_cap, risk_usd / (sl_dist_pct + cost_pct))
+                if notional <= 0:
+                    continue
+                held[sym] = {
+                    "entry_px": raw_entry,
+                    "entry_ts": nxt_bar.ts_utc,
+                    "qty": notional / raw_entry,
+                    "sl_px": act.stop_loss or raw_entry * 0.9,
+                    "fee_rate": fee_rate,
+                    "overnight_bps": overnight_bps,
+                    "spread_bps": spread_bps,
+                }
+
+    return trades, trace
 
 
-def screen_instrument(
-    instrument: dict[str, Any],
-    bars_1d: list[OHLCVBar],
+def slippage_bps_val(risk_cfg: dict[str, Any]) -> float:
+    return float(risk_cfg.get("default_slippage_bps", 1.0))
+
+
+def _build_param_grid(strategy_id: str, strat_cfg: dict[str, Any]) -> list[dict[str, Any]]:
+    cand = strat_cfg.get("candidates", {})
+    if strategy_id == "S1":
+        t_mas = cand.get("trend_ma_periods", [200])
+        e_mas = cand.get("exit_ma_periods", [5])
+        rsi_p = int(cand.get("rsi_period", 2))
+        l_ths = cand.get("rsi_long_thresholds", [10.0, 15.0])
+        s_ths = cand.get("rsi_short_thresholds", [90.0, 85.0])
+        sls = cand.get("sl_atr_mults", [2.0, 2.5])
+        grid = []
+        for t_ma, e_ma, l_th, s_th, slm in itertools.product(t_mas, e_mas, l_ths, s_ths, sls):
+            if (l_th == 10.0 and s_th == 90.0) or (l_th == 15.0 and s_th == 85.0):
+                grid.append(
+                    {
+                        "trend_ma_period": int(t_ma),
+                        "exit_ma_period": int(e_ma),
+                        "rsi_period": rsi_p,
+                        "rsi_long_thresh": float(l_th),
+                        "rsi_short_thresh": float(s_th),
+                        "sl_atr_mult": float(slm),
+                    }
+                )
+        return grid
+
+    if strategy_id == "S2":
+        bb_p = int(cand.get("bb_period", 20))
+        bb_std = float(cand.get("bb_std", 2.0))
+        lbs = cand.get("squeeze_lookbacks", [48, 96])
+        pcts = cand.get("squeeze_percentiles", [20.0, 30.0])
+        sls = cand.get("sl_atr_mults", [1.2, 1.5])
+        return [
+            {
+                "bb_period": bb_p,
+                "bb_std": bb_std,
+                "squeeze_lookback": int(lb),
+                "squeeze_percentile": float(p),
+                "sl_atr_mult": float(slm),
+            }
+            for lb, p, slm in itertools.product(lbs, pcts, sls)
+        ]
+
+    if strategy_id == "S3":
+        r_bars = cand.get("range_bars", [32, 48])
+        touches = int(cand.get("min_edge_touches", 2))
+        edges = cand.get("edge_zone_pcts", [15.0, 20.0])
+        rsi_p = int(cand.get("rsi_period", 14))
+        os_lvls = cand.get("rsi_oversold_levels", [30.0, 35.0])
+        ob_lvls = cand.get("rsi_overbought_levels", [70.0, 65.0])
+        bufs = cand.get("sl_atr_buffers", [0.5])
+        grid = []
+        for rb, ep, os_v, ob_v, buf in itertools.product(r_bars, edges, os_lvls, ob_lvls, bufs):
+            if (os_v == 30.0 and ob_v == 70.0) or (os_v == 35.0 and ob_v == 65.0):
+                grid.append(
+                    {
+                        "range_bars": int(rb),
+                        "min_edge_touches": touches,
+                        "edge_zone_pct": float(ep),
+                        "rsi_period": rsi_p,
+                        "rsi_oversold": float(os_v),
+                        "rsi_overbought": float(ob_v),
+                        "sl_atr_buffer": float(buf),
+                    }
+                )
+        return grid
+
+    if strategy_id == "L1":
+        ents = cand.get("entry_periods", [20, 55])
+        exts = cand.get("exit_periods", [10, 20])
+        sls = cand.get("sl_atr_mults", [2.0, 2.5, 3.0])
+        return [
+            {"entry_period": int(en), "exit_period": int(ex), "sl_atr_mult": float(slm)}
+            for en, ex, slm in itertools.product(ents, exts, sls)
+            if ex < en
+        ]
+
+    if strategy_id == "L2":
+        lbs = cand.get("lookback_days", [14, 28, 56])
+        ks = cand.get("top_k_list", [3, 5])
+        reb = int(cand.get("rebalance_days", 7))
+        sls = cand.get("sl_atr_mults", [2.5, 3.0])
+        return [
+            {"lookback_days": int(lb), "top_k": int(k), "rebalance_days": reb, "sl_atr_mult": float(slm)}
+            for lb, k, slm in itertools.product(lbs, ks, sls)
+        ]
+
+    if strategy_id == "L3":
+        mas = cand.get("ma_periods", [150, 200])
+        sls = cand.get("sl_atr_mults", [2.5, 3.0])
+        return [{"ma_period": int(ma), "sl_atr_mult": float(slm)} for ma, slm in itertools.product(mas, sls)]
+
+    raise ValueError(f"Unknown strategy_id: {strategy_id}")
+
+
+def _history_span_years(bars: list[OHLCVBar]) -> float:
+    if len(bars) < 2:
+        return 0.0
+    dt0 = _parse_dt(bars[0].ts_utc)
+    dt1 = _parse_dt(bars[-1].ts_utc)
+    return round((dt1 - dt0).total_seconds() / (86400.0 * 365.25), 4)
+
+
+def _score_is_metrics(m: dict[str, Any], min_trades: int) -> float:
+    if m["trades"] == 0:
+        return -1e9
+    sample_bonus = 100.0 if m["trades"] >= min_trades else float(m["trades"])
+    return sample_bonus + m["expectancy_r"] * 10.0 + min(m["profit_factor"], 5.0) - m["max_drawdown_pct"] * 0.1
+
+
+def screen_single_strategy(
+    strategy_id: str,
+    bars_by_interval: dict[str, dict[str, list[OHLCVBar]]],
     config: dict[str, Any],
 ) -> dict[str, Any]:
-    """Screen one instrument using strict 70/30 IS/OOS split and Walk-Forward check."""
-    symbol = instrument["symbol"]
-    market = instrument.get("market", "")
-    sb_cfg = config.get("strategy_b", {})
-    pool_capital = float(
-        config.get("account", {}).get("pools", {}).get("long_term", {}).get("capital_usd", 80000.0)
-    )
+    """Portfolio-level 70/30 IS/OOS screening for one of S1-S3, L1-L3."""
+    bt_cfg = config.get("backtest", {})
+    strat_cfg = config.get("strategies", {})[strategy_id]
+    interval = str(strat_cfg["interval"])
+    allowed_markets = set(strat_cfg.get("markets", ["crypto", "forex", "commodity"]))
+    allow_short = bool(strat_cfg.get("allow_short", True))
+    sub_cap = float(strat_cfg.get("capital_usd", 10000.0))
+    min_years = float(bt_cfg.get("min_history_years", 5.0))
+    is_ratio = float(bt_cfg.get("in_sample_ratio", 0.7))
+    min_oos_trades = int(bt_cfg.get("min_oos_trades", 30))
+    max_oos_dd = float(bt_cfg.get("max_oos_drawdown_pct", 25.0))
+    min_oos_pf = float(bt_cfg.get("min_oos_profit_factor", 1.3))
 
-    sorted_bars = sorted(bars_1d, key=lambda b: b.ts_utc)
-    if len(sorted_bars) < 2:
+    enabled_insts = [
+        inst
+        for inst in config.get("instruments", [])
+        if inst.get("enabled", True) and inst.get("market") in allowed_markets
+    ]
+    inst_by_sym = {i["symbol"]: i for i in enabled_insts}
+    raw_bars_map = bars_by_interval.get(interval, {})
+
+    # Separate instruments meeting vs below 5-year bar span
+    all_available: dict[str, list[OHLCVBar]] = {}
+    years_by_sym: dict[str, float] = {}
+    five_yr_syms: list[str] = []
+    short_history_syms: list[str] = []
+
+    for inst in enabled_insts:
+        sym = inst["symbol"]
+        bars = sorted(raw_bars_map.get(sym, []), key=lambda b: b.ts_utc)
+        if not bars:
+            continue
+        yrs = _history_span_years(bars)
+        all_available[sym] = bars
+        years_by_sym[sym] = yrs
+        if yrs >= min_years:
+            five_yr_syms.append(sym)
+        else:
+            short_history_syms.append(sym)
+
+    # For long-term (L1/L2/L3), evaluate portfolio over instruments with >= 5 years history.
+    # For short-term (S1/S2/S3), if no symbols reach 5 years, evaluate available intraday history honestly
+    # to report real years and OOS trade count, while strictly failing the 5-year threshold.
+    is_long_term = interval == "1d"
+    eval_syms = five_yr_syms if (five_yr_syms or is_long_term) else sorted(all_available.keys())
+
+    if not eval_syms:
+        max_yrs = max(years_by_sym.values(), default=0.0)
         return {
-            "symbol": symbol,
-            "market": market,
+            "strategy_id": strategy_id,
+            "name": strat_cfg.get("name", strategy_id),
+            "pool": strat_cfg.get("pool", "long_term"),
+            "capital_usd": sub_cap,
+            "interval": interval,
             "status": "insufficient_history",
-            "history_years": 0.0,
-            "bar_count": len(sorted_bars),
             "passed": False,
-            "chosen_strategy": None,
+            "applicable_instruments": len(enabled_insts),
+            "eligible_instruments": 0,
+            "excluded_insufficient_count": len(short_history_syms),
+            "history_years": round(max_yrs, 4),
             "chosen_params": None,
-            "in_sample": None,
-            "out_of_sample": None,
-            "walk_forward": None,
-            "reason": "無日線歷史資料",
+            "in_sample": compute_metrics([], sub_cap),
+            "out_of_sample": compute_metrics([], sub_cap),
+            "reason": f"達 {min_years:.0f} 年歷史標準之標的為 0 個（最長僅 {max_yrs:.2f} 年），依規格不硬算",
         }
 
-    first_dt = _parse_dt(sorted_bars[0].ts_utc)
-    last_dt = _parse_dt(sorted_bars[-1].ts_utc)
-    history_years = round((last_dt - first_dt).total_seconds() / (86400.0 * 365.25), 2)
-    min_years = float(sb_cfg.get("min_history_years", 5.0))
+    # Build strict 70/30 IS/OOS splits per instrument (IS contains zero OOS bars)
+    is_slices: dict[str, list[OHLCVBar]] = {}
+    split_indices: dict[str, int] = {}
+    for sym in eval_syms:
+        bars = all_available[sym]
+        split_idx = max(1, int(len(bars) * is_ratio))
+        split_indices[sym] = split_idx
+        is_slices[sym] = bars[:split_idx]
 
-    if history_years < min_years:
-        return {
-            "symbol": symbol,
-            "market": market,
-            "status": "insufficient_history",
-            "history_years": history_years,
-            "bar_count": len(sorted_bars),
-            "start_date_utc": sorted_bars[0].ts_utc[:10],
-            "end_date_utc": sorted_bars[-1].ts_utc[:10],
-            "passed": False,
-            "chosen_strategy": None,
-            "chosen_params": None,
-            "in_sample": None,
-            "out_of_sample": None,
-            "walk_forward": None,
-            "reason": f"資料年數不足：僅 {history_years:.2f} 年（少於 {min_years:.0f} 年要求），不硬算篩選",
-        }
+    grid = _build_param_grid(strategy_id, strat_cfg)
+    best_score = -1e18
+    best_params = grid[0]
+    best_is_metrics = compute_metrics([], sub_cap)
 
-    is_ratio = float(sb_cfg.get("in_sample_ratio", 0.7))
-    split_idx = int(len(sorted_bars) * is_ratio)
-    is_bars = sorted_bars[:split_idx]
+    if strategy_id == "L2":
+        all_is_dates = sorted({b.ts_utc[:10] for bars in is_slices.values() for b in bars})
+        for params in grid:
+            is_trades, _ = simulate_l2_portfolio(is_slices, inst_by_sym, params, config, start_date=None)
+            m = compute_metrics(is_trades, sub_cap)
+            sc = _score_is_metrics(m, min_oos_trades)
+            if sc > best_score:
+                best_score = sc
+                best_params = params
+                best_is_metrics = m
 
-    # Step 1: Select parameters strictly on IS bars ONLY (OOS bars are NEVER passed here)
-    chosen_strat, chosen_params, is_metrics = _select_best_in_sample(
-        is_bars, instrument, config, pool_capital=pool_capital
-    )
+        # OOS on full series starting strictly at split date (first OOS date)
+        full_eval_bars = {sym: all_available[sym] for sym in eval_syms}
+        oos_dates = sorted({b.ts_utc[:10] for sym in eval_syms for b in full_eval_bars[sym][split_indices[sym] :]})
+        oos_start_d = oos_dates[0] if oos_dates else None
+        oos_trades, _ = simulate_l2_portfolio(full_eval_bars, inst_by_sym, best_params, config, start_date=oos_start_d)
+        oos_metrics = compute_metrics(oos_trades, sub_cap)
+    else:
+        for params in grid:
+            is_trades_all: list[BacktestTrade] = []
+            for sym in eval_syms:
+                tr_list, _ = simulate_single_symbol(
+                    bars=is_slices[sym],
+                    strategy_id=strategy_id,
+                    params=params,
+                    instrument=inst_by_sym[sym],
+                    config=config,
+                    interval=interval,
+                    allow_short=allow_short,
+                    start_idx=0,
+                )
+                is_trades_all.extend(tr_list)
+            m = compute_metrics(is_trades_all, sub_cap)
+            sc = _score_is_metrics(m, min_oos_trades)
+            if sc > best_score:
+                best_score = sc
+                best_params = params
+                best_is_metrics = m
 
-    # Step 2: Validate ONCE on OOS bars (with IS tail used purely as indicator warmup, trades >= split_idx)
-    oos_trades = _simulate_candidate(
-        sorted_bars, chosen_strat, chosen_params, instrument, config, start_trade_idx=split_idx
-    )
-    oos_metrics = compute_metrics(oos_trades, pool_capital=pool_capital)
-
-    # Step 3: Walk-Forward check across rolling windows
-    wf_windows = int(sb_cfg.get("walk_forward_windows", 3))
-    wf_positive = 0
-    wf_folds: list[dict[str, Any]] = []
-    if wf_windows > 0 and len(sorted_bars) >= 600:
-        fold_size = len(sorted_bars) // (wf_windows + 2)
-        for w in range(wf_windows):
-            train_end = fold_size * (w + 2)
-            test_end = min(len(sorted_bars), train_end + fold_size)
-            if test_end - train_end < 60:
-                continue
-            w_strat, w_params, _ = _select_best_in_sample(
-                sorted_bars[:train_end], instrument, config, pool_capital=pool_capital
+        # Evaluate best_params ONCE on out-of-sample (indices >= split_idx)
+        oos_trades_all: list[BacktestTrade] = []
+        for sym in eval_syms:
+            tr_list, _ = simulate_single_symbol(
+                bars=all_available[sym],
+                strategy_id=strategy_id,
+                params=best_params,
+                instrument=inst_by_sym[sym],
+                config=config,
+                interval=interval,
+                allow_short=allow_short,
+                start_idx=split_indices[sym],
             )
-            w_trades = _simulate_candidate(
-                sorted_bars[:test_end], w_strat, w_params, instrument, config, start_trade_idx=train_end
-            )
-            w_m = compute_metrics(w_trades, pool_capital=pool_capital)
-            if w_m["expectancy_r"] > 0 and w_m["trades"] > 0:
-                wf_positive += 1
-            wf_folds.append({"fold": w + 1, "strategy": w_strat, "trades": w_m["trades"], "expectancy_r": w_m["expectancy_r"]})
+            oos_trades_all.extend(tr_list)
+        oos_metrics = compute_metrics(oos_trades_all, sub_cap)
 
-    # Step 4: Strict OOS pass criteria (never relaxed)
-    min_oos_trades = int(sb_cfg.get("min_oos_trades", 30))
-    max_oos_dd = float(sb_cfg.get("max_oos_drawdown_pct", 25.0))
-    min_oos_pf = float(sb_cfg.get("min_oos_profit_factor", 1.3))
+    rep_years = round(max(years_by_sym[s] for s in eval_syms), 4)
+    has_five_years = rep_years >= min_years
 
     fail_reasons: list[str] = []
+    if not has_five_years:
+        fail_reasons.append(f"歷史資料不足 {min_years:.0f} 年（可用 {rep_years:.2f} 年）")
     if oos_metrics["expectancy_r"] <= 0:
         fail_reasons.append(f"樣本外期望值 {oos_metrics['expectancy_r']:.3f}R <= 0")
     if oos_metrics["trades"] < min_oos_trades:
         fail_reasons.append(f"樣本外交易數 {oos_metrics['trades']} < {min_oos_trades}")
-    if oos_metrics["max_drawdown_pct"] >= max_oos_dd:
-        fail_reasons.append(f"樣本外最大回撤 {oos_metrics['max_drawdown_pct']:.2f}% >= {max_oos_dd}%")
     if oos_metrics["profit_factor"] <= min_oos_pf:
         fail_reasons.append(f"樣本外獲利因子 {oos_metrics['profit_factor']:.2f} <= {min_oos_pf}")
+    if oos_metrics["max_drawdown_pct"] >= max_oos_dd:
+        fail_reasons.append(f"樣本外最大回撤 {oos_metrics['max_drawdown_pct']:.2f}% >= {max_oos_dd:.0f}%")
 
     passed = len(fail_reasons) == 0
+    status = "ok" if has_five_years else "insufficient_history"
+    reason = "符合所有樣本外與歷史年數門檻" if passed else "；".join(fail_reasons)
+
     return {
-        "symbol": symbol,
-        "market": market,
-        "status": "ok",
-        "history_years": history_years,
-        "bar_count": len(sorted_bars),
-        "start_date_utc": sorted_bars[0].ts_utc[:10],
-        "end_date_utc": sorted_bars[-1].ts_utc[:10],
-        "split_date_utc": sorted_bars[split_idx].ts_utc[:10],
+        "strategy_id": strategy_id,
+        "name": strat_cfg.get("name", strategy_id),
+        "pool": strat_cfg.get("pool", "long_term"),
+        "capital_usd": round(sub_cap, 2),
+        "interval": interval,
+        "status": status,
         "passed": passed,
-        "chosen_strategy": chosen_strat,
-        "chosen_params": chosen_params,
-        "in_sample": is_metrics,
+        "applicable_instruments": len(enabled_insts),
+        "eligible_instruments": len(eval_syms),
+        "excluded_insufficient_count": len(short_history_syms),
+        "history_years": rep_years,
+        "chosen_params": best_params,
+        "in_sample": best_is_metrics,
         "out_of_sample": oos_metrics,
-        "walk_forward": {
-            "windows_evaluated": len(wf_folds),
-            "positive_windows": wf_positive,
-            "folds": wf_folds,
-        },
-        "reason": "通過全部樣本外檢定" if passed else "；".join(fail_reasons),
+        "reason": reason,
     }
+
+
+def screen_all_six_strategies(
+    bars_by_interval: dict[str, dict[str, list[OHLCVBar]]],
+    config: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Run portfolio screening sequentially for S1, S2, S3, L1, L2, L3."""
+    order = ["S1", "S2", "S3", "L1", "L2", "L3"]
+    strats_cfg = config.get("strategies", {})
+    return [screen_single_strategy(sid, bars_by_interval, config) for sid in order if sid in strats_cfg]

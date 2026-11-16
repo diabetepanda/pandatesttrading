@@ -288,7 +288,7 @@ def build_performance_stats(
 
     by_strategy = {
         s: _calc_group([t for t in trades if t.strategy == s])
-        for s in ("A", "B")
+        for s in ("S1", "S2", "S3", "L1", "L2", "L3")
     }
     by_market = {
         m: _calc_group([t for t in trades if t.market == m])

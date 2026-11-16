@@ -21,7 +21,6 @@ from src.data.resample import resample_1m_to_15m
 from src.engine.simulator import MarketBar, SimulationEngine
 from src.indicators.technical import compute_atr, compute_atr_ratio, resample_15m_to_1h
 from src.signals.models import LifecycleState
-from src.strategies.strategy_a import StrategyA
 
 
 def _read_json_if_exists(path: Path, default: Any) -> Any:
@@ -237,42 +236,27 @@ def run_scan(
             }
         )
 
-    # Restore SimulationEngine state and run catch-up replay + Strategy A
+    # Restore SimulationEngine state and run catch-up replay
     engine = SimulationEngine(config, out_dir=out_dir)
     engine.load_state()
     for inst_out in instruments_out:
         if inst_out["latest_price"] is not None:
             engine.latest_marks[inst_out["symbol"]] = float(inst_out["latest_price"])
 
-    strategy_a = StrategyA(config, events=events)
-    strat_a_cfg = config.get("strategy_a", {})
-    bo_mult = float(strat_a_cfg.get("breakout_bar_atr_mult", 2.5))
+    signals_cfg = config.get("signals", {})
+    atr_period = int(config.get("backtest", {}).get("atr_period", 14))
 
-    # Compute peer metrics per correlation group and 1H ATR / ATR ratio for replay
-    peer_metrics: dict[str, dict[str, Any]] = {}
     atr_1h_by_sym: dict[str, float | None] = {}
     atr_ratio_by_sym: dict[str, float | None] = {}
     for inst in instruments_cfg:
         sym = inst["symbol"]
         mkt = inst["market"]
-        grp = inst.get("correlation_group", "")
         b15 = bars_15m_by_sym.get(sym, [])
         b1h = resample_15m_to_1h(b15, now_utc=now)
-        atr_1h = compute_atr(b1h, period=int(strat_a_cfg.get("atr_period", 14)), market=mkt, interval="1h")
-        atr_rat = compute_atr_ratio(
-            b1h,
-            atr_period=int(strat_a_cfg.get("atr_period", 14)),
-            baseline_bars=int(strat_a_cfg.get("atr_baseline_days", 20)) * 24,
-            market=mkt,
-            interval="1h",
-        )
+        atr_1h = compute_atr(b1h, period=atr_period, market=mkt, interval="1h")
+        atr_rat = compute_atr_ratio(b1h, atr_period=atr_period, baseline_bars=20 * 24, market=mkt, interval="1h")
         atr_1h_by_sym[sym] = atr_1h
         atr_ratio_by_sym[sym] = atr_rat
-
-        if b15 and atr_1h and atr_1h > 0:
-            last_range = b15[-1].high - b15[-1].low
-            if last_range > bo_mult * atr_1h:
-                peer_metrics.setdefault(grp, {})["violent_move"] = True
 
     # Catch-up replay for any symbol with open/pending trades
     symbols_with_open_trades = {
@@ -284,19 +268,14 @@ def run_scan(
     for sym in sorted(symbols_with_open_trades):
         m_bars = _to_market_bars_1m(bars_1m_by_sym.get(sym, []), now)
         if m_bars:
-            inst_cfg = engine.instruments.get(sym, {})
-            mkt = inst_cfg.get("market", "crypto")
-            low_hrs, _ = strategy_a.compute_low_liquidity_profile(bars_15m_by_sym.get(sym, []), mkt)
-            _, sess_end, _ = strategy_a.is_low_liquidity_window(now, mkt, low_hrs)
             engine.replay_bars(
                 sym,
                 m_bars,
                 atr=atr_1h_by_sym.get(sym),
                 atr_ratio=atr_ratio_by_sym.get(sym),
-                session_end_utc=sess_end,
             )
 
-    # Evaluate Strategy A on every enabled instrument
+    # Phase 1: record data health, derivatives status & watch reason without emitting new orders
     signals_before = set(engine.primary_ledger.trades.keys())
     watch_today_items: list[dict[str, Any]] = []
     heatmap_out: dict[str, dict[str, Any]] = {}
@@ -306,66 +285,41 @@ def run_scan(
         mkt = inst["market"]
         rep_1m = reports_by_sym[sym]["1m"]
         rep_15m = reports_by_sym[sym]["15m"]
-        b15 = bars_15m_by_sym.get(sym, [])
 
-        crypto_meta = None
         deriv_record: dict[str, Any] | None = None
         if mkt == "crypto":
             deriv_fn = derivatives_fetcher or fetch_crypto_derivatives_meta
             crypto_meta = deriv_fn(inst)
             deriv_record = normalize_derivatives_info(crypto_meta)
 
-        ev = strategy_a.evaluate_instrument(
-            instrument=inst,
-            bars_15m=b15,
-            report_1m=rep_1m,
-            report_15m=rep_15m,
-            now_utc=now,
-            peer_metrics=peer_metrics,
-            crypto_meta=crypto_meta,
-        )
-        heatmap_out[sym] = {
-            "market": mkt,
-            "low_hours": ev.low_liquidity_hours,
-            "hourly_profile": ev.hourly_profile,
-        }
-
-        if ev.decision == "signal" and ev.candidate is not None:
-            latest_ts_15m = ev.candidate.snapshot.kline_summary.get("latest_15m_ts_utc")
-            latest_close_dt = _parse_iso_utc(str(latest_ts_15m)) + timedelta(minutes=15) if latest_ts_15m else now
-            pub = engine.submit_candidate_signal(
-                ev.candidate,
-                now_utc=now_iso,
-                latest_bar_close_utc=latest_close_dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                control=control,
-            )
-            if pub is None:
-                item_entry: dict[str, Any] = {
-                    "symbol": sym,
-                    "market": mkt,
-                    "decision": "rejected",
-                    "reason": "風控或頻率限制擋下（詳見 watch_log / risk_events）",
-                    "indicators": ev.indicators,
-                    "data_status_1m": rep_1m["status"],
-                    "data_status_15m": rep_15m["status"],
-                }
-                if deriv_record is not None:
-                    item_entry["derivatives"] = deriv_record
-                watch_today_items.append(item_entry)
+        st_1m = rep_1m.get("status", "failed")
+        st_15m = rep_15m.get("status", "failed")
+        if st_1m in ("unstable", "failed"):
+            watch_reason = f"1m {rep_1m.get('reason') or '資料不穩'}"
+            if st_1m == "unstable" and "資料不穩" not in watch_reason:
+                watch_reason = f"資料不穩（{watch_reason}）"
+        elif st_15m in ("unstable", "failed"):
+            watch_reason = f"15m {rep_15m.get('reason') or '資料不穩'}"
+            if st_15m == "unstable" and "資料不穩" not in watch_reason:
+                watch_reason = f"資料不穩（{watch_reason}）"
+        elif deriv_record is not None and deriv_record.get("status") != "ok":
+            watch_reason = f"第一階段：6 個新策略回測比較驗證中，暫停出單（衍生品狀態：{deriv_record.get('status')}）"
         else:
-            engine._record_watch(sym, "A", now_iso, ev.watch_reason)
-            item_entry = {
-                "symbol": sym,
-                "market": mkt,
-                "decision": "watch",
-                "reason": ev.watch_reason,
-                "indicators": ev.indicators,
-                "data_status_1m": rep_1m["status"],
-                "data_status_15m": rep_15m["status"],
-            }
-            if deriv_record is not None:
-                item_entry["derivatives"] = deriv_record
-            watch_today_items.append(item_entry)
+            watch_reason = "第一階段：6 個新策略回測比較驗證中，暫停出單"
+
+        engine._record_watch(sym, "S1", now_iso, watch_reason)
+        item_entry: dict[str, Any] = {
+            "symbol": sym,
+            "market": mkt,
+            "decision": "watch",
+            "reason": watch_reason,
+            "indicators": {},
+            "data_status_1m": st_1m,
+            "data_status_15m": st_15m,
+        }
+        if deriv_record is not None:
+            item_entry["derivatives"] = deriv_record
+        watch_today_items.append(item_entry)
 
     signals_after = set(engine.primary_ledger.trades.keys())
     new_signal_ids = sorted(signals_after - signals_before)
