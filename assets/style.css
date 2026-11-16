@@ -474,6 +474,20 @@ h1, h2 {
 }
 
 @media (max-width: 640px) {
+  .main-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .main-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .main-nav .nav-link,
+  .main-nav .btn-sm {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
   .signal-grid {
     grid-template-columns: 1fr;
   }
@@ -483,6 +497,102 @@ h1, h2 {
   .chart-container {
     height: 280px;
   }
+  .data-table.mobile-cards,
+  .data-table.mobile-cards tbody {
+    display: block;
+    width: 100%;
+  }
+  .data-table.mobile-cards thead {
+    display: none;
+  }
+  .data-table.mobile-cards tr {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    background: #0f141b;
+  }
+  .data-table.mobile-cards td {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    white-space: normal;
+    text-align: right;
+    border-bottom: 1px dashed rgba(48, 54, 61, 0.5);
+    padding: 6px 0;
+    word-break: break-word;
+  }
+  .data-table.mobile-cards td:last-child {
+    border-bottom: none;
+  }
+  .data-table.mobile-cards td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-weight: 600;
+    text-align: left;
+    flex-shrink: 0;
+  }
+  .data-table.mobile-cards td[colspan] {
+    display: block;
+    text-align: center;
+  }
+  .data-table.mobile-cards td[colspan]::before {
+    display: none;
+  }
+}
+
+.watch-summary-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.watch-chip {
+  background: #21262d;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.watch-chip.active {
+  background: rgba(88, 166, 255, 0.18);
+  border-color: var(--accent);
+  color: #79c0ff;
+  font-weight: 600;
+}
+
+.watch-more-wrap {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.bt-details summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 0.84rem;
+}
+
+.bt-details-body {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: normal;
+  line-height: 1.5;
+}
+
+.bt-near-box {
+  background: rgba(88, 166, 255, 0.08);
+  border: 1px solid rgba(88, 166, 255, 0.25);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 0.84rem;
 }
 
 .meter-grid {

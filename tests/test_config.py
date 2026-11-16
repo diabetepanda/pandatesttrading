@@ -91,3 +91,89 @@ def test_frontend_assets_and_relative_paths() -> None:
     cfg = load_config()
     assert cfg["analytics"]["min_verified_trades_shadow"] >= 1
     assert cfg["analytics"]["min_verified_trades_stats"] >= 1
+
+
+def test_frontend_ui_optimizations_and_mobile_css() -> None:
+    import shutil
+    import subprocess
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    index_html = (root / "index.html").read_text(encoding="utf-8")
+    style_css = (root / "assets" / "style.css").read_text(encoding="utf-8")
+    app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
+
+    # Cache-busting version bumped
+    assert "?v=20261116d" in index_html
+
+    # Mobile responsive card table + horizontal nav scroll rules
+    assert "@media (max-width: 640px)" in style_css
+    assert ".data-table.mobile-cards" in style_css
+    assert "overflow-x: auto" in style_css
+    assert "flex-wrap: nowrap" in style_css
+
+    # UI feature hooks
+    assert "watch-summary-bar" in index_html
+    assert "watch-toggle-btn" in index_html
+    assert "bt-near-box" in index_html
+    assert "next-scan-est" in index_html
+    assert "此時段不計算" in app_js
+    assert "唐奇安通道突破" in app_js
+    assert "均線交叉" in app_js
+    assert "週線趨勢＋ATR" in app_js
+    assert "ageMin > 40" in app_js
+    assert "排程延遲" in app_js
+    assert "convertReasonUtcToTaipei" in app_js
+
+    # If node is available, verify JS helper behavior directly
+    node_bin = shutil.which("node")
+    if node_bin:
+        script = f"""
+        const fs = require('fs');
+        const vm = require('vm');
+        const stubEl = () => ({{
+          classList: {{ add: () => {{}}, remove: () => {{}} }},
+          addEventListener: () => {{}},
+          innerHTML: '',
+          textContent: '',
+          value: 'all',
+          dataset: {{}},
+        }});
+        const sandbox = {{
+          window: {{
+            location: {{ hash: '#/wall' }},
+            addEventListener: () => {{}},
+            SIGNAL_DESK_CONFIG: {{}},
+          }},
+          document: {{
+            getElementById: stubEl,
+            querySelectorAll: () => [],
+            querySelector: () => stubEl(),
+          }},
+          setInterval: () => {{}},
+          setTimeout: () => {{}},
+          clearTimeout: () => {{}},
+          fetch: async () => ({{ ok: false }}),
+          console,
+          Date,
+          Math,
+          Number,
+          String,
+          Array,
+          Object,
+          Set,
+          Map,
+          JSON,
+        }};
+        vm.runInNewContext(fs.readFileSync({repr(str(root / "assets" / "app.js"))}, 'utf8'), sandbox);
+        const u = sandbox.window.__SIGNAL_DESK_UTILS__;
+        if (u.convertReasonUtcToTaipei('目前 UTC 08:00 非低流動性') !== '目前 台北 16:00 非低流動性') {{
+          throw new Error('UTC->Taipei failed: ' + u.convertReasonUtcToTaipei('目前 UTC 08:00 非低流動性'));
+        }}
+        const pepe = u.formatNumber(0.000004123);
+        if (!pepe || !pepe.includes('4123')) {{
+          throw new Error('Small price precision failed: ' + pepe);
+        }}
+        """
+        proc = subprocess.run([node_bin, "-e", script], capture_output=True, text=True)
+        assert proc.returncode == 0, f"Node helper check failed: {proc.stderr or proc.stdout}"

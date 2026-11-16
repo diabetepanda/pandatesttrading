@@ -13,6 +13,8 @@
 
   let currentMarketFilter = "all";
   let currentWallTab = "active";
+  let currentWatchCategory = "all";
+  let showAllWatch = false;
   let cachedInstruments = [];
   let cachedSignals = [];
   let cachedWatch = null;
@@ -46,9 +48,31 @@
   function formatNumber(val) {
     if (val === null || val === undefined || Number.isNaN(Number(val))) return null;
     const num = Number(val);
-    if (num >= 1000) return num.toLocaleString("en-US", { maximumFractionDigits: 2 });
-    if (num >= 1) return num.toLocaleString("en-US", { maximumFractionDigits: 4 });
-    return num.toLocaleString("en-US", { maximumFractionDigits: 6 });
+    const abs = Math.abs(num);
+    if (abs === 0) return "0";
+    if (abs >= 1000) return num.toLocaleString("en-US", { maximumFractionDigits: 2 });
+    if (abs >= 1) return num.toLocaleString("en-US", { maximumFractionDigits: 4 });
+    // Keep at least 4 significant digits for small prices (e.g. PEPE 0.000004123)
+    const leadingZeros = Math.max(0, -Math.floor(Math.log10(abs)) - 1);
+    const decimals = Math.min(12, Math.max(4, leadingZeros + 4));
+    return num.toLocaleString("en-US", { maximumFractionDigits: decimals });
+  }
+
+  function convertReasonUtcToTaipei(text) {
+    if (!text) return "";
+    let out = String(text);
+    // ISO UTC timestamps like 2026-11-16T08:00:00Z
+    out = out.replace(/(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?Z)/g, (m) => `台北 ${formatTaipeiTime(m)}`);
+    // "UTC 08:00" or "08:00 UTC"
+    out = out.replace(/\bUTC\s+(\d{1,2}):(\d{2})\b/gi, (_, h, m) => {
+      const th = (Number(h) + 8) % 24;
+      return `台北 ${String(th).padStart(2, "0")}:${m}`;
+    });
+    out = out.replace(/\b(\d{1,2}):(\d{2})\s*UTC\b/gi, (_, h, m) => {
+      const th = (Number(h) + 8) % 24;
+      return `台北 ${String(th).padStart(2, "0")}:${m}`;
+    });
+    return out;
   }
 
   function formatUsd(val) {
@@ -699,15 +723,15 @@
         const rCls = rVal > 0 ? "chg-up" : rVal < 0 ? "chg-down" : "muted";
         return `
           <tr>
-            <td><a href="#/signal/${encodeURIComponent(s.signal_id)}" style="color:var(--accent);">${s.signal_id}</a></td>
-            <td>策略 ${s.strategy}</td>
-            <td><strong>${s.symbol}</strong></td>
-            <td>${s.direction === "long" ? "做多" : "做空"}</td>
-            <td class="${rCls}">${rVal.toFixed(2)}R</td>
-            <td class="${rCls}">${formatUsd(s.realized_pnl_usd)}</td>
-            <td>${formatDuration(s.entered_at_utc, s.closed_at_utc)}</td>
-            <td>${s.exit_reason || "--"}</td>
-            <td>${formatTaipeiTime(s.closed_at_utc)}</td>
+            <td data-label="報單編號"><a href="#/signal/${encodeURIComponent(s.signal_id)}" style="color:var(--accent);">${s.signal_id}</a></td>
+            <td data-label="策略">策略 ${s.strategy}</td>
+            <td data-label="標的"><strong>${s.symbol}</strong></td>
+            <td data-label="方向">${s.direction === "long" ? "做多" : "做空"}</td>
+            <td data-label="R 值" class="${rCls}">${rVal.toFixed(2)}R</td>
+            <td data-label="美元損益" class="${rCls}">${formatUsd(s.realized_pnl_usd)}</td>
+            <td data-label="持倉時間">${formatDuration(s.entered_at_utc, s.closed_at_utc)}</td>
+            <td data-label="出場原因">${s.exit_reason || "--"}</td>
+            <td data-label="結束時間 (UTC+8)">${formatTaipeiTime(s.closed_at_utc)}</td>
           </tr>`;
       })
       .join("");
@@ -749,42 +773,101 @@
         const chgHtml = live && !live.failed ? formatChange(live.changePct) : '<span class="muted">--</span>';
         return `
           <tr>
-            <td><strong>${item.symbol}</strong><br><span class="muted">${item.display_name || ""}</span></td>
-            <td>${marketLabel(item.market)}</td>
-            <td>${renderPriceCell(item)}</td>
-            <td>${chgHtml}</td>
-            <td>${item.source_used || '<span class="muted">無</span>'}</td>
-            <td>${statusPill(r1m.status)}</td>
-            <td>${statusPill(r15m.status)}</td>
-            <td>${statusPill(r1d.status)}</td>
-            <td>${statusPill(item.overall_status)} <span class="muted">${note}</span></td>
+            <td data-label="標的"><strong>${item.symbol}</strong><br><span class="muted">${item.display_name || ""}</span></td>
+            <td data-label="市場">${marketLabel(item.market)}</td>
+            <td data-label="最新價格">${renderPriceCell(item)}</td>
+            <td data-label="24h 漲跌">${chgHtml}</td>
+            <td data-label="排程來源">${item.source_used || '<span class="muted">無</span>'}</td>
+            <td data-label="1m">${statusPill(r1m.status)}</td>
+            <td data-label="15m">${statusPill(r15m.status)}</td>
+            <td data-label="1d">${statusPill(r1d.status)}</td>
+            <td data-label="狀態 / 備註">${statusPill(item.overall_status)} <span class="muted">${escapeHtml(note)}</span></td>
           </tr>`;
       })
       .join("");
   }
 
+  function classifyWatchReason(reason) {
+    const r = String(reason || "");
+    if (/未觸及|區間上下緣|RSI|入場條件/.test(r)) return { label: "未觸及入場條件", rank: 1 };
+    if (/ADX|布林|ATR|區間|盤整|趨勢|波動/.test(r)) return { label: "市場狀態不符", rank: 2 };
+    if (/風控|事件|資金費率|未平倉|排程延遲|暫停/.test(r)) return { label: "風控或事件擋下", rank: 3 };
+    if (/低流動性|結算|換日/.test(r)) return { label: "非低流動性時段", rank: 4 };
+    if (/資料不穩|資料不足|資料失敗|失敗|延遲/.test(r)) return { label: "資料不穩", rank: 6 };
+    return { label: "其他觀望", rank: 5 };
+  }
+
   function renderWatchToday(watchData) {
     const tbody = document.getElementById("watch-tbody");
+    const sumBar = document.getElementById("watch-summary-bar");
+    const moreWrap = document.getElementById("watch-more-wrap");
+    const toggleBtn = document.getElementById("watch-toggle-btn");
     if (!tbody) return;
     const items = watchData && Array.isArray(watchData.items) ? watchData.items : [];
     if (items.length === 0) {
+      if (sumBar) sumBar.innerHTML = "";
+      if (moreWrap) moreWrap.classList.add("hidden");
       tbody.innerHTML = '<tr><td colspan="5" class="muted center">尚無觀望紀錄（等待下次掃描）</td></tr>';
       return;
     }
-    tbody.innerHTML = items
+
+    const enriched = items.map((w) => {
+      const cat = classifyWatchReason(w.reason);
+      return { ...w, _cat: cat.label, _rank: cat.rank };
+    });
+    enriched.sort((a, b) => (a._rank - b._rank) || String(a.symbol).localeCompare(String(b.symbol)));
+
+    const counts = {};
+    const rankMap = {};
+    enriched.forEach((w) => {
+      counts[w._cat] = (counts[w._cat] || 0) + 1;
+      rankMap[w._cat] = w._rank;
+    });
+    const sortedCats = Object.keys(counts).sort((a, b) => rankMap[a] - rankMap[b]);
+    if (currentWatchCategory !== "all" && !counts[currentWatchCategory]) {
+      currentWatchCategory = "all";
+    }
+
+    if (sumBar) {
+      const chips = [`<button class="watch-chip ${currentWatchCategory === "all" ? "active" : ""}" data-cat="all" type="button">全部 ${enriched.length}</button>`];
+      sortedCats.forEach((c) => {
+        chips.push(`<button class="watch-chip ${currentWatchCategory === c ? "active" : ""}" data-cat="${escapeHtml(c)}" type="button">${escapeHtml(c)} ${counts[c]}</button>`);
+      });
+      sumBar.innerHTML = chips.join("");
+    }
+
+    const filtered = currentWatchCategory === "all" ? enriched : enriched.filter((w) => w._cat === currentWatchCategory);
+    const limit = 15;
+    const visible = showAllWatch ? filtered : filtered.slice(0, limit);
+
+    if (moreWrap && toggleBtn) {
+      if (filtered.length > limit) {
+        moreWrap.classList.remove("hidden");
+        toggleBtn.textContent = showAllWatch ? `收合為前 ${limit} 個` : `顯示全部 ${filtered.length} 個`;
+      } else {
+        moreWrap.classList.add("hidden");
+      }
+    }
+
+    tbody.innerHTML = visible
       .map((w) => {
         const ind = w.indicators || {};
-        const adxTxt = ind.adx_1h !== null && ind.adx_1h !== undefined ? ind.adx_1h : "--";
-        const rsiTxt = ind.rsi_14 !== null && ind.rsi_14 !== undefined ? ind.rsi_14 : "--";
-        const atrTxt = ind.atr_ratio !== null && ind.atr_ratio !== undefined ? ind.atr_ratio : "--";
+        const hasAnyInd =
+          (ind.adx_1h !== null && ind.adx_1h !== undefined) ||
+          (ind.rsi_14 !== null && ind.rsi_14 !== undefined) ||
+          (ind.atr_ratio !== null && ind.atr_ratio !== undefined);
+        const indTxt = hasAnyInd
+          ? `ADX ${ind.adx_1h ?? "--"} / RSI ${ind.rsi_14 ?? "--"} / ATR ${ind.atr_ratio ?? "--"}x`
+          : '<span class="muted">此時段不計算</span>';
         const badge = w.decision === "rejected" ? '<span class="pill pill-fail">風控擋下</span>' : '<span class="pill pill-warn">觀望</span>';
+        const reasonTaipei = escapeHtml(convertReasonUtcToTaipei(w.reason || ""));
         return `
           <tr>
-            <td><strong>${w.symbol}</strong></td>
-            <td>${marketLabel(w.market)}</td>
-            <td>${badge}</td>
-            <td>ADX ${adxTxt} / RSI ${rsiTxt} / ATR ${atrTxt}x</td>
-            <td>${w.reason || ""}</td>
+            <td data-label="標的"><strong>${escapeHtml(w.symbol)}</strong></td>
+            <td data-label="市場">${marketLabel(w.market)}</td>
+            <td data-label="判定">${badge}</td>
+            <td data-label="1H ADX / RSI / ATR">${indTxt}</td>
+            <td data-label="觀望 / 擋下原因">${reasonTaipei}</td>
           </tr>`;
       })
       .join("");
@@ -863,13 +946,24 @@
 
     const schedLight = document.getElementById("sched-light");
     const lastUpdatedEl = document.getElementById("last-updated");
+    const nextScanEl = document.getElementById("next-scan-est");
     const delayBanner = document.getElementById("delay-banner");
+
+    if (nextScanEl) {
+      const now = new Date();
+      const utcMin = now.getUTCMinutes();
+      const slots = [7, 22, 37, 52];
+      const nextSlot = slots.find((m) => m > utcMin);
+      const minsUntil = nextSlot !== undefined ? (nextSlot - utcMin) : (60 - utcMin + 7);
+      nextScanEl.textContent = `（下次掃描約在 ${minsUntil} 分鐘後）`;
+    }
+
     if (health && health.updated_at_utc) {
       lastUpdatedEl.textContent = formatTaipeiTime(health.updated_at_utc);
       const ageMin = (Date.now() - new Date(health.updated_at_utc).getTime()) / 60000;
-      if (ageMin > STALE_MINUTES) {
+      if (ageMin > 40) {
         schedLight.className = "light light-warn";
-        schedLight.textContent = `排程：延遲 (${Math.round(ageMin)}m)`;
+        schedLight.textContent = `排程：排程延遲 (${Math.round(ageMin)}m)`;
         delayBanner.classList.remove("hidden");
       } else {
         schedLight.className = "light light-ok";
@@ -891,6 +985,31 @@
       .replace(/"/g, "&quot;");
   }
 
+  function strategyZhLabel(code) {
+    const map = {
+      donchian: "唐奇安通道突破",
+      ema_cross: "均線交叉",
+      weekly_trend_atr: "週線趨勢＋ATR",
+    };
+    if (!code) return "--";
+    const zh = map[code] || code;
+    return `<span title="${escapeHtml(code)}">${escapeHtml(zh)}</span>`;
+  }
+
+  function formatParamsZh(params) {
+    if (!params || Object.keys(params).length === 0) return "--";
+    const keyMap = {
+      period: "週期",
+      fast: "快線",
+      slow: "慢線",
+      weekly_ema: "週線EMA",
+      sl_atr_mult: "止損ATR倍數",
+    };
+    return Object.entries(params)
+      .map(([k, v]) => `<span title="${escapeHtml(k)}=${escapeHtml(v)}">${escapeHtml(keyMap[k] || k)} ${escapeHtml(v)}</span>`)
+      .join("、");
+  }
+
   function formatMetricSummary(m) {
     if (!m || typeof m.trades !== "number") return "--";
     if (m.trades === 0) return "0 筆";
@@ -904,16 +1023,34 @@
   function renderBacktestResults() {
     const tbody = document.getElementById("backtest-tbody");
     const metaEl = document.getElementById("bt-summary-meta");
+    const nearBox = document.getElementById("bt-near-box");
     if (!tbody || !metaEl) return;
 
     if (!cachedBacktest || !Array.isArray(cachedBacktest.results) || cachedBacktest.results.length === 0) {
       metaEl.textContent = "目前尚無策略 B 回測結果（等待每週自動排程或手動執行 Strategy B Weekly Backtest）。";
-      tbody.innerHTML = '<tr><td colspan="7" class="muted center">目前尚無策略 B 回測結果。</td></tr>';
+      if (nearBox) nearBox.classList.add("hidden");
+      tbody.innerHTML = '<tr><td colspan="5" class="muted center">目前尚無策略 B 回測結果。</td></tr>';
       return;
     }
 
     const s = cachedBacktest.summary || {};
-    metaEl.textContent = `最新回測時間 (UTC+8)：${formatTaipeiTime(cachedBacktest.generated_at_utc)}｜總計 ${s.total ?? cachedBacktest.results.length} 檔｜通過 ${s.passed ?? 0}｜未通過 ${s.failed ?? 0}｜歷史不足 ${s.insufficient_history ?? 0}（歷史不代表未來）`;
+    metaEl.textContent = `最新回測 (UTC+8)：${formatTaipeiTime(cachedBacktest.generated_at_utc)}｜總計 ${s.total ?? cachedBacktest.results.length} 個｜通過 ${s.passed ?? 0} 個｜未通過 ${s.failed ?? 0} 個｜歷史不足 ${s.insufficient_history ?? 0} 個（歷史不代表未來）`;
+
+    if (nearBox) {
+      const nearTop = cachedBacktest.results
+        .filter((r) => r.status === "ok" && !r.passed && r.out_of_sample && Number(r.out_of_sample.expectancy_r) > 0 && Number(r.out_of_sample.profit_factor) > 1.3)
+        .sort((a, b) => (Number(b.out_of_sample.trades || 0) - Number(a.out_of_sample.trades || 0)) || (Number(b.out_of_sample.profit_factor || 0) - Number(a.out_of_sample.profit_factor || 0)))
+        .slice(0, 3);
+      if (nearTop.length > 0) {
+        const listTxt = nearTop
+          .map((r) => `<strong>${escapeHtml(r.symbol)}</strong>（${r.out_of_sample.trades} 筆，+${Number(r.out_of_sample.expectancy_r).toFixed(3)}R，PF ${Number(r.out_of_sample.profit_factor).toFixed(2)}）`)
+          .join("、");
+        nearBox.innerHTML = `<strong>最接近通過前 3 檔</strong>（期望值 &gt; 0 且 PF &gt; 1.3，僅差交易筆數）：${listTxt}`;
+        nearBox.classList.remove("hidden");
+      } else {
+        nearBox.classList.add("hidden");
+      }
+    }
 
     tbody.innerHTML = cachedBacktest.results
       .map((item) => {
@@ -926,23 +1063,35 @@
           statusBadge = '<span class="pill pill-ok">通過驗證</span>';
         }
 
-        const paramsText = item.chosen_params && Object.keys(item.chosen_params).length > 0
-          ? Object.entries(item.chosen_params).map(([k, v]) => `${k}=${v}`).join(", ")
+        const oos = item.out_of_sample;
+        const oosBrief = oos && typeof oos.trades === "number"
+          ? `${oos.trades} 筆｜${Number(oos.expectancy_r || 0).toFixed(3)}R｜PF ${Number(oos.profit_factor || 0).toFixed(2)}`
           : "--";
-        const stratText = item.chosen_strategy ? `${escapeHtml(item.chosen_strategy)} (${escapeHtml(paramsText)})` : "--";
         const yrsText = item.history_years !== undefined && item.history_years !== null
           ? `${Number(item.history_years).toFixed(2)} 年 (${item.bar_count || 0} 根)`
           : "--";
+        const stratHtml = item.chosen_strategy
+          ? `${strategyZhLabel(item.chosen_strategy)}（${formatParamsZh(item.chosen_params)}）`
+          : "--";
+        const detailHtml = `
+          <details class="bt-details">
+            <summary>詳細</summary>
+            <div class="bt-details-body">
+              <div>歷史長度：${yrsText}</div>
+              <div>策略與參數：${stratHtml}</div>
+              <div>樣本內 (IS)：${formatMetricSummary(item.in_sample)}</div>
+              <div>樣本外 (OOS) 完整：${formatMetricSummary(item.out_of_sample)}</div>
+            </div>
+          </details>
+        `;
 
         return `
           <tr>
-            <td><strong>${escapeHtml(item.symbol)}</strong><br><span class="muted">${escapeHtml(item.market || "")}</span></td>
-            <td>${yrsText}</td>
-            <td>${statusBadge}</td>
-            <td><code>${stratText}</code></td>
-            <td>${formatMetricSummary(item.in_sample)}</td>
-            <td>${formatMetricSummary(item.out_of_sample)}</td>
-            <td>${escapeHtml(item.reason || "--")}</td>
+            <td data-label="標的"><strong>${escapeHtml(item.symbol)}</strong><br><span class="muted">${marketLabel(item.market || "")}</span></td>
+            <td data-label="通過狀態">${statusBadge}</td>
+            <td data-label="未通過原因">${escapeHtml(item.reason || "--")}</td>
+            <td data-label="樣本外 (筆數/期望/PF)">${oosBrief}</td>
+            <td data-label="詳細">${detailHtml}</td>
           </tr>
         `;
       })
@@ -1141,24 +1290,26 @@
 
     tbody.innerHTML = cachedShadow.policies
       .map((p) => {
-        const verPill = p.verified ? '<span class="pill pill-ok">已驗證</span>' : '<span class="pill pill-warn">尚未驗證</span>';
+        const verPill = p.verified
+          ? '<span class="pill pill-ok">已驗證</span>'
+          : `<span class="pill pill-warn">尚未驗證（${p.closed_trades || 0} / ${p.min_trades_required || minN} 筆）</span>`;
         const primaryTag = p.is_primary ? ' <span class="pill pill-live">主帳本</span>' : "";
         const riskCell = `${escapeHtml(p.risk_status)}<br><span class="muted">保證金 ${Number(p.used_margin_pct || 0).toFixed(1)}%</span>`;
         const sampleCell = `${p.closed_trades || 0} / ${p.min_trades_required || minN} 筆<br><span class="muted">進行中 ${p.open_trades || 0}</span>`;
         if (!p.verified) {
           return `
             <tr>
-              <td><strong>${escapeHtml(p.label)}</strong>${primaryTag}</td>
-              <td>${verPill}</td>
-              <td>${sampleCell}</td>
-              <td>${riskCell}</td>
-              <td>${unverifiedCell()}</td>
-              <td>${unverifiedCell()}</td>
-              <td>${unverifiedCell()}</td>
-              <td>${unverifiedCell()}</td>
-              <td>${unverifiedCell()}</td>
-              <td>${unverifiedCell()}</td>
-              <td>${unverifiedCell()}</td>
+              <td data-label="補倉政策"><strong>${escapeHtml(p.label)}</strong>${primaryTag}</td>
+              <td data-label="驗證狀態">${verPill}</td>
+              <td data-label="樣本數"><span class="muted">進行中 ${p.open_trades || 0} 筆</span></td>
+              <td data-label="風險狀態">${riskCell}</td>
+              <td data-label="勝率">—</td>
+              <td data-label="平均 R">—</td>
+              <td data-label="總報酬 / CAGR">—</td>
+              <td data-label="最大回撤">—</td>
+              <td data-label="夏普 / 獲利因子">—</td>
+              <td data-label="恢復因子 / 最大連虧">—</td>
+              <td data-label="資金效率 / 風險調整報酬">—</td>
             </tr>
           `;
         }
@@ -1230,10 +1381,10 @@
       ? '<tr><td colspan="4" class="muted center">無群組資料。</td></tr>'
       : groups.map((g) => `
           <tr>
-            <td><strong>${escapeHtml(g.name)}</strong> (<code>${escapeHtml(g.group_id)}</code>)</td>
-            <td>${formatUsd(g.used_risk_usd)}</td>
-            <td>${formatUsd(g.limit_usd)}</td>
-            <td>${Number(g.usage_pct).toFixed(1)}%</td>
+            <td data-label="群組名稱"><strong title="${escapeHtml(g.group_id)}">${escapeHtml(g.name)}</strong></td>
+            <td data-label="已使用預估停損風險">${formatUsd(g.used_risk_usd)}</td>
+            <td data-label="群組上限">${formatUsd(g.limit_usd)}</td>
+            <td data-label="使用比例">${Number(g.usage_pct).toFixed(1)}%</td>
           </tr>
         `).join("");
 
@@ -1475,10 +1626,29 @@
     document.getElementById(id).addEventListener("change", renderResultsTable);
   });
 
+  document.getElementById("watch-summary-bar")?.addEventListener("click", (e) => {
+    const chip = e.target.closest(".watch-chip");
+    if (!chip) return;
+    currentWatchCategory = chip.dataset.cat || "all";
+    showAllWatch = false;
+    if (cachedWatch) renderWatchToday(cachedWatch);
+  });
+
+  document.getElementById("watch-toggle-btn")?.addEventListener("click", () => {
+    showAllWatch = !showAllWatch;
+    if (cachedWatch) renderWatchToday(cachedWatch);
+  });
+
   document.getElementById("refresh-btn").addEventListener("click", () => {
     refreshAll();
     refreshLivePrices();
   });
+
+  window.__SIGNAL_DESK_UTILS__ = {
+    formatNumber,
+    convertReasonUtcToTaipei,
+    classifyWatchReason,
+  };
 
   window.addEventListener("hashchange", applyRoute);
 

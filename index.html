@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261116c" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261116d" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -40,7 +40,7 @@
       </div>
       <div class="metric">
         <span class="metric-label">最後排程更新 (Actions, UTC+8)</span>
-        <span id="last-updated" class="metric-value">--</span>
+        <span class="metric-value"><span id="last-updated">--</span> <span id="next-scan-est" class="muted"></span></span>
       </div>
     </div>
     <nav class="main-nav" aria-label="主導覽">
@@ -54,7 +54,7 @@
       <button id="refresh-btn" class="btn btn-sm" type="button">重新整理</button>
     </nav>
     <div id="delay-banner" class="alert-banner hidden">
-      ⚠️ 排程可能延遲，資料不是最新（距離最後更新已超過 45 分鐘）
+      ⚠️ 排程延遲：距離最後排程更新已超過 40 分鐘，資料可能不是最新
     </div>
     <div id="control-banner" class="alert-banner alert-danger hidden"></div>
   </header>
@@ -124,9 +124,10 @@
 
       <section class="card">
         <h2>今日觀望</h2>
-        <p class="subtitle">最近一次排程掃描中被策略條件或風控規則擋下的標的與原因。</p>
+        <p class="subtitle">最近一次排程掃描中被策略條件或風控規則擋下的標的與原因（依接近觸發程度排序）。</p>
+        <div id="watch-summary-bar" class="watch-summary-bar"></div>
         <div class="table-wrap">
-          <table class="data-table">
+          <table class="data-table mobile-cards" id="watch-table">
             <thead>
               <tr>
                 <th>標的</th>
@@ -142,6 +143,9 @@
               </tr>
             </tbody>
           </table>
+        </div>
+        <div id="watch-more-wrap" class="watch-more-wrap hidden">
+          <button id="watch-toggle-btn" class="btn" type="button">顯示全部</button>
         </div>
       </section>
     </section>
@@ -189,7 +193,7 @@
           </select>
         </div>
         <div class="table-wrap">
-          <table class="data-table">
+          <table class="data-table mobile-cards" id="results-table">
             <thead>
               <tr>
                 <th>報單編號</th>
@@ -221,22 +225,21 @@
           <div class="badge badge-warn">歷史不代表未來</div>
         </div>
         <p id="bt-summary-meta" class="muted">目前尚無策略 B 回測結果（等待每週自動排程或手動執行 Strategy B Weekly Backtest）。</p>
+        <div id="bt-near-box" class="bt-near-box hidden"></div>
         <div class="table-wrap">
-          <table class="data-table">
+          <table class="data-table mobile-cards" id="backtest-table">
             <thead>
               <tr>
                 <th>標的</th>
-                <th>歷史長度</th>
-                <th>篩選結果</th>
-                <th>候選策略與參數</th>
-                <th>樣本內（IS）表現</th>
-                <th>樣本外（OOS）表現</th>
-                <th>狀態／說明</th>
+                <th>通過狀態</th>
+                <th>未通過原因</th>
+                <th>樣本外（筆數 / 期望值 / PF）</th>
+                <th>詳細</th>
               </tr>
             </thead>
             <tbody id="backtest-tbody">
               <tr>
-                <td colspan="7" class="muted center">目前尚無策略 B 回測結果。</td>
+                <td colspan="5" class="muted center">目前尚無策略 B 回測結果。</td>
               </tr>
             </tbody>
           </table>
@@ -264,7 +267,7 @@
         </div>
 
         <div class="table-wrap">
-          <table class="data-table">
+          <table class="data-table mobile-cards" id="instruments-table">
             <thead>
               <tr>
                 <th>標的</th>
@@ -316,7 +319,7 @@
         <h2>高影響經濟事件日曆（UTC / UTC+8）</h2>
         <p class="subtitle">策略 A 於高影響事件前 4 小時與結束後 60 分鐘自動禁止報單。</p>
         <div class="table-wrap">
-          <table class="data-table">
+          <table class="data-table mobile-cards" id="instruments-table">
             <thead>
               <tr>
                 <th>事件名稱</th>
@@ -352,7 +355,7 @@
         <div id="stats-notice" class="alert-banner hidden"></div>
         <p id="stats-meta" class="muted">目前尚無績效統計資料。</p>
         <div class="table-wrap">
-          <table class="data-table">
+          <table class="data-table mobile-cards" id="instruments-table">
             <thead>
               <tr>
                 <th>分組</th>
@@ -399,7 +402,7 @@
       <section class="card">
         <h2>目前持倉與掛單明細</h2>
         <div class="table-wrap">
-          <table class="data-table">
+          <table class="data-table mobile-cards" id="instruments-table">
             <thead>
               <tr>
                 <th>報單 / 標的</th>
@@ -433,7 +436,7 @@
         <div id="scaling-notice" class="alert-banner hidden"></div>
         <p id="scaling-meta" class="muted">目前尚無影子帳本比較資料。</p>
         <div class="table-wrap">
-          <table class="data-table">
+          <table class="data-table mobile-cards" id="instruments-table">
             <thead>
               <tr>
                 <th>補倉政策</th>
@@ -476,7 +479,7 @@
       <section class="card">
         <h2>相關性群組風險曝險（上限合併計算）</h2>
         <div class="table-wrap">
-          <table class="data-table">
+          <table class="data-table mobile-cards" id="instruments-table">
             <thead>
               <tr>
                 <th>群組名稱</th>
@@ -495,7 +498,7 @@
       <section class="card">
         <h2>持倉爆倉安全距離檢核（止損須先於爆倉）</h2>
         <div class="table-wrap">
-          <table class="data-table">
+          <table class="data-table mobile-cards" id="instruments-table">
             <thead>
               <tr>
                 <th>標的 / 方向</th>
@@ -525,7 +528,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261116c"></script>
-  <script src="./assets/app.js?v=20261116c"></script>
+  <script src="./assets/config.js?v=20261116d"></script>
+  <script src="./assets/app.js?v=20261116d"></script>
 </body>
 </html>
