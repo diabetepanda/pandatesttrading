@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: data-branch-writer
+  group: data-writer-weekly
   cancel-in-progress: false
 
 jobs:
@@ -57,5 +57,9 @@ jobs:
             echo "No backtest changes to commit."
           else
             git commit -m "chore(data): weekly Strategy B screening $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-            git push origin data
+            if git rev-parse --verify origin/data >/dev/null 2>&1; then
+              python3 ../main_repo/src/jobs/data_sync.py --repo-dir . --branch data --max-retries 3
+            else
+              git push origin data
+            fi
           fi

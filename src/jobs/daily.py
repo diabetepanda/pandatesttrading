@@ -15,6 +15,7 @@ from src.data.models import OHLCVBar
 from src.data.quality import _parse_iso_utc, check_continuity
 from src.engine.simulator import MarketBar, SimulationEngine
 from src.indicators.technical import compute_atr
+from src.jobs.data_sync import append_run_log
 from src.signals.models import LifecycleState
 from src.strategies.strategy_b import StrategyB
 
@@ -137,9 +138,24 @@ def run_daily(
     _write_json(out_dir / "watch_today_b.json", {"updated_at_utc": now_iso, "items": watch_items})
     _write_json(out_dir / "new_signals_to_commit.json", {"signal_ids": new_signal_ids})
 
+    duration_sec = round(time.monotonic() - t0, 2)
+    keep_n = int(config.get("schedule", {}).get("keep_run_logs", 100))
+    append_run_log(
+        out_dir,
+        {
+            "run_at_utc": now_iso,
+            "job": "daily",
+            "duration_sec": duration_sec,
+            "status": "ok",
+            "signals_published": len(new_signal_ids),
+            "watch_count": len(watch_items),
+        },
+        keep_n=keep_n,
+    )
+
     return {
         "updated_at_utc": now_iso,
-        "duration_sec": round(time.monotonic() - t0, 2),
+        "duration_sec": duration_sec,
         "signals_published": new_signal_ids,
         "watch_count": len(watch_items),
     }

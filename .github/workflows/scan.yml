@@ -18,7 +18,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: data-branch-writer
+  group: data-writer-scan
   cancel-in-progress: false
 
 jobs:
@@ -81,4 +81,8 @@ jobs:
           else
             git commit -m "chore(data): scan update $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           fi
-          git push origin data
+          if git rev-parse --verify origin/data >/dev/null 2>&1; then
+            python3 ../main_repo/src/jobs/data_sync.py --repo-dir . --branch data --max-retries 3
+          else
+            git push origin data
+          fi
