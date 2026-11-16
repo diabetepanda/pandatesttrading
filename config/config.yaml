@@ -91,6 +91,13 @@ strategy_a:
   pre_session_end_close_minutes: 30
   breakout_bar_atr_mult: 2.5
   breakout_atr_ratio_trigger: 1.8
+  bb_period: 20
+  bb_std: 2.0
+  atr_baseline_days: 20
+  edge_touch_tolerance_pct: 15.0
+  add_atr_mult: 0.35
+  max_abs_funding_rate: 0.001
+  max_oi_surge_pct: 10.0
 
 strategy_b:
   min_history_years: 5

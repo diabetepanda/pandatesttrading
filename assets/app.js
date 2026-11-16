@@ -365,17 +365,77 @@
       .join("");
   }
 
-  function renderRunLog(runLog) {
+  function renderSignals(signalsList) {
+    const box = document.getElementById("signals-box");
+    if (!box) return;
+    if (!Array.isArray(signalsList) || signalsList.length === 0) {
+      box.innerHTML = '<span class="muted">目前尚無已發布報單（策略 A 僅在低流動性區間且全部過濾條件成立時發單）。</span>';
+      return;
+    }
+    const items = signalsList.slice(0, 10).map((s) => {
+      const dir = s.direction === "long" ? '<span class="chg-up">做多</span>' : '<span class="chg-down">做空</span>';
+      const stMap = {
+        waiting_entry: "等待入場",
+        active: "進行中",
+        tp1_hit: "已達 TP1",
+        closed: "已結束",
+        cancelled: "未成交取消",
+      };
+      const stLabel = stMap[s.lifecycle_state] || s.lifecycle_state;
+      return `<li><strong>${s.signal_id}</strong>｜${s.symbol} ${dir}｜入場 ${s.entry_low}~${s.entry_high}｜SL ${s.stop_loss}｜TP1 ${s.tp1} / TP2 ${s.tp2}｜狀態：<span class="pill pill-live">${stLabel}</span>（${s.r_multiple}R / $${s.realized_pnl_usd}）</li>`;
+    });
+    box.innerHTML = `<ul>${items.join("")}</ul>`;
+  }
+
+  function renderWatchToday(watchData) {
+    const tbody = document.getElementById("watch-tbody");
+    if (!tbody) return;
+    const items = watchData && Array.isArray(watchData.items) ? watchData.items : [];
+    if (items.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" class="muted center">尚無觀望紀錄（等待下次掃描）</td></tr>';
+      return;
+    }
+    tbody.innerHTML = items
+      .map((w) => {
+        const ind = w.indicators || {};
+        const adxTxt = ind.adx_1h !== null && ind.adx_1h !== undefined ? ind.adx_1h : "--";
+        const rsiTxt = ind.rsi_14 !== null && ind.rsi_14 !== undefined ? ind.rsi_14 : "--";
+        const atrTxt = ind.atr_ratio !== null && ind.atr_ratio !== undefined ? ind.atr_ratio : "--";
+        const badge = w.decision === "rejected" ? '<span class="pill pill-fail">風控擋下</span>' : '<span class="pill pill-warn">觀望</span>';
+        return `
+          <tr>
+            <td><strong>${w.symbol}</strong></td>
+            <td>${marketLabel(w.market)}</td>
+            <td>${badge}</td>
+            <td>ADX ${adxTxt} / RSI ${rsiTxt} / ATR ${atrTxt}x</td>
+            <td>${w.reason || ""}</td>
+          </tr>
+        `;
+      })
+      .join("");
+  }
+
+  function renderRunLog(runLog, health) {
     const box = document.getElementById("run-log-box");
+    const sumEl = document.getElementById("sched-summary");
+    if (sumEl && health && health.runs_last_24h !== undefined) {
+      sumEl.textContent = `近 24 小時排程執行次數：${health.runs_last_24h} 次｜自動排程時間：每小時 07, 22, 37, 52 分 UTC`;
+    }
     if (!Array.isArray(runLog) || runLog.length === 0) {
       box.textContent = "尚無排程紀錄。";
       return;
     }
     const items = runLog.slice(0, 10).map((r) => {
       const cls = r.status === "ok" ? "pill-ok" : "pill-fail";
-      return `<li>${formatTaipeiTime(r.run_at_utc)} — <span class="pill ${cls}">${r.status}</span>（${r.instruments_ok}/${r.instruments_total} 正常，耗時 ${r.duration_sec}s）</li>`;
+      const sigInfo = r.signals_published !== undefined ? `｜報單 ${r.signals_published}、觀望 ${r.watch_count ?? 0}` : "";
+      return `<li>${formatTaipeiTime(r.run_at_utc)} — <span class="pill ${cls}">${r.status}</span>（${r.instruments_ok}/${r.instruments_total} 正常${sigInfo}，耗時 ${r.duration_sec}s）</li>`;
     });
     box.innerHTML = `<ul>${items.join("")}</ul>`;
+  }
+
+  function formatUsd(val) {
+    if (val === undefined || val === null || Number.isNaN(Number(val))) return "$100,000.00";
+    return "$" + Number(val).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   function updateLights(health, control) {
@@ -433,12 +493,14 @@
   async function refreshAll() {
     const errBox = document.getElementById("fetch-error-box");
     try {
-      const [instRes, healthRes, controlRes, runLogRes, probeRes] = await Promise.allSettled([
+      const [instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, watchRes] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
         fetchDataJson("data_health.json"),
         fetchDataJson("control_status.json"),
         fetchDataJson("run_log.json"),
         fetchDataJson("data_probe_report.json"),
+        fetchDataJson("signals_index.json"),
+        fetchDataJson("watch_today.json"),
       ]);
 
       if (instRes.status === "rejected") {
@@ -453,11 +515,25 @@
       const control = controlRes.status === "fulfilled" ? controlRes.value : null;
       updateLights(health, control);
 
+      if (health && health.total_equity_usd !== undefined) {
+        document.getElementById("total-equity").textContent = formatUsd(health.total_equity_usd);
+        document.getElementById("short-equity").textContent = formatUsd(health.short_term_equity_usd);
+        document.getElementById("long-equity").textContent = formatUsd(health.long_term_equity_usd);
+      }
+
       if (runLogRes.status === "fulfilled") {
-        renderRunLog(runLogRes.value);
+        renderRunLog(runLogRes.value, health);
       }
       if (probeRes.status === "fulfilled") {
         renderProbe(probeRes.value);
+      }
+      if (signalsRes.status === "fulfilled") {
+        renderSignals(signalsRes.value);
+      } else {
+        renderSignals([]);
+      }
+      if (watchRes.status === "fulfilled") {
+        renderWatchToday(watchRes.value);
       }
     } catch (err) {
       errBox.textContent = `資料來源失敗：${err.message}`;

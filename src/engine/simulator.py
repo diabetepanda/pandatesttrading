@@ -220,8 +220,64 @@ class TradeRecord:
             "closed_at_utc": self.closed_at_utc,
             "exit_price": self.exit_price,
             "exit_reason": self.exit_reason,
+            "entry_low": self.entry_low,
+            "entry_high": self.entry_high,
+            "add_levels": [lvl.to_dict() for lvl in self.add_levels],
+            "initial_stop_loss": self.initial_stop_loss,
+            "invalidation_price": self.invalidation_price,
+            "valid_until_utc": self.valid_until_utc,
+            "time_stop_bars": self.time_stop_bars,
+            "stage_target_notionals": list(self.stage_target_notionals),
+            "assumed_spread_bps": self.assumed_spread_bps,
+            "fee_rate": self.fee_rate,
+            "slippage_bps": self.slippage_bps,
+            "overnight_cost_daily_bps": self.overnight_cost_daily_bps,
+            "initial_filled_qty": round(self.initial_filled_qty, 8),
             "stages": [s.to_dict() for s in self.stages],
         }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> TradeRecord:
+        stn = data.get("stage_target_notionals", [0.0, 0.0, 0.0])
+        return cls(
+            signal_id=data["signal_id"],
+            strategy=data["strategy"],
+            symbol=data["symbol"],
+            market=data["market"],
+            correlation_group=data.get("correlation_group", ""),
+            direction=data["direction"],
+            policy_name=data["policy_name"],
+            state=LifecycleState(data["state"]),
+            entry_low=float(data["entry_low"]),
+            entry_high=float(data["entry_high"]),
+            add_levels=tuple(AddLevel(**lvl) for lvl in data.get("add_levels", [])),
+            initial_stop_loss=float(data["initial_stop_loss"]),
+            current_stop_loss=float(data["current_stop_loss"]),
+            current_tp1=float(data["current_tp1"]),
+            current_tp2=data["current_tp2"],
+            invalidation_price=float(data["invalidation_price"]),
+            valid_until_utc=data["valid_until_utc"],
+            time_stop_bars=int(data["time_stop_bars"]),
+            r_plan_usd=float(data["r_plan_usd"]),
+            stage_target_notionals=(float(stn[0]), float(stn[1]), float(stn[2])),
+            leverage=float(data["leverage"]),
+            assumed_spread_bps=float(data.get("assumed_spread_bps", 2.0)),
+            fee_rate=float(data.get("fee_rate", 0.0005)),
+            slippage_bps=float(data.get("slippage_bps", 1.0)),
+            overnight_cost_daily_bps=float(data.get("overnight_cost_daily_bps", 0.0)),
+            stages=[TradeStage(**s) for s in data.get("stages", [])],
+            avg_entry_price=float(data.get("avg_entry_price", 0.0)),
+            remaining_qty=float(data.get("remaining_qty", 0.0)),
+            initial_filled_qty=float(data.get("initial_filled_qty", 0.0)),
+            realized_pnl_usd=float(data.get("realized_pnl_usd", 0.0)),
+            total_fees_usd=float(data.get("total_fees_usd", 0.0)),
+            total_overnight_usd=float(data.get("total_overnight_usd", 0.0)),
+            r_multiple=float(data.get("r_multiple", 0.0)),
+            entered_at_utc=data.get("entered_at_utc"),
+            closed_at_utc=data.get("closed_at_utc"),
+            exit_price=data.get("exit_price"),
+            exit_reason=data.get("exit_reason"),
+        )
 
 
 class Ledger:
@@ -315,6 +371,36 @@ class Ledger:
             "short_term_remaining_capital": max(0.0, short_eq - short_used_cap),
             "long_term_remaining_capital": max(0.0, long_eq - long_used_cap),
         }
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "policy_name": self.policy_name,
+            "short_term_realized_pnl": self.short_term_realized_pnl,
+            "long_term_realized_pnl": self.long_term_realized_pnl,
+            "peak_equity_usd": self.peak_equity_usd,
+            "drawdown_paused": self.drawdown_paused,
+            "trades": {k: v.to_dict() for k, v in self.trades.items()},
+            "orders": {k: v.to_dict() for k, v in self.orders.items()},
+            "fills": [f.to_dict() for f in self.fills],
+            "daily_realized_pnl": self.daily_realized_pnl,
+            "weekly_realized_pnl": self.weekly_realized_pnl,
+            "daily_signal_counts": self.daily_signal_counts,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any], config: dict[str, Any]) -> Ledger:
+        led = cls(data["policy_name"], config)
+        led.short_term_realized_pnl = float(data.get("short_term_realized_pnl", 0.0))
+        led.long_term_realized_pnl = float(data.get("long_term_realized_pnl", 0.0))
+        led.peak_equity_usd = float(data.get("peak_equity_usd", led.peak_equity_usd))
+        led.drawdown_paused = bool(data.get("drawdown_paused", False))
+        led.trades = {k: TradeRecord.from_dict(v) for k, v in data.get("trades", {}).items()}
+        led.orders = {k: OrderRecord(**v) for k, v in data.get("orders", {}).items()}
+        led.fills = [FillRecord(**f) for f in data.get("fills", [])]
+        led.daily_realized_pnl = {k: float(v) for k, v in data.get("daily_realized_pnl", {}).items()}
+        led.weekly_realized_pnl = {k: float(v) for k, v in data.get("weekly_realized_pnl", {}).items()}
+        led.daily_signal_counts = {k: int(v) for k, v in data.get("daily_signal_counts", {}).items()}
+        return led
 
 
 class SimulationEngine:
@@ -1183,6 +1269,47 @@ class SimulationEngine:
         with (eq_dir / f"{_month_key(ts)}.jsonl").open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(snap_row, ensure_ascii=False) + "\n")
 
+        # Export signals_index.json for web UI consumption
+        signals_index: list[dict[str, Any]] = []
+        sig_dir = self.out_dir / "signals"
+        if sig_dir.exists():
+            for sp in sorted(sig_dir.glob("*.json"), reverse=True):
+                try:
+                    s_data = json.loads(sp.read_text(encoding="utf-8"))
+                    sid = s_data["signal_id"]
+                    tr = prim.trades.get(sid)
+                    s_data["lifecycle_state"] = tr.state.value if tr else "waiting_entry"
+                    s_data["stages_filled"] = len(tr.stages) if tr else 0
+                    s_data["realized_pnl_usd"] = round(tr.realized_pnl_usd, 2) if tr else 0.0
+                    s_data["r_multiple"] = round(tr.r_multiple, 2) if tr else 0.0
+                    s_data["exit_reason"] = tr.exit_reason if tr else None
+                    signals_index.append(s_data)
+                except Exception:
+                    continue
+        (self.out_dir / "signals_index.json").write_text(
+            json.dumps(signals_index, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+        # Full multi-ledger persistence for cross-run restoration
+        (self.out_dir / "ledgers_state.json").write_text(
+            json.dumps(
+                {
+                    "sequences": {
+                        "signal": self._signal_seq,
+                        "event": self._event_seq,
+                        "fill": self._fill_seq,
+                    },
+                    "latest_marks": self.latest_marks,
+                    "ledgers": {pol: led.to_dict() for pol, led in self.ledgers.items()},
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+
         # Replay cursor state
         state_path = self.out_dir / "state.json"
         existing_state = {}
@@ -1193,3 +1320,30 @@ class SimulationEngine:
                 existing_state = {}
         existing_state["last_processed_ts"] = self.last_processed_ts
         state_path.write_text(json.dumps(existing_state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    def load_state(self) -> None:
+        """Restore persisted ledgers, sequences, and replay cursors from out_dir."""
+        state_path = self.out_dir / "state.json"
+        if state_path.exists():
+            try:
+                st = json.loads(state_path.read_text(encoding="utf-8"))
+                if isinstance(st.get("last_processed_ts"), dict):
+                    self.last_processed_ts = dict(st["last_processed_ts"])
+            except Exception:
+                pass
+
+        led_path = self.out_dir / "ledgers_state.json"
+        if led_path.exists():
+            try:
+                payload = json.loads(led_path.read_text(encoding="utf-8"))
+                seqs = payload.get("sequences", {})
+                self._signal_seq = int(seqs.get("signal", 0))
+                self._event_seq = int(seqs.get("event", 0))
+                self._fill_seq = int(seqs.get("fill", 0))
+                if isinstance(payload.get("latest_marks"), dict):
+                    self.latest_marks = {k: float(v) for k, v in payload["latest_marks"].items()}
+                for pol, raw_led in payload.get("ledgers", {}).items():
+                    if pol in self.ledgers:
+                        self.ledgers[pol] = Ledger.from_dict(raw_led, self.config)
+            except Exception:
+                pass

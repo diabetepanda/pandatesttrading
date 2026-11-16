@@ -337,11 +337,9 @@ def test_gap_open_beyond_stop_fills_at_open_price(tmp_path: Path) -> None:
     assert trade.exit_price <= 1.0600
 
 
-def test_catchup_replay_idempotency_schedule_delay_and_shadow_ledgers(tmp_path: Path) -> None:
+def test_schedule_delay_blocks_new_signal_and_logs_watch(tmp_path: Path) -> None:
     cfg = load_config()
     eng = SimulationEngine(cfg, out_dir=tmp_path)
-
-    # 1) Schedule delay > 20 minutes refuses new signal & logs to watch_log
     delayed_sig = eng.submit_candidate_signal(
         _make_candidate(),
         now_utc="2026-11-16T02:35:00Z",
@@ -352,7 +350,10 @@ def test_catchup_replay_idempotency_schedule_delay_and_shadow_ledgers(tmp_path: 
     watch_txt = (tmp_path / "watch_log" / "2026-11.jsonl").read_text(encoding="utf-8")
     assert "排程延遲" in watch_txt
 
-    # 2) Publish valid signal and replay a batch of 1m bars after a simulated delay
+
+def test_catchup_replay_processes_missed_bars_chronologically(tmp_path: Path) -> None:
+    cfg = load_config()
+    eng = SimulationEngine(cfg, out_dir=tmp_path)
     sig = eng.submit_candidate_signal(
         _make_candidate(
             entry_low=99.5,
@@ -369,31 +370,72 @@ def test_catchup_replay_idempotency_schedule_delay_and_shadow_ledgers(tmp_path: 
         control=_ctrl_ok(),
     )
     assert sig is not None
-
+    # Feed bars out of order to verify chronological sorting during catch-up replay
     bars = [
-        _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.3, 99.8, 100.1),  # Entry
-        _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 99.8, 99.9, 98.6, 99.0),    # Add fill
-        _bar("2026-11-16T02:03:00Z", "2026-11-16T02:04:00Z", 101.0, 104.7, 100.9, 104.6), # TP1
+        _bar("2026-11-16T02:03:00Z", "2026-11-16T02:04:00Z", 101.0, 104.7, 100.9, 104.6),  # TP1
+        _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 99.8, 99.9, 98.6, 99.0),     # Add fill
+        _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.3, 99.8, 100.1),   # Entry
     ]
-    events_first = eng.replay_bars("BTCUSDT", bars)
-    assert len(events_first) >= 3
+    events = eng.replay_bars("BTCUSDT", bars)
+    assert len(events) >= 3
     assert eng.last_processed_ts["BTCUSDT"] == "2026-11-16T02:04:00Z"
-
-    # Check all 5 shadow ledgers (A, B, C, D, E) tracked the trade
-    for pol in ("A", "B", "C", "D", "E"):
-        assert sig.signal_id in eng.ledgers[pol].trades
-        assert eng.ledgers[pol].trades[sig.signal_id].state == LifecycleState.TP1_HIT
-
-    # 3) Idempotency: replaying exact same bars must produce ZERO new events or fills
-    fills_count_before = len(eng.primary_ledger.fills)
-    events_second = eng.replay_bars("BTCUSDT", bars)
-    assert events_second == []
-    assert len(eng.primary_ledger.fills) == fills_count_before
-
-    # Save state check
+    assert eng.primary_ledger.trades[sig.signal_id].state == LifecycleState.TP1_HIT
     eng.save_state()
     assert (tmp_path / "trades.json").exists()
+    assert (tmp_path / "trade_stages.json").exists()
     assert (tmp_path / "state.json").exists()
     assert (tmp_path / "equity_snapshots" / "2026-11.jsonl").exists()
     state_json = json.loads((tmp_path / "state.json").read_text(encoding="utf-8"))
     assert state_json["last_processed_ts"]["BTCUSDT"] == "2026-11-16T02:04:00Z"
+
+
+def test_idempotent_replay_does_not_duplicate_events_or_fills(tmp_path: Path) -> None:
+    cfg = load_config()
+    eng = SimulationEngine(cfg, out_dir=tmp_path)
+    sig = eng.submit_candidate_signal(
+        _make_candidate(entry_low=99.5, entry_high=100.5, stop_loss=97.5, tp1=104.5, tp2=106.0, leverage=4.0),
+        now_utc="2026-11-16T02:01:00Z",
+        latest_bar_close_utc="2026-11-16T02:00:00Z",
+        control=_ctrl_ok(),
+    )
+    assert sig is not None
+    bars = [
+        _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.3, 99.8, 100.1),
+        _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 100.1, 104.7, 100.0, 104.6),
+    ]
+    first_events = eng.replay_bars("BTCUSDT", bars)
+    assert len(first_events) >= 2
+    fills_before = len(eng.primary_ledger.fills)
+    second_events = eng.replay_bars("BTCUSDT", bars)
+    assert second_events == []
+    assert len(eng.primary_ledger.fills) == fills_before
+
+
+def test_five_shadow_ledgers_track_parallel_positions(tmp_path: Path) -> None:
+    cfg = load_config()
+    eng = SimulationEngine(cfg, out_dir=tmp_path)
+    sig = eng.submit_candidate_signal(
+        _make_candidate(
+            entry_low=99.5,
+            entry_high=100.5,
+            add_levels=(AddLevel(stage=2, add_type="mean_add", price=98.8, note="補倉"),),
+            stop_loss=97.5,
+            tp1=104.5,
+            tp2=106.0,
+            invalidation_price=97.0,
+            leverage=4.0,
+        ),
+        now_utc="2026-11-16T02:01:00Z",
+        latest_bar_close_utc="2026-11-16T02:00:00Z",
+        control=_ctrl_ok(),
+    )
+    assert sig is not None
+    bars = [
+        _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.3, 99.8, 100.1),
+        _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 99.8, 99.9, 98.6, 99.0),
+        _bar("2026-11-16T02:03:00Z", "2026-11-16T02:04:00Z", 101.0, 104.7, 100.9, 104.6),
+    ]
+    eng.replay_bars("BTCUSDT", bars)
+    for pol in ("A", "B", "C", "D", "E"):
+        assert sig.signal_id in eng.ledgers[pol].trades
+        assert eng.ledgers[pol].trades[sig.signal_id].state == LifecycleState.TP1_HIT

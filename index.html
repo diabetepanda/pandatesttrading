@@ -54,7 +54,7 @@
     <section class="card">
       <div class="section-header">
         <div>
-          <h1>市場行情與資料健康狀態（階段 1）</h1>
+          <h1>市場行情、策略 A 掃描與資料健康狀態（階段 3）</h1>
           <p class="subtitle">
             <strong>即時價格（瀏覽器）</strong>每 8 秒更新，僅供顯示；<strong>報單與模擬驗證</strong>一律以 GitHub Actions 排程（60 秒重讀）的已收盤 K 線為準。
           </p>
@@ -94,6 +94,31 @@
     </section>
 
     <section class="card">
+      <h2>策略 A 掃描結果：最新報單與今日觀望紀錄</h2>
+      <p class="subtitle">每次排程以已收盤 K 線掃描 18 檔標的；通過全部過濾條件與風控審核才會發布報單，其餘列出被擋原因。</p>
+      <div id="signals-box" class="muted">報單資料讀取中...</div>
+      <h3 style="margin-top: 14px; font-size: 0.98rem;">今日觀望</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>標的</th>
+              <th>市場</th>
+              <th>判定</th>
+              <th>1H ADX / RSI / ATR倍數</th>
+              <th>觀望 / 擋下原因</th>
+            </tr>
+          </thead>
+          <tbody id="watch-tbody">
+            <tr>
+              <td colspan="5" class="muted center">尚無觀望紀錄（等待下次掃描）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
       <h2>資料來源實測報告（GitHub Actions）</h2>
       <p class="subtitle">顯示各標的在 1m / 15m / 1d 週期下，主來源與備援來源的連線實測結果。</p>
       <div id="probe-summary" class="muted">尚無實測報告（請先於 GitHub Actions 手動觸發一次 Market Scan）。</div>
@@ -114,6 +139,7 @@
 
     <section class="card">
       <h2>近期排程執行紀錄</h2>
+      <p id="sched-summary" class="subtitle">排程頻率：每小時 07, 22, 37, 52 分 UTC 自動執行（避開整點尖峰）</p>
       <div id="run-log-box" class="muted">尚無排程紀錄。</div>
     </section>
   </main>

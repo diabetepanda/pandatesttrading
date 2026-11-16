@@ -80,7 +80,7 @@ class BinanceVisionAdapter(DataAdapter):
             raise ValueError(f"Unsupported interval: {interval}")
         resp = requests.get(
             self.BASE_URL,
-            params={"symbol": source_symbol, "interval": interval, "limit": limit},
+            params={"symbol": source_symbol, "interval": interval, "limit": min(limit, 1000)},
             headers={"User-Agent": USER_AGENT},
             timeout=self.timeout_sec,
         )
@@ -178,7 +178,7 @@ class BybitAdapter(DataAdapter):
             raise ValueError(f"Unsupported interval: {interval}")
         resp = requests.get(
             self.BASE_URL,
-            params={"category": "spot", "symbol": source_symbol, "interval": iv, "limit": limit},
+            params={"category": "spot", "symbol": source_symbol, "interval": iv, "limit": min(limit, 1000)},
             headers={"User-Agent": USER_AGENT},
             timeout=self.timeout_sec,
         )

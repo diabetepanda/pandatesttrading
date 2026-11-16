@@ -2,7 +2,7 @@ name: Market Scan (15m)
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
     inputs:
       probe_all:
@@ -66,10 +66,19 @@ jobs:
       - name: Commit and push to data branch
         working-directory: data_repo
         run: |
+          if [ -f new_signals_to_commit.json ]; then
+            SIGNAL_IDS=$(python3 -c 'import json; print(" ".join(json.load(open("new_signals_to_commit.json")).get("signal_ids", [])))')
+            for sid in $SIGNAL_IDS; do
+              git add "signals/${sid}.json" "snapshots/SNAP-${sid}.json" 2>/dev/null || true
+              if ! git diff --cached --quiet; then
+                git commit -m "feat(signal): publish ${sid}"
+              fi
+            done
+          fi
           git add -A
           if git diff --cached --quiet; then
             echo "No data changes to commit."
           else
             git commit -m "chore(data): scan update $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-            git push origin data
           fi
+          git push origin data
