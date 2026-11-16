@@ -137,8 +137,23 @@ correlation_groups:
   crypto_majors:
     name: 加密主流幣
     max_stop_risk_usd: 1000.0
+  crypto_layer1:
+    name: 加密 Layer1 公鏈
+    max_stop_risk_usd: 1000.0
+  crypto_layer2:
+    name: 加密 Layer2 擴容
+    max_stop_risk_usd: 1000.0
+  crypto_defi:
+    name: 加密 DeFi 與基建
+    max_stop_risk_usd: 1000.0
+  crypto_meme_ai:
+    name: 加密迷因與 AI
+    max_stop_risk_usd: 1000.0
   usd_fx:
     name: 美元相關外匯
+    max_stop_risk_usd: 1000.0
+  gbp_fx:
+    name: 英鎊相關外匯
     max_stop_risk_usd: 1000.0
   jpy_cross:
     name: 日圓交叉
@@ -245,6 +260,506 @@ instruments:
       kraken: XRPUSD
       coinbase: XRP-USD
       bybit: XRPUSDT
+
+  - symbol: DOGEUSDT
+    display_name: Dogecoin (DOGE/USDT)
+    market: crypto
+    correlation_group: crypto_meme_ai
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.00001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: DOGEUSDT
+      okx: DOGE-USDT
+      coinbase: DOGE-USD
+      bybit: DOGEUSDT
+
+  - symbol: ADAUSDT
+    display_name: Cardano (ADA/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.0005
+    tick_size: 0.0001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: ADAUSDT
+      okx: ADA-USDT
+      kraken: ADAUSDT
+      coinbase: ADA-USD
+      bybit: ADAUSDT
+
+  - symbol: AVAXUSDT
+    display_name: Avalanche (AVAX/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: AVAXUSDT
+      okx: AVAX-USDT
+      kraken: AVAXUSDT
+      coinbase: AVAX-USD
+      bybit: AVAXUSDT
+
+  - symbol: LINKUSDT
+    display_name: Chainlink (LINK/USDT)
+    market: crypto
+    correlation_group: crypto_defi
+    enabled: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: LINKUSDT
+      okx: LINK-USDT
+      kraken: LINKUSDT
+      coinbase: LINK-USD
+      bybit: LINKUSDT
+
+  - symbol: DOTUSDT
+    display_name: Polkadot (DOT/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: DOTUSDT
+      okx: DOT-USDT
+      kraken: DOTUSDT
+      coinbase: DOT-USD
+      bybit: DOTUSDT
+
+  - symbol: LTCUSDT
+    display_name: Litecoin (LTC/USDT)
+    market: crypto
+    correlation_group: crypto_majors
+    enabled: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: LTCUSDT
+      okx: LTC-USDT
+      kraken: LTCUSDT
+      coinbase: LTC-USD
+      bybit: LTCUSDT
+
+  - symbol: TRXUSDT
+    display_name: TRON (TRX/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.0001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: TRXUSDT
+      okx: TRX-USDT
+      kraken: TRXUSD
+      bybit: TRXUSDT
+
+  - symbol: BCHUSDT
+    display_name: Bitcoin Cash (BCH/USDT)
+    market: crypto
+    correlation_group: crypto_majors
+    enabled: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.0005
+    tick_size: 0.1
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: BCHUSDT
+      okx: BCH-USDT
+      kraken: BCHUSDT
+      coinbase: BCH-USD
+      bybit: BCHUSDT
+
+  - symbol: NEARUSDT
+    display_name: NEAR Protocol (NEAR/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: NEARUSDT
+      okx: NEAR-USDT
+      kraken: NEARUSD
+      coinbase: NEAR-USD
+      bybit: NEARUSDT
+
+  - symbol: SUIUSDT
+    display_name: Sui (SUI/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.0001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: SUIUSDT
+      okx: SUI-USDT
+      kraken: SUIUSD
+      coinbase: SUI-USD
+      bybit: SUIUSDT
+
+  - symbol: TONUSDT
+    display_name: Toncoin (TON/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      kraken: TONUSDT
+      coinbase: TON-USD
+      bybit: TONUSDT
+
+  - symbol: APTUSDT
+    display_name: Aptos (APT/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: APTUSDT
+      okx: APT-USDT
+      kraken: APTUSD
+      coinbase: APT-USD
+      bybit: APTUSDT
+
+  - symbol: UNIUSDT
+    display_name: Uniswap (UNI/USDT)
+    market: crypto
+    correlation_group: crypto_defi
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: UNIUSDT
+      okx: UNI-USDT
+      kraken: UNIUSD
+      coinbase: UNI-USD
+      bybit: UNIUSDT
+
+  - symbol: ATOMUSDT
+    display_name: Cosmos (ATOM/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: ATOMUSDT
+      okx: ATOM-USDT
+      kraken: ATOMUSDT
+      coinbase: ATOM-USD
+      bybit: ATOMUSDT
+
+  - symbol: ETCUSDT
+    display_name: Ethereum Classic (ETC/USDT)
+    market: crypto
+    correlation_group: crypto_majors
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: ETCUSDT
+      okx: ETC-USDT
+      kraken: XETCZUSD
+      coinbase: ETC-USD
+      bybit: ETCUSDT
+
+  - symbol: FILUSDT
+    display_name: Filecoin (FIL/USDT)
+    market: crypto
+    correlation_group: crypto_defi
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: FILUSDT
+      okx: FIL-USDT
+      kraken: FILUSD
+      coinbase: FIL-USD
+      bybit: FILUSDT
+
+  - symbol: ARBUSDT
+    display_name: Arbitrum (ARB/USDT)
+    market: crypto
+    correlation_group: crypto_layer2
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.0001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: ARBUSDT
+      okx: ARB-USDT
+      kraken: ARBUSD
+      coinbase: ARB-USD
+      bybit: ARBUSDT
+
+  - symbol: OPUSDT
+    display_name: Optimism (OP/USDT)
+    market: crypto
+    correlation_group: crypto_layer2
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.0001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: OPUSDT
+      okx: OP-USDT
+      kraken: OPUSD
+      coinbase: OP-USD
+      bybit: OPUSDT
+
+  - symbol: INJUSDT
+    display_name: Injective (INJ/USDT)
+    market: crypto
+    correlation_group: crypto_defi
+    enabled: true
+    assumed_spread_bps: 7.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: INJUSDT
+      okx: INJ-USDT
+      kraken: INJUSD
+      coinbase: INJ-USD
+      bybit: INJUSDT
+
+  - symbol: AAVEUSDT
+    display_name: Aave (AAVE/USDT)
+    market: crypto
+    correlation_group: crypto_defi
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: AAVEUSDT
+      okx: AAVE-USDT
+      kraken: AAVEUSD
+      coinbase: AAVE-USD
+      bybit: AAVEUSDT
+
+  - symbol: XLMUSDT
+    display_name: Stellar (XLM/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.0001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: XLMUSDT
+      okx: XLM-USDT
+      kraken: XXLMZUSD
+      coinbase: XLM-USD
+      bybit: XLMUSDT
+
+  - symbol: HBARUSDT
+    display_name: Hedera (HBAR/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 6.0
+    fee_rate: 0.0005
+    tick_size: 0.0001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: HBARUSDT
+      okx: HBAR-USDT
+      kraken: HBARUSD
+      coinbase: HBAR-USD
+      bybit: HBARUSDT
+
+  - symbol: ICPUSDT
+    display_name: Internet Computer (ICP/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 7.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: ICPUSDT
+      okx: ICP-USDT
+      kraken: ICPUSD
+      coinbase: ICP-USD
+      bybit: ICPUSDT
+
+  - symbol: SEIUSDT
+    display_name: Sei (SEI/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 8.0
+    fee_rate: 0.0005
+    tick_size: 0.0001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: SEIUSDT
+      okx: SEI-USDT
+      kraken: SEIUSD
+      coinbase: SEI-USD
+      bybit: SEIUSDT
+
+  - symbol: TIAUSDT
+    display_name: Celestia (TIA/USDT)
+    market: crypto
+    correlation_group: crypto_layer1
+    enabled: true
+    assumed_spread_bps: 8.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: TIAUSDT
+      okx: TIA-USDT
+      kraken: TIAUSD
+      coinbase: TIA-USD
+      bybit: TIAUSDT
+
+  - symbol: PEPEUSDT
+    display_name: Pepe (PEPE/USDT)
+    market: crypto
+    correlation_group: crypto_meme_ai
+    enabled: true
+    assumed_spread_bps: 8.0
+    fee_rate: 0.0005
+    tick_size: 0.00000001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: PEPEUSDT
+      okx: PEPE-USDT
+      kraken: PEPEUSD
+      coinbase: PEPE-USD
+      bybit: PEPEUSDT
+
+  - symbol: WLDUSDT
+    display_name: Worldcoin (WLD/USDT)
+    market: crypto
+    correlation_group: crypto_meme_ai
+    enabled: true
+    assumed_spread_bps: 8.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: WLDUSDT
+      okx: WLD-USDT
+      kraken: WLDUSD
+      coinbase: WLD-USD
+      bybit: WLDUSDT
+
+  - symbol: RENDERUSDT
+    display_name: Render (RENDER/USDT)
+    market: crypto
+    correlation_group: crypto_meme_ai
+    enabled: true
+    assumed_spread_bps: 7.0
+    fee_rate: 0.0005
+    tick_size: 0.001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: RENDERUSDT
+      okx: RENDER-USDT
+      kraken: RENDERUSD
+      coinbase: RENDER-USD
+      bybit: RENDERUSDT
 
   # --- 外匯 ---
   - symbol: EURUSD
@@ -366,6 +881,36 @@ instruments:
     sources:
       yfinance: EURJPY=X
       stooq: eurjpy
+
+  - symbol: EURGBP
+    display_name: EUR/GBP
+    market: forex
+    correlation_group: gbp_fx
+    enabled: true
+    assumed_spread_bps: 1.5
+    fee_rate: 0.0001
+    tick_size: 0.00001
+    trading_hours: "24/5"
+    max_leverage: 20.0
+    overnight_cost_daily_bps: 1.0
+    sources:
+      yfinance: EURGBP=X
+      stooq: eurgbp
+
+  - symbol: GBPJPY
+    display_name: GBP/JPY
+    market: forex
+    correlation_group: jpy_cross
+    enabled: true
+    assumed_spread_bps: 2.0
+    fee_rate: 0.0001
+    tick_size: 0.001
+    trading_hours: "24/5"
+    max_leverage: 20.0
+    overnight_cost_daily_bps: 1.5
+    sources:
+      yfinance: GBPJPY=X
+      stooq: gbpjpy
 
   # --- 商品 ---
   - symbol: XAUUSD

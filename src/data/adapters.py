@@ -331,6 +331,11 @@ class YFinanceAdapter(DataAdapter):
 
     name = "yfinance"
     PERIOD_MAP = {"1m": "5d", "15m": "1mo", "1d": "10y"}
+    _last_request_mono: float = 0.0
+
+    def __init__(self, timeout_sec: int = 15, min_interval_sec: float = 0.25) -> None:
+        super().__init__(timeout_sec=timeout_sec)
+        self.min_interval_sec = max(0.0, float(min_interval_sec))
 
     def fetch_bars(
         self,
@@ -342,6 +347,12 @@ class YFinanceAdapter(DataAdapter):
         period = self.PERIOD_MAP.get(interval)
         if not period:
             raise ValueError(f"Unsupported interval: {interval}")
+
+        if self.min_interval_sec > 0:
+            elapsed = time.monotonic() - YFinanceAdapter._last_request_mono
+            if elapsed < self.min_interval_sec:
+                time.sleep(self.min_interval_sec - elapsed)
+        YFinanceAdapter._last_request_mono = time.monotonic()
 
         df = yf.download(
             tickers=source_symbol,

@@ -208,38 +208,77 @@
     return null;
   }
 
+  async function fetchTradingViewBatch(tvCodes) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    try {
+      const resp = await fetch("https://scanner.tradingview.com/global/scan", {
+        method: "POST",
+        cache: "no-store",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          symbols: { tickers: tvCodes },
+          columns: ["close", "change"],
+        }),
+        signal: controller.signal,
+      });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const payload = await resp.json();
+      const map = {};
+      for (const row of payload?.data || []) {
+        const vals = row?.d || [];
+        if (row?.s && vals[0] !== undefined && vals[0] !== null && !Number.isNaN(Number(vals[0]))) {
+          map[row.s] = {
+            price: Number(vals[0]),
+            changePct: vals[1] !== undefined && vals[1] !== null ? Number(vals[1]) : null,
+            source: "TradingView",
+          };
+        }
+      }
+      return map;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
   async function fetchLiveTradFi() {
     const results = {};
     const tvSymbols = Object.keys(LIVE_TRADINGVIEW_SYMBOLS);
+    let tvMap = {};
+    try {
+      tvMap = await fetchTradingViewBatch(Object.values(LIVE_TRADINGVIEW_SYMBOLS));
+    } catch (_) {
+      tvMap = {};
+    }
+
     await Promise.all(
       tvSymbols.map(async (sym) => {
         const metalCode = LIVE_METAL_SYMBOLS[sym];
         const tvCode = LIVE_TRADINGVIEW_SYMBOLS[sym];
-        if (metalCode) {
-          const [goldRes, tvRes] = await Promise.allSettled([
-            fetchWithTimeout(`https://api.gold-api.com/price/${metalCode}`),
-            fetchTradingViewSymbol(tvCode),
-          ]);
-          const tvOk = tvRes.status === "fulfilled" ? tvRes.value : null;
-          if (goldRes.status === "fulfilled" && goldRes.value && goldRes.value.price !== undefined) {
-            results[sym] = {
-              price: Number(goldRes.value.price),
-              changePct: tvOk ? tvOk.changePct : null,
-              source: "gold-api",
-            };
-          } else if (tvOk) {
-            results[sym] = tvOk;
-          } else {
-            results[sym] = { failed: true };
+        let tvOk = tvMap[tvCode] || null;
+        if (!tvOk) {
+          try {
+            tvOk = await fetchTradingViewSymbol(tvCode);
+          } catch (_) {
+            tvOk = null;
           }
+        }
+        if (metalCode) {
+          try {
+            const goldVal = await fetchWithTimeout(`https://api.gold-api.com/price/${metalCode}`);
+            if (goldVal && goldVal.price !== undefined) {
+              results[sym] = {
+                price: Number(goldVal.price),
+                changePct: tvOk ? tvOk.changePct : null,
+                source: "gold-api",
+              };
+              return;
+            }
+          } catch (_) {}
+          results[sym] = tvOk || { failed: true };
           return;
         }
-        try {
-          const tvOk = await fetchTradingViewSymbol(tvCode);
-          results[sym] = tvOk || { failed: true };
-        } catch (_) {
-          results[sym] = { failed: true };
-        }
+        results[sym] = tvOk || { failed: true };
       })
     );
     return results;

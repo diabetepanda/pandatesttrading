@@ -14,7 +14,10 @@ def test_config_has_required_sections() -> None:
     assert cfg["account"]["pools"]["long_term"]["capital_usd"] == 80000.0
     assert cfg["risk"]["drawdown_warning_pct"] == 8.0
     assert cfg["risk"]["drawdown_pause_pct"] == 12.0
-    assert len(cfg["instruments"]) >= 18
+    enabled = [inst for inst in cfg["instruments"] if inst.get("enabled", True)]
+    assert len(enabled) == 48
+    assert sum(1 for inst in enabled if inst["market"] == "crypto") == 33
+    assert sum(1 for inst in enabled if inst["market"] in ("forex", "commodity")) == 15
 
 
 def test_instruments_have_valid_fields() -> None:
@@ -62,8 +65,10 @@ def test_frontend_assets_and_relative_paths() -> None:
     assert "LIVE_CRYPTO_SYMBOLS" in config_js
     assert "LIVE_METAL_SYMBOLS" in config_js
     assert "LIVE_TRADINGVIEW_SYMBOLS" in config_js
-    for code in ("FX:EURUSD", "FX:USDJPY", "NYMEX:CL1!", "NYMEX:NG1!", "COMEX:GC1!", "COMEX:SI1!", "COMEX:HG1!"):
+    for code in ("FX:EURUSD", "FX:USDJPY", "FX:EURGBP", "FX:GBPJPY", "NYMEX:CL1!", "NYMEX:NG1!", "COMEX:GC1!", "COMEX:SI1!", "COMEX:HG1!"):
         assert code in config_js
+    assert "PEPEUSDT" in config_js
+    assert "TONUSDT" in config_js
 
     # Stage 4, 5 & 6 hash routes, disclaimer, backtest results, shadow comparison, and fixed CDN check
     for route in ("#/wall", "#/results", "#/stats", "#/account", "#/scaling", "#/risk", "#/data"):
