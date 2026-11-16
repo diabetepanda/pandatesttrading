@@ -1,5 +1,23 @@
 [
   {
+    "run_at_utc": "2026-11-16T18:07:12Z",
+    "job": "scan",
+    "duration_sec": 7.89,
+    "step_timings_sec": {
+      "load_and_cleanup_sec": 0.063,
+      "fetch_and_quality_sec": 5.859,
+      "indicators_and_replay_sec": 0.503,
+      "derivatives_fetch_sec": 1.08,
+      "strategy_eval_sec": 0.369,
+      "export_and_save_sec": 0.014
+    },
+    "status": "ok",
+    "instruments_ok": 40,
+    "instruments_total": 42,
+    "signals_published": 0,
+    "watch_count": 38
+  },
+  {
     "run_at_utc": "2026-11-16T17:57:05Z",
     "job": "weekly",
     "duration_sec": 128.57,
