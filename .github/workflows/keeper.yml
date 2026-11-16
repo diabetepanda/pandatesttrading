@@ -1,0 +1,45 @@
+name: Scheduler Keeper
+
+# GitHub 的 schedule 在新 repo 可能長時間不觸發。
+# 這個流程每 15 分鐘用 workflow_dispatch 觸發 Market Scan，
+# 並在每日／每週時段觸發 Daily／Weekly；約 5.5 小時後自己接力啟動下一輪。
+# 公開 repo 的 Actions 免費；GITHUB_TOKEN 觸發 workflow_dispatch 是官方允許的例外。
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "11 */6 * * *"
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: scheduler-keeper
+  cancel-in-progress: false
+
+jobs:
+  keep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Trigger scans every 15 minutes
+        run: |
+          end=$(( $(date +%s) + 330*60 ))
+          while [ "$(date +%s)" -lt "$end" ]; do
+            gh workflow run scan.yml -f probe_all=false || echo "scan dispatch failed"
+            hm=$(date -u +%H%M); dow=$(date -u +%u)
+            if [ "$hm" -ge 0015 ] && [ "$hm" -lt 0030 ]; then
+              gh workflow run daily.yml || echo "daily dispatch failed"
+            fi
+            if [ "$dow" = 7 ] && [ "$hm" -ge 0200 ] && [ "$hm" -lt 0215 ]; then
+              gh workflow run weekly.yml || echo "weekly dispatch failed"
+            fi
+            sleep 900
+          done
+      - name: Hand off to next keeper run
+        if: always()
+        run: gh workflow run keeper.yml
