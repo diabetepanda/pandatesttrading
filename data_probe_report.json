@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-16T08:20:37Z",
+  "generated_at_utc": "2026-11-16T08:22:05Z",
   "results": [
     {
       "symbol": "BTCUSDT",
@@ -7,41 +7,41 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 648.5,
+          "latency_ms": 608.6,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 64598.9
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 64609.92
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 306.3,
+          "latency_ms": 235.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 64593.0
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 64611.3
         },
         {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 152.7,
+          "latency_ms": 135.9,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 64620.9
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 64597.0
         },
         {
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 39.1,
+          "latency_ms": 38.1,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:19:00Z",
           "latest_close": 64570.82
@@ -50,7 +50,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 173.5,
+          "latency_ms": 91.1,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=1&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -63,14 +63,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 645.4,
+          "latency_ms": 585.4,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 64721.83
@@ -79,7 +79,7 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 188.7,
+          "latency_ms": 170.6,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 64722.6
@@ -88,7 +88,7 @@
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 114.0,
+          "latency_ms": 161.0,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 64734.2
@@ -97,7 +97,7 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 23.0,
+          "latency_ms": 40.4,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 64659.43
@@ -106,7 +106,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 22.8,
+          "latency_ms": 66.6,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=15&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -119,14 +119,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 500.6,
+      "delay_minutes": 502.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 646.9,
+          "latency_ms": 592.8,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 65351.05
@@ -135,7 +135,7 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 191.5,
+          "latency_ms": 179.3,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 65348.3
@@ -144,7 +144,7 @@
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 134.3,
+          "latency_ms": 129.4,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 65358.0
@@ -153,7 +153,7 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 25.5,
+          "latency_ms": 29.6,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 65315.35
@@ -162,7 +162,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 87.5,
+          "latency_ms": 47.6,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=D&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -175,41 +175,41 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 645.0,
+          "latency_ms": 592.4,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 1807.84
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 1808.01
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 184.2,
+          "latency_ms": 169.2,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 1807.79
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 1807.82
         },
         {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 135.8,
+          "latency_ms": 123.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
           "latest_close": 1807.33
         },
         {
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 25.2,
+          "latency_ms": 30.1,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:18:00Z",
           "latest_close": 1805.05
@@ -218,7 +218,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 45.4,
+          "latency_ms": 17.3,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETHUSDT&interval=1&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -231,14 +231,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 713.3,
+          "latency_ms": 585.9,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 1811.31
@@ -247,7 +247,7 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 196.5,
+          "latency_ms": 172.7,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 1811.73
@@ -256,7 +256,7 @@
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 144.1,
+          "latency_ms": 135.3,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 1811.85
@@ -265,7 +265,7 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 30.9,
+          "latency_ms": 28.4,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 1809.68
@@ -274,7 +274,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 24.8,
+          "latency_ms": 20.4,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETHUSDT&interval=15&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -287,14 +287,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 500.6,
+      "delay_minutes": 502.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 644.6,
+          "latency_ms": 584.2,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 1835.35
@@ -303,7 +303,7 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 197.7,
+          "latency_ms": 192.9,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 1835.44
@@ -312,7 +312,7 @@
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 146.0,
+          "latency_ms": 154.2,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 1835.28
@@ -321,7 +321,7 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 22.8,
+          "latency_ms": 31.0,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 1834.54
@@ -330,7 +330,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 88.9,
+          "latency_ms": 17.9,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETHUSDT&interval=D&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -343,50 +343,50 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 648.3,
+          "latency_ms": 611.1,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 70.79
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 70.83
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 189.7,
+          "latency_ms": 170.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 70.8
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 70.83
         },
         {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 38.8,
+          "latency_ms": 140.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 70.71
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 70.76
         },
         {
           "adapter": "coinbase",
           "ok": true,
-          "bar_count": 60,
-          "latency_ms": 26.4,
+          "bar_count": 59,
+          "latency_ms": 28.8,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:17:00Z",
-          "latest_close": 70.84
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 70.74
         },
         {
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 88.3,
+          "latency_ms": 17.2,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SOLUSDT&interval=1&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -399,14 +399,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 643.9,
+          "latency_ms": 584.3,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 70.99
@@ -415,7 +415,7 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 187.0,
+          "latency_ms": 170.6,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 70.99
@@ -424,7 +424,7 @@
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 143.4,
+          "latency_ms": 129.8,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 70.92
@@ -433,7 +433,7 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 30.0,
+          "latency_ms": 97.6,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 70.91
@@ -442,7 +442,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 22.2,
+          "latency_ms": 72.7,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SOLUSDT&interval=15&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -455,14 +455,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 500.6,
+      "delay_minutes": 502.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 643.6,
+          "latency_ms": 601.1,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 72.77
@@ -471,7 +471,7 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 184.7,
+          "latency_ms": 172.1,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 72.77
@@ -480,7 +480,7 @@
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 115.2,
+          "latency_ms": 131.9,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 72.75
@@ -489,7 +489,7 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 25.3,
+          "latency_ms": 25.9,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 72.73
@@ -498,7 +498,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 21.5,
+          "latency_ms": 18.0,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SOLUSDT&interval=D&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -511,32 +511,32 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
-          "bar_count": 58,
-          "latency_ms": 646.4,
+          "bar_count": 59,
+          "latency_ms": 594.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 590.0
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 590.26
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 202.3,
+          "latency_ms": 164.1,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:20:00Z",
-          "latest_close": 590.14
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 590.19
         },
         {
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 19.4,
+          "latency_ms": 21.4,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BNBUSDT&interval=1&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -549,14 +549,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 644.0,
+          "latency_ms": 595.8,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 590.57
@@ -565,7 +565,7 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 193.5,
+          "latency_ms": 169.9,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 590.78
@@ -574,7 +574,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 22.9,
+          "latency_ms": 69.8,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BNBUSDT&interval=15&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -587,14 +587,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 500.6,
+      "delay_minutes": 502.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 648.9,
+          "latency_ms": 593.3,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 596.79
@@ -603,7 +603,7 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 185.2,
+          "latency_ms": 179.8,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 596.92
@@ -612,7 +612,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 24.2,
+          "latency_ms": 17.3,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BNBUSDT&interval=D&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -625,41 +625,41 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
-          "bar_count": 58,
-          "latency_ms": 647.9,
+          "bar_count": 59,
+          "latency_ms": 594.0,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 0.9531
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.9539
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 190.6,
+          "latency_ms": 167.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:20:00Z",
-          "latest_close": 0.9537
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.954
         },
         {
           "adapter": "kraken",
           "ok": true,
-          "bar_count": 58,
-          "latency_ms": 33.3,
+          "bar_count": 59,
+          "latency_ms": 60.1,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 0.95267
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.95297
         },
         {
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 33.8,
+          "latency_ms": 27.9,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:17:00Z",
           "latest_close": 0.9538
@@ -668,7 +668,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 19.8,
+          "latency_ms": 21.5,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XRPUSDT&interval=1&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -681,14 +681,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 644.2,
+          "latency_ms": 592.3,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 0.9553
@@ -697,7 +697,7 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 182.6,
+          "latency_ms": 168.4,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 0.9553
@@ -706,7 +706,7 @@
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 110.3,
+          "latency_ms": 32.4,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 0.95432
@@ -715,7 +715,7 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 23.0,
+          "latency_ms": 31.6,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 0.9543
@@ -724,7 +724,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 18.8,
+          "latency_ms": 17.9,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XRPUSDT&interval=15&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -737,14 +737,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 500.6,
+      "delay_minutes": 502.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 649.6,
+          "latency_ms": 610.5,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 0.9742
@@ -753,7 +753,7 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 206.4,
+          "latency_ms": 180.4,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 0.9742
@@ -762,7 +762,7 @@
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 110.5,
+          "latency_ms": 127.5,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 0.97387
@@ -771,7 +771,7 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 27.4,
+          "latency_ms": 28.9,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 0.9739
@@ -780,8 +780,4604 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 18.8,
+          "latency_ms": 68.0,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XRPUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 590.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.0585
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 251.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.0585
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 32.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:18:00Z",
+          "latest_close": 0.05839
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.0,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=DOGEUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 591.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.05865
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 176.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.05864
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 29.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.0586
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 21.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=DOGEUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 583.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.05987
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 186.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.05988
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 35.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.05986
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 41.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=DOGEUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ADAUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 583.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.1522
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 174.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.1521
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 140.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.152221
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 29.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:19:00Z",
+          "latest_close": 0.15207
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.4,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ADAUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ADAUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 596.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.1525
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 173.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.1526
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 152.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.152692
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 28.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.15235
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 71.2,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ADAUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ADAUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 597.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.1555
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 168.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.1554
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 154.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.155533
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 30.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.15533
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 41.2,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ADAUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 602.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 7.121
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 180.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 7.12
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 129.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 7.134
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 31.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:18:00Z",
+          "latest_close": 7.1
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.9,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=AVAXUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 592.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 7.132
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 169.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 7.128
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 140.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 7.134
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 29.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 7.122
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=AVAXUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 588.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 7.311
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 173.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 7.316
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 142.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 7.317
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 35.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 7.308
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=AVAXUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "LINKUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 596.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 9.113
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 251.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:22:00Z",
+          "latest_close": 9.118
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 141.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 9.11402
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 26.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 9.105
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 16.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=LINKUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "LINKUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 584.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 9.128
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 171.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 9.128
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 148.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 9.16488
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 26.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 9.116
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 128.3,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=LINKUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "LINKUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 591.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 9.297
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 194.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 9.297
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 133.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 9.28263
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 34.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 9.293
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.9,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=LINKUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "DOTUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 583.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.722
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 178.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:22:00Z",
+          "latest_close": 0.7219
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 137.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.7268
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 29.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:19:00Z",
+          "latest_close": 0.7197
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 51.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=DOTUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "DOTUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 608.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.722
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 170.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.7221
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 142.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.7268
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 27.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.721
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 75.9,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=DOTUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "DOTUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 583.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.737
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 172.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.7372
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 126.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.7359
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 28.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.7349
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=DOTUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "LTCUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 591.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 44.61
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 172.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:22:00Z",
+          "latest_close": 44.62
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 141.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 44.61265
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 31.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:19:00Z",
+          "latest_close": 44.591
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.1,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=LTCUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "LTCUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 589.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 44.67
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 172.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 44.67
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 153.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 44.6594
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 30.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 44.626
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.2,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=LTCUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "LTCUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 584.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 45.57
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 181.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 45.58
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 141.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 45.55754
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 35.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 45.551
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 20.7,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=LTCUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "TRXUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 595.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.3029
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 174.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:22:00Z",
+          "latest_close": 0.3028
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 136.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.302495
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 19.7,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=TRXUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "TRXUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 587.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.3028
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 175.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.30291
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 145.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.30242
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.9,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=TRXUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "TRXUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 602.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.3054
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 179.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.3054
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 130.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.305232
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 68.3,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=TRXUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "BCHUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 608.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 206.5
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 179.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:22:00Z",
+          "latest_close": 206.64
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 139.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 206.76
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 31.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:18:00Z",
+          "latest_close": 206.64
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 19.7,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BCHUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "BCHUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 588.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 207.2
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 169.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 207.06
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 131.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 207.17
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 37.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 206.79
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 21.0,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BCHUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "BCHUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 600.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 210.8
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 169.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 211.02
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 127.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 210.64
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 29.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 210.66
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 46.6,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BCHUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "NEARUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 591.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 3.171
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 183.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:22:00Z",
+          "latest_close": 3.174
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 134.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 3.1678
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 31.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 3.1655
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 22.1,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=NEARUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "NEARUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 584.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 3.176
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 166.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 3.176
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 147.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 3.1728
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 35.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 3.1726
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.1,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=NEARUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "NEARUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 591.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 3.216
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 171.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 3.217
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 127.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 3.2183
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 28.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 3.2148
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 21.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=NEARUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "SUIUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 606.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.7175
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 238.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:22:00Z",
+          "latest_close": 0.7181
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 131.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.7167
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 28.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.7164
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 16.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SUIUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "SUIUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 583.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.7189
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 168.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.7189
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 186.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.7181
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 26.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.718
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.7,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SUIUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "SUIUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 596.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.7375
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 178.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.7375
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 124.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.7376
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 41.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.7377
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 41.0,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SUIUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "TONUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 38.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 1.057
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 27.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 1.0527
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=TONUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "TONUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 35.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 1.057
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 26.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 1.0521
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 68.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=TONUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "TONUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 40.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 1.051
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 27.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 1.0728
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.2,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=TONUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "APTUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 594.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.458
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 187.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:22:00Z",
+          "latest_close": 0.4581
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 151.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.458
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 30.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:19:00Z",
+          "latest_close": 0.4579
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.3,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=APTUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "APTUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 594.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.4597
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 180.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.4597
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 143.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.4597
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 63.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.4591
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 25.2,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=APTUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "APTUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 592.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.458
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 177.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.4584
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 145.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.4562
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 27.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.4579
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 45.7,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=APTUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "UNIUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 610.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 5.137
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 170.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:23:00Z",
+          "latest_close": 5.15
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 35.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 5.1277
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 27.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 5.1314
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.9,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=UNIUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "UNIUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 584.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 5.155
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 171.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 5.155
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 137.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 5.1508
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 34.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 5.148
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 42.3,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=UNIUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "UNIUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 608.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 5.184
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 185.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 5.184
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 124.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 5.1839
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 26.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 5.1829
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 24.4,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=UNIUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ATOMUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 591.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 1.296
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 167.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:23:00Z",
+          "latest_close": 1.296
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 150.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 1.2946
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 25.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:18:00Z",
+          "latest_close": 1.2931
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ATOMUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ATOMUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 594.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 1.297
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 167.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 1.298
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 147.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 1.3009
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 56.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 1.2961
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.3,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ATOMUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ATOMUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 582.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 1.311
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 180.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 1.313
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 142.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 1.3113
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 30.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 1.3116
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 64.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ATOMUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ETCUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 588.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 5.89
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 171.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:23:00Z",
+          "latest_close": 5.892
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 134.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 5.901
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 26.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:14:00Z",
+          "latest_close": 5.89
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.4,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETCUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ETCUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 584.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 5.9
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 176.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 5.902
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 127.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 5.901
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 60.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 5.89
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.3,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETCUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ETCUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 593.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 6.02
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 179.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 6.028
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 139.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 6.038
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 28.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 6.034
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETCUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "FILUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 610.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.5936
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 171.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:23:00Z",
+          "latest_close": 0.5964
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 136.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.593
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 27.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:19:00Z",
+          "latest_close": 0.5934
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.4,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=FILUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "FILUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 589.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.596
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 175.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.5963
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 143.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.595
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 39.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.5951
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.6,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=FILUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "FILUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 601.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.6135
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 384.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.6141
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 140.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.613
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 28.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.6135
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 45.2,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=FILUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ARBUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 586.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.1323
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 171.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:23:00Z",
+          "latest_close": 0.1324
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 123.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.1323
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 29.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:19:00Z",
+          "latest_close": 0.13229
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ARBUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ARBUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 611.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.1325
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 292.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.13255
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 141.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.1324
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 35.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.13241
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.2,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ARBUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ARBUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 596.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.1348
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 171.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.13475
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 150.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.1348
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 33.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.13482
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 67.7,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ARBUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "OPUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 583.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.0798
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 168.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:23:00Z",
+          "latest_close": 0.07992
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 128.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.0797
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 31.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.07976
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 44.6,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=OPUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "OPUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 584.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.0799
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 171.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.07989
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 131.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.0798
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 37.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.07975
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 24.3,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=OPUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "OPUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 598.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.082
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 180.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.08204
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 134.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.0817
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 29.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.08194
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.6,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=OPUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "INJUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 582.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 6.629
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 170.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:23:00Z",
+          "latest_close": 6.637
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 127.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 6.623
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 27.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 6.636
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 66.2,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=INJUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "INJUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 596.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 6.649
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 171.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 6.649
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 146.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 6.648
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 30.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 6.652
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.1,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=INJUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "INJUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 609.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 6.992
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 216.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 6.995
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 137.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 6.993
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 31.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 6.99
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.6,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=INJUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 587.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 108.6
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 168.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:23:00Z",
+          "latest_close": 108.77
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 143.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 108.51
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 30.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 108.56
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 19.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=AAVEUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 749.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 108.98
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 167.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 108.97
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 131.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 108.88
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 36.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 108.86
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 21.9,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=AAVEUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 600.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 109.74
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 182.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 109.72
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 163.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 109.76
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 29.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 109.62
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 22.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=AAVEUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "XLMUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 584.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.1382
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 170.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:24:00Z",
+          "latest_close": 0.13802
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 38.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.1381
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 57,
+          "latency_ms": 31.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.138062
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 70.9,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XLMUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "XLMUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 645.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.1386
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 170.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.13859
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 134.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.13845
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 32.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.138443
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 21.9,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XLMUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "XLMUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 587.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.1416
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 186.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.14156
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 188.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.141597
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 24.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.14152
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.0,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XLMUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "HBARUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 594.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.05831
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 174.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:24:00Z",
+          "latest_close": 0.0584
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 136.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.05844
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 37.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.0583
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 76.1,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=HBARUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "HBARUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 587.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.05849
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 170.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.0585
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 464.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.05844
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 30.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.05843
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 67.4,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=HBARUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "HBARUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 596.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.05932
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 193.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.05938
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 143.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.0593
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 29.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.05931
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 46.4,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=HBARUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ICPUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 595.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 2.218
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 168.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:24:00Z",
+          "latest_close": 2.22
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 165.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 2.211
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 37.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 2.2159
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 69.0,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ICPUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ICPUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 585.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 2.222
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 168.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 2.223
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 125.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 2.222
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 63.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 2.2217
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.6,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ICPUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "ICPUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 608.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 2.235
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 172.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 2.237
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 129.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 2.237
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 28.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 2.2357
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 16.1,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ICPUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "SEIUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 587.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.03919
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 185.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:24:00Z",
+          "latest_close": 0.03922
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 129.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.03925
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 36.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:18:00Z",
+          "latest_close": 0.03918
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 69.6,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SEIUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "SEIUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 595.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.0393
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 176.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.03929
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 138.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.03938
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 31.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.03925
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 45.3,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SEIUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "SEIUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 774.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.0397
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 172.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.0397
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 166.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.03969
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 35.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.03965
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 72.7,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SEIUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "TIAUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 609.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.3476
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 314.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:24:00Z",
+          "latest_close": 0.3482
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 167.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.3474
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 58,
+          "latency_ms": 27.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.3473
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=TIAUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "TIAUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 596.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.348
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 174.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.3482
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 123.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.3478
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 33.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.3476
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 68.0,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=TIAUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "TIAUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 589.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.3616
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 179.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.3615
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 134.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.3603
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 37.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.3615
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 24.0,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=TIAUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 586.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 3.73e-06
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 167.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:24:00Z",
+          "latest_close": 3.7414e-06
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 135.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 3.723e-06
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 25.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:19:00Z",
+          "latest_close": 3.72e-06
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.4,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=PEPEUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 591.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 3.73e-06
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 177.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 3.7299e-06
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 154.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 3.727e-06
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 33.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 3.72e-06
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 43.1,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=PEPEUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 597.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 3.88e-06
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 183.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 3.8759e-06
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 162.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 3.874e-06
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 26.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 3.87e-06
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 16.4,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=PEPEUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "WLDUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 593.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.2633
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 169.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:24:00Z",
+          "latest_close": 0.2638
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 140.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.2632
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 24.4,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:20:00Z",
+          "latest_close": 0.2632
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=WLDUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "WLDUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 593.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.2643
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 169.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.2643
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 177.5,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.2643
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 28.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.264
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.6,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=WLDUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "WLDUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 609.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.2715
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 185.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.2717
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 142.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.2714
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 24.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 0.2713
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 69.0,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=WLDUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "RENDERUSDT",
+      "market": "crypto",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 56,
+          "latency_ms": 592.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 1.371
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 171.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:24:00Z",
+          "latest_close": 1.375
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 55,
+          "latency_ms": 136.7,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 1.371
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 28.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:19:00Z",
+          "latest_close": 1.3703
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 18.4,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=RENDERUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "RENDERUSDT",
+      "market": "crypto",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 584.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 1.375
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 190.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 1.376
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 144.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 1.375
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 28.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 1.3743
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 16.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=RENDERUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "RENDERUSDT",
+      "market": "crypto",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 502.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "binance_vision",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 592.8,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 1.406
+        },
+        {
+          "adapter": "okx",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 182.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 1.407
+        },
+        {
+          "adapter": "kraken",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 141.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 1.404
+        },
+        {
+          "adapter": "coinbase",
+          "ok": true,
+          "bar_count": 59,
+          "latency_ms": 27.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-15T00:00:00Z",
+          "latest_close": 1.4055
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 17.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=RENDERUSDT&interval=D&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
         }
@@ -793,16 +5389,16 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 146.4,
+          "latency_ms": 125.2,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
           "latest_close": 1.1016855239868164
         },
         {
@@ -822,14 +5418,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 97.8,
+          "latency_ms": 231.3,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 1.1016855239868164
@@ -851,14 +5447,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 165.6,
+          "latency_ms": 230.8,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 1.1050212383270264
@@ -867,7 +5463,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 482.5,
+          "latency_ms": 502.0,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -880,17 +5476,17 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 141.8,
+          "latency_ms": 129.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 1.320166826248169
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 1.3204457759857178
         },
         {
           "adapter": "stooq",
@@ -909,14 +5505,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 123.7,
+          "latency_ms": 141.6,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 1.3203760385513306
@@ -938,14 +5534,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 114.0,
+          "latency_ms": 262.7,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 1.3231364488601685
@@ -954,7 +5550,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 424.6,
+          "latency_ms": 528.2,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -967,17 +5563,17 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 145.3,
+          "latency_ms": 165.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 159.51499938964844
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 159.51400756835938
         },
         {
           "adapter": "stooq",
@@ -996,14 +5592,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 107.1,
+          "latency_ms": 212.4,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 159.52999877929688
@@ -1025,14 +5621,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 163.4,
+          "latency_ms": 169.8,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 159.875
@@ -1041,7 +5637,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 497.4,
+          "latency_ms": 496.9,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1054,17 +5650,17 @@
       "interval": "1m",
       "quality_status": "unstable",
       "missing_ratio": 0.4979,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "缺 K 線比例過高 (49.8% > 10.0%)",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 119.9,
+          "latency_ms": 163.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 0.6756300330162048
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.6756756901741028
         },
         {
           "adapter": "stooq",
@@ -1083,14 +5679,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 172.6,
+          "latency_ms": 194.2,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 0.6756300330162048
@@ -1112,14 +5708,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 148.3,
+          "latency_ms": 171.0,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 0.680689811706543
@@ -1128,7 +5724,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 485.9,
+          "latency_ms": 511.0,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1141,17 +5737,17 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 367.9,
+          "latency_ms": 169.4,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 1.4279600381851196
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 1.4279799461364746
         },
         {
           "adapter": "stooq",
@@ -1170,14 +5766,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 320.6,
+          "latency_ms": 121.1,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 1.4280200004577637
@@ -1199,14 +5795,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 1167.9,
+          "latency_ms": 252.3,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 1.4261000156402588
@@ -1215,7 +5811,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 485.7,
+          "latency_ms": 348.0,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1228,17 +5824,17 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 144.1,
+          "latency_ms": 151.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 0.8396000266075134
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.8396700024604797
         },
         {
           "adapter": "stooq",
@@ -1257,14 +5853,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 118.2,
+          "latency_ms": 161.3,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 0.8393599987030029
@@ -1286,14 +5882,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 139.8,
+          "latency_ms": 218.6,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 0.8359299898147583
@@ -1302,7 +5898,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 426.7,
+          "latency_ms": 534.9,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1315,17 +5911,17 @@
       "interval": "1m",
       "quality_status": "unstable",
       "missing_ratio": 0.4979,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "缺 K 線比例過高 (49.8% > 10.0%)",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 119.8,
+          "latency_ms": 145.6,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 0.5516024231910706
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.551632821559906
         },
         {
           "adapter": "stooq",
@@ -1344,14 +5940,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 100.1,
+          "latency_ms": 180.9,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 0.5517545938491821
@@ -1373,14 +5969,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 139.4,
+          "latency_ms": 226.6,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 0.5544804930686951
@@ -1389,7 +5985,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 299.9,
+          "latency_ms": 501.3,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1402,17 +5998,17 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 0.6,
+      "delay_minutes": 0.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 160.0,
+          "latency_ms": 158.6,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:19:00Z",
-          "latest_close": 175.68600463867188
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 175.677001953125
         },
         {
           "adapter": "stooq",
@@ -1431,14 +6027,14 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 100.4,
+          "latency_ms": 164.2,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
           "latest_close": 175.69500732421875
@@ -1460,14 +6056,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 135.0,
+          "latency_ms": 233.3,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 176.65899658203125
@@ -1476,7 +6072,181 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 298.7,
+          "latency_ms": 533.6,
+          "error": "Empty bars returned",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "EURGBP",
+      "market": "forex",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "yfinance",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 219.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 0.8341100215911865
+        },
+        {
+          "adapter": "stooq",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 0.0,
+          "error": "Stooq free CSV only supports 1d interval",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "EURGBP",
+      "market": "forex",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "yfinance",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 221.2,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 0.834119975566864
+        },
+        {
+          "adapter": "stooq",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 0.0,
+          "error": "Stooq free CSV only supports 1d interval",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "EURGBP",
+      "market": "forex",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 622.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "yfinance",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 246.1,
+          "error": "",
+          "latest_ts_utc": "2026-11-13T00:00:00Z",
+          "latest_close": 0.8350200057029724
+        },
+        {
+          "adapter": "stooq",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 495.5,
+          "error": "Empty bars returned",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "GBPJPY",
+      "market": "forex",
+      "interval": "1m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "yfinance",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 179.0,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:21:00Z",
+          "latest_close": 210.61000061035156
+        },
+        {
+          "adapter": "stooq",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 0.0,
+          "error": "Stooq free CSV only supports 1d interval",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "GBPJPY",
+      "market": "forex",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 7.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "yfinance",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 184.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T08:00:00Z",
+          "latest_close": 210.6320037841797
+        },
+        {
+          "adapter": "stooq",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 0.0,
+          "error": "Stooq free CSV only supports 1d interval",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "GBPJPY",
+      "market": "forex",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 622.1,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "yfinance",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 249.3,
+          "error": "",
+          "latest_ts_utc": "2026-11-13T00:00:00Z",
+          "latest_close": 211.53599548339844
+        },
+        {
+          "adapter": "stooq",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 522.8,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1489,17 +6259,17 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 8.6,
+      "delay_minutes": 5.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 153.2,
+          "latency_ms": 161.0,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:11:00Z",
-          "latest_close": 3859.800048828125
+          "latest_ts_utc": "2026-11-16T08:16:00Z",
+          "latest_close": 3863.0
         },
         {
           "adapter": "stooq",
@@ -1518,17 +6288,17 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 186.5,
+          "latency_ms": 185.9,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
-          "latest_close": 3859.800048828125
+          "latest_close": 3858.300048828125
         },
         {
           "adapter": "stooq",
@@ -1547,14 +6317,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0698,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 111.7,
+          "latency_ms": 273.9,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 3886.300048828125
@@ -1563,7 +6333,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 455.6,
+          "latency_ms": 512.6,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1576,17 +6346,17 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 8.6,
+      "delay_minutes": 5.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 125.2,
+          "latency_ms": 143.9,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:11:00Z",
-          "latest_close": 47.33000183105469
+          "latest_ts_utc": "2026-11-16T08:16:00Z",
+          "latest_close": 47.42499923706055
         },
         {
           "adapter": "stooq",
@@ -1605,17 +6375,17 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 112.2,
+          "latency_ms": 193.8,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
-          "latest_close": 47.33000183105469
+          "latest_close": 47.36000061035156
         },
         {
           "adapter": "stooq",
@@ -1634,14 +6404,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0698,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 1150.0,
+          "latency_ms": 242.5,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 49.03099822998047
@@ -1650,7 +6420,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 457.6,
+          "latency_ms": 532.6,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1663,17 +6433,17 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 8.6,
+      "delay_minutes": 5.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 154.1,
+          "latency_ms": 117.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:11:00Z",
-          "latest_close": 88.93000030517578
+          "latest_ts_utc": "2026-11-16T08:16:00Z",
+          "latest_close": 88.91000366210938
         },
         {
           "adapter": "stooq",
@@ -1692,17 +6462,17 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 98.0,
+          "latency_ms": 121.2,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
-          "latest_close": 88.93000030517578
+          "latest_close": 88.98999786376953
         },
         {
           "adapter": "stooq",
@@ -1721,14 +6491,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0698,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 118.3,
+          "latency_ms": 272.1,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 88.55999755859375
@@ -1737,7 +6507,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 479.9,
+          "latency_ms": 527.1,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1750,16 +6520,16 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 8.6,
+      "delay_minutes": 5.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 144.9,
+          "latency_ms": 145.1,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:11:00Z",
+          "latest_ts_utc": "2026-11-16T08:16:00Z",
           "latest_close": 3.119999885559082
         },
         {
@@ -1779,17 +6549,17 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 102.8,
+          "latency_ms": 158.3,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
-          "latest_close": 3.119999885559082
+          "latest_close": 3.11899995803833
         },
         {
           "adapter": "stooq",
@@ -1808,14 +6578,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0698,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 118.5,
+          "latency_ms": 206.1,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 3.2300000190734863
@@ -1824,7 +6594,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 425.6,
+          "latency_ms": 361.3,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1837,17 +6607,17 @@
       "interval": "1m",
       "quality_status": "ok",
       "missing_ratio": 0.0164,
-      "delay_minutes": 8.6,
+      "delay_minutes": 5.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 152.5,
+          "latency_ms": 163.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T08:11:00Z",
-          "latest_close": 6.044000148773193
+          "latest_ts_utc": "2026-11-16T08:16:00Z",
+          "latest_close": 6.040500164031982
         },
         {
           "adapter": "stooq",
@@ -1866,17 +6636,17 @@
       "interval": "15m",
       "quality_status": "ok",
       "missing_ratio": 0.0,
-      "delay_minutes": 5.6,
+      "delay_minutes": 7.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 111.4,
+          "latency_ms": 170.4,
           "error": "",
           "latest_ts_utc": "2026-11-16T08:00:00Z",
-          "latest_close": 6.044000148773193
+          "latest_close": 6.040999889373779
         },
         {
           "adapter": "stooq",
@@ -1895,14 +6665,14 @@
       "interval": "1d",
       "quality_status": "ok",
       "missing_ratio": 0.0698,
-      "delay_minutes": 620.6,
+      "delay_minutes": 622.1,
       "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 307.5,
+          "latency_ms": 285.9,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 6.079500198364258
@@ -1911,7 +6681,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 491.4,
+          "latency_ms": 354.9,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
