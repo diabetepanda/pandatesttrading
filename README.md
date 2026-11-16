@@ -1,6 +1,6 @@
 # Signal Desk 報單網站＋模擬驗證艙
 
-本專案為部署於 GitHub Pages 與 GitHub Actions 的多市場交易報單與模擬驗證系統（目前進度：**階段 1 — 專案骨架、資料來源與品質檢查**）。
+本專案為部署於 GitHub Pages 與 GitHub Actions 的多市場交易報單與模擬驗證系統（目前進度：**階段 2 — 報單資料模型、模擬引擎、風控、補算重播與補倉政策**）。
 
 - 正式網址：https://diabetepanda.github.io/pandatesttrading/
 - 聲明：**本站為個人模擬驗證，非投資建議。**
@@ -69,3 +69,14 @@ pytest -v
 2. **Bybit 對美國雲端 IP 回 403**：實測顯示 `api.bybit.com` 會封鎖美國 GitHub Actions 主機 IP，已將 `bybit` 移至加密貨幣備援順序最後（優先使用 `data-api.binance.vision`、OKX、Kraken、Coinbase）。
 3. **外匯與商品休市時間**：系統假設外匯與商品週末休市為週五 22:00 UTC 至週日 22:00 UTC（計算缺 K 線與日線延遲時皆會扣除週末休市時段），商品每日結算休市約在 21:00–23:00 UTC 之間（≤ 90 分鐘），不計入缺 K 線。
 4. **Python 版本**：GitHub Actions 使用 Python 3.11；本機測試使用 macOS 內建 Python 3.9.6（程式皆加上 `from __future__ import annotations` 維持相容），最終以 GitHub Actions `CI Tests` 結果為準。
+
+## 假設與已知風險（階段 2）
+
+因 `SPEC.md` 未明確定義部分數值細節，階段 2 採用以下保守預設並集中放於 `config/config.yaml`：
+
+1. **買賣價（Bid / Ask）推算**：當資料來源無真實買賣報價時，依標的 `assumed_spread_bps` 由中間價對稱推算：`ask = mid * (1 + spread_bps / 20000)`、`bid = mid * (1 - spread_bps / 20000)`；做多進場與做空平倉用 `ask`，做空進場與做多平倉用 `bid`。
+2. **滑點預設**：市價／停損／停利觸發另加 `risk.default_slippage_bps`（預設 `1.0 bps`）之不利滑價。
+3. **預估爆倉價與維持保證金模型**：採逐倉等效模型計算，`initial_margin = notional / leverage`，`maintenance_margin = initial_margin * maintenance_margin_ratio`（預設 `0.50`），因此預估爆倉距離為 `entry * (1 - maintenance_margin_ratio) / leverage`；止損距離不得超過爆倉距離的 `50%`（`stop_to_liquidation_max_ratio: 0.5`）。
+4. **補倉政策 E（動態波動率＋風險預算）公式**：基準階段權重預設 `[0.40, 0.35, 0.25]`，基準名目額度保留低波動上調空間（`max_notional / 1.15`）；當 `atr_ratio >= 1.2` 乘以 `0.75`、當 `atr_ratio <= 0.8` 乘以 `1.15`，且總倉位始終受 `min(max_notional, R_plan / (stop_pct + cost_pct))` 與逐階段補倉風控鎖定上限約束。
+5. **隔夜／資金費率扣除**：依標的 `overnight_cost_daily_bps` 按實際持倉時間比例（`(close_ts - entry_ts) / 86400`）於平倉時扣除。
+6. **12% 回撤暫停解除流程**：觸發 12% 回撤暫停後，即使之後手動編輯 `control/control.json`，系統必須同時看到 `"risk_review_done": true` 且 `"risk_review_note"` 為非空白字串，才會解除暫停並寫入 `risk_review_completed` 事件。
