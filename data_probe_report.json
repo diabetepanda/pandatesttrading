@@ -1,56 +1,59 @@
 {
-  "generated_at_utc": "2026-11-16T04:32:16Z",
+  "generated_at_utc": "2026-11-16T05:10:12Z",
   "results": [
     {
       "symbol": "BTCUSDT",
       "market": "crypto",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 549.4,
+          "latency_ms": 406.6,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 64996.0
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 64716.58
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 249.7,
+          "latency_ms": 143.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 64999.5
-        },
-        {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 108.8,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=1&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 64718.7
         },
         {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 214.8,
+          "latency_ms": 46.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 65009.4
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 64702.6
         },
         {
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 92.4,
+          "latency_ms": 35.0,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 64943.13
+          "latest_ts_utc": "2026-11-16T05:06:00Z",
+          "latest_close": 64658.16
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 52.1,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -59,51 +62,54 @@
       "market": "crypto",
       "interval": "15m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 556.7,
+          "latency_ms": 403.9,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 65062.01
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 64821.73
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 194.0,
+          "latency_ms": 138.0,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 65067.6
-        },
-        {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 59.1,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=15&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 64821.5
         },
         {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 193.2,
+          "latency_ms": 200.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 65060.8
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 64808.5
         },
         {
           "adapter": "coinbase",
           "ok": true,
-          "bar_count": 60,
-          "latency_ms": 70.0,
+          "bar_count": 59,
+          "latency_ms": 35.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 64994.76
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 64759.53
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 28.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -112,12 +118,15 @@
       "market": "crypto",
       "interval": "1d",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 310.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 545.7,
+          "latency_ms": 405.4,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 65351.05
@@ -126,25 +135,16 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 211.3,
+          "latency_ms": 136.3,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 65348.3
         },
         {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 41.9,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=D&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
-        },
-        {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 185.0,
+          "latency_ms": 222.9,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 65358.0
@@ -153,10 +153,19 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 59.4,
+          "latency_ms": 36.3,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 65315.35
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 28.8,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BTCUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -165,51 +174,54 @@
       "market": "crypto",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 539.1,
+          "latency_ms": 407.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 1824.28
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 1814.96
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 187.1,
+          "latency_ms": 136.8,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 1824.29
-        },
-        {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 43.9,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETHUSDT&interval=1&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 1814.88
         },
         {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 195.2,
+          "latency_ms": 196.8,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 1826.18
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 1815.55
         },
         {
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 57.3,
+          "latency_ms": 38.1,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:30:00Z",
-          "latest_close": 1823.13
+          "latest_ts_utc": "2026-11-16T05:05:00Z",
+          "latest_close": 1812.0
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 27.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETHUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -218,51 +230,54 @@
       "market": "crypto",
       "interval": "15m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 568.8,
+          "latency_ms": 412.4,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 1827.01
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 1818.67
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 198.1,
+          "latency_ms": 134.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 1827.21
-        },
-        {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 33.1,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETHUSDT&interval=15&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 1818.92
         },
         {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 225.5,
+          "latency_ms": 222.2,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 1826.18
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 1818.65
         },
         {
           "adapter": "coinbase",
           "ok": true,
-          "bar_count": 60,
-          "latency_ms": 65.1,
+          "bar_count": 59,
+          "latency_ms": 34.4,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 1824.6
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 1816.84
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 32.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETHUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -271,12 +286,15 @@
       "market": "crypto",
       "interval": "1d",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 310.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 515.8,
+          "latency_ms": 409.6,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 1835.35
@@ -285,25 +303,16 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 190.4,
+          "latency_ms": 136.3,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 1835.44
         },
         {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 118.0,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETHUSDT&interval=D&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
-        },
-        {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 205.8,
+          "latency_ms": 184.3,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 1835.28
@@ -312,10 +321,19 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 58.2,
+          "latency_ms": 37.5,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 1834.54
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 26.5,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=ETHUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -324,51 +342,54 @@
       "market": "crypto",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 523.8,
+          "latency_ms": 407.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 71.83
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 71.5
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 192.2,
+          "latency_ms": 130.8,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 71.82
-        },
-        {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 81.9,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SOLUSDT&interval=1&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 71.5
         },
         {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 73.0,
+          "latency_ms": 39.8,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 71.76
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 71.44
         },
         {
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 56.5,
+          "latency_ms": 41.8,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:27:00Z",
-          "latest_close": 71.9
+          "latest_ts_utc": "2026-11-16T05:07:00Z",
+          "latest_close": 71.35
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 31.9,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SOLUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -377,51 +398,54 @@
       "market": "crypto",
       "interval": "15m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 550.9,
+          "latency_ms": 396.8,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 72.0
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 71.6
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 196.3,
+          "latency_ms": 135.4,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 72.01
-        },
-        {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 52.4,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SOLUSDT&interval=15&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 71.59
         },
         {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 93.4,
+          "latency_ms": 215.9,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 71.93
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 71.52
         },
         {
           "adapter": "coinbase",
           "ok": true,
-          "bar_count": 60,
-          "latency_ms": 62.4,
+          "bar_count": 59,
+          "latency_ms": 55.8,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 71.92
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 71.5
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 28.4,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SOLUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -430,12 +454,15 @@
       "market": "crypto",
       "interval": "1d",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 310.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 532.1,
+          "latency_ms": 404.0,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 72.77
@@ -444,25 +471,16 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 198.1,
+          "latency_ms": 133.2,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 72.77
         },
         {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 76.1,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SOLUSDT&interval=D&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
-        },
-        {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 202.4,
+          "latency_ms": 200.7,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 72.75
@@ -471,10 +489,19 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 52.2,
+          "latency_ms": 35.3,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 72.73
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 26.7,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=SOLUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -483,30 +510,33 @@
       "market": "crypto",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 522.0,
+          "latency_ms": 401.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 591.68
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 589.76
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 180.4,
+          "latency_ms": 136.4,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 591.97
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 589.81
         },
         {
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 82.8,
+          "latency_ms": 26.7,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BNBUSDT&interval=1&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -518,30 +548,33 @@
       "market": "crypto",
       "interval": "15m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 525.2,
+          "latency_ms": 401.0,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 592.52
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 590.08
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 194.7,
+          "latency_ms": 138.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 592.64
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 590.2
         },
         {
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 42.7,
+          "latency_ms": 28.5,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BNBUSDT&interval=15&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -553,12 +586,15 @@
       "market": "crypto",
       "interval": "1d",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 310.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 525.0,
+          "latency_ms": 406.7,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 596.79
@@ -567,7 +603,7 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 205.4,
+          "latency_ms": 137.2,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 596.92
@@ -576,7 +612,7 @@
           "adapter": "bybit",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 52.8,
+          "latency_ms": 28.2,
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=BNBUSDT&interval=D&limit=60",
           "latest_ts_utc": null,
           "latest_close": null
@@ -588,51 +624,54 @@
       "market": "crypto",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 525.8,
+          "latency_ms": 401.0,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 0.9624
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 0.9583
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 183.7,
+          "latency_ms": 137.4,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 0.9622
-        },
-        {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 45.2,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XRPUSDT&interval=1&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 0.9583
         },
         {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 182.4,
+          "latency_ms": 190.9,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 0.96101
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 0.95746
         },
         {
           "adapter": "coinbase",
           "ok": true,
-          "bar_count": 60,
-          "latency_ms": 52.1,
+          "bar_count": 59,
+          "latency_ms": 39.2,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:30:00Z",
-          "latest_close": 0.9622
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 0.9574
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 27.7,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XRPUSDT&interval=1&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -641,51 +680,54 @@
       "market": "crypto",
       "interval": "15m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 525.4,
+          "latency_ms": 398.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 0.964
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 0.9583
         },
         {
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 202.5,
+          "latency_ms": 137.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 0.9641
-        },
-        {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 62.7,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XRPUSDT&interval=15&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 0.9583
         },
         {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 183.3,
+          "latency_ms": 193.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 0.96314
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 0.95717
         },
         {
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 59.2,
+          "latency_ms": 47.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 0.9631
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 0.9574
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 26.0,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XRPUSDT&interval=15&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -694,12 +736,15 @@
       "market": "crypto",
       "interval": "1d",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 310.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "binance_vision",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 538.0,
+          "latency_ms": 401.3,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 0.9742
@@ -708,25 +753,16 @@
           "adapter": "okx",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 197.3,
+          "latency_ms": 139.4,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 0.9742
         },
         {
-          "adapter": "bybit",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 66.2,
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XRPUSDT&interval=D&limit=60",
-          "latest_ts_utc": null,
-          "latest_close": null
-        },
-        {
           "adapter": "kraken",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 218.2,
+          "latency_ms": 196.0,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 0.97387
@@ -735,10 +771,19 @@
           "adapter": "coinbase",
           "ok": true,
           "bar_count": 59,
-          "latency_ms": 48.7,
+          "latency_ms": 35.6,
           "error": "",
           "latest_ts_utc": "2026-11-15T00:00:00Z",
           "latest_close": 0.9739
+        },
+        {
+          "adapter": "bybit",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 27.0,
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/kline?category=spot&symbol=XRPUSDT&interval=D&limit=60",
+          "latest_ts_utc": null,
+          "latest_close": null
         }
       ]
     },
@@ -747,15 +792,18 @@
       "market": "forex",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 323.4,
+          "latency_ms": 125.8,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 1.1016855239868164
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 1.102292776107788
         },
         {
           "adapter": "stooq",
@@ -773,15 +821,18 @@
       "market": "forex",
       "interval": "15m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 155.2,
+          "latency_ms": 91.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 1.1015641689300537
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 1.1021713018417358
         },
         {
           "adapter": "stooq",
@@ -798,13 +849,16 @@
       "symbol": "EURUSD",
       "market": "forex",
       "interval": "1d",
-      "quality_status": "stale",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 180.7,
+          "latency_ms": 72.4,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 1.1050212383270264
@@ -813,7 +867,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 580.3,
+          "latency_ms": 709.8,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -825,15 +879,18 @@
       "market": "forex",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0083,
+      "delay_minutes": 0.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 288.8,
+          "latency_ms": 118.6,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 1.320393443107605
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 1.320899248123169
         },
         {
           "adapter": "stooq",
@@ -851,15 +908,18 @@
       "market": "forex",
       "interval": "15m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 291.0,
+          "latency_ms": 108.9,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 1.3203411102294922
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 1.3207770586013794
         },
         {
           "adapter": "stooq",
@@ -876,13 +936,16 @@
       "symbol": "GBPUSD",
       "market": "forex",
       "interval": "1d",
-      "quality_status": "stale",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 179.8,
+          "latency_ms": 64.7,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 1.3231364488601685
@@ -891,7 +954,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 574.7,
+          "latency_ms": 527.6,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -903,15 +966,18 @@
       "market": "forex",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 300.7,
+          "latency_ms": 132.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 159.6750030517578
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 159.5229949951172
         },
         {
           "adapter": "stooq",
@@ -928,16 +994,19 @@
       "symbol": "USDJPY",
       "market": "forex",
       "interval": "15m",
-      "quality_status": "unstable",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 228.8,
+          "latency_ms": 124.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 159.656005859375
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 159.60000610351562
         },
         {
           "adapter": "stooq",
@@ -954,13 +1023,16 @@
       "symbol": "USDJPY",
       "market": "forex",
       "interval": "1d",
-      "quality_status": "stale",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 177.9,
+          "latency_ms": 63.9,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 159.875
@@ -969,7 +1041,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 563.5,
+          "latency_ms": 508.1,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -981,15 +1053,18 @@
       "market": "forex",
       "interval": "1m",
       "quality_status": "unstable",
+      "missing_ratio": 0.4979,
+      "delay_minutes": 0.2,
+      "quality_reason": "缺 K 線比例過高 (49.8% > 10.0%)",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 266.8,
+          "latency_ms": 107.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 0.6767273545265198
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 0.6760868430137634
         },
         {
           "adapter": "stooq",
@@ -1007,15 +1082,18 @@
       "market": "forex",
       "interval": "15m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 241.4,
+          "latency_ms": 93.4,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 0.6767273545265198
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 0.6761782765388489
         },
         {
           "adapter": "stooq",
@@ -1032,13 +1110,16 @@
       "symbol": "AUDUSD",
       "market": "forex",
       "interval": "1d",
-      "quality_status": "stale",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 194.3,
+          "latency_ms": 62.4,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 0.680689811706543
@@ -1047,7 +1128,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 544.1,
+          "latency_ms": 512.6,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1059,15 +1140,18 @@
       "market": "forex",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 196.7,
+          "latency_ms": 121.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 1.427839994430542
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 1.4276700019836426
         },
         {
           "adapter": "stooq",
@@ -1085,15 +1169,18 @@
       "market": "forex",
       "interval": "15m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 279.1,
+          "latency_ms": 117.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 1.4278299808502197
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 1.427780032157898
         },
         {
           "adapter": "stooq",
@@ -1110,13 +1197,16 @@
       "symbol": "USDCAD",
       "market": "forex",
       "interval": "1d",
-      "quality_status": "stale",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 184.8,
+          "latency_ms": 62.9,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 1.4261000156402588
@@ -1125,7 +1215,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 596.4,
+          "latency_ms": 516.5,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1137,15 +1227,18 @@
       "market": "forex",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 328.5,
+          "latency_ms": 139.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 0.8395100235939026
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 0.8390799760818481
         },
         {
           "adapter": "stooq",
@@ -1163,15 +1256,18 @@
       "market": "forex",
       "interval": "15m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 293.2,
+          "latency_ms": 97.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 0.8396199941635132
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 0.8391900062561035
         },
         {
           "adapter": "stooq",
@@ -1188,13 +1284,16 @@
       "symbol": "USDCHF",
       "market": "forex",
       "interval": "1d",
-      "quality_status": "stale",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 185.0,
+          "latency_ms": 60.4,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 0.8359299898147583
@@ -1203,7 +1302,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 366.3,
+          "latency_ms": 519.5,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1215,40 +1314,17 @@
       "market": "forex",
       "interval": "1m",
       "quality_status": "unstable",
+      "missing_ratio": 0.4979,
+      "delay_minutes": 0.2,
+      "quality_reason": "缺 K 線比例過高 (49.8% > 10.0%)",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 285.7,
+          "latency_ms": 127.7,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 0.5523030757904053
-        },
-        {
-          "adapter": "stooq",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 0.0,
-          "error": "Stooq free CSV only supports 1d interval",
-          "latest_ts_utc": null,
-          "latest_close": null
-        }
-      ]
-    },
-    {
-      "symbol": "NZDUSD",
-      "market": "forex",
-      "interval": "15m",
-      "quality_status": "ok",
-      "attempts": [
-        {
-          "adapter": "yfinance",
-          "ok": true,
-          "bar_count": 60,
-          "latency_ms": 279.7,
-          "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
           "latest_close": 0.5521811246871948
         },
         {
@@ -1265,14 +1341,46 @@
     {
       "symbol": "NZDUSD",
       "market": "forex",
-      "interval": "1d",
-      "quality_status": "stale",
+      "interval": "15m",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 191.9,
+          "latency_ms": 93.6,
+          "error": "",
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 0.5522421002388
+        },
+        {
+          "adapter": "stooq",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 0.0,
+          "error": "Stooq free CSV only supports 1d interval",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "NZDUSD",
+      "market": "forex",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "yfinance",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 81.5,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 0.5544804930686951
@@ -1281,7 +1389,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 504.3,
+          "latency_ms": 506.6,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1293,15 +1401,18 @@
       "market": "forex",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 0.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 307.9,
+          "latency_ms": 146.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:31:00Z",
-          "latest_close": 175.86599731445312
+          "latest_ts_utc": "2026-11-16T05:09:00Z",
+          "latest_close": 175.79200744628906
         },
         {
           "adapter": "stooq",
@@ -1318,16 +1429,19 @@
       "symbol": "EURJPY",
       "market": "forex",
       "interval": "15m",
-      "quality_status": "unstable",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 10.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 234.1,
+          "latency_ms": 112.1,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 175.8280029296875
+          "latest_ts_utc": "2026-11-16T04:45:00Z",
+          "latest_close": 175.8509979248047
         },
         {
           "adapter": "stooq",
@@ -1344,13 +1458,16 @@
       "symbol": "EURJPY",
       "market": "forex",
       "interval": "1d",
-      "quality_status": "stale",
+      "quality_status": "ok",
+      "missing_ratio": 0.0,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 200.6,
+          "latency_ms": 70.8,
           "error": "",
           "latest_ts_utc": "2026-11-13T00:00:00Z",
           "latest_close": 176.65899658203125
@@ -1359,7 +1476,7 @@
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 362.5,
+          "latency_ms": 521.2,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1371,15 +1488,18 @@
       "market": "commodity",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0083,
+      "delay_minutes": 9.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 281.1,
+          "latency_ms": 115.6,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:22:00Z",
-          "latest_close": 3873.300048828125
+          "latest_ts_utc": "2026-11-16T05:00:00Z",
+          "latest_close": 3868.199951171875
         },
         {
           "adapter": "stooq",
@@ -1396,15 +1516,18 @@
       "symbol": "XAUUSD",
       "market": "commodity",
       "interval": "15m",
-      "quality_status": "unstable",
+      "quality_status": "stale",
+      "missing_ratio": 0.0,
+      "delay_minutes": 115.2,
+      "quality_reason": "資料延遲 (115.2 分鐘 > 45 分鐘)",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 235.8,
+          "latency_ms": 100.6,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
+          "latest_ts_utc": "2026-11-16T03:00:00Z",
           "latest_close": 3873.39990234375
         },
         {
@@ -1423,21 +1546,24 @@
       "market": "commodity",
       "interval": "1d",
       "quality_status": "ok",
+      "missing_ratio": 0.0698,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 184.4,
+          "latency_ms": 63.9,
           "error": "",
-          "latest_ts_utc": "2026-11-15T00:00:00Z",
-          "latest_close": 3873.39990234375
+          "latest_ts_utc": "2026-11-13T00:00:00Z",
+          "latest_close": 3886.300048828125
         },
         {
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 570.5,
+          "latency_ms": 501.0,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1449,41 +1575,18 @@
       "market": "commodity",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.04,
+      "delay_minutes": 9.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 298.2,
+          "latency_ms": 129.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:22:00Z",
-          "latest_close": 47.47999954223633
-        },
-        {
-          "adapter": "stooq",
-          "ok": false,
-          "bar_count": 0,
-          "latency_ms": 0.0,
-          "error": "Stooq free CSV only supports 1d interval",
-          "latest_ts_utc": null,
-          "latest_close": null
-        }
-      ]
-    },
-    {
-      "symbol": "XAGUSD",
-      "market": "commodity",
-      "interval": "15m",
-      "quality_status": "unstable",
-      "attempts": [
-        {
-          "adapter": "yfinance",
-          "ok": true,
-          "bar_count": 60,
-          "latency_ms": 254.1,
-          "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 47.47999954223633
+          "latest_ts_utc": "2026-11-16T05:00:00Z",
+          "latest_close": 47.275001525878906
         },
         {
           "adapter": "stooq",
@@ -1499,23 +1602,55 @@
     {
       "symbol": "XAGUSD",
       "market": "commodity",
-      "interval": "1d",
-      "quality_status": "ok",
+      "interval": "15m",
+      "quality_status": "stale",
+      "missing_ratio": 0.0,
+      "delay_minutes": 115.2,
+      "quality_reason": "資料延遲 (115.2 分鐘 > 45 分鐘)",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 184.6,
+          "latency_ms": 89.8,
           "error": "",
-          "latest_ts_utc": "2026-11-15T00:00:00Z",
-          "latest_close": 47.47999954223633
+          "latest_ts_utc": "2026-11-16T03:00:00Z",
+          "latest_close": 47.42499923706055
         },
         {
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 567.7,
+          "latency_ms": 0.0,
+          "error": "Stooq free CSV only supports 1d interval",
+          "latest_ts_utc": null,
+          "latest_close": null
+        }
+      ]
+    },
+    {
+      "symbol": "XAGUSD",
+      "market": "commodity",
+      "interval": "1d",
+      "quality_status": "ok",
+      "missing_ratio": 0.0698,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
+      "attempts": [
+        {
+          "adapter": "yfinance",
+          "ok": true,
+          "bar_count": 60,
+          "latency_ms": 66.9,
+          "error": "",
+          "latest_ts_utc": "2026-11-13T00:00:00Z",
+          "latest_close": 49.03099822998047
+        },
+        {
+          "adapter": "stooq",
+          "ok": false,
+          "bar_count": 0,
+          "latency_ms": 511.1,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1527,15 +1662,18 @@
       "market": "commodity",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0164,
+      "delay_minutes": 9.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 289.2,
+          "latency_ms": 119.5,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:22:00Z",
-          "latest_close": 88.44000244140625
+          "latest_ts_utc": "2026-11-16T05:00:00Z",
+          "latest_close": 88.33000183105469
         },
         {
           "adapter": "stooq",
@@ -1552,16 +1690,19 @@
       "symbol": "WTI",
       "market": "commodity",
       "interval": "15m",
-      "quality_status": "ok",
+      "quality_status": "stale",
+      "missing_ratio": 0.0,
+      "delay_minutes": 145.2,
+      "quality_reason": "資料延遲 (145.2 分鐘 > 45 分鐘)",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 270.8,
+          "latency_ms": 103.6,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 88.44000244140625
+          "latest_ts_utc": "2026-11-16T02:30:00Z",
+          "latest_close": 88.05999755859375
         },
         {
           "adapter": "stooq",
@@ -1579,21 +1720,24 @@
       "market": "commodity",
       "interval": "1d",
       "quality_status": "ok",
+      "missing_ratio": 0.0698,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 184.9,
+          "latency_ms": 72.2,
           "error": "",
-          "latest_ts_utc": "2026-11-15T00:00:00Z",
-          "latest_close": 88.44000244140625
+          "latest_ts_utc": "2026-11-13T00:00:00Z",
+          "latest_close": 88.55999755859375
         },
         {
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 522.8,
+          "latency_ms": 530.9,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1605,15 +1749,18 @@
       "market": "commodity",
       "interval": "1m",
       "quality_status": "unstable",
+      "missing_ratio": 0.2157,
+      "delay_minutes": 9.2,
+      "quality_reason": "缺 K 線比例過高 (21.6% > 10.0%)",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 314.2,
+          "latency_ms": 148.1,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:21:00Z",
-          "latest_close": 3.1640000343322754
+          "latest_ts_utc": "2026-11-16T05:00:00Z",
+          "latest_close": 3.1559998989105225
         },
         {
           "adapter": "stooq",
@@ -1630,16 +1777,19 @@
       "symbol": "NATGAS",
       "market": "commodity",
       "interval": "15m",
-      "quality_status": "unstable",
+      "quality_status": "stale",
+      "missing_ratio": 0.0,
+      "delay_minutes": 145.2,
+      "quality_reason": "資料延遲 (145.2 分鐘 > 45 分鐘)",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 239.2,
+          "latency_ms": 112.0,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 3.1640000343322754
+          "latest_ts_utc": "2026-11-16T02:30:00Z",
+          "latest_close": 3.1519999504089355
         },
         {
           "adapter": "stooq",
@@ -1657,21 +1807,24 @@
       "market": "commodity",
       "interval": "1d",
       "quality_status": "ok",
+      "missing_ratio": 0.0698,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 181.1,
+          "latency_ms": 62.8,
           "error": "",
-          "latest_ts_utc": "2026-11-15T00:00:00Z",
-          "latest_close": 3.1640000343322754
+          "latest_ts_utc": "2026-11-13T00:00:00Z",
+          "latest_close": 3.2300000190734863
         },
         {
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 532.0,
+          "latency_ms": 505.6,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
@@ -1683,15 +1836,18 @@
       "market": "commodity",
       "interval": "1m",
       "quality_status": "ok",
+      "missing_ratio": 0.0244,
+      "delay_minutes": 9.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 292.8,
+          "latency_ms": 141.1,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:23:00Z",
-          "latest_close": 6.013000011444092
+          "latest_ts_utc": "2026-11-16T05:00:00Z",
+          "latest_close": 6.007999897003174
         },
         {
           "adapter": "stooq",
@@ -1708,16 +1864,19 @@
       "symbol": "COPPER",
       "market": "commodity",
       "interval": "15m",
-      "quality_status": "unstable",
+      "quality_status": "stale",
+      "missing_ratio": 0.0,
+      "delay_minutes": 115.2,
+      "quality_reason": "資料延遲 (115.2 分鐘 > 45 分鐘)",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 225.5,
+          "latency_ms": 92.3,
           "error": "",
-          "latest_ts_utc": "2026-11-16T04:15:00Z",
-          "latest_close": 6.013000011444092
+          "latest_ts_utc": "2026-11-16T03:00:00Z",
+          "latest_close": 6.003499984741211
         },
         {
           "adapter": "stooq",
@@ -1735,21 +1894,24 @@
       "market": "commodity",
       "interval": "1d",
       "quality_status": "ok",
+      "missing_ratio": 0.0698,
+      "delay_minutes": 430.2,
+      "quality_reason": "正常",
       "attempts": [
         {
           "adapter": "yfinance",
           "ok": true,
           "bar_count": 60,
-          "latency_ms": 189.8,
+          "latency_ms": 64.9,
           "error": "",
-          "latest_ts_utc": "2026-11-15T00:00:00Z",
-          "latest_close": 6.013000011444092
+          "latest_ts_utc": "2026-11-13T00:00:00Z",
+          "latest_close": 6.079500198364258
         },
         {
           "adapter": "stooq",
           "ok": false,
           "bar_count": 0,
-          "latency_ms": 592.7,
+          "latency_ms": 516.3,
           "error": "Empty bars returned",
           "latest_ts_utc": null,
           "latest_close": null
