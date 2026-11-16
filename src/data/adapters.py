@@ -5,7 +5,9 @@ from __future__ import annotations
 import csv
 import io
 import json
+import lzma
 import pickle
+import struct
 import threading
 import time
 import zipfile
@@ -26,6 +28,7 @@ INTERVAL_SECONDS: dict[str, int] = {
     "1m": 60,
     "15m": 900,
     "1h": 3600,
+    "4h": 14400,
     "1d": 86400,
 }
 
@@ -998,3 +1001,205 @@ class BinanceMonthlyArchiveFetcher:
                 merged_map[b.ts_utc] = b
 
         return sorted(merged_map.values(), key=lambda b: b.ts_utc)
+
+
+DUKASCOPY_SYMBOL_MAP: dict[str, tuple[str, float]] = {
+    "XAUUSD": ("XAUUSD", 1000.0),
+    "XAGUSD": ("XAGUSD", 1000.0),
+    "COPPER": ("COPPERCMDUSD", 1000.0),
+    "WTI": ("LIGHTCMDUSD", 1000.0),
+    "NATGAS": ("NATGASCMDUSD", 1000.0),
+    "EURUSD": ("EURUSD", 100000.0),
+    "GBPUSD": ("GBPUSD", 100000.0),
+    "USDJPY": ("USDJPY", 1000.0),
+    "AUDUSD": ("AUDUSD", 100000.0),
+    "USDCAD": ("USDCAD", 100000.0),
+    "USDCHF": ("USDCHF", 100000.0),
+    "NZDUSD": ("NZDUSD", 100000.0),
+    "EURJPY": ("EURJPY", 1000.0),
+    "EURGBP": ("EURGBP", 100000.0),
+    "GBPJPY": ("GBPJPY", 1000.0),
+}
+
+
+def parse_dukascopy_bi5(
+    bi5_bytes: bytes,
+    base_dt_utc: datetime,
+    divisor: float,
+    interval: str = "1h",
+    now_ts_sec: float | None = None,
+) -> list[OHLCVBar]:
+    """Decompress Dukascopy LZMA .bi5 candle buffer into closed OHLCVBar entries."""
+    if not bi5_bytes:
+        return []
+    raw = lzma.decompress(bi5_bytes)
+    rec_size = 24
+    now_sec = now_ts_sec if now_ts_sec is not None else datetime.now(timezone.utc).timestamp()
+    base_sec = base_dt_utc.astimezone(timezone.utc).timestamp()
+    out: list[OHLCVBar] = []
+    for offset in range(0, len(raw) - (len(raw) % rec_size), rec_size):
+        dt_off, o_int, c_int, l_int, h_int, vol = struct.unpack(">5If", raw[offset : offset + rec_size])
+        open_sec = base_sec + float(dt_off)
+        if not _is_closed_bar(open_sec, interval, now_sec):
+            continue
+        out.append(
+            OHLCVBar(
+                ts_utc=_sec_to_iso_utc(open_sec),
+                open=round(o_int / divisor, 6),
+                high=round(h_int / divisor, 6),
+                low=round(l_int / divisor, 6),
+                close=round(c_int / divisor, 6),
+                volume=float(vol),
+            )
+        )
+    return out
+
+
+class DukascopyArchiveFetcher:
+    """Fetches and caches >=5y FX/commodity 15m & 1h bars from Dukascopy free public datafeed."""
+
+    HOUR_URL = "https://datafeed.dukascopy.com/datafeed/{pair}/{year:04d}/{month0:02d}/BID_candles_hour_1.bi5"
+    DAY_MIN_URL = "https://datafeed.dukascopy.com/datafeed/{pair}/{year:04d}/{month0:02d}/{day:02d}/BID_candles_min_1.bi5"
+
+    def __init__(
+        self,
+        cache_dir: Path | str = ".cache/dukascopy",
+        timeout_sec: int = 5,
+    ) -> None:
+        self.cache_dir = Path(cache_dir)
+        self.timeout_sec = timeout_sec
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self._session = requests.Session()
+        self._unreachable = False
+
+    def _fetch_hour_bi5(self, pair: str, year: int, month1: int) -> bytes | None:
+        month0 = month1 - 1
+        cpath = self.cache_dir / pair / f"{year:04d}" / f"{month0:02d}_BID_candles_hour_1.bi5"
+        if cpath.exists() and cpath.stat().st_size > 0:
+            return cpath.read_bytes()
+        if self._unreachable:
+            return None
+        url = self.HOUR_URL.format(pair=pair, year=year, month0=month0)
+        try:
+            resp = self._session.get(url, headers={"User-Agent": USER_AGENT}, timeout=self.timeout_sec)
+            if resp.status_code in (403, 429) or resp.status_code >= 500:
+                self._unreachable = True
+                return None
+            if resp.status_code == 404 or not resp.content:
+                return None
+            lzma.decompress(resp.content)
+            cpath.parent.mkdir(parents=True, exist_ok=True)
+            cpath.write_bytes(resp.content)
+            return resp.content
+        except Exception:
+            self._unreachable = True
+            return None
+
+    def _fetch_day_min_bi5(self, pair: str, year: int, month1: int, day: int) -> bytes | None:
+        month0 = month1 - 1
+        cpath = self.cache_dir / pair / f"{year:04d}" / f"{month0:02d}" / f"{day:02d}_BID_candles_min_1.bi5"
+        if cpath.exists() and cpath.stat().st_size > 0:
+            return cpath.read_bytes()
+        if self._unreachable:
+            return None
+        url = self.DAY_MIN_URL.format(pair=pair, year=year, month0=month0, day=day)
+        try:
+            resp = self._session.get(url, headers={"User-Agent": USER_AGENT}, timeout=self.timeout_sec)
+            if resp.status_code in (403, 429) or resp.status_code >= 500:
+                self._unreachable = True
+                return None
+            if resp.status_code == 404 or not resp.content:
+                return None
+            lzma.decompress(resp.content)
+            cpath.parent.mkdir(parents=True, exist_ok=True)
+            cpath.write_bytes(resp.content)
+            return resp.content
+        except Exception:
+            self._unreachable = True
+            return None
+
+    def fetch_history(
+        self,
+        symbol: str,
+        interval: str,
+        years: float = 5.1,
+        now_utc: datetime | None = None,
+    ) -> list[OHLCVBar]:
+        """Return closed 1h or 15m (resampled from 1m) bars from Dukascopy, cached on disk."""
+        mapping = DUKASCOPY_SYMBOL_MAP.get(symbol)
+        if not mapping or interval not in ("15m", "1h"):
+            return []
+        pair, divisor = mapping
+        now = (now_utc or datetime.now(timezone.utc)).astimezone(timezone.utc)
+        now_sec = now.timestamp()
+        start_dt = now - timedelta(days=int(round(years * 365.25)))
+
+        merged_dir = self.cache_dir / "merged"
+        merged_dir.mkdir(parents=True, exist_ok=True)
+        cache_key = f"{symbol}_{interval}_{start_dt.strftime('%Y%m')}_{now.strftime('%Y%m')}.pkl"
+        merged_path = merged_dir / cache_key
+        if merged_path.exists():
+            try:
+                cached = pickle.loads(merged_path.read_bytes())
+                if isinstance(cached, list) and cached:
+                    return cached
+            except Exception:
+                pass
+
+        if self._unreachable:
+            return []
+
+        bars_by_ts: dict[str, OHLCVBar] = {}
+        if interval == "1h":
+            ym_cur = (start_dt.year, start_dt.month)
+            ym_end = (now.year, now.month)
+            # Probe most recent completed month first so unreachable hosts fail fast
+            prev_m = (now.replace(day=1) - timedelta(days=1))
+            probe_bytes = self._fetch_hour_bi5(pair, prev_m.year, prev_m.month)
+            if not probe_bytes and self._unreachable:
+                return []
+            while ym_cur <= ym_end:
+                y, m = ym_cur
+                raw_bytes = self._fetch_hour_bi5(pair, y, m)
+                if raw_bytes:
+                    base_dt = datetime(y, m, 1, 0, 0, tzinfo=timezone.utc)
+                    for b in parse_dukascopy_bi5(raw_bytes, base_dt, divisor, "1h", now_ts_sec=now_sec):
+                        bars_by_ts[b.ts_utc] = b
+                if self._unreachable:
+                    return []
+                m += 1
+                if m > 12:
+                    m = 1
+                    y += 1
+                ym_cur = (y, m)
+        else:
+            from src.data.resample import resample_1m_to_15m
+
+            # Probe one recent weekday first so unreachable hosts fail fast
+            probe_dt = (now - timedelta(days=3)).replace(hour=0, minute=0, second=0, microsecond=0)
+            while probe_dt.weekday() >= 5:
+                probe_dt -= timedelta(days=1)
+            self._fetch_day_min_bi5(pair, probe_dt.year, probe_dt.month, probe_dt.day)
+            if self._unreachable:
+                return []
+
+            cursor = start_dt.replace(hour=0, minute=0, second=0, microsecond=0)
+            bars_1m: list[OHLCVBar] = []
+            while cursor <= now:
+                if cursor.weekday() < 5:
+                    raw_bytes = self._fetch_day_min_bi5(pair, cursor.year, cursor.month, cursor.day)
+                    if raw_bytes:
+                        bars_1m.extend(parse_dukascopy_bi5(raw_bytes, cursor, divisor, "1m", now_ts_sec=now_sec))
+                    if self._unreachable:
+                        return []
+                cursor += timedelta(days=1)
+            for b in resample_1m_to_15m(bars_1m, now_utc=now):
+                bars_by_ts[b.ts_utc] = b
+
+        out = sorted(bars_by_ts.values(), key=lambda b: b.ts_utc)
+        if out:
+            try:
+                merged_path.write_bytes(pickle.dumps(out))
+            except Exception:
+                pass
+        return out

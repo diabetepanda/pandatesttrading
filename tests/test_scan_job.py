@@ -127,9 +127,9 @@ def test_run_scan_excludes_unstable_1m_instruments_in_watch_today(tmp_path: Path
     for sym in ("AUDUSD", "NZDUSD", "NATGAS"):
         assert sym in by_sym
         assert "資料不穩" in by_sym[sym]["reason"]
-    # Even in Phase 1 watch-only mode, derivatives must still be recorded for crypto
+    # Derivatives must still be recorded for crypto during live Round-2 scan
     btc_item = by_sym["BTCUSDT"]
-    assert "第一階段" in btc_item["reason"]
+    assert "S1" in btc_item["reason"]
     assert btc_item["derivatives"]["status"] == "ok"
     assert btc_item["derivatives"]["funding_rate"] == 0.0001
     assert btc_item["derivatives"]["oi_change"] == 1.0

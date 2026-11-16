@@ -29,12 +29,12 @@
   let activeEquityChart = null;
 
   const STRATEGY_NAMES = {
-    S1: "S1 RSI(2) 回檔買進（短線）",
-    S2: "S2 波動突破（短線）",
-    S3: "S3 區間來回（短線）",
-    L1: "L1 多標的趨勢跟隨（長線）",
-    L2: "L2 加密強弱輪動（長線）",
-    L3: "L3 200 日均線趨勢過濾（長線）",
+    S1: "S1 開盤區間突破（短線）",
+    S2: "S2 4 小時突破（短線）",
+    S3: "S3 日線 RSI 回檔（短線）",
+    L1: "L1 波動度調整趨勢跟隨（長線）",
+    L2: "L2 精簡標的趨勢跟隨（長線）",
+    L3: "L3 雙動能（長線）",
   };
 
   function formatTaipeiTime(isoOrDate) {
@@ -102,6 +102,7 @@
     if (status === "ok") return '<span class="pill pill-ok">正常</span>';
     if (status === "stale") return '<span class="pill pill-warn">延遲/休市</span>';
     if (status === "unstable") return '<span class="pill pill-warn">資料不穩</span>';
+    if (status === "skipped") return '<span class="muted">僅日線</span>';
     return '<span class="pill pill-fail">資料來源失敗</span>';
   }
 
@@ -117,7 +118,7 @@
   }
 
   function marketLabel(market) {
-    const map = { crypto: "加密貨幣", forex: "外匯", commodity: "商品", stock: "股票" };
+    const map = { crypto: "加密貨幣", forex: "外匯", commodity: "商品", index: "指數", stock: "股票" };
     return map[market] || market;
   }
 
@@ -481,15 +482,20 @@
         const adds = Array.isArray(s.add_levels) && s.add_levels.length > 0
           ? s.add_levels.map((l) => `${l.price}`).join(", ")
           : "無";
+        const verLabel = s.verification_status || "觀察中（未通過驗證）";
+        const verCls = verLabel === "已驗證" ? "pill-ok" : "pill-warn";
 
         return `
           <article class="signal-card" data-sid="${s.signal_id}">
             <div class="signal-card-head">
               <div>
                 <div class="signal-card-title">${s.symbol} ${dirBadge}</div>
-                <div class="muted">${s.signal_id}｜策略 ${s.strategy}｜${formatTaipeiTime(s.published_at_utc)}</div>
+                <div class="muted">${s.signal_id}｜${STRATEGY_NAMES[s.strategy] || `策略 ${s.strategy}`}｜${formatTaipeiTime(s.published_at_utc)}</div>
               </div>
-              <span class="pill pill-live">${lifecycleLabel(s.lifecycle_state)}</span>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+                <span class="pill ${verCls}">${escapeHtml(verLabel)}</span>
+                <span class="pill pill-live">${lifecycleLabel(s.lifecycle_state)}</span>
+              </div>
             </div>
             <div class="badge badge-warn" style="align-self:flex-start;">模擬驗證中，非投資建議</div>
             <div class="signal-kv">
@@ -566,12 +572,15 @@
       ? `<pre style="overflow-x:auto;font-size:0.8rem;">${JSON.stringify({ kline_summary: snapshot.kline_summary, indicators: snapshot.indicators, filter_checks: snapshot.filter_checks }, null, 2)}</pre>`
       : '<p class="muted">無快照資料。</p>';
 
+    const verDetailLabel = sig.verification_status || "觀察中（未通過驗證）";
+    const verDetailCls = verDetailLabel === "已驗證" ? "pill-ok" : "pill-warn";
+
     root.innerHTML = `
       <section class="card">
         <div class="section-header">
           <div>
             <h1>${sig.signal_id}｜${sig.symbol}（${sig.direction === "long" ? "做多" : "做空"}）</h1>
-            <p class="subtitle">策略 ${sig.strategy}｜狀態：<strong>${lifecycleLabel(sig.lifecycle_state)}</strong>｜發布時間 (UTC+8)：${formatTaipeiTime(sig.published_at_utc)}</p>
+            <p class="subtitle">${STRATEGY_NAMES[sig.strategy] || `策略 ${sig.strategy}`}｜<span class="pill ${verDetailCls}">${escapeHtml(verDetailLabel)}</span>｜狀態：<strong>${lifecycleLabel(sig.lifecycle_state)}</strong>｜發布時間 (UTC+8)：${formatTaipeiTime(sig.published_at_utc)}</p>
           </div>
           <div class="card-actions">
             <a class="btn" href="#/wall">返回報單牆</a>
@@ -1025,13 +1034,10 @@
 
     tbody.innerHTML = list
       .map((item) => {
-        let statusBadge = '<span class="pill pill-fail">未通過</span>';
-        if (item.status === "insufficient_history") {
-          statusBadge = '<span class="pill pill-warn">歷史不足 (&lt;5年)</span>';
-        }
-        if (item.passed) {
-          statusBadge = '<span class="pill pill-ok">通過驗證</span>';
-        }
+        const label = item.verification_label || (item.passed ? "已驗證" : (item.status === "insufficient_history" ? "資料不足，觀察中" : "觀察中（未通過驗證）"));
+        const statusBadge = item.passed
+          ? `<span class="pill pill-ok">${escapeHtml(label)}</span>`
+          : `<span class="pill pill-warn">${escapeHtml(label)}</span>`;
 
         const oos = item.out_of_sample || {};
         const tradesTxt = typeof oos.trades === "number" ? `${oos.trades} 筆` : "--";
@@ -1111,6 +1117,7 @@
       ["市場：加密貨幣", cachedPerf.by_market?.crypto],
       ["市場：外匯", cachedPerf.by_market?.forex],
       ["市場：商品", cachedPerf.by_market?.commodity],
+      ["市場：指數", cachedPerf.by_market?.index],
       ["方向：做多", cachedPerf.by_direction?.long],
       ["方向：做空", cachedPerf.by_direction?.short],
       ["僅初始進場", cachedPerf.by_add_type?.initial_only],

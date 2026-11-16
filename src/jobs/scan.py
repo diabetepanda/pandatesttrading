@@ -19,7 +19,8 @@ from src.data.models import FetchResult, OHLCVBar
 from src.data.quality import _parse_iso_utc, check_continuity
 from src.data.resample import resample_1m_to_15m
 from src.engine.simulator import MarketBar, SimulationEngine
-from src.indicators.technical import compute_atr, compute_atr_ratio, resample_15m_to_1h
+from src.indicators.technical import compute_atr, compute_atr_ratio, resample_15m_to_1h, resample_1h_to_4h
+from src.jobs.live_strategy import evaluate_live_single_strategy_step, load_strategy_runtime_configs
 from src.signals.models import LifecycleState
 
 
@@ -112,10 +113,12 @@ def run_scan(
     for inst in instruments_cfg:
         symbol = inst["symbol"]
         market = inst["market"]
+        is_daily_only = bool(inst.get("daily_only", False)) or market == "index"
 
         intervals_reports: dict[str, dict[str, Any]] = {}
         fetch_results: dict[str, FetchResult] = {}
-        for iv in ("1m", "15m", "1d"):
+        ivs_to_fetch = ("1d",) if is_daily_only else ("1m", "15m", "1d")
+        for iv in ivs_to_fetch:
             fetch_limit = 1500 if iv == "1m" else (2000 if iv == "15m" else 120)
             res = data_fetcher.fetch(inst, iv, limit=fetch_limit, now_utc=now)
             fetch_results[iv] = res
@@ -157,12 +160,29 @@ def run_scan(
                     }
                 )
 
-        effective_15m_bars = fetch_results["15m"].bars if fetch_results["15m"].ok else []
+        if is_daily_only:
+            intervals_reports["1m"] = {
+                "status": "skipped",
+                "reason": "指數僅用於日線與長線策略",
+                "latest_close": None,
+                "latest_ts_utc": None,
+                "source_used": None,
+            }
+            intervals_reports["15m"] = {
+                "status": "skipped",
+                "reason": "指數不進 15 分鐘掃描",
+                "latest_close": None,
+                "latest_ts_utc": None,
+                "source_used": None,
+            }
+
+        res_15m = fetch_results.get("15m")
+        effective_15m_bars = res_15m.bars if (res_15m is not None and res_15m.ok) else []
 
         # Fallback: if direct 15m is stale/unstable/failed, try resampling closed 1m bars
         res_1m = fetch_results.get("1m")
         rep_15m = intervals_reports["15m"]
-        if rep_15m["status"] != "ok" and res_1m is not None and res_1m.ok and res_1m.bars:
+        if not is_daily_only and rep_15m["status"] != "ok" and res_1m is not None and res_1m.ok and res_1m.bars:
             resampled_bars = resample_1m_to_15m(res_1m.bars, now_utc=now)
             if resampled_bars:
                 res_resampled = FetchResult(
@@ -211,15 +231,18 @@ def run_scan(
                     source_used = intervals_reports[fallback_iv]["source_used"]
                     break
 
-        statuses = {intervals_reports[iv]["status"] for iv in ("1m", "15m", "1d")}
-        if all(intervals_reports[iv]["status"] == "failed" for iv in ("1m", "15m", "1d")):
-            overall_status = "failed"
-        elif intervals_reports["15m"]["status"] in ("failed", "unstable") or intervals_reports["1d"]["status"] == "failed":
-            overall_status = "unstable"
-        elif "stale" in statuses:
-            overall_status = "stale"
+        if is_daily_only:
+            overall_status = intervals_reports["1d"]["status"]
         else:
-            overall_status = "ok"
+            statuses = {intervals_reports[iv]["status"] for iv in ("1m", "15m", "1d")}
+            if all(intervals_reports[iv]["status"] == "failed" for iv in ("1m", "15m", "1d")):
+                overall_status = "failed"
+            elif intervals_reports["15m"]["status"] in ("failed", "unstable") or intervals_reports["1d"]["status"] == "failed":
+                overall_status = "unstable"
+            elif "stale" in statuses:
+                overall_status = "stale"
+            else:
+                overall_status = "ok"
 
         status_counts[overall_status] = status_counts.get(overall_status, 0) + 1
         instruments_out.append(
@@ -275,13 +298,18 @@ def run_scan(
                 atr_ratio=atr_ratio_by_sym.get(sym),
             )
 
-    # Phase 1: record data health, derivatives status & watch reason without emitting new orders
+    # Evaluate live intraday strategies S1 (15m ORB) and S2 (4h breakout resampled from 1h)
+    runtime_cfgs = load_strategy_runtime_configs(out_dir, config)
     signals_before = set(engine.primary_ledger.trades.keys())
     watch_today_items: list[dict[str, Any]] = []
 
     for inst in instruments_cfg:
         sym = inst["symbol"]
         mkt = inst["market"]
+        if bool(inst.get("daily_only", False)) or mkt == "index":
+            # Indices only enter daily long-term strategies; never enter 15m scan
+            continue
+
         rep_1m = reports_by_sym[sym]["1m"]
         rep_15m = reports_by_sym[sym]["15m"]
 
@@ -293,6 +321,45 @@ def run_scan(
 
         st_1m = rep_1m.get("status", "failed")
         st_15m = rep_15m.get("status", "failed")
+        data_ok = st_1m not in ("unstable", "failed") and st_15m not in ("unstable", "failed")
+        deriv_ok = (deriv_record is None) or (deriv_record.get("status") == "ok")
+        allow_entry = data_ok and deriv_ok
+
+        b15 = bars_15m_by_sym.get(sym, [])
+        b1h = resample_15m_to_1h(b15, now_utc=now) if b15 else []
+        b4h = resample_1h_to_4h(b1h, now_utc=now) if b1h else []
+
+        published_any = False
+        strat_msgs: list[str] = []
+        if b15 and "S1" in runtime_cfgs:
+            ok1, msg1 = evaluate_live_single_strategy_step(
+                engine=engine,
+                strategy_id="S1",
+                inst=inst,
+                closed_bars=b15,
+                runtime_cfg=runtime_cfgs["S1"],
+                now_iso=now_iso,
+                control=control,
+                allow_new_entry=allow_entry,
+            )
+            published_any = published_any or ok1
+            if msg1:
+                strat_msgs.append(msg1)
+        if b4h and "S2" in runtime_cfgs:
+            ok2, msg2 = evaluate_live_single_strategy_step(
+                engine=engine,
+                strategy_id="S2",
+                inst=inst,
+                closed_bars=b4h,
+                runtime_cfg=runtime_cfgs["S2"],
+                now_iso=now_iso,
+                control=control,
+                allow_new_entry=allow_entry,
+            )
+            published_any = published_any or ok2
+            if msg2:
+                strat_msgs.append(msg2)
+
         if st_1m in ("unstable", "failed"):
             watch_reason = f"1m {rep_1m.get('reason') or '資料不穩'}"
             if st_1m == "unstable" and "資料不穩" not in watch_reason:
@@ -302,9 +369,11 @@ def run_scan(
             if st_15m == "unstable" and "資料不穩" not in watch_reason:
                 watch_reason = f"資料不穩（{watch_reason}）"
         elif deriv_record is not None and deriv_record.get("status") != "ok":
-            watch_reason = f"第一階段：6 個新策略回測比較驗證中，暫停出單（衍生品狀態：{deriv_record.get('status')}）"
+            watch_reason = f"衍生品狀態：{deriv_record.get('status')}（未進場）"
+        elif published_any:
+            continue
         else:
-            watch_reason = "第一階段：6 個新策略回測比較驗證中，暫停出單"
+            watch_reason = "；".join(strat_msgs) if strat_msgs else "未觸及 S1/S2 入場條件"
 
         engine._record_watch(sym, "S1", now_iso, watch_reason)
         item_entry: dict[str, Any] = {

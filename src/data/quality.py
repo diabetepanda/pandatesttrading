@@ -30,7 +30,7 @@ def is_market_open(market: str, dt: datetime) -> bool:
     """Approximate whether a market is expected to be trading at dt (UTC)."""
     if market == "crypto":
         return True
-    if market in ("forex", "commodity"):
+    if market in ("forex", "commodity", "index"):
         return not is_weekend_closure(dt)
     if market == "stock":
         # US equities: Mon-Fri 13:30 - 20:00 UTC (approx)

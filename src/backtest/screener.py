@@ -1,4 +1,4 @@
-"""Portfolio-level 6-strategy backtester & strict IS/OOS screener (S1-S3, L1-L3)."""
+"""Portfolio-level Round-2 6-strategy backtester & strict IS/OOS screener (S1-S3, L1-L3)."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from src.strategies.six_strategies import (
     SignalAction,
     allocate_subaccount_position,
     build_symbol_base_cache,
-    decide_l2_rotation_step,
+    decide_l3_dual_momentum_step,
     decide_strategy_step,
     precompute_series,
 )
@@ -145,16 +145,45 @@ def _conservative_entry_candidate_indices(
     start_bar_idx: int,
     end_bar_idx: int,
 ) -> list[int]:
-    """Return superset of bar indices that can emit an entry action (still verified via decide_strategy_step)."""
+    """Return superset of closed bar indices that can emit an entry (all verified via decide_strategy_step)."""
     closes = series["closes"]
     atr = series["atr"]
     out: list[int] = []
 
     if strategy_id == "S1":
+        orb_dir = series["orb_dir"]
+        for i in range(start_bar_idx, end_bar_idx):
+            av = atr[i]
+            od = orb_dir[i]
+            if av is None or av <= 0 or not od:
+                continue
+            if od == "long" or (allow_short and od == "short"):
+                out.append(i)
+        return out
+
+    if strategy_id == "S2":
+        bo_p = int(params.get("breakout_bars", 20))
+        tr_p = int(params.get("trail_bars", 8))
+        bhi_s = series["s2_bo_hi"]
+        blo_s = series["s2_bo_lo"]
+        eff_start = max(start_bar_idx, max(bo_p, tr_p))
+        for i in range(eff_start, end_bar_idx):
+            av = atr[i]
+            bhi = bhi_s[i]
+            blo = blo_s[i]
+            if av is None or av <= 0 or bhi is None or blo is None:
+                continue
+            c = closes[i]
+            if c > bhi or (allow_short and c < blo):
+                out.append(i)
+        return out
+
+    if strategy_id == "S3":
         sma_t = series["sma_trend"]
         rsi = series["rsi"]
         rsi_l = float(params.get("rsi_long_thresh", 10.0))
         rsi_s = float(params.get("rsi_short_thresh", 90.0))
+        eff_allow_short = bool(params.get("allow_short", allow_short)) and allow_short
         for i in range(start_bar_idx, end_bar_idx):
             av = atr[i]
             st = sma_t[i]
@@ -162,56 +191,15 @@ def _conservative_entry_candidate_indices(
             if av is None or av <= 0 or st is None or rv is None:
                 continue
             c = closes[i]
-            if (c > st and rv < rsi_l) or (allow_short and c < st and rv > rsi_s):
+            if (c > st and rv < rsi_l) or (eff_allow_short and c < st and rv > rsi_s):
                 out.append(i)
         return out
 
-    if strategy_id == "S2":
-        bb_p = int(params.get("bb_period", 20))
-        sq_pct = float(params.get("squeeze_percentile", 25.0))
-        up_s = series["bb_upper"]
-        lo_s = series["bb_lower"]
-        bw_pct = series["bb_bw_pct"]
-        bhi_s = series["s2_box_hi"]
-        blo_s = series["s2_box_lo"]
-        eff_start = max(start_bar_idx, bb_p + 2)
-        for i in range(eff_start, end_bar_idx):
-            av = atr[i]
-            pb = bw_pct[i - 1]
-            bhi = bhi_s[i]
-            blo = blo_s[i]
-            uv = up_s[i]
-            lv = lo_s[i]
-            if av is None or av <= 0 or pb is None or pb > sq_pct or bhi is None or blo is None or uv is None or lv is None:
-                continue
-            c = closes[i]
-            if (c > bhi and c > uv) or (allow_short and c < blo and c < lv):
-                out.append(i)
-        return out
-
-    if strategy_id == "S3":
-        rng_bars = int(params.get("range_bars", 48))
-        min_touches = int(params.get("min_edge_touches", 2))
-        rsi_os = float(params.get("rsi_oversold", 35.0))
-        rsi_ob = float(params.get("rsi_overbought", 65.0))
-        rsi = series["rsi"]
-        ut_s = series["s3_up_touches"]
-        lt_s = series["s3_lo_touches"]
-        eff_start = max(start_bar_idx, rng_bars)
-        for i in range(eff_start, end_bar_idx):
-            av = atr[i]
-            rv = rsi[i]
-            if av is None or av <= 0 or rv is None:
-                continue
-            if ut_s[i] >= min_touches and lt_s[i] >= min_touches and (rv < rsi_os or (allow_short and rv > rsi_ob)):
-                out.append(i)
-        return out
-
-    if strategy_id == "L1":
+    if strategy_id in ("L1", "L2"):
         entry_p = int(params.get("entry_period", 20))
         exit_p = int(params.get("exit_period", 10))
-        ehi = series["l1_entry_hi"]
-        elo = series["l1_entry_lo"]
+        ehi = series["don_entry_hi"]
+        elo = series["don_entry_lo"]
         eff_start = max(start_bar_idx, max(entry_p, exit_p))
         for i in range(eff_start, end_bar_idx):
             av = atr[i]
@@ -221,22 +209,6 @@ def _conservative_entry_candidate_indices(
                 continue
             c = closes[i]
             if c > hi_v or (allow_short and c < lo_v):
-                out.append(i)
-        return out
-
-    if strategy_id == "L3":
-        sma_t = series["sma_trend"]
-        for i in range(start_bar_idx, end_bar_idx):
-            av = atr[i]
-            sv = sma_t[i]
-            if av is None or av <= 0 or sv is None:
-                continue
-            ps = sma_t[i - 1] if i > 0 else None
-            pc = closes[i - 1] if i > 0 else None
-            c = closes[i]
-            if (c > sv and (ps is None or (pc is not None and pc <= ps))) or (
-                allow_short and c < sv and (ps is None or (pc is not None and pc >= ps))
-            ):
                 out.append(i)
         return out
 
@@ -263,6 +235,7 @@ def simulate_portfolio_strategy(
     slippage_bps = float(risk_cfg.get("default_slippage_bps", 1.0))
     slip = slippage_bps / 10000.0
     max_concurrent = int(bt_cfg.get("max_concurrent_positions", 5))
+    eff_allow_short = bool(params.get("allow_short", allow_short)) if strategy_id == "S3" else allow_short
 
     eval_syms = sorted(sym for sym, bars in bars_by_symbol.items() if len(bars) >= 30)
     if not eval_syms:
@@ -302,13 +275,13 @@ def simulate_portfolio_strategy(
             market=inst.get("market", "crypto"),
             interval=interval,
             atr_period=atr_period,
+            allow_short=eff_allow_short,
             base_cache=bc,
         )
         series_by_sym[sym] = ser
 
         start_bidx = 1
         if min_signal_ts is not None:
-            # Binary search / linear scan first index >= min_signal_ts
             for idx, b in enumerate(bars):
                 if b.ts_utc >= min_signal_ts:
                     start_bidx = max(1, idx)
@@ -337,14 +310,11 @@ def simulate_portfolio_strategy(
     pending_exits: dict[int, list[tuple[str, int]]] = defaultdict(list)
     pending_entries: dict[int, list[tuple[str, int, SignalAction]]] = defaultdict(list)
 
-    active_t_set: set[int] = set(entry_triggers_by_t.keys())
-    # We must visit timestamps where open_pos exist OR pending actions exist OR entry triggers exist.
-    # Iterating over sorted all_ts indices allows O(1) skip when completely flat and no triggers.
     for t_idx in range(len(all_ts)):
         if not open_pos and t_idx not in pending_exits and t_idx not in pending_entries and t_idx not in entry_triggers_by_t:
             continue
 
-        # 1) Execute pending exits scheduled for this bar's open (frees capital/risk first)
+        # 1) Pending exits at bar open
         if t_idx in pending_exits:
             for sym, fill_bidx in pending_exits.pop(t_idx):
                 if sym not in open_pos:
@@ -367,7 +337,6 @@ def simulate_portfolio_strategy(
                     fee_rate,
                     overnight_bps,
                 )
-                # Isolated subaccount floor: never push subaccount equity <= 0
                 net_pnl = max(-(current_equity - 0.01), raw_net)
                 current_equity = max(0.01, current_equity + net_pnl)
                 equity_curve.append(current_equity)
@@ -386,7 +355,7 @@ def simulate_portfolio_strategy(
                     )
                 )
 
-        # 2) Execute pending entries scheduled for this bar's open via shared allocate_subaccount_position
+        # 2) Pending entries at bar open using shared allocate_subaccount_position
         if t_idx in pending_entries:
             for sym, fill_bidx, act in pending_entries.pop(t_idx):
                 if sym in open_pos:
@@ -414,6 +383,7 @@ def simulate_portfolio_strategy(
                     fee_rate=fee_rate,
                     slippage_bps=slippage_bps,
                     config=config,
+                    risk_multiplier=act.risk_multiplier,
                 )
                 if not alloc.approved:
                     continue
@@ -421,6 +391,7 @@ def simulate_portfolio_strategy(
                     "dir": direction,
                     "entry_px": raw_entry,
                     "entry_ts": bar.ts_utc,
+                    "entry_bidx": fill_bidx,
                     "qty": alloc.qty,
                     "notional_usd": alloc.notional_usd,
                     "risk_usd": alloc.risk_usd,
@@ -428,7 +399,7 @@ def simulate_portfolio_strategy(
                     "tp_px": act.take_profit,
                 }
 
-        # 3) Check intra-bar SL/TP and close-bar exit signals on currently open positions
+        # 3) Intra-bar SL/TP & close-bar exit check on currently open positions
         exited_this_bar: set[str] = set()
         for sym in list(open_pos.keys()):
             bidx = sym_bidx_by_t[sym].get(t_idx)
@@ -504,6 +475,7 @@ def simulate_portfolio_strategy(
                 continue
 
             if bidx < len(bars) - 1:
+                bars_held = max(1, bidx - pos["entry_bidx"] + 1)
                 act = decide_strategy_step(
                     strategy_id=strategy_id,
                     series=series_by_sym[sym],
@@ -511,6 +483,7 @@ def simulate_portfolio_strategy(
                     position_dir=pos_dir,
                     params=params,
                     allow_short=allow_short,
+                    bars_held=bars_held,
                 )
                 if act.action == "exit":
                     sl_round = round(act.stop_loss, 6) if act.stop_loss is not None else None
@@ -518,7 +491,7 @@ def simulate_portfolio_strategy(
                     next_t = sym_t_by_bidx[sym][bidx + 1]
                     pending_exits[next_t].append((sym, bidx + 1))
 
-        # 4) Check candidate entry triggers on closed bar at t_idx
+        # 4) Candidate entries at close of t_idx
         if t_idx in entry_triggers_by_t and len(open_pos) < max_concurrent:
             for sym, bidx in entry_triggers_by_t[t_idx]:
                 if sym in open_pos or sym in exited_this_bar:
@@ -533,6 +506,7 @@ def simulate_portfolio_strategy(
                     position_dir="",
                     params=params,
                     allow_short=allow_short,
+                    bars_held=0,
                 )
                 if act.action in ("enter_long", "enter_short"):
                     sl_round = round(act.stop_loss, 6) if act.stop_loss is not None else None
@@ -572,34 +546,40 @@ def simulate_single_symbol(
     return trades, trace
 
 
-def simulate_l2_portfolio(
+def simulate_l3_dual_momentum(
     bars_by_symbol: dict[str, list[OHLCVBar]],
     instruments_by_sym: dict[str, dict[str, Any]],
     params: dict[str, Any],
     config: dict[str, Any],
     start_date: str | None = None,
 ) -> tuple[list[BacktestTrade], list[float], list[tuple[str, str, str, str]]]:
-    """Cross-sectional simulation for L2 weekly crypto momentum rotation with sub-account risk control."""
-    lookback = int(params.get("lookback_days", 28))
-    top_k = int(params.get("top_k", 3))
+    """Weekly rebalanced L3 Dual Momentum simulation across crypto & index asset classes."""
+    lookback = int(params.get("lookback_days", 60))
+    top_k_crypto = int(params.get("top_k_crypto", 2))
+    top_k_index = int(params.get("top_k_index", 1))
     rebalance_days = int(params.get("rebalance_days", 7))
     sl_mult = float(params.get("sl_atr_mult", 2.5))
+    vol_target = float(params.get("vol_target_pct", 0.015))
 
     bt_cfg = config.get("backtest", {})
     risk_cfg = config.get("risk", {})
-    strat_cfg = config.get("strategies", {}).get("L2", {})
+    strat_cfg = config.get("strategies", {}).get("L3", {})
     atr_period = int(bt_cfg.get("atr_period", 14))
-    sub_cap = float(strat_cfg.get("capital_usd", 23333.33))
+    sub_cap = float(strat_cfg.get("capital_usd", 23333.34))
     slip_bps = float(risk_cfg.get("default_slippage_bps", 1.0))
     slip = slip_bps / 10000.0
 
     date_bars: dict[str, dict[str, int]] = {}
     atr_lookup: dict[str, list[float | None]] = {}
+    markets_by_sym: dict[str, str] = {}
     all_dates_set: set[str] = set()
+
     for sym, bars in bars_by_symbol.items():
         if not bars:
             continue
-        atr_raw = compute_atr_series(bars, period=atr_period, market="crypto", interval="1d")
+        mkt = instruments_by_sym[sym]["market"]
+        markets_by_sym[sym] = mkt
+        atr_raw = compute_atr_series(bars, period=atr_period, market=mkt, interval="1d")
         atr_s: list[float | None] = [None] * len(bars)
         for k, val in enumerate(atr_raw):
             if atr_period + k < len(atr_s):
@@ -633,7 +613,7 @@ def simulate_l2_portfolio(
         d = sorted_dates[d_idx]
         next_d = sorted_dates[d_idx + 1]
 
-        # Check intra-day SL first for held coins
+        # Intra-day protective SL check
         for sym in list(held.keys()):
             b_idx = date_bars.get(sym, {}).get(d)
             if b_idx is None:
@@ -646,7 +626,14 @@ def simulate_l2_portfolio(
             if sl_hit:
                 raw_exit = (open_bid * (1.0 - slip)) if open_bid <= pos["sl_px"] else (pos["sl_px"] * (1.0 - slip))
                 raw_net, cost_usd, _ = _calc_trade_costs(
-                    "long", pos["entry_px"], raw_exit, pos["qty"], pos["entry_ts"], bar.ts_utc, pos["fee_rate"], pos["overnight_bps"]
+                    "long",
+                    pos["entry_px"],
+                    raw_exit,
+                    pos["qty"],
+                    pos["entry_ts"],
+                    bar.ts_utc,
+                    pos["fee_rate"],
+                    pos["overnight_bps"],
                 )
                 net_pnl = max(-(current_equity - 0.01), raw_net)
                 current_equity = max(0.01, current_equity + net_pnl)
@@ -654,7 +641,7 @@ def simulate_l2_portfolio(
                 trades.append(
                     BacktestTrade(
                         symbol=sym,
-                        strategy_id="L2",
+                        strategy_id="L3",
                         entry_ts_utc=pos["entry_ts"],
                         exit_ts_utc=bar.ts_utc,
                         direction="long",
@@ -678,17 +665,19 @@ def simulate_l2_portfolio(
                 up_to_date[sym] = bars_by_symbol[sym][: b_idx + 1]
                 pre_atr[sym] = atr_lookup[sym][b_idx]
 
-        actions = decide_l2_rotation_step(
-            closes_up_to_date=up_to_date,
+        actions = decide_l3_dual_momentum_step(
+            bars_up_to_date=up_to_date,
+            markets_by_sym=markets_by_sym,
             held_symbols=set(held.keys()),
             lookback_days=lookback,
-            top_k=top_k,
+            top_k_crypto=top_k_crypto,
+            top_k_index=top_k_index,
             sl_atr_mult=sl_mult,
             atr_period=atr_period,
+            vol_target_pct=vol_target,
             precomputed_atr_by_sym=pre_atr,
         )
 
-        # Process exits first to free capital & risk slots before entering new coins
         ordered_items = sorted(actions.items(), key=lambda kv: (0 if kv[1].action == "exit" else 1, kv[0]))
         for sym, act in ordered_items:
             nxt_idx = date_bars.get(sym, {}).get(next_d)
@@ -696,16 +685,23 @@ def simulate_l2_portfolio(
                 continue
             nxt_bar = bars_by_symbol[sym][nxt_idx]
             inst = instruments_by_sym[sym]
-            spread_bps = float(inst.get("assumed_spread_bps", 5.0))
+            spread_bps = float(inst.get("assumed_spread_bps", 3.0))
             fee_rate = float(inst.get("fee_rate", 0.0005))
-            overnight_bps = float(inst.get("overnight_cost_daily_bps", 3.0))
+            overnight_bps = float(inst.get("overnight_cost_daily_bps", 2.0))
 
             if act.action == "exit" and sym in held:
                 trace.append((d, sym, "exit", "long"))
                 pos = held.pop(sym)
                 raw_exit = nxt_bar.open * (1.0 - spread_bps / 20000.0) * (1.0 - slip)
                 raw_net, cost_usd, _ = _calc_trade_costs(
-                    "long", pos["entry_px"], raw_exit, pos["qty"], pos["entry_ts"], nxt_bar.ts_utc, fee_rate, overnight_bps
+                    "long",
+                    pos["entry_px"],
+                    raw_exit,
+                    pos["qty"],
+                    pos["entry_ts"],
+                    nxt_bar.ts_utc,
+                    fee_rate,
+                    overnight_bps,
                 )
                 net_pnl = max(-(current_equity - 0.01), raw_net)
                 current_equity = max(0.01, current_equity + net_pnl)
@@ -713,7 +709,7 @@ def simulate_l2_portfolio(
                 trades.append(
                     BacktestTrade(
                         symbol=sym,
-                        strategy_id="L2",
+                        strategy_id="L3",
                         entry_ts_utc=pos["entry_ts"],
                         exit_ts_utc=nxt_bar.ts_utc,
                         direction="long",
@@ -732,7 +728,7 @@ def simulate_l2_portfolio(
                 open_risk_sum = sum(p["risk_usd"] for p in held.values())
                 open_notional_sum = sum(p["notional_usd"] for p in held.values())
                 alloc = allocate_subaccount_position(
-                    strategy_id="L2",
+                    strategy_id="L3",
                     subaccount_equity_usd=current_equity,
                     open_positions_count=len(held),
                     open_total_risk_usd=open_risk_sum,
@@ -742,6 +738,7 @@ def simulate_l2_portfolio(
                     fee_rate=fee_rate,
                     slippage_bps=slip_bps,
                     config=config,
+                    risk_multiplier=act.risk_multiplier,
                 )
                 if not alloc.approved:
                     continue
@@ -763,92 +760,91 @@ def simulate_l2_portfolio(
 def _build_param_grid(strategy_id: str, strat_cfg: dict[str, Any]) -> list[dict[str, Any]]:
     cand = strat_cfg.get("candidates", {})
     if strategy_id == "S1":
-        t_mas = cand.get("trend_ma_periods", [200])
-        e_mas = cand.get("exit_ma_periods", [5])
-        rsi_p = int(cand.get("rsi_period", 2))
-        l_ths = cand.get("rsi_long_thresholds", [10.0, 15.0])
-        s_ths = cand.get("rsi_short_thresholds", [90.0, 85.0])
-        sls = cand.get("sl_atr_mults", [2.0, 2.5])
-        grid = []
-        for t_ma, e_ma, l_th, s_th, slm in itertools.product(t_mas, e_mas, l_ths, s_ths, sls):
-            if (l_th == 10.0 and s_th == 90.0) or (l_th == 15.0 and s_th == 85.0):
-                grid.append(
-                    {
-                        "trend_ma_period": int(t_ma),
-                        "exit_ma_period": int(e_ma),
-                        "rsi_period": rsi_p,
-                        "rsi_long_thresh": float(l_th),
-                        "rsi_short_thresh": float(s_th),
-                        "sl_atr_mult": float(slm),
-                    }
-                )
-        return grid
-
-    if strategy_id == "S2":
-        bb_p = int(cand.get("bb_period", 20))
-        bb_std = float(cand.get("bb_std", 2.0))
-        lbs = cand.get("squeeze_lookbacks", [48, 96])
-        pcts = cand.get("squeeze_percentiles", [20.0, 30.0])
-        sls = cand.get("sl_atr_mults", [1.2, 1.5])
+        sessions = cand.get("session_opens_utc", ["00:00", "13:30"])
+        rng_m = int(cand.get("range_minutes", 60))
+        sl_modes = cand.get("sl_modes", ["range_edge", "atr_1.5", "atr_2.0"])
+        eod = str(cand.get("eod_close_utc", "23:45"))
         return [
             {
-                "bb_period": bb_p,
-                "bb_std": bb_std,
-                "squeeze_lookback": int(lb),
-                "squeeze_percentile": float(p),
-                "sl_atr_mult": float(slm),
+                "session_open_utc": str(so),
+                "range_minutes": rng_m,
+                "sl_mode": str(sm),
+                "eod_close_utc": eod,
             }
-            for lb, p, slm in itertools.product(lbs, pcts, sls)
+            for so, sm in itertools.product(sessions, sl_modes)
+        ]
+
+    if strategy_id == "S2":
+        bos = cand.get("breakout_bars", [12, 20, 30])
+        trs = cand.get("trail_bars", [6, 10])
+        sls = cand.get("sl_atr_mults", [2.0, 2.5])
+        max_h = int(cand.get("max_hold_bars", 30))
+        return [
+            {
+                "breakout_bars": int(bo),
+                "trail_bars": int(tr),
+                "sl_atr_mult": float(slm),
+                "max_hold_bars": max_h,
+            }
+            for bo, tr, slm in itertools.product(bos, trs, sls)
+            if tr < bo
         ]
 
     if strategy_id == "S3":
-        r_bars = cand.get("range_bars", [32, 48])
-        touches = int(cand.get("min_edge_touches", 2))
-        edges = cand.get("edge_zone_pcts", [15.0, 20.0])
-        rsi_p = int(cand.get("rsi_period", 14))
-        os_lvls = cand.get("rsi_oversold_levels", [30.0, 35.0])
-        ob_lvls = cand.get("rsi_overbought_levels", [70.0, 65.0])
-        bufs = cand.get("sl_atr_buffers", [0.5])
-        grid = []
-        for rb, ep, os_v, ob_v, buf in itertools.product(r_bars, edges, os_lvls, ob_lvls, bufs):
-            if (os_v == 30.0 and ob_v == 70.0) or (os_v == 35.0 and ob_v == 65.0):
-                grid.append(
-                    {
-                        "range_bars": int(rb),
-                        "min_edge_touches": touches,
-                        "edge_zone_pct": float(ep),
-                        "rsi_period": rsi_p,
-                        "rsi_oversold": float(os_v),
-                        "rsi_overbought": float(ob_v),
-                        "sl_atr_buffer": float(buf),
-                    }
-                )
-        return grid
+        t_ma = int(cand.get("trend_ma_period", 200))
+        rsis = cand.get("rsi_periods", [2, 3])
+        l_ths = cand.get("rsi_long_thresholds", [10.0, 15.0])
+        e_mas = cand.get("exit_ma_periods", [5, 8])
+        short_modes = cand.get("allow_short_modes", [False, True])
+        slm = float(cand.get("sl_atr_mult", 2.5))
+        max_h = int(cand.get("max_hold_bars", 10))
+        return [
+            {
+                "trend_ma_period": t_ma,
+                "rsi_period": int(rp),
+                "rsi_long_thresh": float(lt),
+                "rsi_short_thresh": 100.0 - float(lt),
+                "exit_ma_period": int(em),
+                "allow_short": bool(sm),
+                "sl_atr_mult": slm,
+                "max_hold_bars": max_h,
+            }
+            for rp, lt, em, sm in itertools.product(rsis, l_ths, e_mas, short_modes)
+        ]
 
-    if strategy_id == "L1":
+    if strategy_id in ("L1", "L2"):
         ents = cand.get("entry_periods", [20, 55])
         exts = cand.get("exit_periods", [10, 20])
-        sls = cand.get("sl_atr_mults", [2.0, 2.5, 3.0])
+        sls = cand.get("sl_atr_mults", [2.5, 3.0])
+        vols = cand.get("vol_target_pcts", [0.015])
         return [
-            {"entry_period": int(en), "exit_period": int(ex), "sl_atr_mult": float(slm)}
-            for en, ex, slm in itertools.product(ents, exts, sls)
+            {
+                "entry_period": int(en),
+                "exit_period": int(ex),
+                "sl_atr_mult": float(slm),
+                "vol_target_pct": float(vt),
+            }
+            for en, ex, slm, vt in itertools.product(ents, exts, sls, vols)
             if ex < en
         ]
 
-    if strategy_id == "L2":
-        lbs = cand.get("lookback_days", [14, 28, 56])
-        ks = cand.get("top_k_list", [3, 5])
+    if strategy_id == "L3":
+        lbs = cand.get("lookback_days", [20, 60, 120])
+        kc_list = cand.get("top_k_crypto_list", [2, 3])
+        ki_list = cand.get("top_k_index_list", [1, 2])
         reb = int(cand.get("rebalance_days", 7))
         sls = cand.get("sl_atr_mults", [2.5, 3.0])
         return [
-            {"lookback_days": int(lb), "top_k": int(k), "rebalance_days": reb, "sl_atr_mult": float(slm)}
-            for lb, k, slm in itertools.product(lbs, ks, sls)
+            {
+                "lookback_days": int(lb),
+                "top_k_crypto": int(kc),
+                "top_k_index": int(ki),
+                "rebalance_days": reb,
+                "sl_atr_mult": float(slm),
+                "vol_target_pct": 0.015,
+            }
+            for lb, kc, ki, slm in itertools.product(lbs, kc_list, ki_list, sls)
         ]
-
-    if strategy_id == "L3":
-        mas = cand.get("ma_periods", [150, 200])
-        sls = cand.get("sl_atr_mults", [2.5, 3.0])
-        return [{"ma_period": int(ma), "sl_atr_mult": float(slm)} for ma, slm in itertools.product(mas, sls)]
 
     raise ValueError(f"Unknown strategy_id: {strategy_id}")
 
@@ -872,12 +868,14 @@ def screen_single_strategy(
     strategy_id: str,
     bars_by_interval: dict[str, dict[str, list[OHLCVBar]]],
     config: dict[str, Any],
+    backup_notes: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     """Portfolio-level 70/30 IS/OOS screening for one of S1-S3, L1-L3."""
     bt_cfg = config.get("backtest", {})
     strat_cfg = config.get("strategies", {})[strategy_id]
     interval = str(strat_cfg["interval"])
-    allowed_markets = set(strat_cfg.get("markets", ["crypto", "forex", "commodity"]))
+    symbol_whitelist = set(strat_cfg["symbols"]) if "symbols" in strat_cfg else None
+    allowed_markets = set(strat_cfg.get("markets", ["crypto", "forex", "commodity", "index"]))
     allow_short = bool(strat_cfg.get("allow_short", True))
     sub_cap = float(strat_cfg.get("capital_usd", 10000.0))
     atr_period = int(bt_cfg.get("atr_period", 14))
@@ -887,21 +885,28 @@ def screen_single_strategy(
     max_oos_dd = float(bt_cfg.get("max_oos_drawdown_pct", 25.0))
     min_oos_pf = float(bt_cfg.get("min_oos_profit_factor", 1.3))
 
-    enabled_insts = [
-        inst
-        for inst in config.get("instruments", [])
-        if inst.get("enabled", True) and inst.get("market") in allowed_markets
-    ]
+    if symbol_whitelist is not None:
+        enabled_insts = [
+            inst for inst in config.get("instruments", []) if inst.get("enabled", True) and inst["symbol"] in symbol_whitelist
+        ]
+    else:
+        enabled_insts = [
+            inst
+            for inst in config.get("instruments", [])
+            if inst.get("enabled", True) and inst.get("market") in allowed_markets
+        ]
+
     inst_by_sym = {i["symbol"]: i for i in enabled_insts}
     raw_bars_map = bars_by_interval.get(interval, {})
 
-    is_short_term = interval in ("15m", "1h")
+    is_intraday = interval in ("15m", "1h", "4h")
     all_available: dict[str, list[OHLCVBar]] = {}
     years_by_sym: dict[str, float] = {}
     five_yr_syms: list[str] = []
     short_history_crypto: list[str] = []
-    excluded_non_crypto: list[str] = []
+    excluded_no_free_history: list[str] = []
     short_history_daily: list[str] = []
+    active_backup_notes: list[str] = []
 
     for inst in enabled_insts:
         sym = inst["symbol"]
@@ -909,14 +914,15 @@ def screen_single_strategy(
         bars = sorted(raw_bars_map.get(sym, []), key=lambda b: b.ts_utc)
         yrs = _history_span_years(bars) if bars else 0.0
 
-        if is_short_term and mkt != "crypto":
-            # Exclude FX/commodity lacking >= 5y reliable free intraday archive
+        if is_intraday and mkt != "crypto":
             if yrs >= min_years and bars:
                 all_available[sym] = bars
                 years_by_sym[sym] = yrs
                 five_yr_syms.append(sym)
+                if backup_notes and sym in backup_notes:
+                    active_backup_notes.append(backup_notes[sym])
             else:
-                excluded_non_crypto.append(sym)
+                excluded_no_free_history.append(sym)
             continue
 
         if not bars or len(bars) < 30:
@@ -935,23 +941,19 @@ def screen_single_strategy(
         else:
             short_history_daily.append(sym)
 
-    # For short-term: use all crypto symbols (marking newly listed <5y coins honestly, excluding non-crypto lacking free 5y data).
-    # For long-term daily: use >= 5y instruments across crypto/FX/commodity.
-    if is_short_term:
-        eval_syms = sorted(all_available.keys())
-    else:
-        eval_syms = five_yr_syms
+    eval_syms = sorted(all_available.keys()) if is_intraday else sorted(five_yr_syms)
 
     notes: list[str] = []
-    if excluded_non_crypto:
-        notes.append(f"外匯與商品 {len(excluded_non_crypto)} 檔無足夠免費歷史資料已排除")
-    if is_short_term and short_history_crypto:
-        sample_tags = ", ".join(f"{s}({years_by_sym.get(s, 0.0):.1f}y)" for s in sorted(short_history_crypto)[:6])
-        more = " 等" if len(short_history_crypto) > 6 else ""
-        notes.append(
-            f"上市／可得未滿 5 年加密貨幣 {len(short_history_crypto)} 檔（{sample_tags}{more}）使用全部可得資料回測"
-        )
-    elif not is_short_term and (short_history_crypto or short_history_daily):
+    if active_backup_notes:
+        notes.extend(sorted(set(active_backup_notes)))
+    if excluded_no_free_history:
+        sample_ex = ", ".join(excluded_no_free_history[:5]) + (" 等" if len(excluded_no_free_history) > 5 else "")
+        notes.append(f"資料不足，觀察中（{sample_ex} 共 {len(excluded_no_free_history)} 檔無 5 年分時歷史資料，不拿 1 個月資料湊數）")
+    if is_intraday and short_history_crypto:
+        sample_tags = ", ".join(f"{s}({years_by_sym.get(s, 0.0):.1f}y)" for s in sorted(short_history_crypto)[:5])
+        more = " 等" if len(short_history_crypto) > 5 else ""
+        notes.append(f"未滿 5 年加密貨幣 {len(short_history_crypto)} 檔（{sample_tags}{more}）使用全部可得資料")
+    elif not is_intraday and (short_history_crypto or short_history_daily):
         cnt_excl = len(short_history_crypto) + len(short_history_daily)
         notes.append(f"日線未滿 5 年標的 {cnt_excl} 檔已排除")
     data_note = "；".join(notes)
@@ -962,24 +964,24 @@ def screen_single_strategy(
             "strategy_id": strategy_id,
             "name": strat_cfg.get("name", strategy_id),
             "pool": strat_cfg.get("pool", "long_term"),
-            "capital_usd": sub_cap,
+            "capital_usd": round(sub_cap, 2),
             "interval": interval,
             "status": "insufficient_history",
+            "verification_label": "資料不足，觀察中",
             "passed": False,
             "applicable_instruments": len(enabled_insts),
             "eligible_instruments": 0,
-            "excluded_no_free_history_count": len(excluded_non_crypto),
-            "excluded_insufficient_count": len(short_history_crypto) + len(short_history_daily),
+            "excluded_no_free_history_count": len(excluded_no_free_history),
+            "excluded_insufficient_count": len(excluded_no_free_history) + len(short_history_crypto) + len(short_history_daily),
             "short_history_crypto_count": len(short_history_crypto),
             "history_years": round(max_yrs, 4),
-            "data_note": data_note or f"無可用 {interval} 歷史資料",
+            "data_note": data_note or f"無可用 {interval} 歷史資料（資料不足，觀察中）",
             "chosen_params": None,
             "in_sample": compute_metrics([], sub_cap),
             "out_of_sample": compute_metrics([], sub_cap),
-            "reason": f"達 {min_years:.0f} 年歷史標準之標的為 0 個（最長僅 {max_yrs:.2f} 年），依規格不硬算",
+            "reason": f"資料不足，觀察中（達 {min_years:.0f} 年之標的 0 個，最長 {max_yrs:.2f} 年）",
         }
 
-    # Global chronological 70/30 cutoff timestamp so IS contains ZERO OOS bars across all symbols
     all_timeline = sorted({b.ts_utc for sym in eval_syms for b in all_available[sym]})
     split_t_idx = max(1, min(len(all_timeline) - 1, int(len(all_timeline) * is_ratio)))
     cutoff_ts = all_timeline[split_t_idx]
@@ -995,9 +997,9 @@ def screen_single_strategy(
     best_params = grid[0]
     best_is_metrics = compute_metrics([], sub_cap)
 
-    if strategy_id == "L2":
+    if strategy_id == "L3":
         for params in grid:
-            is_trades, is_eq, _ = simulate_l2_portfolio(is_slices, inst_by_sym, params, config, start_date=None)
+            is_trades, is_eq, _ = simulate_l3_dual_momentum(is_slices, inst_by_sym, params, config, start_date=None)
             m = compute_metrics(is_trades, sub_cap, equity_curve_points=is_eq)
             sc = _score_is_metrics(m, min_oos_trades)
             if sc > best_score:
@@ -1006,7 +1008,7 @@ def screen_single_strategy(
                 best_is_metrics = m
 
         oos_start_d = cutoff_ts[:10]
-        oos_trades, oos_eq, _ = simulate_l2_portfolio(
+        oos_trades, oos_eq, _ = simulate_l3_dual_momentum(
             full_eval_bars, inst_by_sym, best_params, config, start_date=oos_start_d
         )
         oos_metrics = compute_metrics(oos_trades, sub_cap, equity_curve_points=oos_eq)
@@ -1040,7 +1042,6 @@ def screen_single_strategy(
                 best_params = params
                 best_is_metrics = m
 
-        # Free IS cache before evaluating OOS once on best_params
         is_caches.clear()
         oos_trades_all, oos_eq, _ = simulate_portfolio_strategy(
             bars_by_symbol=full_eval_bars,
@@ -1071,6 +1072,7 @@ def screen_single_strategy(
 
     passed = len(fail_reasons) == 0
     status = "ok" if has_five_years else "insufficient_history"
+    verification_label = "已驗證" if passed else ("資料不足，觀察中" if not has_five_years else "觀察中（未通過驗證）")
     reason = "符合所有樣本外與歷史年數門檻" if passed else "；".join(fail_reasons)
 
     return {
@@ -1080,12 +1082,13 @@ def screen_single_strategy(
         "capital_usd": round(sub_cap, 2),
         "interval": interval,
         "status": status,
+        "verification_label": verification_label,
         "passed": passed,
         "applicable_instruments": len(enabled_insts),
         "eligible_instruments": len(eval_syms),
-        "excluded_no_free_history_count": len(excluded_non_crypto),
+        "excluded_no_free_history_count": len(excluded_no_free_history),
         "excluded_insufficient_count": (
-            len(excluded_non_crypto) if is_short_term else (len(short_history_crypto) + len(short_history_daily))
+            len(excluded_no_free_history) if is_intraday else (len(short_history_crypto) + len(short_history_daily))
         ),
         "short_history_crypto_count": len(short_history_crypto),
         "history_years": rep_years,
@@ -1100,8 +1103,9 @@ def screen_single_strategy(
 def screen_all_six_strategies(
     bars_by_interval: dict[str, dict[str, list[OHLCVBar]]],
     config: dict[str, Any],
+    backup_notes: dict[str, str] | None = None,
 ) -> list[dict[str, Any]]:
     """Run portfolio screening sequentially for S1, S2, S3, L1, L2, L3."""
     order = ["S1", "S2", "S3", "L1", "L2", "L3"]
     strats_cfg = config.get("strategies", {})
-    return [screen_single_strategy(sid, bars_by_interval, config) for sid in order if sid in strats_cfg]
+    return [screen_single_strategy(sid, bars_by_interval, config, backup_notes=backup_notes) for sid in order if sid in strats_cfg]

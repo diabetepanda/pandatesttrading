@@ -49,6 +49,45 @@ def resample_15m_to_1h(
     return out
 
 
+def _floor_4h(dt: datetime) -> datetime:
+    return dt.replace(hour=(dt.hour // 4) * 4, minute=0, second=0, microsecond=0)
+
+
+def resample_1h_to_4h(
+    bars_1h: list[OHLCVBar],
+    now_utc: datetime | None = None,
+) -> list[OHLCVBar]:
+    """Resample closed 1h bars into strictly closed 4h UTC buckets (00/04/08/12/16/20)."""
+    if not bars_1h:
+        return []
+    now = (now_utc or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    buckets: dict[datetime, list[tuple[datetime, OHLCVBar]]] = defaultdict(list)
+
+    for bar in bars_1h:
+        dt = _parse_iso_utc(bar.ts_utc)
+        if dt + timedelta(hours=1) > now:
+            continue
+        bucket_start = _floor_4h(dt)
+        if bucket_start + timedelta(hours=4) > now:
+            continue
+        buckets[bucket_start].append((dt, bar))
+
+    out: list[OHLCVBar] = []
+    for bucket_start in sorted(buckets.keys()):
+        items = sorted(buckets[bucket_start], key=lambda x: x[0])
+        out.append(
+            OHLCVBar(
+                ts_utc=bucket_start.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                open=items[0][1].open,
+                high=max(b.high for _, b in items),
+                low=min(b.low for _, b in items),
+                close=items[-1][1].close,
+                volume=sum(b.volume for _, b in items),
+            )
+        )
+    return out
+
+
 def compute_atr_series(
     bars: list[OHLCVBar],
     period: int = 14,

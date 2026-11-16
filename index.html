@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261116f" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261116g" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -100,18 +100,19 @@
         <div class="filter-controls">
           <select id="wall-filter-strategy" aria-label="策略篩選">
             <option value="all">全部策略</option>
-            <option value="S1">S1 RSI(2) 回檔買進</option>
-            <option value="S2">S2 波動突破</option>
-            <option value="S3">S3 區間來回</option>
-            <option value="L1">L1 多標的趨勢跟隨</option>
-            <option value="L2">L2 加密強弱輪動</option>
-            <option value="L3">L3 200 日均線趨勢過濾</option>
+            <option value="S1">S1 開盤區間突破</option>
+            <option value="S2">S2 4 小時突破</option>
+            <option value="S3">S3 日線 RSI 回檔</option>
+            <option value="L1">L1 波動度調整趨勢跟隨</option>
+            <option value="L2">L2 精簡標的趨勢跟隨</option>
+            <option value="L3">L3 雙動能</option>
           </select>
           <select id="wall-filter-market" aria-label="市場篩選">
             <option value="all">全部市場</option>
             <option value="crypto">加密貨幣</option>
             <option value="forex">外匯</option>
             <option value="commodity">商品</option>
+            <option value="index">指數</option>
           </select>
           <select id="wall-filter-direction" aria-label="方向篩選">
             <option value="all">全部方向</option>
@@ -211,6 +212,7 @@
           <button class="tab" data-market="crypto" type="button">加密貨幣</button>
           <button class="tab" data-market="forex" type="button">外匯</button>
           <button class="tab" data-market="commodity" type="button">商品</button>
+          <button class="tab" data-market="index" type="button">指數</button>
         </div>
 
         <div class="table-wrap">
@@ -469,7 +471,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261116f"></script>
-  <script src="./assets/app.js?v=20261116f"></script>
+  <script src="./assets/config.js?v=20261116g"></script>
+  <script src="./assets/app.js?v=20261116g"></script>
 </body>
 </html>

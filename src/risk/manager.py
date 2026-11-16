@@ -327,6 +327,7 @@ class RiskManager:
 
         notional = min(desired_notional_usd, pool_target_notional, pool_remaining_cap, risk_cap_notional)
         if "subaccount_equity_usd" in account_state:
+            vol_mult = float(account_state.get("subaccount_risk_multiplier", 1.0))
             sub_alloc = self.check_subaccount_allocation(
                 strategy_id=strategy,
                 instrument=instrument,
@@ -336,7 +337,7 @@ class RiskManager:
                 open_positions_count=int(account_state.get("subaccount_open_positions", 0)),
                 open_total_risk_usd=float(account_state.get("subaccount_open_risk_usd", 0.0)),
                 open_total_notional_usd=float(account_state.get("subaccount_open_notional_usd", 0.0)),
-                risk_multiplier=warning_mult,
+                risk_multiplier=warning_mult * vol_mult,
             )
             if not sub_alloc.approved:
                 return RiskCheckResult(False, 0.0, 0.0, eff_leverage, 0.0, 0.0, 0.0, 0.0, risk_status, sub_alloc.reason)

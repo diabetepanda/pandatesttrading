@@ -70,6 +70,10 @@
       COPPER: "COMEX:HG1!",
       WTI: "NYMEX:CL1!",
       NATGAS: "NYMEX:NG1!",
+      NAS100: "NASDAQ:NDX",
+      SP500: "SP:SPX",
+      JP225: "TVC:NI225",
+      TWII: "TWSE:IX0001",
     },
   };
 })(window);

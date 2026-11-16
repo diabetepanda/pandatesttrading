@@ -1,4 +1,4 @@
-name: Weekly 6-Strategy Backtest
+name: Weekly Six-Strategy Screening
 
 on:
   schedule:
@@ -45,13 +45,13 @@ jobs:
       - name: Install dependencies
         run: pip install -r main_repo/requirements.txt
 
-      - name: Cache Binance monthly historical archives
+      - name: Cache Binance and Dukascopy historical archives
         uses: actions/cache@v4
         with:
-          path: main_repo/.cache/binance_monthly
-          key: binance-monthly-${{ hashFiles('main_repo/config/config.yaml') }}
+          path: main_repo/.cache
+          key: hist-archives-${{ hashFiles('main_repo/config/config.yaml') }}
           restore-keys: |
-            binance-monthly-
+            hist-archives-
 
       - name: Run weekly 6-strategy backtest job
         working-directory: main_repo

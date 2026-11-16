@@ -111,6 +111,7 @@ class Signal:
     time_stop_bars: int
     reasons: tuple[str, ...]
     snapshot_id: str
+    verification_status: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         data = asdict(self)
@@ -146,6 +147,7 @@ class Signal:
             time_stop_bars=int(data["time_stop_bars"]),
             reasons=reasons,
             snapshot_id=data["snapshot_id"],
+            verification_status=str(data.get("verification_status", "")),
         )
 
 
@@ -200,12 +202,12 @@ def _fmt_num(val: float | str) -> str:
 
 
 STRATEGY_LABELS: dict[str, str] = {
-    "S1": "S1 RSI(2) 回檔買進（短線）",
-    "S2": "S2 波動突破（短線）",
-    "S3": "S3 區間來回（短線）",
-    "L1": "L1 多標的趨勢跟隨（長線）",
-    "L2": "L2 加密強弱輪動（長線）",
-    "L3": "L3 200 日均線趨勢過濾（長線）",
+    "S1": "S1 開盤區間突破（短線）",
+    "S2": "S2 4 小時突破（短線）",
+    "S3": "S3 日線 RSI 回檔（短線）",
+    "L1": "L1 波動度調整趨勢跟隨（長線）",
+    "L2": "L2 精簡標的趨勢跟隨（長線）",
+    "L3": "L3 雙動能（長線）",
 }
 
 
@@ -224,14 +226,20 @@ def format_signal_text(signal: Signal) -> str:
 
     lines = [
         f"【Signal Desk 報單】{signal.signal_id}（{strat_zh}）",
-        f"標的：{signal.symbol}｜方向：{dir_zh}",
-        f"入場區間：{_fmt_num(signal.entry_low)} ~ {_fmt_num(signal.entry_high)}",
-        f"補倉價位：{add_line}",
-        f"止損價：{_fmt_num(signal.stop_loss)}",
-        f"止盈 TP1：{_fmt_num(signal.tp1)}｜TP2：{_fmt_num(signal.tp2)}",
-        f"建議風險比例：佔資金池 {signal.risk_pct_pool:g}%（預估風險 ${signal.risk_usd:.2f}）",
-        f"掛單有效期限：{signal.valid_until_utc}",
-        f"失效條件：{signal.invalidation_cond}",
-        "模擬驗證中，非投資建議",
     ]
+    if signal.verification_status:
+        lines.append(f"策略狀態：{signal.verification_status}")
+    lines.extend(
+        [
+            f"標的：{signal.symbol}｜方向：{dir_zh}",
+            f"入場區間：{_fmt_num(signal.entry_low)} ~ {_fmt_num(signal.entry_high)}",
+            f"補倉價位：{add_line}",
+            f"止損價：{_fmt_num(signal.stop_loss)}",
+            f"止盈 TP1：{_fmt_num(signal.tp1)}｜TP2：{_fmt_num(signal.tp2)}",
+            f"建議風險比例：佔資金池 {signal.risk_pct_pool:g}%（預估風險 ${signal.risk_usd:.2f}）",
+            f"掛單有效期限：{signal.valid_until_utc}",
+            f"失效條件：{signal.invalidation_cond}",
+            "模擬驗證中，非投資建議",
+        ]
+    )
     return "\n".join(lines)

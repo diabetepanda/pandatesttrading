@@ -20,9 +20,13 @@ def test_config_has_required_sections() -> None:
     assert cfg["risk"]["drawdown_warning_pct"] == 8.0
     assert cfg["risk"]["drawdown_pause_pct"] == 12.0
     enabled = [inst for inst in cfg["instruments"] if inst.get("enabled", True)]
-    assert len(enabled) == 48
+    assert len(enabled) == 52
     assert sum(1 for inst in enabled if inst["market"] == "crypto") == 33
     assert sum(1 for inst in enabled if inst["market"] in ("forex", "commodity")) == 15
+    assert sum(1 for inst in enabled if inst["market"] == "index") == 4
+    index_syms = {inst["symbol"] for inst in enabled if inst["market"] == "index"}
+    assert index_syms == {"NAS100", "SP500", "JP225", "TWII"}
+    assert all(inst.get("daily_only") is True for inst in enabled if inst["market"] == "index")
 
 
 def test_instruments_have_valid_fields() -> None:
@@ -32,7 +36,7 @@ def test_instruments_have_valid_fields() -> None:
         sym = inst["symbol"]
         assert sym not in seen_symbols
         seen_symbols.add(sym)
-        assert inst["market"] in {"crypto", "forex", "commodity", "stock"}
+        assert inst["market"] in {"crypto", "forex", "commodity", "stock", "index"}
         assert inst["correlation_group"] in cfg["correlation_groups"]
         assert inst["max_leverage"] > 0
         assert isinstance(inst["sources"], dict) and len(inst["sources"]) >= 1
@@ -70,7 +74,21 @@ def test_frontend_assets_and_relative_paths() -> None:
     assert "LIVE_CRYPTO_SYMBOLS" in config_js
     assert "LIVE_METAL_SYMBOLS" in config_js
     assert "LIVE_TRADINGVIEW_SYMBOLS" in config_js
-    for code in ("FX:EURUSD", "FX:USDJPY", "FX:EURGBP", "FX:GBPJPY", "NYMEX:CL1!", "NYMEX:NG1!", "COMEX:GC1!", "COMEX:SI1!", "COMEX:HG1!"):
+    for code in (
+        "FX:EURUSD",
+        "FX:USDJPY",
+        "FX:EURGBP",
+        "FX:GBPJPY",
+        "NYMEX:CL1!",
+        "NYMEX:NG1!",
+        "COMEX:GC1!",
+        "COMEX:SI1!",
+        "COMEX:HG1!",
+        "NASDAQ:NDX",
+        "SP:SPX",
+        "TVC:NI225",
+        "TWSE:IX0001",
+    ):
         assert code in config_js
     assert "PEPEUSDT" in config_js
     assert "TONUSDT" in config_js
@@ -109,7 +127,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261116f" in index_html
+    assert "?v=20261116g" in index_html
     assert "短線池 (A)" not in index_html
     assert "長線池 (B)" not in index_html
     assert "$30,000" in index_html
@@ -188,17 +206,32 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
 
 
 def test_no_legacy_strategy_ab_references() -> None:
-    """Ensure legacy Strategy A/B wording and identifiers are completely absent across code, UI, and docs."""
+    """Ensure legacy Strategy A/B and Round-1 six-strategy names are completely absent across code, UI, and docs."""
     from pathlib import Path
 
     root = Path(__file__).resolve().parent.parent
-    forbidden = ["策略 A", "策略 B", "Strategy A", "Strategy B", "strategy_a", "strategy_b"]
+    forbidden = [
+        "策略 A",
+        "策略 B",
+        "Strategy A",
+        "Strategy B",
+        "strategy_a",
+        "strategy_b",
+        "RSI(2)",
+        "雙軌均值回歸",
+        "波動突破（Squeeze",
+        "區間來回（Range",
+        "跨資產動能輪動",
+        "雙均線過濾",
+    ]
     targets = [
         root / "index.html",
         root / "CHECKLIST.md",
         root / "SPEC.md",
+        root / "README.md",
+        root / "config" / "config.yaml",
     ]
-    for folder in (root / "assets", root / "src"):
+    for folder in (root / "assets", root / "src", root / ".github" / "workflows"):
         for p in sorted(folder.rglob("*")):
             if p.is_file() and "__pycache__" not in p.parts:
                 targets.append(p)
@@ -209,4 +242,4 @@ def test_no_legacy_strategy_ab_references() -> None:
         for needle in forbidden:
             if needle in text:
                 offenders.append(f"{path.relative_to(root)}: {needle!r}")
-    assert not offenders, "Legacy Strategy A/B references remain:\n" + "\n".join(offenders)
+    assert not offenders, "Legacy Strategy A/B or Round-1 strategy references remain:\n" + "\n".join(offenders)

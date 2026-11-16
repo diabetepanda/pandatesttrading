@@ -96,6 +96,10 @@ class CandidateSignal:
     atr_ratio: float = 1.0
     leverage: float | None = None
     time_stop_bars: int | None = None
+    verification_status: str = ""
+    desired_notional_usd: float | None = None
+    subaccount_risk_mode: bool = False
+    risk_multiplier: float = 1.0
 
 
 @dataclass
@@ -381,6 +385,38 @@ class Ledger:
             "long_term_remaining_capital": max(0.0, long_eq - long_used_cap),
         }
 
+    def build_subaccount_state(
+        self,
+        strategy_id: str,
+        mark_prices: dict[str, float] | None = None,
+    ) -> dict[str, Any]:
+        """Compute current sub-account equity, open count, risk, and notional for one strategy."""
+        marks = mark_prices or {}
+        strat_cfg = self.config.get("strategies", {}).get(strategy_id, {})
+        base_cap = float(strat_cfg.get("capital_usd", 10000.0))
+        realized = 0.0
+        unrealized = 0.0
+        open_cnt = 0
+        open_risk = 0.0
+        open_notional = 0.0
+        for tr in self.trades.values():
+            if tr.strategy != strategy_id:
+                continue
+            realized += tr.realized_pnl_usd
+            if tr.state in (LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
+                open_cnt += 1
+                open_risk += tr.open_stop_risk_usd()
+                open_notional += tr.current_notional_usd()
+            if tr.state in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
+                mp = marks.get(tr.symbol, tr.avg_entry_price)
+                unrealized += tr.unrealized_pnl_usd(mp)
+        return {
+            "subaccount_equity_usd": max(0.0, base_cap + realized + unrealized),
+            "subaccount_open_positions": open_cnt,
+            "subaccount_open_risk_usd": open_risk,
+            "subaccount_open_notional_usd": open_notional,
+        }
+
     def to_dict(self) -> dict[str, Any]:
         return {
             "policy_name": self.policy_name,
@@ -472,7 +508,17 @@ class SimulationEngine:
             return None
 
         # 1) Schedule delay guard (SPEC 4.4)
-        max_delay_min = float(self.config.get("schedule", {}).get("max_candle_delay_minutes", 20))
+        sched_cfg = self.config.get("schedule", {})
+        bar_interval = str(
+            candidate.snapshot.kline_summary.get("interval")
+            or self.config.get("strategies", {}).get(candidate.strategy, {}).get("interval", "15m")
+        )
+        if bar_interval == "1d":
+            max_delay_min = float(sched_cfg.get("max_daily_candle_delay_minutes", 4320))
+        elif bar_interval == "4h":
+            max_delay_min = float(sched_cfg.get("max_4h_candle_delay_minutes", 90))
+        else:
+            max_delay_min = float(sched_cfg.get("max_candle_delay_minutes", 20))
         delay_min = (_parse_utc(now_utc) - _parse_utc(latest_bar_close_utc)).total_seconds() / 60.0
         if delay_min > max_delay_min:
             self._record_watch(
@@ -487,10 +533,17 @@ class SimulationEngine:
         entry_mid = (candidate.entry_low + candidate.entry_high) / 2.0
         pool_name = "short_term" if is_short_term_strategy(candidate.strategy) else "long_term"
         pool_cfg = self.config.get("account", {}).get("pools", {}).get(pool_name, {})
-        target_notional = float(pool_cfg.get("target_notional_usd", 2000.0))
+        target_notional = float(
+            candidate.desired_notional_usd
+            if candidate.desired_notional_usd is not None
+            else pool_cfg.get("target_notional_usd", 2000.0)
+        )
 
         # 2) Check primary ledger risk rules first
         primary_acct = self.primary_ledger.build_account_state(now_utc, marks)
+        if candidate.subaccount_risk_mode:
+            primary_acct.update(self.primary_ledger.build_subaccount_state(candidate.strategy, marks))
+            primary_acct["subaccount_risk_multiplier"] = candidate.risk_multiplier
         primary_risk = self.risk_manager.check_new_signal(
             instrument=inst,
             strategy=candidate.strategy,
@@ -574,6 +627,7 @@ class SimulationEngine:
             time_stop_bars=time_stop_bars,
             reasons=candidate.reasons,
             snapshot_id=snap.snapshot_id,
+            verification_status=candidate.verification_status,
         )
         self.signal_store.publish_signal(signal, snap)
 
@@ -585,6 +639,9 @@ class SimulationEngine:
 
         for pol_name, ledger in self.ledgers.items():
             acct = ledger.build_account_state(now_utc, marks)
+            if candidate.subaccount_risk_mode:
+                acct.update(ledger.build_subaccount_state(candidate.strategy, marks))
+                acct["subaccount_risk_multiplier"] = candidate.risk_multiplier
             risk_res = (
                 primary_risk
                 if pol_name == self.primary_policy_name
@@ -1243,6 +1300,43 @@ class SimulationEngine:
                 )
             )
         return all_events
+
+    def close_trade_by_strategy(
+        self,
+        strategy_id: str,
+        symbol: str,
+        close_price: float,
+        ts_utc: str,
+        exit_reason: str = "logic_invalidated",
+    ) -> list[SignalUpdateEvent]:
+        """Close or cancel active/pending trades for `(strategy_id, symbol)` across all ledgers."""
+        events_out: list[SignalUpdateEvent] = []
+        for ledger in self.ledgers.values():
+            slip_default = float(self.config.get("risk", {}).get("default_slippage_bps", 1.0)) / 10000.0
+            for trade in list(ledger.trades.values()):
+                if trade.strategy != strategy_id or trade.symbol != symbol:
+                    continue
+                if trade.state == LifecycleState.WAITING_ENTRY:
+                    trade.state = validate_transition(
+                        trade.state, LifecycleState.CANCELLED, exit_reason="pre_entry_invalidated"
+                    )
+                    trade.exit_reason = "pre_entry_invalidated"
+                    trade.closed_at_utc = ts_utc
+                    if trade.signal_id in ledger.orders:
+                        ledger.orders[trade.signal_id].status = "cancelled"
+                    self._emit_primary(
+                        ledger, events_out, trade.signal_id, ts_utc, "cancelled", close_price, "策略訊號結束，取消未成交掛單"
+                    )
+                elif trade.state in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
+                    spread = trade.assumed_spread_bps
+                    slip = trade.slippage_bps / 10000.0 if trade.slippage_bps else slip_default
+                    exec_px = (
+                        _bid_price(close_price, spread) * (1.0 - slip)
+                        if trade.direction == "long"
+                        else _ask_price(close_price, spread) * (1.0 + slip)
+                    )
+                    self._finalize_close(ledger, trade, exec_px, ts_utc, exit_reason, events_out)
+        return events_out
 
     def save_state(self, snapshot_ts_utc: str | None = None) -> None:
         """Persist trades, orders, fills, equity snapshots, and replay state to out_dir."""

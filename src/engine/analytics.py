@@ -292,7 +292,7 @@ def build_performance_stats(
     }
     by_market = {
         m: _calc_group([t for t in trades if t.market == m])
-        for m in ("crypto", "forex", "commodity")
+        for m in ("crypto", "forex", "commodity", "index")
     }
     by_direction = {
         d: _calc_group([t for t in trades if t.direction == d])
