@@ -1,6 +1,6 @@
 # Signal Desk 報單網站＋模擬驗證艙
 
-本專案為部署於 GitHub Pages 與 GitHub Actions 的多市場交易報單與模擬驗證系統（目前進度：**階段 4 — 報單牆、單張報單頁、成績總表**）。
+本專案為部署於 GitHub Pages 與 GitHub Actions 的多市場交易報單與模擬驗證系統（目前進度：**階段 5 — 策略 B 歷史回測、樣本外篩選與日線掃描**）。
 
 - 正式網址：https://diabetepanda.github.io/pandatesttrading/
 - 聲明：**本站為個人模擬驗證，非投資建議。**
@@ -88,3 +88,21 @@ pytest -v
 2. **加密貨幣資金費率與未平倉量**：優先使用 OKX 公開合約端點（`public/funding-rate` 與 `rubik/stat/contracts/open-interest-history`），備援 Binance 期貨公開端點（`fapi.binance.com`，部分美國 IP 可能受限）；若兩者皆無法取得，該條件直接判定為「資料不足」並寫入觀望紀錄，絕不預設為正常。
 3. **不穩標的不填補原則**：依實測，`AUDUSD`、`NZDUSD`、`NATGAS` 的 `1m` 在 Yahoo 無跳動分鐘缺 K 線超過 10%，策略 A 會自動將其標為 `資料不穩` 並記錄於觀望紀錄，不產生報單。
 4. **每張新報單獨立 commit**：當 `scan.yml` 產生新報單時，會依 `SPEC.md` 1.7 先為每張新報單單獨建立一筆含報單編號的 git commit 寫入 `data` 分支，再 commit 其餘狀態檔。
+
+## 假設與已知風險（階段 5）
+
+1. **策略 B 候選池與參數網格（`config/config.yaml`）**：每週依 `strategy_b.candidates` 在純樣本內（In-Sample）區間評估三類趨勢模型（共 21 組參數）：
+   - `donchian`：突破週期 `[20, 55, 100]`
+   - `ema_cross`：日線均線交叉 `[20/100, 50/200]`
+   - `weekly_trend_atr`：週線等價 EMA（以 `weekly_ema * 5` 日線換算）`[10, 20]`
+   - 搭配初始移動止損 ATR 倍數 `sl_atr_mults: [2.0, 2.5, 3.0]`，以及進場／平倉皆於訊號隔日開盤價成交、無未來函數。
+2. **嚴格樣本內／樣本外切分與 Walk-Forward**：
+   - 依時間順序前 `70%` 為樣本內（IS，只用來選取候選模型與參數）、後 `30%` 為樣本外（OOS，僅評估最終表現；指標暖機沿用歷史序列至前一根，交易僅於 `split_idx` 之後產生）。
+   - Walk-Forward 另於樣本內及遞增訓練視窗做 `3` 折滾動檢驗作為診斷參考。
+3. **成本扣除與嚴格 OOS 通過門檻（不放寬）**：
+   - 模擬損益固定由 `config/config.yaml` 讀取並扣除手續費（`fee_rate` 雙邊）、點差（`assumed_spread_bps`）、滑價（`risk.default_slippage_bps`）與持倉隔夜費（`overnight_cost_daily_bps`）。
+   - 嚴格遵守 `SPEC.md` 12.1 通過門檻：OOS 交易數 `>= 30`、期望值 `> 0`、最大回撤 `< 25%`、獲利因子（Profit Factor）`> 1.3`；任一不符皆標示未通過，策略 B 每日掃描不會對該標的發出報單。
+4. **五年日線資料實測結果**：
+   - 加密貨幣由 `data-api.binance.vision` 分頁向後回抓（最高 `2600` 根日線，實測 5 檔皆達 `6.26–7.12` 年），外匯與商品由 `yfinance`（`10y`）抓取 `2513–2600` 根日線（約 `9.99` 年），全數 18 檔皆達 5 年以上門檻。
+   - 若未來新增歷史不滿 5 年的標的，系統直接標記為 `insufficient_history`（歷史不足）而不硬算篩選。
+   - **歷史回測不代表未來表現**，僅作為策略 B 候選篩選與研究驗證依據。

@@ -16,6 +16,7 @@
   let cachedInstruments = [];
   let cachedSignals = [];
   let cachedWatch = null;
+  let cachedBacktest = null;
   let livePrices = {};
   let activeChart = null;
 
@@ -836,6 +837,72 @@
     }
   }
 
+  function escapeHtml(str) {
+    return String(str ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function formatMetricSummary(m) {
+    if (!m || typeof m.trades !== "number") return "--";
+    if (m.trades === 0) return "0 筆";
+    const wr = Number(m.win_rate_pct || 0).toFixed(1);
+    const exp = Number(m.expectancy_r || 0).toFixed(3);
+    const pf = m.profit_factor !== null && m.profit_factor !== undefined ? Number(m.profit_factor).toFixed(2) : "--";
+    const dd = Number(m.max_drawdown_pct || 0).toFixed(2);
+    return `${m.trades} 筆｜勝率 ${wr}%｜期望 ${exp}R｜PF ${pf}｜回撤 ${dd}%`;
+  }
+
+  function renderBacktestResults() {
+    const tbody = document.getElementById("backtest-tbody");
+    const metaEl = document.getElementById("bt-summary-meta");
+    if (!tbody || !metaEl) return;
+
+    if (!cachedBacktest || !Array.isArray(cachedBacktest.results) || cachedBacktest.results.length === 0) {
+      metaEl.textContent = "目前尚無策略 B 回測結果（等待每週自動排程或手動執行 Strategy B Weekly Backtest）。";
+      tbody.innerHTML = '<tr><td colspan="7" class="muted center">目前尚無策略 B 回測結果。</td></tr>';
+      return;
+    }
+
+    const s = cachedBacktest.summary || {};
+    metaEl.textContent = `最新回測時間 (UTC+8)：${formatTaipeiTime(cachedBacktest.generated_at_utc)}｜總計 ${s.total ?? cachedBacktest.results.length} 檔｜通過 ${s.passed ?? 0}｜未通過 ${s.failed ?? 0}｜歷史不足 ${s.insufficient_history ?? 0}（歷史不代表未來）`;
+
+    tbody.innerHTML = cachedBacktest.results
+      .map((item) => {
+        let statusBadge = '<span class="pill pill-fail">未通過</span>';
+        if (item.status === "insufficient_history") {
+          statusBadge = '<span class="pill pill-warn">歷史不足 (&lt;5年)</span>';
+        } else if (item.status === "data_failed") {
+          statusBadge = '<span class="pill pill-fail">抓取失敗</span>';
+        } else if (item.passed) {
+          statusBadge = '<span class="pill pill-ok">通過驗證</span>';
+        }
+
+        const paramsText = item.chosen_params && Object.keys(item.chosen_params).length > 0
+          ? Object.entries(item.chosen_params).map(([k, v]) => `${k}=${v}`).join(", ")
+          : "--";
+        const stratText = item.chosen_strategy ? `${escapeHtml(item.chosen_strategy)} (${escapeHtml(paramsText)})` : "--";
+        const yrsText = item.history_years !== undefined && item.history_years !== null
+          ? `${Number(item.history_years).toFixed(2)} 年 (${item.bar_count || 0} 根)`
+          : "--";
+
+        return `
+          <tr>
+            <td><strong>${escapeHtml(item.symbol)}</strong><br><span class="muted">${escapeHtml(item.market || "")}</span></td>
+            <td>${yrsText}</td>
+            <td>${statusBadge}</td>
+            <td><code>${stratText}</code></td>
+            <td>${formatMetricSummary(item.in_sample)}</td>
+            <td>${formatMetricSummary(item.out_of_sample)}</td>
+            <td>${escapeHtml(item.reason || "--")}</td>
+          </tr>
+        `;
+      })
+      .join("");
+  }
+
   function applyRoute() {
     const rawHash = window.location.hash || "#/wall";
     const cleaned = rawHash.replace(/^#\/?/, "");
@@ -852,6 +919,7 @@
       document.getElementById("view-results").classList.remove("hidden");
       document.querySelector('.nav-link[data-route="results"]')?.classList.add("active");
       renderResultsTable();
+      renderBacktestResults();
     } else if (route === "data") {
       document.getElementById("view-data").classList.remove("hidden");
       document.querySelector('.nav-link[data-route="data"]')?.classList.add("active");
@@ -890,7 +958,7 @@
   async function refreshAll() {
     const errBox = document.getElementById("fetch-error-box");
     try {
-      const [instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, watchRes] = await Promise.allSettled([
+      const [instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, watchRes, btRes] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
         fetchDataJson("data_health.json"),
         fetchDataJson("control_status.json"),
@@ -898,6 +966,7 @@
         fetchDataJson("data_probe_report.json"),
         fetchDataJson("signals_index.json"),
         fetchDataJson("watch_today.json"),
+        fetchDataJson("backtest_results.json"),
       ]);
 
       if (instRes.status === "rejected") {
@@ -908,10 +977,12 @@
       cachedInstruments = instRes.value.instruments || [];
       cachedSignals = signalsRes.status === "fulfilled" && Array.isArray(signalsRes.value) ? signalsRes.value : [];
       cachedWatch = watchRes.status === "fulfilled" ? watchRes.value : null;
+      cachedBacktest = btRes.status === "fulfilled" ? btRes.value : null;
 
       renderInstruments();
       renderWallCards();
       renderResultsTable();
+      renderBacktestResults();
 
       const health = healthRes.status === "fulfilled" ? healthRes.value : null;
       const control = controlRes.status === "fulfilled" ? controlRes.value : null;

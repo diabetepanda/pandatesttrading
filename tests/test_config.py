@@ -65,10 +65,14 @@ def test_frontend_assets_and_relative_paths() -> None:
     for code in ("FX:EURUSD", "FX:USDJPY", "NYMEX:CL1!", "NYMEX:NG1!", "COMEX:GC1!", "COMEX:SI1!", "COMEX:HG1!"):
         assert code in config_js
 
-    # Stage 4 hash routes and fixed CDN version check
+    # Stage 4 & 5 hash routes, disclaimer, backtest results, and fixed CDN version check
     for route in ("#/wall", "#/results", "#/data"):
         assert route in index_html
     assert "lightweight-charts@4.2.1" in index_html
+    assert "backtest-section" in index_html
+    assert "歷史不代表未來" in index_html
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
     assert "模擬驗證中，非投資建議" in app_js
     assert "computeFloatingPnl" in app_js
+    assert "backtest_results.json" in app_js
+    assert "renderBacktestResults" in app_js

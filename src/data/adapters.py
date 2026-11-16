@@ -78,35 +78,54 @@ class BinanceVisionAdapter(DataAdapter):
     ) -> list[OHLCVBar]:
         if interval not in INTERVAL_SECONDS:
             raise ValueError(f"Unsupported interval: {interval}")
-        resp = requests.get(
-            self.BASE_URL,
-            params={"symbol": source_symbol, "interval": interval, "limit": min(limit, 1000)},
-            headers={"User-Agent": USER_AGENT},
-            timeout=self.timeout_sec,
-        )
-        resp.raise_for_status()
-        raw = resp.json()
-        if not isinstance(raw, list):
-            raise ValueError(f"Unexpected Binance response: {raw}")
-
         now_sec = (now_utc or datetime.now(timezone.utc)).timestamp()
-        bars: list[OHLCVBar] = []
-        for row in raw:
-            open_ms = int(row[0])
-            if not _is_closed_bar(open_ms / 1000.0, interval, now_sec):
-                continue
-            bars.append(
-                OHLCVBar(
-                    ts_utc=_ms_to_iso_utc(open_ms),
+        bars_by_ts: dict[str, OHLCVBar] = {}
+        end_time_ms: int | None = None
+        remaining = max(1, limit)
+        max_pages = 5 if limit > 1000 else 1
+
+        for _ in range(max_pages):
+            batch_limit = min(remaining, 1000)
+            params: dict[str, Any] = {"symbol": source_symbol, "interval": interval, "limit": batch_limit}
+            if end_time_ms is not None:
+                params["endTime"] = end_time_ms
+            resp = requests.get(
+                self.BASE_URL,
+                params=params,
+                headers={"User-Agent": USER_AGENT},
+                timeout=self.timeout_sec,
+            )
+            resp.raise_for_status()
+            raw = resp.json()
+            if not isinstance(raw, list):
+                raise ValueError(f"Unexpected Binance response: {raw}")
+            if not raw:
+                break
+
+            earliest_ms: int | None = None
+            for row in raw:
+                open_ms = int(row[0])
+                if earliest_ms is None or open_ms < earliest_ms:
+                    earliest_ms = open_ms
+                if not _is_closed_bar(open_ms / 1000.0, interval, now_sec):
+                    continue
+                ts_iso = _ms_to_iso_utc(open_ms)
+                bars_by_ts[ts_iso] = OHLCVBar(
+                    ts_utc=ts_iso,
                     open=float(row[1]),
                     high=float(row[2]),
                     low=float(row[3]),
                     close=float(row[4]),
                     volume=float(row[5]),
                 )
-            )
-        bars.sort(key=lambda b: b.ts_utc)
-        return bars
+
+            if len(raw) < batch_limit or len(bars_by_ts) >= limit or earliest_ms is None:
+                break
+            end_time_ms = earliest_ms - 1
+            remaining = max(1, limit - len(bars_by_ts))
+
+        bars = sorted(bars_by_ts.values(), key=lambda b: b.ts_utc)
+        return bars[-limit:]
 
 
 class OkxAdapter(DataAdapter):
@@ -311,7 +330,7 @@ class YFinanceAdapter(DataAdapter):
     """Yahoo Finance adapter via yfinance (no API key)."""
 
     name = "yfinance"
-    PERIOD_MAP = {"1m": "5d", "15m": "1mo", "1d": "1y"}
+    PERIOD_MAP = {"1m": "5d", "15m": "1mo", "1d": "10y"}
 
     def fetch_bars(
         self,

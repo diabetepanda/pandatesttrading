@@ -18,15 +18,44 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
+        with:
+          path: main_repo
+
+      - name: Prepare data branch workspace
+        shell: bash
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --heads https://github.com/${{ github.repository }}.git data >/dev/null 2>&1; then
+            git clone --branch data --single-branch https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git data_repo
+          else
+            git clone --no-checkout https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git data_repo
+            cd data_repo
+            git checkout --orphan data
+            git rm -rf . >/dev/null 2>&1 || true
+          fi
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
+          cache-dependency-path: main_repo/requirements.txt
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r main_repo/requirements.txt
 
-      - name: Run weekly job
-        run: python -m src.jobs.weekly
+      - name: Run weekly screening job
+        working-directory: main_repo
+        run: python -m src.jobs.weekly --out-dir ../data_repo
+
+      - name: Commit and push to data branch
+        working-directory: data_repo
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No backtest changes to commit."
+          else
+            git commit -m "chore(data): weekly Strategy B screening $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            git push origin data
+          fi

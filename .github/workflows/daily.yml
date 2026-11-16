@@ -18,15 +18,53 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
+        with:
+          path: main_repo
+
+      - name: Prepare data branch workspace
+        shell: bash
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --heads https://github.com/${{ github.repository }}.git data >/dev/null 2>&1; then
+            git clone --branch data --single-branch https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git data_repo
+          else
+            git clone --no-checkout https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git data_repo
+            cd data_repo
+            git checkout --orphan data
+            git rm -rf . >/dev/null 2>&1 || true
+          fi
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
+          cache-dependency-path: main_repo/requirements.txt
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r main_repo/requirements.txt
 
-      - name: Run daily job
-        run: python -m src.jobs.daily
+      - name: Run daily Strategy B scan
+        working-directory: main_repo
+        run: python -m src.jobs.daily --out-dir ../data_repo
+
+      - name: Commit and push to data branch
+        working-directory: data_repo
+        run: |
+          if [ -f new_signals_to_commit.json ]; then
+            SIGNAL_IDS=$(python3 -c 'import json; print(" ".join(json.load(open("new_signals_to_commit.json")).get("signal_ids", [])))')
+            for sid in $SIGNAL_IDS; do
+              git add "signals/${sid}.json" "snapshots/SNAP-${sid}.json" 2>/dev/null || true
+              if ! git diff --cached --quiet; then
+                git commit -m "feat(signal): publish ${sid}"
+              fi
+            done
+          fi
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No daily scan changes to commit."
+          else
+            git commit -m "chore(data): daily Strategy B scan $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          fi
+          git push origin data
