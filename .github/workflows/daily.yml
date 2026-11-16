@@ -1,4 +1,4 @@
-name: Daily Strategy B Scan
+name: Daily Long-Term Scan (L1-L3)
 
 on:
   schedule:
@@ -45,7 +45,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r main_repo/requirements.txt
 
-      - name: Run daily Strategy B scan
+      - name: Run daily L1-L3 scan
         working-directory: main_repo
         run: python -m src.jobs.daily --out-dir ../data_repo
 
@@ -65,7 +65,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No daily scan changes to commit."
           else
-            git commit -m "chore(data): daily Strategy B scan $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            git commit -m "chore(data): daily L1-L3 scan $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           fi
           if git rev-parse --verify origin/data >/dev/null 2>&1; then
             python3 ../main_repo/src/jobs/data_sync.py --repo-dir . --branch data --max-retries 3

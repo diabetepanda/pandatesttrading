@@ -4,13 +4,20 @@ from __future__ import annotations
 
 import csv
 import io
+import json
+import pickle
+import threading
 import time
+import zipfile
 from abc import ABC, abstractmethod
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from typing import Any
 
 import pandas as pd
 import requests
+from requests.adapters import HTTPAdapter
 import yfinance as yf
 
 from src.data.models import AttemptRecord, FetchResult, OHLCVBar
@@ -18,6 +25,7 @@ from src.data.models import AttemptRecord, FetchResult, OHLCVBar
 INTERVAL_SECONDS: dict[str, int] = {
     "1m": 60,
     "15m": 900,
+    "1h": 3600,
     "1d": 86400,
 }
 
@@ -82,7 +90,7 @@ class BinanceVisionAdapter(DataAdapter):
         bars_by_ts: dict[str, OHLCVBar] = {}
         end_time_ms: int | None = None
         remaining = max(1, limit)
-        max_pages = 5 if limit > 1000 else 1
+        max_pages = max(1, min(10, (remaining + 999) // 1000))
 
         for _ in range(max_pages):
             batch_limit = min(remaining, 1000)
@@ -133,7 +141,7 @@ class OkxAdapter(DataAdapter):
 
     name = "okx"
     BASE_URL = "https://www.okx.com/api/v5/market/candles"
-    INTERVAL_MAP = {"1m": "1m", "15m": "15m", "1d": "1Dutc"}
+    INTERVAL_MAP = {"1m": "1m", "15m": "15m", "1h": "1H", "1d": "1Dutc"}
 
     def fetch_bars(
         self,
@@ -183,7 +191,7 @@ class BybitAdapter(DataAdapter):
 
     name = "bybit"
     BASE_URL = "https://api.bybit.com/v5/market/kline"
-    INTERVAL_MAP = {"1m": "1", "15m": "15", "1d": "D"}
+    INTERVAL_MAP = {"1m": "1", "15m": "15", "1h": "60", "1d": "D"}
 
     def fetch_bars(
         self,
@@ -232,7 +240,7 @@ class KrakenAdapter(DataAdapter):
 
     name = "kraken"
     BASE_URL = "https://api.kraken.com/0/public/OHLC"
-    INTERVAL_MAP = {"1m": 1, "15m": 15, "1d": 1440}
+    INTERVAL_MAP = {"1m": 1, "15m": 15, "1h": 60, "1d": 1440}
 
     def fetch_bars(
         self,
@@ -330,7 +338,7 @@ class YFinanceAdapter(DataAdapter):
     """Yahoo Finance adapter via yfinance (no API key)."""
 
     name = "yfinance"
-    PERIOD_MAP = {"1m": "5d", "15m": "1mo", "1d": "10y"}
+    PERIOD_MAP = {"1m": "5d", "15m": "1mo", "1h": "2y", "1d": "10y"}
     _last_request_mono: float = 0.0
 
     def __init__(self, timeout_sec: int = 15, min_interval_sec: float = 0.25) -> None:
@@ -715,3 +723,278 @@ def normalize_derivatives_info(raw: dict[str, Any] | None) -> dict[str, Any]:
         "oi_change": oi_chg,
         "status": status,
     }
+
+
+def parse_binance_kline_zip(
+    zip_bytes: bytes,
+    interval: str,
+    now_ts_sec: float | None = None,
+) -> list[OHLCVBar]:
+    """Parse one Binance Spot monthly kline ZIP archive supporting ms (13-digit) & us (16-digit) timestamps."""
+    now_sec = now_ts_sec if now_ts_sec is not None else datetime.now(timezone.utc).timestamp()
+    out: list[OHLCVBar] = []
+    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zf:
+        csv_names = [n for n in zf.namelist() if n.endswith(".csv")] or zf.namelist()
+        if not csv_names:
+            return out
+        with zf.open(csv_names[0]) as fp:
+            reader = csv.reader(io.TextIOWrapper(fp, encoding="utf-8", errors="replace"))
+            for row in reader:
+                if not row or len(row) < 6:
+                    continue
+                first = row[0].strip()
+                if not first.isdigit():
+                    continue
+                open_ms = int(first)
+                # Binance spot CSV archives switched from ms (13 digits) to us (16 digits) in 2025-01
+                if open_ms >= 10**14:
+                    open_ms //= 1000
+                if not _is_closed_bar(open_ms / 1000.0, interval, now_sec):
+                    continue
+                out.append(
+                    OHLCVBar(
+                        ts_utc=_ms_to_iso_utc(open_ms),
+                        open=float(row[1]),
+                        high=float(row[2]),
+                        low=float(row[3]),
+                        close=float(row[4]),
+                        volume=float(row[5]),
+                    )
+                )
+    return out
+
+
+class BinanceMonthlyArchiveFetcher:
+    """Downloads and caches >=5y historical OHLCV bars from data.binance.vision monthly ZIPs."""
+
+    ARCHIVE_URL = "https://data.binance.vision/data/spot/monthly/klines/{symbol}/{interval}/{symbol}-{interval}-{ym}.zip"
+    KLINES_API_URL = "https://data-api.binance.vision/api/v3/klines"
+
+    def __init__(
+        self,
+        cache_dir: Path | str = ".cache/binance_monthly",
+        timeout_sec: int = 20,
+        max_workers: int = 20,
+    ) -> None:
+        self.cache_dir = Path(cache_dir)
+        self.timeout_sec = timeout_sec
+        self.max_workers = max(1, max_workers)
+        self.bounds_path = self.cache_dir / "symbol_bounds.json"
+        self._lock = threading.Lock()
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self._session = requests.Session()
+        adapter = HTTPAdapter(pool_connections=32, pool_maxsize=32)
+        self._session.mount("https://", adapter)
+        self._session.mount("http://", adapter)
+        self._api_adapter = BinanceVisionAdapter(timeout_sec=timeout_sec)
+
+    @staticmethod
+    def _month_range(start_ym: tuple[int, int], end_ym: tuple[int, int]) -> list[str]:
+        y, m = start_ym
+        ey, em = end_ym
+        out: list[str] = []
+        while (y, m) <= (ey, em):
+            out.append(f"{y:04d}-{m:02d}")
+            m += 1
+            if m > 12:
+                m = 1
+                y += 1
+        return out
+
+    @staticmethod
+    def _subtract_months(year: int, month: int, months: int) -> tuple[int, int]:
+        total = year * 12 + (month - 1) - months
+        return total // 12, (total % 12) + 1
+
+    def _get_symbol_bounds(self, source_symbol: str, today_key: str) -> tuple[int | None, int | None]:
+        with self._lock:
+            bounds: dict[str, Any] = {}
+            if self.bounds_path.exists():
+                try:
+                    bounds = json.loads(self.bounds_path.read_text(encoding="utf-8"))
+                except Exception:
+                    bounds = {}
+            entry = dict(bounds.get(source_symbol, {}))
+            first_ms = entry.get("first_open_ms") if isinstance(entry.get("first_open_ms"), int) else None
+            latest_ms = (
+                entry.get("latest_open_ms")
+                if entry.get("checked_date") == today_key and isinstance(entry.get("latest_open_ms"), int)
+                else None
+            )
+            if first_ms and latest_ms:
+                return first_ms, latest_ms
+
+        if not first_ms:
+            try:
+                resp = self._session.get(
+                    self.KLINES_API_URL,
+                    params={"symbol": source_symbol, "interval": "1d", "startTime": 0, "limit": 1},
+                    headers={"User-Agent": USER_AGENT},
+                    timeout=self.timeout_sec,
+                )
+                resp.raise_for_status()
+                raw = resp.json()
+                if isinstance(raw, list) and raw:
+                    val = int(raw[0][0])
+                    first_ms = val // 1000 if val >= 10**14 else val
+            except Exception:
+                pass
+
+        if not latest_ms:
+            try:
+                resp = self._session.get(
+                    self.KLINES_API_URL,
+                    params={"symbol": source_symbol, "interval": "1d", "limit": 1},
+                    headers={"User-Agent": USER_AGENT},
+                    timeout=self.timeout_sec,
+                )
+                resp.raise_for_status()
+                raw = resp.json()
+                if isinstance(raw, list) and raw:
+                    val = int(raw[0][0])
+                    latest_ms = val // 1000 if val >= 10**14 else val
+            except Exception:
+                pass
+
+        if first_ms or latest_ms:
+            with self._lock:
+                bounds = {}
+                if self.bounds_path.exists():
+                    try:
+                        bounds = json.loads(self.bounds_path.read_text(encoding="utf-8"))
+                    except Exception:
+                        bounds = {}
+                cur = dict(bounds.get(source_symbol, {}))
+                if first_ms:
+                    cur["first_open_ms"] = first_ms
+                if latest_ms:
+                    cur["latest_open_ms"] = latest_ms
+                    cur["checked_date"] = today_key
+                bounds[source_symbol] = cur
+                self.bounds_path.write_text(json.dumps(bounds, indent=2) + "\n", encoding="utf-8")
+        return first_ms, latest_ms
+
+    def _fetch_month_zip(self, source_symbol: str, interval: str, ym: str) -> bytes | None:
+        zip_dir = self.cache_dir / source_symbol / interval
+        zip_dir.mkdir(parents=True, exist_ok=True)
+        zip_path = zip_dir / f"{source_symbol}-{interval}-{ym}.zip"
+        if zip_path.exists() and zip_path.stat().st_size > 0:
+            return zip_path.read_bytes()
+
+        url = self.ARCHIVE_URL.format(symbol=source_symbol, interval=interval, ym=ym)
+        resp = self._session.get(url, headers={"User-Agent": USER_AGENT}, timeout=self.timeout_sec)
+        if resp.status_code == 404:
+            return None
+        resp.raise_for_status()
+        zip_bytes = resp.content
+        # Validate archive before caching to disk
+        with zipfile.ZipFile(io.BytesIO(zip_bytes)):
+            pass
+        zip_path.write_bytes(zip_bytes)
+        return zip_bytes
+
+    def fetch_history(
+        self,
+        source_symbol: str,
+        interval: str,
+        years: float = 5.1,
+        now_utc: datetime | None = None,
+        include_current_month: bool = True,
+    ) -> list[OHLCVBar]:
+        """Return closed OHLCV bars covering `years` (or full listing history if newer), cached on disk."""
+        if interval not in INTERVAL_SECONDS:
+            raise ValueError(f"Unsupported interval: {interval}")
+        now = (now_utc or datetime.now(timezone.utc)).astimezone(timezone.utc)
+        now_sec = now.timestamp()
+        today_key = now.strftime("%Y-%m-%d")
+
+        first_ms, latest_ms = self._get_symbol_bounds(source_symbol, today_key)
+        effective_anchor = now
+        if latest_ms is not None:
+            latest_dt = datetime.fromtimestamp(latest_ms / 1000.0, tz=timezone.utc) + timedelta(days=1)
+            if latest_dt < effective_anchor:
+                effective_anchor = latest_dt
+
+        last_complete_dt = effective_anchor.replace(day=1, hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
+        end_ym = (last_complete_dt.year, last_complete_dt.month)
+        months_back = max(1, int(round(years * 12)) + 1)
+        target_start_ym = self._subtract_months(end_ym[0], end_ym[1], months_back)
+
+        if first_ms is not None:
+            first_dt = datetime.fromtimestamp(first_ms / 1000.0, tz=timezone.utc)
+            first_ym = (first_dt.year, first_dt.month)
+            if first_ym > target_start_ym:
+                target_start_ym = first_ym
+
+        month_strs = self._month_range(target_start_ym, end_ym)
+        merged_dir = self.cache_dir / "merged"
+        merged_dir.mkdir(parents=True, exist_ok=True)
+        merged_key = f"{source_symbol}_{interval}_{month_strs[0]}_{month_strs[-1]}" if month_strs else f"{source_symbol}_{interval}_empty"
+        merged_path = merged_dir / f"{merged_key}.pkl"
+
+        archive_bars: list[OHLCVBar] | None = None
+        if merged_path.exists():
+            try:
+                loaded = pickle.loads(merged_path.read_bytes())
+                if isinstance(loaded, list):
+                    archive_bars = loaded
+            except Exception:
+                archive_bars = None
+
+        if archive_bars is None:
+            bars_by_ts: dict[str, OHLCVBar] = {}
+
+            def _load_one(ym: str) -> list[OHLCVBar]:
+                zbytes = self._fetch_month_zip(source_symbol, interval, ym)
+                if not zbytes:
+                    return []
+                return parse_binance_kline_zip(zbytes, interval, now_ts_sec=now_sec)
+
+            if self.max_workers > 1 and len(month_strs) > 1:
+                with ThreadPoolExecutor(max_workers=self.max_workers) as pool:
+                    futures = {pool.submit(_load_one, ym): ym for ym in month_strs}
+                    for fut in as_completed(futures):
+                        try:
+                            for b in fut.result():
+                                bars_by_ts[b.ts_utc] = b
+                        except Exception:
+                            continue
+            else:
+                for ym in month_strs:
+                    try:
+                        for b in _load_one(ym):
+                            bars_by_ts[b.ts_utc] = b
+                    except Exception:
+                        continue
+
+            archive_bars = sorted(bars_by_ts.values(), key=lambda b: b.ts_utc)
+            if archive_bars:
+                try:
+                    merged_path.write_bytes(pickle.dumps(archive_bars))
+                except Exception:
+                    pass
+
+        merged_map: dict[str, OHLCVBar] = {b.ts_utc: b for b in archive_bars if b.ts_utc}
+
+        # Supplement current incomplete month from live Binance Spot klines API (optional graceful fallback)
+        if include_current_month:
+            tail_limit = 3200 if interval == "15m" else (800 if interval == "1h" else 60)
+            tail_day = now.strftime("%Y-%m-%d")
+            tail_path = merged_dir / f"tail_{source_symbol}_{interval}_{tail_day}.pkl"
+            tail_bars: list[OHLCVBar] | None = None
+            if tail_path.exists():
+                try:
+                    tail_bars = pickle.loads(tail_path.read_bytes())
+                except Exception:
+                    tail_bars = None
+            if tail_bars is None:
+                try:
+                    tail_bars = self._api_adapter.fetch_bars(source_symbol, interval, limit=tail_limit, now_utc=now)
+                    if tail_bars:
+                        tail_path.write_bytes(pickle.dumps(tail_bars))
+                except Exception:
+                    tail_bars = []
+            for b in tail_bars or []:
+                merged_map[b.ts_utc] = b
+
+        return sorted(merged_map.values(), key=lambda b: b.ts_utc)

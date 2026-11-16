@@ -1,4 +1,4 @@
-name: Weekly Strategy B Screening
+name: Weekly 6-Strategy Backtest
 
 on:
   schedule:
@@ -45,7 +45,15 @@ jobs:
       - name: Install dependencies
         run: pip install -r main_repo/requirements.txt
 
-      - name: Run weekly screening job
+      - name: Cache Binance monthly historical archives
+        uses: actions/cache@v4
+        with:
+          path: main_repo/.cache/binance_monthly
+          key: binance-monthly-${{ hashFiles('main_repo/config/config.yaml') }}
+          restore-keys: |
+            binance-monthly-
+
+      - name: Run weekly 6-strategy backtest job
         working-directory: main_repo
         run: python -m src.jobs.weekly --out-dir ../data_repo
 
@@ -56,7 +64,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No backtest changes to commit."
           else
-            git commit -m "chore(data): weekly Strategy B screening $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            git commit -m "chore(data): weekly 6-strategy backtest $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
             if git rev-parse --verify origin/data >/dev/null 2>&1; then
               python3 ../main_repo/src/jobs/data_sync.py --repo-dir . --branch data --max-retries 3
             else

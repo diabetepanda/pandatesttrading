@@ -58,28 +58,42 @@ def compute_atr_series(
     """Compute Wilder ATR series, ignoring expected weekend/settlement gaps."""
     if len(bars) < period + 1:
         return []
-    timestamps = [_parse_iso_utc(b.ts_utc) for b in bars]
+    timestamps = [_parse_iso_utc(b.ts_utc) for b in bars] if market != "crypto" else None
     trs: list[float] = []
-    for i in range(1, len(bars)):
-        curr = bars[i]
-        prev = bars[i - 1]
-        if _is_expected_break(timestamps[i - 1], timestamps[i], market, interval):
-            tr = max(0.0, curr.high - curr.low)
-        else:
-            tr = max(
-                curr.high - curr.low,
-                abs(curr.high - prev.close),
-                abs(curr.low - prev.close),
-            )
-        trs.append(tr)
+    if timestamps is None:
+        prev_close = bars[0].close
+        for i in range(1, len(bars)):
+            curr = bars[i]
+            hi = curr.high
+            lo = curr.low
+            tr1 = hi - lo
+            tr2 = abs(hi - prev_close)
+            tr3 = abs(lo - prev_close)
+            trs.append(tr1 if tr1 >= tr2 and tr1 >= tr3 else (tr2 if tr2 >= tr3 else tr3))
+            prev_close = curr.close
+    else:
+        for i in range(1, len(bars)):
+            curr = bars[i]
+            prev = bars[i - 1]
+            if _is_expected_break(timestamps[i - 1], timestamps[i], market, interval):
+                tr = max(0.0, curr.high - curr.low)
+            else:
+                tr = max(
+                    curr.high - curr.low,
+                    abs(curr.high - prev.close),
+                    abs(curr.low - prev.close),
+                )
+            trs.append(tr)
 
     if len(trs) < period:
         return []
 
     atr = sum(trs[:period]) / period
     series = [atr]
+    inv_p = 1.0 / period
+    p_minus = period - 1
     for tr in trs[period:]:
-        atr = (atr * (period - 1) + tr) / period
+        atr = (atr * p_minus + tr) * inv_p
         series.append(atr)
     return series
 

@@ -27,7 +27,7 @@ def _make_cand(
     ts_utc: str = "2026-11-16T02:00:00Z",
 ) -> CandidateSignal:
     return CandidateSignal(
-        strategy="A",
+        strategy="S1",
         symbol=symbol,
         direction=direction,
         entry_low=entry_low,

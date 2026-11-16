@@ -14,7 +14,7 @@ from src.signals.models import AddLevel, InputSnapshot, LifecycleState
 
 def _make_candidate(
     symbol: str = "BTCUSDT",
-    strategy: str = "A",
+    strategy: str = "S1",
     direction: str = "long",
     entry_low: float = 99.5,
     entry_high: float = 100.5,

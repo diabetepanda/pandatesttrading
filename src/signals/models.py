@@ -90,7 +90,7 @@ class Signal:
 
     signal_id: str
     published_at_utc: str
-    strategy: str  # "A" or "B"
+    strategy: str  # "S1", "S2", "S3", "L1", "L2", or "L3"
     symbol: str
     market: str
     direction: str  # "long" or "short"
@@ -199,10 +199,20 @@ def _fmt_num(val: float | str) -> str:
     return f"{val:g}"
 
 
+STRATEGY_LABELS: dict[str, str] = {
+    "S1": "S1 RSI(2) 回檔買進（短線）",
+    "S2": "S2 波動突破（短線）",
+    "S3": "S3 區間來回（短線）",
+    "L1": "L1 多標的趨勢跟隨（長線）",
+    "L2": "L2 加密強弱輪動（長線）",
+    "L3": "L3 200 日均線趨勢過濾（長線）",
+}
+
+
 def format_signal_text(signal: Signal) -> str:
     """Format signal into copyable plain text matching SPEC Section 3.4."""
     dir_zh = "做多" if signal.direction == "long" else "做空"
-    strat_zh = "策略 A（短線）" if signal.strategy == "A" else "策略 B（長線）"
+    strat_zh = STRATEGY_LABELS.get(signal.strategy, f"策略 {signal.strategy}")
     if signal.add_levels:
         add_parts = []
         for lvl in signal.add_levels:

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import itertools
+from collections import defaultdict
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from typing import Any
@@ -11,8 +12,10 @@ from src.data.models import OHLCVBar
 from src.indicators.technical import compute_atr_series
 from src.strategies.six_strategies import (
     SignalAction,
+    allocate_subaccount_position,
+    build_symbol_base_cache,
     decide_l2_rotation_step,
-    decide_strategy_bar,
+    decide_strategy_step,
     precompute_series,
 )
 
@@ -40,8 +43,12 @@ def _parse_dt(ts: str) -> datetime:
     return datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
 
 
-def compute_metrics(trades: list[BacktestTrade], pool_capital: float) -> dict[str, Any]:
-    """Compute trade count, win rate, expectancy, profit factor, and max drawdown %."""
+def compute_metrics(
+    trades: list[BacktestTrade],
+    pool_capital: float,
+    equity_curve_points: list[float] | None = None,
+) -> dict[str, Any]:
+    """Compute trade count, win rate, expectancy, PF, min equity, and bounded max drawdown %."""
     n = len(trades)
     if n == 0:
         return {
@@ -51,6 +58,8 @@ def compute_metrics(trades: list[BacktestTrade], pool_capital: float) -> dict[st
             "expectancy_usd": 0.0,
             "profit_factor": 0.0,
             "max_drawdown_pct": 0.0,
+            "min_equity_usd": round(pool_capital, 2),
+            "ending_equity_usd": round(pool_capital, 2),
             "total_return_pct": 0.0,
             "total_pnl_usd": 0.0,
         }
@@ -65,20 +74,32 @@ def compute_metrics(trades: list[BacktestTrade], pool_capital: float) -> dict[st
     else:
         pf = 99.0 if gross_win > 0 else 0.0
 
-    equity = pool_capital
+    if equity_curve_points and len(equity_curve_points) > 0:
+        curve = equity_curve_points
+    else:
+        curve = [pool_capital]
+        eq = pool_capital
+        for t in ordered:
+            eq = max(0.01, eq + t.net_pnl_usd)
+            curve.append(eq)
+
     peak = pool_capital
     max_dd_pct = 0.0
-    for t in ordered:
-        equity += t.net_pnl_usd
-        if equity > peak:
-            peak = equity
-        dd = (peak - equity) / max(1e-9, peak) * 100.0
+    min_equity = pool_capital
+    for eq in curve:
+        if eq > peak:
+            peak = eq
+        if eq < min_equity:
+            min_equity = eq
+        dd = max(0.0, (peak - eq) / max(1e-9, peak) * 100.0)
         if dd > max_dd_pct:
             max_dd_pct = dd
 
+    max_dd_pct = min(99.99, max_dd_pct) if min_equity > 0 else 100.0
     total_pnl = sum(t.net_pnl_usd for t in ordered)
     avg_r = sum(t.r_multiple for t in ordered) / n
     avg_usd = total_pnl / n
+    ending_equity = curve[-1]
 
     return {
         "trades": n,
@@ -87,7 +108,9 @@ def compute_metrics(trades: list[BacktestTrade], pool_capital: float) -> dict[st
         "expectancy_usd": round(avg_usd, 2),
         "profit_factor": round(pf, 3),
         "max_drawdown_pct": round(max_dd_pct, 2),
-        "total_return_pct": round(total_pnl / max(1e-9, pool_capital) * 100.0, 2),
+        "min_equity_usd": round(min_equity, 2),
+        "ending_equity_usd": round(ending_equity, 2),
+        "total_return_pct": round((ending_equity - pool_capital) / max(1e-9, pool_capital) * 100.0, 2),
         "total_pnl_usd": round(total_pnl, 2),
     }
 
@@ -114,71 +137,311 @@ def _calc_trade_costs(
     return gross - total_cost, total_cost, entry_fee
 
 
-def simulate_single_symbol(
-    bars: list[OHLCVBar],
+def _conservative_entry_candidate_indices(
+    strategy_id: str,
+    series: dict[str, Any],
+    params: dict[str, Any],
+    allow_short: bool,
+    start_bar_idx: int,
+    end_bar_idx: int,
+) -> list[int]:
+    """Return superset of bar indices that can emit an entry action (still verified via decide_strategy_step)."""
+    closes = series["closes"]
+    atr = series["atr"]
+    out: list[int] = []
+
+    if strategy_id == "S1":
+        sma_t = series["sma_trend"]
+        rsi = series["rsi"]
+        rsi_l = float(params.get("rsi_long_thresh", 10.0))
+        rsi_s = float(params.get("rsi_short_thresh", 90.0))
+        for i in range(start_bar_idx, end_bar_idx):
+            av = atr[i]
+            st = sma_t[i]
+            rv = rsi[i]
+            if av is None or av <= 0 or st is None or rv is None:
+                continue
+            c = closes[i]
+            if (c > st and rv < rsi_l) or (allow_short and c < st and rv > rsi_s):
+                out.append(i)
+        return out
+
+    if strategy_id == "S2":
+        bb_p = int(params.get("bb_period", 20))
+        sq_pct = float(params.get("squeeze_percentile", 25.0))
+        up_s = series["bb_upper"]
+        lo_s = series["bb_lower"]
+        bw_pct = series["bb_bw_pct"]
+        bhi_s = series["s2_box_hi"]
+        blo_s = series["s2_box_lo"]
+        eff_start = max(start_bar_idx, bb_p + 2)
+        for i in range(eff_start, end_bar_idx):
+            av = atr[i]
+            pb = bw_pct[i - 1]
+            bhi = bhi_s[i]
+            blo = blo_s[i]
+            uv = up_s[i]
+            lv = lo_s[i]
+            if av is None or av <= 0 or pb is None or pb > sq_pct or bhi is None or blo is None or uv is None or lv is None:
+                continue
+            c = closes[i]
+            if (c > bhi and c > uv) or (allow_short and c < blo and c < lv):
+                out.append(i)
+        return out
+
+    if strategy_id == "S3":
+        rng_bars = int(params.get("range_bars", 48))
+        min_touches = int(params.get("min_edge_touches", 2))
+        rsi_os = float(params.get("rsi_oversold", 35.0))
+        rsi_ob = float(params.get("rsi_overbought", 65.0))
+        rsi = series["rsi"]
+        ut_s = series["s3_up_touches"]
+        lt_s = series["s3_lo_touches"]
+        eff_start = max(start_bar_idx, rng_bars)
+        for i in range(eff_start, end_bar_idx):
+            av = atr[i]
+            rv = rsi[i]
+            if av is None or av <= 0 or rv is None:
+                continue
+            if ut_s[i] >= min_touches and lt_s[i] >= min_touches and (rv < rsi_os or (allow_short and rv > rsi_ob)):
+                out.append(i)
+        return out
+
+    if strategy_id == "L1":
+        entry_p = int(params.get("entry_period", 20))
+        exit_p = int(params.get("exit_period", 10))
+        ehi = series["l1_entry_hi"]
+        elo = series["l1_entry_lo"]
+        eff_start = max(start_bar_idx, max(entry_p, exit_p))
+        for i in range(eff_start, end_bar_idx):
+            av = atr[i]
+            hi_v = ehi[i]
+            lo_v = elo[i]
+            if av is None or av <= 0 or hi_v is None or lo_v is None:
+                continue
+            c = closes[i]
+            if c > hi_v or (allow_short and c < lo_v):
+                out.append(i)
+        return out
+
+    if strategy_id == "L3":
+        sma_t = series["sma_trend"]
+        for i in range(start_bar_idx, end_bar_idx):
+            av = atr[i]
+            sv = sma_t[i]
+            if av is None or av <= 0 or sv is None:
+                continue
+            ps = sma_t[i - 1] if i > 0 else None
+            pc = closes[i - 1] if i > 0 else None
+            c = closes[i]
+            if (c > sv and (ps is None or (pc is not None and pc <= ps))) or (
+                allow_short and c < sv and (ps is None or (pc is not None and pc >= ps))
+            ):
+                out.append(i)
+        return out
+
+    return list(range(start_bar_idx, end_bar_idx))
+
+
+def simulate_portfolio_strategy(
+    bars_by_symbol: dict[str, list[OHLCVBar]],
     strategy_id: str,
     params: dict[str, Any],
-    instrument: dict[str, Any],
+    instruments_by_sym: dict[str, dict[str, Any]],
     config: dict[str, Any],
     interval: str,
     allow_short: bool = True,
-    start_idx: int = 0,
-) -> tuple[list[BacktestTrade], list[tuple[str, str, str, float | None]]]:
-    """Simulate a single symbol using the exact shared decide_strategy_bar logic.
-
-    Returns (closed_trades, signal_trace) where signal_trace logs every non-hold
-    SignalAction emitted on closed bars so parity tests can compare 1-for-1 with live calls.
-    """
-    if len(bars) < 30:
-        return [], []
-
+    min_signal_ts: str | None = None,
+    base_caches: dict[str, dict[str, Any]] | None = None,
+) -> tuple[list[BacktestTrade], list[float], list[tuple[str, str, str, str, float | None]]]:
+    """Chronological portfolio simulation with shared sub-account risk limits and concurrent caps."""
+    strat_cfg = config.get("strategies", {}).get(strategy_id, {})
     bt_cfg = config.get("backtest", {})
     risk_cfg = config.get("risk", {})
-    strat_cfg = config.get("strategies", {}).get(strategy_id, {})
-    pool_name = strat_cfg.get("pool", "short_term" if strategy_id.startswith("S") else "long_term")
-    atr_period = int(bt_cfg.get("atr_period", 14))
-    risk_usd = float(risk_cfg.get("max_risk_per_trade_usd", {}).get(pool_name, 250.0))
     sub_cap = float(strat_cfg.get("capital_usd", 10000.0))
-    pool_cap = float(config.get("account", {}).get("pools", {}).get(pool_name, {}).get("capital_usd", 30000.0))
-    max_notional = min(
-        sub_cap,
-        float(config.get("account", {}).get("pools", {}).get(pool_name, {}).get("target_notional_usd", 4000.0)),
-    )
-
-    spread_bps = float(instrument.get("assumed_spread_bps", 2.0))
-    fee_rate = float(instrument.get("fee_rate", 0.0005))
+    atr_period = int(bt_cfg.get("atr_period", 14))
     slippage_bps = float(risk_cfg.get("default_slippage_bps", 1.0))
-    overnight_bps = float(instrument.get("overnight_cost_daily_bps", 0.0))
     slip = slippage_bps / 10000.0
-    market = instrument.get("market", "crypto")
+    max_concurrent = int(bt_cfg.get("max_concurrent_positions", 5))
 
-    series = precompute_series(
-        strategy_id=strategy_id,
-        bars=bars,
-        params=params,
-        market=market,
-        interval=interval,
-        atr_period=atr_period,
-    )
+    eval_syms = sorted(sym for sym, bars in bars_by_symbol.items() if len(bars) >= 30)
+    if not eval_syms:
+        return [], [sub_cap], []
 
+    all_ts_set: set[str] = set()
+    for sym in eval_syms:
+        for b in bars_by_symbol[sym]:
+            all_ts_set.add(b.ts_utc)
+    all_ts = sorted(all_ts_set)
+    ts_to_t = {ts: t for t, ts in enumerate(all_ts)}
+
+    sym_bidx_by_t: dict[str, dict[int, int]] = {}
+    sym_t_by_bidx: dict[str, list[int]] = {}
+    series_by_sym: dict[str, dict[str, Any]] = {}
+    inst_params: dict[str, tuple[float, float, float]] = {}
+
+    entry_triggers_by_t: dict[int, list[tuple[str, int]]] = defaultdict(list)
+
+    for sym in eval_syms:
+        bars = bars_by_symbol[sym]
+        inst = instruments_by_sym[sym]
+        inst_params[sym] = (
+            float(inst.get("assumed_spread_bps", 2.0)),
+            float(inst.get("fee_rate", 0.0005)),
+            float(inst.get("overnight_cost_daily_bps", 0.0)),
+        )
+        t_list = [ts_to_t[b.ts_utc] for b in bars]
+        sym_t_by_bidx[sym] = t_list
+        sym_bidx_by_t[sym] = {t: idx for idx, t in enumerate(t_list)}
+
+        bc = base_caches.get(sym) if base_caches is not None else None
+        ser = precompute_series(
+            strategy_id=strategy_id,
+            bars=bars,
+            params=params,
+            market=inst.get("market", "crypto"),
+            interval=interval,
+            atr_period=atr_period,
+            base_cache=bc,
+        )
+        series_by_sym[sym] = ser
+
+        start_bidx = 1
+        if min_signal_ts is not None:
+            # Binary search / linear scan first index >= min_signal_ts
+            for idx, b in enumerate(bars):
+                if b.ts_utc >= min_signal_ts:
+                    start_bidx = max(1, idx)
+                    break
+            else:
+                start_bidx = len(bars)
+
+        if start_bidx < len(bars) - 1:
+            cand_indices = _conservative_entry_candidate_indices(
+                strategy_id=strategy_id,
+                series=ser,
+                params=params,
+                allow_short=allow_short,
+                start_bar_idx=start_bidx,
+                end_bar_idx=len(bars) - 1,
+            )
+            for bidx in cand_indices:
+                entry_triggers_by_t[t_list[bidx]].append((sym, bidx))
+
+    current_equity = sub_cap
+    equity_curve: list[float] = [sub_cap]
     trades: list[BacktestTrade] = []
-    trace: list[tuple[str, str, str, float | None]] = []
+    trace: list[tuple[str, str, str, str, float | None]] = []
 
-    in_pos = False
-    pos_dir = ""
-    entry_px = 0.0
-    entry_ts = ""
-    qty = 0.0
-    sl_px: float | None = None
-    tp_px: float | None = None
+    open_pos: dict[str, dict[str, Any]] = {}
+    pending_exits: dict[int, list[tuple[str, int]]] = defaultdict(list)
+    pending_entries: dict[int, list[tuple[str, int, SignalAction]]] = defaultdict(list)
 
-    effective_start = max(1, start_idx)
-    for i in range(effective_start, len(bars) - 1):
-        bar = bars[i]
-        next_bar = bars[i + 1]
+    active_t_set: set[int] = set(entry_triggers_by_t.keys())
+    # We must visit timestamps where open_pos exist OR pending actions exist OR entry triggers exist.
+    # Iterating over sorted all_ts indices allows O(1) skip when completely flat and no triggers.
+    for t_idx in range(len(all_ts)):
+        if not open_pos and t_idx not in pending_exits and t_idx not in pending_entries and t_idx not in entry_triggers_by_t:
+            continue
 
-        # 1) Check intra-bar protective stop loss or fixed target on current closed bar
-        if in_pos:
+        # 1) Execute pending exits scheduled for this bar's open (frees capital/risk first)
+        if t_idx in pending_exits:
+            for sym, fill_bidx in pending_exits.pop(t_idx):
+                if sym not in open_pos:
+                    continue
+                pos = open_pos.pop(sym)
+                bar = bars_by_symbol[sym][fill_bidx]
+                spread_bps, fee_rate, overnight_bps = inst_params[sym]
+                raw_exit = (
+                    bar.open * (1.0 - spread_bps / 20000.0) * (1.0 - slip)
+                    if pos["dir"] == "long"
+                    else bar.open * (1.0 + spread_bps / 20000.0) * (1.0 + slip)
+                )
+                raw_net, cost_usd, _ = _calc_trade_costs(
+                    pos["dir"],
+                    pos["entry_px"],
+                    raw_exit,
+                    pos["qty"],
+                    pos["entry_ts"],
+                    bar.ts_utc,
+                    fee_rate,
+                    overnight_bps,
+                )
+                # Isolated subaccount floor: never push subaccount equity <= 0
+                net_pnl = max(-(current_equity - 0.01), raw_net)
+                current_equity = max(0.01, current_equity + net_pnl)
+                equity_curve.append(current_equity)
+                trades.append(
+                    BacktestTrade(
+                        symbol=sym,
+                        strategy_id=strategy_id,
+                        entry_ts_utc=pos["entry_ts"],
+                        exit_ts_utc=bar.ts_utc,
+                        direction=pos["dir"],
+                        entry_price=round(pos["entry_px"], 6),
+                        exit_price=round(raw_exit, 6),
+                        r_multiple=round(net_pnl / max(1e-9, pos["risk_usd"]), 4),
+                        net_pnl_usd=round(net_pnl, 4),
+                        cost_usd=round(cost_usd, 4),
+                    )
+                )
+
+        # 2) Execute pending entries scheduled for this bar's open via shared allocate_subaccount_position
+        if t_idx in pending_entries:
+            for sym, fill_bidx, act in pending_entries.pop(t_idx):
+                if sym in open_pos:
+                    continue
+                bar = bars_by_symbol[sym][fill_bidx]
+                spread_bps, fee_rate, overnight_bps = inst_params[sym]
+                direction = act.direction
+                raw_entry = (
+                    bar.open * (1.0 + spread_bps / 20000.0) * (1.0 + slip)
+                    if direction == "long"
+                    else bar.open * (1.0 - spread_bps / 20000.0) * (1.0 - slip)
+                )
+                if raw_entry <= 0:
+                    continue
+                open_risk_sum = sum(p["risk_usd"] for p in open_pos.values())
+                open_notional_sum = sum(p["notional_usd"] for p in open_pos.values())
+                alloc = allocate_subaccount_position(
+                    strategy_id=strategy_id,
+                    subaccount_equity_usd=current_equity,
+                    open_positions_count=len(open_pos),
+                    open_total_risk_usd=open_risk_sum,
+                    open_total_notional_usd=open_notional_sum,
+                    entry_price=raw_entry,
+                    stop_loss=act.stop_loss,
+                    fee_rate=fee_rate,
+                    slippage_bps=slippage_bps,
+                    config=config,
+                )
+                if not alloc.approved:
+                    continue
+                open_pos[sym] = {
+                    "dir": direction,
+                    "entry_px": raw_entry,
+                    "entry_ts": bar.ts_utc,
+                    "qty": alloc.qty,
+                    "notional_usd": alloc.notional_usd,
+                    "risk_usd": alloc.risk_usd,
+                    "sl_px": act.stop_loss,
+                    "tp_px": act.take_profit,
+                }
+
+        # 3) Check intra-bar SL/TP and close-bar exit signals on currently open positions
+        exited_this_bar: set[str] = set()
+        for sym in list(open_pos.keys()):
+            bidx = sym_bidx_by_t[sym].get(t_idx)
+            if bidx is None:
+                continue
+            bars = bars_by_symbol[sym]
+            bar = bars[bidx]
+            pos = open_pos[sym]
+            spread_bps, fee_rate, overnight_bps = inst_params[sym]
+            pos_dir = pos["dir"]
+            sl_px = pos["sl_px"]
+            tp_px = pos["tp_px"]
+
             exited = False
             raw_exit = 0.0
             if pos_dir == "long":
@@ -209,91 +472,103 @@ def simulate_single_symbol(
                         exited = True
 
             if exited:
-                net_pnl, cost_usd, _ = _calc_trade_costs(
-                    pos_dir, entry_px, raw_exit, qty, entry_ts, bar.ts_utc, fee_rate, overnight_bps
+                open_pos.pop(sym)
+                exited_this_bar.add(sym)
+                raw_net, cost_usd, _ = _calc_trade_costs(
+                    pos_dir,
+                    pos["entry_px"],
+                    raw_exit,
+                    pos["qty"],
+                    pos["entry_ts"],
+                    bar.ts_utc,
+                    fee_rate,
+                    overnight_bps,
                 )
+                net_pnl = max(-(current_equity - 0.01), raw_net)
+                current_equity = max(0.01, current_equity + net_pnl)
+                equity_curve.append(current_equity)
                 trades.append(
                     BacktestTrade(
-                        symbol=instrument["symbol"],
+                        symbol=sym,
                         strategy_id=strategy_id,
-                        entry_ts_utc=entry_ts,
+                        entry_ts_utc=pos["entry_ts"],
                         exit_ts_utc=bar.ts_utc,
                         direction=pos_dir,
-                        entry_price=round(entry_px, 6),
+                        entry_price=round(pos["entry_px"], 6),
                         exit_price=round(raw_exit, 6),
-                        r_multiple=round(net_pnl / max(1e-9, risk_usd), 4),
+                        r_multiple=round(net_pnl / max(1e-9, pos["risk_usd"]), 4),
                         net_pnl_usd=round(net_pnl, 4),
                         cost_usd=round(cost_usd, 4),
                     )
                 )
-                in_pos = False
-                pos_dir = ""
                 continue
 
-        # 2) Run the exact shared strategy bar decision at closed bar i
-        act: SignalAction = decide_strategy_bar(
-            strategy_id=strategy_id,
-            series=series,
-            idx=i,
-            position_dir=pos_dir,
-            params=params,
-            allow_short=allow_short,
-        )
-        if act.action != "hold":
-            sl_round = round(act.stop_loss, 6) if act.stop_loss is not None else None
-            trace.append((bar.ts_utc, act.action, act.direction, sl_round))
-
-        if in_pos and act.action == "exit":
-            raw_exit = (
-                next_bar.open * (1.0 - spread_bps / 20000.0) * (1.0 - slip)
-                if pos_dir == "long"
-                else next_bar.open * (1.0 + spread_bps / 20000.0) * (1.0 + slip)
-            )
-            net_pnl, cost_usd, _ = _calc_trade_costs(
-                pos_dir, entry_px, raw_exit, qty, entry_ts, next_bar.ts_utc, fee_rate, overnight_bps
-            )
-            trades.append(
-                BacktestTrade(
-                    symbol=instrument["symbol"],
+            if bidx < len(bars) - 1:
+                act = decide_strategy_step(
                     strategy_id=strategy_id,
-                    entry_ts_utc=entry_ts,
-                    exit_ts_utc=next_bar.ts_utc,
-                    direction=pos_dir,
-                    entry_price=round(entry_px, 6),
-                    exit_price=round(raw_exit, 6),
-                    r_multiple=round(net_pnl / max(1e-9, risk_usd), 4),
-                    net_pnl_usd=round(net_pnl, 4),
-                    cost_usd=round(cost_usd, 4),
+                    series=series_by_sym[sym],
+                    idx=bidx,
+                    position_dir=pos_dir,
+                    params=params,
+                    allow_short=allow_short,
                 )
-            )
-            in_pos = False
-            pos_dir = ""
+                if act.action == "exit":
+                    sl_round = round(act.stop_loss, 6) if act.stop_loss is not None else None
+                    trace.append((sym, bar.ts_utc, act.action, act.direction, sl_round))
+                    next_t = sym_t_by_bidx[sym][bidx + 1]
+                    pending_exits[next_t].append((sym, bidx + 1))
 
-        elif not in_pos and act.action in ("enter_long", "enter_short"):
-            direction = act.direction
-            raw_entry = (
-                next_bar.open * (1.0 + spread_bps / 20000.0) * (1.0 + slip)
-                if direction == "long"
-                else next_bar.open * (1.0 - spread_bps / 20000.0) * (1.0 - slip)
-            )
-            if raw_entry <= 0:
-                continue
-            atr_val = series["atr"][i] or (raw_entry * 0.02)
-            sl_dist = abs(raw_entry - act.stop_loss) if act.stop_loss is not None else (2.0 * atr_val)
-            sl_dist_pct = max(0.002, sl_dist / raw_entry)
-            cost_pct = 2.0 * (fee_rate + slippage_bps / 10000.0)
-            notional = min(max_notional, risk_usd / (sl_dist_pct + cost_pct))
-            if notional <= 0:
-                continue
+        # 4) Check candidate entry triggers on closed bar at t_idx
+        if t_idx in entry_triggers_by_t and len(open_pos) < max_concurrent:
+            for sym, bidx in entry_triggers_by_t[t_idx]:
+                if sym in open_pos or sym in exited_this_bar:
+                    continue
+                bars = bars_by_symbol[sym]
+                if bidx >= len(bars) - 1:
+                    continue
+                act = decide_strategy_step(
+                    strategy_id=strategy_id,
+                    series=series_by_sym[sym],
+                    idx=bidx,
+                    position_dir="",
+                    params=params,
+                    allow_short=allow_short,
+                )
+                if act.action in ("enter_long", "enter_short"):
+                    sl_round = round(act.stop_loss, 6) if act.stop_loss is not None else None
+                    trace.append((sym, bars[bidx].ts_utc, act.action, act.direction, sl_round))
+                    next_t = sym_t_by_bidx[sym][bidx + 1]
+                    pending_entries[next_t].append((sym, bidx + 1, act))
 
-            qty = notional / raw_entry
-            entry_px = raw_entry
-            entry_ts = next_bar.ts_utc
-            pos_dir = direction
-            sl_px = act.stop_loss
-            tp_px = act.take_profit
-            in_pos = True
+    return trades, equity_curve, trace
 
+
+def simulate_single_symbol(
+    bars: list[OHLCVBar],
+    strategy_id: str,
+    params: dict[str, Any],
+    instrument: dict[str, Any],
+    config: dict[str, Any],
+    interval: str,
+    allow_short: bool = True,
+    start_idx: int = 0,
+) -> tuple[list[BacktestTrade], list[tuple[str, str, str, float | None]]]:
+    """Single-symbol wrapper sharing exact decide_strategy_step and allocate_subaccount_position."""
+    if len(bars) < 30:
+        return [], []
+    sym = instrument["symbol"]
+    min_ts = bars[start_idx].ts_utc if 0 < start_idx < len(bars) else None
+    trades, _, full_trace = simulate_portfolio_strategy(
+        bars_by_symbol={sym: bars},
+        strategy_id=strategy_id,
+        params=params,
+        instruments_by_sym={sym: instrument},
+        config=config,
+        interval=interval,
+        allow_short=allow_short,
+        min_signal_ts=min_ts,
+    )
+    trace = [(ts, act, d, sl) for _, ts, act, d, sl in full_trace]
     return trades, trace
 
 
@@ -303,8 +578,8 @@ def simulate_l2_portfolio(
     params: dict[str, Any],
     config: dict[str, Any],
     start_date: str | None = None,
-) -> tuple[list[BacktestTrade], list[tuple[str, str, str, str]]]:
-    """Cross-sectional simulation for L2 weekly crypto momentum rotation."""
+) -> tuple[list[BacktestTrade], list[float], list[tuple[str, str, str, str]]]:
+    """Cross-sectional simulation for L2 weekly crypto momentum rotation with sub-account risk control."""
     lookback = int(params.get("lookback_days", 28))
     top_k = int(params.get("top_k", 3))
     rebalance_days = int(params.get("rebalance_days", 7))
@@ -314,13 +589,10 @@ def simulate_l2_portfolio(
     risk_cfg = config.get("risk", {})
     strat_cfg = config.get("strategies", {}).get("L2", {})
     atr_period = int(bt_cfg.get("atr_period", 14))
-    risk_usd = float(risk_cfg.get("max_risk_per_trade_usd", {}).get("long_term", 500.0))
     sub_cap = float(strat_cfg.get("capital_usd", 23333.33))
-    per_pos_cap = sub_cap / max(1, top_k)
     slip_bps = float(risk_cfg.get("default_slippage_bps", 1.0))
     slip = slip_bps / 10000.0
 
-    # Index bars by YYYY-MM-DD and precompute causal ATR lookup
     date_bars: dict[str, dict[str, int]] = {}
     atr_lookup: dict[str, list[float | None]] = {}
     all_dates_set: set[str] = set()
@@ -342,7 +614,7 @@ def simulate_l2_portfolio(
 
     sorted_dates = sorted(all_dates_set)
     if len(sorted_dates) < lookback + 10:
-        return [], []
+        return [], [sub_cap], []
 
     start_pos = 0
     if start_date:
@@ -351,9 +623,11 @@ def simulate_l2_portfolio(
                 start_pos = idx
                 break
 
+    current_equity = sub_cap
+    equity_curve: list[float] = [sub_cap]
     trades: list[BacktestTrade] = []
     trace: list[tuple[str, str, str, str]] = []
-    held: dict[str, dict[str, Any]] = {}  # sym -> {entry_px, entry_ts, qty, sl_px, fee_rate, overnight_bps, spread_bps}
+    held: dict[str, dict[str, Any]] = {}
 
     for d_idx in range(max(1, start_pos), len(sorted_dates) - 1):
         d = sorted_dates[d_idx]
@@ -371,9 +645,12 @@ def simulate_l2_portfolio(
             sl_hit = open_bid <= pos["sl_px"] or bar.low * (1.0 - spread_bps / 20000.0) <= pos["sl_px"]
             if sl_hit:
                 raw_exit = (open_bid * (1.0 - slip)) if open_bid <= pos["sl_px"] else (pos["sl_px"] * (1.0 - slip))
-                net_pnl, cost_usd, _ = _calc_trade_costs(
+                raw_net, cost_usd, _ = _calc_trade_costs(
                     "long", pos["entry_px"], raw_exit, pos["qty"], pos["entry_ts"], bar.ts_utc, pos["fee_rate"], pos["overnight_bps"]
                 )
+                net_pnl = max(-(current_equity - 0.01), raw_net)
+                current_equity = max(0.01, current_equity + net_pnl)
+                equity_curve.append(current_equity)
                 trades.append(
                     BacktestTrade(
                         symbol=sym,
@@ -383,7 +660,7 @@ def simulate_l2_portfolio(
                         direction="long",
                         entry_price=round(pos["entry_px"], 6),
                         exit_price=round(raw_exit, 6),
-                        r_multiple=round(net_pnl / max(1e-9, risk_usd), 4),
+                        r_multiple=round(net_pnl / max(1e-9, pos["risk_usd"]), 4),
                         net_pnl_usd=round(net_pnl, 4),
                         cost_usd=round(cost_usd, 4),
                     )
@@ -411,7 +688,9 @@ def simulate_l2_portfolio(
             precomputed_atr_by_sym=pre_atr,
         )
 
-        for sym, act in actions.items():
+        # Process exits first to free capital & risk slots before entering new coins
+        ordered_items = sorted(actions.items(), key=lambda kv: (0 if kv[1].action == "exit" else 1, kv[0]))
+        for sym, act in ordered_items:
             nxt_idx = date_bars.get(sym, {}).get(next_d)
             if nxt_idx is None:
                 continue
@@ -425,9 +704,12 @@ def simulate_l2_portfolio(
                 trace.append((d, sym, "exit", "long"))
                 pos = held.pop(sym)
                 raw_exit = nxt_bar.open * (1.0 - spread_bps / 20000.0) * (1.0 - slip)
-                net_pnl, cost_usd, _ = _calc_trade_costs(
+                raw_net, cost_usd, _ = _calc_trade_costs(
                     "long", pos["entry_px"], raw_exit, pos["qty"], pos["entry_ts"], nxt_bar.ts_utc, fee_rate, overnight_bps
                 )
+                net_pnl = max(-(current_equity - 0.01), raw_net)
+                current_equity = max(0.01, current_equity + net_pnl)
+                equity_curve.append(current_equity)
                 trades.append(
                     BacktestTrade(
                         symbol=sym,
@@ -437,7 +719,7 @@ def simulate_l2_portfolio(
                         direction="long",
                         entry_price=round(pos["entry_px"], 6),
                         exit_price=round(raw_exit, 6),
-                        r_multiple=round(net_pnl / max(1e-9, risk_usd), 4),
+                        r_multiple=round(net_pnl / max(1e-9, pos["risk_usd"]), 4),
                         net_pnl_usd=round(net_pnl, 4),
                         cost_usd=round(cost_usd, 4),
                     )
@@ -447,26 +729,35 @@ def simulate_l2_portfolio(
                 raw_entry = nxt_bar.open * (1.0 + spread_bps / 20000.0) * (1.0 + slip)
                 if raw_entry <= 0:
                     continue
-                sl_dist_pct = max(0.002, abs(raw_entry - (act.stop_loss or raw_entry * 0.95)) / raw_entry)
-                cost_pct = 2.0 * (fee_rate + slippage_bps_val(risk_cfg) / 10000.0)
-                notional = min(per_pos_cap, risk_usd / (sl_dist_pct + cost_pct))
-                if notional <= 0:
+                open_risk_sum = sum(p["risk_usd"] for p in held.values())
+                open_notional_sum = sum(p["notional_usd"] for p in held.values())
+                alloc = allocate_subaccount_position(
+                    strategy_id="L2",
+                    subaccount_equity_usd=current_equity,
+                    open_positions_count=len(held),
+                    open_total_risk_usd=open_risk_sum,
+                    open_total_notional_usd=open_notional_sum,
+                    entry_price=raw_entry,
+                    stop_loss=act.stop_loss or raw_entry * 0.9,
+                    fee_rate=fee_rate,
+                    slippage_bps=slip_bps,
+                    config=config,
+                )
+                if not alloc.approved:
                     continue
                 held[sym] = {
                     "entry_px": raw_entry,
                     "entry_ts": nxt_bar.ts_utc,
-                    "qty": notional / raw_entry,
+                    "qty": alloc.qty,
+                    "notional_usd": alloc.notional_usd,
+                    "risk_usd": alloc.risk_usd,
                     "sl_px": act.stop_loss or raw_entry * 0.9,
                     "fee_rate": fee_rate,
                     "overnight_bps": overnight_bps,
                     "spread_bps": spread_bps,
                 }
 
-    return trades, trace
-
-
-def slippage_bps_val(risk_cfg: dict[str, Any]) -> float:
-    return float(risk_cfg.get("default_slippage_bps", 1.0))
+    return trades, equity_curve, trace
 
 
 def _build_param_grid(strategy_id: str, strat_cfg: dict[str, Any]) -> list[dict[str, Any]]:
@@ -589,6 +880,7 @@ def screen_single_strategy(
     allowed_markets = set(strat_cfg.get("markets", ["crypto", "forex", "commodity"]))
     allow_short = bool(strat_cfg.get("allow_short", True))
     sub_cap = float(strat_cfg.get("capital_usd", 10000.0))
+    atr_period = int(bt_cfg.get("atr_period", 14))
     min_years = float(bt_cfg.get("min_history_years", 5.0))
     is_ratio = float(bt_cfg.get("in_sample_ratio", 0.7))
     min_oos_trades = int(bt_cfg.get("min_oos_trades", 30))
@@ -603,30 +895,66 @@ def screen_single_strategy(
     inst_by_sym = {i["symbol"]: i for i in enabled_insts}
     raw_bars_map = bars_by_interval.get(interval, {})
 
-    # Separate instruments meeting vs below 5-year bar span
+    is_short_term = interval in ("15m", "1h")
     all_available: dict[str, list[OHLCVBar]] = {}
     years_by_sym: dict[str, float] = {}
     five_yr_syms: list[str] = []
-    short_history_syms: list[str] = []
+    short_history_crypto: list[str] = []
+    excluded_non_crypto: list[str] = []
+    short_history_daily: list[str] = []
 
     for inst in enabled_insts:
         sym = inst["symbol"]
+        mkt = inst["market"]
         bars = sorted(raw_bars_map.get(sym, []), key=lambda b: b.ts_utc)
-        if not bars:
+        yrs = _history_span_years(bars) if bars else 0.0
+
+        if is_short_term and mkt != "crypto":
+            # Exclude FX/commodity lacking >= 5y reliable free intraday archive
+            if yrs >= min_years and bars:
+                all_available[sym] = bars
+                years_by_sym[sym] = yrs
+                five_yr_syms.append(sym)
+            else:
+                excluded_non_crypto.append(sym)
             continue
-        yrs = _history_span_years(bars)
+
+        if not bars or len(bars) < 30:
+            if mkt == "crypto":
+                short_history_crypto.append(sym)
+            else:
+                short_history_daily.append(sym)
+            continue
+
         all_available[sym] = bars
         years_by_sym[sym] = yrs
         if yrs >= min_years:
             five_yr_syms.append(sym)
+        elif mkt == "crypto":
+            short_history_crypto.append(sym)
         else:
-            short_history_syms.append(sym)
+            short_history_daily.append(sym)
 
-    # For long-term (L1/L2/L3), evaluate portfolio over instruments with >= 5 years history.
-    # For short-term (S1/S2/S3), if no symbols reach 5 years, evaluate available intraday history honestly
-    # to report real years and OOS trade count, while strictly failing the 5-year threshold.
-    is_long_term = interval == "1d"
-    eval_syms = five_yr_syms if (five_yr_syms or is_long_term) else sorted(all_available.keys())
+    # For short-term: use all crypto symbols (marking newly listed <5y coins honestly, excluding non-crypto lacking free 5y data).
+    # For long-term daily: use >= 5y instruments across crypto/FX/commodity.
+    if is_short_term:
+        eval_syms = sorted(all_available.keys())
+    else:
+        eval_syms = five_yr_syms
+
+    notes: list[str] = []
+    if excluded_non_crypto:
+        notes.append(f"外匯與商品 {len(excluded_non_crypto)} 檔無足夠免費歷史資料已排除")
+    if is_short_term and short_history_crypto:
+        sample_tags = ", ".join(f"{s}({years_by_sym.get(s, 0.0):.1f}y)" for s in sorted(short_history_crypto)[:6])
+        more = " 等" if len(short_history_crypto) > 6 else ""
+        notes.append(
+            f"上市／可得未滿 5 年加密貨幣 {len(short_history_crypto)} 檔（{sample_tags}{more}）使用全部可得資料回測"
+        )
+    elif not is_short_term and (short_history_crypto or short_history_daily):
+        cnt_excl = len(short_history_crypto) + len(short_history_daily)
+        notes.append(f"日線未滿 5 年標的 {cnt_excl} 檔已排除")
+    data_note = "；".join(notes)
 
     if not eval_syms:
         max_yrs = max(years_by_sym.values(), default=0.0)
@@ -640,22 +968,27 @@ def screen_single_strategy(
             "passed": False,
             "applicable_instruments": len(enabled_insts),
             "eligible_instruments": 0,
-            "excluded_insufficient_count": len(short_history_syms),
+            "excluded_no_free_history_count": len(excluded_non_crypto),
+            "excluded_insufficient_count": len(short_history_crypto) + len(short_history_daily),
+            "short_history_crypto_count": len(short_history_crypto),
             "history_years": round(max_yrs, 4),
+            "data_note": data_note or f"無可用 {interval} 歷史資料",
             "chosen_params": None,
             "in_sample": compute_metrics([], sub_cap),
             "out_of_sample": compute_metrics([], sub_cap),
             "reason": f"達 {min_years:.0f} 年歷史標準之標的為 0 個（最長僅 {max_yrs:.2f} 年），依規格不硬算",
         }
 
-    # Build strict 70/30 IS/OOS splits per instrument (IS contains zero OOS bars)
-    is_slices: dict[str, list[OHLCVBar]] = {}
-    split_indices: dict[str, int] = {}
-    for sym in eval_syms:
-        bars = all_available[sym]
-        split_idx = max(1, int(len(bars) * is_ratio))
-        split_indices[sym] = split_idx
-        is_slices[sym] = bars[:split_idx]
+    # Global chronological 70/30 cutoff timestamp so IS contains ZERO OOS bars across all symbols
+    all_timeline = sorted({b.ts_utc for sym in eval_syms for b in all_available[sym]})
+    split_t_idx = max(1, min(len(all_timeline) - 1, int(len(all_timeline) * is_ratio)))
+    cutoff_ts = all_timeline[split_t_idx]
+
+    is_slices: dict[str, list[OHLCVBar]] = {
+        sym: [b for b in all_available[sym] if b.ts_utc < cutoff_ts]
+        for sym in eval_syms
+    }
+    full_eval_bars: dict[str, list[OHLCVBar]] = {sym: all_available[sym] for sym in eval_syms}
 
     grid = _build_param_grid(strategy_id, strat_cfg)
     best_score = -1e18
@@ -663,59 +996,63 @@ def screen_single_strategy(
     best_is_metrics = compute_metrics([], sub_cap)
 
     if strategy_id == "L2":
-        all_is_dates = sorted({b.ts_utc[:10] for bars in is_slices.values() for b in bars})
         for params in grid:
-            is_trades, _ = simulate_l2_portfolio(is_slices, inst_by_sym, params, config, start_date=None)
-            m = compute_metrics(is_trades, sub_cap)
+            is_trades, is_eq, _ = simulate_l2_portfolio(is_slices, inst_by_sym, params, config, start_date=None)
+            m = compute_metrics(is_trades, sub_cap, equity_curve_points=is_eq)
             sc = _score_is_metrics(m, min_oos_trades)
             if sc > best_score:
                 best_score = sc
                 best_params = params
                 best_is_metrics = m
 
-        # OOS on full series starting strictly at split date (first OOS date)
-        full_eval_bars = {sym: all_available[sym] for sym in eval_syms}
-        oos_dates = sorted({b.ts_utc[:10] for sym in eval_syms for b in full_eval_bars[sym][split_indices[sym] :]})
-        oos_start_d = oos_dates[0] if oos_dates else None
-        oos_trades, _ = simulate_l2_portfolio(full_eval_bars, inst_by_sym, best_params, config, start_date=oos_start_d)
-        oos_metrics = compute_metrics(oos_trades, sub_cap)
+        oos_start_d = cutoff_ts[:10]
+        oos_trades, oos_eq, _ = simulate_l2_portfolio(
+            full_eval_bars, inst_by_sym, best_params, config, start_date=oos_start_d
+        )
+        oos_metrics = compute_metrics(oos_trades, sub_cap, equity_curve_points=oos_eq)
     else:
+        is_caches = {
+            sym: build_symbol_base_cache(
+                is_slices[sym],
+                market=inst_by_sym[sym]["market"],
+                interval=interval,
+                atr_period=atr_period,
+            )
+            for sym in eval_syms
+            if len(is_slices[sym]) >= 30
+        }
         for params in grid:
-            is_trades_all: list[BacktestTrade] = []
-            for sym in eval_syms:
-                tr_list, _ = simulate_single_symbol(
-                    bars=is_slices[sym],
-                    strategy_id=strategy_id,
-                    params=params,
-                    instrument=inst_by_sym[sym],
-                    config=config,
-                    interval=interval,
-                    allow_short=allow_short,
-                    start_idx=0,
-                )
-                is_trades_all.extend(tr_list)
-            m = compute_metrics(is_trades_all, sub_cap)
-            sc = _score_is_metrics(m, min_oos_trades)
-            if sc > best_score:
-                best_score = sc
-                best_params = params
-                best_is_metrics = m
-
-        # Evaluate best_params ONCE on out-of-sample (indices >= split_idx)
-        oos_trades_all: list[BacktestTrade] = []
-        for sym in eval_syms:
-            tr_list, _ = simulate_single_symbol(
-                bars=all_available[sym],
+            is_trades_all, is_eq, _ = simulate_portfolio_strategy(
+                bars_by_symbol=is_slices,
                 strategy_id=strategy_id,
-                params=best_params,
-                instrument=inst_by_sym[sym],
+                params=params,
+                instruments_by_sym=inst_by_sym,
                 config=config,
                 interval=interval,
                 allow_short=allow_short,
-                start_idx=split_indices[sym],
+                min_signal_ts=None,
+                base_caches=is_caches,
             )
-            oos_trades_all.extend(tr_list)
-        oos_metrics = compute_metrics(oos_trades_all, sub_cap)
+            m = compute_metrics(is_trades_all, sub_cap, equity_curve_points=is_eq)
+            sc = _score_is_metrics(m, min_oos_trades)
+            if sc > best_score:
+                best_score = sc
+                best_params = params
+                best_is_metrics = m
+
+        # Free IS cache before evaluating OOS once on best_params
+        is_caches.clear()
+        oos_trades_all, oos_eq, _ = simulate_portfolio_strategy(
+            bars_by_symbol=full_eval_bars,
+            strategy_id=strategy_id,
+            params=best_params,
+            instruments_by_sym=inst_by_sym,
+            config=config,
+            interval=interval,
+            allow_short=allow_short,
+            min_signal_ts=cutoff_ts,
+        )
+        oos_metrics = compute_metrics(oos_trades_all, sub_cap, equity_curve_points=oos_eq)
 
     rep_years = round(max(years_by_sym[s] for s in eval_syms), 4)
     has_five_years = rep_years >= min_years
@@ -746,8 +1083,13 @@ def screen_single_strategy(
         "passed": passed,
         "applicable_instruments": len(enabled_insts),
         "eligible_instruments": len(eval_syms),
-        "excluded_insufficient_count": len(short_history_syms),
+        "excluded_no_free_history_count": len(excluded_non_crypto),
+        "excluded_insufficient_count": (
+            len(excluded_non_crypto) if is_short_term else (len(short_history_crypto) + len(short_history_daily))
+        ),
+        "short_history_crypto_count": len(short_history_crypto),
         "history_years": rep_years,
+        "data_note": data_note,
         "chosen_params": best_params,
         "in_sample": best_is_metrics,
         "out_of_sample": oos_metrics,

@@ -11,7 +11,7 @@ from typing import Any
 
 from src.backtest.screener import screen_all_six_strategies
 from src.config_loader import load_config
-from src.data.adapters import FallbackDataFetcher
+from src.data.adapters import BinanceMonthlyArchiveFetcher, FallbackDataFetcher
 from src.indicators.technical import resample_15m_to_1h
 from src.jobs.data_sync import append_run_log
 
@@ -27,32 +27,72 @@ def run_weekly_screening(
     out_dir: Path,
     config_path: Path | None = None,
     fetcher: FallbackDataFetcher | None = None,
+    archive_fetcher: BinanceMonthlyArchiveFetcher | None = None,
     now_utc: datetime | None = None,
 ) -> dict[str, Any]:
-    """Fetch daily & intraday bars and run portfolio-level 6-strategy IS/OOS screening."""
+    """Fetch 5+ year crypto/daily history (cached Binance archives) & run 6-strategy IS/OOS screening."""
     t0 = time.monotonic()
     now = (now_utc or datetime.now(timezone.utc)).astimezone(timezone.utc)
     now_iso = now.strftime("%Y-%m-%dT%H:%M:%SZ")
 
     config = load_config(config_path)
     timeout_sec = int(config.get("data_quality", {}).get("request_timeout_sec", 15))
+    bt_cfg = config.get("backtest", {})
+    min_years = float(bt_cfg.get("min_history_years", 5.0))
+    cache_dir = bt_cfg.get("archive_cache_dir", ".cache/binance_monthly")
+
     data_fetcher = fetcher or FallbackDataFetcher(timeout_sec=timeout_sec)
+    # Only enable real archive fetcher automatically if caller did not inject a mock fetcher
+    bin_archive = archive_fetcher or (
+        BinanceMonthlyArchiveFetcher(cache_dir=cache_dir, timeout_sec=max(20, timeout_sec))
+        if fetcher is None
+        else None
+    )
 
     instruments = [inst for inst in config.get("instruments", []) if inst.get("enabled", True)]
     bars_by_interval: dict[str, dict[str, list[Any]]] = {"1d": {}, "15m": {}, "1h": {}}
 
     for inst in instruments:
         sym = inst["symbol"]
+        mkt = inst["market"]
+
         res_1d = data_fetcher.fetch(inst, "1d", limit=2600, now_utc=now)
         if res_1d.ok and res_1d.bars:
             bars_by_interval["1d"][sym] = res_1d.bars
 
-        res_15m = data_fetcher.fetch(inst, "15m", limit=2400, now_utc=now)
-        if res_15m.ok and res_15m.bars:
-            bars_by_interval["15m"][sym] = res_15m.bars
-            bars_1h = resample_15m_to_1h(res_15m.bars, now_utc=now)
+        if mkt != "crypto":
+            # FX and commodities lack >=5y free 15m/1h archive; excluded from short-term backtest cleanly
+            continue
+
+        bin_code = inst.get("sources", {}).get("binance_vision")
+        if bin_archive is not None and bin_code:
+            bars_15m = bin_archive.fetch_history(
+                bin_code,
+                "15m",
+                years=min_years + 0.15,
+                now_utc=now,
+            )
+            if bars_15m:
+                bars_by_interval["15m"][sym] = bars_15m
+
+            bars_1h = bin_archive.fetch_history(
+                bin_code,
+                "1h",
+                years=min_years + 0.15,
+                now_utc=now,
+            )
+            if not bars_1h and bars_15m:
+                bars_1h = resample_15m_to_1h(bars_15m, now_utc=now)
             if bars_1h:
                 bars_by_interval["1h"][sym] = bars_1h
+        else:
+            # Exception path (e.g. TONUSDT without Binance Spot listing, or injected test mock)
+            res_15m = data_fetcher.fetch(inst, "15m", limit=2400, now_utc=now)
+            if res_15m.ok and res_15m.bars:
+                bars_by_interval["15m"][sym] = res_15m.bars
+                bars_1h = resample_15m_to_1h(res_15m.bars, now_utc=now)
+                if bars_1h:
+                    bars_by_interval["1h"][sym] = bars_1h
 
     strategy_results = screen_all_six_strategies(bars_by_interval, config)
     passed_count = sum(1 for r in strategy_results if r["passed"])
@@ -91,12 +131,12 @@ def run_weekly_screening(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Signal Desk weekly 6-strategy screening job")
+    parser = argparse.ArgumentParser(description="Signal Desk weekly 6-strategy backtest job")
     parser.add_argument("--out-dir", type=Path, default=Path("_data_out"))
     args = parser.parse_args()
 
     res = run_weekly_screening(out_dir=args.out_dir)
-    print(f"Weekly screening complete: {json.dumps(res['summary'], ensure_ascii=False)}")
+    print(f"Weekly 6-strategy backtest complete: {json.dumps(res['summary'], ensure_ascii=False)}")
 
 
 if __name__ == "__main__":

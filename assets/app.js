@@ -23,11 +23,19 @@
   let cachedPerf = null;
   let cachedRisk = null;
   let cachedEquity = null;
-  let cachedHeatmap = null;
   let cachedEvents = null;
   let livePrices = {};
   let activeChart = null;
   let activeEquityChart = null;
+
+  const STRATEGY_NAMES = {
+    S1: "S1 RSI(2) 回檔買進（短線）",
+    S2: "S2 波動突破（短線）",
+    S3: "S3 區間來回（短線）",
+    L1: "L1 多標的趨勢跟隨（長線）",
+    L2: "L2 加密強弱輪動（長線）",
+    L3: "L3 200 日均線趨勢過濾（長線）",
+  };
 
   function formatTaipeiTime(isoOrDate) {
     if (!isoOrDate) return "--";
@@ -350,7 +358,7 @@
 
   function formatSignalCopyText(s) {
     const dirZh = s.direction === "long" ? "做多" : "做空";
-    const stratZh = s.strategy === "A" ? "策略 A（短線）" : "策略 B（長線）";
+    const stratZh = STRATEGY_NAMES[s.strategy] || `策略 ${s.strategy}`;
     const adds = Array.isArray(s.add_levels) && s.add_levels.length > 0
       ? s.add_levels.map((l) => `階段${l.stage} ${l.add_type === "mean_add" ? "逆勢補倉" : "順勢加倉"} ${l.price}`).join("、")
       : "無";
@@ -987,31 +995,6 @@
       .replace(/"/g, "&quot;");
   }
 
-  function strategyZhLabel(code) {
-    const map = {
-      donchian: "唐奇安通道突破",
-      ema_cross: "均線交叉",
-      weekly_trend_atr: "週線趨勢＋ATR",
-    };
-    if (!code) return "--";
-    const zh = map[code] || code;
-    return `<span title="${escapeHtml(code)}">${escapeHtml(zh)}</span>`;
-  }
-
-  function formatParamsZh(params) {
-    if (!params || Object.keys(params).length === 0) return "--";
-    const keyMap = {
-      period: "週期",
-      fast: "快線",
-      slow: "慢線",
-      weekly_ema: "週線EMA",
-      sl_atr_mult: "止損ATR倍數",
-    };
-    return Object.entries(params)
-      .map(([k, v]) => `<span title="${escapeHtml(k)}=${escapeHtml(v)}">${escapeHtml(keyMap[k] || k)} ${escapeHtml(v)}</span>`)
-      .join("、");
-  }
-
   function formatMetricSummary(m) {
     if (!m || typeof m.trades !== "number") return "--";
     if (m.trades === 0) return "0 筆";
@@ -1059,11 +1042,13 @@
         const yrsText = yrsNum > 0 ? `${yrsNum < 0.1 ? yrsNum.toFixed(4) : yrsNum.toFixed(2)} 年` : "--";
         const appTxt = `${item.eligible_instruments ?? 0} / ${item.applicable_instruments ?? 0} 檔（可用 ${yrsText}）`;
         const poolLabel = item.pool === "short_term" ? "短線" : "長線";
+        const noteHtml = item.data_note ? `<div class="muted" style="margin-top:4px;font-size:0.82rem;">註：${escapeHtml(item.data_note)}</div>` : "";
         const paramsText = item.chosen_params && Object.keys(item.chosen_params).length > 0
           ? Object.entries(item.chosen_params).map(([k, v]) => `${k}=${v}`).join(", ")
           : "--";
         const detailHtml = `
           <div>${escapeHtml(item.reason || "--")}</div>
+          ${noteHtml}
           <details class="bt-details">
             <summary>參數與樣本內詳細</summary>
             <div class="bt-details-body">
@@ -1117,8 +1102,12 @@
 
     const rows = [
       ["總計 (Overall)", cachedPerf.overall],
-      ["策略 A (短線)", cachedPerf.by_strategy?.A],
-      ["策略 B (長線)", cachedPerf.by_strategy?.B],
+      [STRATEGY_NAMES.S1, cachedPerf.by_strategy?.S1],
+      [STRATEGY_NAMES.S2, cachedPerf.by_strategy?.S2],
+      [STRATEGY_NAMES.S3, cachedPerf.by_strategy?.S3],
+      [STRATEGY_NAMES.L1, cachedPerf.by_strategy?.L1],
+      [STRATEGY_NAMES.L2, cachedPerf.by_strategy?.L2],
+      [STRATEGY_NAMES.L3, cachedPerf.by_strategy?.L3],
       ["市場：加密貨幣", cachedPerf.by_market?.crypto],
       ["市場：外匯", cachedPerf.by_market?.forex],
       ["市場：商品", cachedPerf.by_market?.commodity],
@@ -1406,37 +1395,7 @@
   }
 
   function renderDataExtras() {
-    const heatBox = document.getElementById("heatmap-box");
     const evTbody = document.getElementById("events-tbody");
-    if (heatBox) {
-      const raw = cachedHeatmap?.instruments || [];
-      const items = Array.isArray(raw)
-        ? raw
-        : Object.entries(raw).map(([symbol, v]) => ({
-            symbol,
-            low_liquidity_hours_utc: (v && (v.low_liquidity_hours_utc || v.low_hours)) || [],
-          }));
-      if (items.length === 0) {
-        heatBox.innerHTML = '<p class="muted">目前尚無低流動性時段資料（等待掃描）。</p>';
-      } else {
-        heatBox.innerHTML = `
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>標的</th><th>低流動性 UTC 小時分佈（高亮 = 候選時段）</th></tr></thead>
-              <tbody>
-                ${items.map((it) => {
-                  const lowSet = new Set(it.low_liquidity_hours_utc || []);
-                  const chips = Array.from({ length: 24 }, (_, h) =>
-                    `<span class="hour-chip ${lowSet.has(h) ? "hour-low" : ""}">${String(h).padStart(2, "0")}</span>`
-                  ).join("");
-                  return `<tr><td><strong>${escapeHtml(it.symbol)}</strong></td><td><div class="hour-row">${chips}</div></td></tr>`;
-                }).join("")}
-              </tbody>
-            </table>
-          </div>
-        `;
-      }
-    }
     if (evTbody) {
       const evs = cachedEvents?.events || [];
       evTbody.innerHTML = evs.length === 0
@@ -1528,7 +1487,7 @@
     try {
       const [
         instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, watchRes, btRes,
-        shadowRes, perfRes, riskRes, eqRes, heatRes, evRes,
+        shadowRes, perfRes, riskRes, eqRes, evRes,
       ] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
         fetchDataJson("data_health.json"),
@@ -1542,7 +1501,6 @@
         fetchDataJson("performance_stats.json"),
         fetchDataJson("risk_status.json"),
         fetchDataJson("equity_curve.json"),
-        fetchDataJson("liquidity_heatmap.json"),
         fetchDataJson("events_calendar.json"),
       ]);
 
@@ -1559,7 +1517,6 @@
       cachedPerf = perfRes.status === "fulfilled" ? perfRes.value : null;
       cachedRisk = riskRes.status === "fulfilled" ? riskRes.value : null;
       cachedEquity = eqRes.status === "fulfilled" ? eqRes.value : null;
-      cachedHeatmap = heatRes.status === "fulfilled" ? heatRes.value : null;
       cachedEvents = evRes.status === "fulfilled" ? evRes.value : null;
 
       // 每個區塊各自防護：一個區塊出錯不會拖垮整個頁面

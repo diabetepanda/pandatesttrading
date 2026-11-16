@@ -72,7 +72,7 @@ def run_daily(
         tr.symbol
         for led in engine.ledgers.values()
         for tr in led.trades.values()
-        if tr.strategy in ("L1", "L2", "L3", "B")
+        if tr.strategy in ("L1", "L2", "L3")
         and tr.state in (LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE, LifecycleState.TP1_HIT)
     }
 

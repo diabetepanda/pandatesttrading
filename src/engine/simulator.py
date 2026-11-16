@@ -79,7 +79,7 @@ class MarketBar:
 class CandidateSignal:
     """Candidate signal produced by a strategy or test harness prior to risk approval."""
 
-    strategy: str  # "A" or "B"
+    strategy: str  # "S1", "S2", "S3", "L1", "L2", or "L3"
     symbol: str
     direction: str  # "long" or "short"
     entry_low: float
@@ -293,8 +293,8 @@ class Ledger:
         self.policy_name = policy_name
         self.config = config
         pools = config.get("account", {}).get("pools", {})
-        self.short_term_capital: float = float(pools.get("short_term", {}).get("capital_usd", 20000.0))
-        self.long_term_capital: float = float(pools.get("long_term", {}).get("capital_usd", 80000.0))
+        self.short_term_capital: float = float(pools.get("short_term", {}).get("capital_usd", 30000.0))
+        self.long_term_capital: float = float(pools.get("long_term", {}).get("capital_usd", 70000.0))
         self.short_term_realized_pnl: float = 0.0
         self.long_term_realized_pnl: float = 0.0
         self.peak_equity_usd: float = self.short_term_capital + self.long_term_capital

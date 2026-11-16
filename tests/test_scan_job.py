@@ -61,7 +61,6 @@ def test_run_scan_outputs_required_files(tmp_path: Path) -> None:
         "data_probe_report.json",
         "watch_today.json",
         "signals_index.json",
-        "liquidity_heatmap.json",
         "new_signals_to_commit.json",
         "trades.json",
         "orders.json",

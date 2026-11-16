@@ -12,7 +12,7 @@ from src.signals.models import AddLevel, InputSnapshot
 
 def _candidate(
     symbol: str = "BTCUSDT",
-    strategy: str = "A",
+    strategy: str = "S1",
     direction: str = "long",
     entry: float = 90000.0,
     sl: float = 89000.0,
@@ -68,7 +68,7 @@ def test_leverage_and_liquidation_safety_check() -> None:
 
     res_reject = rm.check_new_signal(
         instrument=inst,
-        strategy="A",
+        strategy="S1",
         direction="long",
         entry_price=100.0,
         stop_loss=96.0,
@@ -86,7 +86,7 @@ def test_leverage_and_liquidation_safety_check() -> None:
     # Test 2% stop distance at 10x -> ratio = 0.40 <= 0.50 -> APPROVED
     res_ok = rm.check_new_signal(
         instrument=inst,
-        strategy="A",
+        strategy="S1",
         direction="long",
         entry_price=100.0,
         stop_loss=98.0,
@@ -111,7 +111,7 @@ def test_margin_usage_cap_30_percent() -> None:
     # New notional 2,000 at 10x needs 200 margin -> 3,100 > 3,000 -> REJECTED!
     res = rm.check_new_signal(
         instrument=inst,
-        strategy="A",
+        strategy="S1",
         direction="long",
         entry_price=100.0,
         stop_loss=98.0,
@@ -139,7 +139,7 @@ def test_daily_and_weekly_loss_limits_block_new_signals() -> None:
     # Daily loss limit = 1500 USD
     res_daily = rm.check_new_signal(
         instrument=inst,
-        strategy="A",
+        strategy="S1",
         direction="long",
         entry_price=100.0,
         stop_loss=98.0,
@@ -162,7 +162,7 @@ def test_daily_and_weekly_loss_limits_block_new_signals() -> None:
     # Weekly loss limit = 4000 USD (even if today's loss is 0)
     res_weekly = rm.check_new_signal(
         instrument=inst,
-        strategy="A",
+        strategy="S1",
         direction="long",
         entry_price=100.0,
         stop_loss=98.0,
@@ -191,7 +191,7 @@ def test_drawdown_warning_halves_risk_and_pause_requires_control_json_review() -
     # 8% drawdown: equity 92,000 vs peak 100,000 -> warning mode, R_plan halved (250 * 0.5 = 125)
     res_warn = rm.check_new_signal(
         instrument=inst,
-        strategy="A",
+        strategy="S1",
         direction="long",
         entry_price=100.0,
         stop_loss=98.0,
@@ -210,7 +210,7 @@ def test_drawdown_warning_halves_risk_and_pause_requires_control_json_review() -
     # 12% drawdown: equity 88,000 vs peak 100,000 -> paused_drawdown
     res_pause = rm.check_new_signal(
         instrument=inst,
-        strategy="A",
+        strategy="S1",
         direction="long",
         entry_price=100.0,
         stop_loss=98.0,
@@ -228,7 +228,7 @@ def test_drawdown_warning_halves_risk_and_pause_requires_control_json_review() -
     # Unlock via control.json: risk_review_done=True AND non-empty note
     res_unlocked = rm.check_new_signal(
         instrument=inst,
-        strategy="A",
+        strategy="S1",
         direction="long",
         entry_price=100.0,
         stop_loss=98.0,
@@ -253,7 +253,7 @@ def test_correlation_group_and_total_stop_risk_limits() -> None:
     # Group stop risk limit = 1,000 USD; already open in crypto_majors = 1,000 USD -> REJECTED!
     res_group = rm.check_new_signal(
         instrument=inst,
-        strategy="A",
+        strategy="S1",
         direction="long",
         entry_price=100.0,
         stop_loss=98.0,
@@ -276,7 +276,7 @@ def test_correlation_group_and_total_stop_risk_limits() -> None:
     # Total stop risk limit = 3,000 USD; already open across other groups = 3,000 USD -> REJECTED!
     res_total = rm.check_new_signal(
         instrument=inst,
-        strategy="A",
+        strategy="S1",
         direction="long",
         entry_price=100.0,
         stop_loss=98.0,
@@ -302,7 +302,7 @@ def test_risk_rejected_signal_not_published_and_logged_to_watch_log(tmp_path: Pa
     engine = SimulationEngine(cfg, out_dir=tmp_path)
 
     # Paused via control.json -> rejected by risk/control -> must NOT publish signal
-    cand = _candidate(symbol="BTCUSDT", strategy="A", entry=90000.0, sl=89000.0, tp1=91800.0, tp2=92600.0, leverage=5.0)
+    cand = _candidate(symbol="BTCUSDT", strategy="S1", entry=90000.0, sl=89000.0, tp1=91800.0, tp2=92600.0, leverage=5.0)
     published = engine.submit_candidate_signal(
         cand,
         now_utc="2026-11-16T02:05:00Z",

@@ -108,8 +108,12 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     style_css = (root / "assets" / "style.css").read_text(encoding="utf-8")
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
-    # Cache-busting version bumped
-    assert "?v=20261116e" in index_html
+    # Cache-busting version bumped and legacy (A)/(B) labels removed
+    assert "?v=20261116f" in index_html
+    assert "短線池 (A)" not in index_html
+    assert "長線池 (B)" not in index_html
+    assert "$30,000" in index_html
+    assert "$70,000" in index_html
 
     # Mobile responsive card table + horizontal nav scroll rules
     assert "@media (max-width: 640px)" in style_css
@@ -181,3 +185,28 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
         """
         proc = subprocess.run([node_bin, "-e", script], capture_output=True, text=True)
         assert proc.returncode == 0, f"Node helper check failed: {proc.stderr or proc.stdout}"
+
+
+def test_no_legacy_strategy_ab_references() -> None:
+    """Ensure legacy Strategy A/B wording and identifiers are completely absent across code, UI, and docs."""
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    forbidden = ["策略 A", "策略 B", "Strategy A", "Strategy B", "strategy_a", "strategy_b"]
+    targets = [
+        root / "index.html",
+        root / "CHECKLIST.md",
+        root / "SPEC.md",
+    ]
+    for folder in (root / "assets", root / "src"):
+        for p in sorted(folder.rglob("*")):
+            if p.is_file() and "__pycache__" not in p.parts:
+                targets.append(p)
+
+    offenders: list[str] = []
+    for path in targets:
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        for needle in forbidden:
+            if needle in text:
+                offenders.append(f"{path.relative_to(root)}: {needle!r}")
+    assert not offenders, "Legacy Strategy A/B references remain:\n" + "\n".join(offenders)

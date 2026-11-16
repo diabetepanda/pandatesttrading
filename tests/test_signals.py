@@ -25,7 +25,7 @@ def _sample_signal(signal_id: str = "SIG-20261116-001") -> Signal:
     return Signal(
         signal_id=signal_id,
         published_at_utc="2026-11-16T02:00:00Z",
-        strategy="A",
+        strategy="S1",
         symbol="BTCUSDT",
         market="crypto",
         direction="long",

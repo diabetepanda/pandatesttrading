@@ -1,4 +1,4 @@
-"""Scheduled scan job (Stage 3: data fetch, quality check, engine replay, and Strategy A)."""
+"""Scheduled scan job (data fetch, quality check, engine replay, short-term S1-S3 scan, and export)."""
 
 from __future__ import annotations
 
@@ -86,7 +86,7 @@ def run_scan(
     probe_all_adapters: bool = False,
     now_utc: datetime | None = None,
 ) -> dict[str, Any]:
-    """Execute Stage 3 scan: data quality, catch-up replay, Strategy A scan, and JSON export."""
+    """Execute scheduled scan: data quality, catch-up replay, S1-S3 watch/signal scan, and JSON export."""
     t_start = time.monotonic()
     now = (now_utc or datetime.now(timezone.utc)).astimezone(timezone.utc)
     now_iso = now.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -278,7 +278,6 @@ def run_scan(
     # Phase 1: record data health, derivatives status & watch reason without emitting new orders
     signals_before = set(engine.primary_ledger.trades.keys())
     watch_today_items: list[dict[str, Any]] = []
-    heatmap_out: dict[str, dict[str, Any]] = {}
 
     for inst in instruments_cfg:
         sym = inst["symbol"]
@@ -416,7 +415,6 @@ def run_scan(
     _write_json(out_dir / "state.json", state)
     _write_json(out_dir / "run_log.json", run_log)
     _write_json(out_dir / "watch_today.json", {"updated_at_utc": now_iso, "items": watch_today_items})
-    _write_json(out_dir / "liquidity_heatmap.json", {"updated_at_utc": now_iso, "instruments": heatmap_out})
     _write_json(out_dir / "events_calendar.json", {"updated_at_utc": now_iso, "events": events})
     _write_json(out_dir / "new_signals_to_commit.json", {"signal_ids": new_signal_ids})
 

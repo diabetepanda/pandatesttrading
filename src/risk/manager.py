@@ -5,6 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
+from src.strategies.six_strategies import SubaccountAllocation, allocate_subaccount_position
+
 
 @dataclass
 class RiskCheckResult:
@@ -24,8 +26,8 @@ class RiskCheckResult:
 
 
 def is_short_term_strategy(strategy: str) -> bool:
-    """Classify short-term strategies (S1-S3, plus legacy test fixture id 'A')."""
-    return strategy in ("S1", "S2", "S3", "A")
+    """Classify short-term strategies (S1-S3)."""
+    return strategy in ("S1", "S2", "S3")
 
 
 class RiskManager:
@@ -324,6 +326,22 @@ class RiskManager:
         rem_margin = max_total_margin - used_margin
 
         notional = min(desired_notional_usd, pool_target_notional, pool_remaining_cap, risk_cap_notional)
+        if "subaccount_equity_usd" in account_state:
+            sub_alloc = self.check_subaccount_allocation(
+                strategy_id=strategy,
+                instrument=instrument,
+                entry_price=entry_price,
+                stop_loss=stop_loss,
+                subaccount_equity_usd=float(account_state["subaccount_equity_usd"]),
+                open_positions_count=int(account_state.get("subaccount_open_positions", 0)),
+                open_total_risk_usd=float(account_state.get("subaccount_open_risk_usd", 0.0)),
+                open_total_notional_usd=float(account_state.get("subaccount_open_notional_usd", 0.0)),
+                risk_multiplier=warning_mult,
+            )
+            if not sub_alloc.approved:
+                return RiskCheckResult(False, 0.0, 0.0, eff_leverage, 0.0, 0.0, 0.0, 0.0, risk_status, sub_alloc.reason)
+            notional = min(notional, sub_alloc.notional_usd)
+            r_plan = min(r_plan, sub_alloc.risk_usd)
         if notional <= 0:
             return RiskCheckResult(False, r_plan, 0.0, eff_leverage, 0.0, 0.0, 0.0, 0.0, risk_status, "計算名目倉位為 0")
 
@@ -377,4 +395,33 @@ class RiskManager:
             risk_status=risk_status,
             reason="通過風控審核",
             risk_event=dd_event,
+        )
+
+    def check_subaccount_allocation(
+        self,
+        strategy_id: str,
+        instrument: dict[str, Any],
+        entry_price: float,
+        stop_loss: float | None,
+        subaccount_equity_usd: float,
+        open_positions_count: int,
+        open_total_risk_usd: float,
+        open_total_notional_usd: float,
+        risk_multiplier: float = 1.0,
+    ) -> SubaccountAllocation:
+        """Live sub-account allocation delegating directly to the shared backtest sizing function."""
+        fee_rate = float(instrument.get("fee_rate", 0.0005))
+        slippage_bps = float(self.risk_cfg.get("default_slippage_bps", 1.0))
+        return allocate_subaccount_position(
+            strategy_id=strategy_id,
+            subaccount_equity_usd=subaccount_equity_usd,
+            open_positions_count=open_positions_count,
+            open_total_risk_usd=open_total_risk_usd,
+            open_total_notional_usd=open_total_notional_usd,
+            entry_price=entry_price,
+            stop_loss=stop_loss,
+            fee_rate=fee_rate,
+            slippage_bps=slippage_bps,
+            config=self.config,
+            risk_multiplier=risk_multiplier,
         )

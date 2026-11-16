@@ -1,1 +1,1 @@
-"""Backtest and Strategy B screening module (Stage 5+)."""
+"""Backtest and portfolio screening module for the 6 unified strategies (S1-S3, L1-L3)."""

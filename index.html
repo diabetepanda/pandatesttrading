@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261116e" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261116f" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -27,12 +27,12 @@
         <span id="total-equity" class="metric-value">$100,000.00</span>
       </div>
       <div class="metric">
-        <span class="metric-label">短線池 (A)</span>
-        <span id="short-equity" class="metric-value">$20,000.00</span>
+        <span class="metric-label">短線池</span>
+        <span id="short-equity" class="metric-value">$30,000</span>
       </div>
       <div class="metric">
-        <span class="metric-label">長線池 (B)</span>
-        <span id="long-equity" class="metric-value">$80,000.00</span>
+        <span class="metric-label">長線池</span>
+        <span id="long-equity" class="metric-value">$70,000</span>
       </div>
       <div class="metric">
         <span class="metric-label">即時價格更新 (瀏覽器)</span>
@@ -100,8 +100,12 @@
         <div class="filter-controls">
           <select id="wall-filter-strategy" aria-label="策略篩選">
             <option value="all">全部策略</option>
-            <option value="A">策略 A（短線）</option>
-            <option value="B">策略 B（長線）</option>
+            <option value="S1">S1 RSI(2) 回檔買進</option>
+            <option value="S2">S2 波動突破</option>
+            <option value="S3">S3 區間來回</option>
+            <option value="L1">L1 多標的趨勢跟隨</option>
+            <option value="L2">L2 加密強弱輪動</option>
+            <option value="L3">L3 200 日均線趨勢過濾</option>
           </select>
           <select id="wall-filter-market" aria-label="市場篩選">
             <option value="all">全部市場</option>
@@ -253,14 +257,8 @@
       </section>
 
       <section class="card">
-        <h2>策略 A 低流動性時段熱力圖（UTC 小時）</h2>
-        <p class="subtitle">依最近 30–60 天已收盤 15m 資料計算各 UTC 小時平均波幅／成交量，高亮顯示後 1/3 低流動性候選時段。</p>
-        <div id="heatmap-box" class="muted">目前尚無低流動性時段資料（等待掃描）。</div>
-      </section>
-
-      <section class="card">
         <h2>高影響經濟事件日曆（UTC / UTC+8）</h2>
-        <p class="subtitle">策略 A 於高影響事件前 4 小時與結束後 60 分鐘自動禁止報單。</p>
+        <p class="subtitle">短線策略（S1～S3）於高影響事件前 4 小時與結束後 60 分鐘自動禁止報單。</p>
         <div class="table-wrap">
           <table class="data-table mobile-cards" id="instruments-table">
             <thead>
@@ -327,14 +325,14 @@
         <div class="section-header">
           <div>
             <h1>模擬帳戶與資金曲線</h1>
-            <p class="subtitle">虛擬總資金 100,000 USD（短線池 A 20,000＋長線池 B 80,000，資金池嚴格隔離）；現價浮動損益由瀏覽器即時價格估算。</p>
+            <p class="subtitle">虛擬總資金 100,000 USD（短線池 $30,000＋長線池 $70,000，資金池嚴格隔離）；現價浮動損益由瀏覽器即時價格估算。</p>
           </div>
           <span class="badge badge-warn">模擬驗證中，非投資建議</span>
         </div>
         <div class="summary-grid" id="account-summary-grid">
           <div class="summary-card"><span class="metric-label">總淨值</span><span id="acc-total-eq" class="summary-val">--</span></div>
-          <div class="summary-card"><span class="metric-label">短線池 (A) 淨值</span><span id="acc-short-eq" class="summary-val">--</span></div>
-          <div class="summary-card"><span class="metric-label">長線池 (B) 淨值</span><span id="acc-long-eq" class="summary-val">--</span></div>
+          <div class="summary-card"><span class="metric-label">短線池淨值</span><span id="acc-short-eq" class="summary-val">--</span></div>
+          <div class="summary-card"><span class="metric-label">長線池淨值</span><span id="acc-long-eq" class="summary-val">--</span></div>
           <div class="summary-card"><span class="metric-label">進行中持倉 / 使用保證金</span><span id="acc-open-margin" class="summary-val">--</span></div>
         </div>
         <h2 style="margin-top:14px;">帳戶資金曲線</h2>
@@ -471,7 +469,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261116e"></script>
-  <script src="./assets/app.js?v=20261116e"></script>
+  <script src="./assets/config.js?v=20261116f"></script>
+  <script src="./assets/app.js?v=20261116f"></script>
 </body>
 </html>
