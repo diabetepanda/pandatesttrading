@@ -343,10 +343,29 @@ class YFinanceAdapter(DataAdapter):
     name = "yfinance"
     PERIOD_MAP = {"1m": "5d", "15m": "1mo", "1h": "2y", "1d": "10y"}
     _last_request_mono: float = 0.0
+    _yf_lock = threading.Lock()
 
-    def __init__(self, timeout_sec: int = 15, min_interval_sec: float = 0.25) -> None:
+    def __init__(self, timeout_sec: int = 15, min_interval_sec: float = 0.15) -> None:
         super().__init__(timeout_sec=timeout_sec)
         self.min_interval_sec = max(0.0, float(min_interval_sec))
+
+    @classmethod
+    def _choose_period(cls, interval: str, limit: int) -> str:
+        if interval == "1m":
+            return "1d" if limit <= 360 else "5d"
+        if interval == "15m":
+            return "5d" if limit <= 450 else "1mo"
+        if interval == "1h":
+            return "1mo" if limit <= 500 else "2y"
+        if interval == "1d":
+            if limit <= 65:
+                return "3mo"
+            if limit <= 125:
+                return "6mo"
+            if limit <= 500:
+                return "2y"
+            return "10y"
+        return cls.PERIOD_MAP[interval]
 
     def fetch_bars(
         self,
@@ -355,24 +374,26 @@ class YFinanceAdapter(DataAdapter):
         limit: int = 200,
         now_utc: datetime | None = None,
     ) -> list[OHLCVBar]:
-        period = self.PERIOD_MAP.get(interval)
-        if not period:
+        if interval not in self.PERIOD_MAP:
             raise ValueError(f"Unsupported interval: {interval}")
+        period = self._choose_period(interval, limit)
 
-        if self.min_interval_sec > 0:
-            elapsed = time.monotonic() - YFinanceAdapter._last_request_mono
-            if elapsed < self.min_interval_sec:
-                time.sleep(self.min_interval_sec - elapsed)
-        YFinanceAdapter._last_request_mono = time.monotonic()
+        with YFinanceAdapter._yf_lock:
+            if self.min_interval_sec > 0:
+                elapsed = time.monotonic() - YFinanceAdapter._last_request_mono
+                if elapsed < self.min_interval_sec:
+                    time.sleep(self.min_interval_sec - elapsed)
+            YFinanceAdapter._last_request_mono = time.monotonic()
 
-        df = yf.download(
-            tickers=source_symbol,
-            period=period,
-            interval=interval,
-            progress=False,
-            auto_adjust=False,
-            threads=False,
-        )
+            df = yf.download(
+                tickers=source_symbol,
+                period=period,
+                interval=interval,
+                progress=False,
+                auto_adjust=False,
+                threads=False,
+                timeout=self.timeout_sec,
+            )
         if df is None or df.empty:
             return []
 

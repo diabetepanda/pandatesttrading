@@ -8,11 +8,11 @@ on:
       probe_all:
         description: "Probe all primary & fallback adapters (Stage 1 report)"
         required: false
-        default: "true"
+        default: "false"
         type: choice
         options:
-          - "true"
           - "false"
+          - "true"
 
 permissions:
   contents: write
@@ -54,11 +54,19 @@ jobs:
       - name: Install dependencies
         run: pip install -r main_repo/requirements.txt
 
+      - name: Restore scan bar cache
+        uses: actions/cache@v4
+        with:
+          path: main_repo/.cache
+          key: scan-cache-${{ hashFiles('main_repo/config/config.yaml') }}-${{ github.run_id }}
+          restore-keys: |
+            scan-cache-${{ hashFiles('main_repo/config/config.yaml') }}-
+
       - name: Run scan job
         working-directory: main_repo
         run: |
           PROBE_FLAG=""
-          if [ "${{ github.event.inputs.probe_all }}" = "true" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event.inputs.probe_all }}" = "true" ]; then
             PROBE_FLAG="--probe-all"
           fi
           python -m src.jobs.scan --out-dir ../data_repo $PROBE_FLAG

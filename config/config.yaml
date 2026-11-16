@@ -9,8 +9,9 @@ project:
 schedule:
   scan_interval_minutes: 15
   max_candle_delay_minutes: 20
-  max_4h_candle_delay_minutes: 90
-  max_daily_candle_delay_minutes: 4320
+  max_4h_candle_delay_minutes: 260
+  max_daily_candle_delay_minutes: 1500
+  scan_cache_dir: .cache/scan_bars
   ui_stale_warning_minutes: 45
   keep_run_logs: 100
 

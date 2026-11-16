@@ -43,6 +43,10 @@ def test_run_scan_outputs_required_files(tmp_path: Path) -> None:
     # Use Saturday 12:00 UTC so crypto passes low-liquidity window and reaches derivatives check
     now = datetime(2026, 11, 14, 12, 0, tzinfo=timezone.utc)
 
+    # Plant obsolete legacy files to verify scan removes them cleanly
+    (tmp_path / "watch_today_b.json").write_text("{}", encoding="utf-8")
+    (tmp_path / "liquidity_heatmap.json").write_text("{}", encoding="utf-8")
+
     summary = run_scan(
         out_dir=tmp_path,
         fetcher=fetcher,
@@ -51,6 +55,10 @@ def test_run_scan_outputs_required_files(tmp_path: Path) -> None:
         now_utc=now,
     )
     assert summary["status_counts"]["ok"] > 0
+    assert not (tmp_path / "watch_today_b.json").exists()
+    assert not (tmp_path / "liquidity_heatmap.json").exists()
+    assert "step_timings_sec" in summary
+    assert "fetch_and_quality_sec" in summary["step_timings_sec"]
 
     for fname in (
         "instruments.json",
@@ -73,6 +81,11 @@ def test_run_scan_outputs_required_files(tmp_path: Path) -> None:
     state = json.loads((tmp_path / "state.json").read_text(encoding="utf-8"))
     assert state["stage"] == 3
     assert state["runs_last_24h"] == 1
+    run_log = json.loads((tmp_path / "run_log.json").read_text(encoding="utf-8"))
+    assert len(run_log) >= 1 and "step_timings_sec" in run_log[0]
+    watch_doc = json.loads((tmp_path / "watch_today.json").read_text(encoding="utf-8"))
+    btc_watch = next(it for it in watch_doc["items"] if it["symbol"] == "BTCUSDT")
+    assert "S1" in btc_watch["strategies"] and "S2" in btc_watch["strategies"]
 
     # Second scan 15 minutes later restores state and increments 24h count
     run_scan(

@@ -1,10 +1,12 @@
-"""Scheduled scan job (data fetch, quality check, engine replay, short-term S1-S3 scan, and export)."""
+"""Scheduled scan job (incremental bar cache, parallel fetch, replay, S1-S2 scan, and JSON export)."""
 
 from __future__ import annotations
 
 import argparse
 import json
+import pickle
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -20,8 +22,14 @@ from src.data.quality import _parse_iso_utc, check_continuity
 from src.data.resample import resample_1m_to_15m
 from src.engine.simulator import MarketBar, SimulationEngine
 from src.indicators.technical import compute_atr, compute_atr_ratio, resample_15m_to_1h, resample_1h_to_4h
-from src.jobs.live_strategy import evaluate_live_single_strategy_step, load_strategy_runtime_configs
+from src.jobs.live_strategy import (
+    evaluate_live_single_strategy_step,
+    is_instrument_eligible_for_strategy,
+    load_strategy_runtime_configs,
+)
 from src.signals.models import LifecycleState
+
+LEGACY_OBSOLETE_FILES = ("watch_today_b.json", "liquidity_heatmap.json")
 
 
 def _read_json_if_exists(path: Path, default: Any) -> Any:
@@ -39,6 +47,14 @@ def _write_json(path: Path, data: Any) -> None:
     with path.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
         f.write("\n")
+
+
+def _cleanup_legacy_files(out_dir: Path) -> None:
+    for name in LEGACY_OBSOLETE_FILES:
+        try:
+            (out_dir / name).unlink(missing_ok=True)
+        except Exception:
+            pass
 
 
 def _count_runs_last_24h(run_log: list[dict[str, Any]], now: datetime) -> int:
@@ -77,6 +93,50 @@ def _to_market_bars_1m(bars: list[OHLCVBar], now: datetime) -> list[MarketBar]:
     return out
 
 
+class _ScanBarCache:
+    """Disk cache for scan OHLCV bars to turn 15m/1m/1d fetches into lightweight incremental tail updates."""
+
+    MAX_BARS = {"1m": 600, "15m": 2400, "1d": 150}
+
+    def __init__(self, cache_dir: Path | str) -> None:
+        self.cache_dir = Path(cache_dir)
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+
+    def _path(self, symbol: str, interval: str) -> Path:
+        return self.cache_dir / f"{symbol}_{interval}.pkl"
+
+    def load(self, symbol: str, interval: str) -> tuple[str | None, str | None, list[OHLCVBar]]:
+        p = self._path(symbol, interval)
+        if not p.exists():
+            return None, None, []
+        try:
+            payload = pickle.loads(p.read_bytes())
+            return payload.get("fetched_at_utc"), payload.get("source_used"), payload.get("bars", [])
+        except Exception:
+            return None, None, []
+
+    def merge_and_save(
+        self,
+        symbol: str,
+        interval: str,
+        now_iso: str,
+        source_used: str | None,
+        old_bars: list[OHLCVBar],
+        new_bars: list[OHLCVBar],
+    ) -> list[OHLCVBar]:
+        merged_map: dict[str, OHLCVBar] = {b.ts_utc: b for b in old_bars}
+        for b in new_bars:
+            merged_map[b.ts_utc] = b
+        merged = sorted(merged_map.values(), key=lambda b: b.ts_utc)[-self.MAX_BARS.get(interval, 1000) :]
+        try:
+            self._path(symbol, interval).write_bytes(
+                pickle.dumps({"fetched_at_utc": now_iso, "source_used": source_used, "bars": merged})
+            )
+        except Exception:
+            pass
+        return merged
+
+
 def run_scan(
     out_dir: Path,
     config_path: Path | None = None,
@@ -87,40 +147,98 @@ def run_scan(
     probe_all_adapters: bool = False,
     now_utc: datetime | None = None,
 ) -> dict[str, Any]:
-    """Execute scheduled scan: data quality, catch-up replay, S1-S3 watch/signal scan, and JSON export."""
+    """Execute scheduled scan: incremental fetch, quality check, replay, S1-S2 scan, and JSON export."""
     t_start = time.monotonic()
     now = (now_utc or datetime.now(timezone.utc)).astimezone(timezone.utc)
     now_iso = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+    step_timings_sec: dict[str, float] = {}
 
+    t_step = time.monotonic()
     config = load_config(config_path)
     control = load_control(control_path)
     events = load_events(events_path)
     quality_cfg = config.get("data_quality", {})
-    timeout_sec = int(quality_cfg.get("request_timeout_sec", 15))
+    sched_cfg = config.get("schedule", {})
+    timeout_sec = min(10, int(quality_cfg.get("request_timeout_sec", 15)))
     data_fetcher = fetcher or FallbackDataFetcher(timeout_sec=timeout_sec)
 
+    _cleanup_legacy_files(out_dir)
+    engine = SimulationEngine(config, out_dir=out_dir)
+    engine.load_state()
+    symbols_with_open_trades = {
+        tr.symbol
+        for led in engine.ledgers.values()
+        for tr in led.trades.values()
+        if tr.state in (LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE, LifecycleState.TP1_HIT)
+    }
+    step_timings_sec["load_and_cleanup_sec"] = round(time.monotonic() - t_step, 3)
+
+    t_step = time.monotonic()
     instruments_cfg = [inst for inst in config.get("instruments", []) if inst.get("enabled", True)]
+    use_cache = fetcher is None
+    bar_cache = _ScanBarCache(sched_cfg.get("scan_cache_dir", ".cache/scan_bars")) if use_cache else None
 
-    instruments_out: list[dict[str, Any]] = []
-    probe_rows: list[dict[str, Any]] = []
-    status_counts = {"ok": 0, "unstable": 0, "stale": 0, "failed": 0}
-    source_stats: dict[str, dict[str, int]] = {}
-
-    bars_1m_by_sym: dict[str, list[OHLCVBar]] = {}
-    bars_15m_by_sym: dict[str, list[OHLCVBar]] = {}
-    reports_by_sym: dict[str, dict[str, dict[str, Any]]] = {}
-
-    for inst in instruments_cfg:
+    def _process_one_instrument(inst: dict[str, Any]) -> dict[str, Any]:
         symbol = inst["symbol"]
         market = inst["market"]
         is_daily_only = bool(inst.get("daily_only", False)) or market == "index"
 
         intervals_reports: dict[str, dict[str, Any]] = {}
         fetch_results: dict[str, FetchResult] = {}
+        local_probe_rows: list[dict[str, Any]] = []
+        local_attempts = []
         ivs_to_fetch = ("1d",) if is_daily_only else ("1m", "15m", "1d")
+
         for iv in ivs_to_fetch:
-            fetch_limit = 1500 if iv == "1m" else (2000 if iv == "15m" else 120)
-            res = data_fetcher.fetch(inst, iv, limit=fetch_limit, now_utc=now)
+            cached_ts_iso, cached_src, cached_bars = (None, None, [])
+            if bar_cache is not None:
+                cached_ts_iso, cached_src, cached_bars = bar_cache.load(symbol, iv)
+
+            res: FetchResult | None = None
+            if iv == "1d" and bar_cache is not None and cached_ts_iso and len(cached_bars) >= 20:
+                try:
+                    cache_age_sec = (now - _parse_iso_utc(cached_ts_iso)).total_seconds()
+                    latest_bar_age_sec = (now - _parse_iso_utc(cached_bars[-1].ts_utc)).total_seconds()
+                    if 0 <= cache_age_sec < 6 * 3600 and latest_bar_age_sec < 36 * 3600:
+                        res = FetchResult(
+                            symbol=symbol,
+                            interval="1d",
+                            ok=True,
+                            source_used=cached_src or "cache",
+                            bars=cached_bars,
+                        )
+                except Exception:
+                    res = None
+
+            if res is None:
+                if iv == "1m":
+                    if symbol in symbols_with_open_trades:
+                        fetch_limit = 600
+                    elif cached_bars and len(cached_bars) >= 120:
+                        fetch_limit = 180
+                    else:
+                        fetch_limit = 240
+                elif iv == "15m":
+                    if cached_bars and len(cached_bars) >= 600:
+                        fetch_limit = 250
+                    else:
+                        fetch_limit = 1000
+                else:
+                    fetch_limit = 60
+
+                res = data_fetcher.fetch(inst, iv, limit=fetch_limit, now_utc=now)
+                local_attempts.extend(res.attempts)
+                if res.ok and res.bars and bar_cache is not None:
+                    merged_bars = bar_cache.merge_and_save(symbol, iv, now_iso, res.source_used, cached_bars, res.bars)
+                    res = FetchResult(
+                        symbol=res.symbol,
+                        interval=res.interval,
+                        ok=True,
+                        source_used=res.source_used,
+                        bars=merged_bars,
+                        attempts=res.attempts,
+                    )
+
             fetch_results[iv] = res
             eval_res = (
                 FetchResult(
@@ -138,16 +256,9 @@ def run_scan(
             report = check_continuity(eval_res, market=market, quality_config=quality_cfg, now_utc=now)
             intervals_reports[iv] = report.to_dict()
 
-            for att in res.attempts:
-                s = source_stats.setdefault(att.adapter, {"ok": 0, "fail": 0})
-                if att.ok:
-                    s["ok"] += 1
-                else:
-                    s["fail"] += 1
-
             if probe_all_adapters:
                 all_attempts = data_fetcher.probe_all(inst, iv, limit=60, now_utc=now)
-                probe_rows.append(
+                local_probe_rows.append(
                     {
                         "symbol": symbol,
                         "market": market,
@@ -179,7 +290,6 @@ def run_scan(
         res_15m = fetch_results.get("15m")
         effective_15m_bars = res_15m.bars if (res_15m is not None and res_15m.ok) else []
 
-        # Fallback: if direct 15m is stale/unstable/failed, try resampling closed 1m bars
         res_1m = fetch_results.get("1m")
         rep_15m = intervals_reports["15m"]
         if not is_daily_only and rep_15m["status"] != "ok" and res_1m is not None and res_1m.ok and res_1m.bars:
@@ -207,17 +317,13 @@ def run_scan(
                     intervals_reports["15m"] = rep_resampled.to_dict()
                     effective_15m_bars = resampled_bars
                     if probe_all_adapters:
-                        for row in reversed(probe_rows):
+                        for row in reversed(local_probe_rows):
                             if row["symbol"] == symbol and row["interval"] == "15m":
                                 row["quality_status"] = rep_resampled.status
                                 row["missing_ratio"] = rep_resampled.missing_ratio
                                 row["delay_minutes"] = rep_resampled.delay_minutes
                                 row["quality_reason"] = f"已改用 1m 重取樣：{rep_resampled.reason}"
                                 break
-
-        bars_1m_by_sym[symbol] = res_1m.bars if (res_1m and res_1m.ok) else []
-        bars_15m_by_sym[symbol] = effective_15m_bars
-        reports_by_sym[symbol] = intervals_reports
 
         primary_rep = intervals_reports["15m"]
         latest_price = primary_rep["latest_close"]
@@ -244,9 +350,11 @@ def run_scan(
             else:
                 overall_status = "ok"
 
-        status_counts[overall_status] = status_counts.get(overall_status, 0) + 1
-        instruments_out.append(
-            {
+        return {
+            "symbol": symbol,
+            "market": market,
+            "overall_status": overall_status,
+            "inst_out": {
                 "symbol": symbol,
                 "display_name": inst.get("display_name", symbol),
                 "market": market,
@@ -256,38 +364,63 @@ def run_scan(
                 "source_used": source_used,
                 "overall_status": overall_status,
                 "intervals": intervals_reports,
-            }
-        )
+            },
+            "bars_1m": res_1m.bars if (res_1m and res_1m.ok) else [],
+            "bars_15m": effective_15m_bars,
+            "intervals_reports": intervals_reports,
+            "probe_rows": local_probe_rows,
+            "attempts": local_attempts,
+        }
 
-    # Restore SimulationEngine state and run catch-up replay
-    engine = SimulationEngine(config, out_dir=out_dir)
-    engine.load_state()
+    max_workers = 12 if fetcher is None else 1
+    if max_workers > 1 and len(instruments_cfg) > 1:
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            fetched_bundles = list(pool.map(_process_one_instrument, instruments_cfg))
+    else:
+        fetched_bundles = [_process_one_instrument(inst) for inst in instruments_cfg]
+
+    instruments_out: list[dict[str, Any]] = []
+    probe_rows: list[dict[str, Any]] = []
+    status_counts = {"ok": 0, "unstable": 0, "stale": 0, "failed": 0}
+    source_stats: dict[str, dict[str, int]] = {}
+    bars_1m_by_sym: dict[str, list[OHLCVBar]] = {}
+    bars_15m_by_sym: dict[str, list[OHLCVBar]] = {}
+    reports_by_sym: dict[str, dict[str, dict[str, Any]]] = {}
+
+    for b in fetched_bundles:
+        sym = b["symbol"]
+        status_counts[b["overall_status"]] = status_counts.get(b["overall_status"], 0) + 1
+        instruments_out.append(b["inst_out"])
+        bars_1m_by_sym[sym] = b["bars_1m"]
+        bars_15m_by_sym[sym] = b["bars_15m"]
+        reports_by_sym[sym] = b["intervals_reports"]
+        probe_rows.extend(b["probe_rows"])
+        for att in b["attempts"]:
+            s = source_stats.setdefault(att.adapter, {"ok": 0, "fail": 0})
+            s["ok" if att.ok else "fail"] += 1
+
+    step_timings_sec["fetch_and_quality_sec"] = round(time.monotonic() - t_step, 3)
+
+    t_step = time.monotonic()
     for inst_out in instruments_out:
         if inst_out["latest_price"] is not None:
             engine.latest_marks[inst_out["symbol"]] = float(inst_out["latest_price"])
 
-    signals_cfg = config.get("signals", {})
     atr_period = int(config.get("backtest", {}).get("atr_period", 14))
-
+    bars_1h_by_sym: dict[str, list[OHLCVBar]] = {}
     atr_1h_by_sym: dict[str, float | None] = {}
     atr_ratio_by_sym: dict[str, float | None] = {}
     for inst in instruments_cfg:
         sym = inst["symbol"]
         mkt = inst["market"]
         b15 = bars_15m_by_sym.get(sym, [])
-        b1h = resample_15m_to_1h(b15, now_utc=now)
+        b1h = resample_15m_to_1h(b15, now_utc=now) if b15 else []
+        bars_1h_by_sym[sym] = b1h
         atr_1h = compute_atr(b1h, period=atr_period, market=mkt, interval="1h")
         atr_rat = compute_atr_ratio(b1h, atr_period=atr_period, baseline_bars=20 * 24, market=mkt, interval="1h")
         atr_1h_by_sym[sym] = atr_1h
         atr_ratio_by_sym[sym] = atr_rat
 
-    # Catch-up replay for any symbol with open/pending trades
-    symbols_with_open_trades = {
-        tr.symbol
-        for led in engine.ledgers.values()
-        for tr in led.trades.values()
-        if tr.state in (LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE, LifecycleState.TP1_HIT)
-    }
     for sym in sorted(symbols_with_open_trades):
         m_bars = _to_market_bars_1m(bars_1m_by_sym.get(sym, []), now)
         if m_bars:
@@ -297,91 +430,127 @@ def run_scan(
                 atr=atr_1h_by_sym.get(sym),
                 atr_ratio=atr_ratio_by_sym.get(sym),
             )
+    step_timings_sec["indicators_and_replay_sec"] = round(time.monotonic() - t_step, 3)
 
-    # Evaluate live intraday strategies S1 (15m ORB) and S2 (4h breakout resampled from 1h)
+    t_step = time.monotonic()
+    deriv_fn = derivatives_fetcher or fetch_crypto_derivatives_meta
+    crypto_intraday = [
+        inst
+        for inst in instruments_cfg
+        if inst["market"] == "crypto" and not bool(inst.get("daily_only", False))
+    ]
+    deriv_by_sym: dict[str, dict[str, Any]] = {}
+    if crypto_intraday:
+        if max_workers > 1 and derivatives_fetcher is None and len(crypto_intraday) > 1:
+            with ThreadPoolExecutor(max_workers=max_workers) as pool:
+                deriv_results = list(pool.map(lambda inst: (inst["symbol"], normalize_derivatives_info(deriv_fn(inst))), crypto_intraday))
+            deriv_by_sym = dict(deriv_results)
+        else:
+            for inst in crypto_intraday:
+                deriv_by_sym[inst["symbol"]] = normalize_derivatives_info(deriv_fn(inst))
+    step_timings_sec["derivatives_fetch_sec"] = round(time.monotonic() - t_step, 3)
+
+    t_step = time.monotonic()
     runtime_cfgs = load_strategy_runtime_configs(out_dir, config)
     signals_before = set(engine.primary_ledger.trades.keys())
     watch_today_items: list[dict[str, Any]] = []
+    s1_cfg = config.get("strategies", {}).get("S1", {})
+    s2_cfg = config.get("strategies", {}).get("S2", {})
 
     for inst in instruments_cfg:
         sym = inst["symbol"]
         mkt = inst["market"]
         if bool(inst.get("daily_only", False)) or mkt == "index":
-            # Indices only enter daily long-term strategies; never enter 15m scan
             continue
 
         rep_1m = reports_by_sym[sym]["1m"]
         rep_15m = reports_by_sym[sym]["15m"]
-
-        deriv_record: dict[str, Any] | None = None
-        if mkt == "crypto":
-            deriv_fn = derivatives_fetcher or fetch_crypto_derivatives_meta
-            crypto_meta = deriv_fn(inst)
-            deriv_record = normalize_derivatives_info(crypto_meta)
+        deriv_record = deriv_by_sym.get(sym)
 
         st_1m = rep_1m.get("status", "failed")
         st_15m = rep_15m.get("status", "failed")
-        data_ok = st_1m not in ("unstable", "failed") and st_15m not in ("unstable", "failed")
+        is_unstable = st_1m in ("unstable", "failed") or st_15m in ("unstable", "failed")
+        is_stale = st_1m == "stale" or st_15m == "stale"
         deriv_ok = (deriv_record is None) or (deriv_record.get("status") == "ok")
-        allow_entry = data_ok and deriv_ok
+        allow_entry = (not is_unstable) and (not is_stale) and deriv_ok
 
         b15 = bars_15m_by_sym.get(sym, [])
-        b1h = resample_15m_to_1h(b15, now_utc=now) if b15 else []
+        b1h = bars_1h_by_sym.get(sym, [])
         b4h = resample_1h_to_4h(b1h, now_utc=now) if b1h else []
 
         published_any = False
+        strat_judgments: dict[str, dict[str, str]] = {}
         strat_msgs: list[str] = []
-        if b15 and "S1" in runtime_cfgs:
-            ok1, msg1 = evaluate_live_single_strategy_step(
-                engine=engine,
-                strategy_id="S1",
-                inst=inst,
-                closed_bars=b15,
-                runtime_cfg=runtime_cfgs["S1"],
-                now_iso=now_iso,
-                control=control,
-                allow_new_entry=allow_entry,
-            )
+
+        if "S1" in runtime_cfgs and is_instrument_eligible_for_strategy(inst, s1_cfg):
+            if b15:
+                ok1, msg1 = evaluate_live_single_strategy_step(
+                    engine=engine,
+                    strategy_id="S1",
+                    inst=inst,
+                    closed_bars=b15,
+                    runtime_cfg=runtime_cfgs["S1"],
+                    now_iso=now_iso,
+                    control=control,
+                    allow_new_entry=allow_entry,
+                )
+            else:
+                ok1, msg1 = False, f"S1 ({runtime_cfgs['S1'][1]}): 資料過期（缺少已收盤 15m K 線）"
             published_any = published_any or ok1
+            st_lbl1 = "signal" if ok1 else ("expired" if "資料過期" in msg1 else "watch")
+            strat_judgments["S1"] = {"status": st_lbl1, "reason": msg1}
             if msg1:
                 strat_msgs.append(msg1)
-        if b4h and "S2" in runtime_cfgs:
-            ok2, msg2 = evaluate_live_single_strategy_step(
-                engine=engine,
-                strategy_id="S2",
-                inst=inst,
-                closed_bars=b4h,
-                runtime_cfg=runtime_cfgs["S2"],
-                now_iso=now_iso,
-                control=control,
-                allow_new_entry=allow_entry,
-            )
+
+        if "S2" in runtime_cfgs and is_instrument_eligible_for_strategy(inst, s2_cfg):
+            if b4h:
+                ok2, msg2 = evaluate_live_single_strategy_step(
+                    engine=engine,
+                    strategy_id="S2",
+                    inst=inst,
+                    closed_bars=b4h,
+                    runtime_cfg=runtime_cfgs["S2"],
+                    now_iso=now_iso,
+                    control=control,
+                    allow_new_entry=allow_entry,
+                )
+            else:
+                ok2, msg2 = False, f"S2 ({runtime_cfgs['S2'][1]}): 資料過期（缺少已收盤 4h K 線）"
             published_any = published_any or ok2
+            st_lbl2 = "signal" if ok2 else ("expired" if "資料過期" in msg2 else "watch")
+            strat_judgments["S2"] = {"status": st_lbl2, "reason": msg2}
             if msg2:
                 strat_msgs.append(msg2)
 
+        prefix_notes: list[str] = []
         if st_1m in ("unstable", "failed"):
-            watch_reason = f"1m {rep_1m.get('reason') or '資料不穩'}"
-            if st_1m == "unstable" and "資料不穩" not in watch_reason:
-                watch_reason = f"資料不穩（{watch_reason}）"
+            r1 = rep_1m.get("reason") or "資料不穩"
+            prefix_notes.append(f"1m {r1}" if "資料不穩" in r1 or st_1m == "failed" else f"資料不穩（1m {r1}）")
         elif st_15m in ("unstable", "failed"):
-            watch_reason = f"15m {rep_15m.get('reason') or '資料不穩'}"
-            if st_15m == "unstable" and "資料不穩" not in watch_reason:
-                watch_reason = f"資料不穩（{watch_reason}）"
-        elif deriv_record is not None and deriv_record.get("status") != "ok":
-            watch_reason = f"衍生品狀態：{deriv_record.get('status')}（未進場）"
-        elif published_any:
-            continue
-        else:
-            watch_reason = "；".join(strat_msgs) if strat_msgs else "未觸及 S1/S2 入場條件"
+            r15 = rep_15m.get("reason") or "資料不穩"
+            prefix_notes.append(f"15m {r15}" if "資料不穩" in r15 or st_15m == "failed" else f"資料不穩（15m {r15}）")
+        elif is_stale:
+            prefix_notes.append(f"資料過期（1m:{st_1m}, 15m:{st_15m}）")
+        if deriv_record is not None and deriv_record.get("status") != "ok":
+            prefix_notes.append(f"衍生品狀態：{deriv_record.get('status')}（未進場）")
 
-        engine._record_watch(sym, "S1", now_iso, watch_reason)
+        reason_parts = prefix_notes + strat_msgs
+        watch_reason = "；".join(reason_parts) if reason_parts else "未觸及 S1/S2 入場條件"
+        decision = "signal" if published_any else ("watch" if "資料過期" not in watch_reason and not is_unstable else "watch")
+
+        if not published_any:
+            engine._record_watch(sym, "S1", now_iso, watch_reason)
+
         item_entry: dict[str, Any] = {
             "symbol": sym,
             "market": mkt,
-            "decision": "watch",
+            "decision": decision,
             "reason": watch_reason,
-            "indicators": {},
+            "strategies": strat_judgments,
+            "indicators": {
+                "atr_1h": round(atr_1h_by_sym[sym], 6) if atr_1h_by_sym.get(sym) is not None else None,
+                "atr_ratio": round(atr_ratio_by_sym[sym], 3) if atr_ratio_by_sym.get(sym) is not None else None,
+            },
             "data_status_1m": st_1m,
             "data_status_15m": st_15m,
         }
@@ -391,11 +560,11 @@ def run_scan(
 
     signals_after = set(engine.primary_ledger.trades.keys())
     new_signal_ids = sorted(signals_after - signals_before)
+    step_timings_sec["strategy_eval_sec"] = round(time.monotonic() - t_step, 3)
 
-    # Persist engine state & partitioned JSONs
+    t_step = time.monotonic()
     engine.save_state(now_iso)
 
-    # Export recent 15m bars for open/newly published signals for Single Signal Page chart
     charts_dir = out_dir / "charts"
     charts_dir.mkdir(parents=True, exist_ok=True)
     for sid, tr in engine.primary_ledger.trades.items():
@@ -426,6 +595,28 @@ def run_scan(
                     },
                 )
 
+    watch_count = sum(1 for item in watch_today_items if item["decision"] != "signal")
+    prim = engine.primary_ledger
+    total_eq = round(prim.compute_equity(engine.latest_marks), 2)
+    short_eq = round(prim.compute_pool_equity("short_term", engine.latest_marks), 2)
+    long_eq = round(prim.compute_pool_equity("long_term", engine.latest_marks), 2)
+
+    _write_json(out_dir / "instruments.json", {"updated_at_utc": now_iso, "instruments": instruments_out})
+    _write_json(out_dir / "control_status.json", control)
+    _write_json(out_dir / "watch_today.json", {"updated_at_utc": now_iso, "items": watch_today_items})
+    _write_json(out_dir / "events_calendar.json", {"updated_at_utc": now_iso, "events": events})
+    _write_json(out_dir / "new_signals_to_commit.json", {"signal_ids": new_signal_ids})
+
+    if probe_all_adapters:
+        _write_json(
+            out_dir / "data_probe_report.json",
+            {
+                "generated_at_utc": now_iso,
+                "results": probe_rows,
+            },
+        )
+
+    step_timings_sec["export_and_save_sec"] = round(time.monotonic() - t_step, 3)
     duration_sec = round(time.monotonic() - t_start, 2)
 
     run_log = _read_json_if_exists(out_dir / "run_log.json", [])
@@ -437,21 +628,17 @@ def run_scan(
             "run_at_utc": now_iso,
             "job": "scan",
             "duration_sec": duration_sec,
+            "step_timings_sec": step_timings_sec,
             "status": "ok" if status_counts["failed"] < len(instruments_out) else "failed",
             "instruments_ok": status_counts["ok"],
             "instruments_total": len(instruments_out),
             "signals_published": len(new_signal_ids),
-            "watch_count": len(watch_today_items),
+            "watch_count": watch_count,
         },
     )
-    keep_n = int(config.get("schedule", {}).get("keep_run_logs", 100))
+    keep_n = int(sched_cfg.get("keep_run_logs", 100))
     run_log = run_log[:keep_n]
     runs_24h = _count_runs_last_24h(run_log, now)
-
-    prim = engine.primary_ledger
-    total_eq = round(prim.compute_equity(engine.latest_marks), 2)
-    short_eq = round(prim.compute_pool_equity("short_term", engine.latest_marks), 2)
-    long_eq = round(prim.compute_pool_equity("long_term", engine.latest_marks), 2)
 
     data_health = {
         "updated_at_utc": now_iso,
@@ -467,41 +654,27 @@ def run_scan(
         else ("degraded" if (status_counts["failed"] > 0 or status_counts["unstable"] > 0) else "ok"),
     }
 
-    # Merge Stage 3 metadata into state.json while preserving engine's last_processed_ts
     state = _read_json_if_exists(out_dir / "state.json", {})
     state.update(
         {
             "stage": 3,
             "last_run_utc": now_iso,
             "last_run_duration_sec": duration_sec,
+            "step_timings_sec": step_timings_sec,
             "runs_last_24h": runs_24h,
         }
     )
-
-    _write_json(out_dir / "instruments.json", {"updated_at_utc": now_iso, "instruments": instruments_out})
     _write_json(out_dir / "data_health.json", data_health)
-    _write_json(out_dir / "control_status.json", control)
     _write_json(out_dir / "state.json", state)
     _write_json(out_dir / "run_log.json", run_log)
-    _write_json(out_dir / "watch_today.json", {"updated_at_utc": now_iso, "items": watch_today_items})
-    _write_json(out_dir / "events_calendar.json", {"updated_at_utc": now_iso, "events": events})
-    _write_json(out_dir / "new_signals_to_commit.json", {"signal_ids": new_signal_ids})
-
-    if probe_all_adapters:
-        _write_json(
-            out_dir / "data_probe_report.json",
-            {
-                "generated_at_utc": now_iso,
-                "results": probe_rows,
-            },
-        )
 
     return {
         "updated_at_utc": now_iso,
         "duration_sec": duration_sec,
+        "step_timings_sec": step_timings_sec,
         "status_counts": status_counts,
         "signals_published": new_signal_ids,
-        "watch_count": len(watch_today_items),
+        "watch_count": watch_count,
         "runs_last_24h": runs_24h,
     }
 

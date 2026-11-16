@@ -758,3 +758,226 @@ def test_weekly_job_outputs_six_strategies_json(tmp_path: Path) -> None:
     saved = json.loads((tmp_path / "backtest_results.json").read_text(encoding="utf-8"))
     assert [s["strategy_id"] for s in saved["strategies"]] == ["S1", "S2", "S3", "L1", "L2", "L3"]
     assert all("verification_label" in s for s in saved["strategies"])
+
+
+def test_expired_bars_never_emit_signals_and_marked_in_watch(tmp_path: Path) -> None:
+    """Bars older than 1 candle + allowed delay (e.g. weekend Friday FX bars at Monday 12:20 UTC) must NOT emit signals."""
+    cfg = load_config()
+    small_cfg = copy.deepcopy(cfg)
+    small_cfg["instruments"] = [i for i in cfg["instruments"] if i["symbol"] in ("EURUSD", "BTCUSDT")]
+    import yaml
+
+    cfg_path = tmp_path / "config.yaml"
+    ctrl_path = tmp_path / "control.json"
+    ev_path = tmp_path / "events.yaml"
+    cfg_path.write_text(yaml.safe_dump(small_cfg), encoding="utf-8")
+    ctrl_path.write_text(json.dumps({"paused": False, "risk_review_done": False}), encoding="utf-8")
+    ev_path.write_text("events: []\n", encoding="utf-8")
+    out_dir = tmp_path / "data"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Monday 2026-11-16 12:20 UTC while EURUSD only has Friday 2026-11-13 bars (strong 4h breakout on last bar)
+    now = datetime(2026, 11, 16, 12, 20, tzinfo=timezone.utc)
+    fri_end_15m = datetime(2026, 11, 13, 21, 45, tzinfo=timezone.utc)
+    eur_15m = [
+        OHLCVBar(
+            ts_utc=(fri_end_15m - timedelta(minutes=15 * (400 - k))).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            open=1.0800,
+            high=1.0810,
+            low=1.0790,
+            close=1.0800 if k < 384 else 1.1200,
+            volume=100.0,
+        )
+        for k in range(401)
+    ]
+    eur_1m = [
+        OHLCVBar(
+            ts_utc=(fri_end_15m - timedelta(minutes=(60 - k))).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            open=1.1200,
+            high=1.1210,
+            low=1.1190,
+            close=1.1200,
+            volume=50.0,
+        )
+        for k in range(60)
+    ]
+    eur_1d = _make_bars(250, 1440, "trend_wave", start=datetime(2026, 3, 1, tzinfo=timezone.utc))
+
+    # BTCUSDT has fresh bars ending just before now
+    btc_15m = _make_bars(400, 15, "trend_wave", start=now - timedelta(minutes=15 * 401))
+    btc_1m = _make_bars(60, 1, "trend_wave", start=now - timedelta(minutes=61))
+    btc_1d = _make_bars(250, 1440, "trend_wave", start=now - timedelta(days=251))
+
+    class _ExpiredFxFetcher:
+        def fetch(self, inst: dict, interval: str, limit: int = 200, now_utc=None):
+            if inst["symbol"] == "EURUSD":
+                bars = {"1m": eur_1m, "15m": eur_15m, "1d": eur_1d}[interval]
+                return FetchResult("EURUSD", interval, True, "yfinance", bars, None)
+            bars = {"1m": btc_1m, "15m": btc_15m, "1d": btc_1d}[interval]
+            return FetchResult("BTCUSDT", interval, True, "binance_vision", bars, None)
+
+    scan_res = run_scan(
+        out_dir=out_dir,
+        config_path=cfg_path,
+        control_path=ctrl_path,
+        events_path=ev_path,
+        fetcher=_ExpiredFxFetcher(),
+        derivatives_fetcher=lambda _i: {"source": "okx", "funding_rate": 0.0001, "oi_change_1h_pct": 0.5, "status": "ok"},
+        now_utc=now,
+    )
+    eur_sigs = [
+        s
+        for s in json.loads((out_dir / "signals_index.json").read_text(encoding="utf-8"))
+        if s["symbol"] == "EURUSD"
+    ]
+    assert eur_sigs == [], f"Expired EURUSD bars must NEVER emit signals: {eur_sigs}"
+    assert not any(sid for sid in scan_res["signals_published"] if sid in {s["signal_id"] for s in eur_sigs})
+
+    watch_doc = json.loads((out_dir / "watch_today.json").read_text(encoding="utf-8"))
+    eur_watch = next(it for it in watch_doc["items"] if it["symbol"] == "EURUSD")
+    assert "資料過期" in eur_watch["reason"]
+    assert eur_watch["strategies"]["S2"]["status"] == "expired"
+
+    # Daily job with expired 1d bars (> 25h old) must also block and label 資料過期
+    stale_1d = _make_bars(250, 1440, "rsi_pullback", start=datetime(2026, 3, 1, tzinfo=timezone.utc))
+    daily_res = run_daily(
+        out_dir=out_dir,
+        config_path=cfg_path,
+        control_path=ctrl_path,
+        fetcher=type(
+            "_StaleDailyFetcher",
+            (),
+            {"fetch": lambda self, inst, iv, limit=200, now_utc=None: FetchResult(inst["symbol"], iv, True, "fake", stale_1d if iv == "1d" else [], None)},
+        )(),
+        now_utc=now,
+    )
+    assert daily_res["signals_published"] == []
+    watch_daily = json.loads((out_dir / "watch_today_daily.json").read_text(encoding="utf-8"))
+    eur_daily = next(it for it in watch_daily["items"] if it["symbol"] == "EURUSD")
+    assert "資料過期" in eur_daily["reason"]
+
+
+def test_closed_at_utc_never_earlier_than_published_at_utc_and_purges_corrupted_signals(tmp_path: Path) -> None:
+    """Historical bars before published_at_utc must never cancel/close a signal, and legacy bad signals auto-purge."""
+    from src.engine.simulator import CandidateSignal, MarketBar, SimulationEngine
+    from src.signals.models import InputSnapshot
+
+    cfg = load_config()
+    eng = SimulationEngine(cfg, out_dir=tmp_path)
+    pub_ts = "2026-11-16T12:20:00Z"
+    cand = CandidateSignal(
+        strategy="S2",
+        symbol="BTCUSDT",
+        direction="long",
+        entry_low=99.0,
+        entry_high=101.0,
+        add_levels=(),
+        stop_loss=94.0,
+        tp1=112.0,
+        tp2=118.0,
+        invalidation_price=93.0,
+        invalidation_cond="觸及止損價",
+        reasons=("breakout",),
+        snapshot=InputSnapshot("SNAP-TEST", "PENDING", pub_ts, "BTCUSDT", {"interval": "4h", "close": 100.0}, {}, {}),
+        atr=2.0,
+        atr_ratio=1.0,
+        leverage=3.0,
+        time_stop_bars=30,
+        verification_status="觀察中（未通過驗證）",
+        desired_notional_usd=10000.0,
+        subaccount_risk_mode=True,
+    )
+    sig = eng.submit_candidate_signal(
+        cand,
+        now_utc=pub_ts,
+        latest_bar_close_utc="2026-11-16T12:00:00Z",
+        control={"paused": False, "risk_review_done": False},
+    )
+    assert sig is not None
+
+    # Replay an old historical bar from 2026-11-13 that would have hit invalidation_price=93.0
+    eng.replay_bars(
+        "BTCUSDT",
+        [MarketBar("2026-11-13T21:00:00Z", "2026-11-13T21:01:00Z", 90.0, 91.0, 89.0, 90.0, 100.0)],
+    )
+    tr = eng.primary_ledger.trades[sig.signal_id]
+    assert tr.state == LifecycleState.WAITING_ENTRY
+    assert tr.closed_at_utc is None
+
+    # Now replay a bar AFTER published_at_utc that triggers invalidation -> closed_at_utc >= published_at_utc
+    eng.replay_bars(
+        "BTCUSDT",
+        [MarketBar("2026-11-16T12:21:00Z", "2026-11-16T12:22:00Z", 93.5, 93.6, 92.0, 92.5, 100.0)],
+    )
+    assert tr.state == LifecycleState.CANCELLED
+    assert tr.closed_at_utc is not None and tr.closed_at_utc >= sig.published_at_utc
+
+    # Seed SIG-20261116-0001..0003 corrupted FX S2 entries & verify auto-purge upon load_state()
+    purge_dir = tmp_path / "purge_check"
+    eng2 = SimulationEngine(cfg, out_dir=purge_dir)
+    for idx, sym in enumerate(("EURUSD", "GBPUSD", "USDCHF"), start=1):
+        sid = f"SIG-20261116-000{idx}"
+        (purge_dir / "signals").mkdir(parents=True, exist_ok=True)
+        (purge_dir / "snapshots").mkdir(parents=True, exist_ok=True)
+        (purge_dir / "signals" / f"{sid}.json").write_text(
+            json.dumps(
+                {
+                    "signal_id": sid,
+                    "published_at_utc": "2026-11-16T12:20:00Z",
+                    "strategy": "S2",
+                    "symbol": sym,
+                    "market": "forex",
+                    "direction": "long",
+                }
+            ),
+            encoding="utf-8",
+        )
+        (purge_dir / "snapshots" / f"SNAP-{sid}.json").write_text(
+            json.dumps({"snapshot_id": f"SNAP-{sid}", "signal_id": sid, "kline_summary": {"interval": "4h", "ts_utc": "2026-11-13T16:00:00Z"}}),
+            encoding="utf-8",
+        )
+        # Also inject corrupted closed_at_utc < published_at_utc into ledger trades
+        from src.engine.simulator import TradeRecord
+
+        for led in eng2.ledgers.values():
+            led.trades[sid] = TradeRecord(
+                signal_id=sid,
+                strategy="S2",
+                symbol=sym,
+                market="forex",
+                correlation_group="fx",
+                direction="long",
+                policy_name=led.policy_name,
+                state=LifecycleState.CANCELLED,
+                entry_low=1.08,
+                entry_high=1.09,
+                add_levels=(),
+                initial_stop_loss=1.07,
+                current_stop_loss=1.07,
+                current_tp1=1.11,
+                current_tp2=1.12,
+                invalidation_price=1.07,
+                valid_until_utc="2026-11-16T16:20:00Z",
+                time_stop_bars=30,
+                r_plan_usd=75.0,
+                stage_target_notionals=(500.0, 300.0, 200.0),
+                leverage=5.0,
+                assumed_spread_bps=2.0,
+                fee_rate=0.0,
+                slippage_bps=1.0,
+                overnight_cost_daily_bps=0.2,
+                closed_at_utc="2026-11-13T21:00:00Z",
+                exit_reason="pre_entry_invalidated",
+                published_at_utc="2026-11-16T12:20:00Z",
+            )
+    eng2.save_state("2026-11-16T12:25:00Z")
+
+    eng_reloaded = SimulationEngine(cfg, out_dir=purge_dir)
+    eng_reloaded.load_state()
+    eng_reloaded.save_state("2026-11-16T12:35:00Z")
+    for idx in (1, 2, 3):
+        sid = f"SIG-20261116-000{idx}"
+        assert sid not in eng_reloaded.primary_ledger.trades
+        assert not (purge_dir / "signals" / f"{sid}.json").exists()
+        assert not (purge_dir / "snapshots" / f"SNAP-{sid}.json").exists()
+    assert json.loads((purge_dir / "signals_index.json").read_text(encoding="utf-8")) == []

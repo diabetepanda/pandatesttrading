@@ -127,7 +127,11 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261116g" in index_html
+    assert "?v=20261116h" in index_html
+    assert "watch-scope-tabs" in index_html
+    assert "watch_today_daily.json" in app_js
+    assert "watch_today_b.json" not in app_js
+    assert "liquidity_heatmap.json" not in app_js
     assert "短線池 (A)" not in index_html
     assert "長線池 (B)" not in index_html
     assert "$30,000" in index_html

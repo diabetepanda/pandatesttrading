@@ -19,9 +19,21 @@ from src.jobs.data_sync import append_run_log
 from src.jobs.live_strategy import (
     evaluate_live_l3_rebalance,
     evaluate_live_single_strategy_step,
+    is_instrument_eligible_for_strategy,
     load_strategy_runtime_configs,
 )
 from src.signals.models import LifecycleState
+
+
+LEGACY_OBSOLETE_FILES = ("watch_today_b.json", "liquidity_heatmap.json")
+
+
+def _cleanup_legacy_files(out_dir: Path) -> None:
+    for name in LEGACY_OBSOLETE_FILES:
+        try:
+            (out_dir / name).unlink(missing_ok=True)
+        except Exception:
+            pass
 
 
 def _write_json(path: Path, data: Any) -> None:
@@ -65,9 +77,10 @@ def run_daily(
     config = load_config(config_path)
     control = load_control(control_path)
     quality_cfg = config.get("data_quality", {})
-    timeout_sec = int(quality_cfg.get("request_timeout_sec", 15))
+    timeout_sec = min(10, int(quality_cfg.get("request_timeout_sec", 15)))
     data_fetcher = fetcher or FallbackDataFetcher(timeout_sec=timeout_sec)
 
+    _cleanup_legacy_files(out_dir)
     engine = SimulationEngine(config, out_dir=out_dir)
     engine.load_state()
     runtime_cfgs = load_strategy_runtime_configs(out_dir, config)
@@ -75,7 +88,8 @@ def run_daily(
     instruments = [inst for inst in config.get("instruments", []) if inst.get("enabled", True)]
     inst_by_sym = {i["symbol"]: i for i in instruments}
     bars_1d_ok: dict[str, list[OHLCVBar]] = {}
-    watch_items: list[dict[str, Any]] = []
+    watch_by_sym: dict[str, dict[str, Any]] = {}
+    strats_cfg = config.get("strategies", {})
 
     open_daily_syms = {
         tr.symbol
@@ -86,6 +100,7 @@ def run_daily(
     }
 
     signals_before = set(engine.primary_ledger.trades.keys())
+    t_fetch = time.monotonic()
 
     for inst in instruments:
         sym = inst["symbol"]
@@ -105,16 +120,24 @@ def run_daily(
 
         st_1d = rep_1d.get("status", "failed")
         if st_1d in ("failed", "unstable") or not (res_1d.ok and res_1d.bars):
-            reason = f"日線資料異常（{st_1d}）"
+            reason = f"日線資料異常（{st_1d}：{rep_1d.get('reason') or '無資料'}）"
             engine._record_watch(sym, "L1", now_iso, reason)
-            watch_items.append({"symbol": sym, "market": mkt, "decision": "watch", "reason": reason})
+            watch_by_sym[sym] = {
+                "symbol": sym,
+                "market": mkt,
+                "decision": "watch",
+                "reason": reason,
+                "strategies": {},
+                "data_status_1d": st_1d,
+            }
             continue
 
         bars_1d_ok[sym] = res_1d.bars
+        strat_judgments: dict[str, dict[str, str]] = {}
         msgs: list[str] = []
         pub_any = False
         for sid in ("S3", "L1", "L2"):
-            if sid in runtime_cfgs:
+            if sid in runtime_cfgs and is_instrument_eligible_for_strategy(inst, strats_cfg.get(sid, {})):
                 ok_s, msg_s = evaluate_live_single_strategy_step(
                     engine=engine,
                     strategy_id=sid,
@@ -126,12 +149,22 @@ def run_daily(
                     allow_new_entry=True,
                 )
                 pub_any = pub_any or ok_s
+                st_lbl = "signal" if ok_s else ("expired" if "資料過期" in msg_s else "watch")
+                strat_judgments[sid] = {"status": st_lbl, "reason": msg_s}
                 if msg_s:
                     msgs.append(msg_s)
-        if not pub_any:
-            reason = "；".join(msgs) if msgs else "未觸及日線進場條件"
-            watch_items.append({"symbol": sym, "market": mkt, "decision": "watch", "reason": reason})
+        watch_by_sym[sym] = {
+            "symbol": sym,
+            "market": mkt,
+            "decision": "signal" if pub_any else "watch",
+            "reason": "；".join(msgs) if msgs else "未觸及日線進場條件",
+            "strategies": strat_judgments,
+            "data_status_1d": st_1d,
+        }
 
+    fetch_eval_sec = round(time.monotonic() - t_fetch, 3)
+
+    t_l3 = time.monotonic()
     if "L3" in runtime_cfgs and bars_1d_ok:
         l3_outcomes = evaluate_live_l3_rebalance(
             engine=engine,
@@ -143,15 +176,32 @@ def run_daily(
             control=control,
         )
         for sym, (ok_l3, msg_l3) in l3_outcomes.items():
-            if not ok_l3 and msg_l3:
-                watch_items.append({"symbol": sym, "market": inst_by_sym[sym]["market"], "decision": "watch", "reason": msg_l3})
+            row = watch_by_sym.get(sym)
+            if row is not None:
+                st_lbl = "signal" if ok_l3 else ("expired" if "資料過期" in msg_l3 else "watch")
+                row["strategies"]["L3"] = {"status": st_lbl, "reason": msg_l3}
+                if ok_l3:
+                    row["decision"] = "signal"
+                if msg_l3:
+                    row["reason"] = f"{row['reason']}；{msg_l3}" if row["reason"] else msg_l3
 
+    watch_items = [watch_by_sym[i["symbol"]] for i in instruments if i["symbol"] in watch_by_sym]
     new_signal_ids = sorted(set(engine.primary_ledger.trades.keys()) - signals_before)
+    l3_sec = round(time.monotonic() - t_l3, 3)
+
+    t_save = time.monotonic()
     engine.save_state(now_iso)
     _write_json(out_dir / "watch_today_daily.json", {"updated_at_utc": now_iso, "items": watch_items})
     _write_json(out_dir / "new_signals_to_commit.json", {"signal_ids": new_signal_ids})
+    save_sec = round(time.monotonic() - t_save, 3)
 
     duration_sec = round(time.monotonic() - t0, 2)
+    step_timings_sec = {
+        "fetch_and_daily_eval_sec": fetch_eval_sec,
+        "l3_rebalance_sec": l3_sec,
+        "export_and_save_sec": save_sec,
+    }
+    watch_count = sum(1 for item in watch_items if item["decision"] != "signal")
     keep_n = int(config.get("schedule", {}).get("keep_run_logs", 100))
     append_run_log(
         out_dir,
@@ -159,9 +209,10 @@ def run_daily(
             "run_at_utc": now_iso,
             "job": "daily",
             "duration_sec": duration_sec,
+            "step_timings_sec": step_timings_sec,
             "status": "ok",
             "signals_published": len(new_signal_ids),
-            "watch_count": len(watch_items),
+            "watch_count": watch_count,
         },
         keep_n=keep_n,
     )
@@ -169,8 +220,9 @@ def run_daily(
     return {
         "updated_at_utc": now_iso,
         "duration_sec": duration_sec,
+        "step_timings_sec": step_timings_sec,
         "signals_published": new_signal_ids,
-        "watch_count": len(watch_items),
+        "watch_count": watch_count,
     }
 
 

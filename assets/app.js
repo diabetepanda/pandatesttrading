@@ -13,11 +13,13 @@
 
   let currentMarketFilter = "all";
   let currentWallTab = "active";
+  let currentWatchScope = "intraday";
   let currentWatchCategory = "all";
   let showAllWatch = false;
   let cachedInstruments = [];
   let cachedSignals = [];
   let cachedWatch = null;
+  let cachedWatchDaily = null;
   let cachedBacktest = null;
   let cachedShadow = null;
   let cachedPerf = null;
@@ -808,30 +810,60 @@
 
   function classifyWatchReason(reason) {
     const r = String(reason || "");
-    if (/未觸及|區間上下緣|RSI|入場條件/.test(r)) return { label: "未觸及入場條件", rank: 1 };
-    if (/ADX|布林|ATR|區間|盤整|趨勢|波動/.test(r)) return { label: "市場狀態不符", rank: 2 };
+    if (/已發布|signal/.test(r)) return { label: "已出單", rank: 0 };
+    if (/未觸及|區間上下緣|RSI|入場條件|未達突破|未入選雙動能|未成立/.test(r)) return { label: "未觸及入場條件", rank: 1 };
+    if (/ADX|布林|ATR|區間|盤整|趨勢|波動|再平衡/.test(r)) return { label: "市場狀態不符", rank: 2 };
     if (/風控|事件|資金費率|未平倉|排程延遲|暫停/.test(r)) return { label: "風控或事件擋下", rank: 3 };
-    if (/低流動性|結算|換日/.test(r)) return { label: "非低流動性時段", rank: 4 };
-    if (/資料不穩|資料不足|資料失敗|失敗|延遲/.test(r)) return { label: "資料不穩", rank: 6 };
+    if (/資料過期/.test(r)) return { label: "資料過期", rank: 4 };
+    if (/資料不穩|資料不足|資料失敗|失敗|異常|延遲/.test(r)) return { label: "資料不穩", rank: 6 };
     return { label: "其他觀望", rank: 5 };
   }
 
-  function renderWatchToday(watchData) {
+  function formatStrategyJudgments(w) {
+    const strats = w && w.strategies && typeof w.strategies === "object" ? w.strategies : null;
+    const keys = strats ? Object.keys(strats) : [];
+    if (keys.length === 0) {
+      return escapeHtml(convertReasonUtcToTaipei(w.reason || ""));
+    }
+    return keys
+      .map((sid) => {
+        const entry = strats[sid] || {};
+        const st = entry.status || "watch";
+        const pillCls = st === "signal" ? "pill-ok" : (st === "expired" ? "pill-fail" : "pill-warn");
+        const stZh = st === "signal" ? "已出單" : (st === "expired" ? "資料過期" : "觀望");
+        const rsn = escapeHtml(convertReasonUtcToTaipei(entry.reason || ""));
+        return `<div style="margin-bottom:3px;"><span class="pill ${pillCls}">${escapeHtml(sid)} ${stZh}</span> <span class="muted">${rsn}</span></div>`;
+      })
+      .join("");
+  }
+
+  function renderWatchToday(watchDataOverride) {
     const tbody = document.getElementById("watch-tbody");
     const sumBar = document.getElementById("watch-summary-bar");
     const moreWrap = document.getElementById("watch-more-wrap");
     const toggleBtn = document.getElementById("watch-toggle-btn");
+    const scopeUpdEl = document.getElementById("watch-scope-updated");
     if (!tbody) return;
+    const watchData =
+      watchDataOverride || (currentWatchScope === "daily" ? cachedWatchDaily : cachedWatch);
+    if (scopeUpdEl) {
+      scopeUpdEl.textContent = watchData && watchData.updated_at_utc
+        ? `更新時間 (台北)：${formatTaipeiTime(watchData.updated_at_utc)}`
+        : (currentWatchScope === "daily" ? "尚無每日掃描紀錄（Daily Scan 後更新）" : "");
+    }
     const items = watchData && Array.isArray(watchData.items) ? watchData.items : [];
     if (items.length === 0) {
       if (sumBar) sumBar.innerHTML = "";
       if (moreWrap) moreWrap.classList.add("hidden");
-      tbody.innerHTML = '<tr><td colspan="5" class="muted center">尚無觀望紀錄（等待下次掃描）</td></tr>';
+      tbody.innerHTML = currentWatchScope === "daily"
+        ? '<tr><td colspan="5" class="muted center">尚無每日掃描紀錄（等待 Daily Scan 執行）</td></tr>'
+        : '<tr><td colspan="5" class="muted center">尚無觀望紀錄（等待下次掃描）</td></tr>';
       return;
     }
 
     const enriched = items.map((w) => {
-      const cat = classifyWatchReason(w.reason);
+      const basis = w.decision === "signal" ? "已發布" : (w.reason || "");
+      const cat = classifyWatchReason(basis);
       return { ...w, _cat: cat.label, _rank: cat.rank };
     });
     enriched.sort((a, b) => (a._rank - b._rank) || String(a.symbol).localeCompare(String(b.symbol)));
@@ -871,22 +903,31 @@
     tbody.innerHTML = visible
       .map((w) => {
         const ind = w.indicators || {};
-        const hasAnyInd =
+        const hasNewAtr = ind.atr_1h !== null && ind.atr_1h !== undefined;
+        const hasOldInd =
           (ind.adx_1h !== null && ind.adx_1h !== undefined) ||
           (ind.rsi_14 !== null && ind.rsi_14 !== undefined) ||
           (ind.atr_ratio !== null && ind.atr_ratio !== undefined);
-        const indTxt = hasAnyInd
-          ? `ADX ${ind.adx_1h ?? "--"} / RSI ${ind.rsi_14 ?? "--"} / ATR ${ind.atr_ratio ?? "--"}x`
-          : '<span class="muted">此時段不計算</span>';
-        const badge = w.decision === "rejected" ? '<span class="pill pill-fail">風控擋下</span>' : '<span class="pill pill-warn">觀望</span>';
-        const reasonTaipei = escapeHtml(convertReasonUtcToTaipei(w.reason || ""));
+        let indTxt = '<span class="muted">此時段不計算</span>';
+        if (hasNewAtr) {
+          indTxt = `1H ATR ${formatNumber(ind.atr_1h) ?? "--"}${ind.atr_ratio !== null && ind.atr_ratio !== undefined ? ` / ${ind.atr_ratio}x` : ""}`;
+        } else if (hasOldInd) {
+          indTxt = `ADX ${ind.adx_1h ?? "--"} / RSI ${ind.rsi_14 ?? "--"} / ATR ${ind.atr_ratio ?? "--"}x`;
+        } else if (w.data_status_1d) {
+          indTxt = `日線：${escapeHtml(w.data_status_1d)}`;
+        }
+        let badge = '<span class="pill pill-warn">觀望</span>';
+        if (w.decision === "signal") badge = '<span class="pill pill-ok">已出單</span>';
+        else if (w.decision === "rejected") badge = '<span class="pill pill-fail">風控擋下</span>';
+        else if (/資料過期/.test(w.reason || "")) badge = '<span class="pill pill-fail">資料過期</span>';
+        const strategiesHtml = formatStrategyJudgments(w);
         return `
           <tr>
             <td data-label="標的"><strong>${escapeHtml(w.symbol)}</strong></td>
             <td data-label="市場">${marketLabel(w.market)}</td>
             <td data-label="判定">${badge}</td>
-            <td data-label="1H ADX / RSI / ATR">${indTxt}</td>
-            <td data-label="觀望 / 擋下原因">${reasonTaipei}</td>
+            <td data-label="波動 / 狀態指標">${indTxt}</td>
+            <td data-label="各策略目前判斷與原因">${strategiesHtml}</td>
           </tr>`;
       })
       .join("");
@@ -928,8 +969,14 @@
     }
     const items = runLog.slice(0, 10).map((r) => {
       const cls = r.status === "ok" ? "pill-ok" : "pill-fail";
+      const jobTag = r.job ? `[${escapeHtml(r.job)}] ` : "";
+      const instTxt = r.instruments_ok !== undefined ? `${r.instruments_ok}/${r.instruments_total} 正常` : "完成";
       const sigInfo = r.signals_published !== undefined ? `｜報單 ${r.signals_published}、觀望 ${r.watch_count ?? 0}` : "";
-      return `<li>${formatTaipeiTime(r.run_at_utc)} — <span class="pill ${cls}">${r.status}</span>（${r.instruments_ok}/${r.instruments_total} 正常${sigInfo}，耗時 ${r.duration_sec}s）</li>`;
+      const tm = r.step_timings_sec;
+      const timingTxt = tm
+        ? `｜步驟：抓K ${tm.fetch_and_quality_sec ?? tm.fetch_and_daily_eval_sec ?? "--"}s / 回放 ${tm.indicators_and_replay_sec ?? 0}s / 衍生品 ${tm.derivatives_fetch_sec ?? 0}s / 策略 ${tm.strategy_eval_sec ?? tm.l3_rebalance_sec ?? 0}s / 存檔 ${tm.export_and_save_sec ?? 0}s`
+        : "";
+      return `<li>${formatTaipeiTime(r.run_at_utc)} — ${jobTag}<span class="pill ${cls}">${r.status}</span>（${instTxt}${sigInfo}，總耗時 ${r.duration_sec}s${timingTxt}）</li>`;
     });
     box.innerHTML = `<ul>${items.join("")}</ul>`;
   }
@@ -1493,7 +1540,7 @@
     const errBox = document.getElementById("fetch-error-box");
     try {
       const [
-        instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, watchRes, btRes,
+        instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, watchRes, watchDailyRes, btRes,
         shadowRes, perfRes, riskRes, eqRes, evRes,
       ] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
@@ -1503,6 +1550,7 @@
         fetchDataJson("data_probe_report.json"),
         fetchDataJson("signals_index.json"),
         fetchDataJson("watch_today.json"),
+        fetchDataJson("watch_today_daily.json"),
         fetchDataJson("backtest_results.json"),
         fetchDataJson("shadow_comparison.json"),
         fetchDataJson("performance_stats.json"),
@@ -1519,6 +1567,7 @@
       cachedInstruments = instRes.value.instruments || [];
       cachedSignals = signalsRes.status === "fulfilled" && Array.isArray(signalsRes.value) ? signalsRes.value : [];
       cachedWatch = watchRes.status === "fulfilled" ? watchRes.value : null;
+      cachedWatchDaily = watchDailyRes.status === "fulfilled" ? watchDailyRes.value : null;
       cachedBacktest = btRes.status === "fulfilled" ? btRes.value : null;
       cachedShadow = shadowRes.status === "fulfilled" ? shadowRes.value : null;
       cachedPerf = perfRes.status === "fulfilled" ? perfRes.value : null;
@@ -1544,7 +1593,7 @@
       }
       if (runLogRes.status === "fulfilled") renderRunLog(runLogRes.value, health);
       if (probeRes.status === "fulfilled") renderProbe(probeRes.value);
-      if (cachedWatch) renderWatchToday(cachedWatch);
+      renderWatchToday();
     } catch (err) {
       errBox.textContent = `資料來源失敗：${err.message}`;
       errBox.classList.remove("hidden");
@@ -1582,17 +1631,28 @@
     document.getElementById(id)?.addEventListener("change", renderResultsTable);
   });
 
+  document.getElementById("watch-scope-tabs")?.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tab");
+    if (!btn) return;
+    document.querySelectorAll("#watch-scope-tabs .tab").forEach((el) => el.classList.remove("active"));
+    btn.classList.add("active");
+    currentWatchScope = btn.dataset.scope || "intraday";
+    currentWatchCategory = "all";
+    showAllWatch = false;
+    renderWatchToday();
+  });
+
   document.getElementById("watch-summary-bar")?.addEventListener("click", (e) => {
     const chip = e.target.closest(".watch-chip");
     if (!chip) return;
     currentWatchCategory = chip.dataset.cat || "all";
     showAllWatch = false;
-    if (cachedWatch) renderWatchToday(cachedWatch);
+    renderWatchToday();
   });
 
   document.getElementById("watch-toggle-btn")?.addEventListener("click", () => {
     showAllWatch = !showAllWatch;
-    if (cachedWatch) renderWatchToday(cachedWatch);
+    renderWatchToday();
   });
 
   document.getElementById("refresh-btn").addEventListener("click", () => {

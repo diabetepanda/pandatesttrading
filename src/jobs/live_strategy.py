@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -62,10 +62,50 @@ def load_strategy_runtime_configs(
     return out
 
 
-def _is_instrument_eligible_for_strategy(inst: dict[str, Any], strat_cfg: dict[str, Any]) -> bool:
+def is_instrument_eligible_for_strategy(inst: dict[str, Any], strat_cfg: dict[str, Any]) -> bool:
     if "symbols" in strat_cfg:
         return inst["symbol"] in set(strat_cfg["symbols"])
     return inst.get("market") in set(strat_cfg.get("markets", []))
+
+
+def check_bar_freshness(
+    closed_bars: list[OHLCVBar],
+    interval: str,
+    now_utc: datetime,
+    config: dict[str, Any],
+) -> tuple[list[OHLCVBar], bool, str]:
+    """Keep strictly closed bars and reject series whose latest closed bar is older than 1 bar + allowed delay."""
+    if interval not in INTERVAL_SECONDS:
+        return [], False, f"不支援的週期 {interval}"
+    interval_sec = INTERVAL_SECONDS[interval]
+    now = now_utc.astimezone(timezone.utc)
+    valid_bars = [
+        b
+        for b in closed_bars
+        if _parse_iso_utc(b.ts_utc) + timedelta(seconds=interval_sec) <= now
+    ]
+    if not valid_bars:
+        return [], False, "資料過期（無已收盤 K 線）"
+
+    latest = valid_bars[-1]
+    latest_close_dt = _parse_iso_utc(latest.ts_utc) + timedelta(seconds=interval_sec)
+    age_min = (now - latest_close_dt).total_seconds() / 60.0
+
+    sched_cfg = config.get("schedule", {})
+    if interval == "1d":
+        max_delay_min = float(sched_cfg.get("max_daily_candle_delay_minutes", 1500))
+    elif interval == "4h":
+        max_delay_min = float(sched_cfg.get("max_4h_candle_delay_minutes", 260))
+    else:
+        max_delay_min = float(sched_cfg.get("max_candle_delay_minutes", 20))
+
+    if age_min > max_delay_min:
+        return (
+            valid_bars,
+            False,
+            f"資料過期（最新 {interval} 收盤 {latest_close_dt.strftime('%Y-%m-%dT%H:%M:%SZ')}，距今 {age_min:.0f}m > {max_delay_min:.0f}m）",
+        )
+    return valid_bars, True, "ok"
 
 
 def _find_open_trade(engine: SimulationEngine, strategy_id: str, symbol: str) -> Any | None:
@@ -217,23 +257,28 @@ def evaluate_live_single_strategy_step(
 ) -> tuple[bool, str]:
     """Run live exit/entry check for S1, S2, S3, L1, or L2 on closed_bars."""
     strat_cfg = engine.config.get("strategies", {}).get(strategy_id, {})
-    if not _is_instrument_eligible_for_strategy(inst, strat_cfg):
+    if not is_instrument_eligible_for_strategy(inst, strat_cfg):
         return False, ""
     if not closed_bars:
-        return False, f"{strategy_id}: 無已收盤 K 線"
+        return False, f"{strategy_id}: 資料過期（無已收盤 K 線）"
 
     params, ver_label = runtime_cfg
     interval = str(strat_cfg["interval"])
+    now_dt = _parse_iso_utc(now_iso)
+    valid_bars, fresh_ok, fresh_msg = check_bar_freshness(closed_bars, interval, now_dt, engine.config)
+    if not fresh_ok or not valid_bars:
+        return False, f"{strategy_id} ({ver_label}): {fresh_msg}"
+
     mkt = inst["market"]
     sym = inst["symbol"]
     atr_period = int(engine.config.get("backtest", {}).get("atr_period", 14))
     open_tr = _find_open_trade(engine, strategy_id, sym)
     pos_dir = open_tr.direction if open_tr is not None else ""
-    bars_held = _compute_bars_held(open_tr, closed_bars[-1], interval)
+    bars_held = _compute_bars_held(open_tr, valid_bars[-1], interval)
 
     act = evaluate_live_bar(
         strategy_id=strategy_id,
-        closed_bars=closed_bars,
+        closed_bars=valid_bars,
         position_dir=pos_dir,
         params=params,
         market=mkt,
@@ -245,11 +290,13 @@ def evaluate_live_single_strategy_step(
 
     if open_tr is not None and act.action == "exit":
         reason_code = "session_stop" if strategy_id == "S1" else "logic_invalidated"
-        engine.close_trade_by_strategy(strategy_id, sym, closed_bars[-1].close, now_iso, exit_reason=reason_code)
-        return False, f"{strategy_id} 平倉：{act.reason}"
+        engine.close_trade_by_strategy(strategy_id, sym, valid_bars[-1].close, now_iso, exit_reason=reason_code)
+        return False, f"{strategy_id} ({ver_label}): 平倉（{act.reason}）"
 
-    if not allow_new_entry or open_tr is not None:
-        return False, act.reason or f"{strategy_id} 觀望中"
+    if not allow_new_entry:
+        return False, f"{strategy_id} ({ver_label}): 資料／風控過濾擋下（{act.reason or '未進場'}）"
+    if open_tr is not None:
+        return False, f"{strategy_id} ({ver_label}): 已有持倉（{open_tr.signal_id}）"
 
     if act.action in ("enter_long", "enter_short"):
         return _submit_action_as_candidate(
@@ -258,7 +305,7 @@ def evaluate_live_single_strategy_step(
             inst=inst,
             act=act,
             ver_label=ver_label,
-            closed_bars=closed_bars,
+            closed_bars=valid_bars,
             interval=interval,
             now_iso=now_iso,
             control=control,
@@ -280,15 +327,22 @@ def evaluate_live_l3_rebalance(
     """Run L3 Dual Momentum live step on closed daily bars across crypto + index."""
     strat_cfg = engine.config.get("strategies", {}).get("L3", {})
     allowed_mkts = set(strat_cfg.get("markets", ["crypto", "index"]))
-    eligible_bars = {
-        sym: bars
-        for sym, bars in bars_1d_by_sym.items()
-        if sym in instruments_by_sym and instruments_by_sym[sym].get("market") in allowed_mkts and bars
-    }
-    if not eligible_bars:
-        return {}
-
     params, ver_label = runtime_cfg
+    outcomes: dict[str, tuple[bool, str]] = {}
+
+    eligible_bars: dict[str, list[OHLCVBar]] = {}
+    for sym, bars in bars_1d_by_sym.items():
+        if sym not in instruments_by_sym or instruments_by_sym[sym].get("market") not in allowed_mkts or not bars:
+            continue
+        valid_bars, fresh_ok, fresh_msg = check_bar_freshness(bars, "1d", now, engine.config)
+        if not fresh_ok or not valid_bars:
+            outcomes[sym] = (False, f"L3 ({ver_label}): {fresh_msg}")
+            continue
+        eligible_bars[sym] = valid_bars
+
+    if not eligible_bars:
+        return outcomes
+
     held_syms = {
         tr.symbol
         for tr in engine.primary_ledger.trades.values()
@@ -309,15 +363,23 @@ def evaluate_live_l3_rebalance(
         vol_target_pct=float(params.get("vol_target_pct", 0.015)),
     )
 
-    outcomes: dict[str, tuple[bool, str]] = {}
-    # Process exits first to free slots, then entries only on rebalance cadence (weekly Monday or initial bootstrap)
     is_rebalance_day = (now.weekday() == 0) or (len(held_syms) == 0)
+    for sym in sorted(eligible_bars.keys()):
+        if sym not in actions:
+            if sym in held_syms:
+                outcomes[sym] = (False, f"L3 ({ver_label}): 續抱動能領先標的")
+            else:
+                outcomes[sym] = (False, f"L3 ({ver_label}): 未入選雙動能前排名")
+
     for sym, act in sorted(actions.items(), key=lambda kv: (0 if kv[1].action == "exit" else 1, kv[0])):
         bars = eligible_bars[sym]
         if act.action == "exit" and sym in held_syms:
             engine.close_trade_by_strategy("L3", sym, bars[-1].close, now_iso, exit_reason="logic_invalidated")
-            outcomes[sym] = (False, f"L3 平倉：{act.reason}")
-        elif act.action == "enter_long" and sym not in held_syms and is_rebalance_day:
+            outcomes[sym] = (False, f"L3 ({ver_label}): 平倉（{act.reason}）")
+        elif act.action == "enter_long" and sym not in held_syms:
+            if not is_rebalance_day:
+                outcomes[sym] = (False, f"L3 ({ver_label}): 非每週再平衡日（{act.reason}）")
+                continue
             ok, msg = _submit_action_as_candidate(
                 engine=engine,
                 strategy_id="L3",
@@ -330,5 +392,6 @@ def evaluate_live_l3_rebalance(
                 control=control,
                 params=params,
             )
-            outcomes[sym] = (ok, msg)
+            outcomes[sym] = (ok, msg if msg else f"L3 ({ver_label}): 已送出進場評估")
+
     return outcomes

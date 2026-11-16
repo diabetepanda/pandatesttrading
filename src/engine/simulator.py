@@ -180,6 +180,7 @@ class TradeRecord:
     closed_at_utc: str | None = None
     exit_price: float | None = None
     exit_reason: str | None = None
+    published_at_utc: str = ""
 
     def current_notional_usd(self) -> float:
         return self.remaining_qty * self.avg_entry_price if self.remaining_qty > 0 else 0.0
@@ -244,6 +245,7 @@ class TradeRecord:
             "overnight_cost_daily_bps": self.overnight_cost_daily_bps,
             "initial_filled_qty": round(self.initial_filled_qty, 8),
             "stages": [s.to_dict() for s in self.stages],
+            "published_at_utc": self.published_at_utc,
         }
 
     @classmethod
@@ -287,6 +289,7 @@ class TradeRecord:
             closed_at_utc=data.get("closed_at_utc"),
             exit_price=data.get("exit_price"),
             exit_reason=data.get("exit_reason"),
+            published_at_utc=str(data.get("published_at_utc") or ""),
         )
 
 
@@ -514,18 +517,26 @@ class SimulationEngine:
             or self.config.get("strategies", {}).get(candidate.strategy, {}).get("interval", "15m")
         )
         if bar_interval == "1d":
-            max_delay_min = float(sched_cfg.get("max_daily_candle_delay_minutes", 4320))
+            max_delay_min = float(sched_cfg.get("max_daily_candle_delay_minutes", 1500))
         elif bar_interval == "4h":
-            max_delay_min = float(sched_cfg.get("max_4h_candle_delay_minutes", 90))
+            max_delay_min = float(sched_cfg.get("max_4h_candle_delay_minutes", 260))
         else:
             max_delay_min = float(sched_cfg.get("max_candle_delay_minutes", 20))
         delay_min = (_parse_utc(now_utc) - _parse_utc(latest_bar_close_utc)).total_seconds() / 60.0
+        if delay_min < 0:
+            self._record_watch(
+                candidate.symbol,
+                candidate.strategy,
+                now_utc,
+                f"K 線尚未收盤（預計收盤 {latest_bar_close_utc} > 目前 {now_utc}）",
+            )
+            return None
         if delay_min > max_delay_min:
             self._record_watch(
                 candidate.symbol,
                 candidate.strategy,
                 now_utc,
-                f"排程延遲（最新收盤 K 線距今 {delay_min:.1f} 分鐘 > {max_delay_min:.0f} 分鐘）",
+                f"資料過期／排程延遲（最新收盤 K 線距今 {delay_min:.1f} 分鐘 > {max_delay_min:.0f} 分鐘）",
             )
             return None
 
@@ -715,6 +726,7 @@ class SimulationEngine:
                 fee_rate=fee_rate,
                 slippage_bps=slippage_bps,
                 overnight_cost_daily_bps=float(inst.get("overnight_cost_daily_bps", 0.0)),
+                published_at_utc=now_utc,
             )
 
         return signal
@@ -845,9 +857,10 @@ class SimulationEngine:
         exit_reason: str,
         events_out: list[SignalUpdateEvent],
     ) -> None:
-        self._close_quantity(ledger, trade, trade.remaining_qty, exec_price, ts_utc, action="exit")
+        eff_ts = trade.published_at_utc if (trade.published_at_utc and ts_utc < trade.published_at_utc) else ts_utc
+        self._close_quantity(ledger, trade, trade.remaining_qty, exec_price, eff_ts, action="exit")
         trade.state = validate_transition(trade.state, LifecycleState.CLOSED, exit_reason=exit_reason)
-        trade.closed_at_utc = ts_utc
+        trade.closed_at_utc = eff_ts
         trade.exit_price = exec_price
         trade.exit_reason = exit_reason
         trade.r_multiple = trade.realized_pnl_usd / max(1e-9, trade.r_plan_usd)
@@ -855,7 +868,7 @@ class SimulationEngine:
             ledger,
             events_out,
             trade.signal_id,
-            ts_utc,
+            eff_ts,
             "closed",
             exec_price,
             f"平倉結束（{exit_reason}），損益 ${trade.realized_pnl_usd:.2f} ({trade.r_multiple:.2f}R)",
@@ -873,6 +886,10 @@ class SimulationEngine:
         logic_invalidated: bool,
         events_out: list[SignalUpdateEvent],
     ) -> None:
+        # Guard: historical bars closed at or before signal publication must never trigger/cancel this trade
+        if trade.published_at_utc and bar.close_ts_utc <= trade.published_at_utc:
+            return
+
         spread = trade.assumed_spread_bps
         slip = trade.slippage_bps / 10000.0
         bar_close_dt = _parse_utc(bar.close_ts_utc)
@@ -1316,16 +1333,17 @@ class SimulationEngine:
             for trade in list(ledger.trades.values()):
                 if trade.strategy != strategy_id or trade.symbol != symbol:
                     continue
+                eff_ts = trade.published_at_utc if (trade.published_at_utc and ts_utc < trade.published_at_utc) else ts_utc
                 if trade.state == LifecycleState.WAITING_ENTRY:
                     trade.state = validate_transition(
                         trade.state, LifecycleState.CANCELLED, exit_reason="pre_entry_invalidated"
                     )
                     trade.exit_reason = "pre_entry_invalidated"
-                    trade.closed_at_utc = ts_utc
+                    trade.closed_at_utc = eff_ts
                     if trade.signal_id in ledger.orders:
                         ledger.orders[trade.signal_id].status = "cancelled"
                     self._emit_primary(
-                        ledger, events_out, trade.signal_id, ts_utc, "cancelled", close_price, "策略訊號結束，取消未成交掛單"
+                        ledger, events_out, trade.signal_id, eff_ts, "cancelled", close_price, "策略訊號結束，取消未成交掛單"
                     )
                 elif trade.state in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
                     spread = trade.assumed_spread_bps
@@ -1335,7 +1353,7 @@ class SimulationEngine:
                         if trade.direction == "long"
                         else _ask_price(close_price, spread) * (1.0 + slip)
                     )
-                    self._finalize_close(ledger, trade, exec_px, ts_utc, exit_reason, events_out)
+                    self._finalize_close(ledger, trade, exec_px, eff_ts, exit_reason, events_out)
         return events_out
 
     def save_state(self, snapshot_ts_utc: str | None = None) -> None:
@@ -1471,6 +1489,119 @@ class SimulationEngine:
             encoding="utf-8",
         )
 
+    def purge_invalid_signals(self) -> list[str]:
+        """Remove corrupted/expired historical signals (e.g. closed_at_utc < published_at_utc or stale S2 FX signals) from ledgers and files."""
+        sig_pub_map: dict[str, dict[str, Any]] = {}
+        sig_dir = self.out_dir / "signals"
+        if sig_dir.exists():
+            for sp in sig_dir.glob("*.json"):
+                try:
+                    data = json.loads(sp.read_text(encoding="utf-8"))
+                    sid = str(data.get("signal_id", "")).strip()
+                    if sid:
+                        sig_pub_map[sid] = data
+                except Exception:
+                    continue
+
+        # Backfill published_at_utc onto any legacy TradeRecord that lacked it
+        for ledger in self.ledgers.values():
+            for sid, tr in ledger.trades.items():
+                if not tr.published_at_utc and sid in sig_pub_map:
+                    tr.published_at_utc = str(sig_pub_map[sid].get("published_at_utc") or "")
+
+        corrupted_known_ids = {"SIG-20261116-0001", "SIG-20261116-0002", "SIG-20261116-0003"}
+        bad_ids: set[str] = set()
+
+        for sid, sdata in sig_pub_map.items():
+            pub_ts = str(sdata.get("published_at_utc") or "")
+            if (
+                sid in corrupted_known_ids
+                and str(sdata.get("strategy", "")) == "S2"
+                and str(sdata.get("symbol", "")) in {"EURUSD", "GBPUSD", "USDCHF"}
+                and (not pub_ts or pub_ts <= "2026-11-16T12:45:00Z")
+            ):
+                bad_ids.add(sid)
+                continue
+            snap_path = self.out_dir / "snapshots" / f"SNAP-{sid}.json"
+            if pub_ts and snap_path.exists():
+                try:
+                    snap = json.loads(snap_path.read_text(encoding="utf-8"))
+                    ks = snap.get("kline_summary") or {}
+                    kts = str(ks.get("ts_utc") or "")
+                    kiv = str(ks.get("interval") or "")
+                    if kts and kiv == "4h":
+                        close_dt = _parse_utc(kts) + timedelta(hours=4)
+                        if (_parse_utc(pub_ts) - close_dt).total_seconds() / 60.0 > 300.0:
+                            bad_ids.add(sid)
+                except Exception:
+                    pass
+
+        for ledger in self.ledgers.values():
+            for sid, tr in ledger.trades.items():
+                pub_ts = tr.published_at_utc or str((sig_pub_map.get(sid) or {}).get("published_at_utc") or "")
+                if (
+                    sid in corrupted_known_ids
+                    and tr.strategy == "S2"
+                    and tr.symbol in {"EURUSD", "GBPUSD", "USDCHF"}
+                    and (not pub_ts or pub_ts <= "2026-11-16T12:45:00Z")
+                ):
+                    bad_ids.add(sid)
+                if tr.closed_at_utc and pub_ts and tr.closed_at_utc < pub_ts:
+                    bad_ids.add(sid)
+
+        if not bad_ids:
+            return []
+
+        for ledger in self.ledgers.values():
+            removed_any = False
+            for sid in bad_ids:
+                tr = ledger.trades.pop(sid, None)
+                ledger.orders.pop(sid, None)
+                if tr is not None:
+                    removed_any = True
+                    pub_ts = tr.published_at_utc or str((sig_pub_map.get(sid) or {}).get("published_at_utc") or "")
+                    if pub_ts:
+                        d_key = _date_key(pub_ts)
+                        if ledger.daily_signal_counts.get(d_key, 0) > 0:
+                            ledger.daily_signal_counts[d_key] -= 1
+            if removed_any:
+                ledger.fills = [f for f in ledger.fills if f.signal_id not in bad_ids]
+                # Recompute realized PnL aggregates cleanly from remaining fills & trades
+                strat_by_sig = {s: t.strategy for s, t in ledger.trades.items()}
+                short_pnl = 0.0
+                long_pnl = 0.0
+                d_pnl: dict[str, float] = {}
+                w_pnl: dict[str, float] = {}
+                for f in ledger.fills:
+                    strat = strat_by_sig.get(f.signal_id, "S1")
+                    if is_short_term_strategy(strat):
+                        short_pnl += f.realized_pnl_usd
+                    else:
+                        long_pnl += f.realized_pnl_usd
+                    if f.action != "entry":
+                        dk = _date_key(f.ts_utc)
+                        wk = _week_key(f.ts_utc)
+                        d_pnl[dk] = d_pnl.get(dk, 0.0) + f.realized_pnl_usd
+                        w_pnl[wk] = w_pnl.get(wk, 0.0) + f.realized_pnl_usd
+                ledger.short_term_realized_pnl = short_pnl
+                ledger.long_term_realized_pnl = long_pnl
+                ledger.daily_realized_pnl = d_pnl
+                ledger.weekly_realized_pnl = w_pnl
+
+        for sid in sorted(bad_ids):
+            for path in (
+                self.out_dir / "signals" / f"{sid}.json",
+                self.out_dir / "snapshots" / f"SNAP-{sid}.json",
+                self.out_dir / "signal_updates" / f"{sid}.jsonl",
+                self.out_dir / "charts" / f"{sid}.json",
+            ):
+                try:
+                    path.unlink(missing_ok=True)
+                except Exception:
+                    pass
+
+        return sorted(bad_ids)
+
     def load_state(self) -> None:
         """Restore persisted ledgers, sequences, and replay cursors from out_dir."""
         state_path = self.out_dir / "state.json"
@@ -1497,3 +1628,5 @@ class SimulationEngine:
                         self.ledgers[pol] = Ledger.from_dict(raw_led, self.config)
             except Exception:
                 pass
+
+        self.purge_invalid_signals()

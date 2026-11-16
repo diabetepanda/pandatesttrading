@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261116g" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261116h" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -128,8 +128,13 @@
       </section>
 
       <section class="card">
-        <h2>今日觀望</h2>
-        <p class="subtitle">最近一次排程掃描中被策略條件或風控規則擋下的標的與原因（依接近觸發程度排序）。</p>
+        <h2>今日觀望與策略判斷</h2>
+        <p class="subtitle">每次掃描完整重寫；可切換檢視短線掃描（S1、S2）與每日掃描（S3、L1～L3）在各適用標的的目前判斷與原因（依接近觸發程度排序）。</p>
+        <div id="watch-scope-tabs" class="tabs" style="margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <button class="tab active" data-scope="intraday" type="button">短線掃描（S1 / S2）</button>
+          <button class="tab" data-scope="daily" type="button">每日掃描（S3 / L1～L3）</button>
+          <span id="watch-scope-updated" class="muted" style="margin-left:auto;font-size:12px;"></span>
+        </div>
         <div id="watch-summary-bar" class="watch-summary-bar"></div>
         <div class="table-wrap">
           <table class="data-table mobile-cards" id="watch-table">
@@ -138,8 +143,8 @@
                 <th>標的</th>
                 <th>市場</th>
                 <th>判定</th>
-                <th>1H ADX / RSI / ATR倍數</th>
-                <th>觀望 / 擋下原因</th>
+                <th>波動 / 狀態指標</th>
+                <th>各策略目前判斷與原因</th>
               </tr>
             </thead>
             <tbody id="watch-tbody">
@@ -471,7 +476,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261116g"></script>
-  <script src="./assets/app.js?v=20261116g"></script>
+  <script src="./assets/config.js?v=20261116h"></script>
+  <script src="./assets/app.js?v=20261116h"></script>
 </body>
 </html>
