@@ -1,0 +1,23 @@
+# 手動維護的高影響經濟事件日曆 (UTC 時間)
+# 格式：
+# - id: unique-id
+#   title: 事件名稱
+#   currency: USD / EUR / ALL 等
+#   impact: high / medium
+#   time_utc: "YYYY-MM-DDTHH:MM:SSZ"
+events:
+  - id: fomc-2026-12
+    title: FOMC Rate Decision
+    currency: USD
+    impact: high
+    time_utc: "2026-12-16T19:00:00Z"
+  - id: cpi-2026-12
+    title: US CPI Release
+    currency: USD
+    impact: high
+    time_utc: "2026-12-10T13:30:00Z"
+  - id: nfp-2026-12
+    title: US Non-Farm Payrolls
+    currency: USD
+    impact: high
+    time_utc: "2026-12-04T13:30:00Z"

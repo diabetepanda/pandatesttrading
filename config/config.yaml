@@ -1,0 +1,422 @@
+project:
+  name: Signal Desk
+  github_owner: diabetepanda
+  github_repo: pandatesttrading
+  data_branch: data
+  timezone_internal: UTC
+  timezone_display: Asia/Taipei
+
+schedule:
+  scan_interval_minutes: 15
+  max_candle_delay_minutes: 20
+  ui_stale_warning_minutes: 45
+  keep_run_logs: 100
+
+account:
+  initial_capital_usd: 100000.0
+  pools:
+    short_term:
+      capital_usd: 20000.0
+      target_notional_usd: 2000.0
+      max_concurrent_trades: 10
+    long_term:
+      capital_usd: 80000.0
+      target_notional_usd: 8000.0
+      max_concurrent_trades: 10
+
+risk:
+  max_risk_per_trade_usd:
+    short_term: 250.0
+    long_term: 500.0
+  max_total_stop_risk_usd: 3000.0
+  max_daily_loss_usd: 1500.0
+  max_weekly_loss_usd: 4000.0
+  drawdown_warning_pct: 8.0
+  drawdown_warning_risk_multiplier: 0.5
+  drawdown_pause_pct: 12.0
+  max_margin_usage_pct: 30.0
+  max_group_stop_risk_usd: 1000.0
+  stop_to_liquidation_max_ratio: 0.5
+
+scaling:
+  default_policy: E
+  policies: ["A", "B", "C", "D", "E"]
+  max_stages: 3
+
+signals:
+  max_daily_signals: 10
+  order_expiry_hours: 4
+
+strategy_a:
+  enabled_markets: ["crypto", "forex", "commodity"]
+  lookback_days_liquidity: 45
+  low_liquidity_percentile: 33.33
+  settlement_avoid_minutes: 30
+  adx_period: 14
+  adx_max: 20.0
+  bb_percentile_max: 30.0
+  atr_period: 14
+  atr_ratio_max: 1.2
+  event_before_hours: 4
+  event_after_minutes: 60
+  range_bars_15m: 48
+  min_edge_touches: 2
+  range_height_atr_min: 1.0
+  range_height_atr_max: 2.5
+  entry_edge_pct: 15.0
+  rsi_period: 14
+  rsi_overbought: 65.0
+  rsi_oversold: 35.0
+  sl_atr_buffer: 0.5
+  tp1_rr_min: 1.5
+  tp2_rr_min: 2.0
+  max_hold_bars_15m: 24
+  pre_session_end_close_minutes: 30
+  breakout_bar_atr_mult: 2.5
+  breakout_atr_ratio_trigger: 1.8
+
+strategy_b:
+  min_history_years: 5
+  in_sample_ratio: 0.7
+  out_sample_ratio: 0.3
+  min_oos_trades: 30
+  max_oos_drawdown_pct: 25.0
+  min_oos_profit_factor: 1.3
+  sl_atr_min_mult: 2.0
+  sl_atr_max_mult: 3.0
+  min_rr: 2.0
+
+data_quality:
+  max_missing_ratio: 0.10
+  max_delay_minutes:
+    "1m": 15
+    "15m": 45
+    "1d": 2880
+  abnormal_gap_atr_mult: 5.0
+  request_timeout_sec: 15
+
+correlation_groups:
+  crypto_majors:
+    name: 加密主流幣
+    max_stop_risk_usd: 1000.0
+  usd_fx:
+    name: 美元相關外匯
+    max_stop_risk_usd: 1000.0
+  jpy_cross:
+    name: 日圓交叉
+    max_stop_risk_usd: 1000.0
+  precious_metals:
+    name: 貴金屬
+    max_stop_risk_usd: 1000.0
+  energy:
+    name: 能源
+    max_stop_risk_usd: 1000.0
+  industrial_metals:
+    name: 工業金屬
+    max_stop_risk_usd: 1000.0
+  us_equities:
+    name: 美股大型股
+    max_stop_risk_usd: 1000.0
+
+instruments:
+  # --- 加密貨幣 (24/7) ---
+  - symbol: BTCUSDT
+    display_name: Bitcoin (BTC/USDT)
+    market: crypto
+    correlation_group: crypto_majors
+    enabled: true
+    assumed_spread_bps: 2.0
+    fee_rate: 0.0005
+    tick_size: 0.1
+    trading_hours: "24/7"
+    max_leverage: 10.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: BTCUSDT
+      okx: BTC-USDT
+      bybit: BTCUSDT
+      kraken: XBTUSDT
+      coinbase: BTC-USD
+
+  - symbol: ETHUSDT
+    display_name: Ethereum (ETH/USDT)
+    market: crypto
+    correlation_group: crypto_majors
+    enabled: true
+    assumed_spread_bps: 3.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "24/7"
+    max_leverage: 10.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: ETHUSDT
+      okx: ETH-USDT
+      bybit: ETHUSDT
+      kraken: ETHUSDT
+      coinbase: ETH-USD
+
+  - symbol: SOLUSDT
+    display_name: Solana (SOL/USDT)
+    market: crypto
+    correlation_group: crypto_majors
+    enabled: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: SOLUSDT
+      okx: SOL-USDT
+      bybit: SOLUSDT
+      kraken: SOLUSD
+      coinbase: SOL-USD
+
+  - symbol: BNBUSDT
+    display_name: BNB (BNB/USDT)
+    market: crypto
+    correlation_group: crypto_majors
+    enabled: true
+    assumed_spread_bps: 4.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: BNBUSDT
+      okx: BNB-USDT
+      bybit: BNBUSDT
+
+  - symbol: XRPUSDT
+    display_name: XRP (XRP/USDT)
+    market: crypto
+    correlation_group: crypto_majors
+    enabled: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.0005
+    tick_size: 0.0001
+    trading_hours: "24/7"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 3.0
+    sources:
+      binance_vision: XRPUSDT
+      okx: XRP-USDT
+      bybit: XRPUSDT
+      kraken: XRPUSD
+      coinbase: XRP-USD
+
+  # --- 外匯 ---
+  - symbol: EURUSD
+    display_name: EUR/USD
+    market: forex
+    correlation_group: usd_fx
+    enabled: true
+    assumed_spread_bps: 1.0
+    fee_rate: 0.0001
+    tick_size: 0.00001
+    trading_hours: "24/5"
+    max_leverage: 20.0
+    overnight_cost_daily_bps: 1.0
+    sources:
+      yfinance: EURUSD=X
+      stooq: eurusd
+
+  - symbol: GBPUSD
+    display_name: GBP/USD
+    market: forex
+    correlation_group: usd_fx
+    enabled: true
+    assumed_spread_bps: 1.5
+    fee_rate: 0.0001
+    tick_size: 0.00001
+    trading_hours: "24/5"
+    max_leverage: 20.0
+    overnight_cost_daily_bps: 1.0
+    sources:
+      yfinance: GBPUSD=X
+      stooq: gbpusd
+
+  - symbol: USDJPY
+    display_name: USD/JPY
+    market: forex
+    correlation_group: jpy_cross
+    enabled: true
+    assumed_spread_bps: 1.2
+    fee_rate: 0.0001
+    tick_size: 0.001
+    trading_hours: "24/5"
+    max_leverage: 20.0
+    overnight_cost_daily_bps: 1.5
+    sources:
+      yfinance: USDJPY=X
+      stooq: usdjpy
+
+  - symbol: AUDUSD
+    display_name: AUD/USD
+    market: forex
+    correlation_group: usd_fx
+    enabled: true
+    assumed_spread_bps: 1.5
+    fee_rate: 0.0001
+    tick_size: 0.00001
+    trading_hours: "24/5"
+    max_leverage: 20.0
+    overnight_cost_daily_bps: 1.0
+    sources:
+      yfinance: AUDUSD=X
+      stooq: audusd
+
+  - symbol: USDCAD
+    display_name: USD/CAD
+    market: forex
+    correlation_group: usd_fx
+    enabled: true
+    assumed_spread_bps: 1.5
+    fee_rate: 0.0001
+    tick_size: 0.00001
+    trading_hours: "24/5"
+    max_leverage: 20.0
+    overnight_cost_daily_bps: 1.0
+    sources:
+      yfinance: USDCAD=X
+      stooq: usdcad
+
+  - symbol: USDCHF
+    display_name: USD/CHF
+    market: forex
+    correlation_group: usd_fx
+    enabled: true
+    assumed_spread_bps: 1.5
+    fee_rate: 0.0001
+    tick_size: 0.00001
+    trading_hours: "24/5"
+    max_leverage: 20.0
+    overnight_cost_daily_bps: 1.0
+    sources:
+      yfinance: USDCHF=X
+      stooq: usdchf
+
+  - symbol: NZDUSD
+    display_name: NZD/USD
+    market: forex
+    correlation_group: usd_fx
+    enabled: true
+    assumed_spread_bps: 2.0
+    fee_rate: 0.0001
+    tick_size: 0.00001
+    trading_hours: "24/5"
+    max_leverage: 20.0
+    overnight_cost_daily_bps: 1.0
+    sources:
+      yfinance: NZDUSD=X
+      stooq: nzdusd
+
+  - symbol: EURJPY
+    display_name: EUR/JPY
+    market: forex
+    correlation_group: jpy_cross
+    enabled: true
+    assumed_spread_bps: 1.8
+    fee_rate: 0.0001
+    tick_size: 0.001
+    trading_hours: "24/5"
+    max_leverage: 20.0
+    overnight_cost_daily_bps: 1.5
+    sources:
+      yfinance: EURJPY=X
+      stooq: eurjpy
+
+  # --- 商品 ---
+  - symbol: XAUUSD
+    display_name: 黃金 (Gold)
+    market: commodity
+    correlation_group: precious_metals
+    enabled: true
+    assumed_spread_bps: 3.0
+    fee_rate: 0.0002
+    tick_size: 0.01
+    trading_hours: "23/5"
+    max_leverage: 10.0
+    overnight_cost_daily_bps: 1.5
+    sources:
+      yfinance: GC=F
+      stooq: xauusd
+
+  - symbol: XAGUSD
+    display_name: 白銀 (Silver)
+    market: commodity
+    correlation_group: precious_metals
+    enabled: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.0002
+    tick_size: 0.005
+    trading_hours: "23/5"
+    max_leverage: 10.0
+    overnight_cost_daily_bps: 1.5
+    sources:
+      yfinance: SI=F
+      stooq: xagusd
+
+  - symbol: WTI
+    display_name: WTI 原油
+    market: commodity
+    correlation_group: energy
+    enabled: true
+    assumed_spread_bps: 4.0
+    fee_rate: 0.0002
+    tick_size: 0.01
+    trading_hours: "23/5"
+    max_leverage: 10.0
+    overnight_cost_daily_bps: 2.0
+    sources:
+      yfinance: CL=F
+      stooq: cl.f
+
+  - symbol: NATGAS
+    display_name: 天然氣 (Natural Gas)
+    market: commodity
+    correlation_group: energy
+    enabled: true
+    assumed_spread_bps: 8.0
+    fee_rate: 0.0003
+    tick_size: 0.001
+    trading_hours: "23/5"
+    max_leverage: 5.0
+    overnight_cost_daily_bps: 2.5
+    sources:
+      yfinance: NG=F
+      stooq: ng.f
+
+  - symbol: COPPER
+    display_name: 銅 (Copper)
+    market: commodity
+    correlation_group: industrial_metals
+    enabled: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.0002
+    tick_size: 0.0005
+    trading_hours: "23/5"
+    max_leverage: 10.0
+    overnight_cost_daily_bps: 1.5
+    sources:
+      yfinance: HG=F
+      stooq: hg.f
+
+  # --- 股票 (選配，預設關閉) ---
+  - symbol: SPY
+    display_name: S&P 500 ETF (SPY)
+    market: stock
+    correlation_group: us_equities
+    enabled: false
+    assumed_spread_bps: 1.0
+    fee_rate: 0.0001
+    tick_size: 0.01
+    trading_hours: "US_EQUITIES"
+    max_leverage: 4.0
+    overnight_cost_daily_bps: 1.5
+    sources:
+      yfinance: SPY
+      stooq: spy.us

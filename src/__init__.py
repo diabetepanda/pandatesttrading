@@ -1,0 +1,1 @@
+"""Signal Desk core package."""

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signal Desk 報單網站｜模擬驗證中</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-row">
+      <div class="brand">
+        <span class="brand-title">Signal Desk</span>
+        <span class="badge badge-warn">模擬驗證中，非投資建議</span>
+      </div>
+      <div class="status-lights">
+        <span id="risk-light" class="light light-neutral">風控：讀取中</span>
+        <span id="data-light" class="light light-neutral">資料：讀取中</span>
+        <span id="sched-light" class="light light-neutral">排程：讀取中</span>
+      </div>
+    </div>
+    <div class="topbar-metrics">
+      <div class="metric">
+        <span class="metric-label">總淨值</span>
+        <span id="total-equity" class="metric-value">$100,000.00</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">短線池 (A)</span>
+        <span id="short-equity" class="metric-value">$20,000.00</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">長線池 (B)</span>
+        <span id="long-equity" class="metric-value">$80,000.00</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">最後更新 (UTC+8)</span>
+        <span id="last-updated" class="metric-value">--</span>
+      </div>
+    </div>
+    <div id="delay-banner" class="alert-banner hidden">
+      ⚠️ 排程可能延遲，資料不是最新（距離最後更新已超過 45 分鐘）
+    </div>
+    <div id="control-banner" class="alert-banner alert-danger hidden"></div>
+  </header>
+
+  <main class="container">
+    <section id="fetch-error-box" class="error-box hidden"></section>
+
+    <section class="card">
+      <div class="section-header">
+        <div>
+          <h1>市場行情與資料健康狀態（階段 1）</h1>
+          <p class="subtitle">每 60 秒自動重新讀取 GitHub <code>data</code> 分支資料（無 API Key 公開來源）</p>
+        </div>
+        <button id="refresh-btn" class="btn" type="button">立即重新整理</button>
+      </div>
+
+      <div class="filter-tabs" id="market-filters">
+        <button class="tab active" data-market="all" type="button">全部</button>
+        <button class="tab" data-market="crypto" type="button">加密貨幣</button>
+        <button class="tab" data-market="forex" type="button">外匯</button>
+        <button class="tab" data-market="commodity" type="button">商品</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>標的</th>
+              <th>市場</th>
+              <th>最新價格</th>
+              <th>資料來源</th>
+              <th>1m</th>
+              <th>15m</th>
+              <th>1d</th>
+              <th>狀態 / 備註</th>
+            </tr>
+          </thead>
+          <tbody id="instruments-tbody">
+            <tr>
+              <td colspan="8" class="muted center">資料讀取中...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>資料來源實測報告（GitHub Actions）</h2>
+      <p class="subtitle">顯示各標的在 1m / 15m / 1d 週期下，主來源與備援來源的連線實測結果。</p>
+      <div id="probe-summary" class="muted">尚無實測報告（請先於 GitHub Actions 手動觸發一次 Market Scan）。</div>
+      <div class="table-wrap">
+        <table class="data-table hidden" id="probe-table">
+          <thead>
+            <tr>
+              <th>標的</th>
+              <th>週期</th>
+              <th>品質狀態</th>
+              <th>各來源測試結果</th>
+            </tr>
+          </thead>
+          <tbody id="probe-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>近期排程執行紀錄</h2>
+      <div id="run-log-box" class="muted">尚無排程紀錄。</div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
+  </footer>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>
