@@ -11,7 +11,9 @@ from typing import Any
 
 from src.config_loader import load_config, load_control
 from src.data.adapters import FallbackDataFetcher
+from src.data.models import FetchResult
 from src.data.quality import check_continuity
+from src.data.resample import resample_1m_to_15m
 
 
 def _now_utc_iso() -> str:
@@ -66,9 +68,25 @@ def run_scan(
         market = inst["market"]
 
         intervals_reports: dict[str, dict[str, Any]] = {}
+        fetch_results: dict[str, FetchResult] = {}
         for iv in ("1m", "15m", "1d"):
-            res = data_fetcher.fetch(inst, iv, limit=120, now_utc=now)
-            report = check_continuity(res, market=market, quality_config=quality_cfg, now_utc=now)
+            fetch_limit = 1500 if iv == "1m" else 120
+            res = data_fetcher.fetch(inst, iv, limit=fetch_limit, now_utc=now)
+            fetch_results[iv] = res
+            eval_res = (
+                FetchResult(
+                    symbol=res.symbol,
+                    interval=res.interval,
+                    ok=res.ok,
+                    source_used=res.source_used,
+                    bars=res.bars[-120:],
+                    error=res.error,
+                    attempts=res.attempts,
+                )
+                if iv == "1m" and res.ok and len(res.bars) > 120
+                else res
+            )
+            report = check_continuity(eval_res, market=market, quality_config=quality_cfg, now_utc=now)
             intervals_reports[iv] = report.to_dict()
 
             for att in res.attempts:
@@ -92,6 +110,41 @@ def run_scan(
                         "attempts": [a.to_dict() for a in all_attempts],
                     }
                 )
+
+        # Fallback: if direct 15m is stale/unstable/failed, try resampling closed 1m bars
+        res_1m = fetch_results.get("1m")
+        rep_15m = intervals_reports["15m"]
+        if rep_15m["status"] != "ok" and res_1m is not None and res_1m.ok and res_1m.bars:
+            resampled_bars = resample_1m_to_15m(res_1m.bars, now_utc=now)
+            if resampled_bars:
+                res_resampled = FetchResult(
+                    symbol=symbol,
+                    interval="15m",
+                    ok=True,
+                    source_used=f"{res_1m.source_used}+resample_15m",
+                    bars=resampled_bars,
+                )
+                rep_resampled = check_continuity(
+                    res_resampled, market=market, quality_config=quality_cfg, now_utc=now
+                )
+                rank = {"ok": 3, "stale": 2, "unstable": 1, "failed": 0}
+                better_status = rank.get(rep_resampled.status, 0) > rank.get(rep_15m["status"], 0)
+                same_status_fresher = (
+                    rep_resampled.status == rep_15m["status"]
+                    and rep_resampled.delay_minutes is not None
+                    and rep_15m["delay_minutes"] is not None
+                    and rep_resampled.delay_minutes < rep_15m["delay_minutes"]
+                )
+                if better_status or same_status_fresher:
+                    intervals_reports["15m"] = rep_resampled.to_dict()
+                    if probe_all_adapters:
+                        for row in reversed(probe_rows):
+                            if row["symbol"] == symbol and row["interval"] == "15m":
+                                row["quality_status"] = rep_resampled.status
+                                row["missing_ratio"] = rep_resampled.missing_ratio
+                                row["delay_minutes"] = rep_resampled.delay_minutes
+                                row["quality_reason"] = f"已改用 1m 重取樣：{rep_resampled.reason}"
+                                break
 
         # Primary price comes from 15m, falling back to 1m or 1d if 15m failed
         primary_rep = intervals_reports["15m"]
