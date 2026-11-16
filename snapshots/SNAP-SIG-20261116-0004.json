@@ -1,23 +1,23 @@
 {
   "snapshot_id": "SNAP-SIG-20261116-0004",
   "signal_id": "SIG-20261116-0004",
-  "captured_at_utc": "2026-11-16T12:59:30Z",
+  "captured_at_utc": "2026-11-16T12:51:14Z",
   "symbol": "EURUSD",
   "kline_summary": {
-    "interval": "1d",
-    "close": 1.1050212383270264,
-    "high": 1.1072235107421875,
-    "low": 1.102657437324524,
-    "ts_utc": "2026-11-13T00:00:00Z"
+    "interval": "4h",
+    "close": 1.1013215780258179,
+    "high": 1.103265643119812,
+    "low": 1.1007153987884521,
+    "ts_utc": "2026-11-16T08:00:00Z"
   },
   "indicators": {
-    "atr": 0.006226,
-    "atr_ratio": 1.087,
+    "atr": 0.002096,
+    "atr_ratio": 0.896,
     "params": {
-      "entry_period": 55,
-      "exit_period": 20,
-      "sl_atr_mult": 2.5,
-      "vol_target_pct": 0.018
+      "breakout_bars": 12,
+      "trail_bars": 10,
+      "sl_atr_mult": 2.0,
+      "max_hold_bars": 30
     }
   },
   "filter_checks": {
