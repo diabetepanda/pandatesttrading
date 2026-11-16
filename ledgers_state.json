@@ -1,8 +1,8 @@
 {
   "sequences": {
     "signal": 8,
-    "event": 7,
-    "fill": 15
+    "event": 8,
+    "fill": 20
   },
   "latest_marks": {
     "BTCUSDT": 64169.58,
@@ -11,18 +11,18 @@
     "BNBUSDT": 587.39,
     "XRPUSDT": 0.9497,
     "EURUSD": 1.1016855239868164,
-    "GBPUSD": 1.3198881149291992,
+    "GBPUSD": 1.3199055194854736,
     "USDJPY": 159.46600341796875,
     "AUDUSD": 0.6759039759635925,
-    "USDCAD": 1.428820013999939,
-    "USDCHF": 0.8392800092697144,
+    "USDCAD": 1.4286500215530396,
+    "USDCHF": 0.8392199873924255,
     "NZDUSD": 0.5517850518226624,
     "EURJPY": 175.63699340820312,
-    "XAUUSD": 3874.199951171875,
-    "XAGUSD": 47.625,
-    "WTI": 87.52999877929688,
-    "NATGAS": 3.1619999408721924,
-    "COPPER": 6.043000221252441,
+    "XAUUSD": 3873.0,
+    "XAGUSD": 47.584999084472656,
+    "WTI": 87.63999938964844,
+    "NATGAS": 3.1610000133514404,
+    "COPPER": 6.043499946594238,
     "DOGEUSDT": 0.05836,
     "ADAUSDT": 0.151,
     "AVAXUSDT": 7.08,
@@ -61,7 +61,7 @@
   "ledgers": {
     "A": {
       "policy_name": "A",
-      "short_term_realized_pnl": -0.2849994024,
+      "short_term_realized_pnl": -0.37998531739999997,
       "long_term_realized_pnl": 0.0,
       "peak_equity_usd": 100000.0,
       "drawdown_paused": false,
@@ -402,19 +402,19 @@
           "correlation_group": "usd_fx",
           "direction": "long",
           "policy_name": "A",
-          "state": "waiting_entry",
-          "avg_entry_price": 0.0,
-          "remaining_qty": 0.0,
+          "state": "active",
+          "avg_entry_price": 1.42907,
+          "remaining_qty": 664.66940364,
           "current_stop_loss": 1.423631,
           "current_tp1": 1.439439,
           "current_tp2": 1.441988,
           "leverage": 5.0,
           "r_plan_usd": 7.5398,
-          "realized_pnl_usd": 0.0,
-          "total_fees_usd": 0.0,
+          "realized_pnl_usd": -0.095,
+          "total_fees_usd": 0.095,
           "total_overnight_usd": 0.0,
           "r_multiple": 0.0,
-          "entered_at_utc": null,
+          "entered_at_utc": "2026-11-16T13:03:00Z",
           "closed_at_utc": null,
           "exit_price": null,
           "exit_reason": null,
@@ -434,8 +434,17 @@
           "fee_rate": 0.0001,
           "slippage_bps": 1.0,
           "overnight_cost_daily_bps": 1.0,
-          "initial_filled_qty": 0.0,
-          "stages": []
+          "initial_filled_qty": 664.66940364,
+          "stages": [
+            {
+              "stage": 1,
+              "add_type": "initial",
+              "fill_price": 1.4290700682185393,
+              "qty": 664.6694036381872,
+              "notional_usd": 949.85915,
+              "filled_at_utc": "2026-11-16T13:03:00Z"
+            }
+          ]
         }
       },
       "orders": {
@@ -517,7 +526,7 @@
           "entry_low": 1.427301,
           "entry_high": 1.430159,
           "valid_until_utc": "2026-11-16T17:03:21Z",
-          "status": "pending"
+          "status": "filled"
         }
       },
       "fills": [
@@ -559,6 +568,19 @@
           "fee_usd": 0.0949998755,
           "realized_pnl_usd": -0.0949998755,
           "ts_utc": "2026-11-16T12:50:00Z"
+        },
+        {
+          "fill_id": "FILL-SIG-20261116-0008-00016",
+          "signal_id": "SIG-20261116-0008",
+          "symbol": "USDCAD",
+          "side": "buy",
+          "action": "entry",
+          "price": 1.4290700682185393,
+          "qty": 664.6694036381872,
+          "notional_usd": 949.85915,
+          "fee_usd": 0.094985915,
+          "realized_pnl_usd": -0.094985915,
+          "ts_utc": "2026-11-16T13:03:00Z"
         }
       ],
       "daily_realized_pnl": {},
@@ -569,7 +591,7 @@
     },
     "B": {
       "policy_name": "B",
-      "short_term_realized_pnl": -0.18809960550000002,
+      "short_term_realized_pnl": -0.25079347080000003,
       "long_term_realized_pnl": 0.0,
       "peak_equity_usd": 100000.0,
       "drawdown_paused": false,
@@ -910,19 +932,19 @@
           "correlation_group": "usd_fx",
           "direction": "long",
           "policy_name": "B",
-          "state": "waiting_entry",
-          "avg_entry_price": 0.0,
-          "remaining_qty": 0.0,
+          "state": "active",
+          "avg_entry_price": 1.42907,
+          "remaining_qty": 438.70392848,
           "current_stop_loss": 1.423631,
           "current_tp1": 1.439439,
           "current_tp2": 1.441988,
           "leverage": 5.0,
           "r_plan_usd": 7.5402,
-          "realized_pnl_usd": 0.0,
-          "total_fees_usd": 0.0,
+          "realized_pnl_usd": -0.0627,
+          "total_fees_usd": 0.0627,
           "total_overnight_usd": 0.0,
           "r_multiple": 0.0,
-          "entered_at_utc": null,
+          "entered_at_utc": "2026-11-16T13:03:00Z",
           "closed_at_utc": null,
           "exit_price": null,
           "exit_reason": null,
@@ -942,8 +964,17 @@
           "fee_rate": 0.0001,
           "slippage_bps": 1.0,
           "overnight_cost_daily_bps": 1.0,
-          "initial_filled_qty": 0.0,
-          "stages": []
+          "initial_filled_qty": 438.70392848,
+          "stages": [
+            {
+              "stage": 1,
+              "add_type": "initial",
+              "fill_price": 1.4290700682185393,
+              "qty": 438.70392847954184,
+              "notional_usd": 626.938653,
+              "filled_at_utc": "2026-11-16T13:03:00Z"
+            }
+          ]
         }
       },
       "orders": {
@@ -1025,7 +1056,7 @@
           "entry_low": 1.427301,
           "entry_high": 1.430159,
           "valid_until_utc": "2026-11-16T17:03:21Z",
-          "status": "pending"
+          "status": "filled"
         }
       },
       "fills": [
@@ -1067,6 +1098,19 @@
           "fee_usd": 0.0626999178,
           "realized_pnl_usd": -0.0626999178,
           "ts_utc": "2026-11-16T12:50:00Z"
+        },
+        {
+          "fill_id": "FILL-SIG-20261116-0008-00017",
+          "signal_id": "SIG-20261116-0008",
+          "symbol": "USDCAD",
+          "side": "buy",
+          "action": "entry",
+          "price": 1.4290700682185393,
+          "qty": 438.70392847954184,
+          "notional_usd": 626.938653,
+          "fee_usd": 0.06269386530000001,
+          "realized_pnl_usd": -0.06269386530000001,
+          "ts_utc": "2026-11-16T13:03:00Z"
         }
       ],
       "daily_realized_pnl": {},
@@ -1077,7 +1121,7 @@
     },
     "C": {
       "policy_name": "C",
-      "short_term_realized_pnl": -0.1709996414,
+      "short_term_realized_pnl": -0.22799421940000003,
       "long_term_realized_pnl": 0.0,
       "peak_equity_usd": 100000.0,
       "drawdown_paused": false,
@@ -1418,19 +1462,19 @@
           "correlation_group": "usd_fx",
           "direction": "long",
           "policy_name": "C",
-          "state": "waiting_entry",
-          "avg_entry_price": 0.0,
-          "remaining_qty": 0.0,
+          "state": "active",
+          "avg_entry_price": 1.42907,
+          "remaining_qty": 398.82283778,
           "current_stop_loss": 1.423631,
           "current_tp1": 1.439439,
           "current_tp2": 1.441988,
           "leverage": 5.0,
           "r_plan_usd": 7.5402,
-          "realized_pnl_usd": 0.0,
-          "total_fees_usd": 0.0,
+          "realized_pnl_usd": -0.057,
+          "total_fees_usd": 0.057,
           "total_overnight_usd": 0.0,
           "r_multiple": 0.0,
-          "entered_at_utc": null,
+          "entered_at_utc": "2026-11-16T13:03:00Z",
           "closed_at_utc": null,
           "exit_price": null,
           "exit_reason": null,
@@ -1450,8 +1494,17 @@
           "fee_rate": 0.0001,
           "slippage_bps": 1.0,
           "overnight_cost_daily_bps": 1.0,
-          "initial_filled_qty": 0.0,
-          "stages": []
+          "initial_filled_qty": 398.82283778,
+          "stages": [
+            {
+              "stage": 1,
+              "add_type": "initial",
+              "fill_price": 1.4290700682185393,
+              "qty": 398.82283778463517,
+              "notional_usd": 569.94578,
+              "filled_at_utc": "2026-11-16T13:03:00Z"
+            }
+          ]
         }
       },
       "orders": {
@@ -1533,7 +1586,7 @@
           "entry_low": 1.427301,
           "entry_high": 1.430159,
           "valid_until_utc": "2026-11-16T17:03:21Z",
-          "status": "pending"
+          "status": "filled"
         }
       },
       "fills": [
@@ -1575,6 +1628,19 @@
           "fee_usd": 0.0569999253,
           "realized_pnl_usd": -0.0569999253,
           "ts_utc": "2026-11-16T12:50:00Z"
+        },
+        {
+          "fill_id": "FILL-SIG-20261116-0008-00018",
+          "signal_id": "SIG-20261116-0008",
+          "symbol": "USDCAD",
+          "side": "buy",
+          "action": "entry",
+          "price": 1.4290700682185393,
+          "qty": 398.82283778463517,
+          "notional_usd": 569.94578,
+          "fee_usd": 0.056994578000000004,
+          "realized_pnl_usd": -0.056994578000000004,
+          "ts_utc": "2026-11-16T13:03:00Z"
         }
       ],
       "daily_realized_pnl": {},
@@ -1585,7 +1651,7 @@
     },
     "D": {
       "policy_name": "D",
-      "short_term_realized_pnl": -0.113999761,
+      "short_term_realized_pnl": -0.151997507,
       "long_term_realized_pnl": 0.0,
       "peak_equity_usd": 100000.0,
       "drawdown_paused": false,
@@ -1926,19 +1992,19 @@
           "correlation_group": "usd_fx",
           "direction": "long",
           "policy_name": "D",
-          "state": "waiting_entry",
-          "avg_entry_price": 0.0,
-          "remaining_qty": 0.0,
+          "state": "active",
+          "avg_entry_price": 1.42907,
+          "remaining_qty": 265.8914132,
           "current_stop_loss": 1.423631,
           "current_tp1": 1.439439,
           "current_tp2": 1.441988,
           "leverage": 5.0,
           "r_plan_usd": 7.5405,
-          "realized_pnl_usd": 0.0,
-          "total_fees_usd": 0.0,
+          "realized_pnl_usd": -0.038,
+          "total_fees_usd": 0.038,
           "total_overnight_usd": 0.0,
           "r_multiple": 0.0,
-          "entered_at_utc": null,
+          "entered_at_utc": "2026-11-16T13:03:00Z",
           "closed_at_utc": null,
           "exit_price": null,
           "exit_reason": null,
@@ -1958,8 +2024,17 @@
           "fee_rate": 0.0001,
           "slippage_bps": 1.0,
           "overnight_cost_daily_bps": 1.0,
-          "initial_filled_qty": 0.0,
-          "stages": []
+          "initial_filled_qty": 265.8914132,
+          "stages": [
+            {
+              "stage": 1,
+              "add_type": "initial",
+              "fill_price": 1.4290700682185393,
+              "qty": 265.8914131996866,
+              "notional_usd": 379.97746,
+              "filled_at_utc": "2026-11-16T13:03:00Z"
+            }
+          ]
         }
       },
       "orders": {
@@ -2041,7 +2116,7 @@
           "entry_low": 1.427301,
           "entry_high": 1.430159,
           "valid_until_utc": "2026-11-16T17:03:21Z",
-          "status": "pending"
+          "status": "filled"
         }
       },
       "fills": [
@@ -2083,6 +2158,19 @@
           "fee_usd": 0.0379999502,
           "realized_pnl_usd": -0.0379999502,
           "ts_utc": "2026-11-16T12:50:00Z"
+        },
+        {
+          "fill_id": "FILL-SIG-20261116-0008-00019",
+          "signal_id": "SIG-20261116-0008",
+          "symbol": "USDCAD",
+          "side": "buy",
+          "action": "entry",
+          "price": 1.4290700682185393,
+          "qty": 265.8914131996866,
+          "notional_usd": 379.97746,
+          "fee_usd": 0.037997746000000006,
+          "realized_pnl_usd": -0.037997746000000006,
+          "ts_utc": "2026-11-16T13:03:00Z"
         }
       ],
       "daily_realized_pnl": {},
@@ -2093,7 +2181,7 @@
     },
     "E": {
       "policy_name": "E",
-      "short_term_realized_pnl": -0.1982608695,
+      "short_term_realized_pnl": -0.2643410086,
       "long_term_realized_pnl": 0.0,
       "peak_equity_usd": 100000.0,
       "drawdown_paused": false,
@@ -2434,19 +2522,19 @@
           "correlation_group": "usd_fx",
           "direction": "long",
           "policy_name": "E",
-          "state": "waiting_entry",
-          "avg_entry_price": 0.0,
-          "remaining_qty": 0.0,
+          "state": "active",
+          "avg_entry_price": 1.42907,
+          "remaining_qty": 462.39957417,
           "current_stop_loss": 1.423631,
           "current_tp1": 1.439439,
           "current_tp2": 1.441988,
           "leverage": 5.0,
           "r_plan_usd": 7.5401,
-          "realized_pnl_usd": 0.0,
-          "total_fees_usd": 0.0,
+          "realized_pnl_usd": -0.0661,
+          "total_fees_usd": 0.0661,
           "total_overnight_usd": 0.0,
           "r_multiple": 0.0,
-          "entered_at_utc": null,
+          "entered_at_utc": "2026-11-16T13:03:00Z",
           "closed_at_utc": null,
           "exit_price": null,
           "exit_reason": null,
@@ -2466,8 +2554,17 @@
           "fee_rate": 0.0001,
           "slippage_bps": 1.0,
           "overnight_cost_daily_bps": 1.0,
-          "initial_filled_qty": 0.0,
-          "stages": []
+          "initial_filled_qty": 462.39957417,
+          "stages": [
+            {
+              "stage": 1,
+              "add_type": "initial",
+              "fill_price": 1.4290700682185393,
+              "qty": 462.399574167659,
+              "notional_usd": 660.801391,
+              "filled_at_utc": "2026-11-16T13:03:00Z"
+            }
+          ]
         }
       },
       "orders": {
@@ -2549,7 +2646,7 @@
           "entry_low": 1.427301,
           "entry_high": 1.430159,
           "valid_until_utc": "2026-11-16T17:03:21Z",
-          "status": "pending"
+          "status": "filled"
         }
       },
       "fills": [
@@ -2591,6 +2688,19 @@
           "fee_usd": 0.0660869565,
           "realized_pnl_usd": -0.0660869565,
           "ts_utc": "2026-11-16T12:50:00Z"
+        },
+        {
+          "fill_id": "FILL-SIG-20261116-0008-00020",
+          "signal_id": "SIG-20261116-0008",
+          "symbol": "USDCAD",
+          "side": "buy",
+          "action": "entry",
+          "price": 1.4290700682185393,
+          "qty": 462.399574167659,
+          "notional_usd": 660.801391,
+          "fee_usd": 0.0660801391,
+          "realized_pnl_usd": -0.0660801391,
+          "ts_utc": "2026-11-16T13:03:00Z"
         }
       ],
       "daily_realized_pnl": {},

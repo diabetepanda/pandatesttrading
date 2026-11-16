@@ -27,21 +27,30 @@
     ],
     "snapshot_id": "SNAP-SIG-20261116-0008",
     "verification_status": "觀察中（未通過驗證）",
-    "lifecycle_state": "waiting_entry",
-    "stages_filled": 0,
-    "realized_pnl_usd": 0.0,
+    "lifecycle_state": "active",
+    "stages_filled": 1,
+    "realized_pnl_usd": -0.07,
     "r_multiple": 0.0,
     "exit_reason": null,
-    "avg_entry_price": 0.0,
-    "remaining_qty": 0.0,
+    "avg_entry_price": 1.42907,
+    "remaining_qty": 462.39957417,
     "current_stop_loss": 1.423631,
     "current_tp1": 1.439439,
     "current_tp2": 1.441988,
     "r_plan_usd": 7.5401,
-    "entered_at_utc": null,
+    "entered_at_utc": "2026-11-16T13:03:00Z",
     "closed_at_utc": null,
     "exit_price": null,
-    "stages": []
+    "stages": [
+      {
+        "stage": 1,
+        "add_type": "initial",
+        "fill_price": 1.4290700682185393,
+        "qty": 462.399574167659,
+        "notional_usd": 660.801391,
+        "filled_at_utc": "2026-11-16T13:03:00Z"
+      }
+    ]
   },
   {
     "signal_id": "SIG-20261116-0007",

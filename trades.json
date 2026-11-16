@@ -335,19 +335,19 @@
     "correlation_group": "usd_fx",
     "direction": "long",
     "policy_name": "E",
-    "state": "waiting_entry",
-    "avg_entry_price": 0.0,
-    "remaining_qty": 0.0,
+    "state": "active",
+    "avg_entry_price": 1.42907,
+    "remaining_qty": 462.39957417,
     "current_stop_loss": 1.423631,
     "current_tp1": 1.439439,
     "current_tp2": 1.441988,
     "leverage": 5.0,
     "r_plan_usd": 7.5401,
-    "realized_pnl_usd": 0.0,
-    "total_fees_usd": 0.0,
+    "realized_pnl_usd": -0.0661,
+    "total_fees_usd": 0.0661,
     "total_overnight_usd": 0.0,
     "r_multiple": 0.0,
-    "entered_at_utc": null,
+    "entered_at_utc": "2026-11-16T13:03:00Z",
     "closed_at_utc": null,
     "exit_price": null,
     "exit_reason": null,
@@ -367,7 +367,16 @@
     "fee_rate": 0.0001,
     "slippage_bps": 1.0,
     "overnight_cost_daily_bps": 1.0,
-    "initial_filled_qty": 0.0,
-    "stages": []
+    "initial_filled_qty": 462.39957417,
+    "stages": [
+      {
+        "stage": 1,
+        "add_type": "initial",
+        "fill_price": 1.4290700682185393,
+        "qty": 462.399574167659,
+        "notional_usd": 660.801391,
+        "filled_at_utc": "2026-11-16T13:03:00Z"
+      }
+    ]
   }
 ]
