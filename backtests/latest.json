@@ -1,11 +1,11 @@
 {
-  "generated_at_utc": "2026-11-16T09:30:00Z",
-  "duration_sec": 175.77,
+  "generated_at_utc": "2026-11-16T10:42:35Z",
+  "duration_sec": 412.63,
   "summary": {
     "total_strategies": 6,
     "passed": 0,
     "failed": 6,
-    "insufficient_history": 3
+    "insufficient_history": 0
   },
   "strategies": [
     {
@@ -14,12 +14,15 @@
       "pool": "short_term",
       "capital_usd": 10000.0,
       "interval": "1h",
-      "status": "insufficient_history",
+      "status": "ok",
       "passed": false,
       "applicable_instruments": 48,
-      "eligible_instruments": 48,
-      "excluded_insufficient_count": 48,
-      "history_years": 0.0849,
+      "eligible_instruments": 33,
+      "excluded_no_free_history_count": 15,
+      "excluded_insufficient_count": 15,
+      "short_history_crypto_count": 10,
+      "history_years": 5.3782,
+      "data_note": "外匯與商品 15 檔無足夠免費歷史資料已排除；上市／可得未滿 5 年加密貨幣 10 檔（APTUSDT(4.1y), ARBUSDT(3.7y), OPUSDT(4.5y), PEPEUSDT(3.5y), RENDERUSDT(2.3y), SEIUSDT(3.3y) 等）使用全部可得資料回測",
       "chosen_params": {
         "trend_ma_period": 200,
         "exit_ma_period": 5,
@@ -29,26 +32,30 @@
         "sl_atr_mult": 2.5
       },
       "in_sample": {
-        "trades": 386,
-        "win_rate_pct": 51.55,
-        "expectancy_r": -0.014,
-        "expectancy_usd": -3.5,
-        "profit_factor": 0.541,
-        "max_drawdown_pct": 15.67,
-        "total_return_pct": -13.53,
-        "total_pnl_usd": -1352.73
+        "trades": 21788,
+        "win_rate_pct": 58.97,
+        "expectancy_r": -0.0461,
+        "expectancy_usd": -0.45,
+        "profit_factor": 0.823,
+        "max_drawdown_pct": 99.0,
+        "min_equity_usd": 108.77,
+        "ending_equity_usd": 110.02,
+        "total_return_pct": -98.9,
+        "total_pnl_usd": -9889.98
       },
       "out_of_sample": {
-        "trades": 307,
-        "win_rate_pct": 52.12,
-        "expectancy_r": -0.0021,
-        "expectancy_usd": -0.53,
-        "profit_factor": 0.905,
-        "max_drawdown_pct": 5.77,
-        "total_return_pct": -1.64,
-        "total_pnl_usd": -163.77
+        "trades": 9792,
+        "win_rate_pct": 56.02,
+        "expectancy_r": -0.0641,
+        "expectancy_usd": -0.96,
+        "profit_factor": 0.745,
+        "max_drawdown_pct": 94.14,
+        "min_equity_usd": 601.53,
+        "ending_equity_usd": 607.25,
+        "total_return_pct": -93.93,
+        "total_pnl_usd": -9392.75
       },
-      "reason": "歷史資料不足 5 年（可用 0.08 年）；樣本外期望值 -0.002R <= 0；樣本外獲利因子 0.91 <= 1.3"
+      "reason": "樣本外期望值 -0.064R <= 0；樣本外獲利因子 0.74 <= 1.3；樣本外最大回撤 94.14% >= 25%"
     },
     {
       "strategy_id": "S2",
@@ -56,40 +63,47 @@
       "pool": "short_term",
       "capital_usd": 10000.0,
       "interval": "15m",
-      "status": "insufficient_history",
+      "status": "ok",
       "passed": false,
       "applicable_instruments": 48,
-      "eligible_instruments": 48,
-      "excluded_insufficient_count": 48,
-      "history_years": 0.085,
+      "eligible_instruments": 33,
+      "excluded_no_free_history_count": 15,
+      "excluded_insufficient_count": 15,
+      "short_history_crypto_count": 10,
+      "history_years": 5.3783,
+      "data_note": "外匯與商品 15 檔無足夠免費歷史資料已排除；上市／可得未滿 5 年加密貨幣 10 檔（APTUSDT(4.1y), ARBUSDT(3.7y), OPUSDT(4.5y), PEPEUSDT(3.5y), RENDERUSDT(2.3y), SEIUSDT(3.3y) 等）使用全部可得資料回測",
       "chosen_params": {
         "bb_period": 20,
         "bb_std": 2.0,
-        "squeeze_lookback": 96,
-        "squeeze_percentile": 20.0,
+        "squeeze_lookback": 48,
+        "squeeze_percentile": 30.0,
         "sl_atr_mult": 1.5
       },
       "in_sample": {
-        "trades": 1068,
-        "win_rate_pct": 22.38,
-        "expectancy_r": -0.0106,
-        "expectancy_usd": -2.64,
-        "profit_factor": 0.6,
-        "max_drawdown_pct": 28.32,
-        "total_return_pct": -28.23,
-        "total_pnl_usd": -2823.47
+        "trades": 35973,
+        "win_rate_pct": 20.26,
+        "expectancy_r": -0.1855,
+        "expectancy_usd": -0.28,
+        "profit_factor": 0.665,
+        "max_drawdown_pct": 99.99,
+        "min_equity_usd": 0.01,
+        "ending_equity_usd": 0.01,
+        "total_return_pct": -100.0,
+        "total_pnl_usd": -9999.93
       },
       "out_of_sample": {
-        "trades": 485,
-        "win_rate_pct": 28.45,
-        "expectancy_r": 0.0078,
-        "expectancy_usd": 1.96,
-        "profit_factor": 1.279,
-        "max_drawdown_pct": 9.57,
-        "total_return_pct": 9.52,
-        "total_pnl_usd": 951.7
+        "trades": 15700,
+        "win_rate_pct": 23.88,
+        "expectancy_r": -0.229,
+        "expectancy_usd": -0.64,
+        "profit_factor": 0.705,
+        "max_drawdown_pct": 99.86,
+        "min_equity_usd": 14.89,
+        "ending_equity_usd": 15.17,
+        "total_return_pct": -99.85,
+        "total_pnl_usd": -9984.83
       },
-      "reason": "歷史資料不足 5 年（可用 0.09 年）；樣本外獲利因子 1.28 <= 1.3"
+      "reason": "樣本外期望值 -0.229R <= 0；樣本外獲利因子 0.70 <= 1.3；樣本外最大回撤 99.86% >= 25%"
     },
     {
       "strategy_id": "S3",
@@ -97,42 +111,49 @@
       "pool": "short_term",
       "capital_usd": 10000.0,
       "interval": "15m",
-      "status": "insufficient_history",
+      "status": "ok",
       "passed": false,
       "applicable_instruments": 48,
-      "eligible_instruments": 48,
-      "excluded_insufficient_count": 48,
-      "history_years": 0.085,
+      "eligible_instruments": 33,
+      "excluded_no_free_history_count": 15,
+      "excluded_insufficient_count": 15,
+      "short_history_crypto_count": 10,
+      "history_years": 5.3783,
+      "data_note": "外匯與商品 15 檔無足夠免費歷史資料已排除；上市／可得未滿 5 年加密貨幣 10 檔（APTUSDT(4.1y), ARBUSDT(3.7y), OPUSDT(4.5y), PEPEUSDT(3.5y), RENDERUSDT(2.3y), SEIUSDT(3.3y) 等）使用全部可得資料回測",
       "chosen_params": {
-        "range_bars": 48,
+        "range_bars": 32,
         "min_edge_touches": 2,
-        "edge_zone_pct": 15.0,
+        "edge_zone_pct": 20.0,
         "rsi_period": 14,
-        "rsi_oversold": 30.0,
-        "rsi_overbought": 70.0,
+        "rsi_oversold": 35.0,
+        "rsi_overbought": 65.0,
         "sl_atr_buffer": 0.5
       },
       "in_sample": {
-        "trades": 1120,
-        "win_rate_pct": 18.93,
-        "expectancy_r": -0.0052,
-        "expectancy_usd": -1.31,
-        "profit_factor": 0.824,
-        "max_drawdown_pct": 19.14,
-        "total_return_pct": -14.67,
-        "total_pnl_usd": -1467.38
+        "trades": 53601,
+        "win_rate_pct": 17.85,
+        "expectancy_r": -0.2031,
+        "expectancy_usd": -0.19,
+        "profit_factor": 0.801,
+        "max_drawdown_pct": 99.99,
+        "min_equity_usd": 0.01,
+        "ending_equity_usd": 0.01,
+        "total_return_pct": -100.0,
+        "total_pnl_usd": -9999.86
       },
       "out_of_sample": {
-        "trades": 601,
-        "win_rate_pct": 18.3,
-        "expectancy_r": -0.0014,
-        "expectancy_usd": -0.35,
-        "profit_factor": 0.961,
-        "max_drawdown_pct": 27.54,
-        "total_return_pct": -2.08,
-        "total_pnl_usd": -207.95
+        "trades": 25334,
+        "win_rate_pct": 19.1,
+        "expectancy_r": -0.3062,
+        "expectancy_usd": -0.39,
+        "profit_factor": 0.645,
+        "max_drawdown_pct": 99.99,
+        "min_equity_usd": 0.87,
+        "ending_equity_usd": 0.89,
+        "total_return_pct": -99.99,
+        "total_pnl_usd": -9999.11
       },
-      "reason": "歷史資料不足 5 年（可用 0.09 年）；樣本外期望值 -0.001R <= 0；樣本外獲利因子 0.96 <= 1.3；樣本外最大回撤 27.54% >= 25%"
+      "reason": "樣本外期望值 -0.306R <= 0；樣本外獲利因子 0.65 <= 1.3；樣本外最大回撤 99.99% >= 25%"
     },
     {
       "strategy_id": "L1",
@@ -144,34 +165,41 @@
       "passed": false,
       "applicable_instruments": 48,
       "eligible_instruments": 38,
+      "excluded_no_free_history_count": 0,
       "excluded_insufficient_count": 10,
+      "short_history_crypto_count": 10,
       "history_years": 9.9904,
+      "data_note": "日線未滿 5 年標的 10 檔已排除",
       "chosen_params": {
         "entry_period": 20,
         "exit_period": 10,
-        "sl_atr_mult": 2.5
+        "sl_atr_mult": 3.0
       },
       "in_sample": {
-        "trades": 1658,
-        "win_rate_pct": 32.93,
-        "expectancy_r": 0.2646,
-        "expectancy_usd": 132.32,
-        "profit_factor": 1.842,
-        "max_drawdown_pct": 58.09,
-        "total_return_pct": 940.2,
-        "total_pnl_usd": 219379.04
+        "trades": 377,
+        "win_rate_pct": 33.95,
+        "expectancy_r": 0.1753,
+        "expectancy_usd": 39.45,
+        "profit_factor": 1.506,
+        "max_drawdown_pct": 20.55,
+        "min_equity_usd": 18537.39,
+        "ending_equity_usd": 38207.78,
+        "total_return_pct": 63.75,
+        "total_pnl_usd": 14874.45
       },
       "out_of_sample": {
-        "trades": 741,
-        "win_rate_pct": 28.61,
-        "expectancy_r": 0.0274,
-        "expectancy_usd": 13.7,
-        "profit_factor": 1.079,
-        "max_drawdown_pct": 65.06,
-        "total_return_pct": 43.51,
-        "total_pnl_usd": 10153.34
+        "trades": 171,
+        "win_rate_pct": 27.49,
+        "expectancy_r": -0.098,
+        "expectancy_usd": -10.81,
+        "profit_factor": 0.857,
+        "max_drawdown_pct": 19.92,
+        "min_equity_usd": 20327.61,
+        "ending_equity_usd": 21485.66,
+        "total_return_pct": -7.92,
+        "total_pnl_usd": -1847.67
       },
-      "reason": "樣本外獲利因子 1.08 <= 1.3；樣本外最大回撤 65.06% >= 25%"
+      "reason": "樣本外期望值 -0.098R <= 0；樣本外獲利因子 0.86 <= 1.3"
     },
     {
       "strategy_id": "L2",
@@ -183,8 +211,11 @@
       "passed": false,
       "applicable_instruments": 33,
       "eligible_instruments": 23,
+      "excluded_no_free_history_count": 0,
       "excluded_insufficient_count": 10,
+      "short_history_crypto_count": 10,
       "history_years": 7.1157,
+      "data_note": "日線未滿 5 年標的 10 檔已排除",
       "chosen_params": {
         "lookback_days": 28,
         "top_k": 3,
@@ -192,26 +223,30 @@
         "sl_atr_mult": 2.5
       },
       "in_sample": {
-        "trades": 307,
-        "win_rate_pct": 46.58,
-        "expectancy_r": 0.3938,
-        "expectancy_usd": 196.88,
-        "profit_factor": 2.162,
-        "max_drawdown_pct": 13.34,
-        "total_return_pct": 259.04,
-        "total_pnl_usd": 60441.6
+        "trades": 288,
+        "win_rate_pct": 46.88,
+        "expectancy_r": 0.402,
+        "expectancy_usd": 96.79,
+        "profit_factor": 1.919,
+        "max_drawdown_pct": 14.11,
+        "min_equity_usd": 22707.03,
+        "ending_equity_usd": 51207.67,
+        "total_return_pct": 119.46,
+        "total_pnl_usd": 27874.34
       },
       "out_of_sample": {
         "trades": 134,
         "win_rate_pct": 34.33,
-        "expectancy_r": 0.0568,
-        "expectancy_usd": 28.39,
-        "profit_factor": 1.135,
-        "max_drawdown_pct": 32.19,
-        "total_return_pct": 16.3,
-        "total_pnl_usd": 3804.44
+        "expectancy_r": 0.0526,
+        "expectancy_usd": 5.91,
+        "profit_factor": 1.074,
+        "max_drawdown_pct": 15.37,
+        "min_equity_usd": 22189.03,
+        "ending_equity_usd": 24124.96,
+        "total_return_pct": 3.39,
+        "total_pnl_usd": 791.63
       },
-      "reason": "樣本外獲利因子 1.14 <= 1.3；樣本外最大回撤 32.19% >= 25%"
+      "reason": "樣本外獲利因子 1.07 <= 1.3"
     },
     {
       "strategy_id": "L3",
@@ -223,33 +258,40 @@
       "passed": false,
       "applicable_instruments": 48,
       "eligible_instruments": 38,
+      "excluded_no_free_history_count": 0,
       "excluded_insufficient_count": 10,
+      "short_history_crypto_count": 10,
       "history_years": 9.9904,
+      "data_note": "日線未滿 5 年標的 10 檔已排除",
       "chosen_params": {
         "ma_period": 150,
-        "sl_atr_mult": 3.0
+        "sl_atr_mult": 2.5
       },
       "in_sample": {
-        "trades": 1835,
-        "win_rate_pct": 17.0,
-        "expectancy_r": 0.2762,
-        "expectancy_usd": 138.09,
-        "profit_factor": 2.327,
-        "max_drawdown_pct": 152.95,
-        "total_return_pct": 1086.0,
-        "total_pnl_usd": 253400.8
+        "trades": 359,
+        "win_rate_pct": 18.94,
+        "expectancy_r": 1.5114,
+        "expectancy_usd": 226.2,
+        "profit_factor": 3.556,
+        "max_drawdown_pct": 29.2,
+        "min_equity_usd": 16519.64,
+        "ending_equity_usd": 104540.16,
+        "total_return_pct": 348.03,
+        "total_pnl_usd": 81206.82
       },
       "out_of_sample": {
-        "trades": 926,
-        "win_rate_pct": 15.98,
-        "expectancy_r": -0.0485,
-        "expectancy_usd": -24.26,
-        "profit_factor": 0.776,
-        "max_drawdown_pct": 105.86,
-        "total_return_pct": -96.27,
-        "total_pnl_usd": -22463.28
+        "trades": 171,
+        "win_rate_pct": 19.3,
+        "expectancy_r": -0.0964,
+        "expectancy_usd": -8.46,
+        "profit_factor": 0.819,
+        "max_drawdown_pct": 12.09,
+        "min_equity_usd": 21726.68,
+        "ending_equity_usd": 21887.5,
+        "total_return_pct": -6.2,
+        "total_pnl_usd": -1445.84
       },
-      "reason": "樣本外期望值 -0.049R <= 0；樣本外獲利因子 0.78 <= 1.3；樣本外最大回撤 105.86% >= 25%"
+      "reason": "樣本外期望值 -0.096R <= 0；樣本外獲利因子 0.82 <= 1.3"
     }
   ],
   "results": [
@@ -259,12 +301,15 @@
       "pool": "short_term",
       "capital_usd": 10000.0,
       "interval": "1h",
-      "status": "insufficient_history",
+      "status": "ok",
       "passed": false,
       "applicable_instruments": 48,
-      "eligible_instruments": 48,
-      "excluded_insufficient_count": 48,
-      "history_years": 0.0849,
+      "eligible_instruments": 33,
+      "excluded_no_free_history_count": 15,
+      "excluded_insufficient_count": 15,
+      "short_history_crypto_count": 10,
+      "history_years": 5.3782,
+      "data_note": "外匯與商品 15 檔無足夠免費歷史資料已排除；上市／可得未滿 5 年加密貨幣 10 檔（APTUSDT(4.1y), ARBUSDT(3.7y), OPUSDT(4.5y), PEPEUSDT(3.5y), RENDERUSDT(2.3y), SEIUSDT(3.3y) 等）使用全部可得資料回測",
       "chosen_params": {
         "trend_ma_period": 200,
         "exit_ma_period": 5,
@@ -274,26 +319,30 @@
         "sl_atr_mult": 2.5
       },
       "in_sample": {
-        "trades": 386,
-        "win_rate_pct": 51.55,
-        "expectancy_r": -0.014,
-        "expectancy_usd": -3.5,
-        "profit_factor": 0.541,
-        "max_drawdown_pct": 15.67,
-        "total_return_pct": -13.53,
-        "total_pnl_usd": -1352.73
+        "trades": 21788,
+        "win_rate_pct": 58.97,
+        "expectancy_r": -0.0461,
+        "expectancy_usd": -0.45,
+        "profit_factor": 0.823,
+        "max_drawdown_pct": 99.0,
+        "min_equity_usd": 108.77,
+        "ending_equity_usd": 110.02,
+        "total_return_pct": -98.9,
+        "total_pnl_usd": -9889.98
       },
       "out_of_sample": {
-        "trades": 307,
-        "win_rate_pct": 52.12,
-        "expectancy_r": -0.0021,
-        "expectancy_usd": -0.53,
-        "profit_factor": 0.905,
-        "max_drawdown_pct": 5.77,
-        "total_return_pct": -1.64,
-        "total_pnl_usd": -163.77
+        "trades": 9792,
+        "win_rate_pct": 56.02,
+        "expectancy_r": -0.0641,
+        "expectancy_usd": -0.96,
+        "profit_factor": 0.745,
+        "max_drawdown_pct": 94.14,
+        "min_equity_usd": 601.53,
+        "ending_equity_usd": 607.25,
+        "total_return_pct": -93.93,
+        "total_pnl_usd": -9392.75
       },
-      "reason": "歷史資料不足 5 年（可用 0.08 年）；樣本外期望值 -0.002R <= 0；樣本外獲利因子 0.91 <= 1.3"
+      "reason": "樣本外期望值 -0.064R <= 0；樣本外獲利因子 0.74 <= 1.3；樣本外最大回撤 94.14% >= 25%"
     },
     {
       "strategy_id": "S2",
@@ -301,40 +350,47 @@
       "pool": "short_term",
       "capital_usd": 10000.0,
       "interval": "15m",
-      "status": "insufficient_history",
+      "status": "ok",
       "passed": false,
       "applicable_instruments": 48,
-      "eligible_instruments": 48,
-      "excluded_insufficient_count": 48,
-      "history_years": 0.085,
+      "eligible_instruments": 33,
+      "excluded_no_free_history_count": 15,
+      "excluded_insufficient_count": 15,
+      "short_history_crypto_count": 10,
+      "history_years": 5.3783,
+      "data_note": "外匯與商品 15 檔無足夠免費歷史資料已排除；上市／可得未滿 5 年加密貨幣 10 檔（APTUSDT(4.1y), ARBUSDT(3.7y), OPUSDT(4.5y), PEPEUSDT(3.5y), RENDERUSDT(2.3y), SEIUSDT(3.3y) 等）使用全部可得資料回測",
       "chosen_params": {
         "bb_period": 20,
         "bb_std": 2.0,
-        "squeeze_lookback": 96,
-        "squeeze_percentile": 20.0,
+        "squeeze_lookback": 48,
+        "squeeze_percentile": 30.0,
         "sl_atr_mult": 1.5
       },
       "in_sample": {
-        "trades": 1068,
-        "win_rate_pct": 22.38,
-        "expectancy_r": -0.0106,
-        "expectancy_usd": -2.64,
-        "profit_factor": 0.6,
-        "max_drawdown_pct": 28.32,
-        "total_return_pct": -28.23,
-        "total_pnl_usd": -2823.47
+        "trades": 35973,
+        "win_rate_pct": 20.26,
+        "expectancy_r": -0.1855,
+        "expectancy_usd": -0.28,
+        "profit_factor": 0.665,
+        "max_drawdown_pct": 99.99,
+        "min_equity_usd": 0.01,
+        "ending_equity_usd": 0.01,
+        "total_return_pct": -100.0,
+        "total_pnl_usd": -9999.93
       },
       "out_of_sample": {
-        "trades": 485,
-        "win_rate_pct": 28.45,
-        "expectancy_r": 0.0078,
-        "expectancy_usd": 1.96,
-        "profit_factor": 1.279,
-        "max_drawdown_pct": 9.57,
-        "total_return_pct": 9.52,
-        "total_pnl_usd": 951.7
+        "trades": 15700,
+        "win_rate_pct": 23.88,
+        "expectancy_r": -0.229,
+        "expectancy_usd": -0.64,
+        "profit_factor": 0.705,
+        "max_drawdown_pct": 99.86,
+        "min_equity_usd": 14.89,
+        "ending_equity_usd": 15.17,
+        "total_return_pct": -99.85,
+        "total_pnl_usd": -9984.83
       },
-      "reason": "歷史資料不足 5 年（可用 0.09 年）；樣本外獲利因子 1.28 <= 1.3"
+      "reason": "樣本外期望值 -0.229R <= 0；樣本外獲利因子 0.70 <= 1.3；樣本外最大回撤 99.86% >= 25%"
     },
     {
       "strategy_id": "S3",
@@ -342,42 +398,49 @@
       "pool": "short_term",
       "capital_usd": 10000.0,
       "interval": "15m",
-      "status": "insufficient_history",
+      "status": "ok",
       "passed": false,
       "applicable_instruments": 48,
-      "eligible_instruments": 48,
-      "excluded_insufficient_count": 48,
-      "history_years": 0.085,
+      "eligible_instruments": 33,
+      "excluded_no_free_history_count": 15,
+      "excluded_insufficient_count": 15,
+      "short_history_crypto_count": 10,
+      "history_years": 5.3783,
+      "data_note": "外匯與商品 15 檔無足夠免費歷史資料已排除；上市／可得未滿 5 年加密貨幣 10 檔（APTUSDT(4.1y), ARBUSDT(3.7y), OPUSDT(4.5y), PEPEUSDT(3.5y), RENDERUSDT(2.3y), SEIUSDT(3.3y) 等）使用全部可得資料回測",
       "chosen_params": {
-        "range_bars": 48,
+        "range_bars": 32,
         "min_edge_touches": 2,
-        "edge_zone_pct": 15.0,
+        "edge_zone_pct": 20.0,
         "rsi_period": 14,
-        "rsi_oversold": 30.0,
-        "rsi_overbought": 70.0,
+        "rsi_oversold": 35.0,
+        "rsi_overbought": 65.0,
         "sl_atr_buffer": 0.5
       },
       "in_sample": {
-        "trades": 1120,
-        "win_rate_pct": 18.93,
-        "expectancy_r": -0.0052,
-        "expectancy_usd": -1.31,
-        "profit_factor": 0.824,
-        "max_drawdown_pct": 19.14,
-        "total_return_pct": -14.67,
-        "total_pnl_usd": -1467.38
+        "trades": 53601,
+        "win_rate_pct": 17.85,
+        "expectancy_r": -0.2031,
+        "expectancy_usd": -0.19,
+        "profit_factor": 0.801,
+        "max_drawdown_pct": 99.99,
+        "min_equity_usd": 0.01,
+        "ending_equity_usd": 0.01,
+        "total_return_pct": -100.0,
+        "total_pnl_usd": -9999.86
       },
       "out_of_sample": {
-        "trades": 601,
-        "win_rate_pct": 18.3,
-        "expectancy_r": -0.0014,
-        "expectancy_usd": -0.35,
-        "profit_factor": 0.961,
-        "max_drawdown_pct": 27.54,
-        "total_return_pct": -2.08,
-        "total_pnl_usd": -207.95
+        "trades": 25334,
+        "win_rate_pct": 19.1,
+        "expectancy_r": -0.3062,
+        "expectancy_usd": -0.39,
+        "profit_factor": 0.645,
+        "max_drawdown_pct": 99.99,
+        "min_equity_usd": 0.87,
+        "ending_equity_usd": 0.89,
+        "total_return_pct": -99.99,
+        "total_pnl_usd": -9999.11
       },
-      "reason": "歷史資料不足 5 年（可用 0.09 年）；樣本外期望值 -0.001R <= 0；樣本外獲利因子 0.96 <= 1.3；樣本外最大回撤 27.54% >= 25%"
+      "reason": "樣本外期望值 -0.306R <= 0；樣本外獲利因子 0.65 <= 1.3；樣本外最大回撤 99.99% >= 25%"
     },
     {
       "strategy_id": "L1",
@@ -389,34 +452,41 @@
       "passed": false,
       "applicable_instruments": 48,
       "eligible_instruments": 38,
+      "excluded_no_free_history_count": 0,
       "excluded_insufficient_count": 10,
+      "short_history_crypto_count": 10,
       "history_years": 9.9904,
+      "data_note": "日線未滿 5 年標的 10 檔已排除",
       "chosen_params": {
         "entry_period": 20,
         "exit_period": 10,
-        "sl_atr_mult": 2.5
+        "sl_atr_mult": 3.0
       },
       "in_sample": {
-        "trades": 1658,
-        "win_rate_pct": 32.93,
-        "expectancy_r": 0.2646,
-        "expectancy_usd": 132.32,
-        "profit_factor": 1.842,
-        "max_drawdown_pct": 58.09,
-        "total_return_pct": 940.2,
-        "total_pnl_usd": 219379.04
+        "trades": 377,
+        "win_rate_pct": 33.95,
+        "expectancy_r": 0.1753,
+        "expectancy_usd": 39.45,
+        "profit_factor": 1.506,
+        "max_drawdown_pct": 20.55,
+        "min_equity_usd": 18537.39,
+        "ending_equity_usd": 38207.78,
+        "total_return_pct": 63.75,
+        "total_pnl_usd": 14874.45
       },
       "out_of_sample": {
-        "trades": 741,
-        "win_rate_pct": 28.61,
-        "expectancy_r": 0.0274,
-        "expectancy_usd": 13.7,
-        "profit_factor": 1.079,
-        "max_drawdown_pct": 65.06,
-        "total_return_pct": 43.51,
-        "total_pnl_usd": 10153.34
+        "trades": 171,
+        "win_rate_pct": 27.49,
+        "expectancy_r": -0.098,
+        "expectancy_usd": -10.81,
+        "profit_factor": 0.857,
+        "max_drawdown_pct": 19.92,
+        "min_equity_usd": 20327.61,
+        "ending_equity_usd": 21485.66,
+        "total_return_pct": -7.92,
+        "total_pnl_usd": -1847.67
       },
-      "reason": "樣本外獲利因子 1.08 <= 1.3；樣本外最大回撤 65.06% >= 25%"
+      "reason": "樣本外期望值 -0.098R <= 0；樣本外獲利因子 0.86 <= 1.3"
     },
     {
       "strategy_id": "L2",
@@ -428,8 +498,11 @@
       "passed": false,
       "applicable_instruments": 33,
       "eligible_instruments": 23,
+      "excluded_no_free_history_count": 0,
       "excluded_insufficient_count": 10,
+      "short_history_crypto_count": 10,
       "history_years": 7.1157,
+      "data_note": "日線未滿 5 年標的 10 檔已排除",
       "chosen_params": {
         "lookback_days": 28,
         "top_k": 3,
@@ -437,26 +510,30 @@
         "sl_atr_mult": 2.5
       },
       "in_sample": {
-        "trades": 307,
-        "win_rate_pct": 46.58,
-        "expectancy_r": 0.3938,
-        "expectancy_usd": 196.88,
-        "profit_factor": 2.162,
-        "max_drawdown_pct": 13.34,
-        "total_return_pct": 259.04,
-        "total_pnl_usd": 60441.6
+        "trades": 288,
+        "win_rate_pct": 46.88,
+        "expectancy_r": 0.402,
+        "expectancy_usd": 96.79,
+        "profit_factor": 1.919,
+        "max_drawdown_pct": 14.11,
+        "min_equity_usd": 22707.03,
+        "ending_equity_usd": 51207.67,
+        "total_return_pct": 119.46,
+        "total_pnl_usd": 27874.34
       },
       "out_of_sample": {
         "trades": 134,
         "win_rate_pct": 34.33,
-        "expectancy_r": 0.0568,
-        "expectancy_usd": 28.39,
-        "profit_factor": 1.135,
-        "max_drawdown_pct": 32.19,
-        "total_return_pct": 16.3,
-        "total_pnl_usd": 3804.44
+        "expectancy_r": 0.0526,
+        "expectancy_usd": 5.91,
+        "profit_factor": 1.074,
+        "max_drawdown_pct": 15.37,
+        "min_equity_usd": 22189.03,
+        "ending_equity_usd": 24124.96,
+        "total_return_pct": 3.39,
+        "total_pnl_usd": 791.63
       },
-      "reason": "樣本外獲利因子 1.14 <= 1.3；樣本外最大回撤 32.19% >= 25%"
+      "reason": "樣本外獲利因子 1.07 <= 1.3"
     },
     {
       "strategy_id": "L3",
@@ -468,33 +545,40 @@
       "passed": false,
       "applicable_instruments": 48,
       "eligible_instruments": 38,
+      "excluded_no_free_history_count": 0,
       "excluded_insufficient_count": 10,
+      "short_history_crypto_count": 10,
       "history_years": 9.9904,
+      "data_note": "日線未滿 5 年標的 10 檔已排除",
       "chosen_params": {
         "ma_period": 150,
-        "sl_atr_mult": 3.0
+        "sl_atr_mult": 2.5
       },
       "in_sample": {
-        "trades": 1835,
-        "win_rate_pct": 17.0,
-        "expectancy_r": 0.2762,
-        "expectancy_usd": 138.09,
-        "profit_factor": 2.327,
-        "max_drawdown_pct": 152.95,
-        "total_return_pct": 1086.0,
-        "total_pnl_usd": 253400.8
+        "trades": 359,
+        "win_rate_pct": 18.94,
+        "expectancy_r": 1.5114,
+        "expectancy_usd": 226.2,
+        "profit_factor": 3.556,
+        "max_drawdown_pct": 29.2,
+        "min_equity_usd": 16519.64,
+        "ending_equity_usd": 104540.16,
+        "total_return_pct": 348.03,
+        "total_pnl_usd": 81206.82
       },
       "out_of_sample": {
-        "trades": 926,
-        "win_rate_pct": 15.98,
-        "expectancy_r": -0.0485,
-        "expectancy_usd": -24.26,
-        "profit_factor": 0.776,
-        "max_drawdown_pct": 105.86,
-        "total_return_pct": -96.27,
-        "total_pnl_usd": -22463.28
+        "trades": 171,
+        "win_rate_pct": 19.3,
+        "expectancy_r": -0.0964,
+        "expectancy_usd": -8.46,
+        "profit_factor": 0.819,
+        "max_drawdown_pct": 12.09,
+        "min_equity_usd": 21726.68,
+        "ending_equity_usd": 21887.5,
+        "total_return_pct": -6.2,
+        "total_pnl_usd": -1445.84
       },
-      "reason": "樣本外期望值 -0.049R <= 0；樣本外獲利因子 0.78 <= 1.3；樣本外最大回撤 105.86% >= 25%"
+      "reason": "樣本外期望值 -0.096R <= 0；樣本外獲利因子 0.82 <= 1.3"
     }
   ]
 }
