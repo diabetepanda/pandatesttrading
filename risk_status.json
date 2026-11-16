@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-11-16T12:37:17Z",
+  "updated_at_utc": "2026-11-16T12:59:30Z",
   "primary_policy": "E",
   "account": {
     "equity_usd": 100000.0,
@@ -18,7 +18,7 @@
     "used_margin_usd": 0.0,
     "used_margin_pct": 0.0,
     "max_margin_usage_pct": 30.0,
-    "total_stop_risk_usd": 0.0,
+    "total_stop_risk_usd": 235.55,
     "max_total_stop_risk_usd": 3000.0
   },
   "correlation_groups": [
@@ -60,9 +60,9 @@
     {
       "group_id": "usd_fx",
       "name": "美元相關外匯",
-      "used_risk_usd": 0.0,
+      "used_risk_usd": 128.43,
       "limit_usd": 1000.0,
-      "usage_pct": 0.0
+      "usage_pct": 12.84
     },
     {
       "group_id": "gbp_fx",
@@ -95,6 +95,13 @@
     {
       "group_id": "industrial_metals",
       "name": "工業金屬",
+      "used_risk_usd": 107.12,
+      "limit_usd": 1000.0,
+      "usage_pct": 10.71
+    },
+    {
+      "group_id": "index_equities",
+      "name": "全球主要指數",
       "used_risk_usd": 0.0,
       "limit_usd": 1000.0,
       "usage_pct": 0.0
@@ -107,6 +114,88 @@
       "usage_pct": 0.0
     }
   ],
-  "open_positions": [],
+  "open_positions": [
+    {
+      "signal_id": "SIG-20261116-0004",
+      "symbol": "EURUSD",
+      "market": "forex",
+      "strategy": "L1",
+      "direction": "short",
+      "state": "waiting_entry",
+      "stages": [],
+      "stages_filled": 0,
+      "remaining_adds": 3,
+      "avg_entry_price": 0.0,
+      "total_qty": 0.0,
+      "notional_usd": 0.0,
+      "leverage": 5.0,
+      "margin_usd": 0.0,
+      "mark_price": 1.105021,
+      "unrealized_pnl_usd": 0.0,
+      "current_tp1": 1.072337,
+      "current_tp2": "策略動態移動止損／反向訊號出場",
+      "current_stop_loss": 1.120585,
+      "estimated_max_loss_usd": 64.22,
+      "rr_ratio": 2.1,
+      "liquidation_price": 1.215523,
+      "stop_distance_pct": 1.41,
+      "liquidation_distance_pct": 10.0,
+      "stop_to_liq_ratio": 0.141
+    },
+    {
+      "signal_id": "SIG-20261116-0005",
+      "symbol": "EURUSD",
+      "market": "forex",
+      "strategy": "L2",
+      "direction": "short",
+      "state": "waiting_entry",
+      "stages": [],
+      "stages_filled": 0,
+      "remaining_adds": 3,
+      "avg_entry_price": 0.0,
+      "total_qty": 0.0,
+      "notional_usd": 0.0,
+      "leverage": 5.0,
+      "margin_usd": 0.0,
+      "mark_price": 1.105021,
+      "unrealized_pnl_usd": 0.0,
+      "current_tp1": 1.072337,
+      "current_tp2": "策略動態移動止損／反向訊號出場",
+      "current_stop_loss": 1.120585,
+      "estimated_max_loss_usd": 64.22,
+      "rr_ratio": 2.1,
+      "liquidation_price": 1.215523,
+      "stop_distance_pct": 1.41,
+      "liquidation_distance_pct": 10.0,
+      "stop_to_liq_ratio": 0.141
+    },
+    {
+      "signal_id": "SIG-20261116-0006",
+      "symbol": "COPPER",
+      "market": "commodity",
+      "strategy": "L1",
+      "direction": "short",
+      "state": "waiting_entry",
+      "stages": [],
+      "stages_filled": 0,
+      "remaining_adds": 3,
+      "avg_entry_price": 0.0,
+      "total_qty": 0.0,
+      "notional_usd": 0.0,
+      "leverage": 5.0,
+      "margin_usd": 0.0,
+      "mark_price": 6.0795,
+      "unrealized_pnl_usd": 0.0,
+      "current_tp1": 5.77869,
+      "current_tp2": "策略動態移動止損／反向訊號出場",
+      "current_stop_loss": 6.222743,
+      "estimated_max_loss_usd": 107.12,
+      "rr_ratio": 2.1,
+      "liquidation_price": 6.687451,
+      "stop_distance_pct": 2.36,
+      "liquidation_distance_pct": 10.0,
+      "stop_to_liq_ratio": 0.236
+    }
+  ],
   "recent_risk_events": []
 }
