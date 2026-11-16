@@ -71,7 +71,6 @@ def test_run_scan_outputs_required_files(tmp_path: Path) -> None:
         "signals_index.json",
         "new_signals_to_commit.json",
         "trades.json",
-        "orders.json",
         "ledgers_state.json",
     ):
         assert (tmp_path / fname).exists(), f"Missing {fname}"

@@ -8,7 +8,6 @@ from pathlib import Path
 import pytest
 
 from src.signals.models import (
-    AddLevel,
     InputSnapshot,
     InvalidStateTransitionError,
     LifecycleState,
@@ -25,28 +24,20 @@ def _sample_signal(signal_id: str = "SIG-20261116-001") -> Signal:
     return Signal(
         signal_id=signal_id,
         published_at_utc="2026-11-16T02:00:00Z",
+        entered_at_utc="2026-11-16T02:00:00Z",
         strategy="S1",
         symbol="BTCUSDT",
         market="crypto",
         direction="long",
-        entry_low=90000.0,
-        entry_high=90200.0,
-        add_levels=(
-            AddLevel(stage=2, add_type="mean_add", price=89600.0, note="ATR逆勢補倉"),
-        ),
-        stop_loss=89000.0,
-        tp1=91800.0,
-        tp2=92600.0,
-        rr_ratio=2.36,
+        entry_price=65291.0,
+        stop_loss=64013.62,
+        take_profit=None,
+        exit_rule="止損，或台北時間 07:45 前強制平倉",
         risk_pct_pool=1.0,
-        risk_usd=200.0,
-        notional_usd=2000.0,
-        leverage=5.0,
-        liquidation_price=81000.0,
-        valid_until_utc="2026-11-16T06:00:00Z",
-        invalidation_cond="15m 收盤跌破 89000 區間失效",
-        time_stop_bars=24,
-        reasons=("處於低流動性時段", "1H ADX < 20", "RSI < 35"),
+        risk_usd=100.0,
+        notional_usd=5100.0,
+        subaccount_capital_usd=10000.0,
+        reasons=("S1 開盤區間突破", "15m 收盤突破區間高點"),
         snapshot_id="SNAP-20261116-001",
     )
 
@@ -102,9 +93,9 @@ def test_signal_updates_append_only(tmp_path: Path) -> None:
         event_id="EV-002",
         signal_id=sig.signal_id,
         ts_utc="2026-11-16T02:45:00Z",
-        event_type="tp1_hit",
-        price=91800.0,
-        description="達成 TP1，平倉 50%",
+        event_type="closed",
+        price=66500.0,
+        description="強制平倉結束",
     )
 
     upd_path = store.append_update(ev1)
@@ -117,13 +108,11 @@ def test_signal_updates_append_only(tmp_path: Path) -> None:
 
 
 def test_signal_lifecycle_state_transitions() -> None:
-    assert validate_transition(LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE) == LifecycleState.ACTIVE
-    assert validate_transition(LifecycleState.ACTIVE, LifecycleState.TP1_HIT) == LifecycleState.TP1_HIT
-    assert validate_transition(LifecycleState.TP1_HIT, LifecycleState.CLOSED, exit_reason="tp2") == LifecycleState.CLOSED
-    assert (
-        validate_transition(LifecycleState.WAITING_ENTRY, LifecycleState.CANCELLED, exit_reason="expired")
-        == LifecycleState.CANCELLED
-    )
+    assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="stop_loss") == LifecycleState.CLOSED
+    assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="trailing_stop") == LifecycleState.CLOSED
+    assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="time_stop") == LifecycleState.CLOSED
+    assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="session_stop") == LifecycleState.CLOSED
+    assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="rebalance_exit") == LifecycleState.CLOSED
 
     with pytest.raises(InvalidStateTransitionError):
         validate_transition(LifecycleState.CLOSED, LifecycleState.ACTIVE)
@@ -139,14 +128,15 @@ def test_signal_copy_text_format() -> None:
     txt = format_signal_text(_sample_signal())
     assert "BTCUSDT" in txt
     assert "做多" in txt
-    assert "90000" in txt
-    assert "90200" in txt
-    assert "89000" in txt
-    assert "91800" in txt
-    assert "92600" in txt
-    assert "2,000.00" in txt
-    assert "實際槓桿" in txt
-    assert "1%" in txt
-    assert "2026-11-16T06:00:00Z" in txt
-    assert "15m 收盤跌破 89000" in txt
+    assert "65,291" in txt
+    assert "台北時間 11/16 10:00 成交" in txt
+    assert "64,013.62" in txt
+    assert "-$100" in txt
+    assert "佔 S1 策略資金 1.0%" in txt
+    assert "出場規則：止損，或台北時間 07:45 前強制平倉" in txt
+    assert "倉位名目：$5,100（佔 S1 策略資金 51.0%）" in txt
+    assert "TP1" not in txt and "TP2" not in txt and "槓桿" not in txt and "有效期限" not in txt
+    import re
+
+    assert not re.search(r"\d{4}-\d{2}-\d{2}T|\d{2}:\d{2}Z", txt)
     assert txt.strip().endswith("模擬驗證中，非投資建議")

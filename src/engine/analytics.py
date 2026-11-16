@@ -1,4 +1,4 @@
-"""Single-ledger analytics: grouped performance stats, risk center, and equity curves."""
+"""Single-ledger analytics: grouped performance stats, strategy sub-accounts, and equity curves."""
 
 from __future__ import annotations
 
@@ -27,9 +27,7 @@ def compute_series_metrics(
 ) -> dict[str, Any]:
     """Compute portfolio & trade-level statistics with strict minimum sample gating."""
     closed = [t for t in trades if t.state == LifecycleState.CLOSED]
-    open_list = [
-        t for t in trades if t.state in (LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE, LifecycleState.TP1_HIT)
-    ]
+    open_list = [t for t in trades if t.state == LifecycleState.ACTIVE]
     cancelled_count = sum(1 for t in trades if t.state == LifecycleState.CANCELLED)
 
     closed_sorted = sorted(closed, key=lambda t: t.closed_at_utc or t.entered_at_utc or "")
@@ -133,7 +131,7 @@ def compute_series_metrics(
     recovery_factor = round(total_pnl / max_dd_usd, 3) if max_dd_usd > 1e-9 else (round(total_pnl / 1.0, 3) if total_pnl > 0 else 0.0)
 
     avg_notional = sum(
-        sum(s.notional_usd for s in t.stages) if t.stages else getattr(t, "planned_notional_usd", 0.0)
+        getattr(t, "planned_notional_usd", 0.0) or (t.avg_entry_price * t.initial_filled_qty)
         for t in closed_sorted
     ) / n_closed
     cap_eff_pct = round((avg_notional / max(1e-9, initial_capital)) * 100.0, 2)
@@ -165,61 +163,30 @@ def compute_series_metrics(
 def compute_trade_estimates(
     tr: Any,
     subaccount_equity_usd: float,
-    tp1_close_fraction: float = 0.50,
 ) -> dict[str, Any]:
-    """Compute notional, actual leverage, SL estimated loss, and TP1/TP2 estimated profits for a trade."""
-    eff_entry = tr.avg_entry_price if tr.avg_entry_price > 0 else (tr.entry_low + tr.entry_high) / 2.0
-    eff_notional = tr.current_notional_usd() if tr.remaining_qty > 0 else getattr(tr, "planned_notional_usd", 0.0)
+    """Compute notional, sub-account share %, and estimated SL loss (no TP1/TP2 or leverage)."""
+    eff_entry = tr.avg_entry_price if tr.avg_entry_price > 0 else float(getattr(tr, "entry_price", 0.0) or 0.0)
+    eff_notional = tr.current_notional_usd() if tr.remaining_qty > 0 else float(getattr(tr, "planned_notional_usd", 0.0) or 0.0)
     eff_qty = tr.remaining_qty if tr.remaining_qty > 0 else (eff_notional / eff_entry if eff_entry > 0 else 0.0)
     sub_eq = max(1e-9, float(subaccount_equity_usd))
-    actual_lev = round(eff_notional / sub_eq, 4) if eff_notional > 0 else 0.0
 
     one_side_cost_pct = max(0.0, tr.fee_rate) + max(0.0, tr.slippage_bps) / 10000.0
-    if tr.state in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT) and tr.remaining_qty > 0:
+    if tr.state == LifecycleState.ACTIVE and tr.remaining_qty > 0 and eff_entry > 0:
         sl_dist = (
             max(0.0, eff_entry - tr.current_stop_loss)
             if tr.direction == "long"
             else max(0.0, tr.current_stop_loss - eff_entry)
         )
-        sl_loss_usd = tr.remaining_qty * sl_dist + eff_notional * one_side_cost_pct
+        sl_loss_usd = tr.remaining_qty * sl_dist + eff_notional * (2.0 * one_side_cost_pct)
     else:
         sl_dist = abs(eff_entry - tr.current_stop_loss)
         sl_loss_usd = eff_qty * sl_dist + eff_notional * (2.0 * one_side_cost_pct)
 
-    tp1_dist = (
-        max(0.0, tr.current_tp1 - eff_entry)
-        if tr.direction == "long"
-        else max(0.0, eff_entry - tr.current_tp1)
-    )
-    if tr.state == LifecycleState.TP1_HIT:
-        # Remaining 50% already sits after TP1 hit; TP1 realized already captured in realized_pnl_usd
-        tp1_profit_usd = max(0.0, tr.realized_pnl_usd)
-        tp2_frac = 1.0
-    else:
-        tp1_gross = eff_qty * tp1_close_fraction * tp1_dist
-        tp1_cost = (eff_notional * tp1_close_fraction) * one_side_cost_pct
-        tp1_profit_usd = max(0.0, tp1_gross - tp1_cost)
-        tp2_frac = 1.0 - tp1_close_fraction
-
-    tp2_profit_usd: float | None = None
-    if isinstance(tr.current_tp2, (int, float)) and eff_entry > 0:
-        tp2_val = float(tr.current_tp2)
-        tp2_dist = (
-            max(0.0, tp2_val - eff_entry)
-            if tr.direction == "long"
-            else max(0.0, eff_entry - tp2_val)
-        )
-        tp2_rem_gross = eff_qty * tp2_frac * tp2_dist
-        tp2_rem_cost = (eff_notional * tp2_frac) * one_side_cost_pct
-        tp2_profit_usd = round(max(0.0, tp1_profit_usd + tp2_rem_gross - tp2_rem_cost), 2)
-
     return {
         "effective_notional_usd": round(eff_notional, 2),
-        "actual_leverage": actual_lev,
+        "notional_pct_subaccount": round((eff_notional / sub_eq) * 100.0, 2),
         "estimated_stop_loss_usd": round(sl_loss_usd, 2),
         "estimated_stop_loss_pct_pool": round((sl_loss_usd / sub_eq) * 100.0, 2),
-        "estimated_tp1_profit_usd": round(tp1_profit_usd, 2),
-        "estimated_tp2_profit_usd": tp2_profit_usd,
     }
 
 
@@ -246,7 +213,6 @@ def build_performance_stats(
             min_verified_trades=min_verified,
             min_cagr_days=min_cagr_days,
             risk_free_annual=rf_annual,
-            used_margin_usd=float(acct["used_margin_usd"]),
             current_equity_usd=float(acct["equity_usd"]),
         )
 
@@ -277,78 +243,81 @@ def build_risk_status(
     engine: Any,
     now_utc: str,
 ) -> dict[str, Any]:
-    """Build Risk Center & Simulated Account positions payload for single ledger."""
+    """Build per-strategy sub-account Risk Center & open positions payload."""
     cfg = engine.config
-    risk_cfg = cfg.get("risk", {})
-    groups_cfg = cfg.get("correlation_groups", {})
-    tp1_frac = float(cfg.get("signals", {}).get("tp1_close_fraction", 0.50))
+    bt_cfg = cfg.get("backtest", {})
+    strats_cfg = cfg.get("strategies", {})
     marks = engine.latest_marks
-
     ledger = engine.ledger
+
     acct = ledger.build_account_state(now_utc, marks)
     eq = float(acct["equity_usd"])
     peak = float(acct["peak_equity_usd"])
     dd_pct = max(0.0, (peak - eq) / max(1e-9, peak) * 100.0)
-    warn_pct = float(risk_cfg.get("drawdown_warning_pct", 8.0))
-    pause_pct = float(risk_cfg.get("drawdown_pause_pct", 12.0))
-    max_margin_pct = float(risk_cfg.get("max_margin_usage_pct", 30.0))
-    used_margin_pct = float(acct["used_margin_usd"]) / max(1e-9, eq) * 100.0
-    max_daily_loss = float(risk_cfg.get("max_daily_loss_usd", 1500.0))
-    max_weekly_loss = float(risk_cfg.get("max_weekly_loss_usd", 4000.0))
-    max_total_stop = float(risk_cfg.get("max_total_stop_risk_usd", 5000.0))
-
-    if ledger.drawdown_paused or dd_pct >= pause_pct:
-        risk_state_label = "paused_drawdown"
-    elif dd_pct >= warn_pct:
-        risk_state_label = "warning"
-    else:
-        risk_state_label = "normal"
-
-    group_map = acct.get("group_stop_risk_usd", {})
-    groups_out: list[dict[str, Any]] = []
-    for gid, gcfg in groups_cfg.items():
-        lim = float(gcfg.get("max_stop_risk_usd", risk_cfg.get("max_group_stop_risk_usd", 1000.0)))
-        used = float(group_map.get(gid, 0.0))
-        groups_out.append(
-            {
-                "group_id": gid,
-                "name": gcfg.get("name", gid),
-                "used_risk_usd": round(used, 2),
-                "limit_usd": lim,
-                "usage_pct": round(used / max(1e-9, lim) * 100.0, 2),
-            }
-        )
 
     short_eq = float(ledger.compute_pool_equity("short_term", marks))
     long_eq = float(ledger.compute_pool_equity("long_term", marks))
 
+    max_conc = int(bt_cfg.get("max_concurrent_positions", 10))
+    max_risk_pct = float(bt_cfg.get("max_total_open_risk_pct", 10.0))
+    max_notional_mult = float(bt_cfg.get("max_total_notional_multiple", 5.0))
+    risk_per_trade_pct = float(bt_cfg.get("risk_per_trade_pct", 1.0))
+
+    subaccounts_out: list[dict[str, Any]] = []
+    strategy_equities: dict[str, float] = {}
+    total_open_risk = 0.0
+    total_open_notional = 0.0
+
+    for sid in ("S1", "S2", "S3", "L1", "L2", "L3"):
+        scfg = strats_cfg.get(sid, {})
+        init_cap = float(ledger.strategy_capitals.get(sid, scfg.get("capital_usd", 10000.0)))
+        realized_eq = float(ledger.compute_strategy_realized_equity(sid))
+        mtm_eq = float(ledger.compute_strategy_equity(sid, marks))
+        sub_state = ledger.build_subaccount_state(sid)
+        open_cnt = int(sub_state["subaccount_open_positions"])
+        open_risk = float(sub_state["subaccount_open_risk_usd"])
+        open_notional = float(sub_state["subaccount_open_notional_usd"])
+        max_risk_usd = realized_eq * (max_risk_pct / 100.0)
+        max_notional_usd = realized_eq * max_notional_mult
+        realized_pnl = float(ledger.strategy_realized_pnl.get(sid, 0.0))
+        unrealized_pnl = mtm_eq - (init_cap + realized_pnl)
+
+        strategy_equities[sid] = round(mtm_eq, 2)
+        total_open_risk += open_risk
+        total_open_notional += open_notional
+
+        subaccounts_out.append(
+            {
+                "strategy_id": sid,
+                "name": scfg.get("name", sid),
+                "pool": "short_term" if is_short_term_strategy(sid) else "long_term",
+                "interval": scfg.get("interval", "1d"),
+                "initial_capital_usd": round(init_cap, 2),
+                "realized_equity_usd": round(realized_eq, 2),
+                "equity_usd": round(mtm_eq, 2),
+                "realized_pnl_usd": round(realized_pnl, 2),
+                "unrealized_pnl_usd": round(unrealized_pnl, 2),
+                "risk_per_trade_pct": risk_per_trade_pct,
+                "open_positions_count": open_cnt,
+                "max_concurrent_positions": max_conc,
+                "open_risk_usd": round(open_risk, 2),
+                "max_open_risk_usd": round(max_risk_usd, 2),
+                "open_risk_pct": round(open_risk / max(1e-9, realized_eq) * 100.0, 2),
+                "max_total_open_risk_pct": max_risk_pct,
+                "open_notional_usd": round(open_notional, 2),
+                "max_total_notional_usd": round(max_notional_usd, 2),
+                "open_notional_pct": round(open_notional / max(1e-9, realized_eq) * 100.0, 2),
+                "max_total_notional_multiple": max_notional_mult,
+            }
+        )
+
     positions_out: list[dict[str, Any]] = []
     for tr in ledger.trades.values():
-        if tr.state not in (LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
+        if tr.state != LifecycleState.ACTIVE:
             continue
-        sub_eq = short_eq if is_short_term_strategy(tr.strategy) else long_eq
-        mark_px = float(marks.get(tr.symbol, tr.avg_entry_price or (tr.entry_low + tr.entry_high) / 2.0))
-        ref_px = tr.avg_entry_price if tr.avg_entry_price > 0 else (tr.entry_low + tr.entry_high) / 2.0
-        est = compute_trade_estimates(tr, sub_eq, tp1_close_fraction=tp1_frac)
-        eff_notional = est["effective_notional_usd"]
-        margin_lev = max(1.0, float(tr.leverage))
-        liq_metrics = engine.risk_manager.compute_liquidation_metrics(
-            entry_price=ref_px,
-            stop_loss=tr.current_stop_loss,
-            direction=tr.direction,
-            notional_usd=eff_notional,
-            leverage=margin_lev,
-        )
-        sl_dist_pct = abs(ref_px - tr.current_stop_loss) / max(1e-9, ref_px) * 100.0
-        liq_dist_pct = abs(ref_px - liq_metrics["liquidation_price"]) / max(1e-9, ref_px) * 100.0
-        _, rr_val, _ = engine.risk_manager.check_rr_requirements(
-            tr.strategy,
-            tr.direction,
-            ref_px,
-            tr.current_stop_loss,
-            tr.current_tp1,
-            tr.current_tp2,
-        )
+        sub_eq = float(ledger.compute_strategy_realized_equity(tr.strategy))
+        mark_px = float(marks.get(tr.symbol, tr.avg_entry_price or tr.entry_price))
+        est = compute_trade_estimates(tr, sub_eq)
         positions_out.append(
             {
                 "signal_id": tr.signal_id,
@@ -357,27 +326,20 @@ def build_risk_status(
                 "strategy": tr.strategy,
                 "direction": tr.direction,
                 "state": tr.state.value,
-                "stages": [s.to_dict() for s in tr.stages],
-                "stages_filled": len(tr.stages),
+                "entered_at_utc": tr.entered_at_utc or tr.published_at_utc,
                 "avg_entry_price": round(tr.avg_entry_price, 6),
                 "total_qty": round(tr.remaining_qty, 8),
-                "notional_usd": eff_notional,
-                "leverage": est["actual_leverage"],
-                "margin_usd": round(tr.current_margin_usd(), 2),
+                "notional_usd": est["effective_notional_usd"],
+                "notional_pct_subaccount": est["notional_pct_subaccount"],
+                "subaccount_capital_usd": round(sub_eq, 2),
                 "mark_price": round(mark_px, 6),
                 "unrealized_pnl_usd": round(tr.unrealized_pnl_usd(mark_px), 2) if tr.remaining_qty > 0 else 0.0,
-                "current_tp1": tr.current_tp1,
-                "current_tp2": tr.current_tp2,
                 "current_stop_loss": tr.current_stop_loss,
+                "take_profit": tr.take_profit,
+                "exit_rule": tr.exit_rule,
+                "trailing_exit_price": tr.trailing_exit_price,
                 "estimated_max_loss_usd": est["estimated_stop_loss_usd"],
                 "estimated_max_loss_pct_pool": est["estimated_stop_loss_pct_pool"],
-                "estimated_tp1_profit_usd": est["estimated_tp1_profit_usd"],
-                "estimated_tp2_profit_usd": est["estimated_tp2_profit_usd"],
-                "rr_ratio": round(rr_val, 2),
-                "liquidation_price": round(liq_metrics["liquidation_price"], 6),
-                "stop_distance_pct": round(sl_dist_pct, 2),
-                "liquidation_distance_pct": round(liq_dist_pct, 2),
-                "stop_to_liq_ratio": round(liq_metrics["stop_to_liq_ratio"], 3),
             }
         )
 
@@ -401,22 +363,13 @@ def build_risk_status(
             "peak_equity_usd": round(peak, 2),
             "short_term_equity_usd": round(short_eq, 2),
             "long_term_equity_usd": round(long_eq, 2),
+            "strategy_equities": strategy_equities,
             "drawdown_pct": round(dd_pct, 2),
-            "drawdown_warning_pct": warn_pct,
-            "drawdown_pause_pct": pause_pct,
-            "drawdown_paused": ledger.drawdown_paused,
-            "risk_status": risk_state_label,
-            "daily_pnl_usd": round(float(acct["daily_pnl_usd"]), 2),
-            "max_daily_loss_usd": max_daily_loss,
-            "weekly_pnl_usd": round(float(acct["weekly_pnl_usd"]), 2),
-            "max_weekly_loss_usd": max_weekly_loss,
-            "used_margin_usd": round(float(acct["used_margin_usd"]), 2),
-            "used_margin_pct": round(used_margin_pct, 2),
-            "max_margin_usage_pct": max_margin_pct,
-            "total_stop_risk_usd": round(float(acct["total_stop_risk_usd"]), 2),
-            "max_total_stop_risk_usd": max_total_stop,
+            "risk_status": "normal",
+            "total_open_risk_usd": round(total_open_risk, 2),
+            "total_open_notional_usd": round(total_open_notional, 2),
         },
-        "correlation_groups": groups_out,
+        "subaccounts": subaccounts_out,
         "open_positions": positions_out,
         "recent_risk_events": recent_events,
     }
@@ -441,18 +394,6 @@ def export_equity_curve(out_dir: Path, max_points: int = 2000) -> dict[str, Any]
                                 "total_equity_usd": row.get("total_equity_usd"),
                                 "short_term_equity_usd": row.get("short_term_equity_usd"),
                                 "long_term_equity_usd": row.get("long_term_equity_usd"),
-                            }
-                        )
-                    elif isinstance(row.get("ledgers"), dict):
-                        # Legacy snapshot migration fallback (extract primary E or first available)
-                        leds = row["ledgers"]
-                        prim = leds.get("E") or next(iter(leds.values()), {})
-                        points.append(
-                            {
-                                "ts_utc": row.get("ts_utc"),
-                                "total_equity_usd": prim.get("total_equity_usd"),
-                                "short_term_equity_usd": prim.get("short_term_equity_usd"),
-                                "long_term_equity_usd": prim.get("long_term_equity_usd"),
                             }
                         )
                 except Exception:

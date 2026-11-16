@@ -86,10 +86,12 @@ def allocate_subaccount_position(
             f"{strategy_id} 同時持倉檔數已達上限 ({open_positions_count}/{max_concurrent})",
         )
 
-    risk_pct = float(bt_cfg.get("risk_per_trade_pct", 0.75)) / 100.0
-    max_total_risk_pct = min(0.06, float(bt_cfg.get("max_total_open_risk_pct", 5.0)) / 100.0)
-    max_pos_notional_pct = float(bt_cfg.get("max_position_notional_pct", 19.0)) / 100.0
-    max_total_notional_pct = min(0.98, max_concurrent * max_pos_notional_pct)
+    risk_pct = float(bt_cfg.get("risk_per_trade_pct", 1.0)) / 100.0
+    max_total_risk_pct = float(bt_cfg.get("max_total_open_risk_pct", 10.0)) / 100.0
+    max_pos_notional_pct = float(bt_cfg.get("max_position_notional_pct", 500.0)) / 100.0
+    max_total_notional_mult = float(
+        bt_cfg.get("max_total_notional_multiple", max_concurrent * max_pos_notional_pct)
+    )
 
     max_total_risk_usd = subaccount_equity_usd * max_total_risk_pct
     remaining_risk_usd = max(0.0, max_total_risk_usd - max(0.0, open_total_risk_usd))
@@ -114,7 +116,7 @@ def allocate_subaccount_position(
 
     raw_notional = risk_budget_usd / eff_stop_pct
     max_single_notional = subaccount_equity_usd * max_pos_notional_pct
-    max_total_notional = subaccount_equity_usd * max_total_notional_pct
+    max_total_notional = subaccount_equity_usd * max_total_notional_mult
     remaining_notional = max(0.0, max_total_notional - max(0.0, open_total_notional_usd))
 
     notional = min(raw_notional, max_single_notional, remaining_notional)
@@ -703,3 +705,77 @@ def evaluate_live_bar(
         allow_short=allow_short,
         bars_held=bars_held,
     )
+
+
+def _fmt_price_str(val: float) -> str:
+    abs_v = abs(val)
+    if abs_v >= 1000:
+        return f"{val:,.2f}"
+    if abs_v >= 1:
+        return f"{val:,.4f}"
+    return f"{val:.6g}"
+
+
+def compute_strategy_exit_info(
+    strategy_id: str,
+    closed_bars: list[OHLCVBar],
+    direction: str,
+    params: dict[str, Any],
+    market: str = "crypto",
+    interval: str = "1d",
+    atr_period: int = 14,
+) -> tuple[str, float | None]:
+    """Return plain-Chinese exit rule sentence and live trailing exit line price (for S2, L1, L2)."""
+    if strategy_id == "S1":
+        eod_utc = str(params.get("eod_close_utc", "23:45"))
+        hh, mm = eod_utc.split(":")
+        taipei_hh = (int(hh) + 8) % 24
+        return f"止損，或台北時間 {taipei_hh:02d}:{mm} 前強制平倉", None
+
+    if strategy_id == "S3":
+        exit_ma_p = int(params.get("exit_ma_period", 5))
+        max_hold = int(params.get("max_hold_bars", 10))
+        verb = "站回" if direction == "long" else "跌回"
+        return f"止損，日線收盤{verb} {exit_ma_p} 日均線，或最多持有 {max_hold} 天時間出場", None
+
+    if strategy_id == "L3":
+        lookback = int(params.get("lookback_days", 60))
+        top_k = int(params.get("top_k_index", 1) if market == "index" else params.get("top_k_crypto", 2))
+        return f"止損，或每週雙動能調出（過去 {lookback} 天報酬轉負或跌出同類前 {top_k} 名）", None
+
+    trailing_px: float | None = None
+    if closed_bars:
+        series = precompute_series(
+            strategy_id=strategy_id,
+            bars=closed_bars,
+            params=params,
+            market=market,
+            interval=interval,
+            atr_period=atr_period,
+            allow_short=True,
+        )
+        idx = len(closed_bars) - 1
+        if strategy_id == "S2":
+            raw = series["s2_tr_lo"][idx] if direction == "long" else series["s2_tr_hi"][idx]
+            trailing_px = float(raw) if raw is not None else None
+        elif strategy_id in ("L1", "L2"):
+            raw = series["don_exit_lo"][idx] if direction == "long" else series["don_exit_hi"][idx]
+            trailing_px = float(raw) if raw is not None else None
+
+    if strategy_id == "S2":
+        trail_p = int(params.get("trail_bars", 8))
+        max_hold = int(params.get("max_hold_bars", 30))
+        side_txt = "低點" if direction == "long" else "高點"
+        px_txt = f" {_fmt_price_str(trailing_px)}" if trailing_px is not None else ""
+        return f"止損，4H 收盤跌破近 {trail_p} 根移動出場線{px_txt}，或最多持有 {max_hold} 根 4H K 線時間出場" if direction == "long" else (
+            f"止損，4H 收盤站上近 {trail_p} 根移動出場線{px_txt}，或最多持有 {max_hold} 根 4H K 線時間出場"
+        ), trailing_px
+
+    if strategy_id in ("L1", "L2"):
+        exit_p = int(params.get("exit_period", 10))
+        px_txt = f" {_fmt_price_str(trailing_px)}" if trailing_px is not None else ""
+        verb = "跌破" if direction == "long" else "站上"
+        side_txt = "低點" if direction == "long" else "高點"
+        return f"止損，或日線{verb} {exit_p} 日反向通道移動出場線{px_txt}", trailing_px
+
+    return "依策略規則出場或觸及止損", None

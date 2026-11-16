@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
+from datetime import datetime, timedelta, timezone
 from enum import Enum
 from typing import Any
+
+TAIPEI_TZ = timezone(timedelta(hours=8))
 
 
 class SignalLockedError(ValueError):
@@ -16,37 +19,31 @@ class InvalidStateTransitionError(ValueError):
 
 
 class LifecycleState(str, Enum):
-    """Lifecycle states defined in SPEC Section 3.2."""
+    """Lifecycle states aligned with market-open backtest execution."""
 
-    WAITING_ENTRY = "waiting_entry"
     ACTIVE = "active"
-    TP1_HIT = "tp1_hit"
     CLOSED = "closed"
     CANCELLED = "cancelled"
 
 
 VALID_TRANSITIONS: dict[LifecycleState, set[LifecycleState]] = {
-    LifecycleState.WAITING_ENTRY: {LifecycleState.ACTIVE, LifecycleState.CANCELLED},
-    LifecycleState.ACTIVE: {LifecycleState.TP1_HIT, LifecycleState.CLOSED},
-    LifecycleState.TP1_HIT: {LifecycleState.CLOSED},
+    LifecycleState.ACTIVE: {LifecycleState.CLOSED},
     LifecycleState.CLOSED: set(),
     LifecycleState.CANCELLED: set(),
 }
 
 VALID_CLOSE_REASONS: set[str] = {
-    "tp1",
-    "tp2",
     "stop_loss",
     "trailing_stop",
     "time_stop",
     "session_stop",
-    "breakout_protection",
+    "rebalance_exit",
+    "take_profit",
     "logic_invalidated",
     "risk_forced_close",
 }
 
 VALID_CANCEL_REASONS: set[str] = {
-    "expired",
     "pre_entry_invalidated",
     "risk_cancelled",
 }
@@ -72,79 +69,58 @@ def validate_transition(
 
 
 @dataclass(frozen=True)
-class AddLevel:
-    """Planned add-on entry level (stage 2 or 3)."""
-
-    stage: int
-    add_type: str  # "mean_add" or "trend_add"
-    price: float
-    note: str = ""
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
-
-
-@dataclass(frozen=True)
 class Signal:
     """Immutable signal record locked upon publication (SPEC Section 3.1)."""
 
     signal_id: str
     published_at_utc: str
+    entered_at_utc: str
     strategy: str  # "S1", "S2", "S3", "L1", "L2", or "L3"
     symbol: str
     market: str
     direction: str  # "long" or "short"
-    entry_low: float
-    entry_high: float
-    add_levels: tuple[AddLevel, ...]
+    entry_price: float
     stop_loss: float
-    tp1: float
-    tp2: float | str
-    rr_ratio: float
+    take_profit: float | None
+    exit_rule: str
     risk_pct_pool: float
     risk_usd: float
     notional_usd: float
-    leverage: float
-    liquidation_price: float
-    valid_until_utc: str
-    invalidation_cond: str
-    time_stop_bars: int
+    subaccount_capital_usd: float
     reasons: tuple[str, ...]
     snapshot_id: str
     verification_status: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         data = asdict(self)
-        data["add_levels"] = [lvl.to_dict() for lvl in self.add_levels]
         data["reasons"] = list(self.reasons)
         return data
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Signal:
-        add_levels = tuple(AddLevel(**lvl) for lvl in data.get("add_levels", []))
+        if "entry_price" in data:
+            entry_px = float(data["entry_price"])
+        else:
+            entry_px = (float(data.get("entry_low", 0.0)) + float(data.get("entry_high", 0.0))) / 2.0
+        strat = str(data["strategy"])
+        default_cap = 10000.0 if strat.startswith("S") else 23333.33
         reasons = tuple(data.get("reasons", []))
         return cls(
             signal_id=data["signal_id"],
             published_at_utc=data["published_at_utc"],
-            strategy=data["strategy"],
+            entered_at_utc=str(data.get("entered_at_utc") or data["published_at_utc"]),
+            strategy=strat,
             symbol=data["symbol"],
             market=data["market"],
             direction=data["direction"],
-            entry_low=float(data["entry_low"]),
-            entry_high=float(data["entry_high"]),
-            add_levels=add_levels,
+            entry_price=entry_px,
             stop_loss=float(data["stop_loss"]),
-            tp1=float(data["tp1"]),
-            tp2=data["tp2"],
-            rr_ratio=float(data["rr_ratio"]),
-            risk_pct_pool=float(data["risk_pct_pool"]),
-            risk_usd=float(data["risk_usd"]),
-            notional_usd=float(data["notional_usd"]),
-            leverage=float(data["leverage"]),
-            liquidation_price=float(data["liquidation_price"]),
-            valid_until_utc=data["valid_until_utc"],
-            invalidation_cond=data["invalidation_cond"],
-            time_stop_bars=int(data["time_stop_bars"]),
+            take_profit=float(data["take_profit"]) if data.get("take_profit") is not None else None,
+            exit_rule=str(data.get("exit_rule") or data.get("invalidation_cond") or ""),
+            risk_pct_pool=float(data.get("risk_pct_pool", 1.0)),
+            risk_usd=float(data.get("risk_usd", 0.0)),
+            notional_usd=float(data.get("notional_usd", 0.0)),
+            subaccount_capital_usd=float(data.get("subaccount_capital_usd", default_cap)),
             reasons=reasons,
             snapshot_id=data["snapshot_id"],
             verification_status=str(data.get("verification_status", "")),
@@ -174,7 +150,7 @@ class SignalUpdateEvent:
     event_id: str
     signal_id: str
     ts_utc: str
-    event_type: str  # entered, add_filled, tp1_hit, stop_moved, trailing_updated, closed, cancelled
+    event_type: str  # entered, closed, cancelled
     price: float
     description: str
     metadata: dict[str, Any] = field(default_factory=dict)
@@ -198,7 +174,32 @@ class SignalUpdateEvent:
 def _fmt_num(val: float | str) -> str:
     if isinstance(val, str):
         return val
+    abs_v = abs(val)
+    if abs_v >= 1000:
+        return f"{val:,.2f}"
+    if abs_v >= 1:
+        return f"{val:,.4f}".rstrip("0").rstrip(".")
     return f"{val:g}"
+
+
+def _fmt_usd_compact(val: float) -> str:
+    if abs(val - round(val)) < 1e-4:
+        return f"{round(val):,.0f}"
+    return f"{val:,.2f}"
+
+
+def format_taipei_mmdd_hhmm(ts_utc: str) -> str:
+    """Convert ISO UTC timestamp to Asia/Taipei MM/DD HH:mm."""
+    if not ts_utc:
+        return "--"
+    try:
+        raw = ts_utc.replace("Z", "+00:00")
+        dt = datetime.fromisoformat(raw)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(TAIPEI_TZ).strftime("%m/%d %H:%M")
+    except Exception:
+        return ts_utc
 
 
 STRATEGY_LABELS: dict[str, str] = {
@@ -210,30 +211,35 @@ STRATEGY_LABELS: dict[str, str] = {
     "L3": "L3 雙動能（長線）",
 }
 
+EXIT_REASON_LABELS: dict[str, str] = {
+    "stop_loss": "止損",
+    "trailing_stop": "移動停利",
+    "time_stop": "時間出場",
+    "session_stop": "強制平倉",
+    "rebalance_exit": "調出",
+    "take_profit": "止盈",
+    "logic_invalidated": "移動停利",
+    "risk_forced_close": "強制平倉",
+}
 
-def format_signal_text(signal: Signal) -> str:
-    """Format signal into copyable plain text matching SPEC Section 3.4."""
+
+def format_signal_text(signal: Signal, exit_rule_override: str | None = None) -> str:
+    """Format signal into plain text matching unified rules & Taipei timestamps."""
     dir_zh = "做多" if signal.direction == "long" else "做空"
     strat_zh = STRATEGY_LABELS.get(signal.strategy, f"策略 {signal.strategy}")
-    subaccount_eq = 30000.0 if signal.strategy.startswith("S") else 70000.0
-    actual_lev = round(signal.notional_usd / subaccount_eq, 2) if subaccount_eq > 0 else 0.0
+    sub_cap = signal.subaccount_capital_usd or (10000.0 if signal.strategy.startswith("S") else 23333.33)
+    notional_pct = (signal.notional_usd / sub_cap * 100.0) if sub_cap > 0 else 0.0
+    sl_pct = (signal.risk_usd / sub_cap * 100.0) if sub_cap > 0 else signal.risk_pct_pool
+    entered_tp = format_taipei_mmdd_hhmm(signal.entered_at_utc or signal.published_at_utc)
+    rule_txt = exit_rule_override or signal.exit_rule or "依策略規則出場"
 
     lines = [
         f"【Signal Desk 報單】{signal.signal_id}（{strat_zh}）",
+        f"標的：{signal.symbol}｜方向：{dir_zh}",
+        f"進場：市價 {_fmt_num(signal.entry_price)}（台北時間 {entered_tp} 成交）",
+        f"止損：{_fmt_num(signal.stop_loss)}（打到預估虧損 -${_fmt_usd_compact(signal.risk_usd)}，佔 {signal.strategy} 策略資金 {sl_pct:.1f}%）",
+        f"出場規則：{rule_txt}",
+        f"倉位名目：${_fmt_usd_compact(signal.notional_usd)}（佔 {signal.strategy} 策略資金 {notional_pct:.1f}%）",
+        "模擬驗證中，非投資建議",
     ]
-    if signal.verification_status:
-        lines.append(f"策略狀態：{signal.verification_status}")
-    lines.extend(
-        [
-            f"標的：{signal.symbol}｜方向：{dir_zh}",
-            f"入場區間：{_fmt_num(signal.entry_low)} ~ {_fmt_num(signal.entry_high)}",
-            f"止損價：{_fmt_num(signal.stop_loss)}",
-            f"止盈 TP1：{_fmt_num(signal.tp1)}｜TP2：{_fmt_num(signal.tp2)}",
-            f"倉位名目：${signal.notional_usd:,.2f}（實際槓桿 {actual_lev:.2f}x）",
-            f"建議風險比例：佔資金池 {signal.risk_pct_pool:g}%（預估 SL 虧損 -${signal.risk_usd:.2f}）",
-            f"掛單有效期限：{signal.valid_until_utc}",
-            f"失效條件：{signal.invalidation_cond}",
-            "模擬驗證中，非投資建議",
-        ]
-    )
     return "\n".join(lines)

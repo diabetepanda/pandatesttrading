@@ -42,16 +42,18 @@
     if (!isoOrDate) return "--";
     const dt = isoOrDate instanceof Date ? isoOrDate : new Date(isoOrDate);
     if (Number.isNaN(dt.getTime())) return String(isoOrDate);
-    return dt.toLocaleString("zh-TW", {
+    const parts = new Intl.DateTimeFormat("en-US", {
       timeZone: "Asia/Taipei",
-      year: "numeric",
       month: "2-digit",
       day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
-      second: "2-digit",
       hour12: false,
-    });
+    }).formatToParts(dt);
+    const map = {};
+    for (const p of parts) map[p.type] = p.value;
+    const hh = map.hour === "24" ? "00" : (map.hour || "00");
+    return `${map.month || "01"}/${map.day || "01"} ${hh}:${map.minute || "00"}`;
   }
 
   function formatNumber(val) {
@@ -109,13 +111,28 @@
 
   function lifecycleLabel(st) {
     const map = {
-      waiting_entry: "等待入場",
       active: "進行中",
-      tp1_hit: "已達 TP1",
       closed: "已結束",
-      cancelled: "未成交取消",
+      cancelled: "已取消",
     };
     return map[st] || st;
+  }
+
+  function exitReasonLabel(reason) {
+    const map = {
+      stop_loss: "止損",
+      trailing_stop: "移動停利",
+      time_stop: "時間出場",
+      session_stop: "強制平倉",
+      rebalance_exit: "調出",
+      take_profit: "止盈",
+      logic_invalidated: "移動停利",
+      risk_forced_close: "強制平倉",
+      expired: "已取消",
+      pre_entry_invalidated: "已取消",
+      risk_cancelled: "已取消",
+    };
+    return map[reason] || reason || "--";
   }
 
   function marketLabel(market) {
@@ -345,10 +362,10 @@
   }
 
   function computeFloatingPnl(sig, livePrice) {
-    if (livePrice === null || (sig.lifecycle_state !== "active" && sig.lifecycle_state !== "tp1_hit")) {
+    if (livePrice === null || sig.lifecycle_state !== "active") {
       return null;
     }
-    const avg = Number(sig.avg_entry_price || 0);
+    const avg = Number(sig.avg_entry_price || sig.entry_price || 0);
     const remQty = Number(sig.remaining_qty || 0);
     if (avg <= 0 || remQty <= 0) return null;
     const unrealized = sig.direction === "long" ? (livePrice - avg) * remQty : (avg - livePrice) * remQty;
@@ -358,53 +375,49 @@
     return { usd: totalEst, r: estR };
   }
 
-  function computeCardEstimates(s) {
-    const isShort = String(s.strategy || "").startsWith("S");
-    const acc = cachedRisk?.account;
-    const subEq = isShort
-      ? Number(acc?.short_term_equity_usd || 30000)
-      : Number(acc?.long_term_equity_usd || 70000);
-    const notional = Number(s.effective_notional_usd ?? s.notional_usd ?? 0);
-    const actualLev = s.actual_leverage !== undefined && s.actual_leverage !== null
-      ? Number(s.actual_leverage)
-      : (subEq > 0 ? notional / subEq : 0);
-    const slUsd = Number(s.estimated_stop_loss_usd ?? s.risk_usd ?? 0);
-    const slPct = Number(s.estimated_stop_loss_pct_pool ?? s.risk_pct_pool ?? 0);
-    let tp1Usd = s.estimated_tp1_profit_usd;
-    let tp2Usd = s.estimated_tp2_profit_usd;
-    if (tp1Usd === undefined || tp1Usd === null) {
-      const mid = (Number(s.entry_low || 0) + Number(s.entry_high || 0)) / 2;
-      const effEntry = Number(s.avg_entry_price || mid || 0);
-      const qty = effEntry > 0 && notional > 0 ? notional / effEntry : 0;
-      const tp1 = Number(s.current_tp1 ?? s.tp1 ?? 0);
-      if (qty > 0 && tp1 > 0) {
-        const d1 = s.direction === "long" ? Math.max(0, tp1 - effEntry) : Math.max(0, effEntry - tp1);
-        const tp2Val = Number(s.current_tp2 ?? s.tp2 ?? 0);
-        const tp1Frac = !Number.isNaN(tp2Val) && tp2Val > 0 ? 0.5 : 1.0;
-        tp1Usd = qty * tp1Frac * d1;
-        if (!Number.isNaN(tp2Val) && tp2Val > 0) {
-          const d2 = s.direction === "long" ? Math.max(0, tp2Val - effEntry) : Math.max(0, effEntry - tp2Val);
-          tp2Usd = tp1Usd + qty * 0.5 * d2;
-        }
-      }
+  function fmtCompactUsd(val) {
+    const num = Number(val || 0);
+    if (Math.abs(num - Math.round(num)) < 0.01) {
+      return Math.round(num).toLocaleString("en-US");
     }
-    return { notional, actualLev, slUsd, slPct, tp1Usd, tp2Usd };
+    return num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function computeCardEstimates(s) {
+    const strat = String(s.strategy || "S1");
+    const subRow = Array.isArray(cachedRisk?.subaccounts)
+      ? cachedRisk.subaccounts.find((x) => x.strategy_id === strat)
+      : null;
+    const defaultCap = strat.startsWith("S") ? 10000 : 23333.33;
+    const subEq = Number(s.subaccount_capital_usd || subRow?.realized_equity_usd || defaultCap);
+    const notional = Number(s.effective_notional_usd ?? s.notional_usd ?? 0);
+    const notionalPct = s.notional_pct_subaccount !== undefined && s.notional_pct_subaccount !== null
+      ? Number(s.notional_pct_subaccount)
+      : (subEq > 0 ? (notional / subEq) * 100 : 0);
+    const slUsd = Number(s.estimated_stop_loss_usd ?? s.risk_usd ?? 0);
+    const slPct = s.estimated_stop_loss_pct_pool !== undefined && s.estimated_stop_loss_pct_pool !== null
+      ? Number(s.estimated_stop_loss_pct_pool)
+      : (subEq > 0 ? (slUsd / subEq) * 100 : Number(s.risk_pct_pool || 1));
+    return { subEq, notional, notionalPct, slUsd, slPct };
   }
 
   function formatSignalCopyText(s) {
     const dirZh = s.direction === "long" ? "做多" : "做空";
     const stratZh = STRATEGY_NAMES[s.strategy] || `策略 ${s.strategy}`;
     const est = computeCardEstimates(s);
+    const entryPx = Number(s.avg_entry_price || s.entry_price || s.entry_low || 0);
+    const entryStr = formatNumber(entryPx) || String(entryPx);
+    const curSl = s.current_stop_loss ?? s.stop_loss;
+    const slStr = formatNumber(curSl) || String(curSl);
+    const enteredTp = formatTaipeiTime(s.entered_at_utc || s.published_at_utc);
+    const ruleTxt = convertReasonUtcToTaipei(s.exit_rule || s.invalidation_cond || "依策略規則出場");
     return [
       `【Signal Desk 報單】${s.signal_id}（${stratZh}）`,
       `標的：${s.symbol}｜方向：${dirZh}`,
-      `入場區間：${s.entry_low} ~ ${s.entry_high}`,
-      `止損價：${s.stop_loss}`,
-      `止盈 TP1：${s.tp1}｜TP2：${s.tp2}`,
-      `倉位名目：$${est.notional.toLocaleString("en-US", { maximumFractionDigits: 2 })}（實際槓桿 ${est.actualLev.toFixed(2)}x）`,
-      `預估 SL 虧損：-$${est.slUsd.toFixed(2)}（佔資金池 -${est.slPct.toFixed(2)}%）`,
-      `掛單有效期限：${s.valid_until_utc}`,
-      `失效條件：${s.invalidation_cond}`,
+      `進場：市價 ${entryStr}（台北時間 ${enteredTp} 成交）`,
+      `止損：${slStr}（打到預估虧損 -$${fmtCompactUsd(est.slUsd)}，佔 ${s.strategy} 策略資金 ${est.slPct.toFixed(1)}%）`,
+      `出場規則：${ruleTxt}`,
+      `倉位名目：$${fmtCompactUsd(est.notional)}（佔 ${s.strategy} 策略資金 ${est.notionalPct.toFixed(1)}%）`,
       "模擬驗證中，非投資建議",
     ].join("\n");
   }
@@ -424,7 +437,7 @@
   function renderWallSummary() {
     const todayStr = new Date().toISOString().slice(0, 10);
     const todayCount = cachedSignals.filter((s) => (s.published_at_utc || "").startsWith(todayStr)).length;
-    const activeCount = cachedSignals.filter((s) => s.lifecycle_state === "active" || s.lifecycle_state === "tp1_hit").length;
+    const activeCount = cachedSignals.filter((s) => s.lifecycle_state === "active").length;
 
     const cutoff30 = Date.now() - 30 * 86400 * 1000;
     const closed30 = cachedSignals.filter((s) => {
@@ -459,8 +472,7 @@
     const cutoff30 = Date.now() - 30 * 86400 * 1000;
 
     const filtered = cachedSignals.filter((s) => {
-      if (currentWallTab === "active" && s.lifecycle_state !== "active" && s.lifecycle_state !== "tp1_hit") return false;
-      if (currentWallTab === "waiting" && s.lifecycle_state !== "waiting_entry") return false;
+      if (currentWallTab === "active" && s.lifecycle_state !== "active") return false;
       if (currentWallTab === "closed30") {
         if (s.lifecycle_state !== "closed" && s.lifecycle_state !== "cancelled") return false;
         const t = new Date(s.closed_at_utc || s.published_at_utc).getTime();
@@ -485,27 +497,33 @@
         const liveStr = pxInfo.price !== null ? formatNumber(pxInfo.price) : "--";
         const floatPnl = computeFloatingPnl(s, pxInfo.price);
         const curSl = s.current_stop_loss ?? s.stop_loss;
-        const curTp1 = s.current_tp1 ?? s.tp1;
-        const curTp2 = s.current_tp2 ?? s.tp2;
+        const entryPx = Number(s.avg_entry_price || s.entry_price || s.entry_low || 0);
+        const entryStr = formatNumber(entryPx) || String(entryPx);
+        const enteredTp = formatTaipeiTime(s.entered_at_utc || s.published_at_utc);
+        const ruleTxt = convertReasonUtcToTaipei(s.exit_rule || s.invalidation_cond || "依策略規則出場");
 
         let liveHtml = "";
         if (s.lifecycle_state === "closed" || s.lifecycle_state === "cancelled") {
           const rVal = Number(s.r_multiple || 0);
           const rCls = rVal > 0 ? "chg-up" : rVal < 0 ? "chg-down" : "muted";
+          const exitLbl = s.exit_reason_label || exitReasonLabel(s.exit_reason);
           liveHtml = `
             <div class="live-box">
-              <div><strong>最終成績：</strong><span class="${rCls}">${rVal.toFixed(2)}R / ${formatUsd(s.realized_pnl_usd)}</span></div>
-              <div class="muted">出場原因：${s.exit_reason || "--"}</div>
+              <div><strong>實際損益（fills 加總）：</strong><span class="${rCls}">${rVal.toFixed(2)}R / ${formatUsd(s.realized_pnl_usd)}</span></div>
+              <div class="muted">出場原因：${escapeHtml(exitLbl)}｜結束時間：台北 ${formatTaipeiTime(s.closed_at_utc || s.published_at_utc)}</div>
             </div>`;
         } else {
           const floatTxt = floatPnl
             ? `<div><strong>即時浮動損益：</strong><span class="${floatPnl.usd >= 0 ? "chg-up" : "chg-down"}">${floatPnl.r >= 0 ? "+" : ""}${floatPnl.r.toFixed(2)}R (${formatUsd(floatPnl.usd)})</span></div>`
             : "";
+          const trailLine = s.trailing_exit_price
+            ? `<div>目前移動出場線：${formatNumber(s.trailing_exit_price)}</div>`
+            : "";
           liveHtml = `
             <div class="live-box">
               <div><strong>參考現價：</strong>${liveStr} <span class="pill ${pxInfo.failed ? "pill-fail" : "pill-live"}">${pxInfo.source}</span></div>
-              <div>距止損：${formatDist(pxInfo.price, curSl)}｜距 TP1：${formatDist(pxInfo.price, curTp1)}</div>
-              <div>距 TP2：${typeof curTp2 === "number" ? formatDist(pxInfo.price, curTp2) : curTp2}</div>
+              <div>距止損：${formatDist(pxInfo.price, curSl)}</div>
+              ${trailLine}
               ${floatTxt}
               <div class="muted">即時價格估算，僅供顯示；狀態與成績以引擎已收盤 K 線為準</div>
             </div>`;
@@ -514,15 +532,13 @@
         const est = computeCardEstimates(s);
         const verLabel = s.verification_status || "觀察中（未通過驗證）";
         const verCls = verLabel === "已驗證" ? "pill-ok" : "pill-warn";
-        const tp1Txt = est.tp1Usd !== null && est.tp1Usd !== undefined ? `+$${Number(est.tp1Usd).toFixed(2)}` : "--";
-        const tp2Txt = est.tp2Usd !== null && est.tp2Usd !== undefined ? `+$${Number(est.tp2Usd).toFixed(2)}` : "--";
 
         return `
           <article class="signal-card" data-sid="${s.signal_id}">
             <div class="signal-card-head">
               <div>
                 <div class="signal-card-title">${s.symbol} ${dirBadge}</div>
-                <div class="muted">${s.signal_id}｜${STRATEGY_NAMES[s.strategy] || `策略 ${s.strategy}`}｜${formatTaipeiTime(s.published_at_utc)}</div>
+                <div class="muted">${s.signal_id}｜${STRATEGY_NAMES[s.strategy] || `策略 ${s.strategy}`}｜台北 ${enteredTp}</div>
               </div>
               <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
                 <span class="pill ${verCls}">${escapeHtml(verLabel)}</span>
@@ -531,12 +547,11 @@
             </div>
             <div class="badge badge-warn" style="align-self:flex-start;">模擬驗證中，非投資建議</div>
             <div class="signal-kv">
-              <div><span class="muted">入場區間：</span>${s.entry_low} ~ ${s.entry_high}</div>
-              <div><span class="muted">倉位名目 / 實際槓桿：</span>${formatUsd(est.notional)} (${est.actualLev.toFixed(2)}x)</div>
-              <div><span class="muted">止損：</span>${curSl}</div>
-              <div><span class="muted">TP1 / TP2：</span>${curTp1} / ${curTp2}</div>
-              <div><span class="muted">預估 SL 虧損：</span><span class="chg-down">-$${est.slUsd.toFixed(2)} / -${est.slPct.toFixed(2)}%</span></div>
-              <div><span class="muted">預估 TP 獲利：</span><span class="chg-up">TP1 ${tp1Txt} / TP2 ${tp2Txt}</span></div>
+              <div><span class="muted">進場：</span>市價 ${entryStr}（台北 ${enteredTp} 成交）</div>
+              <div><span class="muted">倉位名目：</span>$${fmtCompactUsd(est.notional)}（佔 ${s.strategy} 資金 ${est.notionalPct.toFixed(1)}%）</div>
+              <div><span class="muted">止損：</span>${formatNumber(curSl) || curSl}</div>
+              <div><span class="muted">預估 SL 虧損：</span><span class="chg-down">-$${fmtCompactUsd(est.slUsd)}（佔 ${s.strategy} 資金 ${est.slPct.toFixed(1)}%）</span></div>
+              <div style="grid-column:1 / -1;"><span class="muted">出場規則：</span>${escapeHtml(ruleTxt)}</div>
             </div>
             ${liveHtml}
             <div class="card-actions">
@@ -589,19 +604,21 @@
     const pxInfo = getDisplayPrice(sig.symbol);
     const floatPnl = computeFloatingPnl(sig, pxInfo.price);
     const curSl = sig.current_stop_loss ?? sig.stop_loss;
-    const curTp1 = sig.current_tp1 ?? sig.tp1;
-    const curTp2 = sig.current_tp2 ?? sig.tp2;
+    const entryPx = Number(sig.avg_entry_price || sig.entry_price || sig.entry_low || 0);
+    const enteredTp = formatTaipeiTime(sig.entered_at_utc || sig.published_at_utc);
+    const ruleTxt = convertReasonUtcToTaipei(sig.exit_rule || sig.invalidation_cond || "依策略規則出場");
+    const exitLbl = sig.exit_reason ? (sig.exit_reason_label || exitReasonLabel(sig.exit_reason)) : "--";
 
     const reasonsHtml = Array.isArray(sig.reasons)
-      ? sig.reasons.map((r) => `<li>${r}</li>`).join("")
+      ? sig.reasons.map((r) => `<li>${escapeHtml(convertReasonUtcToTaipei(r))}</li>`).join("")
       : '<li class="muted">無</li>';
 
     const updatesHtml = updates.length > 0
-      ? `<ul class="timeline">${updates.map((u) => `<li class="timeline-item"><strong>${formatTaipeiTime(u.ts_utc)}</strong>｜<code>${u.event_type}</code> @ ${u.price}<br>${u.description}</li>`).join("")}</ul>`
+      ? `<ul class="timeline">${updates.map((u) => `<li class="timeline-item"><strong>台北 ${formatTaipeiTime(u.ts_utc)}</strong>｜<code>${escapeHtml(u.event_type)}</code> @ ${formatNumber(u.price) || u.price}<br>${escapeHtml(convertReasonUtcToTaipei(u.description))}</li>`).join("")}</ul>`
       : '<p class="muted">尚無更新事件。</p>';
 
     const snapHtml = snapshot
-      ? `<pre style="overflow-x:auto;font-size:0.8rem;">${JSON.stringify({ kline_summary: snapshot.kline_summary, indicators: snapshot.indicators, filter_checks: snapshot.filter_checks }, null, 2)}</pre>`
+      ? `<pre style="overflow-x:auto;font-size:0.8rem;">${escapeHtml(convertReasonUtcToTaipei(JSON.stringify({ kline_summary: snapshot.kline_summary, indicators: snapshot.indicators, filter_checks: snapshot.filter_checks }, null, 2)))}</pre>`
       : '<p class="muted">無快照資料。</p>';
 
     const verDetailLabel = sig.verification_status || "觀察中（未通過驗證）";
@@ -613,7 +630,7 @@
         <div class="section-header">
           <div>
             <h1>${sig.signal_id}｜${sig.symbol}（${sig.direction === "long" ? "做多" : "做空"}）</h1>
-            <p class="subtitle">${STRATEGY_NAMES[sig.strategy] || `策略 ${sig.strategy}`}｜<span class="pill ${verDetailCls}">${escapeHtml(verDetailLabel)}</span>｜狀態：<strong>${lifecycleLabel(sig.lifecycle_state)}</strong>｜發布時間 (UTC+8)：${formatTaipeiTime(sig.published_at_utc)}</p>
+            <p class="subtitle">${STRATEGY_NAMES[sig.strategy] || `策略 ${sig.strategy}`}｜<span class="pill ${verDetailCls}">${escapeHtml(verDetailLabel)}</span>｜狀態：<strong>${lifecycleLabel(sig.lifecycle_state)}</strong>｜進場時間：台北 ${enteredTp}</p>
           </div>
           <div class="card-actions">
             <a class="btn" href="#/wall">返回報單牆</a>
@@ -624,7 +641,7 @@
         <div class="badge badge-warn">模擬驗證中，非投資建議</div>
         <div class="live-box" style="margin-top:12px;">
           <div><strong>瀏覽器參考現價：</strong>${pxInfo.price !== null ? formatNumber(pxInfo.price) : "--"}（${pxInfo.source}）</div>
-          <div>距止損 (${curSl})：${formatDist(pxInfo.price, curSl)}｜距 TP1 (${curTp1})：${formatDist(pxInfo.price, curTp1)}｜距 TP2 (${curTp2})：${typeof curTp2 === "number" ? formatDist(pxInfo.price, curTp2) : curTp2}</div>
+          <div>距止損 (${formatNumber(curSl) || curSl})：${formatDist(pxInfo.price, curSl)}${sig.trailing_exit_price ? `｜目前移動出場線：${formatNumber(sig.trailing_exit_price)}` : ""}</div>
           ${floatPnl ? `<div><strong>即時浮動損益：</strong>${floatPnl.r >= 0 ? "+" : ""}${floatPnl.r.toFixed(2)}R / ${formatUsd(floatPnl.usd)}</div>` : ""}
           <div class="muted">即時價格估算，僅供顯示；報單狀態與模擬成績一律以引擎已收盤 K 線為準</div>
         </div>
@@ -633,21 +650,20 @@
       <section class="card">
         <h2>K 線圖與計畫點位</h2>
         <div id="signal-chart-box" class="chart-container"></div>
-        <p id="chart-note" class="muted" style="margin-top:6px;">標示入場區間、止損、TP1/TP2 與實際成交點。</p>
+        <p id="chart-note" class="muted" style="margin-top:6px;">標示進場價、止損價與移動出場線。</p>
       </section>
 
       <section class="card">
         <h2>原始計畫 vs 目前狀態對照</h2>
         <div class="table-wrap">
           <table class="data-table">
-            <thead><tr><th>項目</th><th>發布時原始計畫 / 預估</th><th>目前狀態</th></tr></thead>
+            <thead><tr><th>項目</th><th>進場計畫 / 預估</th><th>目前狀態</th></tr></thead>
             <tbody>
-              <tr><td>入場區間 / 成本</td><td>${sig.entry_low} ~ ${sig.entry_high}</td><td>${sig.avg_entry_price || "--"}</td></tr>
-              <tr><td>止損價</td><td>${sig.stop_loss}</td><td>${curSl}</td></tr>
-              <tr><td>TP1 / TP2</td><td>${sig.tp1} / ${sig.tp2}</td><td>${curTp1} / ${curTp2}</td></tr>
-              <tr><td>倉位名目 / 實際槓桿 / 預估 SL 虧損</td><td>${formatUsd(sigEst.notional)} (${sigEst.actualLev.toFixed(2)}x) / -$${sigEst.slUsd.toFixed(2)} (-${sigEst.slPct.toFixed(2)}%)</td><td>已實現損益 ${formatUsd(sig.realized_pnl_usd)} (${sig.r_multiple}R)</td></tr>
-              <tr><td>預估 TP 獲利</td><td>TP1 ${sigEst.tp1Usd !== null && sigEst.tp1Usd !== undefined ? `+$${Number(sigEst.tp1Usd).toFixed(2)}` : "--"} / TP2 ${sigEst.tp2Usd !== null && sigEst.tp2Usd !== undefined ? `+$${Number(sigEst.tp2Usd).toFixed(2)}` : "--"}</td><td>爆倉參考價 ${sig.liquidation_price}</td></tr>
-              <tr><td>失效條件 / 有效期限</td><td>${sig.invalidation_cond}</td><td>${sig.valid_until_utc}（出場原因：${sig.exit_reason || "--"}）</td></tr>
+              <tr><td>進場市價 / 成交時間</td><td>${formatNumber(entryPx) || entryPx}</td><td>台北 ${enteredTp}</td></tr>
+              <tr><td>固定止損價</td><td>${formatNumber(sig.stop_loss) || sig.stop_loss}</td><td>${formatNumber(curSl) || curSl}</td></tr>
+              <tr><td>倉位名目 / 預估 SL 虧損</td><td>$${fmtCompactUsd(sigEst.notional)}（佔 ${sig.strategy} 資金 ${sigEst.notionalPct.toFixed(1)}%）</td><td class="chg-down">-$${fmtCompactUsd(sigEst.slUsd)}（佔 ${sig.strategy} 資金 ${sigEst.slPct.toFixed(1)}%）</td></tr>
+              <tr><td>出場規則</td><td colspan="2">${escapeHtml(ruleTxt)}</td></tr>
+              <tr><td>已實現損益 / 出場結果</td><td>${formatUsd(sig.realized_pnl_usd)} (${sig.r_multiple}R)</td><td>出場原因：${escapeHtml(exitLbl)}${sig.closed_at_utc ? `（台北 ${formatTaipeiTime(sig.closed_at_utc)}）` : ""}</td></tr>
             </tbody>
           </table>
         </div>
@@ -709,28 +725,31 @@
     series.setData(candles);
 
     const addLine = (price, color, title) => {
-      if (typeof price === "number" && !Number.isNaN(price)) {
+      if (typeof price === "number" && !Number.isNaN(price) && price > 0) {
         series.createPriceLine({ price, color, lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title });
       }
     };
-    addLine(Number(sig.entry_low), "#58a6ff", "入場低");
-    addLine(Number(sig.entry_high), "#58a6ff", "入場高");
+    const entryPx = Number(sig.avg_entry_price || sig.entry_price || sig.entry_low || 0);
+    addLine(entryPx, "#58a6ff", "進場");
     addLine(Number(sig.current_stop_loss ?? sig.stop_loss), "#f85149", "止損");
-    addLine(Number(sig.tp1), "#2ea043", "TP1");
-    if (typeof sig.tp2 === "number") addLine(Number(sig.tp2), "#56d364", "TP2");
+    if (typeof sig.trailing_exit_price === "number") addLine(Number(sig.trailing_exit_price), "#2ea043", "移動出場線");
 
-    if (Array.isArray(sig.stages) && sig.stages.length > 0) {
-      const markers = sig.stages.map((st) => ({
-        time: Math.floor(new Date(st.filled_at_utc).getTime() / 1000),
-        position: sig.direction === "long" ? "belowBar" : "aboveBar",
-        color: "#79c0ff",
-        shape: sig.direction === "long" ? "arrowUp" : "arrowDown",
-        text: `階段${st.stage} @ ${st.fill_price}`,
-      }));
-      series.setMarkers(markers);
+    if (sig.entered_at_utc) {
+      const tSec = Math.floor(new Date(sig.entered_at_utc).getTime() / 1000);
+      if (!Number.isNaN(tSec)) {
+        series.setMarkers([
+          {
+            time: tSec,
+            position: sig.direction === "long" ? "belowBar" : "aboveBar",
+            color: "#79c0ff",
+            shape: sig.direction === "long" ? "arrowUp" : "arrowDown",
+            text: `進場 @ ${formatNumber(entryPx) || entryPx}`,
+          },
+        ]);
+      }
     }
     chart.timeScale().fitContent();
-    if (note) note.textContent = `圖表週期：${chartData.interval}（已標示計畫點位與實際成交）`;
+    if (note) note.textContent = `圖表週期：${chartData.interval}（已標示進場、止損與移動出場線）`;
   }
 
   function formatDuration(startIso, endIso) {
@@ -780,8 +799,8 @@
             <td data-label="R 值" class="${rCls}">${rVal.toFixed(2)}R</td>
             <td data-label="美元損益" class="${rCls}">${formatUsd(s.realized_pnl_usd)}</td>
             <td data-label="持倉時間">${formatDuration(s.entered_at_utc, s.closed_at_utc)}</td>
-            <td data-label="出場原因">${s.exit_reason || "--"}</td>
-            <td data-label="結束時間 (UTC+8)">${formatTaipeiTime(s.closed_at_utc)}</td>
+            <td data-label="出場原因">${escapeHtml(s.exit_reason_label || exitReasonLabel(s.exit_reason))}</td>
+            <td data-label="結束時間 (台北)">${formatTaipeiTime(s.closed_at_utc)}</td>
           </tr>`;
       })
       .join("");
@@ -971,7 +990,7 @@
       tableEl.classList.add("hidden");
       return;
     }
-    summaryEl.textContent = `實測時間 (UTC+8)：${formatTaipeiTime(probeData.generated_at_utc)}，共 ${probeData.results.length} 組測試。`;
+    summaryEl.textContent = `實測時間 (台北)：${formatTaipeiTime(probeData.generated_at_utc)}，共 ${probeData.results.length} 組測試。`;
     tableEl.classList.remove("hidden");
     tbody.innerHTML = probeData.results
       .map((row) => {
@@ -990,7 +1009,7 @@
     const box = document.getElementById("run-log-box");
     const sumEl = document.getElementById("sched-summary");
     if (sumEl && health && health.runs_last_24h !== undefined) {
-      sumEl.textContent = `近 24 小時排程執行次數：${health.runs_last_24h} 次｜自動排程時間：每小時 07, 22, 37, 52 分 UTC`;
+      sumEl.textContent = `近 24 小時排程執行次數：${health.runs_last_24h} 次｜自動排程時間：每小時台北時間 :15/:30/:45/:00 前後`;
     }
     if (!Array.isArray(runLog) || runLog.length === 0) {
       box.textContent = "尚無排程紀錄。";
@@ -1106,7 +1125,7 @@
     }
 
     const s = cachedBacktest.summary || {};
-    metaEl.textContent = `最新回測 (UTC+8)：${formatTaipeiTime(cachedBacktest.generated_at_utc)}｜共 ${s.total_strategies ?? list.length} 個策略｜通過 ${s.passed ?? 0} 個｜未通過 ${s.failed ?? 0} 個｜歷史不足 5 年 ${s.insufficient_history ?? 0} 個（歷史不代表未來）`;
+    metaEl.textContent = `最新回測 (台北)：${formatTaipeiTime(cachedBacktest.generated_at_utc)}｜共 ${s.total_strategies ?? list.length} 個策略｜通過 ${s.passed ?? 0} 個｜未通過 ${s.failed ?? 0} 個｜歷史不足 5 年 ${s.insufficient_history ?? 0} 個（歷史不代表未來）`;
 
     tbody.innerHTML = list
       .map((item) => {
@@ -1180,7 +1199,7 @@
     }
 
     const minN = cachedPerf.min_verified_trades || 50;
-    metaEl.textContent = `最後統計時間 (UTC+8)：${formatTaipeiTime(cachedPerf.updated_at_utc)}｜最低驗證樣本門檻：${minN} 筆`;
+    metaEl.textContent = `最後統計時間 (台北)：${formatTaipeiTime(cachedPerf.updated_at_utc)}｜最低驗證樣本門檻：${minN} 筆`;
 
     const rows = [
       ["總計 (Overall)", cachedPerf.overall],
@@ -1250,7 +1269,7 @@
     document.getElementById("acc-long-eq").textContent = acc ? formatUsd(acc.long_term_equity_usd) : "--";
     const positions = cachedRisk?.open_positions || [];
     document.getElementById("acc-open-margin").textContent = acc
-      ? `${positions.length} 筆 / ${formatUsd(acc.used_margin_usd)} (${Number(acc.used_margin_pct).toFixed(1)}%)`
+      ? `${positions.length} 筆 / ${formatUsd(acc.total_open_notional_usd || 0)}`
       : "--";
 
     const chartBox = document.getElementById("equity-chart-box");
@@ -1292,11 +1311,11 @@
     const posTbody = document.getElementById("account-positions-tbody");
     if (!posTbody) return;
     if (!cachedRisk) {
-      posTbody.innerHTML = '<tr><td colspan="7" class="muted center">目前尚無模擬持倉資料（等待排程產生 risk_status.json）。</td></tr>';
+      posTbody.innerHTML = '<tr><td colspan="6" class="muted center">目前尚無模擬持倉資料（等待排程產生 risk_status.json）。</td></tr>';
       return;
     }
     if (positions.length === 0) {
-      posTbody.innerHTML = '<tr><td colspan="7" class="muted center">目前無持倉或等待入場掛單。</td></tr>';
+      posTbody.innerHTML = '<tr><td colspan="6" class="muted center">目前無持倉。</td></tr>';
       return;
     }
     posTbody.innerHTML = positions
@@ -1307,31 +1326,17 @@
         if (pxInfo.price !== null && p.total_qty > 0 && p.avg_entry_price > 0) {
           floatUsd = p.direction === "long" ? (pxInfo.price - p.avg_entry_price) * p.total_qty : (p.avg_entry_price - pxInfo.price) * p.total_qty;
         }
-        const subEq = String(p.strategy || "").startsWith("S")
-          ? Number(acc?.short_term_equity_usd || 30000)
-          : Number(acc?.long_term_equity_usd || 70000);
-        const actualLev = p.leverage !== undefined && p.leverage !== null
-          ? Number(p.leverage)
-          : (subEq > 0 ? Number(p.notional_usd || 0) / subEq : 0);
-        const estLoss = Number(p.estimated_max_loss_usd || 0);
-        const estLossPct = p.estimated_max_loss_pct_pool !== undefined && p.estimated_max_loss_pct_pool !== null
-          ? Number(p.estimated_max_loss_pct_pool)
-          : (subEq > 0 ? (estLoss / subEq) * 100 : 0);
-        const tp1Profit = p.estimated_tp1_profit_usd !== undefined && p.estimated_tp1_profit_usd !== null
-          ? `+$${Number(p.estimated_tp1_profit_usd).toFixed(2)}`
-          : "--";
-        const tp2Profit = p.estimated_tp2_profit_usd !== undefined && p.estimated_tp2_profit_usd !== null
-          ? `+$${Number(p.estimated_tp2_profit_usd).toFixed(2)}`
-          : "--";
+        const est = computeCardEstimates(p);
+        const enteredTp = formatTaipeiTime(p.entered_at_utc);
+        const ruleTxt = convertReasonUtcToTaipei(p.exit_rule || "依策略規則出場");
         return `
           <tr>
             <td data-label="報單 / 標的"><a href="#/signal/${encodeURIComponent(p.signal_id)}">${escapeHtml(p.signal_id)}</a><br><strong>${escapeHtml(p.symbol)}</strong> (${p.strategy} / ${p.direction === "long" ? "多" : "空"})</td>
-            <td data-label="狀態">${escapeHtml(lifecycleLabel(p.state))}</td>
-            <td data-label="成本 / 總數量">${p.avg_entry_price > 0 ? formatNumber(p.avg_entry_price) : "--"}<br><span class="muted">${p.total_qty}</span></td>
-            <td data-label="名目 / 實際槓桿 / 保證金">${formatUsd(p.notional_usd)}<br><span class="muted">${actualLev.toFixed(2)}x / ${formatUsd(p.margin_usd)}</span></td>
+            <td data-label="進場時間 (台北) / 成本 / 數量">台北 ${enteredTp}<br><span class="muted">${p.avg_entry_price > 0 ? formatNumber(p.avg_entry_price) : "--"} / ${p.total_qty}</span></td>
+            <td data-label="倉位名目 / 佔策略資金">$${fmtCompactUsd(est.notional)}<br><span class="muted">佔 ${escapeHtml(p.strategy)} ${est.notionalPct.toFixed(1)}%</span></td>
             <td data-label="即時現價 / 未實現損益">${formatNumber(refPx) || "--"} (${escapeHtml(pxInfo.source)})<br><span class="${floatUsd >= 0 ? "chg-up" : "chg-down"}">${formatUsd(floatUsd)}</span></td>
-            <td data-label="止損 / TP1 / TP2">SL ${formatNumber(p.current_stop_loss)}<br><span class="muted">TP1 ${formatNumber(p.current_tp1)} / TP2 ${typeof p.current_tp2 === "number" ? formatNumber(p.current_tp2) : escapeHtml(p.current_tp2)}</span></td>
-            <td data-label="預估 SL 虧損 / TP 獲利"><span class="chg-down">-$${estLoss.toFixed(2)} (-${estLossPct.toFixed(2)}%)</span><br><span class="chg-up">TP1 ${tp1Profit} / TP2 ${tp2Profit}</span></td>
+            <td data-label="止損 / 預估 SL 虧損">${formatNumber(p.current_stop_loss)}<br><span class="chg-down">-$${fmtCompactUsd(est.slUsd)} (${est.slPct.toFixed(1)}%)</span></td>
+            <td data-label="出場規則">${escapeHtml(ruleTxt)}</td>
           </tr>
         `;
       })
@@ -1352,60 +1357,45 @@
   function renderRiskCenter() {
     const metaEl = document.getElementById("risk-meta");
     const metersGrid = document.getElementById("risk-meters-grid");
-    const groupsTbody = document.getElementById("risk-groups-tbody");
-    const liqTbody = document.getElementById("risk-liq-tbody");
+    const subTbody = document.getElementById("risk-subaccounts-tbody");
     const eventsBox = document.getElementById("risk-events-box");
-    if (!metaEl || !metersGrid || !groupsTbody || !liqTbody || !eventsBox) return;
+    if (!metaEl || !metersGrid || !subTbody || !eventsBox) return;
 
     if (!cachedRisk || !cachedRisk.account) {
       metaEl.textContent = "目前尚無風控狀態資料（等待排程產生 risk_status.json）。";
-      metersGrid.innerHTML = '<div class="empty-state">目前尚無風控限額使用量資料。</div>';
-      groupsTbody.innerHTML = '<tr><td colspan="4" class="muted center">目前尚無群組風險資料。</td></tr>';
-      liqTbody.innerHTML = '<tr><td colspan="7" class="muted center">目前尚無持倉爆倉距離資料。</td></tr>';
+      metersGrid.innerHTML = '<div class="empty-state">目前尚無策略子帳戶狀態資料。</div>';
+      subTbody.innerHTML = '<tr><td colspan="6" class="muted center">目前尚無策略子帳戶狀態資料。</td></tr>';
       eventsBox.innerHTML = '<p class="muted">目前尚無風控事件。</p>';
       return;
     }
 
     const a = cachedRisk.account;
-    metaEl.textContent = `最後檢核 (UTC+8)：${formatTaipeiTime(cachedRisk.updated_at_utc)}｜目前狀態：${escapeHtml(a.risk_status)}｜最高淨值：${formatUsd(a.peak_equity_usd)}`;
+    metaEl.textContent = `最後檢核 (台北)：${formatTaipeiTime(cachedRisk.updated_at_utc)}｜總淨值：${formatUsd(a.equity_usd)}｜最高淨值：${formatUsd(a.peak_equity_usd)}｜回撤：${Number(a.drawdown_pct || 0).toFixed(2)}%`;
 
-    const dailyLossUsed = Math.max(0, -Number(a.daily_pnl_usd || 0));
-    const weeklyLossUsed = Math.max(0, -Number(a.weekly_pnl_usd || 0));
+    const subs = Array.isArray(cachedRisk.subaccounts) ? cachedRisk.subaccounts : [];
+    const totalMaxRisk = subs.reduce((acc, s) => acc + Number(s.max_open_risk_usd || 0), 0) || 10000;
+    const totalMaxNotional = subs.reduce((acc, s) => acc + Number(s.max_total_notional_usd || 0), 0) || 500000;
+
     metersGrid.innerHTML = [
-      renderMeter("單日虧損限額", formatUsd(dailyLossUsed), formatUsd(a.max_daily_loss_usd), (dailyLossUsed / Math.max(1, a.max_daily_loss_usd)) * 100),
-      renderMeter("單週虧損限額", formatUsd(weeklyLossUsed), formatUsd(a.max_weekly_loss_usd), (weeklyLossUsed / Math.max(1, a.max_weekly_loss_usd)) * 100),
-      renderMeter("帳戶回撤 (8% 警戒 / 12% 暫停)", `${Number(a.drawdown_pct).toFixed(2)}%`, `${a.drawdown_pause_pct}%`, (a.drawdown_pct / Math.max(1, a.drawdown_pause_pct)) * 100),
-      renderMeter("全帳戶保證金使用率", `${Number(a.used_margin_pct).toFixed(2)}%`, `${a.max_margin_usage_pct}%`, (a.used_margin_pct / Math.max(1, a.max_margin_usage_pct)) * 100),
-      renderMeter("全帳戶預估停損總風險", formatUsd(a.total_stop_risk_usd), formatUsd(a.max_total_stop_risk_usd), (a.total_stop_risk_usd / Math.max(1, a.max_total_stop_risk_usd)) * 100),
+      renderMeter("全策略總開放停損風險", formatUsd(a.total_open_risk_usd || 0), formatUsd(totalMaxRisk), ((a.total_open_risk_usd || 0) / totalMaxRisk) * 100),
+      renderMeter("全策略總開倉名目", formatUsd(a.total_open_notional_usd || 0), formatUsd(totalMaxNotional), ((a.total_open_notional_usd || 0) / totalMaxNotional) * 100),
+      renderMeter("帳戶總回撤", `${Number(a.drawdown_pct || 0).toFixed(2)}%`, "25.0% (OOS 門檻)", (Number(a.drawdown_pct || 0) / 25.0) * 100),
     ].join("");
 
-    const groups = cachedRisk.correlation_groups || [];
-    groupsTbody.innerHTML = groups.length === 0
-      ? '<tr><td colspan="4" class="muted center">無群組資料。</td></tr>'
-      : groups.map((g) => `
-          <tr>
-            <td data-label="群組名稱"><strong title="${escapeHtml(g.group_id)}">${escapeHtml(g.name)}</strong></td>
-            <td data-label="已使用預估停損風險">${formatUsd(g.used_risk_usd)}</td>
-            <td data-label="群組上限">${formatUsd(g.limit_usd)}</td>
-            <td data-label="使用比例">${Number(g.usage_pct).toFixed(1)}%</td>
-          </tr>
-        `).join("");
-
-    const positions = cachedRisk.open_positions || [];
-    liqTbody.innerHTML = positions.length === 0
-      ? '<tr><td colspan="7" class="muted center">目前無進行中倉位或掛單。</td></tr>'
-      : positions.map((p) => {
-          const ratioPct = Number(p.stop_to_liq_ratio || 0) * 100;
-          const badge = ratioPct <= 50 ? '<span class="pill pill-ok">安全</span>' : '<span class="pill pill-fail">超標</span>';
+    subTbody.innerHTML = subs.length === 0
+      ? '<tr><td colspan="6" class="muted center">無策略子帳戶資料。</td></tr>'
+      : subs.map((s) => {
+          const poolZh = s.pool === "short_term" ? "短線池" : "長線池";
+          const riskPctRatio = (Number(s.open_risk_usd || 0) / Math.max(1, Number(s.max_open_risk_usd || 1))) * 100;
+          const notPctRatio = (Number(s.open_notional_usd || 0) / Math.max(1, Number(s.max_total_notional_usd || 1))) * 100;
           return `
             <tr>
-              <td><strong>${escapeHtml(p.symbol)}</strong> (${p.direction === "long" ? "做多" : "做空"})</td>
-              <td>${formatNumber(p.avg_entry_price || p.mark_price)}</td>
-              <td>${formatNumber(p.current_stop_loss)}</td>
-              <td>${formatNumber(p.liquidation_price)}</td>
-              <td>${Number(p.stop_distance_pct).toFixed(2)}%</td>
-              <td>${Number(p.liquidation_distance_pct).toFixed(2)}%</td>
-              <td>${ratioPct.toFixed(1)}% ${badge}</td>
+              <td data-label="策略子帳戶"><strong>${escapeHtml(s.strategy_id)}</strong> ${escapeHtml(s.name)}</td>
+              <td data-label="資金池 / 週期">${poolZh} / ${escapeHtml(s.interval)}</td>
+              <td data-label="目前淨值">${formatUsd(s.equity_usd)}<br><span class="muted">已實現 ${formatUsd(s.realized_pnl_usd)} / 未實現 ${formatUsd(s.unrealized_pnl_usd)}</span></td>
+              <td data-label="持倉數">${s.open_positions_count} / ${s.max_concurrent_positions} 檔</td>
+              <td data-label="開放停損風險">${formatUsd(s.open_risk_usd)} / ${formatUsd(s.max_open_risk_usd)}<br><span class="muted">${Number(s.open_risk_pct).toFixed(1)}% (上限 ${s.max_total_open_risk_pct}%｜使用 ${riskPctRatio.toFixed(0)}%)</span></td>
+              <td data-label="總名目倉位">${formatUsd(s.open_notional_usd)} / ${formatUsd(s.max_total_notional_usd)}<br><span class="muted">${Number(s.open_notional_pct).toFixed(1)}% (上限 ${s.max_total_notional_multiple}x｜使用 ${notPctRatio.toFixed(0)}%)</span></td>
             </tr>
           `;
         }).join("");
@@ -1413,7 +1403,7 @@
     const revents = cachedRisk.recent_risk_events || [];
     eventsBox.innerHTML = revents.length === 0
       ? '<p class="muted">目前尚無風控事件。</p>'
-      : `<ul class="timeline">${revents.map((ev) => `<li class="timeline-item"><strong>${formatTaipeiTime(ev.ts_utc)}</strong>｜<code>${escapeHtml(ev.event_type)}</code>｜${escapeHtml(ev.reason || ev.note || "")}</li>`).join("")}</ul>`;
+      : `<ul class="timeline">${revents.map((ev) => `<li class="timeline-item"><strong>台北 ${formatTaipeiTime(ev.ts_utc)}</strong>｜<code>${escapeHtml(ev.event_type)}</code>｜${escapeHtml(convertReasonUtcToTaipei(ev.reason || ev.note || ""))}</li>`).join("")}</ul>`;
   }
 
   function renderDataExtras() {
@@ -1421,13 +1411,12 @@
     if (evTbody) {
       const evs = cachedEvents?.events || [];
       evTbody.innerHTML = evs.length === 0
-        ? '<tr><td colspan="4" class="muted center">目前尚無經濟事件資料。</td></tr>'
+        ? '<tr><td colspan="3" class="muted center">目前尚無經濟事件資料。</td></tr>'
         : evs.map((ev) => `
             <tr>
-              <td><strong>${escapeHtml(ev.title)}</strong></td>
-              <td>${escapeHtml(Array.isArray(ev.currencies) ? ev.currencies.join(", ") : (ev.currency || "--"))}</td>
-              <td><code>${escapeHtml(ev.time_utc)}</code></td>
-              <td>${formatTaipeiTime(ev.time_utc)}</td>
+              <td data-label="事件名稱"><strong>${escapeHtml(ev.title)}</strong></td>
+              <td data-label="貨幣／影響市場">${escapeHtml(Array.isArray(ev.currencies) ? ev.currencies.join(", ") : (ev.currency || "--"))}</td>
+              <td data-label="時間 (台北時間)">${formatTaipeiTime(ev.time_utc)}</td>
             </tr>
           `).join("");
     }
@@ -1624,6 +1613,8 @@
 
   window.__SIGNAL_DESK_UTILS__ = {
     formatNumber,
+    formatTaipeiTime,
+    formatSignalCopyText,
     convertReasonUtcToTaipei,
     classifyWatchReason,
   };

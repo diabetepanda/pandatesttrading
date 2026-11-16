@@ -14,7 +14,6 @@ from src.data.adapters import FallbackDataFetcher
 from src.data.models import OHLCVBar
 from src.data.quality import _parse_iso_utc, check_continuity
 from src.engine.simulator import MarketBar, SimulationEngine
-from src.indicators.technical import compute_atr
 from src.jobs.data_sync import append_run_log
 from src.jobs.live_strategy import (
     evaluate_live_l3_rebalance,
@@ -95,10 +94,10 @@ def run_daily(
         tr.symbol
         for tr in engine.ledger.trades.values()
         if tr.strategy in ("S3", "L1", "L2", "L3")
-        and tr.state in (LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE, LifecycleState.TP1_HIT)
+        and tr.state == LifecycleState.ACTIVE
     }
 
-    signals_before = set(engine.primary_ledger.trades.keys())
+    signals_before = set(engine.ledger.trades.keys())
     t_fetch = time.monotonic()
 
     for inst in instruments:
@@ -113,9 +112,8 @@ def run_daily(
         if sym in open_daily_syms and not bool(inst.get("daily_only", False)) and mkt != "index":
             res_15m = data_fetcher.fetch(inst, "15m", limit=500, now_utc=now)
             if res_15m.ok and res_15m.bars:
-                atr_d = compute_atr(res_1d.bars, period=14, market=mkt, interval="1d") if res_1d.ok else None
                 m_bars = _to_market_bars_15m(res_15m.bars, now)
-                engine.replay_bars(sym, m_bars, atr=atr_d)
+                engine.replay_bars(sym, m_bars)
 
         st_1d = rep_1d.get("status", "failed")
         if st_1d in ("failed", "unstable") or not (res_1d.ok and res_1d.bars):
@@ -185,7 +183,7 @@ def run_daily(
                     row["reason"] = f"{row['reason']}；{msg_l3}" if row["reason"] else msg_l3
 
     watch_items = [watch_by_sym[i["symbol"]] for i in instruments if i["symbol"] in watch_by_sym]
-    new_signal_ids = sorted(set(engine.primary_ledger.trades.keys()) - signals_before)
+    new_signal_ids = sorted(set(engine.ledger.trades.keys()) - signals_before)
     l3_sec = round(time.monotonic() - t_l3, 3)
 
     t_save = time.monotonic()

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261116i" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261117a" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -39,7 +39,7 @@
         <span id="live-updated" class="metric-value">--</span>
       </div>
       <div class="metric">
-        <span class="metric-label">最後排程更新 (Actions, UTC+8)</span>
+        <span class="metric-label">最後排程更新 (Actions, 台北時間)</span>
         <span class="metric-value"><span id="last-updated">--</span> <span id="next-scan-est" class="muted"></span></span>
       </div>
     </div>
@@ -92,7 +92,6 @@
 
         <div class="filter-tabs" id="wall-status-tabs">
           <button class="tab active" data-tab="active" type="button">進行中</button>
-          <button class="tab" data-tab="waiting" type="button">等待入場</button>
           <button class="tab" data-tab="closed30" type="button">已結束（最近 30 天）</button>
         </div>
 
@@ -263,20 +262,19 @@
       </section>
 
       <section class="card">
-        <h2>高影響經濟事件日曆（UTC / UTC+8）</h2>
-        <p class="subtitle">短線策略（S1～S3）於高影響事件前 4 小時與結束後 60 分鐘自動禁止報單。</p>
+        <h2>高影響經濟事件日曆（台北時間）</h2>
+        <p class="subtitle">供市場風險參考，時間一律以台北時間 (Asia/Taipei) 顯示。</p>
         <div class="table-wrap">
           <table class="data-table mobile-cards" id="instruments-table">
             <thead>
               <tr>
                 <th>事件名稱</th>
                 <th>貨幣／影響市場</th>
-                <th>時間 (UTC)</th>
-                <th>時間 (UTC+8)</th>
+                <th>時間 (台北時間)</th>
               </tr>
             </thead>
             <tbody id="events-tbody">
-              <tr><td colspan="4" class="muted center">目前尚無經濟事件資料。</td></tr>
+              <tr><td colspan="3" class="muted center">目前尚無經濟事件資料。</td></tr>
             </tbody>
           </table>
         </div>
@@ -284,7 +282,7 @@
 
       <section class="card">
         <h2>近期排程執行紀錄</h2>
-        <p id="sched-summary" class="subtitle">排程頻率：每小時 07, 22, 37, 52 分 UTC 自動執行（避開整點尖峰）</p>
+        <p id="sched-summary" class="subtitle">排程頻率：每小時台北時間 :15/:30/:45/:00 前後（UTC 07/22/37/52 分）自動執行</p>
         <div id="run-log-box" class="muted">尚無排程紀錄。</div>
       </section>
     </section>
@@ -331,7 +329,7 @@
         <div class="section-header">
           <div>
             <h1>模擬帳戶與資金曲線</h1>
-            <p class="subtitle">虛擬總資金 100,000 USD（短線池 $30,000＋長線池 $70,000，資金池嚴格隔離）；現價浮動損益由瀏覽器即時價格估算。</p>
+            <p class="subtitle">虛擬總資金 100,000 USD（6 個獨立策略子帳戶：S1～S3 各 $10,000，L1～L3 各約 $23,333）；現價浮動損益由瀏覽器即時價格估算。</p>
           </div>
           <span class="badge badge-warn">模擬驗證中，非投資建議</span>
         </div>
@@ -339,7 +337,7 @@
           <div class="summary-card"><span class="metric-label">總淨值</span><span id="acc-total-eq" class="summary-val">--</span></div>
           <div class="summary-card"><span class="metric-label">短線池淨值</span><span id="acc-short-eq" class="summary-val">--</span></div>
           <div class="summary-card"><span class="metric-label">長線池淨值</span><span id="acc-long-eq" class="summary-val">--</span></div>
-          <div class="summary-card"><span class="metric-label">進行中持倉 / 使用保證金</span><span id="acc-open-margin" class="summary-val">--</span></div>
+          <div class="summary-card"><span class="metric-label">進行中持倉 / 總名目</span><span id="acc-open-margin" class="summary-val">--</span></div>
         </div>
         <h2 style="margin-top:14px;">帳戶資金曲線</h2>
         <div id="equity-chart-box" class="chart-container"></div>
@@ -347,22 +345,21 @@
       </section>
 
       <section class="card">
-        <h2>目前持倉與掛單明細</h2>
+        <h2>目前持倉明細</h2>
         <div class="table-wrap">
           <table class="data-table mobile-cards" id="instruments-table">
             <thead>
               <tr>
                 <th>報單 / 標的</th>
-                <th>狀態</th>
-                <th>成本 / 總數量</th>
-                <th>名目 / 實際槓桿 / 保證金</th>
+                <th>進場時間 (台北) / 成本 / 數量</th>
+                <th>倉位名目 / 佔策略資金</th>
                 <th>即時現價 / 未實現損益</th>
-                <th>止損 / TP1 / TP2</th>
-                <th>預估 SL 虧損 / TP1 &amp; TP2 獲利</th>
+                <th>止損 / 預估 SL 虧損</th>
+                <th>出場規則</th>
               </tr>
             </thead>
             <tbody id="account-positions-tbody">
-              <tr><td colspan="7" class="muted center">目前尚無模擬持倉資料。</td></tr>
+              <tr><td colspan="6" class="muted center">目前尚無模擬持倉資料。</td></tr>
             </tbody>
           </table>
         </div>
@@ -374,53 +371,33 @@
       <section class="card">
         <div class="section-header">
           <div>
-            <h1>風控中心</h1>
-            <p class="subtitle">引擎強制執行，任何策略皆不得繞過；觸及 12% 回撤暫停須透過 repo 內 <code>control/control.json</code> 手動覆核解除。</p>
+            <h1>風控中心（策略子帳戶狀態）</h1>
+            <p class="subtitle">實盤與 5 年回測共用同一套部位計算：每策略各自獨立子帳戶、每單風險 1.0%、總開放風險上限 10%、總名目上限 5 倍、最多同時 10 檔；暫停報單可透過 repo 內 <code>control/control.json</code> 手動切換。</p>
           </div>
           <span class="badge badge-warn">模擬驗證中，非投資建議</span>
         </div>
         <p id="risk-meta" class="muted">目前尚無風控狀態資料。</p>
         <div id="risk-meters-grid" class="meter-grid">
-          <div class="empty-state">目前尚無風控限額使用量資料。</div>
+          <div class="empty-state">目前尚無策略子帳戶狀態資料。</div>
         </div>
       </section>
 
       <section class="card">
-        <h2>相關性群組風險曝險（上限合併計算）</h2>
+        <h2>各策略子帳戶即時狀態</h2>
         <div class="table-wrap">
-          <table class="data-table mobile-cards" id="instruments-table">
+          <table class="data-table mobile-cards" id="risk-subaccounts-table">
             <thead>
               <tr>
-                <th>群組名稱</th>
-                <th>已使用預估停損風險</th>
-                <th>群組上限</th>
-                <th>使用比例</th>
+                <th>策略子帳戶</th>
+                <th>資金池 / 週期</th>
+                <th>目前淨值（已實現 / 未實現）</th>
+                <th>持倉數 / 上限 (10)</th>
+                <th>開放停損風險 / 上限 (10%)</th>
+                <th>總名目倉位 / 上限 (5x)</th>
               </tr>
             </thead>
-            <tbody id="risk-groups-tbody">
-              <tr><td colspan="4" class="muted center">目前尚無群組風險資料。</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>持倉爆倉安全距離檢核（止損須先於爆倉）</h2>
-        <div class="table-wrap">
-          <table class="data-table mobile-cards" id="instruments-table">
-            <thead>
-              <tr>
-                <th>標的 / 方向</th>
-                <th>平均成本</th>
-                <th>目前止損</th>
-                <th>預估爆倉價</th>
-                <th>止損距離</th>
-                <th>爆倉距離</th>
-                <th>止損 / 爆倉比例 (上限 50%)</th>
-              </tr>
-            </thead>
-            <tbody id="risk-liq-tbody">
-              <tr><td colspan="7" class="muted center">目前尚無持倉爆倉距離資料。</td></tr>
+            <tbody id="risk-subaccounts-tbody">
+              <tr><td colspan="6" class="muted center">目前尚無策略子帳戶狀態資料。</td></tr>
             </tbody>
           </table>
         </div>
@@ -437,7 +414,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261116i"></script>
-  <script src="./assets/app.js?v=20261116i"></script>
+  <script src="./assets/config.js?v=20261117a"></script>
+  <script src="./assets/app.js?v=20261117a"></script>
 </body>
 </html>

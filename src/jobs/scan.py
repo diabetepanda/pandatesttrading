@@ -168,7 +168,7 @@ def run_scan(
     symbols_with_open_trades = {
         tr.symbol
         for tr in engine.ledger.trades.values()
-        if tr.state in (LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE, LifecycleState.TP1_HIT)
+        if tr.state == LifecycleState.ACTIVE
     }
     step_timings_sec["load_and_cleanup_sec"] = round(time.monotonic() - t_step, 3)
 
@@ -423,12 +423,7 @@ def run_scan(
     for sym in sorted(symbols_with_open_trades):
         m_bars = _to_market_bars_1m(bars_1m_by_sym.get(sym, []), now)
         if m_bars:
-            engine.replay_bars(
-                sym,
-                m_bars,
-                atr=atr_1h_by_sym.get(sym),
-                atr_ratio=atr_ratio_by_sym.get(sym),
-            )
+            engine.replay_bars(sym, m_bars)
     step_timings_sec["indicators_and_replay_sec"] = round(time.monotonic() - t_step, 3)
 
     t_step = time.monotonic()
@@ -451,10 +446,29 @@ def run_scan(
 
     t_step = time.monotonic()
     runtime_cfgs = load_strategy_runtime_configs(out_dir, config)
-    signals_before = set(engine.primary_ledger.trades.keys())
+    signals_before = set(engine.ledger.trades.keys())
     watch_today_items: list[dict[str, Any]] = []
     s1_cfg = config.get("strategies", {}).get("S1", {})
     s2_cfg = config.get("strategies", {}).get("S2", {})
+
+    def _find_next_open_1m_bar(bars_1m_list: list[OHLCVBar], closed_bars_strat: list[OHLCVBar], iv_sec: int) -> MarketBar | None:
+        if not closed_bars_strat or not bars_1m_list:
+            return None
+        close_dt = _parse_iso_utc(closed_bars_strat[-1].ts_utc) + timedelta(seconds=iv_sec)
+        close_iso = close_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+        for b in bars_1m_list:
+            b_close_dt = _parse_iso_utc(b.ts_utc) + timedelta(minutes=1)
+            if b.ts_utc >= close_iso and b_close_dt <= now:
+                return MarketBar(
+                    ts_utc=b.ts_utc,
+                    close_ts_utc=b_close_dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    open=b.open,
+                    high=b.high,
+                    low=b.low,
+                    close=b.close,
+                    volume=b.volume,
+                )
+        return None
 
     for inst in instruments_cfg:
         sym = inst["symbol"]
@@ -473,6 +487,7 @@ def run_scan(
         deriv_ok = (deriv_record is None) or (deriv_record.get("status") == "ok")
         allow_entry = (not is_unstable) and (not is_stale) and deriv_ok
 
+        b1m = bars_1m_by_sym.get(sym, [])
         b15 = bars_15m_by_sym.get(sym, [])
         b1h = bars_1h_by_sym.get(sym, [])
         b4h = resample_1h_to_4h(b1h, now_utc=now) if b1h else []
@@ -483,6 +498,7 @@ def run_scan(
 
         if "S1" in runtime_cfgs and is_instrument_eligible_for_strategy(inst, s1_cfg):
             if b15:
+                nxt1 = _find_next_open_1m_bar(b1m, b15, 900)
                 ok1, msg1 = evaluate_live_single_strategy_step(
                     engine=engine,
                     strategy_id="S1",
@@ -492,6 +508,7 @@ def run_scan(
                     now_iso=now_iso,
                     control=control,
                     allow_new_entry=allow_entry,
+                    next_bar=nxt1,
                 )
             else:
                 ok1, msg1 = False, f"S1 ({runtime_cfgs['S1'][1]}): 資料過期（缺少已收盤 15m K 線）"
@@ -503,6 +520,7 @@ def run_scan(
 
         if "S2" in runtime_cfgs and is_instrument_eligible_for_strategy(inst, s2_cfg):
             if b4h:
+                nxt2 = _find_next_open_1m_bar(b1m, b4h, 14400)
                 ok2, msg2 = evaluate_live_single_strategy_step(
                     engine=engine,
                     strategy_id="S2",
@@ -512,6 +530,7 @@ def run_scan(
                     now_iso=now_iso,
                     control=control,
                     allow_new_entry=allow_entry,
+                    next_bar=nxt2,
                 )
             else:
                 ok2, msg2 = False, f"S2 ({runtime_cfgs['S2'][1]}): 資料過期（缺少已收盤 4h K 線）"
@@ -557,8 +576,16 @@ def run_scan(
             item_entry["derivatives"] = deriv_record
         watch_today_items.append(item_entry)
 
-    signals_after = set(engine.primary_ledger.trades.keys())
+    signals_after = set(engine.ledger.trades.keys())
     new_signal_ids = sorted(signals_after - signals_before)
+    # Replay any 1m bars after newly entered trades' entry_ts so intra-bar SL since market open is evaluated
+    for sid in new_signal_ids:
+        tr = engine.ledger.trades.get(sid)
+        if tr is not None and tr.state == LifecycleState.ACTIVE and tr.entered_at_utc:
+            m_bars = _to_market_bars_1m(bars_1m_by_sym.get(tr.symbol, []), now)
+            for mb in m_bars:
+                if mb.close_ts_utc > tr.entered_at_utc and tr.state == LifecycleState.ACTIVE:
+                    engine._process_trade_bar(tr, mb, [])
     step_timings_sec["strategy_eval_sec"] = round(time.monotonic() - t_step, 3)
 
     t_step = time.monotonic()
@@ -566,12 +593,8 @@ def run_scan(
 
     charts_dir = out_dir / "charts"
     charts_dir.mkdir(parents=True, exist_ok=True)
-    for sid, tr in engine.primary_ledger.trades.items():
-        if sid in new_signal_ids or tr.state in (
-            LifecycleState.WAITING_ENTRY,
-            LifecycleState.ACTIVE,
-            LifecycleState.TP1_HIT,
-        ):
+    for sid, tr in engine.ledger.trades.items():
+        if sid in new_signal_ids or tr.state == LifecycleState.ACTIVE:
             sym_bars = bars_15m_by_sym.get(tr.symbol, [])[-96:]
             if sym_bars:
                 _write_json(
@@ -595,7 +618,7 @@ def run_scan(
                 )
 
     watch_count = sum(1 for item in watch_today_items if item["decision"] != "signal")
-    prim = engine.primary_ledger
+    prim = engine.ledger
     total_eq = round(prim.compute_equity(engine.latest_marks), 2)
     short_eq = round(prim.compute_pool_equity("short_term", engine.latest_marks), 2)
     long_eq = round(prim.compute_pool_equity("long_term", engine.latest_marks), 2)

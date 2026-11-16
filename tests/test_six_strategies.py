@@ -431,8 +431,8 @@ def test_shared_subaccount_sizing_and_concurrent_limits() -> None:
     )
     assert direct == via_rm
     assert direct.approved is True
-    # 0.75% of $20,000 * 0.8 = $120 target risk
-    assert abs(direct.risk_usd - 120.0) < 1e-4
+    # 1.0% of $20,000 * 0.8 = $160 target risk
+    assert abs(direct.risk_usd - 160.0) < 1e-4
 
     # Concurrent position cap enforced
     capped = rm.check_subaccount_allocation(
@@ -448,22 +448,19 @@ def test_shared_subaccount_sizing_and_concurrent_limits() -> None:
     assert capped.approved is False
     assert "檔數已達上限" in capped.reason
 
-    # Total open risk cap enforced (5% of $20,000 = $1,000)
+    # Total open risk cap enforced (10% of $20,000 = $2,000)
     risk_capped = rm.check_new_signal(
         instrument=btc,
         strategy="L3",
         direction="long",
         entry_price=100.0,
         stop_loss=95.0,
-        tp1=110.0,
-        tp2=115.0,
-        leverage=5.0,
         account_state={
             "equity_usd": 100000.0,
             "peak_equity_usd": 100000.0,
             "subaccount_equity_usd": 20000.0,
             "subaccount_open_positions": 3,
-            "subaccount_open_risk_usd": 1200.0,
+            "subaccount_open_risk_usd": 2000.0,
             "subaccount_open_notional_usd": 9000.0,
         },
         control={"paused": False, "risk_review_done": False},
@@ -868,20 +865,11 @@ def test_closed_at_utc_never_earlier_than_published_at_utc_and_purges_corrupted_
         strategy="S2",
         symbol="BTCUSDT",
         direction="long",
-        entry_low=99.0,
-        entry_high=101.0,
-        add_levels=(),
+        ref_price=100.0,
         stop_loss=94.0,
-        tp1=112.0,
-        tp2=118.0,
-        invalidation_price=93.0,
-        invalidation_cond="觸及止損價",
+        exit_rule="止損或移動出場",
         reasons=("breakout",),
         snapshot=InputSnapshot("SNAP-TEST", "PENDING", pub_ts, "BTCUSDT", {"interval": "4h", "close": 100.0}, {}, {}),
-        atr=2.0,
-        atr_ratio=1.0,
-        leverage=3.0,
-        time_stop_bars=30,
         verification_status="觀察中（未通過驗證）",
     )
     sig = eng.submit_candidate_signal(
@@ -892,22 +880,22 @@ def test_closed_at_utc_never_earlier_than_published_at_utc_and_purges_corrupted_
     )
     assert sig is not None
 
-    # Replay an old historical bar from 2026-11-13 that would have hit invalidation_price=93.0
+    # Replay an old historical bar from 2026-11-13 that would have hit stop_loss=94.0
     eng.replay_bars(
         "BTCUSDT",
         [MarketBar("2026-11-13T21:00:00Z", "2026-11-13T21:01:00Z", 90.0, 91.0, 89.0, 90.0, 100.0)],
     )
     tr = eng.ledger.trades[sig.signal_id]
-    assert tr.state == LifecycleState.WAITING_ENTRY
+    assert tr.state == LifecycleState.ACTIVE
     assert tr.closed_at_utc is None
 
-    # Now replay a bar AFTER published_at_utc that triggers invalidation -> closed_at_utc >= published_at_utc
+    # Now replay a bar AFTER entered_at_utc that hits SL -> closed_at_utc >= published/entered_at_utc
     eng.replay_bars(
         "BTCUSDT",
         [MarketBar("2026-11-16T12:21:00Z", "2026-11-16T12:22:00Z", 93.5, 93.6, 92.0, 92.5, 100.0)],
     )
-    assert tr.state == LifecycleState.CANCELLED
-    assert tr.closed_at_utc is not None and tr.closed_at_utc >= sig.published_at_utc
+    assert tr.state == LifecycleState.CLOSED
+    assert tr.closed_at_utc is not None and tr.closed_at_utc >= sig.entered_at_utc
 
     # Seed SIG-20261116-0001..0003 corrupted FX S2 entries & verify auto-purge upon load_state()
     purge_dir = tmp_path / "purge_check"
@@ -944,20 +932,12 @@ def test_closed_at_utc_never_earlier_than_published_at_utc_and_purges_corrupted_
             correlation_group="fx",
             direction="long",
             state=LifecycleState.CANCELLED,
-            entry_low=1.08,
-            entry_high=1.09,
-            add_levels=(),
+            entry_price=1.08,
             initial_stop_loss=1.07,
             current_stop_loss=1.07,
-            current_tp1=1.11,
-            current_tp2=1.12,
-            invalidation_price=1.07,
-            valid_until_utc="2026-11-16T16:20:00Z",
-            time_stop_bars=30,
-            r_plan_usd=75.0,
+            r_plan_usd=100.0,
             planned_notional_usd=1000.0,
-            leverage=0.03,
-            margin_leverage=5.0,
+            subaccount_capital_usd=10000.0,
             assumed_spread_bps=2.0,
             fee_rate=0.0,
             slippage_bps=1.0,

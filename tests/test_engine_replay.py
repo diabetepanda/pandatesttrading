@@ -1,57 +1,47 @@
-"""Unit tests for SimulationEngine: fills, exits, gap open, replay, idempotency, and schedule delay."""
+"""Unit tests for unified SimulationEngine: fills, SL/TP, replay, migration, and screener exact parity."""
 
 from __future__ import annotations
 
 import json
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pytest
 
+from src.backtest.screener import simulate_single_symbol
 from src.config_loader import load_config
+from src.data.models import OHLCVBar
 from src.engine.simulator import CandidateSignal, MarketBar, SimulationEngine
-from src.signals.models import AddLevel, InputSnapshot, LifecycleState
+from src.jobs.live_strategy import evaluate_live_single_strategy_step
+from src.signals.models import InputSnapshot, LifecycleState
 
 
 def _make_candidate(
     symbol: str = "BTCUSDT",
     strategy: str = "S1",
     direction: str = "long",
-    entry_low: float = 99.5,
-    entry_high: float = 100.5,
-    add_levels: tuple[AddLevel, ...] = (),
+    ref_price: float = 100.0,
     stop_loss: float = 98.0,
-    tp1: float = 103.5,
-    tp2: float = 105.0,
-    invalidation_price: float = 97.5,
-    leverage: float = 5.0,
-    time_stop_bars: int = 24,
+    take_profit: float | None = None,
 ) -> CandidateSignal:
     return CandidateSignal(
         strategy=strategy,
         symbol=symbol,
         direction=direction,
-        entry_low=entry_low,
-        entry_high=entry_high,
-        add_levels=add_levels,
+        ref_price=ref_price,
         stop_loss=stop_loss,
-        tp1=tp1,
-        tp2=tp2,
-        invalidation_price=invalidation_price,
-        invalidation_cond="價格觸及失效價",
-        reasons=("區間邊緣測試", "低波動環境"),
+        take_profit=take_profit,
+        exit_rule="止損或策略出場",
+        reasons=("策略條件成立",),
         snapshot=InputSnapshot(
             snapshot_id="SNAP-001",
             signal_id="PENDING",
             captured_at_utc="2026-11-16T02:00:00Z",
             symbol=symbol,
-            kline_summary={"close": 100.0},
-            indicators={"atr_1h": 2.0},
+            kline_summary={"close": ref_price},
+            indicators={},
             filter_checks={"all_ok": True},
         ),
-        atr=2.0,
-        atr_ratio=1.0,
-        leverage=leverage,
-        time_stop_bars=time_stop_bars,
     )
 
 
@@ -60,277 +50,73 @@ def _bar(ts: str, close_ts: str, o: float, h: float, l: float, c: float, v: floa
 
 
 def _ctrl_ok() -> dict:
-    return {"paused": False, "risk_review_done": False, "risk_review_note": ""}
+    return {"paused": False}
 
 
 def test_stop_loss_trigger_long_and_short(tmp_path: Path) -> None:
     cfg = load_config()
-    # Long SL
     eng = SimulationEngine(cfg, out_dir=tmp_path / "long")
     sig_l = eng.submit_candidate_signal(
-        _make_candidate(direction="long", entry_low=99.5, entry_high=100.5, stop_loss=98.0, tp1=103.5, tp2=105.0),
+        _make_candidate(direction="long", ref_price=100.0, stop_loss=98.0),
         now_utc="2026-11-16T02:01:00Z",
         latest_bar_close_utc="2026-11-16T02:00:00Z",
         control=_ctrl_ok(),
+        entry_bar=_bar("2026-11-16T02:00:00Z", "2026-11-16T02:15:00Z", 100.0, 100.4, 99.8, 100.0),
     )
     assert sig_l is not None
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.2, 100.4, 99.8, 100.0))
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 99.8, 99.9, 97.9, 98.1))
-    trade_l = eng.primary_ledger.trades[sig_l.signal_id]
+    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:15:00Z", "2026-11-16T02:16:00Z", 99.8, 99.9, 97.9, 98.1))
+    trade_l = eng.ledger.trades[sig_l.signal_id]
     assert trade_l.state == LifecycleState.CLOSED
     assert trade_l.exit_reason == "stop_loss"
     assert trade_l.realized_pnl_usd < 0
     assert trade_l.r_multiple < 0
 
-    # Short SL
     eng_s = SimulationEngine(cfg, out_dir=tmp_path / "short")
     sig_s = eng_s.submit_candidate_signal(
-        _make_candidate(direction="short", entry_low=99.5, entry_high=100.5, stop_loss=102.0, tp1=96.5, tp2=95.0, invalidation_price=102.5),
+        _make_candidate(direction="short", ref_price=100.0, stop_loss=102.0),
         now_utc="2026-11-16T02:01:00Z",
         latest_bar_close_utc="2026-11-16T02:00:00Z",
         control=_ctrl_ok(),
+        entry_bar=_bar("2026-11-16T02:00:00Z", "2026-11-16T02:15:00Z", 100.0, 100.3, 99.7, 100.0),
     )
     assert sig_s is not None
-    eng_s.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.3, 99.7, 100.0))
-    eng_s.process_bar("BTCUSDT", _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 100.2, 102.2, 100.1, 102.1))
-    trade_s = eng_s.primary_ledger.trades[sig_s.signal_id]
+    eng_s.process_bar("BTCUSDT", _bar("2026-11-16T02:15:00Z", "2026-11-16T02:16:00Z", 100.2, 102.2, 100.1, 102.1))
+    trade_s = eng_s.ledger.trades[sig_s.signal_id]
     assert trade_s.state == LifecycleState.CLOSED
     assert trade_s.exit_reason == "stop_loss"
     assert trade_s.realized_pnl_usd < 0
-
-
-def test_tp1_partial_close_and_tp2_full_close(tmp_path: Path) -> None:
-    cfg = load_config()
-    eng = SimulationEngine(cfg, out_dir=tmp_path)
-    sig = eng.submit_candidate_signal(
-        _make_candidate(direction="long", entry_low=99.5, entry_high=100.5, stop_loss=98.0, tp1=103.5, tp2=105.0),
-        now_utc="2026-11-16T02:01:00Z",
-        latest_bar_close_utc="2026-11-16T02:00:00Z",
-        control=_ctrl_ok(),
-    )
-    assert sig is not None
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.2, 99.8, 100.0))
-    trade = eng.primary_ledger.trades[sig.signal_id]
-    init_qty = trade.remaining_qty
-
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 101.0, 103.6, 100.9, 103.4))
-    assert trade.state == LifecycleState.TP1_HIT
-    assert trade.remaining_qty == pytest.approx(init_qty * 0.5)
-    assert trade.current_stop_loss >= trade.avg_entry_price  # Moved to breakeven
-
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:03:00Z", "2026-11-16T02:04:00Z", 103.4, 105.2, 103.2, 105.1))
-    assert trade.state == LifecycleState.CLOSED
-    assert trade.exit_reason == "tp2"
-    assert trade.remaining_qty == 0.0
-    assert trade.realized_pnl_usd > 0
-
-
-def test_partial_close_realized_pnl_uses_weighted_avg_cost(tmp_path: Path) -> None:
-    cfg = load_config()
-    eng = SimulationEngine(cfg, out_dir=tmp_path)
-    sig = eng.submit_candidate_signal(
-        _make_candidate(
-            direction="long",
-            entry_low=99.5,
-            entry_high=100.5,
-            stop_loss=96.0,
-            tp1=106.0,
-            tp2=108.0,
-            invalidation_price=95.5,
-            leverage=3.0,
-        ),
-        now_utc="2026-11-16T02:01:00Z",
-        latest_bar_close_utc="2026-11-16T02:00:00Z",
-        control=_ctrl_ok(),
-    )
-    assert sig is not None
-    # Single full entry fill around 100.0
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.2, 99.8, 100.0))
-    trade = eng.ledger.trades[sig.signal_id]
-    assert len(trade.stages) == 1
-    expected_avg = trade.stages[0].fill_price
-    assert trade.avg_entry_price == pytest.approx(expected_avg)
-
-    # Trigger TP1 at 106.0 (closes 50% at entry avg cost)
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:03:00Z", "2026-11-16T02:04:00Z", 102.0, 106.2, 101.9, 106.0))
-    assert trade.state == LifecycleState.TP1_HIT
-    assert trade.avg_entry_price == pytest.approx(expected_avg)
-    assert trade.realized_pnl_usd > 0
 
 
 def test_same_bar_sl_and_tp_triggers_sl_conservatively(tmp_path: Path) -> None:
     cfg = load_config()
     eng = SimulationEngine(cfg, out_dir=tmp_path)
     sig = eng.submit_candidate_signal(
-        _make_candidate(direction="long", entry_low=99.5, entry_high=100.5, stop_loss=98.0, tp1=103.5, tp2=105.0),
+        _make_candidate(direction="long", ref_price=100.0, stop_loss=98.0, take_profit=103.5),
         now_utc="2026-11-16T02:01:00Z",
         latest_bar_close_utc="2026-11-16T02:00:00Z",
         control=_ctrl_ok(),
+        entry_bar=_bar("2026-11-16T02:00:00Z", "2026-11-16T02:15:00Z", 100.0, 100.3, 99.8, 100.1),
     )
     assert sig is not None
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.1, 99.9, 100.0))
-    # Wide bar touching BOTH SL (98.0) and TP2 (105.0) -> must exit via stop_loss!
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 100.0, 106.0, 97.5, 105.5))
-    trade = eng.primary_ledger.trades[sig.signal_id]
+    # Single bar touches BOTH stop_loss (98.0) and take_profit (103.5) -> SL wins conservatively
+    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:15:00Z", "2026-11-16T02:16:00Z", 100.0, 104.5, 97.5, 104.0))
+    trade = eng.ledger.trades[sig.signal_id]
     assert trade.state == LifecycleState.CLOSED
     assert trade.exit_reason == "stop_loss"
-
-
-def test_pending_order_expiration_and_pre_entry_invalidation(tmp_path: Path) -> None:
-    cfg = load_config()
-    # 1) Expiration after 4 hours without touching entry zone
-    eng1 = SimulationEngine(cfg, out_dir=tmp_path / "exp")
-    sig1 = eng1.submit_candidate_signal(
-        _make_candidate(entry_low=98.5, entry_high=99.0, stop_loss=96.5, tp1=102.5, tp2=104.0, invalidation_price=96.0),
-        now_utc="2026-11-16T02:00:00Z",
-        latest_bar_close_utc="2026-11-16T02:00:00Z",
-        control=_ctrl_ok(),
-    )
-    assert sig1 is not None
-    eng1.process_bar("BTCUSDT", _bar("2026-11-16T06:00:00Z", "2026-11-16T06:01:00Z", 101.0, 101.5, 100.8, 101.2))
-    assert eng1.primary_ledger.trades[sig1.signal_id].state == LifecycleState.CANCELLED
-    assert eng1.primary_ledger.trades[sig1.signal_id].exit_reason == "expired"
-
-    # 2) Pre-entry invalidation when price breaks invalidation level before entering
-    eng2 = SimulationEngine(cfg, out_dir=tmp_path / "inv")
-    sig2 = eng2.submit_candidate_signal(
-        _make_candidate(entry_low=99.0, entry_high=99.5, stop_loss=97.0, tp1=103.0, tp2=104.5, invalidation_price=96.5),
-        now_utc="2026-11-16T02:00:00Z",
-        latest_bar_close_utc="2026-11-16T02:00:00Z",
-        control=_ctrl_ok(),
-    )
-    assert sig2 is not None
-    eng2.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 96.8, 96.9, 96.2, 96.4))
-    assert eng2.primary_ledger.trades[sig2.signal_id].state == LifecycleState.CANCELLED
-    assert eng2.primary_ledger.trades[sig2.signal_id].exit_reason == "pre_entry_invalidated"
-
-
-def test_time_stop_closes_position(tmp_path: Path) -> None:
-    cfg = load_config()
-    eng = SimulationEngine(cfg, out_dir=tmp_path)
-    sig = eng.submit_candidate_signal(
-        _make_candidate(entry_low=99.5, entry_high=100.5, stop_loss=98.0, tp1=103.5, tp2=105.0, time_stop_bars=2),
-        now_utc="2026-11-16T02:00:00Z",
-        latest_bar_close_utc="2026-11-16T02:00:00Z",
-        control=_ctrl_ok(),
-    )
-    assert sig is not None
-    # Entry at 02:01
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.2, 99.8, 100.0))
-    # Hold for 2 * 15m = 30 minutes -> bar closing at 02:32 triggers time_stop
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:31:00Z", "2026-11-16T02:32:00Z", 100.4, 100.6, 100.2, 100.5))
-    trade = eng.primary_ledger.trades[sig.signal_id]
-    assert trade.state == LifecycleState.CLOSED
-    assert trade.exit_reason == "time_stop"
-
-
-def test_session_end_stop_closes_position(tmp_path: Path) -> None:
-    cfg = load_config()
-    eng = SimulationEngine(cfg, out_dir=tmp_path)
-    sig = eng.submit_candidate_signal(
-        _make_candidate(entry_low=99.5, entry_high=100.5, stop_loss=98.0, tp1=103.5, tp2=105.0),
-        now_utc="2026-11-16T02:00:00Z",
-        latest_bar_close_utc="2026-11-16T02:00:00Z",
-        control=_ctrl_ok(),
-    )
-    assert sig is not None
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.2, 99.8, 100.0))
-    # Low-liquidity session ends at 04:00Z -> forced close at <= 30m before end (03:30Z)
-    eng.process_bar(
-        "BTCUSDT",
-        _bar("2026-11-16T03:30:00Z", "2026-11-16T03:31:00Z", 100.5, 100.6, 100.4, 100.5),
-        session_end_utc="2026-11-16T04:00:00Z",
-    )
-    trade = eng.primary_ledger.trades[sig.signal_id]
-    assert trade.state == LifecycleState.CLOSED
-    assert trade.exit_reason == "session_stop"
-
-
-def test_breakout_protection_closes_at_adverse_bar_price(tmp_path: Path) -> None:
-    cfg = load_config()
-    eng = SimulationEngine(cfg, out_dir=tmp_path)
-    sig = eng.submit_candidate_signal(
-        _make_candidate(entry_low=99.5, entry_high=100.5, stop_loss=98.0, tp1=103.5, tp2=105.0),
-        now_utc="2026-11-16T02:00:00Z",
-        latest_bar_close_utc="2026-11-16T02:00:00Z",
-        control=_ctrl_ok(),
-    )
-    assert sig is not None
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.2, 99.8, 100.0))
-    # Huge spike bar: range = 104.0 - 98.5 = 5.5 > 2.5 * atr (atr=2.0 -> 5.0)
-    # Adverse price for long is bar.low (98.5, before hitting SL 98.0)
-    eng.process_bar(
-        "BTCUSDT",
-        _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 100.0, 104.0, 98.5, 103.0),
-        atr=2.0,
-        atr_ratio=1.1,
-    )
-    trade = eng.primary_ledger.trades[sig.signal_id]
-    assert trade.state == LifecycleState.CLOSED
-    assert trade.exit_reason == "breakout_protection"
-    assert trade.exit_price <= 98.5
-
-
-def test_stop_loss_never_moves_in_adverse_direction(tmp_path: Path) -> None:
-    cfg = load_config()
-    eng = SimulationEngine(cfg, out_dir=tmp_path)
-    sig = eng.submit_candidate_signal(
-        _make_candidate(
-            direction="long",
-            entry_low=99.5,
-            entry_high=100.5,
-            stop_loss=97.0,
-            tp1=104.5,
-            tp2=110.0,
-            invalidation_price=96.5,
-            leverage=4.0,
-        ),
-        now_utc="2026-11-16T02:00:00Z",
-        latest_bar_close_utc="2026-11-16T02:00:00Z",
-        control=_ctrl_ok(),
-    )
-    assert sig is not None
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.2, 99.8, 100.0))
-    trade = eng.ledger.trades[sig.signal_id]
-    assert len(trade.stages) == 1
-    assert sum(s.notional_usd for s in trade.stages) == pytest.approx(trade.planned_notional_usd, rel=1e-4)
-
-    # Attempt to move SL adversely (97.0 -> 95.0 for long) must fail / keep 97.0
-    assert eng.move_stop_loss(sig.signal_id, 95.0, "2026-11-16T02:02:00Z", "嘗試惡化止損") is False
-    assert trade.current_stop_loss == 97.0
-
-    # Move SL favorably (97.0 -> 97.5) succeeds
-    assert eng.move_stop_loss(sig.signal_id, 97.5, "2026-11-16T02:02:30Z", "保護性上移") is True
-    assert trade.current_stop_loss == 97.5
-
-    # Price hits TP1 -> moves SL to breakeven, then reaches +2R -> trailing stop moves SL above avg_entry_price
-    eng.process_bar(
-        "BTCUSDT",
-        _bar("2026-11-16T02:04:00Z", "2026-11-16T02:05:00Z", 102.0, 105.0, 101.8, 104.8),
-        atr=2.0,
-    )
-    assert trade.current_stop_loss >= trade.avg_entry_price
-    eng.process_bar(
-        "BTCUSDT",
-        _bar("2026-11-16T02:05:00Z", "2026-11-16T02:06:00Z", 105.0, 108.8, 104.8, 108.6),
-        atr=2.0,
-    )
-    assert trade.current_stop_loss > trade.avg_entry_price
 
 
 def test_gap_open_beyond_stop_fills_at_open_price(tmp_path: Path) -> None:
     cfg = load_config()
     eng = SimulationEngine(cfg, out_dir=tmp_path)
     sig = eng.submit_candidate_signal(
-        _make_candidate(symbol="EURUSD", entry_low=1.0800, entry_high=1.0820, stop_loss=1.0700, tp1=1.1000, tp2=1.1100, invalidation_price=1.0680, leverage=10.0),
-        now_utc="2026-11-16T02:00:00Z",
+        _make_candidate(symbol="EURUSD", ref_price=1.0810, stop_loss=1.0700),
+        now_utc="2026-11-16T02:01:00Z",
         latest_bar_close_utc="2026-11-16T02:00:00Z",
         control=_ctrl_ok(),
+        entry_bar=_bar("2026-11-16T02:00:00Z", "2026-11-16T02:15:00Z", 1.0810, 1.0815, 1.0805, 1.0810),
     )
     assert sig is not None
-    eng.process_bar("EURUSD", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 1.0810, 1.0815, 1.0805, 1.0810))
-    # Market gaps down at open to 1.0600 (well below SL 1.0700) -> fill at open (~1.0600), NOT 1.0700
-    eng.process_bar("EURUSD", _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 1.0600, 1.0620, 1.0590, 1.0610))
+    eng.process_bar("EURUSD", _bar("2026-11-16T02:15:00Z", "2026-11-16T02:16:00Z", 1.0600, 1.0620, 1.0590, 1.0610))
     trade = eng.ledger.trades[sig.signal_id]
     assert trade.state == LifecycleState.CLOSED
     assert trade.exit_reason == "stop_loss"
@@ -351,215 +137,310 @@ def test_schedule_delay_blocks_new_signal_and_logs_watch(tmp_path: Path) -> None
     assert "排程延遲" in watch_txt
 
 
-def test_catchup_replay_processes_missed_bars_chronologically(tmp_path: Path) -> None:
+def test_catchup_replay_and_idempotency(tmp_path: Path) -> None:
     cfg = load_config()
     eng = SimulationEngine(cfg, out_dir=tmp_path)
     sig = eng.submit_candidate_signal(
-        _make_candidate(
-            entry_low=99.5,
-            entry_high=100.5,
-            stop_loss=97.5,
-            tp1=104.5,
-            tp2=106.0,
-            invalidation_price=97.0,
-            leverage=4.0,
-        ),
+        _make_candidate(ref_price=100.0, stop_loss=97.5, take_profit=104.5),
         now_utc="2026-11-16T02:01:00Z",
         latest_bar_close_utc="2026-11-16T02:00:00Z",
         control=_ctrl_ok(),
+        entry_bar=_bar("2026-11-16T02:00:00Z", "2026-11-16T02:01:00Z", 100.0, 100.2, 99.8, 100.1),
     )
     assert sig is not None
-    # Feed bars out of order to verify chronological sorting during catch-up replay
     bars = [
-        _bar("2026-11-16T02:03:00Z", "2026-11-16T02:04:00Z", 101.0, 104.7, 100.9, 104.6),  # TP1
-        _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.3, 99.8, 100.1),   # Entry
+        _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 101.0, 104.7, 100.9, 104.6),
+        _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.5, 99.9, 100.4),
     ]
     events = eng.replay_bars("BTCUSDT", bars)
-    assert len(events) >= 2
-    assert eng.last_processed_ts["BTCUSDT"] == "2026-11-16T02:04:00Z"
-    assert eng.ledger.trades[sig.signal_id].state == LifecycleState.TP1_HIT
+    assert len(events) == 1
+    assert eng.ledger.trades[sig.signal_id].state == LifecycleState.CLOSED
+    assert eng.ledger.trades[sig.signal_id].exit_reason == "take_profit"
+
+    fills_before = len(eng.ledger.fills)
+    assert eng.replay_bars("BTCUSDT", bars) == []
+    assert len(eng.ledger.fills) == fills_before
     eng.save_state()
     assert (tmp_path / "trades.json").exists()
     assert (tmp_path / "state.json").exists()
     assert (tmp_path / "equity_snapshots" / "2026-11.jsonl").exists()
-    state_json = json.loads((tmp_path / "state.json").read_text(encoding="utf-8"))
-    assert state_json["last_processed_ts"]["BTCUSDT"] == "2026-11-16T02:04:00Z"
 
 
-def test_idempotent_replay_does_not_duplicate_events_or_fills(tmp_path: Path) -> None:
+def test_legacy_state_migration_resets_sl_removes_tp_keeps_closed_intact(tmp_path: Path) -> None:
+    """Requirement D: active trades keep entry & qty, reset SL=initial_stop_loss, drop TP1/TP2; closed stay untouched."""
     cfg = load_config()
-    eng = SimulationEngine(cfg, out_dir=tmp_path)
-    sig = eng.submit_candidate_signal(
-        _make_candidate(entry_low=99.5, entry_high=100.5, stop_loss=97.5, tp1=104.5, tp2=106.0, leverage=4.0),
-        now_utc="2026-11-16T02:01:00Z",
-        latest_bar_close_utc="2026-11-16T02:00:00Z",
-        control=_ctrl_ok(),
-    )
-    assert sig is not None
-    bars = [
-        _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.3, 99.8, 100.1),
-        _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 100.1, 104.7, 100.0, 104.6),
-    ]
-    first_events = eng.replay_bars("BTCUSDT", bars)
-    assert len(first_events) >= 2
-    fills_before = len(eng.ledger.fills)
-    second_events = eng.replay_bars("BTCUSDT", bars)
-    assert second_events == []
-    assert len(eng.ledger.fills) == fills_before
-
-
-def test_live_sizing_matches_backtest_allocate_subaccount_position(tmp_path: Path) -> None:
-    from src.strategies.six_strategies import allocate_subaccount_position
-
-    cfg = load_config()
-    eng = SimulationEngine(cfg, out_dir=tmp_path)
-    fx_inst = next(i for i in cfg["instruments"] if i["symbol"] == "EURUSD")
-
-    # Tight FX stop (~0.4%): both live submit_candidate_signal & allocate_subaccount_position -> $5,700 (19%)
-    entry = 1.1586
-    sl = 1.1539
-    bt_alloc = allocate_subaccount_position(
-        strategy_id="S2",
-        subaccount_equity_usd=30000.0,
-        open_positions_count=0,
-        open_total_risk_usd=0.0,
-        open_total_notional_usd=0.0,
-        entry_price=entry,
-        stop_loss=sl,
-        fee_rate=float(fx_inst["fee_rate"]),
-        slippage_bps=float(cfg["risk"]["default_slippage_bps"]),
-        config=cfg,
-    )
-    sig = eng.submit_candidate_signal(
-        _make_candidate(
-            symbol="EURUSD",
-            strategy="S2",
-            entry_low=1.1580,
-            entry_high=entry,
-            stop_loss=sl,
-            tp1=1.1700,
-            tp2=1.1750,
-            invalidation_price=1.1530,
-            leverage=10.0,
-        ),
-        now_utc="2026-11-16T02:01:00Z",
-        latest_bar_close_utc="2026-11-16T02:00:00Z",
-        control=_ctrl_ok(),
-    )
-    assert sig is not None
-    tr = eng.ledger.trades[sig.signal_id]
-    assert tr.planned_notional_usd == pytest.approx(bt_alloc.notional_usd, abs=0.5)
-    assert tr.planned_notional_usd == pytest.approx(5700.0, abs=0.5)
-    assert sig.leverage == pytest.approx(0.19, abs=0.005)
-
-
-def test_legacy_state_migration_preserves_active_and_resizes_waiting(tmp_path: Path) -> None:
-    cfg = load_config()
-    active_sid = "SIG-20261116-0004"
-    waiting_sid = "SIG-20261116-0011"
+    active_sid = "SIG-20261116-0009"
+    closed_sid = "SIG-20261116-0012"
 
     legacy_state = {
-        "sequences": {"20261116": 13},
-        "last_processed_ts": {"EURUSD": "2026-11-16T20:00:00Z", "SOLUSDT": "2026-11-16T20:00:00Z"},
-        "ledgers": {
-            "A": {"trades": {}},
-            "E": {
-                "trades": {
-                    active_sid: {
-                        "signal_id": active_sid,
-                        "strategy": "S2",
-                        "symbol": "EURUSD",
-                        "market": "forex",
-                        "correlation_group": "fx_usd",
-                        "direction": "short",
-                        "state": "active",
-                        "entry_low": 1.1585,
-                        "entry_high": 1.1587,
-                        "add_levels": [],
-                        "initial_stop_loss": 1.1632,
-                        "current_stop_loss": 1.1632,
-                        "current_tp1": 1.1470,
-                        "current_tp2": 1.1400,
-                        "invalidation_price": 1.1632,
-                        "valid_until_utc": "2026-11-17T08:00:00Z",
-                        "time_stop_bars": 48,
-                        "r_plan_usd": 112.5,
-                        "leverage": 10.0,
-                        "assumed_spread_bps": 1.5,
-                        "fee_rate": 0.0,
-                        "slippage_bps": 1.0,
-                        "overnight_cost_daily_bps": 0.5,
-                        "initial_filled_qty": 570.35,
-                        "stages": [
-                            {
-                                "stage": 1,
-                                "add_type": "initial",
-                                "fill_price": 1.1587,
-                                "qty": 570.35,
-                                "notional_usd": 660.87,
-                                "filled_at_utc": "2026-11-16T15:10:00Z",
-                            }
-                        ],
-                        "published_at_utc": "2026-11-16T14:52:00Z",
-                    },
-                    waiting_sid: {
-                        "signal_id": waiting_sid,
-                        "strategy": "S2",
-                        "symbol": "SOLUSDT",
-                        "market": "crypto",
-                        "correlation_group": "crypto_majors",
-                        "direction": "short",
-                        "state": "waiting_entry",
-                        "entry_low": 141.0,
-                        "entry_high": 142.0,
-                        "add_levels": [],
-                        "initial_stop_loss": 144.8,
-                        "current_stop_loss": 144.8,
-                        "current_tp1": 135.0,
-                        "current_tp2": 131.0,
-                        "invalidation_price": 144.8,
-                        "valid_until_utc": "2026-11-17T08:00:00Z",
-                        "time_stop_bars": 48,
-                        "r_plan_usd": 112.5,
-                        "leverage": 10.0,
-                        "assumed_spread_bps": 2.0,
-                        "fee_rate": 0.0005,
-                        "slippage_bps": 1.0,
-                        "overnight_cost_daily_bps": 1.0,
-                        "initial_filled_qty": 0.0,
-                        "stages": [],
-                        "published_at_utc": "2026-11-16T19:00:00Z",
-                    },
+        "sequences": {"signal": 13, "event": 11, "fill": 35},
+        "latest_marks": {"BTCUSDT": 65500.0, "BNBUSDT": 585.0},
+        "ledger": {
+            "trades": {
+                active_sid: {
+                    "signal_id": active_sid,
+                    "strategy": "S1",
+                    "symbol": "BTCUSDT",
+                    "market": "crypto",
+                    "correlation_group": "crypto_majors",
+                    "direction": "long",
+                    "state": "tp1_hit",
+                    "entry_low": 65200.0,
+                    "entry_high": 65300.0,
+                    "initial_stop_loss": 64013.62,
+                    "current_stop_loss": 65232.61,  # moved breakeven SL must reset to initial_stop_loss
+                    "current_tp1": 68000.0,
+                    "current_tp2": 69500.0,
+                    "r_plan_usd": 100.0,
+                    "planned_notional_usd": 495.65,
+                    "avg_entry_price": 65232.61,
+                    "remaining_qty": 0.00759823,
+                    "initial_filled_qty": 0.00759823,
+                    "realized_pnl_usd": -0.2478,
+                    "entered_at_utc": "2026-11-16T14:51:00Z",
+                    "published_at_utc": "2026-11-16T14:52:00Z",
                 },
-                "fills": [],
+                closed_sid: {
+                    "signal_id": closed_sid,
+                    "strategy": "S1",
+                    "symbol": "BNBUSDT",
+                    "market": "crypto",
+                    "correlation_group": "crypto_majors",
+                    "direction": "long",
+                    "state": "closed",
+                    "entry_low": 593.0,
+                    "entry_high": 595.0,
+                    "initial_stop_loss": 586.12,
+                    "current_stop_loss": 586.12,
+                    "r_plan_usd": 9.56,
+                    "planned_notional_usd": 495.65,
+                    "avg_entry_price": 594.198218,
+                    "remaining_qty": 0.0,
+                    "initial_filled_qty": 0.834149,
+                    "realized_pnl_usd": -7.282,
+                    "entered_at_utc": "2026-11-16T19:00:00Z",
+                    "closed_at_utc": "2026-11-16T20:10:00Z",
+                    "exit_price": 586.06,
+                    "exit_reason": "stop_loss",
+                    "published_at_utc": "2026-11-16T19:01:00Z",
+                },
             },
+            "fills": [
+                {
+                    "fill_id": "F1",
+                    "signal_id": active_sid,
+                    "symbol": "BTCUSDT",
+                    "side": "buy",
+                    "action": "entry",
+                    "price": 65232.61,
+                    "qty": 0.00759823,
+                    "notional_usd": 495.65,
+                    "fee_usd": 0.2478,
+                    "realized_pnl_usd": -0.2478,
+                    "ts_utc": "2026-11-16T14:51:00Z",
+                },
+                {
+                    "fill_id": "F2",
+                    "signal_id": closed_sid,
+                    "symbol": "BNBUSDT",
+                    "side": "buy",
+                    "action": "entry",
+                    "price": 594.198218,
+                    "qty": 0.834149,
+                    "notional_usd": 495.65,
+                    "fee_usd": 0.2478,
+                    "realized_pnl_usd": -0.2478,
+                    "ts_utc": "2026-11-16T19:00:00Z",
+                },
+                {
+                    "fill_id": "F3",
+                    "signal_id": closed_sid,
+                    "symbol": "BNBUSDT",
+                    "side": "sell",
+                    "action": "exit",
+                    "price": 586.06,
+                    "qty": 0.834149,
+                    "notional_usd": 488.86,
+                    "fee_usd": 0.2444,
+                    "realized_pnl_usd": -7.0342,
+                    "ts_utc": "2026-11-16T20:10:00Z",
+                },
+            ],
         },
     }
     (tmp_path / "ledgers_state.json").write_text(json.dumps(legacy_state), encoding="utf-8")
     (tmp_path / "signals").mkdir(parents=True, exist_ok=True)
-    for sid, sym in ((active_sid, "EURUSD"), (waiting_sid, "SOLUSDT")):
+    for sid, sym in ((active_sid, "BTCUSDT"), (closed_sid, "BNBUSDT")):
         (tmp_path / "signals" / f"{sid}.json").write_text(
-            json.dumps({"signal_id": sid, "symbol": sym, "strategy": "S2", "published_at_utc": "2026-11-16T15:00:00Z"}),
+            json.dumps({"signal_id": sid, "symbol": sym, "strategy": "S1", "published_at_utc": "2026-11-16T15:00:00Z"}),
             encoding="utf-8",
         )
 
     eng = SimulationEngine(cfg, out_dir=tmp_path)
     eng.load_state()
-    eng.save_state("2026-11-16T20:05:00Z")
+    eng.save_state("2026-11-16T21:00:00Z")
 
-    # Active trade keeps its filled stage completely intact
     tr_act = eng.ledger.trades[active_sid]
     assert tr_act.state == LifecycleState.ACTIVE
-    assert len(tr_act.stages) == 1
-    assert tr_act.stages[0].notional_usd == pytest.approx(660.87, abs=0.01)
+    assert tr_act.avg_entry_price == pytest.approx(65232.61, abs=1e-4)
+    assert tr_act.remaining_qty == pytest.approx(0.00759823, abs=1e-8)
+    assert tr_act.current_stop_loss == pytest.approx(64013.62, abs=1e-4)
+    assert tr_act.take_profit is None
 
-    # Waiting trade is recalculated under $30k subaccount allocate_subaccount_position -> $5,700 (0.19x)
-    tr_wait = eng.ledger.trades[waiting_sid]
-    assert tr_wait.state == LifecycleState.WAITING_ENTRY
-    assert tr_wait.planned_notional_usd == pytest.approx(5700.0, abs=1.0)
-    assert tr_wait.leverage == pytest.approx(0.19, abs=0.01)
+    tr_closed = eng.ledger.trades[closed_sid]
+    assert tr_closed.state == LifecycleState.CLOSED
+    assert tr_closed.exit_reason == "stop_loss"
 
-    # Persisted ledgers_state.json uses single "ledger" key (no legacy multi-ledger map)
-    saved = json.loads((tmp_path / "ledgers_state.json").read_text(encoding="utf-8"))
-    assert "ledger" in saved
-    assert "ledgers" not in saved
+    # Realized PnL exported to signals_index.json matches sum of fills
+    idx = json.loads((tmp_path / "signals_index.json").read_text(encoding="utf-8"))
+    closed_row = next(r for r in idx if r["signal_id"] == closed_sid)
+    assert closed_row["realized_pnl_usd"] == pytest.approx(-7.28, abs=0.01)
+    assert closed_row["exit_reason_label"] == "止損"
+
+
+def _make_parity_bars(strategy_id: str) -> tuple[list[OHLCVBar], str, dict]:
+    if strategy_id == "S1":
+        # 15m bars across 2 UTC days: Day 1 builds ATR, Day 2 00:00-01:00 builds ORB ~100..101,
+        # breaks out at 01:15 -> enters at 01:30 open -> hits EOD exit at 23:15 -> closes at 23:30 open
+        bars: list[OHLCVBar] = []
+        t0 = datetime(2026, 11, 1, 0, 0, tzinfo=timezone.utc)
+        for i in range(96):  # Day 1: 96 bars
+            dt = t0 + timedelta(minutes=15 * i)
+            bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 100.0, 100.6, 99.4, 100.0, 100.0))
+        for i in range(96):  # Day 2
+            dt = t0 + timedelta(days=1, minutes=15 * i)
+            if i < 4:  # 00:00..00:45 ORB window (range 99.5..100.5)
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 100.0, 100.5, 99.5, 100.1, 100.0))
+            elif i == 5:  # 01:15 breakout close > 100.5 -> triggers entry at 01:30 open
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 100.2, 101.8, 100.1, 101.5, 100.0))
+            elif i < 93:
+                px = 102.0 + 0.02 * (i - 5)
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), px, px + 0.3, px - 0.2, px + 0.1, 100.0))
+            else:
+                # 23:15 triggers EOD close -> exits at 23:30 open!
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 103.5, 103.7, 103.3, 103.4, 100.0))
+        return bars, "15m", {"session_open_utc": "00:00", "range_minutes": 60, "sl_mode": "atr_2.0", "eod_close_utc": "23:45"}
+
+    if strategy_id == "S2":
+        # 4h bars: 25 calm bars (100..101), breakout up on bar 25 -> enter bar 26 open -> drift down below 6-bar low -> exit next open
+        bars = []
+        t0 = datetime(2026, 10, 1, 0, 0, tzinfo=timezone.utc)
+        for i in range(45):
+            dt = t0 + timedelta(hours=4 * i)
+            if i < 25:
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 100.0, 101.0, 99.5, 100.2, 100.0))
+            elif i == 25:
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 100.5, 105.0, 100.4, 104.5, 100.0))
+            elif i < 33:
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 104.8, 106.0, 104.0, 105.5, 100.0))
+            elif i == 33:
+                # Drop below trailing 6-bar low (~104.0) without hitting SL (~101.5) -> triggers trailing_stop exit!
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 104.2, 104.4, 103.0, 103.2, 100.0))
+            else:
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 103.1, 103.5, 102.8, 103.0, 100.0))
+        return bars, "4h", {"breakout_bars": 12, "trail_bars": 6, "sl_atr_mult": 2.5, "max_hold_bars": 30}
+
+    if strategy_id == "S3":
+        # 1d bars: 205 uptrend bars > 200 SMA, sharp 2-day pullback triggers RSI(2)<15 -> enters -> bounces > 5 SMA -> exits
+        bars = []
+        t0 = datetime(2026, 1, 1, 0, 0, tzinfo=timezone.utc)
+        for i in range(220):
+            dt = t0 + timedelta(days=i)
+            if i < 204:
+                c = 100.0 + i * 0.25
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), c - 0.2, c + 0.5, c - 0.5, c, 100.0))
+            elif i in (204, 205):
+                prev_c = bars[-1].close
+                c = prev_c - 3.0
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), prev_c, prev_c + 0.2, c - 0.2, c, 100.0))
+            elif i == 206:
+                prev_c = bars[-1].close
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), prev_c, prev_c + 1.0, prev_c - 0.5, prev_c + 0.8, 100.0))
+            else:
+                prev_c = bars[-1].close
+                c = prev_c + 3.0
+                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), prev_c, c + 0.5, prev_c - 0.2, c, 100.0))
+        return bars, "1d", {"trend_ma_period": 200, "rsi_period": 2, "rsi_long_thresh": 15.0, "rsi_short_thresh": 85.0, "exit_ma_period": 5, "allow_short": False, "sl_atr_mult": 4.0, "max_hold_bars": 10}
+
+    # L1: Donchian 20/10 on 1d
+    bars = []
+    t0 = datetime(2026, 6, 1, 0, 0, tzinfo=timezone.utc)
+    for i in range(55):
+        dt = t0 + timedelta(days=i)
+        if i < 25:
+            bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 100.0, 101.0, 99.5, 100.2, 100.0))
+        elif i == 25:
+            bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 100.3, 104.0, 100.2, 103.5, 100.0))
+        elif i < 37:
+            bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 103.8, 105.0, 103.0, 104.2, 100.0))
+        elif i == 37:
+            bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 103.2, 103.3, 102.0, 102.1, 100.0))
+        else:
+            bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 102.0, 102.5, 101.8, 102.1, 100.0))
+    return bars, "1d", {"entry_period": 20, "exit_period": 10, "sl_atr_mult": 2.5, "vol_target_pct": 0.015}
+
+
+@pytest.mark.parametrize("strategy_id", ["S1", "S2", "S3", "L1"])
+def test_backtest_screener_vs_live_simulator_exact_parity(tmp_path: Path, strategy_id: str) -> None:
+    """Requirement F: screener and live simulator produce identical entry/exit time, price, qty, and PnL."""
+    cfg = load_config()
+    inst = next(i for i in cfg["instruments"] if i["symbol"] == "BTCUSDT")
+    bars, interval, params = _make_parity_bars(strategy_id)
+    dur_sec = {"15m": 900, "4h": 14400, "1d": 86400}[interval]
+
+    bt_trades, _ = simulate_single_symbol(
+        bars=bars,
+        strategy_id=strategy_id,
+        params=params,
+        instrument=inst,
+        config=cfg,
+        interval=interval,
+        allow_short=True,
+    )
+    assert len(bt_trades) >= 1, f"Expected >= 1 backtest trade for {strategy_id}"
+
+    eng = SimulationEngine(cfg, out_dir=tmp_path / strategy_id)
+    runtime_cfg = (params, "已驗證")
+    for idx in range(15, len(bars) - 1):
+        b = bars[idx]
+        nxt = bars[idx + 1]
+        close_dt = datetime.strptime(b.ts_utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc) + timedelta(seconds=dur_sec)
+        nxt_close_dt = datetime.strptime(nxt.ts_utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc) + timedelta(seconds=dur_sec)
+
+        # Evaluate at close of bar `idx`, filling entry/strategy-exit at `nxt.open` (`idx + 1`), matching screener.py order!
+        nxt_mkt = MarketBar(
+            ts_utc=nxt.ts_utc,
+            close_ts_utc=nxt_close_dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            open=nxt.open,
+            high=nxt.high,
+            low=nxt.low,
+            close=nxt.close,
+            volume=nxt.volume,
+        )
+        evaluate_live_single_strategy_step(
+            engine=eng,
+            strategy_id=strategy_id,
+            inst=inst,
+            closed_bars=bars[: idx + 1],
+            runtime_cfg=runtime_cfg,
+            now_iso=close_dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            control=_ctrl_ok(),
+            allow_new_entry=True,
+            next_bar=nxt_mkt,
+        )
+        # Process intra-bar SL / TP on bar `nxt` (`idx + 1`) identical to screener step 3
+        eng.process_bar("BTCUSDT", nxt_mkt)
+
+    live_closed = sorted(
+        [t for t in eng.ledger.trades.values() if t.state == LifecycleState.CLOSED],
+        key=lambda t: t.entered_at_utc or "",
+    )
+    assert len(live_closed) == len(bt_trades), (
+        f"{strategy_id} trade count mismatch: live={len(live_closed)} vs bt={len(bt_trades)}"
+    )
+    for bt, lt in zip(bt_trades, live_closed):
+        assert lt.entered_at_utc == bt.entry_ts_utc
+        assert lt.closed_at_utc == bt.exit_ts_utc
+        assert round(lt.avg_entry_price, 6) == bt.entry_price
+        assert round(lt.exit_price or 0.0, 6) == bt.exit_price
+        assert lt.realized_pnl_usd == pytest.approx(bt.net_pnl_usd, abs=1e-2)

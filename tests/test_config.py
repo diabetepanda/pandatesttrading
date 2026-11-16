@@ -17,8 +17,32 @@ def test_config_has_required_sections() -> None:
     assert set(cfg["strategies"].keys()) == {"S1", "S2", "S3", "L1", "L2", "L3"}
     total_sub = sum(float(v["capital_usd"]) for v in cfg["strategies"].values())
     assert abs(total_sub - 100000.0) < 0.05
-    assert cfg["risk"]["drawdown_warning_pct"] == 8.0
-    assert cfg["risk"]["drawdown_pause_pct"] == 12.0
+    assert cfg["backtest"]["risk_per_trade_pct"] == 1.0
+    assert cfg["backtest"]["max_total_open_risk_pct"] == 10.0
+    assert cfg["backtest"]["max_concurrent_positions"] == 10
+    assert cfg["backtest"]["max_position_notional_pct"] == 500.0
+    assert cfg["backtest"]["max_total_notional_multiple"] == 5.0
+    for removed_risk_key in (
+        "max_total_stop_risk_usd",
+        "max_margin_usage_pct",
+        "max_group_stop_risk_usd",
+        "max_daily_loss_usd",
+        "max_weekly_loss_usd",
+        "drawdown_pause_pct",
+        "short_term_tp1_rr_min",
+        "short_term_tp2_rr_min",
+        "long_term_min_rr",
+    ):
+        assert removed_risk_key not in cfg["risk"]
+    for removed_sig_key in (
+        "tp1_close_fraction",
+        "breakeven_trigger_r",
+        "trailing_stop_trigger_r",
+        "order_expiry_hours",
+        "max_hold_bars_15m",
+        "max_daily_signals",
+    ):
+        assert removed_sig_key not in cfg["signals"]
     enabled = [inst for inst in cfg["instruments"] if inst.get("enabled", True)]
     assert len(enabled) == 52
     assert sum(1 for inst in enabled if inst["market"] == "crypto") == 33
@@ -127,7 +151,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261116i" in index_html
+    assert "?v=20261117a" in index_html
     assert "watch-scope-tabs" in index_html
     assert "watch_today_daily.json" in app_js
     assert "watch_today_b.json" not in app_js
@@ -186,6 +210,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
           fetch: async () => ({{ ok: false }}),
           console,
           Date,
+          Intl,
           Math,
           Number,
           String,
@@ -197,8 +222,27 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
         }};
         vm.runInNewContext(fs.readFileSync({repr(str(root / "assets" / "app.js"))}, 'utf8'), sandbox);
         const u = sandbox.window.__SIGNAL_DESK_UTILS__;
+        if (u.formatTaipeiTime('2026-11-16T14:51:00Z') !== '11/16 22:51') {{
+          throw new Error('formatTaipeiTime failed: ' + u.formatTaipeiTime('2026-11-16T14:51:00Z'));
+        }}
         if (u.convertReasonUtcToTaipei('目前 UTC 08:00 非低流動性') !== '目前 台北 16:00 非低流動性') {{
           throw new Error('UTC->Taipei failed: ' + u.convertReasonUtcToTaipei('目前 UTC 08:00 非低流動性'));
+        }}
+        const copyTxt = u.formatSignalCopyText({{
+          signal_id: 'SIG-20261116-0009',
+          strategy: 'S1',
+          symbol: 'BTCUSDT',
+          direction: 'long',
+          avg_entry_price: 65291,
+          entered_at_utc: '2026-11-16T14:51:00Z',
+          stop_loss: 64013.62,
+          risk_usd: 100,
+          notional_usd: 5100,
+          subaccount_capital_usd: 10000,
+          exit_rule: '止損，或台北時間 07:45 前強制平倉',
+        }});
+        if (!copyTxt.includes('11/16 22:51') || !copyTxt.includes('出場規則：') || copyTxt.includes('TP1') || copyTxt.includes('槓桿')) {{
+          throw new Error('formatSignalCopyText check failed: ' + copyTxt);
         }}
         const pepe = u.formatNumber(0.000004123);
         if (!pepe || !pepe.includes('4123')) {{
