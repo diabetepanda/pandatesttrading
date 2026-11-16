@@ -44,9 +44,10 @@ def test_config_has_required_sections() -> None:
     ):
         assert removed_sig_key not in cfg["signals"]
     enabled = [inst for inst in cfg["instruments"] if inst.get("enabled", True)]
-    assert len(enabled) == 52
+    assert len(enabled) == 42
     assert sum(1 for inst in enabled if inst["market"] == "crypto") == 33
-    assert sum(1 for inst in enabled if inst["market"] in ("forex", "commodity")) == 15
+    assert sum(1 for inst in enabled if inst["market"] == "commodity") == 5
+    assert sum(1 for inst in enabled if inst["market"] == "forex") == 0
     assert sum(1 for inst in enabled if inst["market"] == "index") == 4
     index_syms = {inst["symbol"] for inst in enabled if inst["market"] == "index"}
     assert index_syms == {"NAS100", "SP500", "JP225", "TWII"}

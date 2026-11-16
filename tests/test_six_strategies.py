@@ -311,14 +311,14 @@ def test_oos_mutation_never_leaks_into_is_parameter_selection() -> None:
     cfg = load_config()
     small_cfg = copy.deepcopy(cfg)
     small_cfg["instruments"] = [
-        i for i in cfg["instruments"] if i["symbol"] in ("BTCUSDT", "ETHUSDT", "SOLUSDT", "EURUSD", "NAS100", "SP500")
+        i for i in cfg["instruments"] if i["symbol"] in ("BTCUSDT", "ETHUSDT", "SOLUSDT", "XAUUSD", "NAS100", "SP500")
     ]
 
     bars_orig_1d = {
         "BTCUSDT": _make_bars(2300, 1440, "rsi_pullback", phase=0.1),
         "ETHUSDT": _make_bars(2300, 1440, "trend_wave", phase=0.8),
         "SOLUSDT": _make_bars(2300, 1440, "trend_wave", phase=1.7),
-        "EURUSD": _make_bars(2300, 1440, "rsi_pullback", phase=0.3),
+        "XAUUSD": _make_bars(2300, 1440, "rsi_pullback", phase=0.3),
         "NAS100": _make_bars(2300, 1440, "trend_wave", phase=1.2),
         "SP500": _make_bars(2300, 1440, "trend_wave", phase=2.0),
     }
@@ -503,7 +503,7 @@ def test_dukascopy_bi5_parser_and_paxgusdt_gold_backup(tmp_path: Path) -> None:
 
     small_cfg = copy.deepcopy(cfg)
     small_cfg["instruments"] = [
-        i for i in cfg["instruments"] if i["symbol"] in ("BTCUSDT", "XAUUSD", "WTI", "EURUSD", "NAS100")
+        i for i in cfg["instruments"] if i["symbol"] in ("BTCUSDT", "XAUUSD", "WTI", "COPPER", "NAS100")
     ]
     test_cfg_path.write_text(yaml.safe_dump(small_cfg), encoding="utf-8")
 
@@ -548,7 +548,7 @@ def test_live_scan_and_daily_emit_signals_with_verification_status(tmp_path: Pat
     cfg = load_config()
     small_cfg = copy.deepcopy(cfg)
     small_cfg["instruments"] = [
-        i for i in cfg["instruments"] if i["symbol"] in ("BTCUSDT", "ETHUSDT", "NAS100", "EURUSD")
+        i for i in cfg["instruments"] if i["symbol"] in ("BTCUSDT", "ETHUSDT", "NAS100", "XAUUSD")
     ]
     import yaml
 
@@ -757,10 +757,10 @@ def test_weekly_job_outputs_six_strategies_json(tmp_path: Path) -> None:
 
 
 def test_expired_bars_never_emit_signals_and_marked_in_watch(tmp_path: Path) -> None:
-    """Bars older than 1 candle + allowed delay (e.g. weekend Friday FX bars at Monday 12:20 UTC) must NOT emit signals."""
+    """Bars older than 1 candle + allowed delay (e.g. weekend Friday commodity bars at Monday 12:20 UTC) must NOT emit signals."""
     cfg = load_config()
     small_cfg = copy.deepcopy(cfg)
-    small_cfg["instruments"] = [i for i in cfg["instruments"] if i["symbol"] in ("EURUSD", "BTCUSDT")]
+    small_cfg["instruments"] = [i for i in cfg["instruments"] if i["symbol"] in ("XAUUSD", "BTCUSDT")]
     import yaml
 
     cfg_path = tmp_path / "config.yaml"
@@ -772,43 +772,43 @@ def test_expired_bars_never_emit_signals_and_marked_in_watch(tmp_path: Path) -> 
     out_dir = tmp_path / "data"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Monday 2026-11-16 12:20 UTC while EURUSD only has Friday 2026-11-13 bars (strong 4h breakout on last bar)
+    # Monday 2026-11-16 12:20 UTC while XAUUSD only has Friday 2026-11-13 bars (strong 4h breakout on last bar)
     now = datetime(2026, 11, 16, 12, 20, tzinfo=timezone.utc)
     fri_end_15m = datetime(2026, 11, 13, 21, 45, tzinfo=timezone.utc)
-    eur_15m = [
+    xau_15m = [
         OHLCVBar(
             ts_utc=(fri_end_15m - timedelta(minutes=15 * (400 - k))).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            open=1.0800,
-            high=1.0810,
-            low=1.0790,
-            close=1.0800 if k < 384 else 1.1200,
+            open=2650.0,
+            high=2655.0,
+            low=2645.0,
+            close=2650.0 if k < 384 else 2720.0,
             volume=100.0,
         )
         for k in range(401)
     ]
-    eur_1m = [
+    xau_1m = [
         OHLCVBar(
             ts_utc=(fri_end_15m - timedelta(minutes=(60 - k))).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            open=1.1200,
-            high=1.1210,
-            low=1.1190,
-            close=1.1200,
+            open=2720.0,
+            high=2722.0,
+            low=2718.0,
+            close=2720.0,
             volume=50.0,
         )
         for k in range(60)
     ]
-    eur_1d = _make_bars(250, 1440, "trend_wave", start=datetime(2026, 3, 1, tzinfo=timezone.utc))
+    xau_1d = _make_bars(250, 1440, "trend_wave", start=datetime(2026, 3, 1, tzinfo=timezone.utc))
 
     # BTCUSDT has fresh bars ending just before now
     btc_15m = _make_bars(400, 15, "trend_wave", start=now - timedelta(minutes=15 * 401))
     btc_1m = _make_bars(60, 1, "trend_wave", start=now - timedelta(minutes=61))
     btc_1d = _make_bars(250, 1440, "trend_wave", start=now - timedelta(days=251))
 
-    class _ExpiredFxFetcher:
+    class _ExpiredFetcher:
         def fetch(self, inst: dict, interval: str, limit: int = 200, now_utc=None):
-            if inst["symbol"] == "EURUSD":
-                bars = {"1m": eur_1m, "15m": eur_15m, "1d": eur_1d}[interval]
-                return FetchResult("EURUSD", interval, True, "yfinance", bars, None)
+            if inst["symbol"] == "XAUUSD":
+                bars = {"1m": xau_1m, "15m": xau_15m, "1d": xau_1d}[interval]
+                return FetchResult("XAUUSD", interval, True, "yfinance", bars, None)
             bars = {"1m": btc_1m, "15m": btc_15m, "1d": btc_1d}[interval]
             return FetchResult("BTCUSDT", interval, True, "binance_vision", bars, None)
 
@@ -817,22 +817,22 @@ def test_expired_bars_never_emit_signals_and_marked_in_watch(tmp_path: Path) -> 
         config_path=cfg_path,
         control_path=ctrl_path,
         events_path=ev_path,
-        fetcher=_ExpiredFxFetcher(),
+        fetcher=_ExpiredFetcher(),
         derivatives_fetcher=lambda _i: {"source": "okx", "funding_rate": 0.0001, "oi_change_1h_pct": 0.5, "status": "ok"},
         now_utc=now,
     )
-    eur_sigs = [
+    xau_sigs = [
         s
         for s in json.loads((out_dir / "signals_index.json").read_text(encoding="utf-8"))
-        if s["symbol"] == "EURUSD"
+        if s["symbol"] == "XAUUSD"
     ]
-    assert eur_sigs == [], f"Expired EURUSD bars must NEVER emit signals: {eur_sigs}"
-    assert not any(sid for sid in scan_res["signals_published"] if sid in {s["signal_id"] for s in eur_sigs})
+    assert xau_sigs == [], f"Expired XAUUSD bars must NEVER emit signals: {xau_sigs}"
+    assert not any(sid for sid in scan_res["signals_published"] if sid in {s["signal_id"] for s in xau_sigs})
 
     watch_doc = json.loads((out_dir / "watch_today.json").read_text(encoding="utf-8"))
-    eur_watch = next(it for it in watch_doc["items"] if it["symbol"] == "EURUSD")
-    assert "資料過期" in eur_watch["reason"]
-    assert eur_watch["strategies"]["S2"]["status"] == "expired"
+    xau_watch = next(it for it in watch_doc["items"] if it["symbol"] == "XAUUSD")
+    assert "資料過期" in xau_watch["reason"]
+    assert xau_watch["strategies"]["S2"]["status"] == "expired"
 
     # Daily job with expired 1d bars (> 25h old) must also block and label 資料過期
     stale_1d = _make_bars(250, 1440, "rsi_pullback", start=datetime(2026, 3, 1, tzinfo=timezone.utc))
@@ -849,8 +849,8 @@ def test_expired_bars_never_emit_signals_and_marked_in_watch(tmp_path: Path) -> 
     )
     assert daily_res["signals_published"] == []
     watch_daily = json.loads((out_dir / "watch_today_daily.json").read_text(encoding="utf-8"))
-    eur_daily = next(it for it in watch_daily["items"] if it["symbol"] == "EURUSD")
-    assert "資料過期" in eur_daily["reason"]
+    xau_daily = next(it for it in watch_daily["items"] if it["symbol"] == "XAUUSD")
+    assert "資料過期" in xau_daily["reason"]
 
 
 def test_closed_at_utc_never_earlier_than_published_at_utc_and_purges_corrupted_signals(tmp_path: Path) -> None:

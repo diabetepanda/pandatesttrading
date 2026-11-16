@@ -109,18 +109,18 @@ def test_gap_open_beyond_stop_fills_at_open_price(tmp_path: Path) -> None:
     cfg = load_config()
     eng = SimulationEngine(cfg, out_dir=tmp_path)
     sig = eng.submit_candidate_signal(
-        _make_candidate(symbol="EURUSD", ref_price=1.0810, stop_loss=1.0700),
+        _make_candidate(symbol="BTCUSDT", ref_price=90000.0, stop_loss=88000.0),
         now_utc="2026-11-16T02:01:00Z",
         latest_bar_close_utc="2026-11-16T02:00:00Z",
         control=_ctrl_ok(),
-        entry_bar=_bar("2026-11-16T02:00:00Z", "2026-11-16T02:15:00Z", 1.0810, 1.0815, 1.0805, 1.0810),
+        entry_bar=_bar("2026-11-16T02:00:00Z", "2026-11-16T02:15:00Z", 90000.0, 90100.0, 89900.0, 90000.0),
     )
     assert sig is not None
-    eng.process_bar("EURUSD", _bar("2026-11-16T02:15:00Z", "2026-11-16T02:16:00Z", 1.0600, 1.0620, 1.0590, 1.0610))
+    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:15:00Z", "2026-11-16T02:16:00Z", 87000.0, 87500.0, 86900.0, 87200.0))
     trade = eng.ledger.trades[sig.signal_id]
     assert trade.state == LifecycleState.CLOSED
     assert trade.exit_reason == "stop_loss"
-    assert trade.exit_price <= 1.0600
+    assert trade.exit_price <= 87000.0
 
 
 def test_schedule_delay_blocks_new_signal_and_logs_watch(tmp_path: Path) -> None:

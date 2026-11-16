@@ -82,7 +82,7 @@ strategies:
     pool: short_term
     capital_usd: 10000.0
     interval: 4h
-    markets: ["crypto", "forex", "commodity"]
+    markets: ["crypto", "commodity"]
     allow_short: true
     candidates:
       breakout_bars: [12, 20, 30]
@@ -94,7 +94,7 @@ strategies:
     pool: short_term
     capital_usd: 10000.0
     interval: 1d
-    markets: ["crypto", "forex", "commodity", "index"]
+    markets: ["crypto", "commodity", "index"]
     allow_short: true
     candidates:
       trend_ma_period: 200
@@ -109,7 +109,7 @@ strategies:
     pool: long_term
     capital_usd: 23333.33
     interval: 1d
-    markets: ["crypto", "forex", "commodity", "index"]
+    markets: ["crypto", "commodity", "index"]
     allow_short: true
     candidates:
       entry_periods: [20, 55]
@@ -134,12 +134,6 @@ strategies:
       - LTCUSDT
       - XAUUSD
       - WTI
-      - EURUSD
-      - GBPUSD
-      - USDJPY
-      - AUDUSD
-      - USDCAD
-      - USDCHF
       - NAS100
       - SP500
       - JP225
@@ -796,7 +790,7 @@ instruments:
     display_name: EUR/USD
     market: forex
     correlation_group: usd_fx
-    enabled: true
+    enabled: false
     assumed_spread_bps: 1.0
     fee_rate: 0.0001
     tick_size: 0.00001
@@ -811,7 +805,7 @@ instruments:
     display_name: GBP/USD
     market: forex
     correlation_group: usd_fx
-    enabled: true
+    enabled: false
     assumed_spread_bps: 1.5
     fee_rate: 0.0001
     tick_size: 0.00001
@@ -826,7 +820,7 @@ instruments:
     display_name: USD/JPY
     market: forex
     correlation_group: jpy_cross
-    enabled: true
+    enabled: false
     assumed_spread_bps: 1.2
     fee_rate: 0.0001
     tick_size: 0.001
@@ -841,7 +835,7 @@ instruments:
     display_name: AUD/USD
     market: forex
     correlation_group: usd_fx
-    enabled: true
+    enabled: false
     assumed_spread_bps: 1.5
     fee_rate: 0.0001
     tick_size: 0.00001
@@ -856,7 +850,7 @@ instruments:
     display_name: USD/CAD
     market: forex
     correlation_group: usd_fx
-    enabled: true
+    enabled: false
     assumed_spread_bps: 1.5
     fee_rate: 0.0001
     tick_size: 0.00001
@@ -871,7 +865,7 @@ instruments:
     display_name: USD/CHF
     market: forex
     correlation_group: usd_fx
-    enabled: true
+    enabled: false
     assumed_spread_bps: 1.5
     fee_rate: 0.0001
     tick_size: 0.00001
@@ -886,7 +880,7 @@ instruments:
     display_name: NZD/USD
     market: forex
     correlation_group: usd_fx
-    enabled: true
+    enabled: false
     assumed_spread_bps: 2.0
     fee_rate: 0.0001
     tick_size: 0.00001
@@ -901,7 +895,7 @@ instruments:
     display_name: EUR/JPY
     market: forex
     correlation_group: jpy_cross
-    enabled: true
+    enabled: false
     assumed_spread_bps: 1.8
     fee_rate: 0.0001
     tick_size: 0.001
@@ -916,7 +910,7 @@ instruments:
     display_name: EUR/GBP
     market: forex
     correlation_group: gbp_fx
-    enabled: true
+    enabled: false
     assumed_spread_bps: 1.5
     fee_rate: 0.0001
     tick_size: 0.00001
@@ -931,7 +925,7 @@ instruments:
     display_name: GBP/JPY
     market: forex
     correlation_group: jpy_cross
-    enabled: true
+    enabled: false
     assumed_spread_bps: 2.0
     fee_rate: 0.0001
     tick_size: 0.001

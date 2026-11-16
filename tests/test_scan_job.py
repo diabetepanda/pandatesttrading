@@ -102,7 +102,7 @@ def test_run_scan_excludes_unstable_1m_instruments_in_watch_today(tmp_path: Path
     class UnstableForAudAdapter(DummyAdapter):
         def fetch_bars(self, source_symbol: str, interval: str, limit: int = 200, now_utc=None):
             bars = super().fetch_bars(source_symbol, interval, limit=limit, now_utc=now_utc)
-            if interval == "1m" and source_symbol in ("AUDUSD=X", "NZDUSD=X", "NG=F"):
+            if interval == "1m" and source_symbol in ("CL=F", "NG=F", "HG=F"):
                 # Drop every other minute -> ~50% missing -> unstable!
                 now = now_utc or datetime(2026, 11, 16, 12, 0, tzinfo=timezone.utc)
                 return [
@@ -136,7 +136,7 @@ def test_run_scan_excludes_unstable_1m_instruments_in_watch_today(tmp_path: Path
 
     watch = json.loads((tmp_path / "watch_today.json").read_text(encoding="utf-8"))
     by_sym = {item["symbol"]: item for item in watch["items"]}
-    for sym in ("AUDUSD", "NZDUSD", "NATGAS"):
+    for sym in ("WTI", "NATGAS", "COPPER"):
         assert sym in by_sym
         assert "資料不穩" in by_sym[sym]["reason"]
     # Derivatives must still be recorded for crypto during live Round-2 scan

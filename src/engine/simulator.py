@@ -397,8 +397,8 @@ class SimulationEngine:
     ) -> Signal | None:
         """Validate freshness & strategy sub-account allocation; publish immutable Signal and fill market open."""
         inst = self.instruments.get(candidate.symbol)
-        if inst is None:
-            self._record_watch(candidate.symbol, candidate.strategy, now_utc, f"未知標的 {candidate.symbol}")
+        if inst is None or not inst.get("enabled", True):
+            self._record_watch(candidate.symbol, candidate.strategy, now_utc, f"標的未啟用或未知: {candidate.symbol}")
             return None
 
         sched_cfg = self.config.get("schedule", {})
