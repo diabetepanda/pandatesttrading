@@ -172,8 +172,7 @@ def _submit_action_as_candidate(
 
     latest_close_iso = (latest_close_dt + timedelta(seconds=interval_sec)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    strat_cfg = engine.config.get("strategies", {}).get(strategy_id, {})
-    sub_state = engine.primary_ledger.build_subaccount_state(strategy_id, engine.latest_marks)
+    sub_state = engine.ledger.build_subaccount_state(strategy_id, engine.latest_marks)
     alloc = engine.risk_manager.check_subaccount_allocation(
         strategy_id=strategy_id,
         instrument=inst,
@@ -205,11 +204,6 @@ def _submit_action_as_candidate(
         filter_checks={"data_ok": True, "subaccount_risk_ok": True},
     )
 
-    safe_lev = min(
-        float(inst.get("max_leverage", 5.0)),
-        5.0,
-        max(1.0, round(0.20 / max(1e-4, sl_dist / ref_px), 2)),
-    )
     time_stop_bars = int(params.get("max_hold_bars", 24 if interval == "15m" else 30))
     cand = CandidateSignal(
         strategy=strategy_id,
@@ -227,11 +221,8 @@ def _submit_action_as_candidate(
         snapshot=snap,
         atr=atr_val,
         atr_ratio=atr_ratio,
-        leverage=safe_lev,
         time_stop_bars=time_stop_bars,
         verification_status=ver_label,
-        desired_notional_usd=float(strat_cfg.get("capital_usd", 10000.0)),
-        subaccount_risk_mode=True,
         risk_multiplier=act.risk_multiplier,
     )
     pub = engine.submit_candidate_signal(

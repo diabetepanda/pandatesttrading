@@ -84,14 +84,14 @@ GitHub 免費版的定時排程在尖峰時段偶爾會延遲或跳過，若倉�
 - **這是依規格保護的正常現象，不是系統壞掉**：
   - 例如 `AUDUSD`、`NZDUSD`、`NATGAS` 的 1 分鐘 K 線因 Yahoo Finance 在無跳動分鐘不回傳資料，缺口超過 10%，系統依規格標示 **`資料不穩`** 並自動停用該標的之短線掃描，絕不用假資料填補。
   - 若加密貨幣出現資金費率／持倉量 **`資料不足`**，表示當時 OKX 與 Binance 公開合約端點都連不上（例如美國 IP 限制），系統依規格自動觀望不報單。
-  - 若某標的在 `補倉比較` 或 `績效統計` 顯示 **`尚未驗證`**，代表已結束報單筆數還未達到設定門檻（30 筆 / 50 筆），累積足夠樣本後會自動顯示指標。
+  - 若某標的在 `績效統計` 顯示 **`尚未驗證`**，代表已結束報單筆數還未達到設定門檻（50 筆），累積足夠樣本後會自動顯示指標。
 
 ## 雙層價格架構（瀏覽器即時顯示 vs. 排程模擬驗證）
 
 網站將價格來源嚴格分為兩層，互不干擾：
 
 1. **排程驗證層（GitHub Actions，每 15 分鐘）**：
-   - 使用已收盤 K 線計算報單、成交、補倉、止損止盈、風控與模擬損益，寫入 `data` 分支。
+   - 使用已收盤 K 線計算報單、成交、止損止盈、風控與模擬損益，寫入 `data` 分支。
    - 網頁每 60 秒重新讀取 `data` 分支，頂部顯示「最後排程更新 (Actions)」。
 2. **瀏覽器即時顯示層（`assets/config.js`，預設每 8 秒）**：
    - 網頁打開時由瀏覽器直接呼叫免 API Key 且支援 CORS 的公開 API，**僅用於顯示**最新價、24h 漲跌與未來持倉浮動損益；**絕不觸發或改寫任何報單與模擬資料**。
@@ -133,7 +133,7 @@ pytest -v
 1. **買賣價（Bid / Ask）推算**：當資料來源無真實買賣報價時，依標的 `assumed_spread_bps` 由中間價對稱推算：`ask = mid * (1 + spread_bps / 20000)`、`bid = mid * (1 - spread_bps / 20000)`；做多進場與做空平倉用 `ask`，做空進場與做多平倉用 `bid`。
 2. **滑點預設**：市價／停損／停利觸發另加 `risk.default_slippage_bps`（預設 `1.0 bps`）之不利滑價。
 3. **預估爆倉價與維持保證金模型**：採逐倉等效模型計算，`initial_margin = notional / leverage`，`maintenance_margin = initial_margin * maintenance_margin_ratio`（預設 `0.50`），因此預估爆倉距離為 `entry * (1 - maintenance_margin_ratio) / leverage`；止損距離不得超過爆倉距離的 `50%`（`stop_to_liquidation_max_ratio: 0.5`）。
-4. **補倉政策 E（動態波動率＋風險預算）公式**：基準階段權重預設 `[0.40, 0.35, 0.25]`，基準名目額度保留低波動上調空間（`max_notional / 1.15`）；當 `atr_ratio >= 1.2` 乘以 `0.75`、當 `atr_ratio <= 0.8` 乘以 `1.15`，且總倉位始終受 `min(max_notional, R_plan / (stop_pct + cost_pct))` 與逐階段補倉風控鎖定上限約束。
+4. **統一單筆全倉位預算（與回測 `allocate_subaccount_position` 一致）**：每筆交易於報單成交時一次進場 `100%` 計畫名目部位，單筆風險上限為對應子帳戶當前權益的 `0.75%`（短線池 `$30,000` 約 `$225`／長線池 `$70,000` 約 `$525`），單倉名目上限為子帳戶權益的 `19%`（`$5,700`／`$13,300`），同時受總開放風險 `5%`、最多 `5` 倉、群組風險、單日／週虧損、30% 保證金與 50% 爆倉距離比例限制。
 5. **隔夜／資金費率扣除**：依標的 `overnight_cost_daily_bps` 按實際持倉時間比例（`(close_ts - entry_ts) / 86400`）於平倉時扣除。
 6. **12% 回撤暫停解除流程**：觸發 12% 回撤暫停後，即使之後手動編輯 `control/control.json`，系統必須同時看到 `"risk_review_done": true` 且 `"risk_review_note"` 為非空白字串，才會解除暫停並寫入 `risk_review_completed` 事件。
 
@@ -165,10 +165,10 @@ pytest -v
 1. **排程並發控制與 `data` 分支合併重試**：
    - `scan.yml`、`daily.yml`、`weekly.yml` 已改用各自獨立的 concurrency group（`data-writer-scan`、`data-writer-daily`、`data-writer-weekly`，皆設 `cancel-in-progress: false`），避免 15 分鐘掃描把正在等待的每日／每週任務擠掉取消。
    - 若同時寫入 `data` 分支發生 non-fast-forward 失敗，`src/jobs/data_sync.py` 會自動執行 `git pull --rebase origin data` 並合併重疊檔案（例如 `run_log.json`、`state.json`、`signals_index.json`、`equity_curve.json` 與所有 `*.jsonl`），最多重試 `3` 次，不覆蓋其他排程資料。
-2. **五個影子帳本與樣本不足隱藏原則（`config/config.yaml`）**：
-   - `analytics.min_verified_trades_shadow` 預設 `30` 筆、`analytics.min_verified_trades_stats` 預設 `50` 筆、`analytics.min_cagr_days` 預設 `30` 天。
-   - 當已結束交易數未達門檻時，後端 `shadow_comparison.json` 與 `performance_stats.json` 會將勝率、期望值、總報酬、CAGR、夏普與獲利因子等易誤導數值輸出為 `null`，前端網頁（`#/scaling`、`#/stats`）一律標示 **`尚未驗證`**，且絕不判定任何方法為最佳。
+2. **單一模擬帳本與樣本不足隱藏原則（`config/config.yaml`）**：
+   - `analytics.min_verified_trades_stats` 預設 `50` 筆、`analytics.min_cagr_days` 預設 `30` 天。
+   - 當已結束交易數未達門檻時，後端 `performance_stats.json` 會將勝率、期望值、總報酬、CAGR、夏普與獲利因子等易誤導數值輸出為 `null`，前端網頁（`#/stats`）一律標示 **`尚未驗證`**。
 3. **指標公式保守預設**：
    - 年化夏普率依觀察交易頻率年化計算（無風險利率 `analytics.risk_free_rate_annual` 預設 `0.0`）；期間未滿 `30` 天時 CAGR 標示為 `僅供參考`。
    - 風險調整報酬率採用總報酬率除以 `max(1.0, max_drawdown_pct)`，資金使用效率採平均投入總名目／初始資金比例估算。
-   - 若 `data` 分支尚無淨值快照或影子比較檔，所有新頁面（`#/stats`、`#/account`、`#/scaling`、`#/risk`）一律顯示空狀態，絕不使用假資料或隨機數據。
+   - 若 `data` 分支尚無淨值快照或統計檔，所有頁面（`#/stats`、`#/account`、`#/risk`）一律顯示空狀態，絕不使用假資料或隨機數據。

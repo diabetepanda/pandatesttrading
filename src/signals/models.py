@@ -215,14 +215,8 @@ def format_signal_text(signal: Signal) -> str:
     """Format signal into copyable plain text matching SPEC Section 3.4."""
     dir_zh = "做多" if signal.direction == "long" else "做空"
     strat_zh = STRATEGY_LABELS.get(signal.strategy, f"策略 {signal.strategy}")
-    if signal.add_levels:
-        add_parts = []
-        for lvl in signal.add_levels:
-            kind_zh = "逆勢補倉" if lvl.add_type == "mean_add" else "順勢加倉"
-            add_parts.append(f"階段{lvl.stage} {kind_zh} {_fmt_num(lvl.price)}")
-        add_line = "、".join(add_parts)
-    else:
-        add_line = "無"
+    subaccount_eq = 30000.0 if signal.strategy.startswith("S") else 70000.0
+    actual_lev = round(signal.notional_usd / subaccount_eq, 2) if subaccount_eq > 0 else 0.0
 
     lines = [
         f"【Signal Desk 報單】{signal.signal_id}（{strat_zh}）",
@@ -233,10 +227,10 @@ def format_signal_text(signal: Signal) -> str:
         [
             f"標的：{signal.symbol}｜方向：{dir_zh}",
             f"入場區間：{_fmt_num(signal.entry_low)} ~ {_fmt_num(signal.entry_high)}",
-            f"補倉價位：{add_line}",
             f"止損價：{_fmt_num(signal.stop_loss)}",
             f"止盈 TP1：{_fmt_num(signal.tp1)}｜TP2：{_fmt_num(signal.tp2)}",
-            f"建議風險比例：佔資金池 {signal.risk_pct_pool:g}%（預估風險 ${signal.risk_usd:.2f}）",
+            f"倉位名目：${signal.notional_usd:,.2f}（實際槓桿 {actual_lev:.2f}x）",
+            f"建議風險比例：佔資金池 {signal.risk_pct_pool:g}%（預估 SL 虧損 -${signal.risk_usd:.2f}）",
             f"掛單有效期限：{signal.valid_until_utc}",
             f"失效條件：{signal.invalidation_cond}",
             "模擬驗證中，非投資建議",

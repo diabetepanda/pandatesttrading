@@ -21,7 +21,6 @@
   let cachedWatch = null;
   let cachedWatchDaily = null;
   let cachedBacktest = null;
-  let cachedShadow = null;
   let cachedPerf = null;
   let cachedRisk = null;
   let cachedEquity = null;
@@ -359,20 +358,51 @@
     return { usd: totalEst, r: estR };
   }
 
+  function computeCardEstimates(s) {
+    const isShort = String(s.strategy || "").startsWith("S");
+    const acc = cachedRisk?.account;
+    const subEq = isShort
+      ? Number(acc?.short_term_equity_usd || 30000)
+      : Number(acc?.long_term_equity_usd || 70000);
+    const notional = Number(s.effective_notional_usd ?? s.notional_usd ?? 0);
+    const actualLev = s.actual_leverage !== undefined && s.actual_leverage !== null
+      ? Number(s.actual_leverage)
+      : (subEq > 0 ? notional / subEq : 0);
+    const slUsd = Number(s.estimated_stop_loss_usd ?? s.risk_usd ?? 0);
+    const slPct = Number(s.estimated_stop_loss_pct_pool ?? s.risk_pct_pool ?? 0);
+    let tp1Usd = s.estimated_tp1_profit_usd;
+    let tp2Usd = s.estimated_tp2_profit_usd;
+    if (tp1Usd === undefined || tp1Usd === null) {
+      const mid = (Number(s.entry_low || 0) + Number(s.entry_high || 0)) / 2;
+      const effEntry = Number(s.avg_entry_price || mid || 0);
+      const qty = effEntry > 0 && notional > 0 ? notional / effEntry : 0;
+      const tp1 = Number(s.current_tp1 ?? s.tp1 ?? 0);
+      if (qty > 0 && tp1 > 0) {
+        const d1 = s.direction === "long" ? Math.max(0, tp1 - effEntry) : Math.max(0, effEntry - tp1);
+        const tp2Val = Number(s.current_tp2 ?? s.tp2 ?? 0);
+        const tp1Frac = !Number.isNaN(tp2Val) && tp2Val > 0 ? 0.5 : 1.0;
+        tp1Usd = qty * tp1Frac * d1;
+        if (!Number.isNaN(tp2Val) && tp2Val > 0) {
+          const d2 = s.direction === "long" ? Math.max(0, tp2Val - effEntry) : Math.max(0, effEntry - tp2Val);
+          tp2Usd = tp1Usd + qty * 0.5 * d2;
+        }
+      }
+    }
+    return { notional, actualLev, slUsd, slPct, tp1Usd, tp2Usd };
+  }
+
   function formatSignalCopyText(s) {
     const dirZh = s.direction === "long" ? "做多" : "做空";
     const stratZh = STRATEGY_NAMES[s.strategy] || `策略 ${s.strategy}`;
-    const adds = Array.isArray(s.add_levels) && s.add_levels.length > 0
-      ? s.add_levels.map((l) => `階段${l.stage} ${l.add_type === "mean_add" ? "逆勢補倉" : "順勢加倉"} ${l.price}`).join("、")
-      : "無";
+    const est = computeCardEstimates(s);
     return [
       `【Signal Desk 報單】${s.signal_id}（${stratZh}）`,
       `標的：${s.symbol}｜方向：${dirZh}`,
       `入場區間：${s.entry_low} ~ ${s.entry_high}`,
-      `補倉價位：${adds}`,
       `止損價：${s.stop_loss}`,
       `止盈 TP1：${s.tp1}｜TP2：${s.tp2}`,
-      `建議風險比例：佔資金池 ${s.risk_pct_pool}%（預估風險 $${s.risk_usd}）`,
+      `倉位名目：$${est.notional.toLocaleString("en-US", { maximumFractionDigits: 2 })}（實際槓桿 ${est.actualLev.toFixed(2)}x）`,
+      `預估 SL 虧損：-$${est.slUsd.toFixed(2)}（佔資金池 -${est.slPct.toFixed(2)}%）`,
       `掛單有效期限：${s.valid_until_utc}`,
       `失效條件：${s.invalidation_cond}`,
       "模擬驗證中，非投資建議",
@@ -481,11 +511,11 @@
             </div>`;
         }
 
-        const adds = Array.isArray(s.add_levels) && s.add_levels.length > 0
-          ? s.add_levels.map((l) => `${l.price}`).join(", ")
-          : "無";
+        const est = computeCardEstimates(s);
         const verLabel = s.verification_status || "觀察中（未通過驗證）";
         const verCls = verLabel === "已驗證" ? "pill-ok" : "pill-warn";
+        const tp1Txt = est.tp1Usd !== null && est.tp1Usd !== undefined ? `+$${Number(est.tp1Usd).toFixed(2)}` : "--";
+        const tp2Txt = est.tp2Usd !== null && est.tp2Usd !== undefined ? `+$${Number(est.tp2Usd).toFixed(2)}` : "--";
 
         return `
           <article class="signal-card" data-sid="${s.signal_id}">
@@ -502,11 +532,11 @@
             <div class="badge badge-warn" style="align-self:flex-start;">模擬驗證中，非投資建議</div>
             <div class="signal-kv">
               <div><span class="muted">入場區間：</span>${s.entry_low} ~ ${s.entry_high}</div>
-              <div><span class="muted">補倉價：</span>${adds}</div>
+              <div><span class="muted">倉位名目 / 實際槓桿：</span>${formatUsd(est.notional)} (${est.actualLev.toFixed(2)}x)</div>
               <div><span class="muted">止損：</span>${curSl}</div>
               <div><span class="muted">TP1 / TP2：</span>${curTp1} / ${curTp2}</div>
-              <div><span class="muted">建議風險：</span>${s.risk_pct_pool}% ($${s.risk_usd})</div>
-              <div><span class="muted">補倉階段：</span>${s.stages_filled || 0}/3</div>
+              <div><span class="muted">預估 SL 虧損：</span><span class="chg-down">-$${est.slUsd.toFixed(2)} / -${est.slPct.toFixed(2)}%</span></div>
+              <div><span class="muted">預估 TP 獲利：</span><span class="chg-up">TP1 ${tp1Txt} / TP2 ${tp2Txt}</span></div>
             </div>
             ${liveHtml}
             <div class="card-actions">
@@ -576,6 +606,7 @@
 
     const verDetailLabel = sig.verification_status || "觀察中（未通過驗證）";
     const verDetailCls = verDetailLabel === "已驗證" ? "pill-ok" : "pill-warn";
+    const sigEst = computeCardEstimates(sig);
 
     root.innerHTML = `
       <section class="card">
@@ -602,19 +633,20 @@
       <section class="card">
         <h2>K 線圖與計畫點位</h2>
         <div id="signal-chart-box" class="chart-container"></div>
-        <p id="chart-note" class="muted" style="margin-top:6px;">標示入場區間、補倉價、止損、TP1/TP2 與實際成交點。</p>
+        <p id="chart-note" class="muted" style="margin-top:6px;">標示入場區間、止損、TP1/TP2 與實際成交點。</p>
       </section>
 
       <section class="card">
         <h2>原始計畫 vs 目前狀態對照</h2>
         <div class="table-wrap">
           <table class="data-table">
-            <thead><tr><th>項目</th><th>發布時原始計畫</th><th>目前狀態</th></tr></thead>
+            <thead><tr><th>項目</th><th>發布時原始計畫 / 預估</th><th>目前狀態</th></tr></thead>
             <tbody>
-              <tr><td>入場區間 / 平均成本</td><td>${sig.entry_low} ~ ${sig.entry_high}</td><td>${sig.avg_entry_price || "--"}（已進場 ${sig.stages_filled || 0} 階段）</td></tr>
+              <tr><td>入場區間 / 成本</td><td>${sig.entry_low} ~ ${sig.entry_high}</td><td>${sig.avg_entry_price || "--"}</td></tr>
               <tr><td>止損價</td><td>${sig.stop_loss}</td><td>${curSl}</td></tr>
               <tr><td>TP1 / TP2</td><td>${sig.tp1} / ${sig.tp2}</td><td>${curTp1} / ${curTp2}</td></tr>
-              <tr><td>風險 / 槓桿 / 爆倉價</td><td>$${sig.risk_usd} (${sig.risk_pct_pool}%) / ${sig.leverage}x / ${sig.liquidation_price}</td><td>已實現損益 ${formatUsd(sig.realized_pnl_usd)} (${sig.r_multiple}R)</td></tr>
+              <tr><td>倉位名目 / 實際槓桿 / 預估 SL 虧損</td><td>${formatUsd(sigEst.notional)} (${sigEst.actualLev.toFixed(2)}x) / -$${sigEst.slUsd.toFixed(2)} (-${sigEst.slPct.toFixed(2)}%)</td><td>已實現損益 ${formatUsd(sig.realized_pnl_usd)} (${sig.r_multiple}R)</td></tr>
+              <tr><td>預估 TP 獲利</td><td>TP1 ${sigEst.tp1Usd !== null && sigEst.tp1Usd !== undefined ? `+$${Number(sigEst.tp1Usd).toFixed(2)}` : "--"} / TP2 ${sigEst.tp2Usd !== null && sigEst.tp2Usd !== undefined ? `+$${Number(sigEst.tp2Usd).toFixed(2)}` : "--"}</td><td>爆倉參考價 ${sig.liquidation_price}</td></tr>
               <tr><td>失效條件 / 有效期限</td><td>${sig.invalidation_cond}</td><td>${sig.valid_until_utc}（出場原因：${sig.exit_reason || "--"}）</td></tr>
             </tbody>
           </table>
@@ -686,9 +718,6 @@
     addLine(Number(sig.current_stop_loss ?? sig.stop_loss), "#f85149", "止損");
     addLine(Number(sig.tp1), "#2ea043", "TP1");
     if (typeof sig.tp2 === "number") addLine(Number(sig.tp2), "#56d364", "TP2");
-    if (Array.isArray(sig.add_levels)) {
-      sig.add_levels.forEach((l) => addLine(Number(l.price), "#d29922", `補倉${l.stage}`));
-    }
 
     if (Array.isArray(sig.stages) && sig.stages.length > 0) {
       const markers = sig.stages.map((st) => ({
@@ -1151,7 +1180,7 @@
     }
 
     const minN = cachedPerf.min_verified_trades || 50;
-    metaEl.textContent = `最後統計時間 (UTC+8)：${formatTaipeiTime(cachedPerf.updated_at_utc)}｜主帳本政策：${escapeHtml(cachedPerf.primary_policy || "E")}｜最低驗證樣本門檻：${minN} 筆`;
+    metaEl.textContent = `最後統計時間 (UTC+8)：${formatTaipeiTime(cachedPerf.updated_at_utc)}｜最低驗證樣本門檻：${minN} 筆`;
 
     const rows = [
       ["總計 (Overall)", cachedPerf.overall],
@@ -1167,9 +1196,6 @@
       ["市場：指數", cachedPerf.by_market?.index],
       ["方向：做多", cachedPerf.by_direction?.long],
       ["方向：做空", cachedPerf.by_direction?.short],
-      ["僅初始進場", cachedPerf.by_add_type?.initial_only],
-      ["含逆勢補倉", cachedPerf.by_add_type?.mean_add],
-      ["含順勢加倉", cachedPerf.by_add_type?.trend_add],
     ].filter(([, m]) => Boolean(m));
 
     if (!cachedPerf.overall.verified) {
@@ -1259,18 +1285,18 @@
         };
         totalSeries.setData(toChartData("total_equity_usd"));
         activeEquityChart.timeScale().fitContent();
-        chartNote.textContent = `共有 ${pts.length} 筆淨值快照（主帳本政策 ${cachedEquity.primary_policy || "E"}）。`;
+        chartNote.textContent = `共有 ${pts.length} 筆淨值快照。`;
       }
     }
 
     const posTbody = document.getElementById("account-positions-tbody");
     if (!posTbody) return;
     if (!cachedRisk) {
-      posTbody.innerHTML = '<tr><td colspan="8" class="muted center">目前尚無模擬持倉資料（等待排程產生 risk_status.json）。</td></tr>';
+      posTbody.innerHTML = '<tr><td colspan="7" class="muted center">目前尚無模擬持倉資料（等待排程產生 risk_status.json）。</td></tr>';
       return;
     }
     if (positions.length === 0) {
-      posTbody.innerHTML = '<tr><td colspan="8" class="muted center">目前無持倉或等待入場掛單。</td></tr>';
+      posTbody.innerHTML = '<tr><td colspan="7" class="muted center">目前無持倉或等待入場掛單。</td></tr>';
       return;
     }
     posTbody.innerHTML = positions
@@ -1281,89 +1307,31 @@
         if (pxInfo.price !== null && p.total_qty > 0 && p.avg_entry_price > 0) {
           floatUsd = p.direction === "long" ? (pxInfo.price - p.avg_entry_price) * p.total_qty : (p.avg_entry_price - pxInfo.price) * p.total_qty;
         }
-        const stageText = p.stages && p.stages.length > 0
-          ? p.stages.map((s) => `#${s.stage}:${formatNumber(s.fill_price)}`).join(", ")
+        const subEq = String(p.strategy || "").startsWith("S")
+          ? Number(acc?.short_term_equity_usd || 30000)
+          : Number(acc?.long_term_equity_usd || 70000);
+        const actualLev = p.leverage !== undefined && p.leverage !== null
+          ? Number(p.leverage)
+          : (subEq > 0 ? Number(p.notional_usd || 0) / subEq : 0);
+        const estLoss = Number(p.estimated_max_loss_usd || 0);
+        const estLossPct = p.estimated_max_loss_pct_pool !== undefined && p.estimated_max_loss_pct_pool !== null
+          ? Number(p.estimated_max_loss_pct_pool)
+          : (subEq > 0 ? (estLoss / subEq) * 100 : 0);
+        const tp1Profit = p.estimated_tp1_profit_usd !== undefined && p.estimated_tp1_profit_usd !== null
+          ? `+$${Number(p.estimated_tp1_profit_usd).toFixed(2)}`
+          : "--";
+        const tp2Profit = p.estimated_tp2_profit_usd !== undefined && p.estimated_tp2_profit_usd !== null
+          ? `+$${Number(p.estimated_tp2_profit_usd).toFixed(2)}`
           : "--";
         return `
           <tr>
-            <td><a href="#/signal/${encodeURIComponent(p.signal_id)}">${escapeHtml(p.signal_id)}</a><br><strong>${escapeHtml(p.symbol)}</strong> (${p.strategy} / ${p.direction === "long" ? "多" : "空"})</td>
-            <td>${escapeHtml(p.state)}<br><span class="muted">${escapeHtml(stageText)}</span></td>
-            <td>${p.avg_entry_price > 0 ? formatNumber(p.avg_entry_price) : "--"}<br><span class="muted">${p.total_qty}</span></td>
-            <td>${formatUsd(p.notional_usd)}<br><span class="muted">${p.leverage}x / ${formatUsd(p.margin_usd)}</span></td>
-            <td>${formatNumber(refPx) || "--"} (${escapeHtml(pxInfo.source)})<br><span class="${floatUsd >= 0 ? "chg-up" : "chg-down"}">${formatUsd(floatUsd)}</span></td>
-            <td>SL ${formatNumber(p.current_stop_loss)}<br><span class="muted">TP1 ${formatNumber(p.current_tp1)} / TP2 ${typeof p.current_tp2 === "number" ? formatNumber(p.current_tp2) : escapeHtml(p.current_tp2)}</span></td>
-            <td>${formatUsd(p.estimated_max_loss_usd)}<br><span class="muted">1:${p.rr_ratio}</span></td>
-            <td>${p.remaining_adds} 次</td>
-          </tr>
-        `;
-      })
-      .join("");
-  }
-
-  function renderScalingComparison() {
-    const tbody = document.getElementById("scaling-tbody");
-    const metaEl = document.getElementById("scaling-meta");
-    const noticeEl = document.getElementById("scaling-notice");
-    if (!tbody || !metaEl || !noticeEl) return;
-
-    if (!cachedShadow || !Array.isArray(cachedShadow.policies) || cachedShadow.policies.length === 0) {
-      noticeEl.classList.add("hidden");
-      metaEl.textContent = "目前尚無五個影子帳本比較資料（等待排程產生 shadow_comparison.json）。";
-      tbody.innerHTML = '<tr><td colspan="11" class="muted center">目前尚無影子帳本比較資料。</td></tr>';
-      return;
-    }
-
-    const minN = cachedShadow.min_verified_trades || 30;
-    metaEl.textContent = `最後更新 (UTC+8)：${formatTaipeiTime(cachedShadow.updated_at_utc)}｜最低驗證門檻：${minN} 筆｜最佳政策判定：${cachedShadow.best_policy ? `政策 ${cachedShadow.best_policy}` : "尚未驗證（不判定最佳方法）"}`;
-
-    if (!cachedShadow.all_verified) {
-      noticeEl.textContent = `目前部分或全部帳本未達 ${minN} 筆已結束交易門檻，依規格標示「尚未驗證」，不顯示勝率與報酬率數字，亦不得宣稱任何方法為最佳。`;
-      noticeEl.classList.remove("hidden");
-    } else {
-      noticeEl.classList.add("hidden");
-    }
-
-    tbody.innerHTML = cachedShadow.policies
-      .map((p) => {
-        const verPill = p.verified
-          ? '<span class="pill pill-ok">已驗證</span>'
-          : `<span class="pill pill-warn">尚未驗證（${p.closed_trades || 0} / ${p.min_trades_required || minN} 筆）</span>`;
-        const primaryTag = p.is_primary ? ' <span class="pill pill-live">主帳本</span>' : "";
-        const riskCell = `${escapeHtml(p.risk_status)}<br><span class="muted">保證金 ${Number(p.used_margin_pct || 0).toFixed(1)}%</span>`;
-        const sampleCell = `${p.closed_trades || 0} / ${p.min_trades_required || minN} 筆<br><span class="muted">進行中 ${p.open_trades || 0}</span>`;
-        if (!p.verified) {
-          return `
-            <tr>
-              <td data-label="補倉政策"><strong>${escapeHtml(p.label)}</strong>${primaryTag}</td>
-              <td data-label="驗證狀態">${verPill}</td>
-              <td data-label="樣本數"><span class="muted">進行中 ${p.open_trades || 0} 筆</span></td>
-              <td data-label="風險狀態">${riskCell}</td>
-              <td data-label="勝率">—</td>
-              <td data-label="平均 R">—</td>
-              <td data-label="總報酬 / CAGR">—</td>
-              <td data-label="最大回撤">—</td>
-              <td data-label="夏普 / 獲利因子">—</td>
-              <td data-label="恢復因子 / 最大連虧">—</td>
-              <td data-label="資金效率 / 風險調整報酬">—</td>
-            </tr>
-          `;
-        }
-        const cagrText = p.cagr_pct !== null && p.cagr_pct !== undefined
-          ? `${Number(p.cagr_pct).toFixed(2)}%`
-          : escapeHtml(p.cagr_note || "僅供參考");
-        return `
-          <tr>
-            <td><strong>${escapeHtml(p.label)}</strong>${primaryTag}</td>
-            <td>${verPill}</td>
-            <td>${sampleCell}</td>
-            <td>${riskCell}</td>
-            <td>${Number(p.win_rate_pct).toFixed(2)}%</td>
-            <td>${Number(p.avg_r).toFixed(3)}R</td>
-            <td>${Number(p.total_return_pct).toFixed(2)}% / ${cagrText}</td>
-            <td>${Number(p.max_drawdown_pct).toFixed(2)}%</td>
-            <td>${Number(p.sharpe).toFixed(2)} / ${Number(p.profit_factor).toFixed(2)}</td>
-            <td>${Number(p.recovery_factor).toFixed(2)} / ${p.max_consecutive_losses ?? 0}</td>
-            <td>${Number(p.capital_efficiency_pct).toFixed(2)}% / ${Number(p.scaled_risk_adjusted_return).toFixed(2)}</td>
+            <td data-label="報單 / 標的"><a href="#/signal/${encodeURIComponent(p.signal_id)}">${escapeHtml(p.signal_id)}</a><br><strong>${escapeHtml(p.symbol)}</strong> (${p.strategy} / ${p.direction === "long" ? "多" : "空"})</td>
+            <td data-label="狀態">${escapeHtml(lifecycleLabel(p.state))}</td>
+            <td data-label="成本 / 總數量">${p.avg_entry_price > 0 ? formatNumber(p.avg_entry_price) : "--"}<br><span class="muted">${p.total_qty}</span></td>
+            <td data-label="名目 / 實際槓桿 / 保證金">${formatUsd(p.notional_usd)}<br><span class="muted">${actualLev.toFixed(2)}x / ${formatUsd(p.margin_usd)}</span></td>
+            <td data-label="即時現價 / 未實現損益">${formatNumber(refPx) || "--"} (${escapeHtml(pxInfo.source)})<br><span class="${floatUsd >= 0 ? "chg-up" : "chg-down"}">${formatUsd(floatUsd)}</span></td>
+            <td data-label="止損 / TP1 / TP2">SL ${formatNumber(p.current_stop_loss)}<br><span class="muted">TP1 ${formatNumber(p.current_tp1)} / TP2 ${typeof p.current_tp2 === "number" ? formatNumber(p.current_tp2) : escapeHtml(p.current_tp2)}</span></td>
+            <td data-label="預估 SL 虧損 / TP 獲利"><span class="chg-down">-$${estLoss.toFixed(2)} (-${estLossPct.toFixed(2)}%)</span><br><span class="chg-up">TP1 ${tp1Profit} / TP2 ${tp2Profit}</span></td>
           </tr>
         `;
       })
@@ -1490,10 +1458,6 @@
       document.getElementById("view-account").classList.remove("hidden");
       document.querySelector('.nav-link[data-route="account"]')?.classList.add("active");
       renderSimulatedAccount();
-    } else if (route === "scaling") {
-      document.getElementById("view-scaling").classList.remove("hidden");
-      document.querySelector('.nav-link[data-route="scaling"]')?.classList.add("active");
-      renderScalingComparison();
     } else if (route === "risk") {
       document.getElementById("view-risk").classList.remove("hidden");
       document.querySelector('.nav-link[data-route="risk"]')?.classList.add("active");
@@ -1541,7 +1505,7 @@
     try {
       const [
         instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, watchRes, watchDailyRes, btRes,
-        shadowRes, perfRes, riskRes, eqRes, evRes,
+        perfRes, riskRes, eqRes, evRes,
       ] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
         fetchDataJson("data_health.json"),
@@ -1552,7 +1516,6 @@
         fetchDataJson("watch_today.json"),
         fetchDataJson("watch_today_daily.json"),
         fetchDataJson("backtest_results.json"),
-        fetchDataJson("shadow_comparison.json"),
         fetchDataJson("performance_stats.json"),
         fetchDataJson("risk_status.json"),
         fetchDataJson("equity_curve.json"),
@@ -1569,7 +1532,6 @@
       cachedWatch = watchRes.status === "fulfilled" ? watchRes.value : null;
       cachedWatchDaily = watchDailyRes.status === "fulfilled" ? watchDailyRes.value : null;
       cachedBacktest = btRes.status === "fulfilled" ? btRes.value : null;
-      cachedShadow = shadowRes.status === "fulfilled" ? shadowRes.value : null;
       cachedPerf = perfRes.status === "fulfilled" ? perfRes.value : null;
       cachedRisk = riskRes.status === "fulfilled" ? riskRes.value : null;
       cachedEquity = eqRes.status === "fulfilled" ? eqRes.value : null;
@@ -1577,7 +1539,7 @@
 
       // 每個區塊各自防護：一個區塊出錯不會拖垮整個頁面
       [renderInstruments, renderWallCards, renderResultsTable, renderBacktestResults,
-       renderPerformanceStats, renderSimulatedAccount, renderScalingComparison,
+       renderPerformanceStats, renderSimulatedAccount,
        renderRiskCenter, renderDataExtras].forEach((fn) => {
         try { fn(); } catch (e) { console.error(`${fn.name} 失敗：`, e); }
       });

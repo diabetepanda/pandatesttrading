@@ -133,7 +133,6 @@ def test_partial_close_realized_pnl_uses_weighted_avg_cost(tmp_path: Path) -> No
             direction="long",
             entry_low=99.5,
             entry_high=100.5,
-            add_levels=(AddLevel(stage=2, add_type="mean_add", price=98.5, note="逆勢補倉"),),
             stop_loss=96.0,
             tp1=106.0,
             tp2=108.0,
@@ -145,16 +144,14 @@ def test_partial_close_realized_pnl_uses_weighted_avg_cost(tmp_path: Path) -> No
         control=_ctrl_ok(),
     )
     assert sig is not None
-    # Stage 1 fill around 100.0
+    # Single full entry fill around 100.0
     eng.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.2, 99.8, 100.0))
-    # Stage 2 mean_add fill at 98.5
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 99.5, 99.6, 98.3, 98.6))
-    trade = eng.primary_ledger.trades[sig.signal_id]
-    assert len(trade.stages) == 2
-    expected_avg = sum(s.fill_price * s.qty for s in trade.stages) / sum(s.qty for s in trade.stages)
+    trade = eng.ledger.trades[sig.signal_id]
+    assert len(trade.stages) == 1
+    expected_avg = trade.stages[0].fill_price
     assert trade.avg_entry_price == pytest.approx(expected_avg)
 
-    # Trigger TP1 at 106.0
+    # Trigger TP1 at 106.0 (closes 50% at entry avg cost)
     eng.process_bar("BTCUSDT", _bar("2026-11-16T02:03:00Z", "2026-11-16T02:04:00Z", 102.0, 106.2, 101.9, 106.0))
     assert trade.state == LifecycleState.TP1_HIT
     assert trade.avg_entry_price == pytest.approx(expected_avg)
@@ -274,7 +271,7 @@ def test_breakout_protection_closes_at_adverse_bar_price(tmp_path: Path) -> None
     assert trade.exit_price <= 98.5
 
 
-def test_stop_loss_never_moves_in_adverse_direction_and_recalculates_after_add(tmp_path: Path) -> None:
+def test_stop_loss_never_moves_in_adverse_direction(tmp_path: Path) -> None:
     cfg = load_config()
     eng = SimulationEngine(cfg, out_dir=tmp_path)
     sig = eng.submit_candidate_signal(
@@ -282,10 +279,9 @@ def test_stop_loss_never_moves_in_adverse_direction_and_recalculates_after_add(t
             direction="long",
             entry_low=99.5,
             entry_high=100.5,
-            add_levels=(AddLevel(stage=2, add_type="mean_add", price=98.5, note="補倉"),),
             stop_loss=97.0,
             tp1=104.5,
-            tp2=106.5,
+            tp2=110.0,
             invalidation_price=96.5,
             leverage=4.0,
         ),
@@ -295,7 +291,10 @@ def test_stop_loss_never_moves_in_adverse_direction_and_recalculates_after_add(t
     )
     assert sig is not None
     eng.process_bar("BTCUSDT", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.2, 99.8, 100.0))
-    trade = eng.primary_ledger.trades[sig.signal_id]
+    trade = eng.ledger.trades[sig.signal_id]
+    assert len(trade.stages) == 1
+    assert sum(s.notional_usd for s in trade.stages) == pytest.approx(trade.planned_notional_usd, rel=1e-4)
+
     # Attempt to move SL adversely (97.0 -> 95.0 for long) must fail / keep 97.0
     assert eng.move_stop_loss(sig.signal_id, 95.0, "2026-11-16T02:02:00Z", "嘗試惡化止損") is False
     assert trade.current_stop_loss == 97.0
@@ -304,16 +303,17 @@ def test_stop_loss_never_moves_in_adverse_direction_and_recalculates_after_add(t
     assert eng.move_stop_loss(sig.signal_id, 97.5, "2026-11-16T02:02:30Z", "保護性上移") is True
     assert trade.current_stop_loss == 97.5
 
-    # Stage 2 add fill at 98.5 recalculates TP/SL without ever moving SL below 97.5
-    eng.process_bar("BTCUSDT", _bar("2026-11-16T02:03:00Z", "2026-11-16T02:04:00Z", 99.0, 99.2, 98.3, 98.6))
-    assert len(trade.stages) == 2
-    assert trade.current_stop_loss >= 97.5
-
-    # Price reaches +2R -> trailing stop activates and moves SL above avg_entry_price
+    # Price hits TP1 -> moves SL to breakeven, then reaches +2R -> trailing stop moves SL above avg_entry_price
     eng.process_bar(
         "BTCUSDT",
-        _bar("2026-11-16T02:04:00Z", "2026-11-16T02:05:00Z", 102.0, 104.2, 101.8, 104.0),
-        atr=1.0,
+        _bar("2026-11-16T02:04:00Z", "2026-11-16T02:05:00Z", 102.0, 105.0, 101.8, 104.8),
+        atr=2.0,
+    )
+    assert trade.current_stop_loss >= trade.avg_entry_price
+    eng.process_bar(
+        "BTCUSDT",
+        _bar("2026-11-16T02:05:00Z", "2026-11-16T02:06:00Z", 105.0, 108.8, 104.8, 108.6),
+        atr=2.0,
     )
     assert trade.current_stop_loss > trade.avg_entry_price
 
@@ -331,7 +331,7 @@ def test_gap_open_beyond_stop_fills_at_open_price(tmp_path: Path) -> None:
     eng.process_bar("EURUSD", _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 1.0810, 1.0815, 1.0805, 1.0810))
     # Market gaps down at open to 1.0600 (well below SL 1.0700) -> fill at open (~1.0600), NOT 1.0700
     eng.process_bar("EURUSD", _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 1.0600, 1.0620, 1.0590, 1.0610))
-    trade = eng.primary_ledger.trades[sig.signal_id]
+    trade = eng.ledger.trades[sig.signal_id]
     assert trade.state == LifecycleState.CLOSED
     assert trade.exit_reason == "stop_loss"
     assert trade.exit_price <= 1.0600
@@ -358,7 +358,6 @@ def test_catchup_replay_processes_missed_bars_chronologically(tmp_path: Path) ->
         _make_candidate(
             entry_low=99.5,
             entry_high=100.5,
-            add_levels=(AddLevel(stage=2, add_type="mean_add", price=98.8, note="補倉"),),
             stop_loss=97.5,
             tp1=104.5,
             tp2=106.0,
@@ -373,16 +372,14 @@ def test_catchup_replay_processes_missed_bars_chronologically(tmp_path: Path) ->
     # Feed bars out of order to verify chronological sorting during catch-up replay
     bars = [
         _bar("2026-11-16T02:03:00Z", "2026-11-16T02:04:00Z", 101.0, 104.7, 100.9, 104.6),  # TP1
-        _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 99.8, 99.9, 98.6, 99.0),     # Add fill
         _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.3, 99.8, 100.1),   # Entry
     ]
     events = eng.replay_bars("BTCUSDT", bars)
-    assert len(events) >= 3
+    assert len(events) >= 2
     assert eng.last_processed_ts["BTCUSDT"] == "2026-11-16T02:04:00Z"
-    assert eng.primary_ledger.trades[sig.signal_id].state == LifecycleState.TP1_HIT
+    assert eng.ledger.trades[sig.signal_id].state == LifecycleState.TP1_HIT
     eng.save_state()
     assert (tmp_path / "trades.json").exists()
-    assert (tmp_path / "trade_stages.json").exists()
     assert (tmp_path / "state.json").exists()
     assert (tmp_path / "equity_snapshots" / "2026-11.jsonl").exists()
     state_json = json.loads((tmp_path / "state.json").read_text(encoding="utf-8"))
@@ -405,37 +402,164 @@ def test_idempotent_replay_does_not_duplicate_events_or_fills(tmp_path: Path) ->
     ]
     first_events = eng.replay_bars("BTCUSDT", bars)
     assert len(first_events) >= 2
-    fills_before = len(eng.primary_ledger.fills)
+    fills_before = len(eng.ledger.fills)
     second_events = eng.replay_bars("BTCUSDT", bars)
     assert second_events == []
-    assert len(eng.primary_ledger.fills) == fills_before
+    assert len(eng.ledger.fills) == fills_before
 
 
-def test_five_shadow_ledgers_track_parallel_positions(tmp_path: Path) -> None:
+def test_live_sizing_matches_backtest_allocate_subaccount_position(tmp_path: Path) -> None:
+    from src.strategies.six_strategies import allocate_subaccount_position
+
     cfg = load_config()
     eng = SimulationEngine(cfg, out_dir=tmp_path)
+    fx_inst = next(i for i in cfg["instruments"] if i["symbol"] == "EURUSD")
+
+    # Tight FX stop (~0.4%): both live submit_candidate_signal & allocate_subaccount_position -> $5,700 (19%)
+    entry = 1.1586
+    sl = 1.1539
+    bt_alloc = allocate_subaccount_position(
+        strategy_id="S2",
+        subaccount_equity_usd=30000.0,
+        open_positions_count=0,
+        open_total_risk_usd=0.0,
+        open_total_notional_usd=0.0,
+        entry_price=entry,
+        stop_loss=sl,
+        fee_rate=float(fx_inst["fee_rate"]),
+        slippage_bps=float(cfg["risk"]["default_slippage_bps"]),
+        config=cfg,
+    )
     sig = eng.submit_candidate_signal(
         _make_candidate(
-            entry_low=99.5,
-            entry_high=100.5,
-            add_levels=(AddLevel(stage=2, add_type="mean_add", price=98.8, note="補倉"),),
-            stop_loss=97.5,
-            tp1=104.5,
-            tp2=106.0,
-            invalidation_price=97.0,
-            leverage=4.0,
+            symbol="EURUSD",
+            strategy="S2",
+            entry_low=1.1580,
+            entry_high=entry,
+            stop_loss=sl,
+            tp1=1.1700,
+            tp2=1.1750,
+            invalidation_price=1.1530,
+            leverage=10.0,
         ),
         now_utc="2026-11-16T02:01:00Z",
         latest_bar_close_utc="2026-11-16T02:00:00Z",
         control=_ctrl_ok(),
     )
     assert sig is not None
-    bars = [
-        _bar("2026-11-16T02:01:00Z", "2026-11-16T02:02:00Z", 100.0, 100.3, 99.8, 100.1),
-        _bar("2026-11-16T02:02:00Z", "2026-11-16T02:03:00Z", 99.8, 99.9, 98.6, 99.0),
-        _bar("2026-11-16T02:03:00Z", "2026-11-16T02:04:00Z", 101.0, 104.7, 100.9, 104.6),
-    ]
-    eng.replay_bars("BTCUSDT", bars)
-    for pol in ("A", "B", "C", "D", "E"):
-        assert sig.signal_id in eng.ledgers[pol].trades
-        assert eng.ledgers[pol].trades[sig.signal_id].state == LifecycleState.TP1_HIT
+    tr = eng.ledger.trades[sig.signal_id]
+    assert tr.planned_notional_usd == pytest.approx(bt_alloc.notional_usd, abs=0.5)
+    assert tr.planned_notional_usd == pytest.approx(5700.0, abs=0.5)
+    assert sig.leverage == pytest.approx(0.19, abs=0.005)
+
+
+def test_legacy_state_migration_preserves_active_and_resizes_waiting(tmp_path: Path) -> None:
+    cfg = load_config()
+    active_sid = "SIG-20261116-0004"
+    waiting_sid = "SIG-20261116-0011"
+
+    legacy_state = {
+        "sequences": {"20261116": 13},
+        "last_processed_ts": {"EURUSD": "2026-11-16T20:00:00Z", "SOLUSDT": "2026-11-16T20:00:00Z"},
+        "ledgers": {
+            "A": {"trades": {}},
+            "E": {
+                "trades": {
+                    active_sid: {
+                        "signal_id": active_sid,
+                        "strategy": "S2",
+                        "symbol": "EURUSD",
+                        "market": "forex",
+                        "correlation_group": "fx_usd",
+                        "direction": "short",
+                        "state": "active",
+                        "entry_low": 1.1585,
+                        "entry_high": 1.1587,
+                        "add_levels": [],
+                        "initial_stop_loss": 1.1632,
+                        "current_stop_loss": 1.1632,
+                        "current_tp1": 1.1470,
+                        "current_tp2": 1.1400,
+                        "invalidation_price": 1.1632,
+                        "valid_until_utc": "2026-11-17T08:00:00Z",
+                        "time_stop_bars": 48,
+                        "r_plan_usd": 112.5,
+                        "leverage": 10.0,
+                        "assumed_spread_bps": 1.5,
+                        "fee_rate": 0.0,
+                        "slippage_bps": 1.0,
+                        "overnight_cost_daily_bps": 0.5,
+                        "initial_filled_qty": 570.35,
+                        "stages": [
+                            {
+                                "stage": 1,
+                                "add_type": "initial",
+                                "fill_price": 1.1587,
+                                "qty": 570.35,
+                                "notional_usd": 660.87,
+                                "filled_at_utc": "2026-11-16T15:10:00Z",
+                            }
+                        ],
+                        "published_at_utc": "2026-11-16T14:52:00Z",
+                    },
+                    waiting_sid: {
+                        "signal_id": waiting_sid,
+                        "strategy": "S2",
+                        "symbol": "SOLUSDT",
+                        "market": "crypto",
+                        "correlation_group": "crypto_majors",
+                        "direction": "short",
+                        "state": "waiting_entry",
+                        "entry_low": 141.0,
+                        "entry_high": 142.0,
+                        "add_levels": [],
+                        "initial_stop_loss": 144.8,
+                        "current_stop_loss": 144.8,
+                        "current_tp1": 135.0,
+                        "current_tp2": 131.0,
+                        "invalidation_price": 144.8,
+                        "valid_until_utc": "2026-11-17T08:00:00Z",
+                        "time_stop_bars": 48,
+                        "r_plan_usd": 112.5,
+                        "leverage": 10.0,
+                        "assumed_spread_bps": 2.0,
+                        "fee_rate": 0.0005,
+                        "slippage_bps": 1.0,
+                        "overnight_cost_daily_bps": 1.0,
+                        "initial_filled_qty": 0.0,
+                        "stages": [],
+                        "published_at_utc": "2026-11-16T19:00:00Z",
+                    },
+                },
+                "fills": [],
+            },
+        },
+    }
+    (tmp_path / "ledgers_state.json").write_text(json.dumps(legacy_state), encoding="utf-8")
+    (tmp_path / "signals").mkdir(parents=True, exist_ok=True)
+    for sid, sym in ((active_sid, "EURUSD"), (waiting_sid, "SOLUSDT")):
+        (tmp_path / "signals" / f"{sid}.json").write_text(
+            json.dumps({"signal_id": sid, "symbol": sym, "strategy": "S2", "published_at_utc": "2026-11-16T15:00:00Z"}),
+            encoding="utf-8",
+        )
+
+    eng = SimulationEngine(cfg, out_dir=tmp_path)
+    eng.load_state()
+    eng.save_state("2026-11-16T20:05:00Z")
+
+    # Active trade keeps its filled stage completely intact
+    tr_act = eng.ledger.trades[active_sid]
+    assert tr_act.state == LifecycleState.ACTIVE
+    assert len(tr_act.stages) == 1
+    assert tr_act.stages[0].notional_usd == pytest.approx(660.87, abs=0.01)
+
+    # Waiting trade is recalculated under $30k subaccount allocate_subaccount_position -> $5,700 (0.19x)
+    tr_wait = eng.ledger.trades[waiting_sid]
+    assert tr_wait.state == LifecycleState.WAITING_ENTRY
+    assert tr_wait.planned_notional_usd == pytest.approx(5700.0, abs=1.0)
+    assert tr_wait.leverage == pytest.approx(0.19, abs=0.01)
+
+    # Persisted ledgers_state.json uses single "ledger" key (no legacy multi-ledger map)
+    saved = json.loads((tmp_path / "ledgers_state.json").read_text(encoding="utf-8"))
+    assert "ledger" in saved
+    assert "ledgers" not in saved

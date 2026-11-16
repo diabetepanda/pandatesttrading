@@ -448,7 +448,7 @@ def test_shared_subaccount_sizing_and_concurrent_limits() -> None:
     assert capped.approved is False
     assert "檔數已達上限" in capped.reason
 
-    # Total open risk cap enforced (6% of $20,000 = $1,200)
+    # Total open risk cap enforced (5% of $20,000 = $1,000)
     risk_capped = rm.check_new_signal(
         instrument=btc,
         strategy="L3",
@@ -457,7 +457,6 @@ def test_shared_subaccount_sizing_and_concurrent_limits() -> None:
         stop_loss=95.0,
         tp1=110.0,
         tp2=115.0,
-        desired_notional_usd=5000.0,
         leverage=5.0,
         account_state={
             "equity_usd": 100000.0,
@@ -884,8 +883,6 @@ def test_closed_at_utc_never_earlier_than_published_at_utc_and_purges_corrupted_
         leverage=3.0,
         time_stop_bars=30,
         verification_status="觀察中（未通過驗證）",
-        desired_notional_usd=10000.0,
-        subaccount_risk_mode=True,
     )
     sig = eng.submit_candidate_signal(
         cand,
@@ -900,7 +897,7 @@ def test_closed_at_utc_never_earlier_than_published_at_utc_and_purges_corrupted_
         "BTCUSDT",
         [MarketBar("2026-11-13T21:00:00Z", "2026-11-13T21:01:00Z", 90.0, 91.0, 89.0, 90.0, 100.0)],
     )
-    tr = eng.primary_ledger.trades[sig.signal_id]
+    tr = eng.ledger.trades[sig.signal_id]
     assert tr.state == LifecycleState.WAITING_ENTRY
     assert tr.closed_at_utc is None
 
@@ -939,37 +936,36 @@ def test_closed_at_utc_never_earlier_than_published_at_utc_and_purges_corrupted_
         # Also inject corrupted closed_at_utc < published_at_utc into ledger trades
         from src.engine.simulator import TradeRecord
 
-        for led in eng2.ledgers.values():
-            led.trades[sid] = TradeRecord(
-                signal_id=sid,
-                strategy="S2",
-                symbol=sym,
-                market="forex",
-                correlation_group="fx",
-                direction="long",
-                policy_name=led.policy_name,
-                state=LifecycleState.CANCELLED,
-                entry_low=1.08,
-                entry_high=1.09,
-                add_levels=(),
-                initial_stop_loss=1.07,
-                current_stop_loss=1.07,
-                current_tp1=1.11,
-                current_tp2=1.12,
-                invalidation_price=1.07,
-                valid_until_utc="2026-11-16T16:20:00Z",
-                time_stop_bars=30,
-                r_plan_usd=75.0,
-                stage_target_notionals=(500.0, 300.0, 200.0),
-                leverage=5.0,
-                assumed_spread_bps=2.0,
-                fee_rate=0.0,
-                slippage_bps=1.0,
-                overnight_cost_daily_bps=0.2,
-                closed_at_utc="2026-11-13T21:00:00Z",
-                exit_reason="pre_entry_invalidated",
-                published_at_utc="2026-11-16T12:20:00Z",
-            )
+        eng2.ledger.trades[sid] = TradeRecord(
+            signal_id=sid,
+            strategy="S2",
+            symbol=sym,
+            market="forex",
+            correlation_group="fx",
+            direction="long",
+            state=LifecycleState.CANCELLED,
+            entry_low=1.08,
+            entry_high=1.09,
+            add_levels=(),
+            initial_stop_loss=1.07,
+            current_stop_loss=1.07,
+            current_tp1=1.11,
+            current_tp2=1.12,
+            invalidation_price=1.07,
+            valid_until_utc="2026-11-16T16:20:00Z",
+            time_stop_bars=30,
+            r_plan_usd=75.0,
+            planned_notional_usd=1000.0,
+            leverage=0.03,
+            margin_leverage=5.0,
+            assumed_spread_bps=2.0,
+            fee_rate=0.0,
+            slippage_bps=1.0,
+            overnight_cost_daily_bps=0.2,
+            closed_at_utc="2026-11-13T21:00:00Z",
+            exit_reason="pre_entry_invalidated",
+            published_at_utc="2026-11-16T12:20:00Z",
+        )
     eng2.save_state("2026-11-16T12:25:00Z")
 
     eng_reloaded = SimulationEngine(cfg, out_dir=purge_dir)
@@ -977,7 +973,7 @@ def test_closed_at_utc_never_earlier_than_published_at_utc_and_purges_corrupted_
     eng_reloaded.save_state("2026-11-16T12:35:00Z")
     for idx in (1, 2, 3):
         sid = f"SIG-20261116-000{idx}"
-        assert sid not in eng_reloaded.primary_ledger.trades
+        assert sid not in eng_reloaded.ledger.trades
         assert not (purge_dir / "signals" / f"{sid}.json").exists()
         assert not (purge_dir / "snapshots" / f"SNAP-{sid}.json").exists()
     assert json.loads((purge_dir / "signals_index.json").read_text(encoding="utf-8")) == []

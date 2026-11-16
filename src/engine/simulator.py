@@ -1,4 +1,4 @@
-"""Simulation and catch-up replay engine with 5 parallel shadow ledgers (SPEC Sections 8-14)."""
+"""Single-ledger simulation and catch-up replay engine with unified sub-account sizing."""
 
 from __future__ import annotations
 
@@ -11,16 +11,10 @@ from typing import Any
 from src.engine.analytics import (
     build_performance_stats,
     build_risk_status,
-    build_shadow_comparison,
+    compute_trade_estimates,
     export_equity_curve,
 )
 from src.risk.manager import RiskManager, is_short_term_strategy
-from src.scaling.policies import (
-    TradeStage,
-    compute_weighted_avg_cost,
-    get_scaling_policy,
-    plan_add_stage,
-)
 from src.signals.models import (
     AddLevel,
     InputSnapshot,
@@ -30,6 +24,7 @@ from src.signals.models import (
     validate_transition,
 )
 from src.signals.store import SignalStore
+from src.strategies.six_strategies import allocate_subaccount_position
 
 
 def _parse_utc(ts_str: str) -> datetime:
@@ -63,6 +58,21 @@ def _ask_price(mid: float, spread_bps: float) -> float:
 
 
 @dataclass(frozen=True)
+class TradeStage:
+    """Recorded execution fill stage for a trade."""
+
+    stage: int
+    add_type: str  # "initial"
+    fill_price: float
+    qty: float
+    notional_usd: float
+    filled_at_utc: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
 class MarketBar:
     """Single closed OHLCV bar fed to the simulation/replay engine."""
 
@@ -77,7 +87,7 @@ class MarketBar:
 
 @dataclass(frozen=True)
 class CandidateSignal:
-    """Candidate signal produced by a strategy or test harness prior to risk approval."""
+    """Candidate signal produced by a strategy prior to risk approval."""
 
     strategy: str  # "S1", "S2", "S3", "L1", "L2", or "L3"
     symbol: str
@@ -97,8 +107,6 @@ class CandidateSignal:
     leverage: float | None = None
     time_stop_bars: int | None = None
     verification_status: str = ""
-    desired_notional_usd: float | None = None
-    subaccount_risk_mode: bool = False
     risk_multiplier: float = 1.0
 
 
@@ -110,7 +118,7 @@ class FillRecord:
     signal_id: str
     symbol: str
     side: str  # "buy" or "sell"
-    action: str  # "entry", "add", "tp1", "exit"
+    action: str  # "entry", "tp1", "exit"
     price: float
     qty: float
     notional_usd: float
@@ -141,7 +149,7 @@ class OrderRecord:
 
 @dataclass
 class TradeRecord:
-    """Simulated trade state for a single ledger/scaling policy."""
+    """Simulated trade state in the unified simulation ledger."""
 
     signal_id: str
     strategy: str
@@ -149,7 +157,6 @@ class TradeRecord:
     market: str
     correlation_group: str
     direction: str
-    policy_name: str
     state: LifecycleState
     entry_low: float
     entry_high: float
@@ -162,7 +169,7 @@ class TradeRecord:
     valid_until_utc: str
     time_stop_bars: int
     r_plan_usd: float
-    stage_target_notionals: tuple[float, float, float]
+    planned_notional_usd: float
     leverage: float
     assumed_spread_bps: float
     fee_rate: float
@@ -181,12 +188,15 @@ class TradeRecord:
     exit_price: float | None = None
     exit_reason: str | None = None
     published_at_utc: str = ""
+    margin_leverage: float = 1.0
+    migrated_unified_sizing: bool = True
 
     def current_notional_usd(self) -> float:
         return self.remaining_qty * self.avg_entry_price if self.remaining_qty > 0 else 0.0
 
     def current_margin_usd(self) -> float:
-        return self.current_notional_usd() / max(1.0, self.leverage)
+        lev = max(1.0, float(self.margin_leverage or self.leverage or 1.0))
+        return self.current_notional_usd() / lev
 
     def open_stop_risk_usd(self) -> float:
         if self.state not in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT, LifecycleState.WAITING_ENTRY):
@@ -214,7 +224,6 @@ class TradeRecord:
             "market": self.market,
             "correlation_group": self.correlation_group,
             "direction": self.direction,
-            "policy_name": self.policy_name,
             "state": self.state.value,
             "avg_entry_price": round(self.avg_entry_price, 6),
             "remaining_qty": round(self.remaining_qty, 8),
@@ -222,7 +231,9 @@ class TradeRecord:
             "current_tp1": self.current_tp1,
             "current_tp2": self.current_tp2,
             "leverage": self.leverage,
+            "margin_leverage": self.margin_leverage,
             "r_plan_usd": self.r_plan_usd,
+            "planned_notional_usd": round(self.planned_notional_usd, 4),
             "realized_pnl_usd": round(self.realized_pnl_usd, 4),
             "total_fees_usd": round(self.total_fees_usd, 4),
             "total_overnight_usd": round(self.total_overnight_usd, 4),
@@ -238,7 +249,6 @@ class TradeRecord:
             "invalidation_price": self.invalidation_price,
             "valid_until_utc": self.valid_until_utc,
             "time_stop_bars": self.time_stop_bars,
-            "stage_target_notionals": list(self.stage_target_notionals),
             "assumed_spread_bps": self.assumed_spread_bps,
             "fee_rate": self.fee_rate,
             "slippage_bps": self.slippage_bps,
@@ -246,11 +256,25 @@ class TradeRecord:
             "initial_filled_qty": round(self.initial_filled_qty, 8),
             "stages": [s.to_dict() for s in self.stages],
             "published_at_utc": self.published_at_utc,
+            "migrated_unified_sizing": self.migrated_unified_sizing,
         }
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> TradeRecord:
-        stn = data.get("stage_target_notionals", [0.0, 0.0, 0.0])
+        if "planned_notional_usd" in data:
+            planned_notional = float(data["planned_notional_usd"])
+            migrated_flag = bool(data.get("migrated_unified_sizing", True))
+        else:
+            # Legacy trade migration: keep already-filled stages intact, mark pending orders for recalculation
+            filled_stages = data.get("stages", [])
+            has_fills = bool(filled_stages)
+            planned_notional = (
+                sum(float(s.get("notional_usd", 0.0)) for s in filled_stages)
+                if has_fills
+                else 0.0
+            )
+            migrated_flag = has_fills or (data.get("state") in ("closed", "cancelled"))
+        lev_val = float(data.get("leverage", 1.0))
         return cls(
             signal_id=data["signal_id"],
             strategy=data["strategy"],
@@ -258,7 +282,6 @@ class TradeRecord:
             market=data["market"],
             correlation_group=data.get("correlation_group", ""),
             direction=data["direction"],
-            policy_name=data["policy_name"],
             state=LifecycleState(data["state"]),
             entry_low=float(data["entry_low"]),
             entry_high=float(data["entry_high"]),
@@ -271,8 +294,9 @@ class TradeRecord:
             valid_until_utc=data["valid_until_utc"],
             time_stop_bars=int(data["time_stop_bars"]),
             r_plan_usd=float(data["r_plan_usd"]),
-            stage_target_notionals=(float(stn[0]), float(stn[1]), float(stn[2])),
-            leverage=float(data["leverage"]),
+            planned_notional_usd=planned_notional,
+            leverage=lev_val,
+            margin_leverage=float(data.get("margin_leverage") or max(1.0, lev_val)),
             assumed_spread_bps=float(data.get("assumed_spread_bps", 2.0)),
             fee_rate=float(data.get("fee_rate", 0.0005)),
             slippage_bps=float(data.get("slippage_bps", 1.0)),
@@ -290,14 +314,14 @@ class TradeRecord:
             exit_price=data.get("exit_price"),
             exit_reason=data.get("exit_reason"),
             published_at_utc=str(data.get("published_at_utc") or ""),
+            migrated_unified_sizing=migrated_flag,
         )
 
 
 class Ledger:
-    """Single virtual account ledger (with isolated short_term and long_term pools)."""
+    """Single virtual account ledger with isolated short_term ($30k) and long_term ($70k) pools."""
 
-    def __init__(self, policy_name: str, config: dict[str, Any]) -> None:
-        self.policy_name = policy_name
+    def __init__(self, config: dict[str, Any]) -> None:
         self.config = config
         pools = config.get("account", {}).get("pools", {})
         self.short_term_capital: float = float(pools.get("short_term", {}).get("capital_usd", 30000.0))
@@ -317,30 +341,28 @@ class Ledger:
         marks = mark_prices or {}
         base = self.short_term_capital if pool_name == "short_term" else self.long_term_capital
         realized = self.short_term_realized_pnl if pool_name == "short_term" else self.long_term_realized_pnl
-        want_short = pool_name == "short_term"
         unrealized = 0.0
         for tr in self.trades.values():
-            if is_short_term_strategy(tr.strategy) == want_short and tr.state in (
-                LifecycleState.ACTIVE,
-                LifecycleState.TP1_HIT,
-            ):
+            if tr.state not in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
+                continue
+            tr_pool = "short_term" if is_short_term_strategy(tr.strategy) else "long_term"
+            if tr_pool == pool_name:
                 mp = marks.get(tr.symbol, tr.avg_entry_price)
                 unrealized += tr.unrealized_pnl_usd(mp)
         return base + realized + unrealized
 
     def compute_equity(self, mark_prices: dict[str, float] | None = None) -> float:
-        return self.compute_pool_equity("short_term", mark_prices) + self.compute_pool_equity(
-            "long_term", mark_prices
-        )
+        eq = self.compute_pool_equity("short_term", mark_prices) + self.compute_pool_equity("long_term", mark_prices)
+        if eq > self.peak_equity_usd:
+            self.peak_equity_usd = eq
+        return eq
 
     def build_account_state(self, now_utc: str, mark_prices: dict[str, float] | None = None) -> dict[str, Any]:
         marks = mark_prices or {}
         equity = self.compute_equity(marks)
-        if equity > self.peak_equity_usd:
-            self.peak_equity_usd = equity
-
         d_key = _date_key(now_utc)
         w_key = _week_key(now_utc)
+
         unrealized_total = 0.0
         used_margin = 0.0
         total_stop_risk = 0.0
@@ -358,12 +380,13 @@ class Ledger:
                 total_stop_risk += risk_val
                 group_stop_risk[tr.correlation_group] = group_stop_risk.get(tr.correlation_group, 0.0) + risk_val
                 used_margin += tr.current_margin_usd()
+                eff_notional = tr.current_notional_usd() if tr.remaining_qty > 0 else tr.planned_notional_usd
                 if is_short_term_strategy(tr.strategy):
                     short_open += 1
-                    short_used_cap += tr.current_notional_usd()
+                    short_used_cap += eff_notional
                 else:
                     long_open += 1
-                    long_used_cap += tr.current_notional_usd()
+                    long_used_cap += eff_notional
             if tr.state in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
                 mp = marks.get(tr.symbol, tr.avg_entry_price)
                 unrealized_total += tr.unrealized_pnl_usd(mp)
@@ -393,28 +416,24 @@ class Ledger:
         strategy_id: str,
         mark_prices: dict[str, float] | None = None,
     ) -> dict[str, Any]:
-        """Compute current sub-account equity, open count, risk, and notional for one strategy."""
+        """Compute current sub-account equity (short_term $30k / long_term $70k pool) and open risk."""
         marks = mark_prices or {}
-        strat_cfg = self.config.get("strategies", {}).get(strategy_id, {})
-        base_cap = float(strat_cfg.get("capital_usd", 10000.0))
-        realized = 0.0
-        unrealized = 0.0
+        pool_name = "short_term" if is_short_term_strategy(strategy_id) else "long_term"
+        sub_eq = self.compute_pool_equity(pool_name, marks)
         open_cnt = 0
         open_risk = 0.0
         open_notional = 0.0
         for tr in self.trades.values():
-            if tr.strategy != strategy_id:
+            tr_pool = "short_term" if is_short_term_strategy(tr.strategy) else "long_term"
+            if tr_pool != pool_name:
                 continue
-            realized += tr.realized_pnl_usd
             if tr.state in (LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
                 open_cnt += 1
                 open_risk += tr.open_stop_risk_usd()
-                open_notional += tr.current_notional_usd()
-            if tr.state in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
-                mp = marks.get(tr.symbol, tr.avg_entry_price)
-                unrealized += tr.unrealized_pnl_usd(mp)
+                open_notional += tr.current_notional_usd() if tr.remaining_qty > 0 else tr.planned_notional_usd
         return {
-            "subaccount_equity_usd": max(0.0, base_cap + realized + unrealized),
+            "pool_name": pool_name,
+            "subaccount_equity_usd": max(0.0, sub_eq),
             "subaccount_open_positions": open_cnt,
             "subaccount_open_risk_usd": open_risk,
             "subaccount_open_notional_usd": open_notional,
@@ -422,7 +441,6 @@ class Ledger:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "policy_name": self.policy_name,
             "short_term_realized_pnl": self.short_term_realized_pnl,
             "long_term_realized_pnl": self.long_term_realized_pnl,
             "peak_equity_usd": self.peak_equity_usd,
@@ -437,7 +455,7 @@ class Ledger:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any], config: dict[str, Any]) -> Ledger:
-        led = cls(data["policy_name"], config)
+        led = cls(config)
         led.short_term_realized_pnl = float(data.get("short_term_realized_pnl", 0.0))
         led.long_term_realized_pnl = float(data.get("long_term_realized_pnl", 0.0))
         led.peak_equity_usd = float(data.get("peak_equity_usd", led.peak_equity_usd))
@@ -452,7 +470,7 @@ class Ledger:
 
 
 class SimulationEngine:
-    """Coordinates signal publication, mandatory risk checks, bar replay, and 5 shadow ledgers."""
+    """Coordinates signal publication, risk control, bar replay, and the single simulation ledger."""
 
     def __init__(self, config: dict[str, Any], out_dir: Path | str) -> None:
         self.config = config
@@ -464,10 +482,7 @@ class SimulationEngine:
         self.instruments: dict[str, dict[str, Any]] = {
             inst["symbol"]: inst for inst in config.get("instruments", [])
         }
-        scaling_cfg = config.get("scaling", {})
-        self.primary_policy_name: str = str(scaling_cfg.get("default_policy", "E"))
-        policy_names: list[str] = list(scaling_cfg.get("policies", ["A", "B", "C", "D", "E"]))
-        self.ledgers: dict[str, Ledger] = {p: Ledger(p, config) for p in policy_names}
+        self.ledger: Ledger = Ledger(config)
         self.last_processed_ts: dict[str, str] = {}
         self.latest_marks: dict[str, float] = {}
         self._signal_seq = 0
@@ -476,7 +491,7 @@ class SimulationEngine:
 
     @property
     def primary_ledger(self) -> Ledger:
-        return self.ledgers[self.primary_policy_name]
+        return self.ledger
 
     def _next_signal_id(self, now_utc: str) -> str:
         self._signal_seq += 1
@@ -504,13 +519,12 @@ class SimulationEngine:
         control: dict[str, Any],
         mark_prices: dict[str, float] | None = None,
     ) -> Signal | None:
-        """Validate schedule delay & risk rules; publish immutable Signal or record watch_log."""
+        """Validate schedule delay & risk rules; publish immutable Signal with full-entry sizing."""
         inst = self.instruments.get(candidate.symbol)
         if inst is None:
             self._record_watch(candidate.symbol, candidate.strategy, now_utc, f"未知標的 {candidate.symbol}")
             return None
 
-        # 1) Schedule delay guard (SPEC 4.4)
         sched_cfg = self.config.get("schedule", {})
         bar_interval = str(
             candidate.snapshot.kline_summary.get("interval")
@@ -544,18 +558,13 @@ class SimulationEngine:
         entry_mid = (candidate.entry_low + candidate.entry_high) / 2.0
         pool_name = "short_term" if is_short_term_strategy(candidate.strategy) else "long_term"
         pool_cfg = self.config.get("account", {}).get("pools", {}).get(pool_name, {})
-        target_notional = float(
-            candidate.desired_notional_usd
-            if candidate.desired_notional_usd is not None
-            else pool_cfg.get("target_notional_usd", 2000.0)
-        )
 
-        # 2) Check primary ledger risk rules first
-        primary_acct = self.primary_ledger.build_account_state(now_utc, marks)
-        if candidate.subaccount_risk_mode:
-            primary_acct.update(self.primary_ledger.build_subaccount_state(candidate.strategy, marks))
-            primary_acct["subaccount_risk_multiplier"] = candidate.risk_multiplier
-        primary_risk = self.risk_manager.check_new_signal(
+        acct = self.ledger.build_account_state(now_utc, marks)
+        sub_state = self.ledger.build_subaccount_state(candidate.strategy, marks)
+        acct.update(sub_state)
+        acct["subaccount_risk_multiplier"] = candidate.risk_multiplier
+
+        risk_res = self.risk_manager.check_new_signal(
             instrument=inst,
             strategy=candidate.strategy,
             direction=candidate.direction,
@@ -563,33 +572,31 @@ class SimulationEngine:
             stop_loss=candidate.stop_loss,
             tp1=candidate.tp1,
             tp2=candidate.tp2,
-            desired_notional_usd=target_notional,
             leverage=candidate.leverage,
-            account_state=primary_acct,
+            account_state=acct,
             control=control,
             now_utc=now_utc,
         )
-        if primary_risk.risk_event:
-            self.signal_store.append_risk_event(primary_risk.risk_event)
-            if primary_risk.risk_event.get("event_type") == "risk_review_completed":
-                self.primary_ledger.drawdown_paused = False
+        if risk_res.risk_event:
+            self.signal_store.append_risk_event(risk_res.risk_event)
+            if risk_res.risk_event.get("event_type") == "risk_review_completed":
+                self.ledger.drawdown_paused = False
 
-        if not primary_risk.approved:
-            if primary_risk.risk_status == "paused_drawdown":
-                self.primary_ledger.drawdown_paused = True
-            self._record_watch(candidate.symbol, candidate.strategy, now_utc, primary_risk.reason)
+        if not risk_res.approved:
+            if risk_res.risk_status == "paused_drawdown":
+                self.ledger.drawdown_paused = True
+            self._record_watch(candidate.symbol, candidate.strategy, now_utc, risk_res.reason)
             self.signal_store.append_risk_event(
                 {
                     "ts_utc": now_utc,
                     "event_type": "signal_rejected",
                     "symbol": candidate.symbol,
                     "strategy": candidate.strategy,
-                    "reason": primary_risk.reason,
+                    "reason": risk_res.reason,
                 }
             )
             return None
 
-        # 3) Compute Signal fields and publish locked Signal + InputSnapshot
         sig_id = self._next_signal_id(now_utc)
         snap = InputSnapshot(
             snapshot_id=f"SNAP-{sig_id}",
@@ -611,8 +618,8 @@ class SimulationEngine:
         _, rr_val, _ = self.risk_manager.check_rr_requirements(
             candidate.strategy, candidate.direction, entry_mid, candidate.stop_loss, candidate.tp1, candidate.tp2
         )
-        pool_capital = float(pool_cfg.get("capital_usd", 20000.0))
-        risk_pct_pool = round(primary_risk.r_plan_usd / max(1e-9, pool_capital) * 100.0, 2)
+        sub_eq = max(1e-9, float(sub_state["subaccount_equity_usd"]))
+        risk_pct_pool = round(risk_res.r_plan_usd / sub_eq * 100.0, 2)
 
         signal = Signal(
             signal_id=sig_id,
@@ -623,16 +630,16 @@ class SimulationEngine:
             direction=candidate.direction,
             entry_low=candidate.entry_low,
             entry_high=candidate.entry_high,
-            add_levels=candidate.add_levels,
+            add_levels=(),
             stop_loss=candidate.stop_loss,
             tp1=candidate.tp1,
             tp2=candidate.tp2,
             rr_ratio=round(rr_val, 2),
             risk_pct_pool=risk_pct_pool,
-            risk_usd=round(primary_risk.r_plan_usd, 2),
-            notional_usd=round(primary_risk.notional_usd, 2),
-            leverage=primary_risk.leverage,
-            liquidation_price=round(primary_risk.liquidation_price, 6),
+            risk_usd=round(risk_res.r_plan_usd, 2),
+            notional_usd=round(risk_res.notional_usd, 2),
+            leverage=risk_res.leverage,
+            liquidation_price=round(risk_res.liquidation_price, 6),
             valid_until_utc=valid_until,
             invalidation_cond=candidate.invalidation_cond,
             time_stop_bars=time_stop_bars,
@@ -642,92 +649,50 @@ class SimulationEngine:
         )
         self.signal_store.publish_signal(signal, snap)
 
-        # 4) Register pending orders & trades across primary + all 5 shadow ledgers
-        stop_dist_pct = abs(entry_mid - candidate.stop_loss) / max(1e-9, entry_mid)
         fee_rate = float(inst.get("fee_rate", 0.0005))
         slippage_bps = float(self.config.get("risk", {}).get("default_slippage_bps", 1.0))
-        cost_pct = 2.0 * (fee_rate + slippage_bps / 10000.0)
 
-        for pol_name, ledger in self.ledgers.items():
-            acct = ledger.build_account_state(now_utc, marks)
-            if candidate.subaccount_risk_mode:
-                acct.update(ledger.build_subaccount_state(candidate.strategy, marks))
-                acct["subaccount_risk_multiplier"] = candidate.risk_multiplier
-            risk_res = (
-                primary_risk
-                if pol_name == self.primary_policy_name
-                else self.risk_manager.check_new_signal(
-                    instrument=inst,
-                    strategy=candidate.strategy,
-                    direction=candidate.direction,
-                    entry_price=entry_mid,
-                    stop_loss=candidate.stop_loss,
-                    tp1=candidate.tp1,
-                    tp2=candidate.tp2,
-                    desired_notional_usd=target_notional,
-                    leverage=candidate.leverage,
-                    account_state=acct,
-                    control=control,
-                    now_utc=now_utc,
-                )
-            )
-            if risk_res.risk_event and pol_name != self.primary_policy_name:
-                if risk_res.risk_event.get("event_type") == "risk_review_completed":
-                    ledger.drawdown_paused = False
-            if not risk_res.approved:
-                if risk_res.risk_status == "paused_drawdown":
-                    ledger.drawdown_paused = True
-                continue
-
-            policy = get_scaling_policy(pol_name, self.config)
-            stage_notionals = policy.compute_all_stage_notionals(
-                max_notional_usd=risk_res.notional_usd,
-                r_plan_usd=risk_res.r_plan_usd,
-                stop_distance_pct=stop_dist_pct,
-                atr_ratio=candidate.atr_ratio,
-                fee_slippage_pct=cost_pct,
-            )
-
-            d_key = _date_key(now_utc)
-            ledger.daily_signal_counts[d_key] = ledger.daily_signal_counts.get(d_key, 0) + 1
-            ledger.orders[sig_id] = OrderRecord(
-                order_id=f"ORD-{sig_id}-{pol_name}",
-                signal_id=sig_id,
-                symbol=candidate.symbol,
-                direction=candidate.direction,
-                entry_low=candidate.entry_low,
-                entry_high=candidate.entry_high,
-                valid_until_utc=valid_until,
-                status="pending",
-            )
-            ledger.trades[sig_id] = TradeRecord(
-                signal_id=sig_id,
-                strategy=candidate.strategy,
-                symbol=candidate.symbol,
-                market=inst["market"],
-                correlation_group=inst.get("correlation_group", ""),
-                direction=candidate.direction,
-                policy_name=pol_name,
-                state=LifecycleState.WAITING_ENTRY,
-                entry_low=candidate.entry_low,
-                entry_high=candidate.entry_high,
-                add_levels=candidate.add_levels,
-                initial_stop_loss=candidate.stop_loss,
-                current_stop_loss=candidate.stop_loss,
-                current_tp1=candidate.tp1,
-                current_tp2=candidate.tp2,
-                invalidation_price=candidate.invalidation_price,
-                valid_until_utc=valid_until,
-                time_stop_bars=time_stop_bars,
-                r_plan_usd=risk_res.r_plan_usd,
-                stage_target_notionals=stage_notionals,
-                leverage=risk_res.leverage,
-                assumed_spread_bps=float(inst.get("assumed_spread_bps", 2.0)),
-                fee_rate=fee_rate,
-                slippage_bps=slippage_bps,
-                overnight_cost_daily_bps=float(inst.get("overnight_cost_daily_bps", 0.0)),
-                published_at_utc=now_utc,
-            )
+        d_key = _date_key(now_utc)
+        self.ledger.daily_signal_counts[d_key] = self.ledger.daily_signal_counts.get(d_key, 0) + 1
+        self.ledger.orders[sig_id] = OrderRecord(
+            order_id=f"ORD-{sig_id}",
+            signal_id=sig_id,
+            symbol=candidate.symbol,
+            direction=candidate.direction,
+            entry_low=candidate.entry_low,
+            entry_high=candidate.entry_high,
+            valid_until_utc=valid_until,
+            status="pending",
+        )
+        self.ledger.trades[sig_id] = TradeRecord(
+            signal_id=sig_id,
+            strategy=candidate.strategy,
+            symbol=candidate.symbol,
+            market=inst["market"],
+            correlation_group=inst.get("correlation_group", ""),
+            direction=candidate.direction,
+            state=LifecycleState.WAITING_ENTRY,
+            entry_low=candidate.entry_low,
+            entry_high=candidate.entry_high,
+            add_levels=(),
+            initial_stop_loss=candidate.stop_loss,
+            current_stop_loss=candidate.stop_loss,
+            current_tp1=candidate.tp1,
+            current_tp2=candidate.tp2,
+            invalidation_price=candidate.invalidation_price,
+            valid_until_utc=valid_until,
+            time_stop_bars=time_stop_bars,
+            r_plan_usd=risk_res.r_plan_usd,
+            planned_notional_usd=risk_res.notional_usd,
+            leverage=risk_res.leverage,
+            margin_leverage=risk_res.margin_leverage,
+            assumed_spread_bps=float(inst.get("assumed_spread_bps", 2.0)),
+            fee_rate=fee_rate,
+            slippage_bps=slippage_bps,
+            overnight_cost_daily_bps=float(inst.get("overnight_cost_daily_bps", 0.0)),
+            published_at_utc=now_utc,
+            migrated_unified_sizing=True,
+        )
 
         return signal
 
@@ -737,11 +702,9 @@ class SimulationEngine:
         new_sl: float,
         ts_utc: str,
         description: str,
-        ledger: Ledger | None = None,
     ) -> bool:
         """Move stop loss ONLY in the favorable direction (SPEC 8.2 & 9)."""
-        target_ledger = ledger or self.primary_ledger
-        trade = target_ledger.trades.get(signal_id)
+        trade = self.ledger.trades.get(signal_id)
         if trade is None or trade.state not in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
             return False
 
@@ -752,21 +715,19 @@ class SimulationEngine:
             return False
 
         trade.current_stop_loss = new_sl
-        if target_ledger is self.primary_ledger:
-            ev = SignalUpdateEvent(
-                event_id=self._next_event_id(signal_id),
-                signal_id=signal_id,
-                ts_utc=ts_utc,
-                event_type="stop_moved",
-                price=new_sl,
-                description=description,
-            )
-            self.signal_store.append_update(ev)
+        ev = SignalUpdateEvent(
+            event_id=self._next_event_id(signal_id),
+            signal_id=signal_id,
+            ts_utc=ts_utc,
+            event_type="stop_moved",
+            price=new_sl,
+            description=description,
+        )
+        self.signal_store.append_update(ev)
         return True
 
-    def _emit_primary(
+    def _emit_event(
         self,
-        ledger: Ledger,
         events_out: list[SignalUpdateEvent],
         signal_id: str,
         ts_utc: str,
@@ -775,8 +736,6 @@ class SimulationEngine:
         description: str,
         metadata: dict[str, Any] | None = None,
     ) -> None:
-        if ledger is not self.primary_ledger:
-            return
         ev = SignalUpdateEvent(
             event_id=self._next_event_id(signal_id),
             signal_id=signal_id,
@@ -791,7 +750,6 @@ class SimulationEngine:
 
     def _close_quantity(
         self,
-        ledger: Ledger,
         trade: TradeRecord,
         qty_to_close: float,
         exec_price: float,
@@ -822,16 +780,16 @@ class SimulationEngine:
         trade.remaining_qty = max(0.0, trade.remaining_qty - qty)
 
         if is_short_term_strategy(trade.strategy):
-            ledger.short_term_realized_pnl += net_pnl
+            self.ledger.short_term_realized_pnl += net_pnl
         else:
-            ledger.long_term_realized_pnl += net_pnl
+            self.ledger.long_term_realized_pnl += net_pnl
 
         d_key = _date_key(ts_utc)
         w_key = _week_key(ts_utc)
-        ledger.daily_realized_pnl[d_key] = ledger.daily_realized_pnl.get(d_key, 0.0) + net_pnl
-        ledger.weekly_realized_pnl[w_key] = ledger.weekly_realized_pnl.get(w_key, 0.0) + net_pnl
+        self.ledger.daily_realized_pnl[d_key] = self.ledger.daily_realized_pnl.get(d_key, 0.0) + net_pnl
+        self.ledger.weekly_realized_pnl[w_key] = self.ledger.weekly_realized_pnl.get(w_key, 0.0) + net_pnl
 
-        ledger.fills.append(
+        self.ledger.fills.append(
             FillRecord(
                 fill_id=self._next_fill_id(trade.signal_id),
                 signal_id=trade.signal_id,
@@ -850,7 +808,6 @@ class SimulationEngine:
 
     def _finalize_close(
         self,
-        ledger: Ledger,
         trade: TradeRecord,
         exec_price: float,
         ts_utc: str,
@@ -858,14 +815,13 @@ class SimulationEngine:
         events_out: list[SignalUpdateEvent],
     ) -> None:
         eff_ts = trade.published_at_utc if (trade.published_at_utc and ts_utc < trade.published_at_utc) else ts_utc
-        self._close_quantity(ledger, trade, trade.remaining_qty, exec_price, eff_ts, action="exit")
+        self._close_quantity(trade, trade.remaining_qty, exec_price, eff_ts, action="exit")
         trade.state = validate_transition(trade.state, LifecycleState.CLOSED, exit_reason=exit_reason)
         trade.closed_at_utc = eff_ts
         trade.exit_price = exec_price
         trade.exit_reason = exit_reason
         trade.r_multiple = trade.realized_pnl_usd / max(1e-9, trade.r_plan_usd)
-        self._emit_primary(
-            ledger,
+        self._emit_event(
             events_out,
             trade.signal_id,
             eff_ts,
@@ -877,7 +833,6 @@ class SimulationEngine:
 
     def _process_trade_bar(
         self,
-        ledger: Ledger,
         trade: TradeRecord,
         bar: MarketBar,
         atr: float | None,
@@ -886,7 +841,6 @@ class SimulationEngine:
         logic_invalidated: bool,
         events_out: list[SignalUpdateEvent],
     ) -> None:
-        # Guard: historical bars closed at or before signal publication must never trigger/cancel this trade
         if trade.published_at_utc and bar.close_ts_utc <= trade.published_at_utc:
             return
 
@@ -895,19 +849,17 @@ class SimulationEngine:
         bar_close_dt = _parse_utc(bar.close_ts_utc)
 
         if trade.state == LifecycleState.WAITING_ENTRY:
-            # 1) Pending order expiry
             if bar_close_dt >= _parse_utc(trade.valid_until_utc):
                 trade.state = validate_transition(
                     trade.state, LifecycleState.CANCELLED, exit_reason="expired"
                 )
                 trade.exit_reason = "expired"
                 trade.closed_at_utc = bar.close_ts_utc
-                if trade.signal_id in ledger.orders:
-                    ledger.orders[trade.signal_id].status = "cancelled"
-                self._emit_primary(ledger, events_out, trade.signal_id, bar.close_ts_utc, "cancelled", bar.close, "掛單逾時未成交取消")
+                if trade.signal_id in self.ledger.orders:
+                    self.ledger.orders[trade.signal_id].status = "cancelled"
+                self._emit_event(events_out, trade.signal_id, bar.close_ts_utc, "cancelled", bar.close, "掛單逾時未成交取消")
                 return
 
-            # 2) Pre-entry invalidation
             inv_hit = logic_invalidated or (
                 _bid_price(bar.low, spread) <= trade.invalidation_price
                 if trade.direction == "long"
@@ -919,12 +871,11 @@ class SimulationEngine:
                 )
                 trade.exit_reason = "pre_entry_invalidated"
                 trade.closed_at_utc = bar.close_ts_utc
-                if trade.signal_id in ledger.orders:
-                    ledger.orders[trade.signal_id].status = "cancelled"
-                self._emit_primary(ledger, events_out, trade.signal_id, bar.close_ts_utc, "cancelled", bar.close, "入場前觸及失效條件取消")
+                if trade.signal_id in self.ledger.orders:
+                    self.ledger.orders[trade.signal_id].status = "cancelled"
+                self._emit_event(events_out, trade.signal_id, bar.close_ts_utc, "cancelled", bar.close, "入場前觸及失效條件取消")
                 return
 
-            # 3) Limit order entry check
             if trade.direction == "long":
                 ask_open = _ask_price(bar.open, spread)
                 ask_low = _ask_price(bar.low, spread)
@@ -954,28 +905,28 @@ class SimulationEngine:
                 fill_price *= 1.0 - slip
                 side = "sell"
 
-            stage1_notional = trade.stage_target_notionals[0]
-            if stage1_notional <= 0:
+            full_notional = trade.planned_notional_usd
+            if full_notional <= 0:
                 return
-            qty = stage1_notional / fill_price
-            fee_usd = stage1_notional * trade.fee_rate
+            qty = full_notional / fill_price
+            fee_usd = full_notional * trade.fee_rate
             trade.total_fees_usd += fee_usd
             trade.realized_pnl_usd -= fee_usd
             if is_short_term_strategy(trade.strategy):
-                ledger.short_term_realized_pnl -= fee_usd
+                self.ledger.short_term_realized_pnl -= fee_usd
             else:
-                ledger.long_term_realized_pnl -= fee_usd
+                self.ledger.long_term_realized_pnl -= fee_usd
 
-            stage = TradeStage(1, "initial", fill_price, qty, stage1_notional, bar.ts_utc)
+            stage = TradeStage(1, "initial", fill_price, qty, full_notional, bar.ts_utc)
             trade.stages.append(stage)
             trade.avg_entry_price = fill_price
             trade.remaining_qty = qty
             trade.initial_filled_qty = qty
             trade.entered_at_utc = bar.ts_utc
             trade.state = validate_transition(trade.state, LifecycleState.ACTIVE)
-            if trade.signal_id in ledger.orders:
-                ledger.orders[trade.signal_id].status = "filled"
-            ledger.fills.append(
+            if trade.signal_id in self.ledger.orders:
+                self.ledger.orders[trade.signal_id].status = "filled"
+            self.ledger.fills.append(
                 FillRecord(
                     fill_id=self._next_fill_id(trade.signal_id),
                     signal_id=trade.signal_id,
@@ -984,40 +935,35 @@ class SimulationEngine:
                     action="entry",
                     price=fill_price,
                     qty=qty,
-                    notional_usd=stage1_notional,
+                    notional_usd=full_notional,
                     fee_usd=fee_usd,
                     realized_pnl_usd=-fee_usd,
                     ts_utc=bar.ts_utc,
                 )
             )
-            self._emit_primary(ledger, events_out, trade.signal_id, bar.ts_utc, "entered", fill_price, f"初始進場成交（階段 1）")
+            self._emit_event(events_out, trade.signal_id, bar.ts_utc, "entered", fill_price, f"全額進場成交（名目 ${full_notional:.2f}）")
             return
 
-        # Trade is ACTIVE or TP1_HIT
-        # 1) Gap open beyond stop loss -> fill at open price (SPEC 13.2)
+        # 1) Gap open beyond stop loss -> fill at open price
         if trade.direction == "long":
             bid_open = _bid_price(bar.open, spread)
             if bid_open <= trade.current_stop_loss:
-                self._finalize_close(ledger, trade, bid_open * (1.0 - slip), bar.ts_utc, "stop_loss", events_out)
+                self._finalize_close(trade, bid_open * (1.0 - slip), bar.ts_utc, "stop_loss", events_out)
                 return
         else:
             ask_open = _ask_price(bar.open, spread)
             if ask_open >= trade.current_stop_loss:
-                self._finalize_close(ledger, trade, ask_open * (1.0 + slip), bar.ts_utc, "stop_loss", events_out)
+                self._finalize_close(trade, ask_open * (1.0 + slip), bar.ts_utc, "stop_loss", events_out)
                 return
 
-        # 2) Same-bar SL & TP conservative check: check SL BEFORE TP (SPEC 13.1)
+        # 2) Same-bar SL & TP conservative check: SL BEFORE TP
         if trade.direction == "long":
             if _bid_price(bar.low, spread) <= trade.current_stop_loss:
-                self._finalize_close(
-                    ledger, trade, trade.current_stop_loss * (1.0 - slip), bar.close_ts_utc, "stop_loss", events_out
-                )
+                self._finalize_close(trade, trade.current_stop_loss * (1.0 - slip), bar.close_ts_utc, "stop_loss", events_out)
                 return
         else:
             if _ask_price(bar.high, spread) >= trade.current_stop_loss:
-                self._finalize_close(
-                    ledger, trade, trade.current_stop_loss * (1.0 + slip), bar.close_ts_utc, "stop_loss", events_out
-                )
+                self._finalize_close(trade, trade.current_stop_loss * (1.0 + slip), bar.close_ts_utc, "stop_loss", events_out)
                 return
 
         # 3) Breakout protection
@@ -1034,7 +980,7 @@ class SimulationEngine:
                 if trade.direction == "long"
                 else _ask_price(bar.high, spread) * (1.0 + slip)
             )
-            self._finalize_close(ledger, trade, adverse_px, bar.close_ts_utc, "breakout_protection", events_out)
+            self._finalize_close(trade, adverse_px, bar.close_ts_utc, "breakout_protection", events_out)
             return
 
         # 4) Logic invalidation
@@ -1044,10 +990,10 @@ class SimulationEngine:
                 if trade.direction == "long"
                 else _ask_price(bar.close, spread) * (1.0 + slip)
             )
-            self._finalize_close(ledger, trade, close_px, bar.close_ts_utc, "logic_invalidated", events_out)
+            self._finalize_close(trade, close_px, bar.close_ts_utc, "logic_invalidated", events_out)
             return
 
-        # 5) Session-end stop (<= 30 min before low-liquidity session end)
+        # 5) Session-end stop
         if session_end_utc is not None:
             pre_end_min = int(signals_cfg.get("pre_session_end_close_minutes", 30))
             if bar_close_dt >= _parse_utc(session_end_utc) - timedelta(minutes=pre_end_min):
@@ -1056,7 +1002,7 @@ class SimulationEngine:
                     if trade.direction == "long"
                     else _ask_price(bar.close, spread) * (1.0 + slip)
                 )
-                self._finalize_close(ledger, trade, close_px, bar.close_ts_utc, "session_stop", events_out)
+                self._finalize_close(trade, close_px, bar.close_ts_utc, "session_stop", events_out)
                 return
 
         # 6) Time stop
@@ -1068,10 +1014,10 @@ class SimulationEngine:
                     if trade.direction == "long"
                     else _ask_price(bar.close, spread) * (1.0 + slip)
                 )
-                self._finalize_close(ledger, trade, close_px, bar.close_ts_utc, "time_stop", events_out)
+                self._finalize_close(trade, close_px, bar.close_ts_utc, "time_stop", events_out)
                 return
 
-        # 7) TP1 & TP2 checks
+        # 7) TP1 / TP2
         if trade.state == LifecycleState.ACTIVE:
             tp1_hit = (
                 _bid_price(bar.high, spread) >= trade.current_tp1
@@ -1079,13 +1025,12 @@ class SimulationEngine:
                 else _ask_price(bar.low, spread) <= trade.current_tp1
             )
             if tp1_hit:
-                tp1_frac = float(self.config.get("signals", {}).get("tp1_close_fraction", 0.50))
+                tp1_frac = float(signals_cfg.get("tp1_close_fraction", 0.50))
                 close_qty = trade.remaining_qty * tp1_frac
                 tp1_px = trade.current_tp1 * (1.0 - slip if trade.direction == "long" else 1.0 + slip)
-                pnl = self._close_quantity(ledger, trade, close_qty, tp1_px, bar.close_ts_utc, action="tp1")
+                pnl = self._close_quantity(trade, close_qty, tp1_px, bar.close_ts_utc, action="tp1")
                 trade.state = validate_transition(trade.state, LifecycleState.TP1_HIT)
-                self._emit_primary(
-                    ledger,
+                self._emit_event(
                     events_out,
                     trade.signal_id,
                     bar.close_ts_utc,
@@ -1093,13 +1038,11 @@ class SimulationEngine:
                     tp1_px,
                     f"達成 TP1，部分平倉 {tp1_frac*100:.0f}%，實現損益 ${pnl:.2f}",
                 )
-                # Move SL to breakeven (avg_entry_price) favorably
                 self.move_stop_loss(
                     trade.signal_id,
                     trade.avg_entry_price,
                     bar.close_ts_utc,
                     "TP1 達成，剩餘倉位止損移至平均成本保本",
-                    ledger=ledger,
                 )
 
         if trade.state == LifecycleState.TP1_HIT and isinstance(trade.current_tp2, (int, float)):
@@ -1111,150 +1054,39 @@ class SimulationEngine:
             )
             if tp2_hit:
                 tp2_px = tp2_val * (1.0 - slip if trade.direction == "long" else 1.0 + slip)
-                self._finalize_close(ledger, trade, tp2_px, bar.close_ts_utc, "tp2", events_out)
+                self._finalize_close(trade, tp2_px, bar.close_ts_utc, "tp2", events_out)
                 return
 
-        # 8) Scaling add checks (stage 2 or stage 3)
-        max_stages = int(self.config.get("scaling", {}).get("max_stages", 3))
-        if trade.state == LifecycleState.ACTIVE and len(trade.stages) < max_stages:
-            next_stage_num = len(trade.stages) + 1
-            matching_lvl = next((lvl for lvl in trade.add_levels if lvl.stage == next_stage_num), None)
-            if matching_lvl is not None:
-                if trade.direction == "long":
-                    touched_add = _ask_price(bar.low, spread) <= matching_lvl.price if matching_lvl.add_type == "mean_add" else _ask_price(bar.high, spread) >= matching_lvl.price
-                    add_px = matching_lvl.price * (1.0 + slip)
-                else:
-                    touched_add = _bid_price(bar.high, spread) >= matching_lvl.price if matching_lvl.add_type == "mean_add" else _bid_price(bar.low, spread) <= matching_lvl.price
-                    add_px = matching_lvl.price * (1.0 - slip)
+        # 8) Breakeven / trailing stop checks at >= 1R / >= 2R
+        unit_risk = max(1e-9, abs(trade.avg_entry_price - trade.initial_stop_loss))
+        cur_profit = (
+            (bar.close - trade.avg_entry_price)
+            if trade.direction == "long"
+            else (trade.avg_entry_price - bar.close)
+        )
+        cur_r = cur_profit / unit_risk
+        be_trig = float(signals_cfg.get("breakeven_trigger_r", 1.0))
+        tr_trig = float(signals_cfg.get("trailing_stop_trigger_r", 2.0))
+        tr_mult = float(signals_cfg.get("trailing_stop_atr_mult", 2.0))
 
-                if touched_add:
-                    unit_risk_init = max(1e-9, abs(trade.avg_entry_price - trade.initial_stop_loss))
-                    cur_profit = (
-                        (bar.close - trade.avg_entry_price)
-                        if trade.direction == "long"
-                        else (trade.avg_entry_price - bar.close)
-                    )
-                    cur_r = cur_profit / unit_risk_init
-                    trend_min_r = float(self.config.get("scaling", {}).get("trend_add_min_profit_r", 1.0))
-                    inst = self.instruments.get(trade.symbol, {})
-                    min_qty = float(inst.get("tick_size", 1e-6)) / max(1.0, add_px) * 0.0001
-                    target_add_notional = trade.stage_target_notionals[next_stage_num - 1]
-                    plan = plan_add_stage(
-                        existing_stages=trade.stages,
-                        add_type=matching_lvl.add_type,
-                        next_price=add_px,
-                        stop_loss=trade.current_stop_loss,
-                        direction=trade.direction,
-                        target_add_notional=target_add_notional,
-                        r_plan_usd=trade.r_plan_usd,
-                        fee_rate=trade.fee_rate,
-                        slippage_bps=trade.slippage_bps,
-                        min_qty=max(1e-8, min_qty),
-                        max_stages=max_stages,
-                        current_profit_r=cur_r,
-                        trend_min_profit_r=trend_min_r,
-                        structure_valid=not logic_invalidated,
-                        in_atr_add_zone=True,
-                    )
-                    if plan.allowed:
-                        # Enforce per-ledger risk limits on add-on: drawdown pause, loss caps, margin <= 30%
-                        acct = ledger.build_account_state(bar.close_ts_utc, self.latest_marks)
-                        risk_cfg = self.config.get("risk", {})
-                        eq_now = max(1e-9, float(acct["equity_usd"]))
-                        peak_now = max(eq_now, float(acct["peak_equity_usd"]))
-                        dd_now = (peak_now - eq_now) / peak_now * 100.0
-                        dd_pause = float(risk_cfg.get("drawdown_pause_pct", 12.0))
-                        max_daily = float(risk_cfg.get("max_daily_loss_usd", 1500.0))
-                        max_weekly = float(risk_cfg.get("max_weekly_loss_usd", 4000.0))
-                        max_margin = eq_now * (float(risk_cfg.get("max_margin_usage_pct", 30.0)) / 100.0)
-                        add_margin = plan.notional_usd / max(1.0, trade.leverage)
-                        risk_ok = (
-                            not acct["drawdown_paused"]
-                            and dd_now < dd_pause
-                            and float(acct["daily_pnl_usd"]) > -max_daily
-                            and float(acct["weekly_pnl_usd"]) > -max_weekly
-                            and acct["used_margin_usd"] + add_margin <= max_margin + 1e-9
-                        )
-                        if risk_ok:
-                            fee_usd = plan.notional_usd * trade.fee_rate
-                            trade.total_fees_usd += fee_usd
-                            trade.realized_pnl_usd -= fee_usd
-                            if is_short_term_strategy(trade.strategy):
-                                ledger.short_term_realized_pnl -= fee_usd
-                            else:
-                                ledger.long_term_realized_pnl -= fee_usd
-
-                            new_stage = TradeStage(
-                                stage=next_stage_num,
-                                add_type=matching_lvl.add_type,
-                                fill_price=add_px,
-                                qty=plan.qty,
-                                notional_usd=plan.notional_usd,
-                                filled_at_utc=bar.close_ts_utc,
-                            )
-                            trade.stages.append(new_stage)
-                            trade.remaining_qty += plan.qty
-                            trade.avg_entry_price = compute_weighted_avg_cost(trade.stages)
-                            ledger.fills.append(
-                                FillRecord(
-                                    fill_id=self._next_fill_id(trade.signal_id),
-                                    signal_id=trade.signal_id,
-                                    symbol=trade.symbol,
-                                    side="buy" if trade.direction == "long" else "sell",
-                                    action="add",
-                                    price=add_px,
-                                    qty=plan.qty,
-                                    notional_usd=plan.notional_usd,
-                                    fee_usd=fee_usd,
-                                    realized_pnl_usd=-fee_usd,
-                                    ts_utc=bar.close_ts_utc,
-                                )
-                            )
-                            self._emit_primary(
-                                ledger,
-                                events_out,
-                                trade.signal_id,
-                                bar.close_ts_utc,
-                                "add_filled",
-                                add_px,
-                                f"階段 {next_stage_num} ({matching_lvl.add_type}) 補倉成交，新平均成本 {trade.avg_entry_price:.4f}",
-                            )
-
-        # 9) +1R breakeven & +2R trailing stop evaluation (SPEC Section 9)
-        if trade.state in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT) and trade.avg_entry_price > 0:
-            unit_r = max(1e-9, abs(trade.avg_entry_price - trade.initial_stop_loss))
-            cur_profit = (
-                (bar.close - trade.avg_entry_price)
-                if trade.direction == "long"
-                else (trade.avg_entry_price - bar.close)
+        if cur_r >= tr_trig and atr is not None and atr > 0:
+            if trade.direction == "long":
+                cand_sl = max(trade.avg_entry_price, bar.close - tr_mult * atr)
+            else:
+                cand_sl = min(trade.avg_entry_price, bar.close + tr_mult * atr)
+            self.move_stop_loss(
+                trade.signal_id,
+                cand_sl,
+                bar.close_ts_utc,
+                f"獲利達 {cur_r:.2f}R，更新 ATR 移動止損",
             )
-            cur_r = cur_profit / unit_r
-            sig_cfg = self.config.get("signals", {})
-            be_trig = float(sig_cfg.get("breakeven_trigger_r", 1.0))
-            tr_trig = float(sig_cfg.get("trailing_stop_trigger_r", 2.0))
-            tr_mult = float(sig_cfg.get("trailing_stop_atr_mult", 2.0))
-
-            if cur_r >= tr_trig and atr is not None and atr > 0:
-                if trade.direction == "long":
-                    cand_sl = max(trade.avg_entry_price, bar.close - tr_mult * atr)
-                else:
-                    cand_sl = min(trade.avg_entry_price, bar.close + tr_mult * atr)
-                if self.move_stop_loss(
-                    trade.signal_id,
-                    cand_sl,
-                    bar.close_ts_utc,
-                    f"獲利達 {cur_r:.2f}R，更新 ATR 移動止損",
-                    ledger=ledger,
-                ) and ledger is self.primary_ledger:
-                    pass
-            elif cur_r >= be_trig:
-                self.move_stop_loss(
-                    trade.signal_id,
-                    trade.avg_entry_price,
-                    bar.close_ts_utc,
-                    f"獲利達 {cur_r:.2f}R，止損移至損益兩平",
-                    ledger=ledger,
-                )
+        elif cur_r >= be_trig:
+            self.move_stop_loss(
+                trade.signal_id,
+                trade.avg_entry_price,
+                bar.close_ts_utc,
+                f"獲利達 {cur_r:.2f}R，止損移至損益兩平",
+            )
 
     def process_bar(
         self,
@@ -1265,7 +1097,7 @@ class SimulationEngine:
         session_end_utc: str | None = None,
         logic_invalidated: bool = False,
     ) -> list[SignalUpdateEvent]:
-        """Process a single closed bar across all 5 ledgers idempotently."""
+        """Process a single closed bar across the ledger idempotently."""
         prev_ts = self.last_processed_ts.get(symbol)
         if prev_ts is not None and bar.close_ts_utc <= prev_ts:
             return []
@@ -1273,22 +1105,20 @@ class SimulationEngine:
         self.latest_marks[symbol] = bar.close
         events_out: list[SignalUpdateEvent] = []
 
-        for ledger in self.ledgers.values():
-            for trade in list(ledger.trades.values()):
-                if trade.symbol != symbol:
-                    continue
-                if trade.state in (LifecycleState.CLOSED, LifecycleState.CANCELLED):
-                    continue
-                self._process_trade_bar(
-                    ledger=ledger,
-                    trade=trade,
-                    bar=bar,
-                    atr=atr,
-                    atr_ratio=atr_ratio,
-                    session_end_utc=session_end_utc,
-                    logic_invalidated=logic_invalidated,
-                    events_out=events_out,
-                )
+        for trade in list(self.ledger.trades.values()):
+            if trade.symbol != symbol:
+                continue
+            if trade.state in (LifecycleState.CLOSED, LifecycleState.CANCELLED):
+                continue
+            self._process_trade_bar(
+                trade=trade,
+                bar=bar,
+                atr=atr,
+                atr_ratio=atr_ratio,
+                session_end_utc=session_end_utc,
+                logic_invalidated=logic_invalidated,
+                events_out=events_out,
+            )
 
         self.last_processed_ts[symbol] = bar.close_ts_utc
         return events_out
@@ -1326,48 +1156,53 @@ class SimulationEngine:
         ts_utc: str,
         exit_reason: str = "logic_invalidated",
     ) -> list[SignalUpdateEvent]:
-        """Close or cancel active/pending trades for `(strategy_id, symbol)` across all ledgers."""
+        """Close or cancel active/pending trades for `(strategy_id, symbol)`."""
         events_out: list[SignalUpdateEvent] = []
-        for ledger in self.ledgers.values():
-            slip_default = float(self.config.get("risk", {}).get("default_slippage_bps", 1.0)) / 10000.0
-            for trade in list(ledger.trades.values()):
-                if trade.strategy != strategy_id or trade.symbol != symbol:
-                    continue
-                eff_ts = trade.published_at_utc if (trade.published_at_utc and ts_utc < trade.published_at_utc) else ts_utc
-                if trade.state == LifecycleState.WAITING_ENTRY:
-                    trade.state = validate_transition(
-                        trade.state, LifecycleState.CANCELLED, exit_reason="pre_entry_invalidated"
-                    )
-                    trade.exit_reason = "pre_entry_invalidated"
-                    trade.closed_at_utc = eff_ts
-                    if trade.signal_id in ledger.orders:
-                        ledger.orders[trade.signal_id].status = "cancelled"
-                    self._emit_primary(
-                        ledger, events_out, trade.signal_id, eff_ts, "cancelled", close_price, "策略訊號結束，取消未成交掛單"
-                    )
-                elif trade.state in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
-                    spread = trade.assumed_spread_bps
-                    slip = trade.slippage_bps / 10000.0 if trade.slippage_bps else slip_default
-                    exec_px = (
-                        _bid_price(close_price, spread) * (1.0 - slip)
-                        if trade.direction == "long"
-                        else _ask_price(close_price, spread) * (1.0 + slip)
-                    )
-                    self._finalize_close(ledger, trade, exec_px, eff_ts, exit_reason, events_out)
+        slip_default = float(self.config.get("risk", {}).get("default_slippage_bps", 1.0)) / 10000.0
+        for trade in list(self.ledger.trades.values()):
+            if trade.strategy != strategy_id or trade.symbol != symbol:
+                continue
+            eff_ts = trade.published_at_utc if (trade.published_at_utc and ts_utc < trade.published_at_utc) else ts_utc
+            if trade.state == LifecycleState.WAITING_ENTRY:
+                trade.state = validate_transition(
+                    trade.state, LifecycleState.CANCELLED, exit_reason="pre_entry_invalidated"
+                )
+                trade.exit_reason = "pre_entry_invalidated"
+                trade.closed_at_utc = eff_ts
+                if trade.signal_id in self.ledger.orders:
+                    self.ledger.orders[trade.signal_id].status = "cancelled"
+                self._emit_event(
+                    events_out, trade.signal_id, eff_ts, "cancelled", close_price, "策略訊號結束，取消未成交掛單"
+                )
+            elif trade.state in (LifecycleState.ACTIVE, LifecycleState.TP1_HIT):
+                spread = trade.assumed_spread_bps
+                slip = trade.slippage_bps / 10000.0 if trade.slippage_bps else slip_default
+                exec_px = (
+                    _bid_price(close_price, spread) * (1.0 - slip)
+                    if trade.direction == "long"
+                    else _ask_price(close_price, spread) * (1.0 + slip)
+                )
+                self._finalize_close(trade, exec_px, eff_ts, exit_reason, events_out)
         return events_out
 
     def save_state(self, snapshot_ts_utc: str | None = None) -> None:
-        """Persist trades, orders, fills, equity snapshots, and replay state to out_dir."""
+        """Persist single ledger, orders, fills, equity snapshots, and analytics to out_dir."""
         ts = snapshot_ts_utc or max(self.last_processed_ts.values(), default=_fmt_utc(datetime.now(timezone.utc)))
-        prim = self.primary_ledger
+        led = self.ledger
+
+        try:
+            for stale in self.out_dir.glob("*_comparison.json"):
+                stale.unlink(missing_ok=True)
+        except Exception:
+            pass
 
         (self.out_dir / "trades.json").write_text(
-            json.dumps([t.to_dict() for t in prim.trades.values()], ensure_ascii=False, indent=2) + "\n",
+            json.dumps([t.to_dict() for t in led.trades.values()], ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
         all_stages = [
             {"signal_id": t.signal_id, "symbol": t.symbol, "direction": t.direction, **s.to_dict()}
-            for t in prim.trades.values()
+            for t in led.trades.values()
             for s in t.stages
         ]
         (self.out_dir / "trade_stages.json").write_text(
@@ -1375,41 +1210,35 @@ class SimulationEngine:
             encoding="utf-8",
         )
         (self.out_dir / "orders.json").write_text(
-            json.dumps([o.to_dict() for o in prim.orders.values()], ensure_ascii=False, indent=2) + "\n",
+            json.dumps([o.to_dict() for o in led.orders.values()], ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
 
-        # Partitioned fills
         fills_dir = self.out_dir / "fills"
         fills_dir.mkdir(parents=True, exist_ok=True)
         fills_by_month: dict[str, list[dict[str, Any]]] = {}
-        for f in prim.fills:
+        for f in led.fills:
             fills_by_month.setdefault(_month_key(f.ts_utc), []).append(f.to_dict())
         for m, rows in fills_by_month.items():
             with (fills_dir / f"{m}.jsonl").open("w", encoding="utf-8") as fh:
                 for row in rows:
                     fh.write(json.dumps(row, ensure_ascii=False) + "\n")
 
-        # Partitioned equity snapshots (total + short/long pools + all 5 shadow ledgers)
         eq_dir = self.out_dir / "equity_snapshots"
         eq_dir.mkdir(parents=True, exist_ok=True)
-        shadow_summary = {
-            pol: {
-                "total_equity_usd": round(led.compute_equity(self.latest_marks), 2),
-                "short_term_equity_usd": round(led.compute_pool_equity("short_term", self.latest_marks), 2),
-                "long_term_equity_usd": round(led.compute_pool_equity("long_term", self.latest_marks), 2),
-            }
-            for pol, led in self.ledgers.items()
-        }
         snap_row = {
             "ts_utc": ts,
-            "primary_policy": self.primary_policy_name,
-            "ledgers": shadow_summary,
+            "total_equity_usd": round(led.compute_equity(self.latest_marks), 2),
+            "short_term_equity_usd": round(led.compute_pool_equity("short_term", self.latest_marks), 2),
+            "long_term_equity_usd": round(led.compute_pool_equity("long_term", self.latest_marks), 2),
         }
         with (eq_dir / f"{_month_key(ts)}.jsonl").open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(snap_row, ensure_ascii=False) + "\n")
 
-        # Export signals_index.json for web UI consumption
+        tp1_frac = float(self.config.get("signals", {}).get("tp1_close_fraction", 0.50))
+        short_eq = float(led.compute_pool_equity("short_term", self.latest_marks))
+        long_eq = float(led.compute_pool_equity("long_term", self.latest_marks))
+
         signals_index: list[dict[str, Any]] = []
         sig_dir = self.out_dir / "signals"
         if sig_dir.exists():
@@ -1417,7 +1246,7 @@ class SimulationEngine:
                 try:
                     s_data = json.loads(sp.read_text(encoding="utf-8"))
                     sid = s_data["signal_id"]
-                    tr = prim.trades.get(sid)
+                    tr = led.trades.get(sid)
                     s_data["lifecycle_state"] = tr.state.value if tr else "waiting_entry"
                     s_data["stages_filled"] = len(tr.stages) if tr else 0
                     s_data["realized_pnl_usd"] = round(tr.realized_pnl_usd, 2) if tr else 0.0
@@ -1433,6 +1262,15 @@ class SimulationEngine:
                     s_data["closed_at_utc"] = tr.closed_at_utc if tr else None
                     s_data["exit_price"] = tr.exit_price if tr else None
                     s_data["stages"] = [st.to_dict() for st in tr.stages] if tr else []
+                    if tr is not None:
+                        sub_eq = short_eq if is_short_term_strategy(tr.strategy) else long_eq
+                        est = compute_trade_estimates(tr, sub_eq, tp1_close_fraction=tp1_frac)
+                        s_data["effective_notional_usd"] = est["effective_notional_usd"]
+                        s_data["actual_leverage"] = est["actual_leverage"]
+                        s_data["estimated_stop_loss_usd"] = est["estimated_stop_loss_usd"]
+                        s_data["estimated_stop_loss_pct_pool"] = est["estimated_stop_loss_pct_pool"]
+                        s_data["estimated_tp1_profit_usd"] = est["estimated_tp1_profit_usd"]
+                        s_data["estimated_tp2_profit_usd"] = est["estimated_tp2_profit_usd"]
                     signals_index.append(s_data)
                 except Exception:
                     continue
@@ -1441,7 +1279,6 @@ class SimulationEngine:
             encoding="utf-8",
         )
 
-        # Full multi-ledger persistence for cross-run restoration
         (self.out_dir / "ledgers_state.json").write_text(
             json.dumps(
                 {
@@ -1451,7 +1288,7 @@ class SimulationEngine:
                         "fill": self._fill_seq,
                     },
                     "latest_marks": self.latest_marks,
-                    "ledgers": {pol: led.to_dict() for pol, led in self.ledgers.items()},
+                    "ledger": led.to_dict(),
                 },
                 ensure_ascii=False,
                 indent=2,
@@ -1460,7 +1297,6 @@ class SimulationEngine:
             encoding="utf-8",
         )
 
-        # Replay cursor state
         state_path = self.out_dir / "state.json"
         existing_state = {}
         if state_path.exists():
@@ -1471,11 +1307,6 @@ class SimulationEngine:
         existing_state["last_processed_ts"] = self.last_processed_ts
         state_path.write_text(json.dumps(existing_state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-        # Stage 6 analytics & risk exports (shadow comparison, grouped performance stats, risk center, equity curve)
-        (self.out_dir / "shadow_comparison.json").write_text(
-            json.dumps(build_shadow_comparison(self, ts), ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
         (self.out_dir / "performance_stats.json").write_text(
             json.dumps(build_performance_stats(self, ts), ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
@@ -1485,12 +1316,12 @@ class SimulationEngine:
             encoding="utf-8",
         )
         (self.out_dir / "equity_curve.json").write_text(
-            json.dumps(export_equity_curve(self.out_dir, self.primary_policy_name), ensure_ascii=False, indent=2) + "\n",
+            json.dumps(export_equity_curve(self.out_dir), ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
 
     def purge_invalid_signals(self) -> list[str]:
-        """Remove corrupted/expired historical signals (e.g. closed_at_utc < published_at_utc or stale S2 FX signals) from ledgers and files."""
+        """Remove corrupted/expired historical signals (e.g. closed_at_utc < published_at_utc or stale S2 FX)."""
         sig_pub_map: dict[str, dict[str, Any]] = {}
         sig_dir = self.out_dir / "signals"
         if sig_dir.exists():
@@ -1503,11 +1334,9 @@ class SimulationEngine:
                 except Exception:
                     continue
 
-        # Backfill published_at_utc onto any legacy TradeRecord that lacked it
-        for ledger in self.ledgers.values():
-            for sid, tr in ledger.trades.items():
-                if not tr.published_at_utc and sid in sig_pub_map:
-                    tr.published_at_utc = str(sig_pub_map[sid].get("published_at_utc") or "")
+        for sid, tr in self.ledger.trades.items():
+            if not tr.published_at_utc and sid in sig_pub_map:
+                tr.published_at_utc = str(sig_pub_map[sid].get("published_at_utc") or "")
 
         corrupted_known_ids = {"SIG-20261116-0001", "SIG-20261116-0002", "SIG-20261116-0003"}
         bad_ids: set[str] = set()
@@ -1536,57 +1365,54 @@ class SimulationEngine:
                 except Exception:
                     pass
 
-        for ledger in self.ledgers.values():
-            for sid, tr in ledger.trades.items():
-                pub_ts = tr.published_at_utc or str((sig_pub_map.get(sid) or {}).get("published_at_utc") or "")
-                if (
-                    sid in corrupted_known_ids
-                    and tr.strategy == "S2"
-                    and tr.symbol in {"EURUSD", "GBPUSD", "USDCHF"}
-                    and (not pub_ts or pub_ts <= "2026-11-16T12:45:00Z")
-                ):
-                    bad_ids.add(sid)
-                if tr.closed_at_utc and pub_ts and tr.closed_at_utc < pub_ts:
-                    bad_ids.add(sid)
+        for sid, tr in self.ledger.trades.items():
+            pub_ts = tr.published_at_utc or str((sig_pub_map.get(sid) or {}).get("published_at_utc") or "")
+            if (
+                sid in corrupted_known_ids
+                and tr.strategy == "S2"
+                and tr.symbol in {"EURUSD", "GBPUSD", "USDCHF"}
+                and (not pub_ts or pub_ts <= "2026-11-16T12:45:00Z")
+            ):
+                bad_ids.add(sid)
+            if tr.closed_at_utc and pub_ts and tr.closed_at_utc < pub_ts:
+                bad_ids.add(sid)
 
         if not bad_ids:
             return []
 
-        for ledger in self.ledgers.values():
-            removed_any = False
-            for sid in bad_ids:
-                tr = ledger.trades.pop(sid, None)
-                ledger.orders.pop(sid, None)
-                if tr is not None:
-                    removed_any = True
-                    pub_ts = tr.published_at_utc or str((sig_pub_map.get(sid) or {}).get("published_at_utc") or "")
-                    if pub_ts:
-                        d_key = _date_key(pub_ts)
-                        if ledger.daily_signal_counts.get(d_key, 0) > 0:
-                            ledger.daily_signal_counts[d_key] -= 1
-            if removed_any:
-                ledger.fills = [f for f in ledger.fills if f.signal_id not in bad_ids]
-                # Recompute realized PnL aggregates cleanly from remaining fills & trades
-                strat_by_sig = {s: t.strategy for s, t in ledger.trades.items()}
-                short_pnl = 0.0
-                long_pnl = 0.0
-                d_pnl: dict[str, float] = {}
-                w_pnl: dict[str, float] = {}
-                for f in ledger.fills:
-                    strat = strat_by_sig.get(f.signal_id, "S1")
-                    if is_short_term_strategy(strat):
-                        short_pnl += f.realized_pnl_usd
-                    else:
-                        long_pnl += f.realized_pnl_usd
-                    if f.action != "entry":
-                        dk = _date_key(f.ts_utc)
-                        wk = _week_key(f.ts_utc)
-                        d_pnl[dk] = d_pnl.get(dk, 0.0) + f.realized_pnl_usd
-                        w_pnl[wk] = w_pnl.get(wk, 0.0) + f.realized_pnl_usd
-                ledger.short_term_realized_pnl = short_pnl
-                ledger.long_term_realized_pnl = long_pnl
-                ledger.daily_realized_pnl = d_pnl
-                ledger.weekly_realized_pnl = w_pnl
+        removed_any = False
+        for sid in bad_ids:
+            tr = self.ledger.trades.pop(sid, None)
+            self.ledger.orders.pop(sid, None)
+            if tr is not None:
+                removed_any = True
+                pub_ts = tr.published_at_utc or str((sig_pub_map.get(sid) or {}).get("published_at_utc") or "")
+                if pub_ts:
+                    d_key = _date_key(pub_ts)
+                    if self.ledger.daily_signal_counts.get(d_key, 0) > 0:
+                        self.ledger.daily_signal_counts[d_key] -= 1
+        if removed_any:
+            self.ledger.fills = [f for f in self.ledger.fills if f.signal_id not in bad_ids]
+            strat_by_sig = {s: t.strategy for s, t in self.ledger.trades.items()}
+            short_pnl = 0.0
+            long_pnl = 0.0
+            d_pnl: dict[str, float] = {}
+            w_pnl: dict[str, float] = {}
+            for f in self.ledger.fills:
+                strat = strat_by_sig.get(f.signal_id, "S1")
+                if is_short_term_strategy(strat):
+                    short_pnl += f.realized_pnl_usd
+                else:
+                    long_pnl += f.realized_pnl_usd
+                if f.action != "entry":
+                    dk = _date_key(f.ts_utc)
+                    wk = _week_key(f.ts_utc)
+                    d_pnl[dk] = d_pnl.get(dk, 0.0) + f.realized_pnl_usd
+                    w_pnl[wk] = w_pnl.get(wk, 0.0) + f.realized_pnl_usd
+            self.ledger.short_term_realized_pnl = short_pnl
+            self.ledger.long_term_realized_pnl = long_pnl
+            self.ledger.daily_realized_pnl = d_pnl
+            self.ledger.weekly_realized_pnl = w_pnl
 
         for sid in sorted(bad_ids):
             for path in (
@@ -1602,8 +1428,67 @@ class SimulationEngine:
 
         return sorted(bad_ids)
 
+    def migrate_pending_orders_to_unified_sizing(self) -> list[str]:
+        """Recalculate legacy pending (waiting_entry) orders once using unified full-entry sub-account sizing.
+
+        Already filled/active trades keep their exact original position size, stop-loss, and targets.
+        """
+        updated_ids: list[str] = []
+        for sid, tr in self.ledger.trades.items():
+            if tr.state != LifecycleState.WAITING_ENTRY or tr.stages or tr.migrated_unified_sizing:
+                continue
+            pool_name = "short_term" if is_short_term_strategy(tr.strategy) else "long_term"
+            sub_eq = max(1e-6, float(self.ledger.compute_pool_equity(pool_name, self.latest_marks)))
+            entry_mid = (tr.entry_low + tr.entry_high) / 2.0
+            alloc = allocate_subaccount_position(
+                strategy_id=tr.strategy,
+                subaccount_equity_usd=sub_eq,
+                open_positions_count=0,
+                open_total_risk_usd=0.0,
+                open_total_notional_usd=0.0,
+                entry_price=entry_mid,
+                stop_loss=tr.initial_stop_loss,
+                fee_rate=tr.fee_rate,
+                slippage_bps=tr.slippage_bps,
+                config=self.config,
+                risk_multiplier=1.0,
+            )
+            if alloc.approved and alloc.notional_usd > 0:
+                actual_lev = round(alloc.notional_usd / sub_eq, 4)
+                tr.planned_notional_usd = round(alloc.notional_usd, 4)
+                tr.r_plan_usd = round(alloc.risk_usd, 4)
+                tr.leverage = actual_lev
+                inst = self.instruments.get(tr.symbol, {})
+                max_lev = max(1.0, float(inst.get("max_leverage", 5.0)))
+                sl_dist_pct = max(0.002, abs(entry_mid - tr.initial_stop_loss) / max(1e-9, entry_mid))
+                tr.margin_leverage = min(max_lev, max(1.0, min(5.0, round(0.20 / sl_dist_pct, 2))))
+                tr.add_levels = ()
+                tr.migrated_unified_sizing = True
+                updated_ids.append(sid)
+
+                sig_path = self.out_dir / "signals" / f"{sid}.json"
+                if sig_path.exists():
+                    try:
+                        s_data = json.loads(sig_path.read_text(encoding="utf-8"))
+                        s_data["notional_usd"] = round(alloc.notional_usd, 2)
+                        s_data["risk_usd"] = round(alloc.risk_usd, 2)
+                        s_data["risk_pct_pool"] = round(alloc.risk_usd / sub_eq * 100.0, 2)
+                        s_data["leverage"] = actual_lev
+                        s_data["add_levels"] = []
+                        sig_path.write_text(json.dumps(s_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                    except Exception:
+                        pass
+
+        return updated_ids
+
     def load_state(self) -> None:
-        """Restore persisted ledgers, sequences, and replay cursors from out_dir."""
+        """Restore persisted single ledger (migrating legacy E ledger if needed) and replay cursors."""
+        try:
+            for stale in self.out_dir.glob("*_comparison.json"):
+                stale.unlink(missing_ok=True)
+        except Exception:
+            pass
+
         state_path = self.out_dir / "state.json"
         if state_path.exists():
             try:
@@ -1623,10 +1508,14 @@ class SimulationEngine:
                 self._fill_seq = int(seqs.get("fill", 0))
                 if isinstance(payload.get("latest_marks"), dict):
                     self.latest_marks = {k: float(v) for k, v in payload["latest_marks"].items()}
-                for pol, raw_led in payload.get("ledgers", {}).items():
-                    if pol in self.ledgers:
-                        self.ledgers[pol] = Ledger.from_dict(raw_led, self.config)
+                raw_single = payload.get("ledger")
+                if isinstance(raw_single, dict):
+                    self.ledger = Ledger.from_dict(raw_single, self.config)
+                elif isinstance(payload.get("ledgers"), dict) and payload["ledgers"]:
+                    raw_legacy = payload["ledgers"].get("E") or next(iter(payload["ledgers"].values()))
+                    self.ledger = Ledger.from_dict(raw_legacy, self.config)
             except Exception:
                 pass
 
         self.purge_invalid_signals()
+        self.migrate_pending_orders_to_unified_sizing()

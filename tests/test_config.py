@@ -93,9 +93,10 @@ def test_frontend_assets_and_relative_paths() -> None:
     assert "PEPEUSDT" in config_js
     assert "TONUSDT" in config_js
 
-    # Stage 4, 5 & 6 hash routes, disclaimer, backtest results, shadow comparison, and fixed CDN check
-    for route in ("#/wall", "#/results", "#/stats", "#/account", "#/scaling", "#/risk", "#/data"):
+    # Stage 4, 5 & 6 hash routes, disclaimer, backtest results, and fixed CDN check
+    for route in ("#/wall", "#/results", "#/stats", "#/account", "#/risk", "#/data"):
         assert route in index_html
+    assert "#/scaling" not in index_html
     assert "lightweight-charts@4.2.1" in index_html
     assert "backtest-section" in index_html
     assert "歷史不代表未來" in index_html
@@ -103,16 +104,15 @@ def test_frontend_assets_and_relative_paths() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
     assert "模擬驗證中，非投資建議" in app_js
     assert "computeFloatingPnl" in app_js
+    assert "computeCardEstimates" in app_js
     assert "backtest_results.json" in app_js
     assert "renderBacktestResults" in app_js
-    for fname in ("shadow_comparison.json", "performance_stats.json", "risk_status.json", "equity_curve.json"):
+    for fname in ("performance_stats.json", "risk_status.json", "equity_curve.json"):
         assert fname in app_js
-    assert "renderScalingComparison" in app_js
     assert "renderRiskCenter" in app_js
     assert "尚未驗證" in app_js
 
     cfg = load_config()
-    assert cfg["analytics"]["min_verified_trades_shadow"] >= 1
     assert cfg["analytics"]["min_verified_trades_stats"] >= 1
 
 
@@ -127,7 +127,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261116h" in index_html
+    assert "?v=20261116i" in index_html
     assert "watch-scope-tabs" in index_html
     assert "watch_today_daily.json" in app_js
     assert "watch_today_b.json" not in app_js
@@ -247,3 +247,35 @@ def test_no_legacy_strategy_ab_references() -> None:
             if needle in text:
                 offenders.append(f"{path.relative_to(root)}: {needle!r}")
     assert not offenders, "Legacy Strategy A/B or Round-1 strategy references remain:\n" + "\n".join(offenders)
+
+
+def test_no_policy_shadow_target_stage_residues() -> None:
+    """Ensure multi-ledger and stage target scaling residues are completely removed."""
+    import re
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    forbidden_patterns = [
+        (r"policy", "policy"),
+        (r"shadow", "shadow"),
+        (r"target_notional", "target_notional"),
+        (r"stage_target", "stage_target"),
+        (r"\bledger\s+[a-d]\b", "ledger A~D"),
+        (r"\bledgers\.[a-e]\b", "ledgers.A~E"),
+    ]
+    targets = [
+        root / "index.html",
+        root / "config" / "config.yaml",
+    ]
+    for folder in (root / "assets", root / "src"):
+        for p in sorted(folder.rglob("*")):
+            if p.is_file() and "__pycache__" not in p.parts:
+                targets.append(p)
+
+    offenders: list[str] = []
+    for path in targets:
+        text = path.read_text(encoding="utf-8", errors="ignore").lower()
+        for pat, label in forbidden_patterns:
+            if re.search(pat, text):
+                offenders.append(f"{path.relative_to(root)}: {label!r}")
+    assert not offenders, "Legacy residues remain:\n" + "\n".join(offenders)

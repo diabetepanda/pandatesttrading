@@ -93,8 +93,7 @@ def run_daily(
 
     open_daily_syms = {
         tr.symbol
-        for led in engine.ledgers.values()
-        for tr in led.trades.values()
+        for tr in engine.ledger.trades.values()
         if tr.strategy in ("S3", "L1", "L2", "L3")
         and tr.state in (LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE, LifecycleState.TP1_HIT)
     }

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from src.config_loader import load_config
 from src.engine.simulator import CandidateSignal, SimulationEngine
 from src.risk.manager import RiskManager
@@ -74,7 +76,6 @@ def test_leverage_and_liquidation_safety_check() -> None:
         stop_loss=96.0,
         tp1=106.0,
         tp2=108.0,
-        desired_notional_usd=2000.0,
         leverage=10.0,
         account_state={"equity_usd": 100000.0, "peak_equity_usd": 100000.0},
         control={"paused": False, "risk_review_done": False},
@@ -92,7 +93,6 @@ def test_leverage_and_liquidation_safety_check() -> None:
         stop_loss=98.0,
         tp1=103.5,
         tp2=104.5,
-        desired_notional_usd=2000.0,
         leverage=10.0,
         account_state={"equity_usd": 100000.0, "peak_equity_usd": 100000.0},
         control={"paused": False, "risk_review_done": False},
@@ -107,8 +107,8 @@ def test_margin_usage_cap_30_percent() -> None:
     rm = RiskManager(cfg)
     inst = next(i for i in cfg["instruments"] if i["symbol"] == "BTCUSDT")
 
-    # Account equity = 10,000 -> 30% max margin = 3,000. Already used = 2,900.
-    # New notional 2,000 at 10x needs 200 margin -> 3,100 > 3,000 -> REJECTED!
+    # Account equity = 10,000 -> 30% max margin = 3,000. Already used = 2,960.
+    # New notional capped at 570 -> at 10x needs 57 margin -> 3,017 > 3,000 -> REJECTED!
     res = rm.check_new_signal(
         instrument=inst,
         strategy="S1",
@@ -117,12 +117,11 @@ def test_margin_usage_cap_30_percent() -> None:
         stop_loss=98.0,
         tp1=103.5,
         tp2=104.5,
-        desired_notional_usd=2000.0,
         leverage=10.0,
         account_state={
             "equity_usd": 10000.0,
             "peak_equity_usd": 10000.0,
-            "used_margin_usd": 2900.0,
+            "used_margin_usd": 2960.0,
         },
         control={"paused": False, "risk_review_done": False},
         now_utc="2026-11-16T02:00:00Z",
@@ -145,7 +144,6 @@ def test_daily_and_weekly_loss_limits_block_new_signals() -> None:
         stop_loss=98.0,
         tp1=103.5,
         tp2=104.5,
-        desired_notional_usd=2000.0,
         leverage=5.0,
         account_state={
             "equity_usd": 98500.0,
@@ -168,7 +166,6 @@ def test_daily_and_weekly_loss_limits_block_new_signals() -> None:
         stop_loss=98.0,
         tp1=103.5,
         tp2=104.5,
-        desired_notional_usd=2000.0,
         leverage=5.0,
         account_state={
             "equity_usd": 96000.0,
@@ -188,24 +185,23 @@ def test_drawdown_warning_halves_risk_and_pause_requires_control_json_review() -
     rm = RiskManager(cfg)
     inst = next(i for i in cfg["instruments"] if i["symbol"] == "BTCUSDT")
 
-    # 8% drawdown: equity 92,000 vs peak 100,000 -> warning mode, R_plan halved (250 * 0.5 = 125)
+    # 8% drawdown: warning mode halves unified risk budget (sub_eq=27,600 * 0.75% * 0.5 = $103.5)
     res_warn = rm.check_new_signal(
         instrument=inst,
         strategy="S1",
         direction="long",
         entry_price=100.0,
-        stop_loss=98.0,
-        tp1=103.5,
-        tp2=104.5,
-        desired_notional_usd=2000.0,
-        leverage=5.0,
+        stop_loss=94.0,
+        tp1=110.0,
+        tp2=115.0,
+        leverage=3.0,
         account_state={"equity_usd": 92000.0, "peak_equity_usd": 100000.0},
         control={"paused": False, "risk_review_done": False},
         now_utc="2026-11-16T02:00:00Z",
     )
     assert res_warn.approved is True
     assert res_warn.risk_status == "warning"
-    assert res_warn.r_plan_usd == 125.0
+    assert res_warn.r_plan_usd == pytest.approx(103.5, abs=0.5)
 
     # 12% drawdown: equity 88,000 vs peak 100,000 -> paused_drawdown
     res_pause = rm.check_new_signal(
@@ -216,7 +212,6 @@ def test_drawdown_warning_halves_risk_and_pause_requires_control_json_review() -
         stop_loss=98.0,
         tp1=103.5,
         tp2=104.5,
-        desired_notional_usd=2000.0,
         leverage=5.0,
         account_state={"equity_usd": 88000.0, "peak_equity_usd": 100000.0},
         control={"paused": False, "risk_review_done": False, "risk_review_note": ""},
@@ -234,7 +229,6 @@ def test_drawdown_warning_halves_risk_and_pause_requires_control_json_review() -
         stop_loss=98.0,
         tp1=103.5,
         tp2=104.5,
-        desired_notional_usd=2000.0,
         leverage=5.0,
         account_state={"equity_usd": 88000.0, "peak_equity_usd": 100000.0, "drawdown_paused": True},
         control={"paused": False, "risk_review_done": True, "risk_review_note": "已完成檢討並調降部位"},
@@ -259,7 +253,6 @@ def test_correlation_group_and_total_stop_risk_limits() -> None:
         stop_loss=98.0,
         tp1=103.5,
         tp2=104.5,
-        desired_notional_usd=2000.0,
         leverage=5.0,
         account_state={
             "equity_usd": 100000.0,
@@ -273,7 +266,7 @@ def test_correlation_group_and_total_stop_risk_limits() -> None:
     assert res_group.approved is False
     assert "群組" in res_group.reason
 
-    # Total stop risk limit = 3,000 USD; already open across other groups = 3,000 USD -> REJECTED!
+    # Total stop risk limit = 5,000 USD; already open across other groups = 5,000 USD -> REJECTED!
     res_total = rm.check_new_signal(
         instrument=inst,
         strategy="S1",
@@ -282,19 +275,86 @@ def test_correlation_group_and_total_stop_risk_limits() -> None:
         stop_loss=98.0,
         tp1=103.5,
         tp2=104.5,
-        desired_notional_usd=2000.0,
         leverage=5.0,
         account_state={
             "equity_usd": 100000.0,
             "peak_equity_usd": 100000.0,
             "group_stop_risk_usd": {"crypto_majors": 0.0},
-            "total_stop_risk_usd": 3000.0,
+            "total_stop_risk_usd": 5000.0,
         },
         control={"paused": False, "risk_review_done": False},
         now_utc="2026-11-16T02:00:00Z",
     )
     assert res_total.approved is False
     assert "總停損風險" in res_total.reason
+
+
+def test_unified_sizing_short_term_sl_04pct_and_2pct_and_open_risk_cap() -> None:
+    cfg = load_config()
+    rm = RiskManager(cfg)
+    fx_inst = next(i for i in cfg["instruments"] if i["symbol"] == "EURUSD")
+    btc_inst = next(i for i in cfg["instruments"] if i["symbol"] == "BTCUSDT")
+
+    # Short-term $30,000 pool: 0.75% risk = $225, 19% max notional = $5,700.
+    # Tight 0.4% SL (raw = 225 / 0.004 = $56,250) -> capped at $5,700 (actual_leverage = 0.19x)
+    res_04 = rm.check_new_signal(
+        instrument=fx_inst,
+        strategy="S2",
+        direction="long",
+        entry_price=1.0000,
+        stop_loss=0.9960,
+        tp1=1.0070,
+        tp2=1.0090,
+        leverage=10.0,
+        account_state={"equity_usd": 100000.0, "peak_equity_usd": 100000.0, "subaccount_equity_usd": 30000.0},
+        control={"paused": False, "risk_review_done": False},
+        now_utc="2026-11-16T02:00:00Z",
+    )
+    assert res_04.approved is True
+    assert res_04.notional_usd == pytest.approx(5700.0, abs=1.0)
+    assert res_04.leverage == pytest.approx(0.19, abs=0.005)
+    assert res_04.r_plan_usd < 40.0
+
+    # 2% SL (raw ~225 / 0.02 = $11,250) -> also capped at $5,700 (actual_leverage = 0.19x)
+    res_2 = rm.check_new_signal(
+        instrument=btc_inst,
+        strategy="S1",
+        direction="long",
+        entry_price=100.0,
+        stop_loss=98.0,
+        tp1=103.5,
+        tp2=104.5,
+        leverage=10.0,
+        account_state={"equity_usd": 100000.0, "peak_equity_usd": 100000.0, "subaccount_equity_usd": 30000.0},
+        control={"paused": False, "risk_review_done": False},
+        now_utc="2026-11-16T02:00:00Z",
+    )
+    assert res_2.approved is True
+    assert res_2.notional_usd == pytest.approx(5700.0, abs=1.0)
+    assert res_2.leverage == pytest.approx(0.19, abs=0.005)
+
+    # Total open risk 5% ($1,500) already occupied -> rejected
+    res_full = rm.check_new_signal(
+        instrument=btc_inst,
+        strategy="S1",
+        direction="long",
+        entry_price=100.0,
+        stop_loss=98.0,
+        tp1=103.5,
+        tp2=104.5,
+        leverage=10.0,
+        account_state={
+            "equity_usd": 100000.0,
+            "peak_equity_usd": 100000.0,
+            "subaccount_equity_usd": 30000.0,
+            "subaccount_open_risk_usd": 1500.0,
+            "subaccount_open_positions": 3,
+        },
+        control={"paused": False, "risk_review_done": False},
+        now_utc="2026-11-16T02:00:00Z",
+    )
+    assert res_full.approved is False
+    assert "總風險已達子帳戶" in res_full.reason
 
 
 def test_risk_rejected_signal_not_published_and_logged_to_watch_log(tmp_path: Path) -> None:

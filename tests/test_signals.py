@@ -141,11 +141,12 @@ def test_signal_copy_text_format() -> None:
     assert "做多" in txt
     assert "90000" in txt
     assert "90200" in txt
-    assert "89600" in txt
     assert "89000" in txt
     assert "91800" in txt
     assert "92600" in txt
-    assert "1.0%" in txt or "1%" in txt
+    assert "2,000.00" in txt
+    assert "實際槓桿" in txt
+    assert "1%" in txt
     assert "2026-11-16T06:00:00Z" in txt
     assert "15m 收盤跌破 89000" in txt
     assert txt.strip().endswith("模擬驗證中，非投資建議")

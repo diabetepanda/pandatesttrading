@@ -167,8 +167,7 @@ def run_scan(
     engine.load_state()
     symbols_with_open_trades = {
         tr.symbol
-        for led in engine.ledgers.values()
-        for tr in led.trades.values()
+        for tr in engine.ledger.trades.values()
         if tr.state in (LifecycleState.WAITING_ENTRY, LifecycleState.ACTIVE, LifecycleState.TP1_HIT)
     }
     step_timings_sec["load_and_cleanup_sec"] = round(time.monotonic() - t_step, 3)

@@ -23,6 +23,7 @@ class RiskCheckResult:
     risk_status: str  # "normal", "warning", "paused_drawdown", "paused_manual"
     reason: str
     risk_event: dict[str, Any] | None = None
+    margin_leverage: float = 1.0
 
 
 def is_short_term_strategy(strategy: str) -> bool:
@@ -90,7 +91,7 @@ class RiskManager:
                     "ts_utc": now_utc,
                     "event_type": "drawdown_pause_active",
                     "drawdown_pct": round(dd_pct, 2),
-                    "reason": f"帳戶回撤達 {dd_pct:.2f}%（>= {pause_pct:.1f}%），暫停新報單與補倉",
+                    "reason": f"帳戶回撤達 {dd_pct:.2f}%（>= {pause_pct:.1f}%），暫停發布新報單",
                 },
             )
 
@@ -183,7 +184,6 @@ class RiskManager:
         stop_loss: float,
         tp1: float,
         tp2: float | str,
-        desired_notional_usd: float,
         leverage: float | None,
         account_state: dict[str, Any],
         control: dict[str, Any],
@@ -268,18 +268,21 @@ class RiskManager:
                 f"{pool_name} 資金池同時持倉數已達上限 ({max_concurrent})",
             )
 
-        pool_target_notional = float(pool_cfg.get("target_notional_usd", 1500.0 if pool_name == "short_term" else 4000.0))
-        pool_remaining_cap = float(account_state.get(f"{pool_name}_remaining_capital", pool_cfg.get("capital_usd", 20000.0)))
+        pool_remaining_cap = float(
+            account_state.get(
+                f"{pool_name}_remaining_capital",
+                pool_cfg.get("capital_usd", 30000.0 if pool_name == "short_term" else 70000.0),
+            )
+        )
         if pool_remaining_cap <= 0:
             return RiskCheckResult(
                 False, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, risk_status,
                 f"{pool_name} 資金池剩餘額度不足",
             )
 
-        # Risk budget R_plan = min(per_trade_max, account_remaining, group_remaining) * warning_mult
-        max_trade_risk = float(self.risk_cfg.get("max_risk_per_trade_usd", {}).get(pool_name, 250.0))
+        # Total & correlation-group stop risk caps
         total_stop_risk = float(account_state.get("total_stop_risk_usd", 0.0))
-        max_total_stop_risk = float(self.risk_cfg.get("max_total_stop_risk_usd", 3000.0))
+        max_total_stop_risk = float(self.risk_cfg.get("max_total_stop_risk_usd", 5000.0))
         rem_total_risk = max(0.0, max_total_stop_risk - total_stop_risk)
         if rem_total_risk <= 1e-9:
             return RiskCheckResult(
@@ -305,56 +308,59 @@ class RiskManager:
                 {"ts_utc": now_utc, "event_type": "group_stop_risk_limit_hit", "group": group_key},
             )
 
-        r_plan = min(max_trade_risk, rem_total_risk, rem_group_risk) * warning_mult
+        # Unified position sizing via allocate_subaccount_position (identical to backtest)
+        init_cap = max(1e-9, float(self.acct_cfg.get("initial_capital_usd", 100000.0)))
+        default_pool_cap = float(pool_cfg.get("capital_usd", 30000.0 if pool_name == "short_term" else 70000.0))
+        sub_eq = float(account_state.get("subaccount_equity_usd", default_pool_cap * (equity_usd / init_cap)))
+        vol_mult = float(account_state.get("subaccount_risk_multiplier", 1.0))
 
-        # Position sizing bounded by R_plan, desired notional, target notional, pool capital, margin
-        stop_dist_pct = abs(entry_price - stop_loss) / entry_price
+        sub_alloc = self.check_subaccount_allocation(
+            strategy_id=strategy,
+            instrument=instrument,
+            entry_price=entry_price,
+            stop_loss=stop_loss,
+            subaccount_equity_usd=sub_eq,
+            open_positions_count=int(account_state.get("subaccount_open_positions", 0)),
+            open_total_risk_usd=float(account_state.get("subaccount_open_risk_usd", 0.0)),
+            open_total_notional_usd=float(account_state.get("subaccount_open_notional_usd", 0.0)),
+            risk_multiplier=warning_mult * vol_mult,
+        )
+        if not sub_alloc.approved:
+            return RiskCheckResult(False, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, risk_status, sub_alloc.reason)
+
+        stop_dist_pct = max(0.002, abs(entry_price - stop_loss) / entry_price)
         fee_rate = float(instrument.get("fee_rate", 0.0005))
         slippage_bps = float(self.risk_cfg.get("default_slippage_bps", 1.0))
         cost_pct = 2.0 * (fee_rate + slippage_bps / 10000.0)
         eff_stop_pct = max(1e-9, stop_dist_pct + cost_pct)
 
-        risk_cap_notional = r_plan / eff_stop_pct
-        max_lev = float(instrument.get("max_leverage", 1.0))
-        eff_leverage = min(max_lev, float(leverage)) if leverage is not None else max_lev
-        if eff_leverage <= 0:
-            eff_leverage = 1.0
+        r_plan = min(sub_alloc.risk_usd, rem_total_risk, rem_group_risk)
+        notional = min(sub_alloc.notional_usd, r_plan / eff_stop_pct, pool_remaining_cap)
+        r_plan = notional * eff_stop_pct
+        if notional <= 0:
+            return RiskCheckResult(False, r_plan, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, risk_status, "計算名目倉位為 0")
+
+        max_lev = max(1.0, float(instrument.get("max_leverage", 1.0)))
+        if leverage is not None and leverage > 0:
+            margin_leverage = min(max_lev, float(leverage))
+        else:
+            margin_leverage = min(max_lev, max(1.0, min(5.0, round(0.20 / max(1e-4, stop_dist_pct), 2))))
+        actual_leverage = round(notional / max(1e-9, sub_eq), 4)
 
         used_margin = float(account_state.get("used_margin_usd", 0.0))
         max_margin_pct = float(self.risk_cfg.get("max_margin_usage_pct", 30.0))
         max_total_margin = equity_usd * (max_margin_pct / 100.0)
         rem_margin = max_total_margin - used_margin
 
-        notional = min(desired_notional_usd, pool_target_notional, pool_remaining_cap, risk_cap_notional)
-        if "subaccount_equity_usd" in account_state:
-            vol_mult = float(account_state.get("subaccount_risk_multiplier", 1.0))
-            sub_alloc = self.check_subaccount_allocation(
-                strategy_id=strategy,
-                instrument=instrument,
-                entry_price=entry_price,
-                stop_loss=stop_loss,
-                subaccount_equity_usd=float(account_state["subaccount_equity_usd"]),
-                open_positions_count=int(account_state.get("subaccount_open_positions", 0)),
-                open_total_risk_usd=float(account_state.get("subaccount_open_risk_usd", 0.0)),
-                open_total_notional_usd=float(account_state.get("subaccount_open_notional_usd", 0.0)),
-                risk_multiplier=warning_mult * vol_mult,
-            )
-            if not sub_alloc.approved:
-                return RiskCheckResult(False, 0.0, 0.0, eff_leverage, 0.0, 0.0, 0.0, 0.0, risk_status, sub_alloc.reason)
-            notional = min(notional, sub_alloc.notional_usd)
-            r_plan = min(r_plan, sub_alloc.risk_usd)
-        if notional <= 0:
-            return RiskCheckResult(False, r_plan, 0.0, eff_leverage, 0.0, 0.0, 0.0, 0.0, risk_status, "計算名目倉位為 0")
-
         # Liquidation safety check (SPEC 13.2)
-        liq = self.compute_liquidation_metrics(entry_price, stop_loss, direction, notional, eff_leverage)
+        liq = self.compute_liquidation_metrics(entry_price, stop_loss, direction, notional, margin_leverage)
         max_sl_liq_ratio = float(self.risk_cfg.get("stop_to_liquidation_max_ratio", 0.5))
         if liq["sl_before_liq"] < 0.5 or liq["stop_to_liq_ratio"] > max_sl_liq_ratio:
             return RiskCheckResult(
                 approved=False,
                 r_plan_usd=r_plan,
                 notional_usd=0.0,
-                leverage=eff_leverage,
+                leverage=actual_leverage,
                 initial_margin_usd=liq["initial_margin_usd"],
                 maintenance_margin_usd=liq["maintenance_margin_usd"],
                 liquidation_price=liq["liquidation_price"],
@@ -372,7 +378,7 @@ class RiskManager:
                 approved=False,
                 r_plan_usd=r_plan,
                 notional_usd=0.0,
-                leverage=eff_leverage,
+                leverage=actual_leverage,
                 initial_margin_usd=liq["initial_margin_usd"],
                 maintenance_margin_usd=liq["maintenance_margin_usd"],
                 liquidation_price=liq["liquidation_price"],
@@ -388,7 +394,7 @@ class RiskManager:
             approved=True,
             r_plan_usd=round(r_plan, 4),
             notional_usd=round(notional, 4),
-            leverage=eff_leverage,
+            leverage=actual_leverage,
             initial_margin_usd=round(liq["initial_margin_usd"], 4),
             maintenance_margin_usd=round(liq["maintenance_margin_usd"], 4),
             liquidation_price=liq["liquidation_price"],
@@ -396,6 +402,7 @@ class RiskManager:
             risk_status=risk_status,
             reason="通過風控審核",
             risk_event=dd_event,
+            margin_leverage=margin_leverage,
         )
 
     def check_subaccount_allocation(

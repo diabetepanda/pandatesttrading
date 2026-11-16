@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261116h" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261116i" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -48,7 +48,6 @@
       <a href="#/results" class="nav-link" data-route="results">成績總表</a>
       <a href="#/stats" class="nav-link" data-route="stats">績效統計</a>
       <a href="#/account" class="nav-link" data-route="account">模擬帳戶</a>
-      <a href="#/scaling" class="nav-link" data-route="scaling">補倉比較</a>
       <a href="#/risk" class="nav-link" data-route="risk">風控中心</a>
       <a href="#/data" class="nav-link" data-route="data">市場與資料</a>
       <button id="refresh-btn" class="btn btn-sm" type="button">重新整理</button>
@@ -296,7 +295,7 @@
         <div class="section-header">
           <div>
             <h1>績效統計</h1>
-            <p class="subtitle">依策略、市場、多空方向與補倉類型分組統計；樣本數未達門檻一律顯示「尚未驗證」，不顯示容易誤導的勝率或報酬率數字。</p>
+            <p class="subtitle">依策略、市場與多空方向分組統計；樣本數未達門檻一律顯示「尚未驗證」，不顯示容易誤導的勝率或報酬率數字。</p>
           </div>
           <span class="badge badge-warn">模擬驗證中，非投資建議</span>
         </div>
@@ -354,61 +353,23 @@
             <thead>
               <tr>
                 <th>報單 / 標的</th>
-                <th>狀態 / 階段</th>
-                <th>平均成本 / 總數量</th>
-                <th>名目 / 槓桿 / 保證金</th>
+                <th>狀態</th>
+                <th>成本 / 總數量</th>
+                <th>名目 / 實際槓桿 / 保證金</th>
                 <th>即時現價 / 未實現損益</th>
                 <th>止損 / TP1 / TP2</th>
-                <th>預估最大虧損 / 風報比</th>
-                <th>剩餘補倉</th>
+                <th>預估 SL 虧損 / TP1 &amp; TP2 獲利</th>
               </tr>
             </thead>
             <tbody id="account-positions-tbody">
-              <tr><td colspan="8" class="muted center">目前尚無模擬持倉資料。</td></tr>
+              <tr><td colspan="7" class="muted center">目前尚無模擬持倉資料。</td></tr>
             </tbody>
           </table>
         </div>
       </section>
     </section>
 
-    <!-- 頁面 7：補倉方法比較（五個影子帳本） -->
-    <section id="view-scaling" class="route-view hidden">
-      <section class="card">
-        <div class="section-header">
-          <div>
-            <h1>補倉方法並行比較（五個影子帳本 A～E）</h1>
-            <p class="subtitle">同一批報單、同一觸發條件與成本，僅部位縮放政策不同；每個帳本皆獨立受第 7 節風控約束，主報單牆僅採用預設政策 E。</p>
-          </div>
-          <span class="badge badge-warn">模擬驗證中，非投資建議</span>
-        </div>
-        <div id="scaling-notice" class="alert-banner hidden"></div>
-        <p id="scaling-meta" class="muted">目前尚無影子帳本比較資料。</p>
-        <div class="table-wrap">
-          <table class="data-table mobile-cards" id="instruments-table">
-            <thead>
-              <tr>
-                <th>補倉政策</th>
-                <th>驗證狀態</th>
-                <th>樣本數 (已結束 / 門檻)</th>
-                <th>風險狀態 / 保證金%</th>
-                <th>勝率</th>
-                <th>平均 R</th>
-                <th>總報酬 / CAGR</th>
-                <th>最大回撤</th>
-                <th>夏普 / 獲利因子</th>
-                <th>恢復因子 / 最大連虧</th>
-                <th>資金效率 / 風險調整報酬</th>
-              </tr>
-            </thead>
-            <tbody id="scaling-tbody">
-              <tr><td colspan="11" class="muted center">目前尚無影子帳本比較資料。</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </section>
-
-    <!-- 頁面 8：風控中心 -->
+    <!-- 頁面 7：風控中心 -->
     <section id="view-risk" class="route-view hidden">
       <section class="card">
         <div class="section-header">
@@ -476,7 +437,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261116h"></script>
-  <script src="./assets/app.js?v=20261116h"></script>
+  <script src="./assets/config.js?v=20261116i"></script>
+  <script src="./assets/app.js?v=20261116i"></script>
 </body>
 </html>

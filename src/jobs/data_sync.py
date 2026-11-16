@@ -102,6 +102,25 @@ def _merge_list_by_id(
     return list(by_key.values()) + extras
 
 
+def _merge_single_ledger(rl: dict[str, Any], ll: dict[str, Any]) -> dict[str, Any]:
+    comb_trades = dict(rl.get("trades") or {})
+    comb_trades.update(ll.get("trades") or {})
+    comb_orders = dict(rl.get("orders") or {})
+    comb_orders.update(ll.get("orders") or {})
+    fills_by_id: dict[str, Any] = {}
+    for f in (rl.get("fills") or []) + (ll.get("fills") or []):
+        fid = str(f.get("fill_id", "")) if isinstance(f, dict) else str(f)
+        fills_by_id[fid] = f
+    comb_re = _merge_list_by_id(rl.get("risk_events") or [], ll.get("risk_events") or [], ("ts_utc", "event_type"))
+    out = dict(rl)
+    out.update(ll)
+    out["trades"] = comb_trades
+    out["orders"] = comb_orders
+    out["fills"] = list(fills_by_id.values())
+    out["risk_events"] = comb_re
+    return out
+
+
 def _merge_ledgers_state(remote: dict[str, Any], local: dict[str, Any]) -> dict[str, Any]:
     merged = dict(remote)
     r_seq = remote.get("sequences") or {}
@@ -114,33 +133,15 @@ def _merge_ledgers_state(remote: dict[str, Any], local: dict[str, Any]) -> dict[
     l_marks = local.get("latest_marks") or {}
     merged["latest_marks"] = {**r_marks, **l_marks}
 
-    r_leds = remote.get("ledgers") or {}
-    l_leds = local.get("ledgers") or {}
-    merged_leds: dict[str, Any] = {}
-    for pol in set(r_leds.keys()) | set(l_leds.keys()):
-        if pol not in r_leds:
-            merged_leds[pol] = l_leds[pol]
-        elif pol not in l_leds:
-            merged_leds[pol] = r_leds[pol]
-        else:
-            rl = dict(r_leds[pol])
-            ll = dict(l_leds[pol])
-            comb_trades = dict(rl.get("trades") or {})
-            comb_trades.update(ll.get("trades") or {})
-            comb_orders = dict(rl.get("orders") or {})
-            comb_orders.update(ll.get("orders") or {})
-            fills_by_id: dict[str, Any] = {}
-            for f in (rl.get("fills") or []) + (ll.get("fills") or []):
-                fid = str(f.get("fill_id", "")) if isinstance(f, dict) else str(f)
-                fills_by_id[fid] = f
-            comb_re = _merge_list_by_id(rl.get("risk_events") or [], ll.get("risk_events") or [], ("ts_utc", "event_type"))
-            rl.update(ll)
-            rl["trades"] = comb_trades
-            rl["orders"] = comb_orders
-            rl["fills"] = list(fills_by_id.values())
-            rl["risk_events"] = comb_re
-            merged_leds[pol] = rl
-    merged["ledgers"] = merged_leds
+    r_led = remote.get("ledger") or (remote.get("ledgers") or {}).get("E")
+    l_led = local.get("ledger") or (local.get("ledgers") or {}).get("E")
+    merged.pop("ledgers", None)
+    if r_led and l_led:
+        merged["ledger"] = _merge_single_ledger(dict(r_led), dict(l_led))
+    elif l_led:
+        merged["ledger"] = dict(l_led)
+    elif r_led:
+        merged["ledger"] = dict(r_led)
     return merged
 
 
