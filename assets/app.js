@@ -1227,7 +1227,13 @@
     const heatBox = document.getElementById("heatmap-box");
     const evTbody = document.getElementById("events-tbody");
     if (heatBox) {
-      const items = cachedHeatmap?.instruments || [];
+      const raw = cachedHeatmap?.instruments || [];
+      const items = Array.isArray(raw)
+        ? raw
+        : Object.entries(raw).map(([symbol, v]) => ({
+            symbol,
+            low_liquidity_hours_utc: (v && (v.low_liquidity_hours_utc || v.low_hours)) || [],
+          }));
       if (items.length === 0) {
         heatBox.innerHTML = '<p class="muted">目前尚無低流動性時段資料（等待掃描）。</p>';
       } else {
@@ -1374,15 +1380,12 @@
       cachedHeatmap = heatRes.status === "fulfilled" ? heatRes.value : null;
       cachedEvents = evRes.status === "fulfilled" ? evRes.value : null;
 
-      renderInstruments();
-      renderWallCards();
-      renderResultsTable();
-      renderBacktestResults();
-      renderPerformanceStats();
-      renderSimulatedAccount();
-      renderScalingComparison();
-      renderRiskCenter();
-      renderDataExtras();
+      // 每個區塊各自防護：一個區塊出錯不會拖垮整個頁面
+      [renderInstruments, renderWallCards, renderResultsTable, renderBacktestResults,
+       renderPerformanceStats, renderSimulatedAccount, renderScalingComparison,
+       renderRiskCenter, renderDataExtras].forEach((fn) => {
+        try { fn(); } catch (e) { console.error(`${fn.name} 失敗：`, e); }
+      });
 
       const health = healthRes.status === "fulfilled" ? healthRes.value : null;
       const control = controlRes.status === "fulfilled" ? controlRes.value : null;
