@@ -1,23 +1,23 @@
 {
   "snapshot_id": "SNAP-SIG-20261116-0006",
   "signal_id": "SIG-20261116-0006",
-  "captured_at_utc": "2026-11-16T12:59:30Z",
-  "symbol": "COPPER",
+  "captured_at_utc": "2026-11-16T12:51:14Z",
+  "symbol": "USDCAD",
   "kline_summary": {
-    "interval": "1d",
-    "close": 6.079500198364258,
-    "high": 6.079999923706055,
-    "low": 6.059000015258789,
-    "ts_utc": "2026-11-13T00:00:00Z"
+    "interval": "4h",
+    "close": 1.4287300109863281,
+    "high": 1.4291000366210938,
+    "low": 1.4271999597549438,
+    "ts_utc": "2026-11-16T08:00:00Z"
   },
   "indicators": {
-    "atr": 0.057297,
-    "atr_ratio": 0.951,
+    "atr": 0.00255,
+    "atr_ratio": 0.863,
     "params": {
-      "entry_period": 55,
-      "exit_period": 20,
-      "sl_atr_mult": 2.5,
-      "vol_target_pct": 0.018
+      "breakout_bars": 12,
+      "trail_bars": 10,
+      "sl_atr_mult": 2.0,
+      "max_hold_bars": 30
     }
   },
   "filter_checks": {
