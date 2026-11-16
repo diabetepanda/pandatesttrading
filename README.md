@@ -1,6 +1,6 @@
 # Signal Desk 報單網站＋模擬驗證艙
 
-本專案為部署於 GitHub Pages 與 GitHub Actions 的多市場交易報單與模擬驗證系統（目前進度：**階段 3 — 策略 A 接上報單、模擬引擎與定時排程掃描**）。
+本專案為部署於 GitHub Pages 與 GitHub Actions 的多市場交易報單與模擬驗證系統（目前進度：**階段 4 — 報單牆、單張報單頁、成績總表**）。
 
 - 正式網址：https://diabetepanda.github.io/pandatesttrading/
 - 聲明：**本站為個人模擬驗證，非投資建議。**

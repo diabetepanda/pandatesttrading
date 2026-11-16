@@ -1283,6 +1283,16 @@ class SimulationEngine:
                     s_data["realized_pnl_usd"] = round(tr.realized_pnl_usd, 2) if tr else 0.0
                     s_data["r_multiple"] = round(tr.r_multiple, 2) if tr else 0.0
                     s_data["exit_reason"] = tr.exit_reason if tr else None
+                    s_data["avg_entry_price"] = round(tr.avg_entry_price, 6) if tr else 0.0
+                    s_data["remaining_qty"] = round(tr.remaining_qty, 8) if tr else 0.0
+                    s_data["current_stop_loss"] = tr.current_stop_loss if tr else s_data["stop_loss"]
+                    s_data["current_tp1"] = tr.current_tp1 if tr else s_data["tp1"]
+                    s_data["current_tp2"] = tr.current_tp2 if tr else s_data["tp2"]
+                    s_data["r_plan_usd"] = tr.r_plan_usd if tr else s_data["risk_usd"]
+                    s_data["entered_at_utc"] = tr.entered_at_utc if tr else None
+                    s_data["closed_at_utc"] = tr.closed_at_utc if tr else None
+                    s_data["exit_price"] = tr.exit_price if tr else None
+                    s_data["stages"] = [st.to_dict() for st in tr.stages] if tr else []
                     signals_index.append(s_data)
                 except Exception:
                     continue

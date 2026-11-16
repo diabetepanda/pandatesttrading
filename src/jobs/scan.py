@@ -365,6 +365,37 @@ def run_scan(
     # Persist engine state & partitioned JSONs
     engine.save_state(now_iso)
 
+    # Export recent 15m bars for open/newly published signals for Single Signal Page chart
+    charts_dir = out_dir / "charts"
+    charts_dir.mkdir(parents=True, exist_ok=True)
+    for sid, tr in engine.primary_ledger.trades.items():
+        if sid in new_signal_ids or tr.state in (
+            LifecycleState.WAITING_ENTRY,
+            LifecycleState.ACTIVE,
+            LifecycleState.TP1_HIT,
+        ):
+            sym_bars = bars_15m_by_sym.get(tr.symbol, [])[-96:]
+            if sym_bars:
+                _write_json(
+                    charts_dir / f"{sid}.json",
+                    {
+                        "signal_id": sid,
+                        "symbol": tr.symbol,
+                        "interval": "15m",
+                        "bars": [
+                            {
+                                "ts_utc": b.ts_utc,
+                                "open": b.open,
+                                "high": b.high,
+                                "low": b.low,
+                                "close": b.close,
+                                "volume": b.volume,
+                            }
+                            for b in sym_bars
+                        ],
+                    },
+                )
+
     duration_sec = round(time.monotonic() - t_start, 2)
 
     run_log = _read_json_if_exists(out_dir / "run_log.json", [])
