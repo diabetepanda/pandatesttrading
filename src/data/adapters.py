@@ -559,3 +559,86 @@ class FallbackDataFetcher:
                     )
                 )
         return attempts
+
+
+def fetch_crypto_derivatives_meta(
+    instrument: dict[str, Any],
+    timeout_sec: int = 10,
+) -> dict[str, float] | None:
+    """Fetch crypto funding rate and 1h open-interest change % (OKX primary, Binance Futures fallback).
+
+    Returns None when neither public endpoint can provide complete data.
+    """
+    sources = instrument.get("sources", {})
+    okx_spot = sources.get("okx")
+    if okx_spot:
+        okx_swap = f"{okx_spot}-SWAP"
+        try:
+            fr_resp = requests.get(
+                "https://www.okx.com/api/v5/public/funding-rate",
+                params={"instId": okx_swap},
+                headers={"User-Agent": USER_AGENT},
+                timeout=timeout_sec,
+            )
+            fr_resp.raise_for_status()
+            fr_data = fr_resp.json().get("data", [])
+
+            oi_resp = requests.get(
+                "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history",
+                params={"instId": okx_swap, "period": "1H", "limit": 2},
+                headers={"User-Agent": USER_AGENT},
+                timeout=timeout_sec,
+            )
+            oi_resp.raise_for_status()
+            oi_data = oi_resp.json().get("data", [])
+
+            if fr_data and len(oi_data) >= 2:
+                funding_rate = float(fr_data[0]["fundingRate"])
+                oi_now = float(oi_data[0][1])
+                oi_prev = float(oi_data[1][1])
+                if oi_prev > 0:
+                    oi_chg_pct = ((oi_now - oi_prev) / oi_prev) * 100.0
+                    return {
+                        "funding_rate": funding_rate,
+                        "oi_change_1h_pct": round(oi_chg_pct, 4),
+                        "source": 1.0,  # OKX
+                    }
+        except Exception:
+            pass
+
+    bin_sym = sources.get("binance_vision") or instrument.get("symbol")
+    if bin_sym:
+        try:
+            fr_resp = requests.get(
+                "https://fapi.binance.com/fapi/v1/premiumIndex",
+                params={"symbol": bin_sym},
+                headers={"User-Agent": USER_AGENT},
+                timeout=timeout_sec,
+            )
+            fr_resp.raise_for_status()
+            fr_json = fr_resp.json()
+
+            oi_resp = requests.get(
+                "https://fapi.binance.com/futures/data/openInterestHist",
+                params={"symbol": bin_sym, "period": "1h", "limit": 2},
+                headers={"User-Agent": USER_AGENT},
+                timeout=timeout_sec,
+            )
+            oi_resp.raise_for_status()
+            oi_list = oi_resp.json()
+
+            if "lastFundingRate" in fr_json and isinstance(oi_list, list) and len(oi_list) >= 2:
+                funding_rate = float(fr_json["lastFundingRate"])
+                oi_prev = float(oi_list[0]["sumOpenInterest"])
+                oi_now = float(oi_list[1]["sumOpenInterest"])
+                if oi_prev > 0:
+                    oi_chg_pct = ((oi_now - oi_prev) / oi_prev) * 100.0
+                    return {
+                        "funding_rate": funding_rate,
+                        "oi_change_1h_pct": round(oi_chg_pct, 4),
+                        "source": 2.0,  # Binance Futures
+                    }
+        except Exception:
+            pass
+
+    return None

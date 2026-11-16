@@ -40,9 +40,16 @@ def test_run_scan_outputs_required_files(tmp_path: Path) -> None:
         for k in ("binance_vision", "okx", "bybit", "kraken", "coinbase", "yfinance", "stooq")
     }
     fetcher = FallbackDataFetcher(adapters=adapters)
-    now = datetime(2026, 11, 16, 12, 0, tzinfo=timezone.utc)
+    # Use Saturday 12:00 UTC so crypto passes low-liquidity window and reaches derivatives check
+    now = datetime(2026, 11, 14, 12, 0, tzinfo=timezone.utc)
 
-    summary = run_scan(out_dir=tmp_path, fetcher=fetcher, probe_all_adapters=True, now_utc=now)
+    summary = run_scan(
+        out_dir=tmp_path,
+        fetcher=fetcher,
+        derivatives_fetcher=lambda _inst: {"funding_rate": 0.0001, "oi_change_1h_pct": 1.0},
+        probe_all_adapters=True,
+        now_utc=now,
+    )
     assert summary["status_counts"]["ok"] > 0
 
     for fname in (
@@ -69,7 +76,13 @@ def test_run_scan_outputs_required_files(tmp_path: Path) -> None:
     assert state["runs_last_24h"] == 1
 
     # Second scan 15 minutes later restores state and increments 24h count
-    run_scan(out_dir=tmp_path, fetcher=fetcher, probe_all_adapters=False, now_utc=now + timedelta(minutes=15))
+    run_scan(
+        out_dir=tmp_path,
+        fetcher=fetcher,
+        derivatives_fetcher=lambda _inst: {"funding_rate": 0.0001, "oi_change_1h_pct": 1.0},
+        probe_all_adapters=False,
+        now_utc=now + timedelta(minutes=15),
+    )
     state2 = json.loads((tmp_path / "state.json").read_text(encoding="utf-8"))
     assert state2["runs_last_24h"] == 2
 
@@ -100,11 +113,39 @@ def test_run_scan_excludes_unstable_1m_instruments_in_watch_today(tmp_path: Path
         for k in ("binance_vision", "okx", "bybit", "kraken", "coinbase", "yfinance", "stooq")
     }
     fetcher = FallbackDataFetcher(adapters=adapters)
+    # Use Monday 12:00 UTC (markets open)
     now = datetime(2026, 11, 16, 12, 0, tzinfo=timezone.utc)
-    run_scan(out_dir=tmp_path, fetcher=fetcher, probe_all_adapters=False, now_utc=now)
+    run_scan(
+        out_dir=tmp_path,
+        fetcher=fetcher,
+        derivatives_fetcher=lambda _inst: {"funding_rate": 0.0001, "oi_change_1h_pct": 1.0},
+        probe_all_adapters=False,
+        now_utc=now,
+    )
 
     watch = json.loads((tmp_path / "watch_today.json").read_text(encoding="utf-8"))
     by_sym = {item["symbol"]: item for item in watch["items"]}
     for sym in ("AUDUSD", "NZDUSD", "NATGAS"):
         assert sym in by_sym
         assert "資料不穩" in by_sym[sym]["reason"]
+
+
+def test_run_scan_logs_insufficient_derivatives_data_when_missing(tmp_path: Path) -> None:
+    dummy = DummyAdapter()
+    adapters = {
+        k: dummy
+        for k in ("binance_vision", "okx", "bybit", "kraken", "coinbase", "yfinance", "stooq")
+    }
+    fetcher = FallbackDataFetcher(adapters=adapters)
+    # Saturday 12:00 UTC -> crypto is in low-liquidity weekend candidate window
+    now = datetime(2026, 11, 14, 12, 0, tzinfo=timezone.utc)
+    run_scan(
+        out_dir=tmp_path,
+        fetcher=fetcher,
+        derivatives_fetcher=lambda _inst: None,
+        probe_all_adapters=False,
+        now_utc=now,
+    )
+    watch = json.loads((tmp_path / "watch_today.json").read_text(encoding="utf-8"))
+    by_sym = {item["symbol"]: item for item in watch["items"]}
+    assert "資料不足" in by_sym["BTCUSDT"]["reason"]

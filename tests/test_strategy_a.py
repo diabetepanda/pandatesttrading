@@ -102,6 +102,10 @@ def _ok_rep() -> dict:
     return {"status": "ok", "missing_ratio": 0.0, "delay_minutes": 1.0}
 
 
+def _ok_crypto_meta() -> dict:
+    return {"funding_rate": 0.0001, "oi_change_1h_pct": 1.0}
+
+
 def test_strategy_a_uses_only_closed_bars_no_lookahead() -> None:
     cfg = load_config()
     now = datetime(2026, 11, 16, 4, 0, tzinfo=timezone.utc)
@@ -111,8 +115,8 @@ def test_strategy_a_uses_only_closed_bars_no_lookahead() -> None:
     bars_with_unclosed = _build_strategy_a_fixture_bars(now, direction="long", include_unclosed_spike=True)
 
     strat = StrategyA(cfg, events=[])
-    ev_clean = strat.evaluate_instrument(inst, bars_clean, _ok_rep(), _ok_rep(), now_utc=now)
-    ev_unclosed = strat.evaluate_instrument(inst, bars_with_unclosed, _ok_rep(), _ok_rep(), now_utc=now)
+    ev_clean = strat.evaluate_instrument(inst, bars_clean, _ok_rep(), _ok_rep(), now_utc=now, crypto_meta=_ok_crypto_meta())
+    ev_unclosed = strat.evaluate_instrument(inst, bars_with_unclosed, _ok_rep(), _ok_rep(), now_utc=now, crypto_meta=_ok_crypto_meta())
 
     assert ev_clean.decision == "signal"
     assert ev_unclosed.decision == "signal"
@@ -146,7 +150,7 @@ def test_strategy_a_schedule_delay_blocks_signal() -> None:
     bars = _build_strategy_a_fixture_bars(bar_end, direction="long")
 
     strat = StrategyA(cfg, events=[])
-    ev = strat.evaluate_instrument(inst, bars, _ok_rep(), _ok_rep(), now_utc=now)
+    ev = strat.evaluate_instrument(inst, bars, _ok_rep(), _ok_rep(), now_utc=now, crypto_meta=_ok_crypto_meta())
     assert ev.decision == "watch"
     assert "排程延遲" in ev.watch_reason
     assert ev.filter_checks["schedule_timely"] is False
@@ -204,9 +208,23 @@ def test_strategy_a_market_state_filters_events_crypto_and_correlation() -> None
     res_corr = strat.evaluate_instrument(
         inst, bars, _ok_rep(), _ok_rep(), now_utc=now,
         peer_metrics={"crypto_majors": {"violent_move": True}},
+        crypto_meta=_ok_crypto_meta(),
     )
     assert res_corr.decision == "watch"
     assert res_corr.filter_checks["correlated_peers_calm"] is False
+
+
+def test_strategy_a_rejects_crypto_when_derivatives_data_missing() -> None:
+    cfg = load_config()
+    now = datetime(2026, 11, 16, 4, 0, tzinfo=timezone.utc)
+    inst = next(i for i in cfg["instruments"] if i["symbol"] == "BTCUSDT")
+    bars = _build_strategy_a_fixture_bars(now, direction="long")
+    strat = StrategyA(cfg, events=[])
+
+    ev = strat.evaluate_instrument(inst, bars, _ok_rep(), _ok_rep(), now_utc=now, crypto_meta=None)
+    assert ev.decision == "watch"
+    assert ev.filter_checks["crypto_derivatives_ok"] is False
+    assert "資料不足" in ev.watch_reason
 
 
 def test_strategy_a_range_and_entry_generates_valid_long_and_short_signal() -> None:
@@ -217,7 +235,7 @@ def test_strategy_a_range_and_entry_generates_valid_long_and_short_signal() -> N
 
     # Long setup
     bars_l = _build_strategy_a_fixture_bars(now, direction="long")
-    ev_l = strat.evaluate_instrument(inst, bars_l, _ok_rep(), _ok_rep(), now_utc=now)
+    ev_l = strat.evaluate_instrument(inst, bars_l, _ok_rep(), _ok_rep(), now_utc=now, crypto_meta=_ok_crypto_meta())
     assert ev_l.decision == "signal"
     assert ev_l.candidate is not None
     c_l = ev_l.candidate
@@ -231,7 +249,7 @@ def test_strategy_a_range_and_entry_generates_valid_long_and_short_signal() -> N
 
     # Short setup
     bars_s = _build_strategy_a_fixture_bars(now, direction="short")
-    ev_s = strat.evaluate_instrument(inst, bars_s, _ok_rep(), _ok_rep(), now_utc=now)
+    ev_s = strat.evaluate_instrument(inst, bars_s, _ok_rep(), _ok_rep(), now_utc=now, crypto_meta=_ok_crypto_meta())
     assert ev_s.decision == "signal"
     assert ev_s.candidate is not None
     c_s = ev_s.candidate
@@ -258,7 +276,9 @@ def test_strategy_a_rejects_trending_high_adx_or_high_atr_ratio() -> None:
         trending_bars.append(
             OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), base, base + 0.5, base - 0.1, base + 0.25, vol)
         )
-    ev = strat.evaluate_instrument(inst, trending_bars, _ok_rep(), _ok_rep(), now_utc=now)
+    ev = strat.evaluate_instrument(
+        inst, trending_bars, _ok_rep(), _ok_rep(), now_utc=now, crypto_meta=_ok_crypto_meta()
+    )
     assert ev.decision == "watch"
     assert ev.filter_checks.get("adx_below_max") is False
 
@@ -272,7 +292,7 @@ def test_strategy_a_breakout_protection_and_range_invalidation(tmp_path) -> None
     inst = next(i for i in cfg["instruments"] if i["symbol"] == "BTCUSDT")
     bars = _build_strategy_a_fixture_bars(now, direction="long")
     strat = StrategyA(cfg, events=[])
-    ev = strat.evaluate_instrument(inst, bars, _ok_rep(), _ok_rep(), now_utc=now)
+    ev = strat.evaluate_instrument(inst, bars, _ok_rep(), _ok_rep(), now_utc=now, crypto_meta=_ok_crypto_meta())
     assert ev.decision == "signal" and ev.candidate is not None
 
     eng = SimulationEngine(cfg, out_dir=tmp_path)

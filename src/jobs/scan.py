@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from src.config_loader import load_config, load_control, load_events
-from src.data.adapters import FallbackDataFetcher
+from src.data.adapters import FallbackDataFetcher, fetch_crypto_derivatives_meta
 from src.data.models import FetchResult, OHLCVBar
 from src.data.quality import _parse_iso_utc, check_continuity
 from src.data.resample import resample_1m_to_15m
@@ -79,6 +79,7 @@ def run_scan(
     control_path: Path | None = None,
     events_path: Path | None = None,
     fetcher: FallbackDataFetcher | None = None,
+    derivatives_fetcher: Any | None = None,
     probe_all_adapters: bool = False,
     now_utc: datetime | None = None,
 ) -> dict[str, Any]:
@@ -303,6 +304,11 @@ def run_scan(
         rep_15m = reports_by_sym[sym]["15m"]
         b15 = bars_15m_by_sym.get(sym, [])
 
+        crypto_meta = None
+        if mkt == "crypto":
+            deriv_fn = derivatives_fetcher or fetch_crypto_derivatives_meta
+            crypto_meta = deriv_fn(inst)
+
         ev = strategy_a.evaluate_instrument(
             instrument=inst,
             bars_15m=b15,
@@ -310,6 +316,7 @@ def run_scan(
             report_15m=rep_15m,
             now_utc=now,
             peer_metrics=peer_metrics,
+            crypto_meta=crypto_meta,
         )
         heatmap_out[sym] = {
             "market": mkt,

@@ -123,3 +123,25 @@ def test_fallback_fetcher_switches_when_primary_fails() -> None:
     assert len(res.attempts) == 2
     assert res.attempts[0].ok is False
     assert res.attempts[1].ok is True
+
+
+def test_fetch_crypto_derivatives_meta_okx_and_fallback() -> None:
+    from src.data.adapters import fetch_crypto_derivatives_meta
+
+    inst = {"symbol": "BTCUSDT", "sources": {"okx": "BTC-USDT", "binance_vision": "BTCUSDT"}}
+
+    fr_okx = MagicMock()
+    fr_okx.json.return_value = {"code": "0", "data": [{"fundingRate": "0.0001"}]}
+    oi_okx = MagicMock()
+    oi_okx.json.return_value = {"code": "0", "data": [["2", "105.0"], ["1", "100.0"]]}
+
+    with patch("src.data.adapters.requests.get", side_effect=[fr_okx, oi_okx]):
+        meta = fetch_crypto_derivatives_meta(inst)
+    assert meta is not None
+    assert meta["funding_rate"] == 0.0001
+    assert meta["oi_change_1h_pct"] == 5.0
+
+    # When OKX & Binance both fail -> returns None (no fake defaults)
+    with patch("src.data.adapters.requests.get", side_effect=ConnectionError("blocked")):
+        meta_none = fetch_crypto_derivatives_meta(inst)
+    assert meta_none is None

@@ -272,12 +272,19 @@ class StrategyA:
         if not ev_ok:
             return _watch(ev_msg, session_end_utc)
 
-        # 6) Crypto derivatives check (if crypto & metadata supplied)
-        if market == "crypto" and crypto_meta is not None:
+        # 6) Crypto derivatives check (mandatory for crypto; missing data -> insufficient data)
+        if market == "crypto":
+            if (
+                crypto_meta is None
+                or crypto_meta.get("funding_rate") is None
+                or crypto_meta.get("oi_change_1h_pct") is None
+            ):
+                checks["crypto_derivatives_ok"] = False
+                return _watch("加密貨幣資金費率或未平倉量資料不足，無法驗證衍生品狀態", session_end_utc)
             max_fund = float(self.cfg.get("max_abs_funding_rate", 0.001))
             max_oi = float(self.cfg.get("max_oi_surge_pct", 10.0))
-            fr = abs(float(crypto_meta.get("funding_rate", 0.0)))
-            oi_chg = abs(float(crypto_meta.get("oi_change_1h_pct", 0.0)))
+            fr = abs(float(crypto_meta["funding_rate"]))
+            oi_chg = abs(float(crypto_meta["oi_change_1h_pct"]))
             deriv_ok = (fr <= max_fund) and (oi_chg <= max_oi)
             checks["crypto_derivatives_ok"] = deriv_ok
             if not deriv_ok:
