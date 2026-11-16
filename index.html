@@ -46,6 +46,10 @@
     <nav class="main-nav" aria-label="主導覽">
       <a href="#/wall" class="nav-link" data-route="wall">報單牆</a>
       <a href="#/results" class="nav-link" data-route="results">成績總表</a>
+      <a href="#/stats" class="nav-link" data-route="stats">績效統計</a>
+      <a href="#/account" class="nav-link" data-route="account">模擬帳戶</a>
+      <a href="#/scaling" class="nav-link" data-route="scaling">補倉比較</a>
+      <a href="#/risk" class="nav-link" data-route="risk">風控中心</a>
       <a href="#/data" class="nav-link" data-route="data">市場與資料</a>
       <button id="refresh-btn" class="btn btn-sm" type="button">重新整理</button>
     </nav>
@@ -303,9 +307,216 @@
       </section>
 
       <section class="card">
+        <h2>策略 A 低流動性時段熱力圖（UTC 小時）</h2>
+        <p class="subtitle">依最近 30–60 天已收盤 15m 資料計算各 UTC 小時平均波幅／成交量，高亮顯示後 1/3 低流動性候選時段。</p>
+        <div id="heatmap-box" class="muted">目前尚無低流動性時段資料（等待掃描）。</div>
+      </section>
+
+      <section class="card">
+        <h2>高影響經濟事件日曆（UTC / UTC+8）</h2>
+        <p class="subtitle">策略 A 於高影響事件前 4 小時與結束後 60 分鐘自動禁止報單。</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>事件名稱</th>
+                <th>貨幣／影響市場</th>
+                <th>時間 (UTC)</th>
+                <th>時間 (UTC+8)</th>
+              </tr>
+            </thead>
+            <tbody id="events-tbody">
+              <tr><td colspan="4" class="muted center">目前尚無經濟事件資料。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
         <h2>近期排程執行紀錄</h2>
         <p id="sched-summary" class="subtitle">排程頻率：每小時 07, 22, 37, 52 分 UTC 自動執行（避開整點尖峰）</p>
         <div id="run-log-box" class="muted">尚無排程紀錄。</div>
+      </section>
+    </section>
+
+    <!-- 頁面 5：績效統計 -->
+    <section id="view-stats" class="route-view hidden">
+      <section class="card">
+        <div class="section-header">
+          <div>
+            <h1>績效統計</h1>
+            <p class="subtitle">依策略、市場、多空方向與補倉類型分組統計；樣本數未達門檻一律顯示「尚未驗證」，不顯示容易誤導的勝率或報酬率數字。</p>
+          </div>
+          <span class="badge badge-warn">模擬驗證中，非投資建議</span>
+        </div>
+        <div id="stats-notice" class="alert-banner hidden"></div>
+        <p id="stats-meta" class="muted">目前尚無績效統計資料。</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>分組</th>
+                <th>狀態</th>
+                <th>已結束筆數</th>
+                <th>勝率</th>
+                <th>平均 R / 期望值</th>
+                <th>獲利因子</th>
+                <th>最大回撤</th>
+                <th>夏普 / 恢復因子</th>
+                <th>最大連虧</th>
+                <th>資金使用效率</th>
+              </tr>
+            </thead>
+            <tbody id="stats-tbody">
+              <tr><td colspan="10" class="muted center">目前尚無績效統計資料。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <!-- 頁面 6：模擬帳戶 -->
+    <section id="view-account" class="route-view hidden">
+      <section class="card">
+        <div class="section-header">
+          <div>
+            <h1>模擬帳戶與資金曲線</h1>
+            <p class="subtitle">虛擬總資金 100,000 USD（短線池 A 20,000＋長線池 B 80,000，資金池嚴格隔離）；現價浮動損益由瀏覽器即時價格估算。</p>
+          </div>
+          <span class="badge badge-warn">模擬驗證中，非投資建議</span>
+        </div>
+        <div class="summary-grid" id="account-summary-grid">
+          <div class="summary-card"><span class="metric-label">總淨值</span><span id="acc-total-eq" class="summary-val">--</span></div>
+          <div class="summary-card"><span class="metric-label">短線池 (A) 淨值</span><span id="acc-short-eq" class="summary-val">--</span></div>
+          <div class="summary-card"><span class="metric-label">長線池 (B) 淨值</span><span id="acc-long-eq" class="summary-val">--</span></div>
+          <div class="summary-card"><span class="metric-label">進行中持倉 / 使用保證金</span><span id="acc-open-margin" class="summary-val">--</span></div>
+        </div>
+        <h2 style="margin-top:14px;">帳戶資金曲線</h2>
+        <div id="equity-chart-box" class="chart-container"></div>
+        <p id="equity-chart-note" class="muted" style="margin-top:6px;">尚無淨值快照資料。</p>
+      </section>
+
+      <section class="card">
+        <h2>目前持倉與掛單明細</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>報單 / 標的</th>
+                <th>狀態 / 階段</th>
+                <th>平均成本 / 總數量</th>
+                <th>名目 / 槓桿 / 保證金</th>
+                <th>即時現價 / 未實現損益</th>
+                <th>止損 / TP1 / TP2</th>
+                <th>預估最大虧損 / 風報比</th>
+                <th>剩餘補倉</th>
+              </tr>
+            </thead>
+            <tbody id="account-positions-tbody">
+              <tr><td colspan="8" class="muted center">目前尚無模擬持倉資料。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <!-- 頁面 7：補倉方法比較（五個影子帳本） -->
+    <section id="view-scaling" class="route-view hidden">
+      <section class="card">
+        <div class="section-header">
+          <div>
+            <h1>補倉方法並行比較（五個影子帳本 A～E）</h1>
+            <p class="subtitle">同一批報單、同一觸發條件與成本，僅部位縮放政策不同；每個帳本皆獨立受第 7 節風控約束，主報單牆僅採用預設政策 E。</p>
+          </div>
+          <span class="badge badge-warn">模擬驗證中，非投資建議</span>
+        </div>
+        <div id="scaling-notice" class="alert-banner hidden"></div>
+        <p id="scaling-meta" class="muted">目前尚無影子帳本比較資料。</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>補倉政策</th>
+                <th>驗證狀態</th>
+                <th>樣本數 (已結束 / 門檻)</th>
+                <th>風險狀態 / 保證金%</th>
+                <th>勝率</th>
+                <th>平均 R</th>
+                <th>總報酬 / CAGR</th>
+                <th>最大回撤</th>
+                <th>夏普 / 獲利因子</th>
+                <th>恢復因子 / 最大連虧</th>
+                <th>資金效率 / 風險調整報酬</th>
+              </tr>
+            </thead>
+            <tbody id="scaling-tbody">
+              <tr><td colspan="11" class="muted center">目前尚無影子帳本比較資料。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <!-- 頁面 8：風控中心 -->
+    <section id="view-risk" class="route-view hidden">
+      <section class="card">
+        <div class="section-header">
+          <div>
+            <h1>風控中心</h1>
+            <p class="subtitle">引擎強制執行，任何策略皆不得繞過；觸及 12% 回撤暫停須透過 repo 內 <code>control/control.json</code> 手動覆核解除。</p>
+          </div>
+          <span class="badge badge-warn">模擬驗證中，非投資建議</span>
+        </div>
+        <p id="risk-meta" class="muted">目前尚無風控狀態資料。</p>
+        <div id="risk-meters-grid" class="meter-grid">
+          <div class="empty-state">目前尚無風控限額使用量資料。</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>相關性群組風險曝險（上限合併計算）</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>群組名稱</th>
+                <th>已使用預估停損風險</th>
+                <th>群組上限</th>
+                <th>使用比例</th>
+              </tr>
+            </thead>
+            <tbody id="risk-groups-tbody">
+              <tr><td colspan="4" class="muted center">目前尚無群組風險資料。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>持倉爆倉安全距離檢核（止損須先於爆倉）</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>標的 / 方向</th>
+                <th>平均成本</th>
+                <th>目前止損</th>
+                <th>預估爆倉價</th>
+                <th>止損距離</th>
+                <th>爆倉距離</th>
+                <th>止損 / 爆倉比例 (上限 50%)</th>
+              </tr>
+            </thead>
+            <tbody id="risk-liq-tbody">
+              <tr><td colspan="7" class="muted center">目前尚無持倉爆倉距離資料。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>近期風控事件紀錄</h2>
+        <div id="risk-events-box" class="muted">目前尚無風控事件。</div>
       </section>
     </section>
   </main>

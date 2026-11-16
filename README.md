@@ -1,6 +1,6 @@
 # Signal Desk 報單網站＋模擬驗證艙
 
-本專案為部署於 GitHub Pages 與 GitHub Actions 的多市場交易報單與模擬驗證系統（目前進度：**階段 5 — 策略 B 歷史回測、樣本外篩選與日線掃描**）。
+本專案為部署於 GitHub Pages 與 GitHub Actions 的多市場交易報單與模擬驗證系統（目前進度：**階段 6 — 五個影子帳本、績效統計、模擬帳戶與風控中心**）。
 
 - 正式網址：https://diabetepanda.github.io/pandatesttrading/
 - 聲明：**本站為個人模擬驗證，非投資建議。**
@@ -106,3 +106,16 @@ pytest -v
    - 加密貨幣由 `data-api.binance.vision` 分頁向後回抓（最高 `2600` 根日線，實測 5 檔皆達 `6.26–7.12` 年），外匯與商品由 `yfinance`（`10y`）抓取 `2513–2600` 根日線（約 `9.99` 年），全數 18 檔皆達 5 年以上門檻。
    - 若未來新增歷史不滿 5 年的標的，系統直接標記為 `insufficient_history`（歷史不足）而不硬算篩選。
    - **歷史回測不代表未來表現**，僅作為策略 B 候選篩選與研究驗證依據。
+
+## 假設與已知風險（階段 6）
+
+1. **排程並發控制與 `data` 分支合併重試**：
+   - `scan.yml`、`daily.yml`、`weekly.yml` 已改用各自獨立的 concurrency group（`data-writer-scan`、`data-writer-daily`、`data-writer-weekly`，皆設 `cancel-in-progress: false`），避免 15 分鐘掃描把正在等待的每日／每週任務擠掉取消。
+   - 若同時寫入 `data` 分支發生 non-fast-forward 失敗，`src/jobs/data_sync.py` 會自動執行 `git pull --rebase origin data` 並合併重疊檔案（例如 `run_log.json`、`state.json`、`signals_index.json`、`equity_curve.json` 與所有 `*.jsonl`），最多重試 `3` 次，不覆蓋其他排程資料。
+2. **五個影子帳本與樣本不足隱藏原則（`config/config.yaml`）**：
+   - `analytics.min_verified_trades_shadow` 預設 `30` 筆、`analytics.min_verified_trades_stats` 預設 `50` 筆、`analytics.min_cagr_days` 預設 `30` 天。
+   - 當已結束交易數未達門檻時，後端 `shadow_comparison.json` 與 `performance_stats.json` 會將勝率、期望值、總報酬、CAGR、夏普與獲利因子等易誤導數值輸出為 `null`，前端網頁（`#/scaling`、`#/stats`）一律標示 **`尚未驗證`**，且絕不判定任何方法為最佳。
+3. **指標公式保守預設**：
+   - 年化夏普率依觀察交易頻率年化計算（無風險利率 `analytics.risk_free_rate_annual` 預設 `0.0`）；期間未滿 `30` 天時 CAGR 標示為 `僅供參考`。
+   - 風險調整報酬率採用總報酬率除以 `max(1.0, max_drawdown_pct)`，資金使用效率採平均投入總名目／初始資金比例估算。
+   - 若 `data` 分支尚無淨值快照或影子比較檔，所有新頁面（`#/stats`、`#/account`、`#/scaling`、`#/risk`）一律顯示空狀態，絕不使用假資料或隨機數據。

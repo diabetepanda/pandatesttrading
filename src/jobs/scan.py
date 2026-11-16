@@ -463,6 +463,7 @@ def run_scan(
     _write_json(out_dir / "run_log.json", run_log)
     _write_json(out_dir / "watch_today.json", {"updated_at_utc": now_iso, "items": watch_today_items})
     _write_json(out_dir / "liquidity_heatmap.json", {"updated_at_utc": now_iso, "instruments": heatmap_out})
+    _write_json(out_dir / "events_calendar.json", {"updated_at_utc": now_iso, "events": events})
     _write_json(out_dir / "new_signals_to_commit.json", {"signal_ids": new_signal_ids})
 
     if probe_all_adapters:

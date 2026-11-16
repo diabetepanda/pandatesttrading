@@ -184,6 +184,15 @@ def merge_conflicted_content(rel_path: str, remote_text: str, local_text: str) -
         if norm == "orders.json" and isinstance(remote_obj, list) and isinstance(local_obj, list):
             return json.dumps(_merge_list_by_id(remote_obj, local_obj, ("order_id",)), ensure_ascii=False, indent=2) + "\n"
 
+        if norm == "equity_curve.json" and isinstance(remote_obj, dict) and isinstance(local_obj, dict):
+            merged_pts = _merge_list_by_id(
+                remote_obj.get("points") or [],
+                local_obj.get("points") or [],
+                ("ts_utc",),
+            )
+            merged_pts.sort(key=lambda x: str(x.get("ts_utc", "")) if isinstance(x, dict) else "")
+            return json.dumps({**remote_obj, **local_obj, "points": merged_pts[-2000:]}, ensure_ascii=False, indent=2) + "\n"
+
         if isinstance(remote_obj, dict) and isinstance(local_obj, dict):
             merged_dict = {**remote_obj, **local_obj}
             return json.dumps(merged_dict, ensure_ascii=False, indent=2) + "\n"

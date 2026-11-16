@@ -8,6 +8,12 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+from src.engine.analytics import (
+    build_performance_stats,
+    build_risk_status,
+    build_shadow_comparison,
+    export_equity_curve,
+)
 from src.risk.manager import RiskManager
 from src.scaling.policies import (
     TradeStage,
@@ -594,7 +600,12 @@ class SimulationEngine:
                     now_utc=now_utc,
                 )
             )
+            if risk_res.risk_event and pol_name != self.primary_policy_name:
+                if risk_res.risk_event.get("event_type") == "risk_review_completed":
+                    ledger.drawdown_paused = False
             if not risk_res.approved:
+                if risk_res.risk_status == "paused_drawdown":
+                    ledger.drawdown_paused = True
                 continue
 
             policy = get_scaling_policy(pol_name, self.config)
@@ -1069,11 +1080,25 @@ class SimulationEngine:
                         in_atr_add_zone=True,
                     )
                     if plan.allowed:
-                        # Also verify account margin cap <= 30%
+                        # Enforce per-ledger risk limits on add-on: drawdown pause, loss caps, margin <= 30%
                         acct = ledger.build_account_state(bar.close_ts_utc, self.latest_marks)
-                        max_margin = acct["equity_usd"] * (float(self.config.get("risk", {}).get("max_margin_usage_pct", 30.0)) / 100.0)
+                        risk_cfg = self.config.get("risk", {})
+                        eq_now = max(1e-9, float(acct["equity_usd"]))
+                        peak_now = max(eq_now, float(acct["peak_equity_usd"]))
+                        dd_now = (peak_now - eq_now) / peak_now * 100.0
+                        dd_pause = float(risk_cfg.get("drawdown_pause_pct", 12.0))
+                        max_daily = float(risk_cfg.get("max_daily_loss_usd", 1500.0))
+                        max_weekly = float(risk_cfg.get("max_weekly_loss_usd", 4000.0))
+                        max_margin = eq_now * (float(risk_cfg.get("max_margin_usage_pct", 30.0)) / 100.0)
                         add_margin = plan.notional_usd / max(1.0, trade.leverage)
-                        if acct["used_margin_usd"] + add_margin <= max_margin + 1e-9:
+                        risk_ok = (
+                            not acct["drawdown_paused"]
+                            and dd_now < dd_pause
+                            and float(acct["daily_pnl_usd"]) > -max_daily
+                            and float(acct["weekly_pnl_usd"]) > -max_weekly
+                            and acct["used_margin_usd"] + add_margin <= max_margin + 1e-9
+                        )
+                        if risk_ok:
                             fee_usd = plan.notional_usd * trade.fee_rate
                             trade.total_fees_usd += fee_usd
                             trade.realized_pnl_usd -= fee_usd
@@ -1330,6 +1355,24 @@ class SimulationEngine:
                 existing_state = {}
         existing_state["last_processed_ts"] = self.last_processed_ts
         state_path.write_text(json.dumps(existing_state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+        # Stage 6 analytics & risk exports (shadow comparison, grouped performance stats, risk center, equity curve)
+        (self.out_dir / "shadow_comparison.json").write_text(
+            json.dumps(build_shadow_comparison(self, ts), ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        (self.out_dir / "performance_stats.json").write_text(
+            json.dumps(build_performance_stats(self, ts), ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        (self.out_dir / "risk_status.json").write_text(
+            json.dumps(build_risk_status(self, ts), ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        (self.out_dir / "equity_curve.json").write_text(
+            json.dumps(export_equity_curve(self.out_dir, self.primary_policy_name), ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
 
     def load_state(self) -> None:
         """Restore persisted ledgers, sequences, and replay cursors from out_dir."""

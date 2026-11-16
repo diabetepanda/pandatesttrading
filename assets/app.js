@@ -17,8 +17,15 @@
   let cachedSignals = [];
   let cachedWatch = null;
   let cachedBacktest = null;
+  let cachedShadow = null;
+  let cachedPerf = null;
+  let cachedRisk = null;
+  let cachedEquity = null;
+  let cachedHeatmap = null;
+  let cachedEvents = null;
   let livePrices = {};
   let activeChart = null;
+  let activeEquityChart = null;
 
   function formatTaipeiTime(isoOrDate) {
     if (!isoOrDate) return "--";
@@ -903,6 +910,360 @@
       .join("");
   }
 
+  function unverifiedCell() {
+    return '<span class="pill pill-warn">尚未驗證</span>';
+  }
+
+  function formatPctOrUnverified(val, verified, suffix = "%") {
+    if (!verified || val === null || val === undefined) return unverifiedCell();
+    return `${Number(val).toFixed(2)}${suffix}`;
+  }
+
+  function renderPerformanceStats() {
+    const tbody = document.getElementById("stats-tbody");
+    const metaEl = document.getElementById("stats-meta");
+    const noticeEl = document.getElementById("stats-notice");
+    if (!tbody || !metaEl || !noticeEl) return;
+
+    if (!cachedPerf || !cachedPerf.overall) {
+      noticeEl.classList.add("hidden");
+      metaEl.textContent = "目前尚無績效統計資料（等待排程產生 performance_stats.json）。";
+      tbody.innerHTML = '<tr><td colspan="10" class="muted center">目前尚無績效統計資料。</td></tr>';
+      return;
+    }
+
+    const minN = cachedPerf.min_verified_trades || 50;
+    metaEl.textContent = `最後統計時間 (UTC+8)：${formatTaipeiTime(cachedPerf.updated_at_utc)}｜主帳本政策：${escapeHtml(cachedPerf.primary_policy || "E")}｜最低驗證樣本門檻：${minN} 筆`;
+
+    const rows = [
+      ["總計 (Overall)", cachedPerf.overall],
+      ["策略 A (短線)", cachedPerf.by_strategy?.A],
+      ["策略 B (長線)", cachedPerf.by_strategy?.B],
+      ["市場：加密貨幣", cachedPerf.by_market?.crypto],
+      ["市場：外匯", cachedPerf.by_market?.forex],
+      ["市場：商品", cachedPerf.by_market?.commodity],
+      ["方向：做多", cachedPerf.by_direction?.long],
+      ["方向：做空", cachedPerf.by_direction?.short],
+      ["僅初始進場", cachedPerf.by_add_type?.initial_only],
+      ["含逆勢補倉", cachedPerf.by_add_type?.mean_add],
+      ["含順勢加倉", cachedPerf.by_add_type?.trend_add],
+    ].filter(([, m]) => Boolean(m));
+
+    if (!cachedPerf.overall.verified) {
+      noticeEl.textContent = `目前總已結束報單數為 ${cachedPerf.overall.closed_trades} 筆（少於 ${minN} 筆），樣本不足，一律標示「尚未驗證」且不顯示勝率與報酬率數字。`;
+      noticeEl.classList.remove("hidden");
+    } else {
+      noticeEl.classList.add("hidden");
+    }
+
+    tbody.innerHTML = rows
+      .map(([label, m]) => {
+        const verBadge = m.verified ? '<span class="pill pill-ok">已驗證</span>' : '<span class="pill pill-warn">尚未驗證</span>';
+        const cntText = `${m.closed_trades || 0} / ${m.min_trades_required || minN}`;
+        if (!m.verified) {
+          return `
+            <tr>
+              <td><strong>${escapeHtml(label)}</strong></td>
+              <td>${verBadge}</td>
+              <td>${cntText}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+            </tr>
+          `;
+        }
+        return `
+          <tr>
+            <td><strong>${escapeHtml(label)}</strong></td>
+            <td>${verBadge}</td>
+            <td>${cntText}</td>
+            <td>${Number(m.win_rate_pct).toFixed(2)}%</td>
+            <td>${Number(m.avg_r).toFixed(3)}R</td>
+            <td>${Number(m.profit_factor).toFixed(2)}</td>
+            <td>${Number(m.max_drawdown_pct).toFixed(2)}%</td>
+            <td>${Number(m.sharpe).toFixed(2)} / ${Number(m.recovery_factor).toFixed(2)}</td>
+            <td>${m.max_consecutive_losses ?? 0}</td>
+            <td>${Number(m.capital_efficiency_pct).toFixed(2)}%</td>
+          </tr>
+        `;
+      })
+      .join("");
+  }
+
+  function renderSimulatedAccount() {
+    const acc = cachedRisk?.account;
+    document.getElementById("acc-total-eq").textContent = acc ? formatUsd(acc.equity_usd) : "--";
+    document.getElementById("acc-short-eq").textContent = acc ? formatUsd(acc.short_term_equity_usd) : "--";
+    document.getElementById("acc-long-eq").textContent = acc ? formatUsd(acc.long_term_equity_usd) : "--";
+    const positions = cachedRisk?.open_positions || [];
+    document.getElementById("acc-open-margin").textContent = acc
+      ? `${positions.length} 筆 / ${formatUsd(acc.used_margin_usd)} (${Number(acc.used_margin_pct).toFixed(1)}%)`
+      : "--";
+
+    const chartBox = document.getElementById("equity-chart-box");
+    const chartNote = document.getElementById("equity-chart-note");
+    if (chartBox && chartNote) {
+      if (activeEquityChart) {
+        activeEquityChart.remove();
+        activeEquityChart = null;
+      }
+      const pts = cachedEquity?.points || [];
+      if (pts.length === 0 || !window.LightweightCharts) {
+        chartBox.innerHTML = "";
+        chartNote.textContent = pts.length === 0 ? "目前尚無淨值快照資料（等待排程產生 equity_curve.json）。" : "圖表函式庫載入失敗。";
+      } else {
+        chartBox.innerHTML = "";
+        activeEquityChart = window.LightweightCharts.createChart(chartBox, {
+          width: chartBox.clientWidth || 720,
+          height: chartBox.clientHeight || 340,
+          layout: { background: { color: "#0d1117" }, textColor: "#c9d1d9" },
+          grid: { vertLines: { color: "#1f242c" }, horzLines: { color: "#1f242c" } },
+          timeScale: { timeVisible: true, secondsVisible: false },
+        });
+        const totalSeries = activeEquityChart.addLineSeries({ color: "#58a6ff", lineWidth: 2, title: "總淨值" });
+        const toChartData = (key) => {
+          const seen = new Map();
+          pts.forEach((p) => {
+            const t = Math.floor(new Date(p.ts_utc).getTime() / 1000);
+            const v = Number(p[key]);
+            if (!Number.isNaN(t) && !Number.isNaN(v)) seen.set(t, v);
+          });
+          return Array.from(seen.entries()).sort((a, b) => a[0] - b[0]).map(([time, value]) => ({ time, value }));
+        };
+        totalSeries.setData(toChartData("total_equity_usd"));
+        activeEquityChart.timeScale().fitContent();
+        chartNote.textContent = `共有 ${pts.length} 筆淨值快照（主帳本政策 ${cachedEquity.primary_policy || "E"}）。`;
+      }
+    }
+
+    const posTbody = document.getElementById("account-positions-tbody");
+    if (!posTbody) return;
+    if (!cachedRisk) {
+      posTbody.innerHTML = '<tr><td colspan="8" class="muted center">目前尚無模擬持倉資料（等待排程產生 risk_status.json）。</td></tr>';
+      return;
+    }
+    if (positions.length === 0) {
+      posTbody.innerHTML = '<tr><td colspan="8" class="muted center">目前無持倉或等待入場掛單。</td></tr>';
+      return;
+    }
+    posTbody.innerHTML = positions
+      .map((p) => {
+        const pxInfo = getLivePriceInfo(p.symbol, null);
+        const refPx = pxInfo.price !== null ? pxInfo.price : p.mark_price;
+        let floatUsd = p.unrealized_pnl_usd || 0;
+        if (pxInfo.price !== null && p.total_qty > 0 && p.avg_entry_price > 0) {
+          floatUsd = p.direction === "long" ? (pxInfo.price - p.avg_entry_price) * p.total_qty : (p.avg_entry_price - pxInfo.price) * p.total_qty;
+        }
+        const stageText = p.stages && p.stages.length > 0
+          ? p.stages.map((s) => `#${s.stage}:${formatNumber(s.fill_price)}`).join(", ")
+          : "--";
+        return `
+          <tr>
+            <td><a href="#/signal/${encodeURIComponent(p.signal_id)}">${escapeHtml(p.signal_id)}</a><br><strong>${escapeHtml(p.symbol)}</strong> (${p.strategy} / ${p.direction === "long" ? "多" : "空"})</td>
+            <td>${escapeHtml(p.state)}<br><span class="muted">${escapeHtml(stageText)}</span></td>
+            <td>${p.avg_entry_price > 0 ? formatNumber(p.avg_entry_price) : "--"}<br><span class="muted">${p.total_qty}</span></td>
+            <td>${formatUsd(p.notional_usd)}<br><span class="muted">${p.leverage}x / ${formatUsd(p.margin_usd)}</span></td>
+            <td>${formatNumber(refPx) || "--"} (${escapeHtml(pxInfo.source)})<br><span class="${floatUsd >= 0 ? "chg-up" : "chg-down"}">${formatUsd(floatUsd)}</span></td>
+            <td>SL ${formatNumber(p.current_stop_loss)}<br><span class="muted">TP1 ${formatNumber(p.current_tp1)} / TP2 ${typeof p.current_tp2 === "number" ? formatNumber(p.current_tp2) : escapeHtml(p.current_tp2)}</span></td>
+            <td>${formatUsd(p.estimated_max_loss_usd)}<br><span class="muted">1:${p.rr_ratio}</span></td>
+            <td>${p.remaining_adds} 次</td>
+          </tr>
+        `;
+      })
+      .join("");
+  }
+
+  function renderScalingComparison() {
+    const tbody = document.getElementById("scaling-tbody");
+    const metaEl = document.getElementById("scaling-meta");
+    const noticeEl = document.getElementById("scaling-notice");
+    if (!tbody || !metaEl || !noticeEl) return;
+
+    if (!cachedShadow || !Array.isArray(cachedShadow.policies) || cachedShadow.policies.length === 0) {
+      noticeEl.classList.add("hidden");
+      metaEl.textContent = "目前尚無五個影子帳本比較資料（等待排程產生 shadow_comparison.json）。";
+      tbody.innerHTML = '<tr><td colspan="11" class="muted center">目前尚無影子帳本比較資料。</td></tr>';
+      return;
+    }
+
+    const minN = cachedShadow.min_verified_trades || 30;
+    metaEl.textContent = `最後更新 (UTC+8)：${formatTaipeiTime(cachedShadow.updated_at_utc)}｜最低驗證門檻：${minN} 筆｜最佳政策判定：${cachedShadow.best_policy ? `政策 ${cachedShadow.best_policy}` : "尚未驗證（不判定最佳方法）"}`;
+
+    if (!cachedShadow.all_verified) {
+      noticeEl.textContent = `目前部分或全部帳本未達 ${minN} 筆已結束交易門檻，依規格標示「尚未驗證」，不顯示勝率與報酬率數字，亦不得宣稱任何方法為最佳。`;
+      noticeEl.classList.remove("hidden");
+    } else {
+      noticeEl.classList.add("hidden");
+    }
+
+    tbody.innerHTML = cachedShadow.policies
+      .map((p) => {
+        const verPill = p.verified ? '<span class="pill pill-ok">已驗證</span>' : '<span class="pill pill-warn">尚未驗證</span>';
+        const primaryTag = p.is_primary ? ' <span class="pill pill-live">主帳本</span>' : "";
+        const riskCell = `${escapeHtml(p.risk_status)}<br><span class="muted">保證金 ${Number(p.used_margin_pct || 0).toFixed(1)}%</span>`;
+        const sampleCell = `${p.closed_trades || 0} / ${p.min_trades_required || minN} 筆<br><span class="muted">進行中 ${p.open_trades || 0}</span>`;
+        if (!p.verified) {
+          return `
+            <tr>
+              <td><strong>${escapeHtml(p.label)}</strong>${primaryTag}</td>
+              <td>${verPill}</td>
+              <td>${sampleCell}</td>
+              <td>${riskCell}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+              <td>${unverifiedCell()}</td>
+            </tr>
+          `;
+        }
+        const cagrText = p.cagr_pct !== null && p.cagr_pct !== undefined
+          ? `${Number(p.cagr_pct).toFixed(2)}%`
+          : escapeHtml(p.cagr_note || "僅供參考");
+        return `
+          <tr>
+            <td><strong>${escapeHtml(p.label)}</strong>${primaryTag}</td>
+            <td>${verPill}</td>
+            <td>${sampleCell}</td>
+            <td>${riskCell}</td>
+            <td>${Number(p.win_rate_pct).toFixed(2)}%</td>
+            <td>${Number(p.avg_r).toFixed(3)}R</td>
+            <td>${Number(p.total_return_pct).toFixed(2)}% / ${cagrText}</td>
+            <td>${Number(p.max_drawdown_pct).toFixed(2)}%</td>
+            <td>${Number(p.sharpe).toFixed(2)} / ${Number(p.profit_factor).toFixed(2)}</td>
+            <td>${Number(p.recovery_factor).toFixed(2)} / ${p.max_consecutive_losses ?? 0}</td>
+            <td>${Number(p.capital_efficiency_pct).toFixed(2)}% / ${Number(p.scaled_risk_adjusted_return).toFixed(2)}</td>
+          </tr>
+        `;
+      })
+      .join("");
+  }
+
+  function renderMeter(title, currentLabel, limitLabel, ratioPct) {
+    const pct = Math.max(0, Math.min(100, Number(ratioPct) || 0));
+    const cls = pct >= 85 ? "danger" : (pct >= 60 ? "warn" : "");
+    return `
+      <div class="meter-card">
+        <div class="meter-head"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(currentLabel)} / ${escapeHtml(limitLabel)}</span></div>
+        <div class="meter-bar"><div class="meter-fill ${cls}" style="width:${pct.toFixed(1)}%"></div></div>
+      </div>
+    `;
+  }
+
+  function renderRiskCenter() {
+    const metaEl = document.getElementById("risk-meta");
+    const metersGrid = document.getElementById("risk-meters-grid");
+    const groupsTbody = document.getElementById("risk-groups-tbody");
+    const liqTbody = document.getElementById("risk-liq-tbody");
+    const eventsBox = document.getElementById("risk-events-box");
+    if (!metaEl || !metersGrid || !groupsTbody || !liqTbody || !eventsBox) return;
+
+    if (!cachedRisk || !cachedRisk.account) {
+      metaEl.textContent = "目前尚無風控狀態資料（等待排程產生 risk_status.json）。";
+      metersGrid.innerHTML = '<div class="empty-state">目前尚無風控限額使用量資料。</div>';
+      groupsTbody.innerHTML = '<tr><td colspan="4" class="muted center">目前尚無群組風險資料。</td></tr>';
+      liqTbody.innerHTML = '<tr><td colspan="7" class="muted center">目前尚無持倉爆倉距離資料。</td></tr>';
+      eventsBox.innerHTML = '<p class="muted">目前尚無風控事件。</p>';
+      return;
+    }
+
+    const a = cachedRisk.account;
+    metaEl.textContent = `最後檢核 (UTC+8)：${formatTaipeiTime(cachedRisk.updated_at_utc)}｜目前狀態：${escapeHtml(a.risk_status)}｜最高淨值：${formatUsd(a.peak_equity_usd)}`;
+
+    const dailyLossUsed = Math.max(0, -Number(a.daily_pnl_usd || 0));
+    const weeklyLossUsed = Math.max(0, -Number(a.weekly_pnl_usd || 0));
+    metersGrid.innerHTML = [
+      renderMeter("單日虧損限額", formatUsd(dailyLossUsed), formatUsd(a.max_daily_loss_usd), (dailyLossUsed / Math.max(1, a.max_daily_loss_usd)) * 100),
+      renderMeter("單週虧損限額", formatUsd(weeklyLossUsed), formatUsd(a.max_weekly_loss_usd), (weeklyLossUsed / Math.max(1, a.max_weekly_loss_usd)) * 100),
+      renderMeter("帳戶回撤 (8% 警戒 / 12% 暫停)", `${Number(a.drawdown_pct).toFixed(2)}%`, `${a.drawdown_pause_pct}%`, (a.drawdown_pct / Math.max(1, a.drawdown_pause_pct)) * 100),
+      renderMeter("全帳戶保證金使用率", `${Number(a.used_margin_pct).toFixed(2)}%`, `${a.max_margin_usage_pct}%`, (a.used_margin_pct / Math.max(1, a.max_margin_usage_pct)) * 100),
+      renderMeter("全帳戶預估停損總風險", formatUsd(a.total_stop_risk_usd), formatUsd(a.max_total_stop_risk_usd), (a.total_stop_risk_usd / Math.max(1, a.max_total_stop_risk_usd)) * 100),
+    ].join("");
+
+    const groups = cachedRisk.correlation_groups || [];
+    groupsTbody.innerHTML = groups.length === 0
+      ? '<tr><td colspan="4" class="muted center">無群組資料。</td></tr>'
+      : groups.map((g) => `
+          <tr>
+            <td><strong>${escapeHtml(g.name)}</strong> (<code>${escapeHtml(g.group_id)}</code>)</td>
+            <td>${formatUsd(g.used_risk_usd)}</td>
+            <td>${formatUsd(g.limit_usd)}</td>
+            <td>${Number(g.usage_pct).toFixed(1)}%</td>
+          </tr>
+        `).join("");
+
+    const positions = cachedRisk.open_positions || [];
+    liqTbody.innerHTML = positions.length === 0
+      ? '<tr><td colspan="7" class="muted center">目前無進行中倉位或掛單。</td></tr>'
+      : positions.map((p) => {
+          const ratioPct = Number(p.stop_to_liq_ratio || 0) * 100;
+          const badge = ratioPct <= 50 ? '<span class="pill pill-ok">安全</span>' : '<span class="pill pill-fail">超標</span>';
+          return `
+            <tr>
+              <td><strong>${escapeHtml(p.symbol)}</strong> (${p.direction === "long" ? "做多" : "做空"})</td>
+              <td>${formatNumber(p.avg_entry_price || p.mark_price)}</td>
+              <td>${formatNumber(p.current_stop_loss)}</td>
+              <td>${formatNumber(p.liquidation_price)}</td>
+              <td>${Number(p.stop_distance_pct).toFixed(2)}%</td>
+              <td>${Number(p.liquidation_distance_pct).toFixed(2)}%</td>
+              <td>${ratioPct.toFixed(1)}% ${badge}</td>
+            </tr>
+          `;
+        }).join("");
+
+    const revents = cachedRisk.recent_risk_events || [];
+    eventsBox.innerHTML = revents.length === 0
+      ? '<p class="muted">目前尚無風控事件。</p>'
+      : `<ul class="timeline">${revents.map((ev) => `<li class="timeline-item"><strong>${formatTaipeiTime(ev.ts_utc)}</strong>｜<code>${escapeHtml(ev.event_type)}</code>｜${escapeHtml(ev.reason || ev.note || "")}</li>`).join("")}</ul>`;
+  }
+
+  function renderDataExtras() {
+    const heatBox = document.getElementById("heatmap-box");
+    const evTbody = document.getElementById("events-tbody");
+    if (heatBox) {
+      const items = cachedHeatmap?.instruments || [];
+      if (items.length === 0) {
+        heatBox.innerHTML = '<p class="muted">目前尚無低流動性時段資料（等待掃描）。</p>';
+      } else {
+        heatBox.innerHTML = `
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>標的</th><th>低流動性 UTC 小時分佈（高亮 = 候選時段）</th></tr></thead>
+              <tbody>
+                ${items.map((it) => {
+                  const lowSet = new Set(it.low_liquidity_hours_utc || []);
+                  const chips = Array.from({ length: 24 }, (_, h) =>
+                    `<span class="hour-chip ${lowSet.has(h) ? "hour-low" : ""}">${String(h).padStart(2, "0")}</span>`
+                  ).join("");
+                  return `<tr><td><strong>${escapeHtml(it.symbol)}</strong></td><td><div class="hour-row">${chips}</div></td></tr>`;
+                }).join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+    }
+    if (evTbody) {
+      const evs = cachedEvents?.events || [];
+      evTbody.innerHTML = evs.length === 0
+        ? '<tr><td colspan="4" class="muted center">目前尚無經濟事件資料。</td></tr>'
+        : evs.map((ev) => `
+            <tr>
+              <td><strong>${escapeHtml(ev.title)}</strong></td>
+              <td>${escapeHtml(Array.isArray(ev.currencies) ? ev.currencies.join(", ") : (ev.currency || "--"))}</td>
+              <td><code>${escapeHtml(ev.time_utc)}</code></td>
+              <td>${formatTaipeiTime(ev.time_utc)}</td>
+            </tr>
+          `).join("");
+    }
+  }
+
   function applyRoute() {
     const rawHash = window.location.hash || "#/wall";
     const cleaned = rawHash.replace(/^#\/?/, "");
@@ -920,9 +1281,26 @@
       document.querySelector('.nav-link[data-route="results"]')?.classList.add("active");
       renderResultsTable();
       renderBacktestResults();
+    } else if (route === "stats") {
+      document.getElementById("view-stats").classList.remove("hidden");
+      document.querySelector('.nav-link[data-route="stats"]')?.classList.add("active");
+      renderPerformanceStats();
+    } else if (route === "account") {
+      document.getElementById("view-account").classList.remove("hidden");
+      document.querySelector('.nav-link[data-route="account"]')?.classList.add("active");
+      renderSimulatedAccount();
+    } else if (route === "scaling") {
+      document.getElementById("view-scaling").classList.remove("hidden");
+      document.querySelector('.nav-link[data-route="scaling"]')?.classList.add("active");
+      renderScalingComparison();
+    } else if (route === "risk") {
+      document.getElementById("view-risk").classList.remove("hidden");
+      document.querySelector('.nav-link[data-route="risk"]')?.classList.add("active");
+      renderRiskCenter();
     } else if (route === "data") {
       document.getElementById("view-data").classList.remove("hidden");
       document.querySelector('.nav-link[data-route="data"]')?.classList.add("active");
+      renderDataExtras();
     } else {
       document.getElementById("view-wall").classList.remove("hidden");
       document.querySelector('.nav-link[data-route="wall"]')?.classList.add("active");
@@ -952,13 +1330,18 @@
       liveUpdatedEl.textContent = formatTaipeiTime(new Date());
     }
     if (cachedInstruments.length > 0) renderInstruments();
-    if ((window.location.hash || "#/wall").startsWith("#/wall") || !window.location.hash) renderWallCards();
+    const curHash = window.location.hash || "#/wall";
+    if (curHash.startsWith("#/wall") || !window.location.hash) renderWallCards();
+    if (curHash.startsWith("#/account")) renderSimulatedAccount();
   }
 
   async function refreshAll() {
     const errBox = document.getElementById("fetch-error-box");
     try {
-      const [instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, watchRes, btRes] = await Promise.allSettled([
+      const [
+        instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, watchRes, btRes,
+        shadowRes, perfRes, riskRes, eqRes, heatRes, evRes,
+      ] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
         fetchDataJson("data_health.json"),
         fetchDataJson("control_status.json"),
@@ -967,6 +1350,12 @@
         fetchDataJson("signals_index.json"),
         fetchDataJson("watch_today.json"),
         fetchDataJson("backtest_results.json"),
+        fetchDataJson("shadow_comparison.json"),
+        fetchDataJson("performance_stats.json"),
+        fetchDataJson("risk_status.json"),
+        fetchDataJson("equity_curve.json"),
+        fetchDataJson("liquidity_heatmap.json"),
+        fetchDataJson("events_calendar.json"),
       ]);
 
       if (instRes.status === "rejected") {
@@ -978,11 +1367,22 @@
       cachedSignals = signalsRes.status === "fulfilled" && Array.isArray(signalsRes.value) ? signalsRes.value : [];
       cachedWatch = watchRes.status === "fulfilled" ? watchRes.value : null;
       cachedBacktest = btRes.status === "fulfilled" ? btRes.value : null;
+      cachedShadow = shadowRes.status === "fulfilled" ? shadowRes.value : null;
+      cachedPerf = perfRes.status === "fulfilled" ? perfRes.value : null;
+      cachedRisk = riskRes.status === "fulfilled" ? riskRes.value : null;
+      cachedEquity = eqRes.status === "fulfilled" ? eqRes.value : null;
+      cachedHeatmap = heatRes.status === "fulfilled" ? heatRes.value : null;
+      cachedEvents = evRes.status === "fulfilled" ? evRes.value : null;
 
       renderInstruments();
       renderWallCards();
       renderResultsTable();
       renderBacktestResults();
+      renderPerformanceStats();
+      renderSimulatedAccount();
+      renderScalingComparison();
+      renderRiskCenter();
+      renderDataExtras();
 
       const health = healthRes.status === "fulfilled" ? healthRes.value : null;
       const control = controlRes.status === "fulfilled" ? controlRes.value : null;

@@ -56,6 +56,12 @@ scaling:
   policy_e_low_vol_multiplier: 1.15
   trend_add_min_profit_r: 1.0
 
+analytics:
+  min_verified_trades_shadow: 30
+  min_verified_trades_stats: 50
+  min_cagr_days: 30
+  risk_free_rate_annual: 0.0
+
 signals:
   max_daily_signals: 10
   order_expiry_hours: 4
