@@ -1,13 +1,15 @@
 # Signal Desk 報單網站＋模擬驗證艙
 
-本專案為部署於 GitHub Pages 與 GitHub Actions 的多市場交易報單與模擬驗證系統（目前進度：**階段 6 — 五個影子帳本、績效統計、模擬帳戶與風控中心**）。
+本專案為部署於 GitHub Pages 與 GitHub Actions 的多市場交易報單與模擬驗證系統（目前進度：**階段 7 — 最終驗收與文件**）。
 
 - 正式網址：https://diabetepanda.github.io/pandatesttrading/
+- 規格驗收檢查表：[CHECKLIST.md](./CHECKLIST.md)（逐條對照 `SPEC.md` 實作狀態與證據）
 - 聲明：**本站為個人模擬驗證，非投資建議。**
 
 ## 專案結構
 
 - `SPEC.md`：完整規格書
+- `CHECKLIST.md`：規格逐條驗收檢查表（完成／部分完成／未完成與已知風險）
 - `config/config.yaml`：所有可調參數與標的設定
 - `control/control.json`：手動控制開關（暫停報單、解除 12% 回撤暫停）
 - `events.yaml`：手動維護的高影響經濟事件日曆 (UTC)
@@ -24,12 +26,65 @@
 4. 設定 Actions 讀寫權限：進入 **Settings → Actions → General**，滑到底部的 **Workflow permissions**，選擇 **Read and write permissions**，按 **Save**。
 5. 手動觸發第一次掃描：進入 **Actions** 分頁 → 點選左側 **Market Scan (15m)** → 點右側 **Run workflow** → 維持 `probe_all: true` → 按 **Run workflow**。
 
-## 如何操作 `control/control.json`
+## 如何操作 `control/control.json`（不用指令列，直接在網頁修改）
 
-因為網站為純靜態網頁，沒有後端伺服器，暫停報單或解除風控暫停請直接在 GitHub 網頁編輯 `control/control.json`：
+網站是純靜態網頁，沒有後端伺服器；若要**手動暫停報單**，或於**回撤達 12% 暫停後解除恢復**，直接在 GitHub 網頁編輯 `control/control.json` 即可。
 
-- 暫停報單：將 `"paused": false` 改為 `true`，並填寫 `"pause_reason"`。
-- 解除 12% 回撤暫停：將 `"risk_review_done": false` 改為 `true`，並填寫 `"risk_review_note"`。
+### 網頁編輯步驟
+
+1. 用瀏覽器打開你的 GitHub 倉庫：`https://github.com/diabetepanda/pandatesttrading`（確認左上角分支顯示 `main`）。
+2. 在檔案列表中點進 **`control`** 資料夾，再點 **`control.json`**。
+3. 點檔案內容右上角的 **鉛筆圖示（Edit this file）** 進入編輯畫面。
+4. 依照下面欄位說明修改文字（**注意保留雙引號 `""`、冒號 `:` 與逗號 `,`，不要刪掉大括號 `{ }`，也不要在最後一欄多加逗號**）。
+5. 改好後點右上角綠色的 **`Commit changes...`** 按鈕，維持預設選項 **`Commit directly to the main branch`**，再按一次彈出視窗的 **`Commit changes`** 存檔即可。
+
+### 每個欄位的用途、可填值與生效時間
+
+| 欄位名稱 | 一句話用途 | 可填的值 | 改完多久生效 |
+| :--- | :--- | :--- | :--- |
+| `paused` | 手動緊急暫停或恢復所有新報單。 | `true`（暫停）或 `false`（正常運作，**不要加引號**） | 下一次排程執行時生效（策略 A 最慢 15 分鐘內；策略 B 為每日 00:15 UTC）。 |
+| `pause_reason` | 記錄手動暫停原因，會顯示在網站頂部警示列。 | 任意文字（例如 `"週末維護暫停"` 或 `""`） | 下一次排程寫入後顯示於網站。 |
+| `risk_review_done` | 帳戶回撤達 12% 被系統強制暫停後，確認人工已檢視風險的開關。 | `true`（已檢視）或 `false`（未檢視，**不要加引號**） | 下一次排程執行並通過檢核後立即解除暫停。 |
+| `risk_review_note` | 解除 12% 暫停時必須填寫的人工審查備註（不可留白）。 | 任意非空白文字（例如 `"已檢查持倉並確認恢復"`） | 與 `risk_review_done` 同次排程生效，並寫入風控事件紀錄。 |
+| `updated_at` | 方便你記錄最後手動修改時間的備忘欄位。 | UTC 時間字串（例如 `"2026-11-16T08:00:00Z"`） | 僅供備忘，不影響程式邏輯。 |
+
+### 回撤達 12% 暫停後，如何手動恢復？
+
+當風控中心或網站頂部顯示 **「回撤達 12% 暫停」** 時，單純把 `paused` 維持 `false` 並不會恢復，必須完成以下兩欄才有效：
+1. 依上方步驟點開 `control/control.json` 的鉛筆圖示。
+2. 將 `"risk_review_done": false` 改成 **`"risk_review_done": true`**。
+3. 將 `"risk_review_note": ""` 改成有內容的備註，例如 **`"risk_review_note": "已檢查風險與持倉，同意恢復報單"`**（**兩項同時成立才會解除**）。
+4. 按 **`Commit changes...`** → **`Commit changes`** 存檔。等下一次排程跑完（或手動去 Actions 跑一次），系統就會自動解除暫停並寫入一筆 `risk_review_completed` 事件。
+
+---
+
+## 常見狀況怎麼辦（非工程師排解指南）
+
+### 1. 網站畫面沒有更新（或頂部出現「排程可能延遲」）
+- **先強制重新整理**：在網站按 **`Cmd + Shift + R`**（Mac）或 **`Ctrl + Shift + R`**（Windows），排除瀏覽器舊快取；網站平時每 60 秒會自動重讀一次 `data` 分支。
+- **看頂部「最後排程更新」時間**：若距離現在超過 45 分鐘，代表 GitHub Actions 最近沒有成功送出新資料，請接著看下面第 2、3 點。
+
+### 2. GitHub Actions 出現紅色叉叉 ❌
+1. 打開倉庫上方的 **`Actions`** 分頁，點開出現紅色叉叉的那一筆執行紀錄。
+2. 點進失敗的步驟（例如 `Run scan job` 或 `Commit and push`）查看最後幾行紅字：
+   - 若是 `CI Tests` 失敗：代表最近一次改動沒有通過單元測試，需修正程式後重推。
+   - 若是 Yahoo / 交易所偶發連線逾時：通常等下一次排程自動重跑就會恢復，也可手動重跑一次（見第 3 點）。
+
+### 3. 自動排程沒有跑（怎麼手動按 `Run workflow`）
+GitHub 免費版的定時排程在尖峰時段偶爾會延遲或跳過，若倉庫太久沒有任何 commit 也可能被暫時停用排程：
+1. 打開倉庫網頁上方的 **`Actions`** 分頁。
+2. 在左側選單點選你要跑的工作流程：
+   - **Market Scan (15m)**：掃描策略 A、更新持倉與即時狀態（最常用）
+   - **Daily Strategy B Scan**：掃描策略 B 長線訊號
+   - **Weekly Strategy B Screening**：重跑策略 B 5 年歷史回測與篩選
+3. 點右側灰色的 **`Run workflow`** 下拉按鈕 → 維持預設分頁 `Branch: main` → 按綠色的 **`Run workflow`** 按鈕，等約 1 分鐘出現綠色勾勾 ✅ 後回網站重新整理即可。
+4. 若頁面上出現黃色提示「Scheduled workflows are disabled」，直接按提示上的 **`Enable workflow`** 即可重新啟用定時排程。
+
+### 4. 某個標的顯示「資料不足」或「資料不穩」
+- **這是依規格保護的正常現象，不是系統壞掉**：
+  - 例如 `AUDUSD`、`NZDUSD`、`NATGAS` 的 1 分鐘 K 線因 Yahoo Finance 在無跳動分鐘不回傳資料，缺口超過 10%，系統依規格標示 **`資料不穩`** 並自動停用該標的的策略 A，絕不用假資料填補。
+  - 若加密貨幣出現資金費率／持倉量 **`資料不足`**，表示當時 OKX 與 Binance 公開合約端點都連不上（例如美國 IP 限制），系統依規格自動觀望不報單。
+  - 若某標的在 `補倉比較` 或 `績效統計` 顯示 **`尚未驗證`**，代表已結束報單筆數還未達到設定門檻（30 筆 / 50 筆），累積足夠樣本後會自動顯示指標。
 
 ## 雙層價格架構（瀏覽器即時顯示 vs. 排程模擬驗證）
 
