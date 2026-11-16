@@ -61,3 +61,6 @@ def test_frontend_assets_and_relative_paths() -> None:
     assert "LIVE_REFRESH_MS" in config_js
     assert "LIVE_CRYPTO_SYMBOLS" in config_js
     assert "LIVE_METAL_SYMBOLS" in config_js
+    assert "LIVE_TRADINGVIEW_SYMBOLS" in config_js
+    for code in ("FX:EURUSD", "FX:USDJPY", "NYMEX:CL1!", "NYMEX:NG1!", "COMEX:GC1!", "COMEX:SI1!", "COMEX:HG1!"):
+        assert code in config_js

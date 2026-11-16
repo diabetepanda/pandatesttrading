@@ -9,6 +9,7 @@
   const REQUEST_TIMEOUT_MS = CFG.REQUEST_TIMEOUT_MS || 5000;
   const LIVE_CRYPTO_SYMBOLS = CFG.LIVE_CRYPTO_SYMBOLS || {};
   const LIVE_METAL_SYMBOLS = CFG.LIVE_METAL_SYMBOLS || {};
+  const LIVE_TRADINGVIEW_SYMBOLS = CFG.LIVE_TRADINGVIEW_SYMBOLS || {};
 
   let currentMarketFilter = "all";
   let cachedInstruments = [];
@@ -77,7 +78,9 @@
   }
 
   function isLiveCapable(symbol) {
-    return Boolean(LIVE_CRYPTO_SYMBOLS[symbol] || LIVE_METAL_SYMBOLS[symbol]);
+    return Boolean(
+      LIVE_CRYPTO_SYMBOLS[symbol] || LIVE_METAL_SYMBOLS[symbol] || LIVE_TRADINGVIEW_SYMBOLS[symbol]
+    );
   }
 
   async function fetchLiveCrypto() {
@@ -175,18 +178,58 @@
     return results;
   }
 
-  async function fetchLiveMetals() {
+  async function fetchTradingViewSymbol(tvCode) {
+    const url = `https://scanner.tradingview.com/symbol?symbol=${encodeURIComponent(tvCode)}&fields=close,change&no_404=true`;
+    const data = await fetchWithTimeout(url);
+    if (data && data.close !== undefined && data.close !== null && !Number.isNaN(Number(data.close))) {
+      return {
+        price: Number(data.close),
+        changePct: data.change !== undefined && data.change !== null ? Number(data.change) : null,
+        source: "TradingView",
+      };
+    }
+    return null;
+  }
+
+  async function fetchLiveTradFi() {
     const results = {};
-    const entries = Object.entries(LIVE_METAL_SYMBOLS);
+    const tvSymbols = Object.keys(LIVE_TRADINGVIEW_SYMBOLS);
+
     await Promise.all(
-      entries.map(async ([sym, code]) => {
-        try {
-          const data = await fetchWithTimeout(`https://api.gold-api.com/price/${code}`);
-          if (data && data.price !== undefined && !Number.isNaN(Number(data.price))) {
-            results[sym] = { price: Number(data.price), changePct: null, source: "gold-api" };
+      tvSymbols.map(async (sym) => {
+        const metalCode = LIVE_METAL_SYMBOLS[sym];
+        const tvCode = LIVE_TRADINGVIEW_SYMBOLS[sym];
+
+        if (metalCode) {
+          // 金屬：gold-api 為主來源，TradingView 為備援並補充 24h 漲跌幅
+          const [goldRes, tvRes] = await Promise.allSettled([
+            fetchWithTimeout(`https://api.gold-api.com/price/${metalCode}`),
+            fetchTradingViewSymbol(tvCode),
+          ]);
+          const tvOk = tvRes.status === "fulfilled" ? tvRes.value : null;
+          if (
+            goldRes.status === "fulfilled" &&
+            goldRes.value &&
+            goldRes.value.price !== undefined &&
+            !Number.isNaN(Number(goldRes.value.price))
+          ) {
+            results[sym] = {
+              price: Number(goldRes.value.price),
+              changePct: tvOk ? tvOk.changePct : null,
+              source: "gold-api",
+            };
+          } else if (tvOk) {
+            results[sym] = tvOk;
           } else {
             results[sym] = { failed: true };
           }
+          return;
+        }
+
+        // 外匯與能源：TradingView 為主來源
+        try {
+          const tvOk = await fetchTradingViewSymbol(tvCode);
+          results[sym] = tvOk || { failed: true };
         } catch (_) {
           results[sym] = { failed: true };
         }
@@ -199,8 +242,8 @@
     const liveLight = document.getElementById("live-light");
     const liveUpdatedEl = document.getElementById("live-updated");
 
-    const [cryptoRes, metalRes] = await Promise.all([fetchLiveCrypto(), fetchLiveMetals()]);
-    livePrices = { ...cryptoRes, ...metalRes };
+    const [cryptoRes, tradFiRes] = await Promise.all([fetchLiveCrypto(), fetchLiveTradFi()]);
+    livePrices = { ...cryptoRes, ...tradFiRes };
 
     const entries = Object.values(livePrices);
     const okCount = entries.filter((x) => x && !x.failed && x.price !== undefined).length;

@@ -42,13 +42,12 @@
    - 網頁打開時由瀏覽器直接呼叫免 API Key 且支援 CORS 的公開 API，**僅用於顯示**最新價、24h 漲跌與未來持倉浮動損益；**絕不觸發或改寫任何報單與模擬資料**。
    - 若即時來源連線失敗，畫面顯示「即時價格來源失敗」並改回顯示排程價，絕不填補假資料。
 
-### 各標的瀏覽器即時價格支援清單
+### 各標的瀏覽器即時價格支援清單（目前全部 18 檔皆支援）
 
-- **有瀏覽器即時價格（8 檔）**：
-  - **加密貨幣 5 檔**（`BTCUSDT`、`ETHUSDT`、`SOLUSDT`、`BNBUSDT`、`XRPUSDT`）：優先 OKX → 備援 Binance（`data-api.binance.vision`）→ 備援 Kraken。
-  - **金屬商品 3 檔**（`XAUUSD`、`XAGUSD`、`COPPER`）：`api.gold-api.com`。
-- **無瀏覽器即時價格（10 檔，顯示 GitHub Actions 排程價）**：
-  - **外匯 8 檔**（`EURUSD`、`GBPUSD`、`USDJPY`、`AUDUSD`、`USDCAD`、`USDCHF`、`NZDUSD`、`EURJPY`）與 **能源商品 2 檔**（`WTI`、`NATGAS`）：目前實測無免 API Key 且支援瀏覽器 CORS 的即時跳動報價來源（Yahoo Finance 對瀏覽器回傳 429 限流，Frankfurter / ExchangeRate-API 僅為每日參考匯率）。
+- **加密貨幣 5 檔**（`BTCUSDT`、`ETHUSDT`、`SOLUSDT`、`BNBUSDT`、`XRPUSDT`）：優先 OKX → 備援 Binance（`data-api.binance.vision`）→ 備援 Kraken。
+- **金屬商品 3 檔**（`XAUUSD`、`XAGUSD`、`COPPER`）：主來源 `api.gold-api.com`，備援與 24h 漲跌幅使用 TradingView 公開報價端點（`COMEX:GC1!`、`COMEX:SI1!`、`COMEX:HG1!`）。
+- **外匯 8 檔**（`EURUSD`、`GBPUSD`、`USDJPY`、`AUDUSD`、`USDCAD`、`USDCHF`、`NZDUSD`、`EURJPY`）與 **能源商品 2 檔**（`WTI`、`NATGAS`）：使用 TradingView 公開報價端點（`FX:*`、`NYMEX:CL1!`、`NYMEX:NG1!`）。
+- **選配股票（預設關閉）**：目前未啟用，無瀏覽器即時價格。
 
 ## 資料來源與排程限制
 

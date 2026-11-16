@@ -18,11 +18,28 @@
       XRPUSDT: { okx: "XRP-USDT", binance: "XRPUSDT", kraken: "XRPUSD" },
     },
 
-    // 金屬商品即時價格 (api.gold-api.com 支援 CORS)
+    // 金屬商品主來源 (api.gold-api.com 支援 CORS)
     LIVE_METAL_SYMBOLS: {
       XAUUSD: "XAU",
       XAGUSD: "XAG",
       COPPER: "HG",
+    },
+
+    // TradingView 公開報價端點代碼（外匯／能源主來源，金屬備援與漲跌幅來源）
+    LIVE_TRADINGVIEW_SYMBOLS: {
+      EURUSD: "FX:EURUSD",
+      GBPUSD: "FX:GBPUSD",
+      USDJPY: "FX:USDJPY",
+      AUDUSD: "FX:AUDUSD",
+      USDCAD: "FX:USDCAD",
+      USDCHF: "FX:USDCHF",
+      NZDUSD: "FX:NZDUSD",
+      EURJPY: "FX:EURJPY",
+      XAUUSD: "COMEX:GC1!",
+      XAGUSD: "COMEX:SI1!",
+      COPPER: "COMEX:HG1!",
+      WTI: "NYMEX:CL1!",
+      NATGAS: "NYMEX:NG1!",
     },
   };
 })(window);
