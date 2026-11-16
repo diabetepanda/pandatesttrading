@@ -1,11 +1,11 @@
 {
-  "generated_at_utc": "2026-11-16T07:11:44Z",
-  "duration_sec": 36.58,
+  "generated_at_utc": "2026-11-16T08:28:12Z",
+  "duration_sec": 101.49,
   "summary": {
-    "total": 18,
+    "total": 48,
     "passed": 0,
-    "failed": 18,
-    "insufficient_history": 0
+    "failed": 48,
+    "insufficient_history": 10
   },
   "results": [
     {
@@ -317,6 +317,1296 @@
         ]
       },
       "reason": "樣本外交易數 25 < 30",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 7.12,
+      "bar_count": 2600,
+      "start_date_utc": "2019-10-04",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2024-09-26",
+      "passed": false,
+      "chosen_strategy": "donchian",
+      "chosen_params": {
+        "period": 55,
+        "sl_atr_mult": 2.5
+      },
+      "in_sample": {
+        "trades": 33,
+        "win_rate_pct": 36.36,
+        "expectancy_r": 0.7231,
+        "expectancy_usd": 361.55,
+        "profit_factor": 2.786,
+        "max_drawdown_pct": 3.62,
+        "total_return_pct": 14.91,
+        "total_pnl_usd": 11931.04
+      },
+      "out_of_sample": {
+        "trades": 16,
+        "win_rate_pct": 25.0,
+        "expectancy_r": -0.0031,
+        "expectancy_usd": -1.56,
+        "profit_factor": 0.992,
+        "max_drawdown_pct": 2.39,
+        "total_return_pct": -0.03,
+        "total_pnl_usd": -25.03
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 0,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "ema_cross",
+            "trades": 18,
+            "expectancy_r": -0.2723
+          },
+          {
+            "fold": 2,
+            "strategy": "ema_cross",
+            "trades": 23,
+            "expectancy_r": -0.2782
+          },
+          {
+            "fold": 3,
+            "strategy": "donchian",
+            "trades": 10,
+            "expectancy_r": -0.1679
+          }
+        ]
+      },
+      "reason": "樣本外期望值 -0.003R <= 0；樣本外交易數 16 < 30；樣本外獲利因子 0.99 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "ADAUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 7.12,
+      "bar_count": 2600,
+      "start_date_utc": "2019-10-04",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2024-09-26",
+      "passed": false,
+      "chosen_strategy": "donchian",
+      "chosen_params": {
+        "period": 55,
+        "sl_atr_mult": 3.0
+      },
+      "in_sample": {
+        "trades": 32,
+        "win_rate_pct": 46.88,
+        "expectancy_r": 0.5061,
+        "expectancy_usd": 253.03,
+        "profit_factor": 2.67,
+        "max_drawdown_pct": 1.42,
+        "total_return_pct": 10.12,
+        "total_pnl_usd": 8097.05
+      },
+      "out_of_sample": {
+        "trades": 14,
+        "win_rate_pct": 35.71,
+        "expectancy_r": -0.0221,
+        "expectancy_usd": -11.04,
+        "profit_factor": 0.942,
+        "max_drawdown_pct": 1.89,
+        "total_return_pct": -0.19,
+        "total_pnl_usd": -154.62
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 1,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "ema_cross",
+            "trades": 15,
+            "expectancy_r": 0.1728
+          },
+          {
+            "fold": 2,
+            "strategy": "donchian",
+            "trades": 21,
+            "expectancy_r": -0.2301
+          },
+          {
+            "fold": 3,
+            "strategy": "donchian",
+            "trades": 9,
+            "expectancy_r": -0.1303
+          }
+        ]
+      },
+      "reason": "樣本外期望值 -0.022R <= 0；樣本外交易數 14 < 30；樣本外獲利因子 0.94 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 6.15,
+      "bar_count": 2246,
+      "start_date_utc": "2020-09-22",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2025-01-11",
+      "passed": false,
+      "chosen_strategy": "weekly_trend_atr",
+      "chosen_params": {
+        "weekly_ema": 20,
+        "sl_atr_mult": 3.0
+      },
+      "in_sample": {
+        "trades": 32,
+        "win_rate_pct": 50.0,
+        "expectancy_r": 0.8699,
+        "expectancy_usd": 434.93,
+        "profit_factor": 6.765,
+        "max_drawdown_pct": 0.96,
+        "total_return_pct": 17.4,
+        "total_pnl_usd": 13917.69
+      },
+      "out_of_sample": {
+        "trades": 14,
+        "win_rate_pct": 50.0,
+        "expectancy_r": 0.1549,
+        "expectancy_usd": 77.44,
+        "profit_factor": 1.651,
+        "max_drawdown_pct": 0.97,
+        "total_return_pct": 1.36,
+        "total_pnl_usd": 1084.22
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 2,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "donchian",
+            "trades": 15,
+            "expectancy_r": 0.2218
+          },
+          {
+            "fold": 2,
+            "strategy": "weekly_trend_atr",
+            "trades": 17,
+            "expectancy_r": -0.1645
+          },
+          {
+            "fold": 3,
+            "strategy": "weekly_trend_atr",
+            "trades": 9,
+            "expectancy_r": 0.2105
+          }
+        ]
+      },
+      "reason": "樣本外交易數 14 < 30",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "LINKUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 7.12,
+      "bar_count": 2600,
+      "start_date_utc": "2019-10-04",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2024-09-26",
+      "passed": false,
+      "chosen_strategy": "ema_cross",
+      "chosen_params": {
+        "fast": 20,
+        "slow": 100,
+        "sl_atr_mult": 3.0
+      },
+      "in_sample": {
+        "trades": 59,
+        "win_rate_pct": 40.68,
+        "expectancy_r": 0.1345,
+        "expectancy_usd": 67.25,
+        "profit_factor": 1.424,
+        "max_drawdown_pct": 3.61,
+        "total_return_pct": 4.96,
+        "total_pnl_usd": 3967.78
+      },
+      "out_of_sample": {
+        "trades": 23,
+        "win_rate_pct": 39.13,
+        "expectancy_r": 0.0792,
+        "expectancy_usd": 39.61,
+        "profit_factor": 1.217,
+        "max_drawdown_pct": 1.93,
+        "total_return_pct": 1.14,
+        "total_pnl_usd": 911.01
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 1,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "ema_cross",
+            "trades": 20,
+            "expectancy_r": -0.0382
+          },
+          {
+            "fold": 2,
+            "strategy": "donchian",
+            "trades": 20,
+            "expectancy_r": -0.2366
+          },
+          {
+            "fold": 3,
+            "strategy": "ema_cross",
+            "trades": 14,
+            "expectancy_r": 0.0732
+          }
+        ]
+      },
+      "reason": "樣本外交易數 23 < 30；樣本外獲利因子 1.22 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "DOTUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 6.24,
+      "bar_count": 2281,
+      "start_date_utc": "2020-08-18",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2024-12-31",
+      "passed": false,
+      "chosen_strategy": "weekly_trend_atr",
+      "chosen_params": {
+        "weekly_ema": 20,
+        "sl_atr_mult": 3.0
+      },
+      "in_sample": {
+        "trades": 38,
+        "win_rate_pct": 47.37,
+        "expectancy_r": 0.2187,
+        "expectancy_usd": 109.37,
+        "profit_factor": 1.867,
+        "max_drawdown_pct": 1.12,
+        "total_return_pct": 5.2,
+        "total_pnl_usd": 4156.04
+      },
+      "out_of_sample": {
+        "trades": 12,
+        "win_rate_pct": 41.67,
+        "expectancy_r": 0.1028,
+        "expectancy_usd": 51.41,
+        "profit_factor": 1.539,
+        "max_drawdown_pct": 0.77,
+        "total_return_pct": 0.77,
+        "total_pnl_usd": 616.87
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 2,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "donchian",
+            "trades": 18,
+            "expectancy_r": -0.1574
+          },
+          {
+            "fold": 2,
+            "strategy": "weekly_trend_atr",
+            "trades": 13,
+            "expectancy_r": 0.005
+          },
+          {
+            "fold": 3,
+            "strategy": "weekly_trend_atr",
+            "trades": 7,
+            "expectancy_r": 0.1629
+          }
+        ]
+      },
+      "reason": "樣本外交易數 12 < 30",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "LTCUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 7.12,
+      "bar_count": 2600,
+      "start_date_utc": "2019-10-04",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2024-09-26",
+      "passed": false,
+      "chosen_strategy": "ema_cross",
+      "chosen_params": {
+        "fast": 20,
+        "slow": 100,
+        "sl_atr_mult": 2.0
+      },
+      "in_sample": {
+        "trades": 84,
+        "win_rate_pct": 35.71,
+        "expectancy_r": -0.0355,
+        "expectancy_usd": -17.73,
+        "profit_factor": 0.91,
+        "max_drawdown_pct": 6.88,
+        "total_return_pct": -1.86,
+        "total_pnl_usd": -1489.28
+      },
+      "out_of_sample": {
+        "trades": 39,
+        "win_rate_pct": 33.33,
+        "expectancy_r": -0.0402,
+        "expectancy_usd": -20.09,
+        "profit_factor": 0.899,
+        "max_drawdown_pct": 5.61,
+        "total_return_pct": -0.98,
+        "total_pnl_usd": -783.42
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 0,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "weekly_trend_atr",
+            "trades": 22,
+            "expectancy_r": -0.3333
+          },
+          {
+            "fold": 2,
+            "strategy": "donchian",
+            "trades": 15,
+            "expectancy_r": -0.2443
+          },
+          {
+            "fold": 3,
+            "strategy": "donchian",
+            "trades": 15,
+            "expectancy_r": -0.0839
+          }
+        ]
+      },
+      "reason": "樣本外期望值 -0.040R <= 0；樣本外獲利因子 0.90 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "TRXUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 7.12,
+      "bar_count": 2600,
+      "start_date_utc": "2019-10-04",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2024-09-26",
+      "passed": false,
+      "chosen_strategy": "donchian",
+      "chosen_params": {
+        "period": 20,
+        "sl_atr_mult": 3.0
+      },
+      "in_sample": {
+        "trades": 53,
+        "win_rate_pct": 41.51,
+        "expectancy_r": 0.1054,
+        "expectancy_usd": 52.69,
+        "profit_factor": 1.357,
+        "max_drawdown_pct": 3.62,
+        "total_return_pct": 3.49,
+        "total_pnl_usd": 2792.31
+      },
+      "out_of_sample": {
+        "trades": 20,
+        "win_rate_pct": 60.0,
+        "expectancy_r": 0.1244,
+        "expectancy_usd": 62.22,
+        "profit_factor": 1.527,
+        "max_drawdown_pct": 1.64,
+        "total_return_pct": 1.56,
+        "total_pnl_usd": 1244.44
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 2,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "donchian",
+            "trades": 19,
+            "expectancy_r": 0.017
+          },
+          {
+            "fold": 2,
+            "strategy": "weekly_trend_atr",
+            "trades": 16,
+            "expectancy_r": -0.1071
+          },
+          {
+            "fold": 3,
+            "strategy": "weekly_trend_atr",
+            "trades": 15,
+            "expectancy_r": 0.1299
+          }
+        ]
+      },
+      "reason": "樣本外交易數 20 < 30",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "BCHUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 6.97,
+      "bar_count": 2545,
+      "start_date_utc": "2019-11-28",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2024-10-13",
+      "passed": false,
+      "chosen_strategy": "donchian",
+      "chosen_params": {
+        "period": 20,
+        "sl_atr_mult": 3.0
+      },
+      "in_sample": {
+        "trades": 51,
+        "win_rate_pct": 37.25,
+        "expectancy_r": 0.1868,
+        "expectancy_usd": 93.38,
+        "profit_factor": 1.506,
+        "max_drawdown_pct": 2.19,
+        "total_return_pct": 5.95,
+        "total_pnl_usd": 4762.57
+      },
+      "out_of_sample": {
+        "trades": 24,
+        "win_rate_pct": 29.17,
+        "expectancy_r": 0.0099,
+        "expectancy_usd": 4.97,
+        "profit_factor": 1.025,
+        "max_drawdown_pct": 2.86,
+        "total_return_pct": 0.15,
+        "total_pnl_usd": 119.31
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 1,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "ema_cross",
+            "trades": 24,
+            "expectancy_r": -0.0078
+          },
+          {
+            "fold": 2,
+            "strategy": "ema_cross",
+            "trades": 18,
+            "expectancy_r": -0.2361
+          },
+          {
+            "fold": 3,
+            "strategy": "donchian",
+            "trades": 15,
+            "expectancy_r": 0.0433
+          }
+        ]
+      },
+      "reason": "樣本外交易數 24 < 30；樣本外獲利因子 1.02 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "NEARUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 6.09,
+      "bar_count": 2224,
+      "start_date_utc": "2020-10-14",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2025-01-17",
+      "passed": false,
+      "chosen_strategy": "weekly_trend_atr",
+      "chosen_params": {
+        "weekly_ema": 20,
+        "sl_atr_mult": 2.5
+      },
+      "in_sample": {
+        "trades": 40,
+        "win_rate_pct": 50.0,
+        "expectancy_r": 0.3663,
+        "expectancy_usd": 183.17,
+        "profit_factor": 2.852,
+        "max_drawdown_pct": 0.99,
+        "total_return_pct": 9.16,
+        "total_pnl_usd": 7326.74
+      },
+      "out_of_sample": {
+        "trades": 23,
+        "win_rate_pct": 34.78,
+        "expectancy_r": 0.0161,
+        "expectancy_usd": 8.06,
+        "profit_factor": 1.038,
+        "max_drawdown_pct": 3.54,
+        "total_return_pct": 0.23,
+        "total_pnl_usd": 185.43
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 2,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "weekly_trend_atr",
+            "trades": 19,
+            "expectancy_r": 0.0999
+          },
+          {
+            "fold": 2,
+            "strategy": "weekly_trend_atr",
+            "trades": 16,
+            "expectancy_r": -0.0956
+          },
+          {
+            "fold": 3,
+            "strategy": "weekly_trend_atr",
+            "trades": 16,
+            "expectancy_r": 0.1145
+          }
+        ]
+      },
+      "reason": "樣本外交易數 23 < 30；樣本外獲利因子 1.04 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "SUIUSDT",
+      "market": "crypto",
+      "status": "insufficient_history",
+      "history_years": 3.54,
+      "bar_count": 1293,
+      "start_date_utc": "2023-05-03",
+      "end_date_utc": "2026-11-15",
+      "passed": false,
+      "chosen_strategy": null,
+      "chosen_params": null,
+      "in_sample": null,
+      "out_of_sample": null,
+      "walk_forward": null,
+      "reason": "資料年數不足：僅 3.54 年（少於 5 年要求），不硬算篩選",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "TONUSDT",
+      "market": "crypto",
+      "status": "insufficient_history",
+      "history_years": 1.75,
+      "bar_count": 640,
+      "start_date_utc": "2025-02-14",
+      "end_date_utc": "2026-11-15",
+      "passed": false,
+      "chosen_strategy": null,
+      "chosen_params": null,
+      "in_sample": null,
+      "out_of_sample": null,
+      "walk_forward": null,
+      "reason": "資料年數不足：僅 1.75 年（少於 5 年要求），不硬算篩選",
+      "source_used": "kraken"
+    },
+    {
+      "symbol": "APTUSDT",
+      "market": "crypto",
+      "status": "insufficient_history",
+      "history_years": 4.07,
+      "bar_count": 1489,
+      "start_date_utc": "2022-10-19",
+      "end_date_utc": "2026-11-15",
+      "passed": false,
+      "chosen_strategy": null,
+      "chosen_params": null,
+      "in_sample": null,
+      "out_of_sample": null,
+      "walk_forward": null,
+      "reason": "資料年數不足：僅 4.07 年（少於 5 年要求），不硬算篩選",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "UNIUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 6.16,
+      "bar_count": 2251,
+      "start_date_utc": "2020-09-17",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2025-01-09",
+      "passed": false,
+      "chosen_strategy": "weekly_trend_atr",
+      "chosen_params": {
+        "weekly_ema": 10,
+        "sl_atr_mult": 3.0
+      },
+      "in_sample": {
+        "trades": 41,
+        "win_rate_pct": 39.02,
+        "expectancy_r": 0.0922,
+        "expectancy_usd": 46.11,
+        "profit_factor": 1.272,
+        "max_drawdown_pct": 2.49,
+        "total_return_pct": 2.36,
+        "total_pnl_usd": 1890.51
+      },
+      "out_of_sample": {
+        "trades": 21,
+        "win_rate_pct": 38.1,
+        "expectancy_r": 0.114,
+        "expectancy_usd": 57.02,
+        "profit_factor": 1.431,
+        "max_drawdown_pct": 1.45,
+        "total_return_pct": 1.5,
+        "total_pnl_usd": 1197.33
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 2,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "ema_cross",
+            "trades": 19,
+            "expectancy_r": 0.0004
+          },
+          {
+            "fold": 2,
+            "strategy": "donchian",
+            "trades": 13,
+            "expectancy_r": -0.2413
+          },
+          {
+            "fold": 3,
+            "strategy": "weekly_trend_atr",
+            "trades": 16,
+            "expectancy_r": 0.1463
+          }
+        ]
+      },
+      "reason": "樣本外交易數 21 < 30",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "ATOMUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 7.12,
+      "bar_count": 2600,
+      "start_date_utc": "2019-10-04",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2024-09-26",
+      "passed": false,
+      "chosen_strategy": "ema_cross",
+      "chosen_params": {
+        "fast": 20,
+        "slow": 100,
+        "sl_atr_mult": 2.0
+      },
+      "in_sample": {
+        "trades": 84,
+        "win_rate_pct": 35.71,
+        "expectancy_r": -0.0156,
+        "expectancy_usd": -7.81,
+        "profit_factor": 0.959,
+        "max_drawdown_pct": 4.69,
+        "total_return_pct": -0.82,
+        "total_pnl_usd": -656.22
+      },
+      "out_of_sample": {
+        "trades": 44,
+        "win_rate_pct": 25.0,
+        "expectancy_r": -0.1707,
+        "expectancy_usd": -85.33,
+        "profit_factor": 0.599,
+        "max_drawdown_pct": 5.94,
+        "total_return_pct": -4.69,
+        "total_pnl_usd": -3754.57
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 0,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "ema_cross",
+            "trades": 25,
+            "expectancy_r": -0.1
+          },
+          {
+            "fold": 2,
+            "strategy": "donchian",
+            "trades": 10,
+            "expectancy_r": -0.1643
+          },
+          {
+            "fold": 3,
+            "strategy": "donchian",
+            "trades": 9,
+            "expectancy_r": -0.4383
+          }
+        ]
+      },
+      "reason": "樣本外期望值 -0.171R <= 0；樣本外獲利因子 0.60 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "ETCUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 7.12,
+      "bar_count": 2600,
+      "start_date_utc": "2019-10-04",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2024-09-26",
+      "passed": false,
+      "chosen_strategy": "weekly_trend_atr",
+      "chosen_params": {
+        "weekly_ema": 10,
+        "sl_atr_mult": 2.0
+      },
+      "in_sample": {
+        "trades": 65,
+        "win_rate_pct": 44.62,
+        "expectancy_r": 0.443,
+        "expectancy_usd": 221.48,
+        "profit_factor": 2.357,
+        "max_drawdown_pct": 2.89,
+        "total_return_pct": 18.0,
+        "total_pnl_usd": 14396.27
+      },
+      "out_of_sample": {
+        "trades": 27,
+        "win_rate_pct": 44.44,
+        "expectancy_r": 0.0442,
+        "expectancy_usd": 22.09,
+        "profit_factor": 1.139,
+        "max_drawdown_pct": 1.45,
+        "total_return_pct": 0.75,
+        "total_pnl_usd": 596.48
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 1,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "weekly_trend_atr",
+            "trades": 14,
+            "expectancy_r": 0.1362
+          },
+          {
+            "fold": 2,
+            "strategy": "weekly_trend_atr",
+            "trades": 22,
+            "expectancy_r": -0.1635
+          },
+          {
+            "fold": 3,
+            "strategy": "donchian",
+            "trades": 10,
+            "expectancy_r": -0.1079
+          }
+        ]
+      },
+      "reason": "樣本外交易數 27 < 30；樣本外獲利因子 1.14 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "FILUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 6.08,
+      "bar_count": 2223,
+      "start_date_utc": "2020-10-15",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2025-01-18",
+      "passed": false,
+      "chosen_strategy": "weekly_trend_atr",
+      "chosen_params": {
+        "weekly_ema": 10,
+        "sl_atr_mult": 3.0
+      },
+      "in_sample": {
+        "trades": 40,
+        "win_rate_pct": 52.5,
+        "expectancy_r": 0.5238,
+        "expectancy_usd": 261.91,
+        "profit_factor": 3.614,
+        "max_drawdown_pct": 1.13,
+        "total_return_pct": 13.1,
+        "total_pnl_usd": 10476.26
+      },
+      "out_of_sample": {
+        "trades": 18,
+        "win_rate_pct": 22.22,
+        "expectancy_r": -0.3099,
+        "expectancy_usd": -154.93,
+        "profit_factor": 0.196,
+        "max_drawdown_pct": 3.63,
+        "total_return_pct": -3.49,
+        "total_pnl_usd": -2788.69
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 1,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "weekly_trend_atr",
+            "trades": 18,
+            "expectancy_r": 0.191
+          },
+          {
+            "fold": 2,
+            "strategy": "weekly_trend_atr",
+            "trades": 15,
+            "expectancy_r": -0.059
+          },
+          {
+            "fold": 3,
+            "strategy": "weekly_trend_atr",
+            "trades": 11,
+            "expectancy_r": -0.3341
+          }
+        ]
+      },
+      "reason": "樣本外期望值 -0.310R <= 0；樣本外交易數 18 < 30；樣本外獲利因子 0.20 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "ARBUSDT",
+      "market": "crypto",
+      "status": "insufficient_history",
+      "history_years": 3.65,
+      "bar_count": 1334,
+      "start_date_utc": "2023-03-23",
+      "end_date_utc": "2026-11-15",
+      "passed": false,
+      "chosen_strategy": null,
+      "chosen_params": null,
+      "in_sample": null,
+      "out_of_sample": null,
+      "walk_forward": null,
+      "reason": "資料年數不足：僅 3.65 年（少於 5 年要求），不硬算篩選",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "OPUSDT",
+      "market": "crypto",
+      "status": "insufficient_history",
+      "history_years": 4.46,
+      "bar_count": 1629,
+      "start_date_utc": "2022-06-01",
+      "end_date_utc": "2026-11-15",
+      "passed": false,
+      "chosen_strategy": null,
+      "chosen_params": null,
+      "in_sample": null,
+      "out_of_sample": null,
+      "walk_forward": null,
+      "reason": "資料年數不足：僅 4.46 年（少於 5 年要求），不硬算篩選",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "INJUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 6.07,
+      "bar_count": 2217,
+      "start_date_utc": "2020-10-21",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2025-01-19",
+      "passed": false,
+      "chosen_strategy": "donchian",
+      "chosen_params": {
+        "period": 55,
+        "sl_atr_mult": 2.0
+      },
+      "in_sample": {
+        "trades": 38,
+        "win_rate_pct": 36.84,
+        "expectancy_r": 0.1729,
+        "expectancy_usd": 86.44,
+        "profit_factor": 1.508,
+        "max_drawdown_pct": 2.15,
+        "total_return_pct": 4.11,
+        "total_pnl_usd": 3284.89
+      },
+      "out_of_sample": {
+        "trades": 14,
+        "win_rate_pct": 57.14,
+        "expectancy_r": 0.1875,
+        "expectancy_usd": 93.73,
+        "profit_factor": 1.793,
+        "max_drawdown_pct": 1.41,
+        "total_return_pct": 1.64,
+        "total_pnl_usd": 1312.25
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 1,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "donchian",
+            "trades": 17,
+            "expectancy_r": 0.3179
+          },
+          {
+            "fold": 2,
+            "strategy": "donchian",
+            "trades": 17,
+            "expectancy_r": -0.1582
+          },
+          {
+            "fold": 3,
+            "strategy": "donchian",
+            "trades": 11,
+            "expectancy_r": -0.1415
+          }
+        ]
+      },
+      "reason": "樣本外交易數 14 < 30",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 6.08,
+      "bar_count": 2223,
+      "start_date_utc": "2020-10-15",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2025-01-18",
+      "passed": false,
+      "chosen_strategy": "weekly_trend_atr",
+      "chosen_params": {
+        "weekly_ema": 10,
+        "sl_atr_mult": 2.0
+      },
+      "in_sample": {
+        "trades": 59,
+        "win_rate_pct": 42.37,
+        "expectancy_r": 0.0117,
+        "expectancy_usd": 5.83,
+        "profit_factor": 1.039,
+        "max_drawdown_pct": 4.82,
+        "total_return_pct": 0.43,
+        "total_pnl_usd": 343.9
+      },
+      "out_of_sample": {
+        "trades": 29,
+        "win_rate_pct": 37.93,
+        "expectancy_r": -0.1272,
+        "expectancy_usd": -63.58,
+        "profit_factor": 0.577,
+        "max_drawdown_pct": 3.0,
+        "total_return_pct": -2.3,
+        "total_pnl_usd": -1843.74
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 0,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "weekly_trend_atr",
+            "trades": 17,
+            "expectancy_r": -0.1626
+          },
+          {
+            "fold": 2,
+            "strategy": "weekly_trend_atr",
+            "trades": 23,
+            "expectancy_r": -0.1863
+          },
+          {
+            "fold": 3,
+            "strategy": "ema_cross",
+            "trades": 22,
+            "expectancy_r": -0.0398
+          }
+        ]
+      },
+      "reason": "樣本外期望值 -0.127R <= 0；樣本外交易數 29 < 30；樣本外獲利因子 0.58 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "XLMUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 7.12,
+      "bar_count": 2600,
+      "start_date_utc": "2019-10-04",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2024-09-26",
+      "passed": false,
+      "chosen_strategy": "ema_cross",
+      "chosen_params": {
+        "fast": 20,
+        "slow": 100,
+        "sl_atr_mult": 3.0
+      },
+      "in_sample": {
+        "trades": 50,
+        "win_rate_pct": 54.0,
+        "expectancy_r": 0.2683,
+        "expectancy_usd": 134.16,
+        "profit_factor": 2.188,
+        "max_drawdown_pct": 1.7,
+        "total_return_pct": 8.38,
+        "total_pnl_usd": 6707.96
+      },
+      "out_of_sample": {
+        "trades": 23,
+        "win_rate_pct": 34.78,
+        "expectancy_r": -0.1239,
+        "expectancy_usd": -61.95,
+        "profit_factor": 0.604,
+        "max_drawdown_pct": 2.35,
+        "total_return_pct": -1.78,
+        "total_pnl_usd": -1424.91
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 1,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "ema_cross",
+            "trades": 24,
+            "expectancy_r": 0.146
+          },
+          {
+            "fold": 2,
+            "strategy": "ema_cross",
+            "trades": 15,
+            "expectancy_r": -0.0606
+          },
+          {
+            "fold": 3,
+            "strategy": "ema_cross",
+            "trades": 14,
+            "expectancy_r": -0.1376
+          }
+        ]
+      },
+      "reason": "樣本外期望值 -0.124R <= 0；樣本外交易數 23 < 30；樣本外獲利因子 0.60 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "HBARUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 7.12,
+      "bar_count": 2600,
+      "start_date_utc": "2019-10-04",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2024-09-26",
+      "passed": false,
+      "chosen_strategy": "donchian",
+      "chosen_params": {
+        "period": 20,
+        "sl_atr_mult": 2.0
+      },
+      "in_sample": {
+        "trades": 62,
+        "win_rate_pct": 43.55,
+        "expectancy_r": 0.2088,
+        "expectancy_usd": 104.41,
+        "profit_factor": 1.607,
+        "max_drawdown_pct": 2.68,
+        "total_return_pct": 8.09,
+        "total_pnl_usd": 6473.26
+      },
+      "out_of_sample": {
+        "trades": 29,
+        "win_rate_pct": 48.28,
+        "expectancy_r": 0.1629,
+        "expectancy_usd": 81.46,
+        "profit_factor": 1.571,
+        "max_drawdown_pct": 2.81,
+        "total_return_pct": 2.95,
+        "total_pnl_usd": 2362.34
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 1,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "donchian",
+            "trades": 22,
+            "expectancy_r": -0.0704
+          },
+          {
+            "fold": 2,
+            "strategy": "donchian",
+            "trades": 12,
+            "expectancy_r": 0.5869
+          },
+          {
+            "fold": 3,
+            "strategy": "donchian",
+            "trades": 11,
+            "expectancy_r": -0.1996
+          }
+        ]
+      },
+      "reason": "樣本外交易數 29 < 30",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "ICPUSDT",
+      "market": "crypto",
+      "status": "ok",
+      "history_years": 5.51,
+      "bar_count": 2015,
+      "start_date_utc": "2021-05-11",
+      "end_date_utc": "2026-11-15",
+      "split_date_utc": "2025-03-21",
+      "passed": false,
+      "chosen_strategy": "weekly_trend_atr",
+      "chosen_params": {
+        "weekly_ema": 20,
+        "sl_atr_mult": 2.5
+      },
+      "in_sample": {
+        "trades": 31,
+        "win_rate_pct": 38.71,
+        "expectancy_r": 0.2782,
+        "expectancy_usd": 139.09,
+        "profit_factor": 2.228,
+        "max_drawdown_pct": 1.1,
+        "total_return_pct": 5.39,
+        "total_pnl_usd": 4311.94
+      },
+      "out_of_sample": {
+        "trades": 18,
+        "win_rate_pct": 33.33,
+        "expectancy_r": -0.2205,
+        "expectancy_usd": -110.24,
+        "profit_factor": 0.491,
+        "max_drawdown_pct": 2.7,
+        "total_return_pct": -2.48,
+        "total_pnl_usd": -1984.27
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 1,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "ema_cross",
+            "trades": 13,
+            "expectancy_r": 0.3608
+          },
+          {
+            "fold": 2,
+            "strategy": "weekly_trend_atr",
+            "trades": 17,
+            "expectancy_r": -0.3881
+          },
+          {
+            "fold": 3,
+            "strategy": "ema_cross",
+            "trades": 9,
+            "expectancy_r": -0.1663
+          }
+        ]
+      },
+      "reason": "樣本外期望值 -0.221R <= 0；樣本外交易數 18 < 30；樣本外獲利因子 0.49 <= 1.3",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "SEIUSDT",
+      "market": "crypto",
+      "status": "insufficient_history",
+      "history_years": 3.25,
+      "bar_count": 1189,
+      "start_date_utc": "2023-08-15",
+      "end_date_utc": "2026-11-15",
+      "passed": false,
+      "chosen_strategy": null,
+      "chosen_params": null,
+      "in_sample": null,
+      "out_of_sample": null,
+      "walk_forward": null,
+      "reason": "資料年數不足：僅 3.25 年（少於 5 年要求），不硬算篩選",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "TIAUSDT",
+      "market": "crypto",
+      "status": "insufficient_history",
+      "history_years": 3.04,
+      "bar_count": 1112,
+      "start_date_utc": "2023-10-31",
+      "end_date_utc": "2026-11-15",
+      "passed": false,
+      "chosen_strategy": null,
+      "chosen_params": null,
+      "in_sample": null,
+      "out_of_sample": null,
+      "walk_forward": null,
+      "reason": "資料年數不足：僅 3.04 年（少於 5 年要求），不硬算篩選",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "PEPEUSDT",
+      "market": "crypto",
+      "status": "insufficient_history",
+      "history_years": 3.53,
+      "bar_count": 1291,
+      "start_date_utc": "2023-05-05",
+      "end_date_utc": "2026-11-15",
+      "passed": false,
+      "chosen_strategy": null,
+      "chosen_params": null,
+      "in_sample": null,
+      "out_of_sample": null,
+      "walk_forward": null,
+      "reason": "資料年數不足：僅 3.53 年（少於 5 年要求），不硬算篩選",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "WLDUSDT",
+      "market": "crypto",
+      "status": "insufficient_history",
+      "history_years": 3.31,
+      "bar_count": 1211,
+      "start_date_utc": "2023-07-24",
+      "end_date_utc": "2026-11-15",
+      "passed": false,
+      "chosen_strategy": null,
+      "chosen_params": null,
+      "in_sample": null,
+      "out_of_sample": null,
+      "walk_forward": null,
+      "reason": "資料年數不足：僅 3.31 年（少於 5 年要求），不硬算篩選",
+      "source_used": "binance_vision"
+    },
+    {
+      "symbol": "RENDERUSDT",
+      "market": "crypto",
+      "status": "insufficient_history",
+      "history_years": 2.31,
+      "bar_count": 843,
+      "start_date_utc": "2024-07-26",
+      "end_date_utc": "2026-11-15",
+      "passed": false,
+      "chosen_strategy": null,
+      "chosen_params": null,
+      "in_sample": null,
+      "out_of_sample": null,
+      "walk_forward": null,
+      "reason": "資料年數不足：僅 2.31 年（少於 5 年要求），不硬算篩選",
       "source_used": "binance_vision"
     },
     {
@@ -819,6 +2109,130 @@
         ]
       },
       "reason": "樣本外期望值 -0.083R <= 0；樣本外交易數 25 < 30；樣本外獲利因子 0.28 <= 1.3",
+      "source_used": "yfinance"
+    },
+    {
+      "symbol": "EURGBP",
+      "market": "forex",
+      "status": "ok",
+      "history_years": 9.99,
+      "bar_count": 2600,
+      "start_date_utc": "2016-11-17",
+      "end_date_utc": "2026-11-13",
+      "split_date_utc": "2023-11-10",
+      "passed": false,
+      "chosen_strategy": "weekly_trend_atr",
+      "chosen_params": {
+        "weekly_ema": 20,
+        "sl_atr_mult": 2.5
+      },
+      "in_sample": {
+        "trades": 41,
+        "win_rate_pct": 31.71,
+        "expectancy_r": -0.0408,
+        "expectancy_usd": -20.39,
+        "profit_factor": 0.582,
+        "max_drawdown_pct": 1.2,
+        "total_return_pct": -1.05,
+        "total_pnl_usd": -836.04
+      },
+      "out_of_sample": {
+        "trades": 17,
+        "win_rate_pct": 11.76,
+        "expectancy_r": -0.0961,
+        "expectancy_usd": -48.07,
+        "profit_factor": 0.074,
+        "max_drawdown_pct": 1.02,
+        "total_return_pct": -1.02,
+        "total_pnl_usd": -817.17
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 0,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "donchian",
+            "trades": 14,
+            "expectancy_r": -0.1093
+          },
+          {
+            "fold": 2,
+            "strategy": "weekly_trend_atr",
+            "trades": 10,
+            "expectancy_r": -0.0977
+          },
+          {
+            "fold": 3,
+            "strategy": "weekly_trend_atr",
+            "trades": 12,
+            "expectancy_r": -0.091
+          }
+        ]
+      },
+      "reason": "樣本外期望值 -0.096R <= 0；樣本外交易數 17 < 30；樣本外獲利因子 0.07 <= 1.3",
+      "source_used": "yfinance"
+    },
+    {
+      "symbol": "GBPJPY",
+      "market": "forex",
+      "status": "ok",
+      "history_years": 9.99,
+      "bar_count": 2600,
+      "start_date_utc": "2016-11-17",
+      "end_date_utc": "2026-11-13",
+      "split_date_utc": "2023-11-10",
+      "passed": false,
+      "chosen_strategy": "weekly_trend_atr",
+      "chosen_params": {
+        "weekly_ema": 20,
+        "sl_atr_mult": 2.0
+      },
+      "in_sample": {
+        "trades": 45,
+        "win_rate_pct": 35.56,
+        "expectancy_r": 0.002,
+        "expectancy_usd": 1.02,
+        "profit_factor": 1.022,
+        "max_drawdown_pct": 1.1,
+        "total_return_pct": 0.06,
+        "total_pnl_usd": 45.86
+      },
+      "out_of_sample": {
+        "trades": 24,
+        "win_rate_pct": 20.83,
+        "expectancy_r": -0.0882,
+        "expectancy_usd": -44.11,
+        "profit_factor": 0.163,
+        "max_drawdown_pct": 1.32,
+        "total_return_pct": -1.32,
+        "total_pnl_usd": -1058.74
+      },
+      "walk_forward": {
+        "windows_evaluated": 3,
+        "positive_windows": 0,
+        "folds": [
+          {
+            "fold": 1,
+            "strategy": "weekly_trend_atr",
+            "trades": 13,
+            "expectancy_r": -0.0344
+          },
+          {
+            "fold": 2,
+            "strategy": "weekly_trend_atr",
+            "trades": 15,
+            "expectancy_r": -0.0192
+          },
+          {
+            "fold": 3,
+            "strategy": "weekly_trend_atr",
+            "trades": 15,
+            "expectancy_r": -0.1132
+          }
+        ]
+      },
+      "reason": "樣本外期望值 -0.088R <= 0；樣本外交易數 24 < 30；樣本外獲利因子 0.16 <= 1.3",
       "source_used": "yfinance"
     },
     {
