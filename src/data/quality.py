@@ -56,9 +56,12 @@ def _is_expected_break(prev_dt: datetime, curr_dt: datetime, market: str, interv
         return True
 
     # Intraday (1m, 15m) for forex/commodity/stock
-    # Weekend gap: Friday evening to Sunday evening
-    if is_weekend_closure(prev_dt + timedelta(minutes=1)) or is_weekend_closure(
-        curr_dt - timedelta(minutes=1)
+    # Weekend gap: Friday evening to Sunday/Monday
+    midpoint = prev_dt + (curr_dt - prev_dt) / 2
+    if (
+        is_weekend_closure(prev_dt + timedelta(minutes=1))
+        or is_weekend_closure(curr_dt - timedelta(minutes=1))
+        or is_weekend_closure(midpoint)
     ):
         return True
 
@@ -72,6 +75,33 @@ def _is_expected_break(prev_dt: datetime, curr_dt: datetime, market: str, interv
         return True
 
     return False
+
+
+def _effective_delay_minutes(latest_close_dt: datetime, now: datetime, market: str) -> float:
+    """Compute delay in minutes from latest_close_dt to now, excluding weekend closures."""
+    if now <= latest_close_dt:
+        return 0.0
+    total_sec = (now - latest_close_dt).total_seconds()
+    if market == "crypto":
+        return round(total_sec / 60.0, 1)
+
+    # Subtract any overlap with weekend closure windows [Fri 22:00 UTC, Sun 22:00 UTC]
+    weekend_sec = 0.0
+    start_day = (latest_close_dt - timedelta(days=3)).replace(hour=0, minute=0, second=0, microsecond=0)
+    end_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    cursor = start_day
+    while cursor <= end_day:
+        if cursor.weekday() == 4:  # Friday
+            win_start = cursor.replace(hour=22, minute=0, second=0, microsecond=0)
+            win_end = win_start + timedelta(hours=48)
+            overlap_start = max(latest_close_dt, win_start)
+            overlap_end = min(now, win_end)
+            if overlap_end > overlap_start:
+                weekend_sec += (overlap_end - overlap_start).total_seconds()
+        cursor += timedelta(days=1)
+
+    effective_sec = max(0.0, total_sec - weekend_sec)
+    return round(effective_sec / 60.0, 1)
 
 
 def check_continuity(
@@ -122,9 +152,9 @@ def check_continuity(
 
     missing_ratio = round(missing_bars / expected_bars, 4) if expected_bars > 0 else 0.0
 
-    # Delay from the close of the latest bar to now
+    # Delay from the close of the latest bar to now (excluding weekend closures for non-crypto)
     latest_close_dt = timestamps[-1] + timedelta(seconds=interval_sec)
-    delay_minutes = round(max(0.0, (now - latest_close_dt).total_seconds() / 60.0), 1)
+    delay_minutes = _effective_delay_minutes(latest_close_dt, now, market)
 
     # Abnormal price gaps (excluding expected closures)
     ranges = [max(1e-12, b.high - b.low) for b in bars]

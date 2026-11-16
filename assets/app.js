@@ -112,11 +112,14 @@
             return `<span class="pill ${cls}" title="${a.error || ""}">${label}</span>`;
           })
           .join(" ");
+        const missPct = row.missing_ratio !== undefined ? `${(row.missing_ratio * 100).toFixed(1)}%` : "--";
+        const delayTxt = row.delay_minutes !== undefined && row.delay_minutes !== null ? `${row.delay_minutes}m` : "--";
+        const reasonTxt = row.quality_reason ? `<br><span class="muted">缺K:${missPct} 延遲:${delayTxt}｜${row.quality_reason}</span>` : "";
         return `
           <tr>
             <td><strong>${row.symbol}</strong></td>
             <td>${row.interval}</td>
-            <td>${statusPill(row.quality_status)}</td>
+            <td>${statusPill(row.quality_status)}${reasonTxt}</td>
             <td>${attemptsHtml || '<span class="muted">無</span>'}</td>
           </tr>
         `;

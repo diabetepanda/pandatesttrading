@@ -46,6 +46,7 @@ pytest -v
 
 ## 假設與已知風險（階段 1）
 
-1. **Stooq 僅支援日線**：外匯與商品的盤中週期（`1m`、`15m`）目前僅依賴 `yfinance`，若 `yfinance` 在 GitHub Actions 上對特定期貨代碼（如 `GC=F`、`CL=F`）限流或不穩，將在階段 1 實測報告中標示並依規格停用該市場的策略 A。
-2. **外匯與商品休市時間**：系統假設外匯與商品週末休市為週五 22:00 UTC 至週日 22:00 UTC，商品每日結算休市約在 21:00–23:00 UTC 之間（≤ 90 分鐘），不計入缺 K 線。
-3. **本機環境限制**：開發環境（macOS）尚未安裝 Xcode Command Line Tools，因此無法在本機執行 `git` 與 `pytest`；所有測試將於推送至 GitHub 後由 `ci.yml` 自動執行驗證。
+1. **外匯與商品目前只有單一來源（`yfinance`）**：原訂備援 Stooq（`stooq.com/q/d/l/`）目前已啟用反爬蟲 JavaScript 驗證（Proof-of-Work），無法以程式免 Key 直接抓取 CSV，因此外匯與商品目前僅依賴 `yfinance` 單一免 Key 來源，存在單點限流或不穩風險。
+2. **Bybit 對美國雲端 IP 回 403**：實測顯示 `api.bybit.com` 會封鎖美國 GitHub Actions 主機 IP，已將 `bybit` 移至加密貨幣備援順序最後（優先使用 `data-api.binance.vision`、OKX、Kraken、Coinbase）。
+3. **外匯與商品休市時間**：系統假設外匯與商品週末休市為週五 22:00 UTC 至週日 22:00 UTC（計算缺 K 線與日線延遲時皆會扣除週末休市時段），商品每日結算休市約在 21:00–23:00 UTC 之間（≤ 90 分鐘），不計入缺 K 線。
+4. **Python 版本**：GitHub Actions 使用 Python 3.11；本機測試使用 macOS 內建 Python 3.9.6（程式皆加上 `from __future__ import annotations` 維持相容），最終以 GitHub Actions `CI Tests` 結果為準。

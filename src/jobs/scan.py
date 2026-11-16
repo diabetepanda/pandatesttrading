@@ -86,6 +86,9 @@ def run_scan(
                         "market": market,
                         "interval": iv,
                         "quality_status": report.status,
+                        "missing_ratio": report.missing_ratio,
+                        "delay_minutes": report.delay_minutes,
+                        "quality_reason": report.reason,
                         "attempts": [a.to_dict() for a in all_attempts],
                     }
                 )

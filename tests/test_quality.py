@@ -91,3 +91,29 @@ def test_forex_weekend_closure_not_counted_as_missing_or_stale() -> None:
     rep = check_continuity(res, market="forex", quality_config=QUALITY_CFG, now_utc=datetime(2026, 11, 16, 0, 0, tzinfo=timezone.utc))
     assert rep.status == "ok"
     assert rep.missing_ratio == 0.0
+
+
+def test_forex_intraday_gap_from_fri_2145_to_sun_2300_is_weekend() -> None:
+    fri_start = datetime(2026, 11, 13, 20, 0, tzinfo=timezone.utc)
+    fri_bars = _make_bars(fri_start, 8, 15, base_price=150.0)  # ends 21:45 UTC
+    sun_start = datetime(2026, 11, 15, 23, 0, tzinfo=timezone.utc)
+    sun_bars = _make_bars(sun_start, 8, 15, base_price=150.0)  # starts 23:00 UTC
+    res = FetchResult(symbol="USDJPY", interval="15m", ok=True, source_used="yfinance", bars=fri_bars + sun_bars)
+    rep = check_continuity(res, market="forex", quality_config=QUALITY_CFG, now_utc=datetime(2026, 11, 16, 1, 0, tzinfo=timezone.utc))
+    assert rep.status == "ok"
+    assert rep.missing_ratio == 0.0
+
+
+def test_forex_daily_friday_bar_not_stale_on_monday_morning() -> None:
+    # Friday 2026-11-13 daily bar closes at 2026-11-14T00:00:00Z.
+    # Checked on Monday 2026-11-16T04:32:00Z -> weekend (48h) subtracted -> effective delay < 7h -> ok!
+    bars = [
+        OHLCVBar("2026-11-11T00:00:00Z", 1.08, 1.09, 1.07, 1.085, 0.0),
+        OHLCVBar("2026-11-12T00:00:00Z", 1.085, 1.09, 1.08, 1.082, 0.0),
+        OHLCVBar("2026-11-13T00:00:00Z", 1.082, 1.088, 1.08, 1.084, 0.0),
+    ]
+    res = FetchResult(symbol="EURUSD", interval="1d", ok=True, source_used="yfinance", bars=bars)
+    now_mon = datetime(2026, 11, 16, 4, 32, tzinfo=timezone.utc)
+    rep = check_continuity(res, market="forex", quality_config=QUALITY_CFG, now_utc=now_mon)
+    assert rep.status == "ok"
+    assert rep.delay_minutes < 500
