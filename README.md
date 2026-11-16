@@ -31,6 +31,25 @@
 - 暫停報單：將 `"paused": false` 改為 `true`，並填寫 `"pause_reason"`。
 - 解除 12% 回撤暫停：將 `"risk_review_done": false` 改為 `true`，並填寫 `"risk_review_note"`。
 
+## 雙層價格架構（瀏覽器即時顯示 vs. 排程模擬驗證）
+
+網站將價格來源嚴格分為兩層，互不干擾：
+
+1. **排程驗證層（GitHub Actions，每 15 分鐘）**：
+   - 使用已收盤 K 線計算報單、成交、補倉、止損止盈、風控與模擬損益，寫入 `data` 分支。
+   - 網頁每 60 秒重新讀取 `data` 分支，頂部顯示「最後排程更新 (Actions)」。
+2. **瀏覽器即時顯示層（`assets/config.js`，預設每 8 秒）**：
+   - 網頁打開時由瀏覽器直接呼叫免 API Key 且支援 CORS 的公開 API，**僅用於顯示**最新價、24h 漲跌與未來持倉浮動損益；**絕不觸發或改寫任何報單與模擬資料**。
+   - 若即時來源連線失敗，畫面顯示「即時價格來源失敗」並改回顯示排程價，絕不填補假資料。
+
+### 各標的瀏覽器即時價格支援清單
+
+- **有瀏覽器即時價格（8 檔）**：
+  - **加密貨幣 5 檔**（`BTCUSDT`、`ETHUSDT`、`SOLUSDT`、`BNBUSDT`、`XRPUSDT`）：優先 OKX → 備援 Binance（`data-api.binance.vision`）→ 備援 Kraken。
+  - **金屬商品 3 檔**（`XAUUSD`、`XAGUSD`、`COPPER`）：`api.gold-api.com`。
+- **無瀏覽器即時價格（10 檔，顯示 GitHub Actions 排程價）**：
+  - **外匯 8 檔**（`EURUSD`、`GBPUSD`、`USDJPY`、`AUDUSD`、`USDCAD`、`USDCHF`、`NZDUSD`、`EURJPY`）與 **能源商品 2 檔**（`WTI`、`NATGAS`）：目前實測無免 API Key 且支援瀏覽器 CORS 的即時跳動報價來源（Yahoo Finance 對瀏覽器回傳 429 限流，Frankfurter / ExchangeRate-API 僅為每日參考匯率）。
+
 ## 資料來源與排程限制
 
 - **免 API Key 公開來源**：加密貨幣優先使用 `data-api.binance.vision`（避開美國 IP 封鎖），備援 OKX、Bybit、Kraken、Coinbase；外匯與商品優先使用 `yfinance`，備援 Stooq（Stooq 僅支援日線 `1d`）。

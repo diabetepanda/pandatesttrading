@@ -1,17 +1,23 @@
 (function () {
   "use strict";
 
-  const DATA_BASE = "https://raw.githubusercontent.com/diabetepanda/pandatesttrading/data";
-  const STALE_MINUTES = 45;
-  const REFRESH_MS = 60000;
+  const CFG = window.SIGNAL_DESK_CONFIG || {};
+  const DATA_BASE = CFG.DATA_BASE || "https://raw.githubusercontent.com/diabetepanda/pandatesttrading/data";
+  const STALE_MINUTES = CFG.STALE_MINUTES || 45;
+  const DATA_REFRESH_MS = CFG.DATA_REFRESH_MS || 60000;
+  const LIVE_REFRESH_MS = CFG.LIVE_REFRESH_MS || 8000;
+  const REQUEST_TIMEOUT_MS = CFG.REQUEST_TIMEOUT_MS || 5000;
+  const LIVE_CRYPTO_SYMBOLS = CFG.LIVE_CRYPTO_SYMBOLS || {};
+  const LIVE_METAL_SYMBOLS = CFG.LIVE_METAL_SYMBOLS || {};
 
   let currentMarketFilter = "all";
   let cachedInstruments = [];
+  let livePrices = {}; // symbol -> { price, changePct, source } | { failed: true }
 
-  function formatTaipeiTime(isoUtc) {
-    if (!isoUtc) return "--";
-    const dt = new Date(isoUtc);
-    if (Number.isNaN(dt.getTime())) return isoUtc;
+  function formatTaipeiTime(isoOrDate) {
+    if (!isoOrDate) return "--";
+    const dt = isoOrDate instanceof Date ? isoOrDate : new Date(isoOrDate);
+    if (Number.isNaN(dt.getTime())) return String(isoOrDate);
     return dt.toLocaleString("zh-TW", {
       timeZone: "Asia/Taipei",
       year: "numeric",
@@ -24,14 +30,22 @@
     });
   }
 
-  function formatPrice(val) {
-    if (val === null || val === undefined || Number.isNaN(Number(val))) {
-      return '<span class="pill pill-fail">資料來源失敗</span>';
-    }
+  function formatNumber(val) {
+    if (val === null || val === undefined || Number.isNaN(Number(val))) return null;
     const num = Number(val);
     if (num >= 1000) return num.toLocaleString("en-US", { maximumFractionDigits: 2 });
     if (num >= 1) return num.toLocaleString("en-US", { maximumFractionDigits: 4 });
     return num.toLocaleString("en-US", { maximumFractionDigits: 6 });
+  }
+
+  function formatChange(pct) {
+    if (pct === null || pct === undefined || Number.isNaN(Number(pct))) {
+      return '<span class="muted">--</span>';
+    }
+    const val = Number(pct);
+    const sign = val > 0 ? "+" : "";
+    const cls = val > 0 ? "chg-up" : val < 0 ? "chg-down" : "muted";
+    return `<span class="${cls}">${sign}${val.toFixed(2)}%</span>`;
   }
 
   function statusPill(status) {
@@ -46,13 +60,190 @@
     return map[market] || market;
   }
 
-  async function fetchDataJson(filename) {
-    const url = `${DATA_BASE}/${filename}?t=${Date.now()}`;
-    const resp = await fetch(url, { cache: "no-store" });
-    if (!resp.ok) {
-      throw new Error(`${filename} HTTP ${resp.status}`);
+  async function fetchWithTimeout(url) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    try {
+      const resp = await fetch(url, { cache: "no-store", signal: controller.signal });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      return await resp.json();
+    } finally {
+      clearTimeout(timer);
     }
-    return resp.json();
+  }
+
+  async function fetchDataJson(filename) {
+    return fetchWithTimeout(`${DATA_BASE}/${filename}?t=${Date.now()}`);
+  }
+
+  function isLiveCapable(symbol) {
+    return Boolean(LIVE_CRYPTO_SYMBOLS[symbol] || LIVE_METAL_SYMBOLS[symbol]);
+  }
+
+  async function fetchLiveCrypto() {
+    const results = {};
+    const pending = new Set(Object.keys(LIVE_CRYPTO_SYMBOLS));
+
+    // 1. 優先 OKX
+    try {
+      const okxData = await fetchWithTimeout("https://www.okx.com/api/v5/market/tickers?instType=SPOT");
+      if (okxData && okxData.code === "0" && Array.isArray(okxData.data)) {
+        const byInst = {};
+        for (const row of okxData.data) byInst[row.instId] = row;
+        for (const sym of Array.from(pending)) {
+          const okxCode = LIVE_CRYPTO_SYMBOLS[sym].okx;
+          const row = byInst[okxCode];
+          if (row && row.last) {
+            const last = Number(row.last);
+            const open24h = Number(row.open24h);
+            const chg = open24h > 0 ? ((last - open24h) / open24h) * 100 : null;
+            results[sym] = { price: last, changePct: chg, source: "OKX" };
+            pending.delete(sym);
+          }
+        }
+      }
+    } catch (_) {
+      // Fallback to Binance Vision
+    }
+
+    // 2. 備援 Binance data-api.binance.vision
+    if (pending.size > 0) {
+      try {
+        const binSymbols = Array.from(pending)
+          .map((s) => LIVE_CRYPTO_SYMBOLS[s].binance)
+          .filter(Boolean);
+        if (binSymbols.length > 0) {
+          const qs = encodeURIComponent(JSON.stringify(binSymbols));
+          const binData = await fetchWithTimeout(`https://data-api.binance.vision/api/v3/ticker/24hr?symbols=${qs}`);
+          if (Array.isArray(binData)) {
+            const bySym = {};
+            for (const row of binData) bySym[row.symbol] = row;
+            for (const sym of Array.from(pending)) {
+              const binCode = LIVE_CRYPTO_SYMBOLS[sym].binance;
+              const row = bySym[binCode];
+              if (row && row.lastPrice) {
+                results[sym] = {
+                  price: Number(row.lastPrice),
+                  changePct: row.priceChangePercent !== undefined ? Number(row.priceChangePercent) : null,
+                  source: "Binance",
+                };
+                pending.delete(sym);
+              }
+            }
+          }
+        }
+      } catch (_) {
+        // Fallback to Kraken
+      }
+    }
+
+    // 3. 最後備援 Kraken
+    if (pending.size > 0) {
+      try {
+        const krakenPairs = Array.from(pending)
+          .map((s) => LIVE_CRYPTO_SYMBOLS[s].kraken)
+          .filter(Boolean);
+        if (krakenPairs.length > 0) {
+          const krData = await fetchWithTimeout(
+            `https://api.kraken.com/0/public/Ticker?pair=${encodeURIComponent(krakenPairs.join(","))}`
+          );
+          if (krData && (!krData.error || krData.error.length === 0) && krData.result) {
+            for (const sym of Array.from(pending)) {
+              const kCode = LIVE_CRYPTO_SYMBOLS[sym].kraken;
+              if (!kCode) continue;
+              const entry =
+                krData.result[kCode] ||
+                Object.entries(krData.result).find(([k]) => k.includes(kCode.replace("USDT", "")))?.[1];
+              if (entry && entry.c && entry.c[0]) {
+                const last = Number(entry.c[0]);
+                const open = entry.o ? Number(entry.o) : null;
+                const chg = open && open > 0 ? ((last - open) / open) * 100 : null;
+                results[sym] = { price: last, changePct: chg, source: "Kraken" };
+                pending.delete(sym);
+              }
+            }
+          }
+        }
+      } catch (_) {
+        // All failed for remaining symbols
+      }
+    }
+
+    for (const sym of pending) {
+      results[sym] = { failed: true };
+    }
+    return results;
+  }
+
+  async function fetchLiveMetals() {
+    const results = {};
+    const entries = Object.entries(LIVE_METAL_SYMBOLS);
+    await Promise.all(
+      entries.map(async ([sym, code]) => {
+        try {
+          const data = await fetchWithTimeout(`https://api.gold-api.com/price/${code}`);
+          if (data && data.price !== undefined && !Number.isNaN(Number(data.price))) {
+            results[sym] = { price: Number(data.price), changePct: null, source: "gold-api" };
+          } else {
+            results[sym] = { failed: true };
+          }
+        } catch (_) {
+          results[sym] = { failed: true };
+        }
+      })
+    );
+    return results;
+  }
+
+  async function refreshLivePrices() {
+    const liveLight = document.getElementById("live-light");
+    const liveUpdatedEl = document.getElementById("live-updated");
+
+    const [cryptoRes, metalRes] = await Promise.all([fetchLiveCrypto(), fetchLiveMetals()]);
+    livePrices = { ...cryptoRes, ...metalRes };
+
+    const entries = Object.values(livePrices);
+    const okCount = entries.filter((x) => x && !x.failed && x.price !== undefined).length;
+    const totalLive = entries.length;
+
+    if (okCount === 0) {
+      liveLight.className = "light light-danger";
+      liveLight.textContent = "即時：即時價格來源失敗";
+    } else if (okCount < totalLive) {
+      liveLight.className = "light light-warn";
+      liveLight.textContent = `即時：部分成功 (${okCount}/${totalLive})`;
+      liveUpdatedEl.textContent = formatTaipeiTime(new Date());
+    } else {
+      liveLight.className = "light light-ok";
+      liveLight.textContent = `即時：正常 (${okCount}/${totalLive})`;
+      liveUpdatedEl.textContent = formatTaipeiTime(new Date());
+    }
+
+    if (cachedInstruments.length > 0) {
+      renderInstruments();
+    }
+  }
+
+  function renderPriceCell(item) {
+    const schedStr = formatNumber(item.latest_price);
+    const live = livePrices[item.symbol];
+
+    if (isLiveCapable(item.symbol)) {
+      if (live && !live.failed && live.price !== undefined) {
+        const liveStr = formatNumber(live.price);
+        const schedSub = schedStr ? `<br><span class="muted">排程價：${schedStr}</span>` : "";
+        return `<strong>${liveStr}</strong> <span class="pill pill-live">即時 ${live.source}</span>${schedSub}`;
+      }
+      if (live && live.failed) {
+        const fallback = schedStr || '<span class="pill pill-fail">資料來源失敗</span>';
+        return `${fallback} <span class="pill pill-fail">即時價格來源失敗</span>`;
+      }
+    }
+
+    if (!schedStr) {
+      return '<span class="pill pill-fail">資料來源失敗</span>';
+    }
+    return `${schedStr} <span class="muted">(僅排程)</span>`;
   }
 
   function renderInstruments() {
@@ -62,7 +253,7 @@
     );
 
     if (rows.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" class="muted center">無符合條件的標的資料</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9" class="muted center">無符合條件的標的資料</td></tr>';
       return;
     }
 
@@ -73,11 +264,15 @@
         const r15m = iv["15m"] || {};
         const r1d = iv["1d"] || {};
         const note = r15m.reason || r1d.reason || "";
+        const live = livePrices[item.symbol];
+        const chgHtml = live && !live.failed ? formatChange(live.changePct) : '<span class="muted">--</span>';
+
         return `
           <tr>
             <td><strong>${item.symbol}</strong><br><span class="muted">${item.display_name || ""}</span></td>
             <td>${marketLabel(item.market)}</td>
-            <td>${formatPrice(item.latest_price)}</td>
+            <td>${renderPriceCell(item)}</td>
+            <td>${chgHtml}</td>
             <td>${item.source_used || '<span class="muted">無</span>'}</td>
             <td>${statusPill(r1m.status)}</td>
             <td>${statusPill(r15m.status)}</td>
@@ -226,7 +421,7 @@
       errBox.classList.remove("hidden");
       updateLights(null, null);
       document.getElementById("instruments-tbody").innerHTML =
-        '<tr><td colspan="8" class="center"><span class="pill pill-fail">資料來源失敗</span></td></tr>';
+        '<tr><td colspan="9" class="center"><span class="pill pill-fail">資料來源失敗</span></td></tr>';
     }
   }
 
@@ -239,8 +434,13 @@
     renderInstruments();
   });
 
-  document.getElementById("refresh-btn").addEventListener("click", refreshAll);
+  document.getElementById("refresh-btn").addEventListener("click", () => {
+    refreshAll();
+    refreshLivePrices();
+  });
 
   refreshAll();
-  setInterval(refreshAll, REFRESH_MS);
+  refreshLivePrices();
+  setInterval(refreshAll, DATA_REFRESH_MS);
+  setInterval(refreshLivePrices, LIVE_REFRESH_MS);
 })();

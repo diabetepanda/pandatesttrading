@@ -44,3 +44,20 @@ def test_events_yaml_valid() -> None:
     for ev in events:
         assert "title" in ev
         assert "time_utc" in ev
+
+
+def test_frontend_assets_and_relative_paths() -> None:
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    index_html = (root / "index.html").read_text(encoding="utf-8")
+    assert "./assets/config.js" in index_html
+    assert "./assets/app.js" in index_html
+    assert "./assets/style.css" in index_html
+    assert 'href="/' not in index_html
+    assert 'src="/' not in index_html
+
+    config_js = (root / "assets" / "config.js").read_text(encoding="utf-8")
+    assert "LIVE_REFRESH_MS" in config_js
+    assert "LIVE_CRYPTO_SYMBOLS" in config_js
+    assert "LIVE_METAL_SYMBOLS" in config_js

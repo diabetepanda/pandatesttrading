@@ -17,6 +17,7 @@
         <span id="risk-light" class="light light-neutral">風控：讀取中</span>
         <span id="data-light" class="light light-neutral">資料：讀取中</span>
         <span id="sched-light" class="light light-neutral">排程：讀取中</span>
+        <span id="live-light" class="light light-neutral">即時：讀取中</span>
       </div>
     </div>
     <div class="topbar-metrics">
@@ -33,7 +34,11 @@
         <span id="long-equity" class="metric-value">$80,000.00</span>
       </div>
       <div class="metric">
-        <span class="metric-label">最後更新 (UTC+8)</span>
+        <span class="metric-label">即時價格更新 (瀏覽器)</span>
+        <span id="live-updated" class="metric-value">--</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">最後排程更新 (Actions, UTC+8)</span>
         <span id="last-updated" class="metric-value">--</span>
       </div>
     </div>
@@ -50,7 +55,9 @@
       <div class="section-header">
         <div>
           <h1>市場行情與資料健康狀態（階段 1）</h1>
-          <p class="subtitle">每 60 秒自動重新讀取 GitHub <code>data</code> 分支資料（無 API Key 公開來源）</p>
+          <p class="subtitle">
+            <strong>即時價格（瀏覽器）</strong>每 8 秒更新，僅供顯示；<strong>報單與模擬驗證</strong>一律以 GitHub Actions 排程（60 秒重讀）的已收盤 K 線為準。
+          </p>
         </div>
         <button id="refresh-btn" class="btn" type="button">立即重新整理</button>
       </div>
@@ -68,8 +75,9 @@
             <tr>
               <th>標的</th>
               <th>市場</th>
-              <th>最新價格</th>
-              <th>資料來源</th>
+              <th>最新價格（即時 / 排程）</th>
+              <th>24h 漲跌</th>
+              <th>排程資料來源</th>
               <th>1m</th>
               <th>15m</th>
               <th>1d</th>
@@ -78,7 +86,7 @@
           </thead>
           <tbody id="instruments-tbody">
             <tr>
-              <td colspan="8" class="muted center">資料讀取中...</td>
+              <td colspan="9" class="muted center">資料讀取中...</td>
             </tr>
           </tbody>
         </table>
@@ -114,6 +122,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
+  <script src="./assets/config.js"></script>
   <script src="./assets/app.js"></script>
 </body>
 </html>
