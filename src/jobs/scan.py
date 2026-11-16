@@ -10,7 +10,11 @@ from pathlib import Path
 from typing import Any
 
 from src.config_loader import load_config, load_control, load_events
-from src.data.adapters import FallbackDataFetcher, fetch_crypto_derivatives_meta
+from src.data.adapters import (
+    FallbackDataFetcher,
+    fetch_crypto_derivatives_meta,
+    normalize_derivatives_info,
+)
 from src.data.models import FetchResult, OHLCVBar
 from src.data.quality import _parse_iso_utc, check_continuity
 from src.data.resample import resample_1m_to_15m
@@ -305,9 +309,11 @@ def run_scan(
         b15 = bars_15m_by_sym.get(sym, [])
 
         crypto_meta = None
+        deriv_record: dict[str, Any] | None = None
         if mkt == "crypto":
             deriv_fn = derivatives_fetcher or fetch_crypto_derivatives_meta
             crypto_meta = deriv_fn(inst)
+            deriv_record = normalize_derivatives_info(crypto_meta)
 
         ev = strategy_a.evaluate_instrument(
             instrument=inst,
@@ -334,30 +340,32 @@ def run_scan(
                 control=control,
             )
             if pub is None:
-                watch_today_items.append(
-                    {
-                        "symbol": sym,
-                        "market": mkt,
-                        "decision": "rejected",
-                        "reason": "風控或頻率限制擋下（詳見 watch_log / risk_events）",
-                        "indicators": ev.indicators,
-                        "data_status_1m": rep_1m["status"],
-                        "data_status_15m": rep_15m["status"],
-                    }
-                )
-        else:
-            engine._record_watch(sym, "A", now_iso, ev.watch_reason)
-            watch_today_items.append(
-                {
+                item_entry: dict[str, Any] = {
                     "symbol": sym,
                     "market": mkt,
-                    "decision": "watch",
-                    "reason": ev.watch_reason,
+                    "decision": "rejected",
+                    "reason": "風控或頻率限制擋下（詳見 watch_log / risk_events）",
                     "indicators": ev.indicators,
                     "data_status_1m": rep_1m["status"],
                     "data_status_15m": rep_15m["status"],
                 }
-            )
+                if deriv_record is not None:
+                    item_entry["derivatives"] = deriv_record
+                watch_today_items.append(item_entry)
+        else:
+            engine._record_watch(sym, "A", now_iso, ev.watch_reason)
+            item_entry = {
+                "symbol": sym,
+                "market": mkt,
+                "decision": "watch",
+                "reason": ev.watch_reason,
+                "indicators": ev.indicators,
+                "data_status_1m": rep_1m["status"],
+                "data_status_15m": rep_15m["status"],
+            }
+            if deriv_record is not None:
+                item_entry["derivatives"] = deriv_record
+            watch_today_items.append(item_entry)
 
     signals_after = set(engine.primary_ledger.trades.keys())
     new_signal_ids = sorted(signals_after - signals_before)

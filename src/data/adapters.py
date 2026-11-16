@@ -564,12 +564,16 @@ class FallbackDataFetcher:
 def fetch_crypto_derivatives_meta(
     instrument: dict[str, Any],
     timeout_sec: int = 10,
-) -> dict[str, float] | None:
+) -> dict[str, Any]:
     """Fetch crypto funding rate and 1h open-interest change % (OKX primary, Binance Futures fallback).
 
-    Returns None when neither public endpoint can provide complete data.
+    Returns a structured dict with keys: source, funding_rate, oi_change, oi_change_1h_pct, status.
+    status is one of: "ok", "資料不足", "抓取失敗".
     """
     sources = instrument.get("sources", {})
+    had_http_ok = False
+    last_source: str | None = None
+
     okx_spot = sources.get("okx")
     if okx_spot:
         okx_swap = f"{okx_spot}-SWAP"
@@ -591,17 +595,21 @@ def fetch_crypto_derivatives_meta(
             )
             oi_resp.raise_for_status()
             oi_data = oi_resp.json().get("data", [])
+            had_http_ok = True
+            last_source = "okx"
 
             if fr_data and len(oi_data) >= 2:
                 funding_rate = float(fr_data[0]["fundingRate"])
                 oi_now = float(oi_data[0][1])
                 oi_prev = float(oi_data[1][1])
                 if oi_prev > 0:
-                    oi_chg_pct = ((oi_now - oi_prev) / oi_prev) * 100.0
+                    oi_chg_pct = round(((oi_now - oi_prev) / oi_prev) * 100.0, 4)
                     return {
+                        "source": "okx",
                         "funding_rate": funding_rate,
-                        "oi_change_1h_pct": round(oi_chg_pct, 4),
-                        "source": 1.0,  # OKX
+                        "oi_change": oi_chg_pct,
+                        "oi_change_1h_pct": oi_chg_pct,
+                        "status": "ok",
                     }
         except Exception:
             pass
@@ -626,19 +634,54 @@ def fetch_crypto_derivatives_meta(
             )
             oi_resp.raise_for_status()
             oi_list = oi_resp.json()
+            had_http_ok = True
+            last_source = "binance_futures"
 
             if "lastFundingRate" in fr_json and isinstance(oi_list, list) and len(oi_list) >= 2:
                 funding_rate = float(fr_json["lastFundingRate"])
                 oi_prev = float(oi_list[0]["sumOpenInterest"])
                 oi_now = float(oi_list[1]["sumOpenInterest"])
                 if oi_prev > 0:
-                    oi_chg_pct = ((oi_now - oi_prev) / oi_prev) * 100.0
+                    oi_chg_pct = round(((oi_now - oi_prev) / oi_prev) * 100.0, 4)
                     return {
+                        "source": "binance_futures",
                         "funding_rate": funding_rate,
-                        "oi_change_1h_pct": round(oi_chg_pct, 4),
-                        "source": 2.0,  # Binance Futures
+                        "oi_change": oi_chg_pct,
+                        "oi_change_1h_pct": oi_chg_pct,
+                        "status": "ok",
                     }
         except Exception:
             pass
 
-    return None
+    return {
+        "source": last_source,
+        "funding_rate": None,
+        "oi_change": None,
+        "oi_change_1h_pct": None,
+        "status": "資料不足" if had_http_ok else "抓取失敗",
+    }
+
+
+def normalize_derivatives_info(raw: dict[str, Any] | None) -> dict[str, Any]:
+    """Normalize derivatives metadata for watch_today.json logging."""
+    if raw is None:
+        return {
+            "source": None,
+            "funding_rate": None,
+            "oi_change": None,
+            "status": "資料不足",
+        }
+    fr = raw.get("funding_rate")
+    oi_chg = raw.get("oi_change", raw.get("oi_change_1h_pct"))
+    src = raw.get("source")
+    if isinstance(src, (int, float)):
+        src = "okx" if float(src) == 1.0 else ("binance_futures" if float(src) == 2.0 else str(src))
+    status = raw.get("status")
+    if not status:
+        status = "ok" if (fr is not None and oi_chg is not None) else "資料不足"
+    return {
+        "source": src,
+        "funding_rate": fr,
+        "oi_change": oi_chg,
+        "status": status,
+    }

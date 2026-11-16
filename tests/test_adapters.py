@@ -137,11 +137,21 @@ def test_fetch_crypto_derivatives_meta_okx_and_fallback() -> None:
 
     with patch("src.data.adapters.requests.get", side_effect=[fr_okx, oi_okx]):
         meta = fetch_crypto_derivatives_meta(inst)
-    assert meta is not None
+    assert meta["status"] == "ok"
+    assert meta["source"] == "okx"
     assert meta["funding_rate"] == 0.0001
-    assert meta["oi_change_1h_pct"] == 5.0
+    assert meta["oi_change"] == 5.0
 
-    # When OKX & Binance both fail -> returns None (no fake defaults)
+    # HTTP 200 but incomplete fields -> status == "資料不足"
+    empty_ok = MagicMock()
+    empty_ok.json.return_value = {"code": "0", "data": []}
+    with patch("src.data.adapters.requests.get", side_effect=[empty_ok, empty_ok, ConnectionError("bin")]):
+        meta_insuff = fetch_crypto_derivatives_meta(inst)
+    assert meta_insuff["status"] == "資料不足"
+    assert meta_insuff["funding_rate"] is None
+
+    # When OKX & Binance both fail with network errors -> status == "抓取失敗"
     with patch("src.data.adapters.requests.get", side_effect=ConnectionError("blocked")):
-        meta_none = fetch_crypto_derivatives_meta(inst)
-    assert meta_none is None
+        meta_fail = fetch_crypto_derivatives_meta(inst)
+    assert meta_fail["status"] == "抓取失敗"
+    assert meta_fail["funding_rate"] is None
