@@ -12,7 +12,7 @@ from src.data.adapters import INTERVAL_SECONDS
 from src.data.models import OHLCVBar
 from src.data.quality import _parse_iso_utc
 from src.engine.simulator import CandidateSignal, MarketBar, SimulationEngine
-from src.signals.models import InputSnapshot, LifecycleState
+from src.signals.models import InputSnapshot, LifecycleState, round_price
 from src.strategies.six_strategies import (
     SignalAction,
     compute_strategy_exit_info,
@@ -194,10 +194,10 @@ def _submit_action_as_candidate(
         symbol=inst["symbol"],
         direction=act.direction,
         ref_price=ref_px,
-        stop_loss=round(sl_px, 6),
-        take_profit=round(tp_px, 6) if tp_px is not None else None,
+        stop_loss=round_price(sl_px),
+        take_profit=round_price(tp_px) if tp_px is not None else None,
         exit_rule=exit_rule,
-        trailing_exit_price=round(trailing_px, 6) if trailing_px is not None else None,
+        trailing_exit_price=round_price(trailing_px) if trailing_px is not None else None,
         reasons=(f"策略狀態：{ver_label}", act.reason),
         snapshot=snap,
         verification_status=ver_label,
@@ -259,7 +259,7 @@ def evaluate_live_single_strategy_step(
             atr_period=atr_period,
         )
         open_tr.exit_rule = exit_rule
-        open_tr.trailing_exit_price = round(trailing_px, 6) if trailing_px is not None else None
+        open_tr.trailing_exit_price = round_price(trailing_px) if trailing_px is not None else None
 
     act = evaluate_live_bar(
         strategy_id=strategy_id,

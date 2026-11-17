@@ -141,3 +141,13 @@ def test_signal_copy_text_format() -> None:
 
     assert not re.search(r"\d{4}-\d{2}-\d{2}T|\d{2}:\d{2}Z", txt)
     assert txt.strip().endswith("模擬驗證中，非投資建議")
+
+
+def test_price_precision_across_scales() -> None:
+    from src.signals.models import _fmt_num, round_price
+
+    assert round_price(0.000003882) == pytest.approx(0.000003882, abs=1e-12)
+    assert round_price(2.463123) == pytest.approx(2.463123, abs=1e-9)
+    assert _fmt_num(0.000003882) == "0.000003882"
+    assert _fmt_num(2.46312) == "2.4631"
+    assert _fmt_num(47.0694) == "47.069"

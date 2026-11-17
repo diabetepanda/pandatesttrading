@@ -21,6 +21,7 @@ from src.signals.models import (
     LifecycleState,
     Signal,
     SignalUpdateEvent,
+    round_price,
     validate_transition,
 )
 from src.signals.store import SignalStore
@@ -153,8 +154,8 @@ class TradeRecord:
             "correlation_group": self.correlation_group,
             "direction": self.direction,
             "state": self.state.value,
-            "entry_price": round(self.entry_price, 6),
-            "avg_entry_price": round(self.avg_entry_price, 6),
+            "entry_price": round_price(self.entry_price),
+            "avg_entry_price": round_price(self.avg_entry_price),
             "remaining_qty": round(self.remaining_qty, 8),
             "initial_filled_qty": round(self.initial_filled_qty, 8),
             "initial_stop_loss": self.initial_stop_loss,
@@ -499,7 +500,7 @@ class SimulationEngine:
             symbol=candidate.symbol,
             market=inst["market"],
             direction=candidate.direction,
-            entry_price=round(raw_entry, 6),
+            entry_price=round_price(raw_entry),
             stop_loss=candidate.stop_loss,
             take_profit=candidate.take_profit,
             exit_rule=candidate.exit_rule,
@@ -862,8 +863,8 @@ class SimulationEngine:
                     if strat_key in ver_labels:
                         s_data["verification_status"] = ver_labels[strat_key]
                     s_data["lifecycle_state"] = tr.state.value if tr else s_data.get("lifecycle_state", "active")
-                    s_data["avg_entry_price"] = round(tr.avg_entry_price, 6) if tr else 0.0
-                    s_data["entry_price"] = round(tr.avg_entry_price, 6) if (tr and tr.avg_entry_price > 0) else float(s_data.get("entry_price") or s_data.get("entry_low") or 0.0)
+                    s_data["avg_entry_price"] = round_price(tr.avg_entry_price) if tr else 0.0
+                    s_data["entry_price"] = round_price(tr.avg_entry_price) if (tr and tr.avg_entry_price > 0) else float(s_data.get("entry_price") or s_data.get("entry_low") or 0.0)
                     s_data["remaining_qty"] = round(tr.remaining_qty, 8) if tr else 0.0
                     s_data["current_stop_loss"] = tr.current_stop_loss if tr else s_data["stop_loss"]
                     s_data["take_profit"] = tr.take_profit if tr else s_data.get("take_profit")

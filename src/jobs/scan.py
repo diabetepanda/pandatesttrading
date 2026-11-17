@@ -27,7 +27,7 @@ from src.jobs.live_strategy import (
     is_instrument_eligible_for_strategy,
     load_strategy_runtime_configs,
 )
-from src.signals.models import LifecycleState
+from src.signals.models import LifecycleState, round_price
 
 LEGACY_OBSOLETE_FILES = ("watch_today_b.json", "liquidity_heatmap.json")
 
@@ -613,7 +613,7 @@ def run_scan(
             "reason": watch_reason,
             "strategies": strat_judgments,
             "indicators": {
-                "atr_1h": round(atr_1h_by_sym[sym], 6) if atr_1h_by_sym.get(sym) is not None else None,
+                "atr_1h": round_price(atr_1h_by_sym[sym]) if atr_1h_by_sym.get(sym) is not None else None,
                 "atr_ratio": round(atr_ratio_by_sym[sym], 3) if atr_ratio_by_sym.get(sym) is not None else None,
             },
             "data_status_1m": st_1m,

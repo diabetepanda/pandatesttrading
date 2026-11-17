@@ -119,8 +119,10 @@ def test_frontend_assets_and_relative_paths() -> None:
     assert "TONUSDT" in config_js
 
     # Stage 4, 5 & 6 hash routes, disclaimer, backtest results, and fixed CDN check
-    for route in ("#/wall", "#/results", "#/stats", "#/account", "#/risk", "#/data"):
+    for route in ("#/simple", "#/wall", "#/results", "#/stats", "#/account", "#/risk", "#/data"):
         assert route in index_html
+    nav_block = index_html.split('<nav class="main-nav"', 1)[1].split("</nav>", 1)[0]
+    assert nav_block.index("#/simple") < nav_block.index("#/wall")
     assert "#/scaling" not in index_html
     assert "lightweight-charts@4.2.1" in index_html
     assert "backtest-section" in index_html
@@ -152,7 +154,10 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261117a" in index_html
+    assert "?v=20261117b" in index_html
+    assert "simple-signals-grid" in index_html
+    assert ".simple-grid" in style_css
+    assert "trades.json" in app_js
     assert "watch-scope-tabs" in index_html
     assert "watch_today_daily.json" in app_js
     assert "watch_today_b.json" not in app_js
@@ -248,6 +253,62 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
         const pepe = u.formatNumber(0.000004123);
         if (!pepe || !pepe.includes('4123')) {{
           throw new Error('Small price precision failed: ' + pepe);
+        }}
+        if (u.formatNumber(0.000003882) !== '0.000003882') {{
+          throw new Error('PEPE precision failed: ' + u.formatNumber(0.000003882));
+        }}
+        if (u.formatNumber(2.46312) !== '2.4631') {{
+          throw new Error('2.4631 precision failed: ' + u.formatNumber(2.46312));
+        }}
+        if (u.formatNumber(47.0694) !== '47.069') {{
+          throw new Error('47.069 precision failed: ' + u.formatNumber(47.0694));
+        }}
+
+        // Simple Signal exit point rules: long (higher), short (lower), null trailing (SL), L3 suffix
+        const exLong = u.computeSimpleExitPoint({{ direction: 'long', current_stop_loss: 95, trailing_exit_price: 98, strategy: 'S2' }});
+        if (exLong.price !== 98 || exLong.suffix !== '') throw new Error('exLong higher failed: ' + JSON.stringify(exLong));
+        const exLongSl = u.computeSimpleExitPoint({{ direction: 'long', current_stop_loss: 99, trailing_exit_price: 97, strategy: 'L1' }});
+        if (exLongSl.price !== 99) throw new Error('exLong SL failed: ' + JSON.stringify(exLongSl));
+        const exShort = u.computeSimpleExitPoint({{ direction: 'short', current_stop_loss: 105, trailing_exit_price: 102, strategy: 'S2' }});
+        if (exShort.price !== 102 || exShort.suffix !== '') throw new Error('exShort lower failed: ' + JSON.stringify(exShort));
+        const exNull = u.computeSimpleExitPoint({{ direction: 'short', current_stop_loss: 105, trailing_exit_price: null, strategy: 'L3' }});
+        if (exNull.price !== 105 || exNull.suffix !== '（另外每週檢查排名）') throw new Error('exNull/L3 failed: ' + JSON.stringify(exNull));
+
+        // Simple Signal PnL calculation: long, short, + realized_pnl_usd, null price -> "—"
+        const pnlLong = u.computeSimpleTradePnl({{ direction: 'long', avg_entry_price: 100, remaining_qty: 10, realized_pnl_usd: -2.4 }}, 105.5);
+        if (pnlLong.text !== '+$53' || pnlLong.cls !== 'chg-up') throw new Error('pnlLong failed: ' + JSON.stringify(pnlLong));
+        const pnlShort = u.computeSimpleTradePnl({{ direction: 'short', avg_entry_price: 100, remaining_qty: 10, realized_pnl_usd: -1.0 }}, 103.0);
+        if (pnlShort.text !== '-$31' || pnlShort.cls !== 'chg-down') throw new Error('pnlShort failed: ' + JSON.stringify(pnlShort));
+        const pnlMissing = u.computeSimpleTradePnl({{ direction: 'long', avg_entry_price: 100, remaining_qty: 10, realized_pnl_usd: 0 }}, null);
+        if (pnlMissing.text !== '—') throw new Error('pnlMissing failed: ' + JSON.stringify(pnlMissing));
+
+        // Display names & card builder (sorting, filtering active, reason extraction, position integer formatting)
+        if (u.formatSimpleSymbolName('COPPER', 'commodity') !== 'Copper（銅）') throw new Error('COPPER name failed');
+        if (u.formatSimpleSymbolName('XAGUSD', 'commodity') !== 'Silver（白銀）') throw new Error('Silver name failed');
+        if (u.formatSimpleSymbolName('ICPUSDT', 'crypto') !== 'ICP') throw new Error('ICP name failed');
+
+        const cards = u.buildSimpleSignalCardsData(
+          [
+            {{ signal_id: 'SIG-1', strategy: 'S2', symbol: 'ICPUSDT', market: 'crypto', direction: 'short', state: 'active', entry_price: 2.4631, avg_entry_price: 2.4631, remaining_qty: 1000, current_stop_loss: 2.6, trailing_exit_price: 2.55, planned_notional_usd: 15000, realized_pnl_usd: -5 }},
+            {{ signal_id: 'SIG-2', strategy: 'L3', symbol: 'BTCUSDT', market: 'crypto', direction: 'long', state: 'active', entry_price: 90000, avg_entry_price: 90000, remaining_qty: 0.1, current_stop_loss: 85000, trailing_exit_price: null, planned_notional_usd: 9000, realized_pnl_usd: -2 }},
+            {{ signal_id: 'SIG-3', strategy: 'S1', symbol: 'COPPER', market: 'commodity', direction: 'long', state: 'closed', entry_price: 4.5, avg_entry_price: 4.5, remaining_qty: 0, current_stop_loss: 4.3, planned_notional_usd: 5000, realized_pnl_usd: 10 }},
+          ],
+          {{
+            'SIG-1': {{ signal_id: 'SIG-1', verification_status: '觀察中（未通過驗證）', reasons: ['策略狀態：觀察中（未通過驗證）', 'S2 跌破低點'] }},
+            'SIG-2': {{ signal_id: 'SIG-2', verification_status: '已驗證', reasons: ['策略狀態：已驗證', 'L3 動能排名前列'] }},
+          }},
+          {{ strategies: [{{ strategy_id: 'S2', passed: false }}, {{ strategy_id: 'L3', passed: true }}] }},
+          (sym) => (sym === 'ICPUSDT' ? 2.4 : null),
+          []
+        );
+        if (cards.length !== 2 || cards[0].signal_id !== 'SIG-2' || cards[1].signal_id !== 'SIG-1') {{
+          throw new Error('Sorting/filtering failed: ' + JSON.stringify(cards));
+        }}
+        if (cards[0].posText !== '本金 $1,800 × 5 倍 = $9,000' || !cards[0].exitStr.includes('（另外每週檢查排名）') || cards[0].pnlInfo.text !== '—') {{
+          throw new Error('L3 card check failed: ' + JSON.stringify(cards[0]));
+        }}
+        if (cards[1].dot !== '🔴' || cards[1].displayName !== 'ICP' || cards[1].reasonLine !== 'S2 跌破低點（S2 短線，觀察中）' || cards[1].exitStr !== '2.55' || cards[1].pnlInfo.text !== '+$58') {{
+          throw new Error('ICP card check failed: ' + JSON.stringify(cards[1]));
         }}
         """
         proc = subprocess.run([node_bin, "-e", script], capture_output=True, text=True)

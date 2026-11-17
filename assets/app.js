@@ -18,6 +18,8 @@
   let showAllWatch = false;
   let cachedInstruments = [];
   let cachedSignals = [];
+  let cachedTrades = [];
+  let cachedSignalById = {};
   let cachedWatch = null;
   let cachedWatchDaily = null;
   let cachedBacktest = null;
@@ -56,17 +58,21 @@
     return `${map.month || "01"}/${map.day || "01"} ${hh}:${map.minute || "00"}`;
   }
 
+  function getPricePrecision(val) {
+    const abs = Math.abs(Number(val));
+    if (!Number.isFinite(abs) || abs === 0) return 2;
+    if (abs >= 1000) return 2;
+    if (abs >= 10) return 3;
+    if (abs >= 1) return 4;
+    const leadingZeros = Math.max(0, -Math.floor(Math.log10(abs)) - 1);
+    return Math.min(12, Math.max(4, leadingZeros + 4));
+  }
+
   function formatNumber(val) {
     if (val === null || val === undefined || Number.isNaN(Number(val))) return null;
     const num = Number(val);
-    const abs = Math.abs(num);
-    if (abs === 0) return "0";
-    if (abs >= 1000) return num.toLocaleString("en-US", { maximumFractionDigits: 2 });
-    if (abs >= 1) return num.toLocaleString("en-US", { maximumFractionDigits: 4 });
-    // Keep at least 4 significant digits for small prices (e.g. PEPE 0.000004123)
-    const leadingZeros = Math.max(0, -Math.floor(Math.log10(abs)) - 1);
-    const decimals = Math.min(12, Math.max(4, leadingZeros + 4));
-    return num.toLocaleString("en-US", { maximumFractionDigits: decimals });
+    if (num === 0) return "0";
+    return num.toLocaleString("en-US", { maximumFractionDigits: getPricePrecision(num) });
   }
 
   function convertReasonUtcToTaipei(text) {
@@ -435,6 +441,157 @@
     });
   }
 
+  const SIMPLE_DISPLAY_NAMES = {
+    XAUUSD: "Gold（黃金）",
+    XAGUSD: "Silver（白銀）",
+    COPPER: "Copper（銅）",
+    WTI: "WTI（原油）",
+    NATGAS: "Natural Gas（天然氣）",
+    NAS100: "NASDAQ 100（那斯達克 100）",
+    SP500: "S&P 500（標普 500）",
+    JP225: "Nikkei 225（日經 225）",
+    TWII: "TAIEX（台股加權指數）",
+  };
+
+  function formatSimpleSymbolName(symbol, market, instrumentsList) {
+    const sym = String(symbol || "");
+    if (SIMPLE_DISPLAY_NAMES[sym]) return SIMPLE_DISPLAY_NAMES[sym];
+    if (market === "crypto" || /USDT$/i.test(sym)) {
+      return sym.replace(/USDT$/i, "");
+    }
+    const list = Array.isArray(instrumentsList) ? instrumentsList : cachedInstruments;
+    const inst = list.find((i) => i.symbol === sym);
+    if (inst && inst.display_name) {
+      const m = String(inst.display_name).match(/^(.+?)\s*\(([^)]+)\)$/);
+      if (m) return `${m[2]}（${m[1]}）`;
+      return inst.display_name;
+    }
+    return sym;
+  }
+
+  function getStrategyPoolKind(strategyId) {
+    if (strategyId === "L3") return "輪動";
+    if (String(strategyId || "").startsWith("L")) return "長線";
+    return "短線";
+  }
+
+  function isStrategyVerified(strategyId, signalObj, backtestObj) {
+    const bt = backtestObj !== undefined ? backtestObj : cachedBacktest;
+    const list = bt ? (Array.isArray(bt.strategies) ? bt.strategies : bt.results) : null;
+    if (Array.isArray(list)) {
+      const row = list.find((item) => item.strategy_id === strategyId);
+      if (row) return Boolean(row.passed);
+    }
+    if (signalObj?.verification_status === "已驗證") return true;
+    if (Array.isArray(signalObj?.reasons)) {
+      if (signalObj.reasons.some((r) => String(r).trim() === "策略狀態：已驗證")) return true;
+    }
+    return false;
+  }
+
+  function extractSimpleReasonText(signalObj) {
+    const reasons = Array.isArray(signalObj?.reasons) ? signalObj.reasons : [];
+    const picked = reasons.find((r) => !String(r).trim().startsWith("策略狀態："));
+    if (picked) return convertReasonUtcToTaipei(String(picked).trim());
+    return "依策略訊號進場";
+  }
+
+  function computeSimpleExitPoint(tradeObj) {
+    const sl = Number(tradeObj?.current_stop_loss ?? tradeObj?.initial_stop_loss ?? tradeObj?.stop_loss ?? 0);
+    const rawTrail = tradeObj?.trailing_exit_price;
+    const hasTrail = rawTrail !== null && rawTrail !== undefined && rawTrail !== "" && !Number.isNaN(Number(rawTrail));
+    let exitPx = sl;
+    if (hasTrail) {
+      const trail = Number(rawTrail);
+      exitPx = tradeObj?.direction === "short" ? Math.min(sl, trail) : Math.max(sl, trail);
+    }
+    const suffix = tradeObj?.strategy === "L3" ? "（另外每週檢查排名）" : "";
+    return { price: exitPx, suffix };
+  }
+
+  function computeSimpleTradePnl(tradeObj, currentPrice) {
+    if (currentPrice === null || currentPrice === undefined || currentPrice === "" || Number.isNaN(Number(currentPrice))) {
+      return { available: false, roundedUsd: null, text: "—", cls: "muted" };
+    }
+    const cur = Number(currentPrice);
+    const entry = Number(tradeObj?.avg_entry_price || tradeObj?.entry_price || 0);
+    const qty = Number(tradeObj?.remaining_qty || 0);
+    const realized = Number(tradeObj?.realized_pnl_usd || 0);
+    const unrealized = tradeObj?.direction === "short" ? (entry - cur) * qty : (cur - entry) * qty;
+    const total = unrealized + realized;
+    let rounded = Math.round(total);
+    if (Object.is(rounded, -0)) rounded = 0;
+    if (rounded > 0) {
+      return { available: true, roundedUsd: rounded, text: `+$${rounded.toLocaleString("en-US")}`, cls: "chg-up" };
+    }
+    if (rounded < 0) {
+      return { available: true, roundedUsd: rounded, text: `-$${Math.abs(rounded).toLocaleString("en-US")}`, cls: "chg-down" };
+    }
+    return { available: true, roundedUsd: 0, text: "$0", cls: "muted" };
+  }
+
+  function buildSimpleSignalCardsData(tradesList, signalById, backtestObj, priceLookupFn, instrumentsList) {
+    const active = (Array.isArray(tradesList) ? tradesList : []).filter((t) => t && t.state === "active");
+    const cards = active.map((t) => {
+      const sigObj = (signalById && signalById[t.signal_id]) || null;
+      const isLong = t.direction === "long";
+      const entryPx = Number(t.avg_entry_price || t.entry_price || 0);
+      const slPx = Number(t.current_stop_loss ?? t.initial_stop_loss ?? t.stop_loss ?? 0);
+      const notionalRaw = Number(t.planned_notional_usd || (Number(t.remaining_qty || 0) * entryPx) || 0);
+      const marginUsd = Math.round(notionalRaw / 5);
+      const notionalUsd = Math.round(notionalRaw);
+      const verified = isStrategyVerified(t.strategy, sigObj, backtestObj);
+      const exitInfo = computeSimpleExitPoint(t);
+      const curPx = typeof priceLookupFn === "function" ? priceLookupFn(t.symbol) : getDisplayPrice(t.symbol).price;
+      const pnlInfo = computeSimpleTradePnl(t, curPx);
+      return {
+        signal_id: t.signal_id,
+        verified,
+        notionalRaw,
+        dot: isLong ? "🟢" : "🔴",
+        displayName: formatSimpleSymbolName(t.symbol, t.market, instrumentsList),
+        dirZh: isLong ? "做多" : "做空",
+        reasonLine: `${extractSimpleReasonText(sigObj)}（${t.strategy} ${getStrategyPoolKind(t.strategy)}，${verified ? "已驗證" : "觀察中"}）`,
+        entryStr: entryPx > 0 ? (formatNumber(entryPx) ?? "—") : "—",
+        slStr: slPx > 0 ? (formatNumber(slPx) ?? "—") : "—",
+        exitStr: exitInfo.price > 0 ? `${formatNumber(exitInfo.price) ?? "—"}${exitInfo.suffix}` : `—${exitInfo.suffix}`,
+        posText: `本金 $${marginUsd.toLocaleString("en-US")} × 5 倍 = $${notionalUsd.toLocaleString("en-US")}`,
+        pnlInfo,
+      };
+    });
+    cards.sort((a, b) => (Number(b.verified) - Number(a.verified)) || (b.notionalRaw - a.notionalRaw));
+    return cards;
+  }
+
+  function renderSimpleSignals() {
+    const grid = document.getElementById("simple-signals-grid");
+    if (!grid) return;
+    const cards = buildSimpleSignalCardsData(
+      cachedTrades,
+      cachedSignalById,
+      cachedBacktest,
+      (sym) => getDisplayPrice(sym).price,
+      cachedInstruments
+    );
+    if (cards.length === 0) {
+      grid.innerHTML = '<div class="empty-state">目前沒有持倉</div>';
+      return;
+    }
+    grid.innerHTML = cards
+      .map((c) => `
+        <article class="simple-card">
+          <div class="simple-card-title">${c.dot} ${escapeHtml(c.displayName)} ${c.dirZh}</div>
+          <div class="simple-card-line">理由：${escapeHtml(c.reasonLine)}</div>
+          <div class="simple-card-line">進場價：${escapeHtml(c.entryStr)}</div>
+          <div class="simple-card-line">停損價：${escapeHtml(c.slStr)}</div>
+          <div class="simple-card-line">出場點位：${escapeHtml(c.exitStr)}</div>
+          <div class="simple-card-line">倉位：${escapeHtml(c.posText)}</div>
+          <div class="simple-card-line">目前損益：<span class="${c.pnlInfo.cls}">${escapeHtml(c.pnlInfo.text)}</span></div>
+        </article>
+      `)
+      .join("");
+  }
+
   function renderWallSummary() {
     const todayStr = new Date().toISOString().slice(0, 10);
     const todayCount = cachedSignals.filter((s) => (s.published_at_utc || "").startsWith(todayStr)).length;
@@ -708,12 +865,15 @@
       timeScale: { timeVisible: true, secondsVisible: false },
     });
     activeChart = chart;
+    const samplePx = Number(chartData.bars[0]?.close || sig.avg_entry_price || sig.entry_price || 1);
+    const chartPrec = getPricePrecision(samplePx);
     const series = chart.addCandlestickSeries({
       upColor: "#2ea043",
       downColor: "#f85149",
       borderVisible: false,
       wickUpColor: "#2ea043",
       wickDownColor: "#f85149",
+      priceFormat: { type: "price", precision: chartPrec, minMove: Math.pow(10, -chartPrec) },
     });
 
     const candles = chartData.bars.map((b) => ({
@@ -1435,6 +1595,10 @@
     if (route === "signal" && parts[1]) {
       document.getElementById("view-signal").classList.remove("hidden");
       renderSignalDetail(decodeURIComponent(parts[1]));
+    } else if (route === "simple") {
+      document.getElementById("view-simple")?.classList.remove("hidden");
+      document.querySelector('.nav-link[data-route="simple"]')?.classList.add("active");
+      renderSimpleSignals();
     } else if (route === "results") {
       document.getElementById("view-results").classList.remove("hidden");
       document.querySelector('.nav-link[data-route="results"]')?.classList.add("active");
@@ -1486,6 +1650,7 @@
     }
     if (cachedInstruments.length > 0) renderInstruments();
     const curHash = window.location.hash || "#/wall";
+    if (curHash.startsWith("#/simple")) renderSimpleSignals();
     if (curHash.startsWith("#/wall") || !window.location.hash) renderWallCards();
     if (curHash.startsWith("#/account")) renderSimulatedAccount();
   }
@@ -1494,7 +1659,7 @@
     const errBox = document.getElementById("fetch-error-box");
     try {
       const [
-        instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, watchRes, watchDailyRes, btRes,
+        instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, tradesRes, watchRes, watchDailyRes, btRes,
         perfRes, riskRes, eqRes, evRes,
       ] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
@@ -1503,6 +1668,7 @@
         fetchDataJson("run_log.json"),
         fetchDataJson("data_probe_report.json"),
         fetchDataJson("signals_index.json"),
+        fetchDataJson("trades.json"),
         fetchDataJson("watch_today.json"),
         fetchDataJson("watch_today_daily.json"),
         fetchDataJson("backtest_results.json"),
@@ -1519,6 +1685,7 @@
       errBox.classList.add("hidden");
       cachedInstruments = instRes.value.instruments || [];
       cachedSignals = signalsRes.status === "fulfilled" && Array.isArray(signalsRes.value) ? signalsRes.value : [];
+      cachedTrades = tradesRes.status === "fulfilled" && Array.isArray(tradesRes.value) ? tradesRes.value : [];
       cachedWatch = watchRes.status === "fulfilled" ? watchRes.value : null;
       cachedWatchDaily = watchDailyRes.status === "fulfilled" ? watchDailyRes.value : null;
       cachedBacktest = btRes.status === "fulfilled" ? btRes.value : null;
@@ -1527,8 +1694,25 @@
       cachedEquity = eqRes.status === "fulfilled" ? eqRes.value : null;
       cachedEvents = evRes.status === "fulfilled" ? evRes.value : null;
 
+      const sigMap = {};
+      for (const s of cachedSignals) {
+        if (s && s.signal_id) sigMap[s.signal_id] = s;
+      }
+      const activeTrades = cachedTrades.filter((t) => t && t.state === "active");
+      if (activeTrades.length > 0) {
+        const sigResults = await Promise.allSettled(
+          activeTrades.map((t) => fetchDataJson(`signals/${encodeURIComponent(t.signal_id)}.json`))
+        );
+        sigResults.forEach((r) => {
+          if (r.status === "fulfilled" && r.value && r.value.signal_id) {
+            sigMap[r.value.signal_id] = r.value;
+          }
+        });
+      }
+      cachedSignalById = sigMap;
+
       // 每個區塊各自防護：一個區塊出錯不會拖垮整個頁面
-      [renderInstruments, renderWallCards, renderResultsTable, renderBacktestResults,
+      [renderSimpleSignals, renderInstruments, renderWallCards, renderResultsTable, renderBacktestResults,
        renderPerformanceStats, renderSimulatedAccount,
        renderRiskCenter, renderDataExtras].forEach((fn) => {
         try { fn(); } catch (e) { console.error(`${fn.name} 失敗：`, e); }
@@ -1614,10 +1798,18 @@
 
   window.__SIGNAL_DESK_UTILS__ = {
     formatNumber,
+    getPricePrecision,
     formatTaipeiTime,
     formatSignalCopyText,
     convertReasonUtcToTaipei,
     classifyWatchReason,
+    formatSimpleSymbolName,
+    getStrategyPoolKind,
+    isStrategyVerified,
+    extractSimpleReasonText,
+    computeSimpleExitPoint,
+    computeSimpleTradePnl,
+    buildSimpleSignalCardsData,
   };
 
   window.addEventListener("hashchange", applyRoute);

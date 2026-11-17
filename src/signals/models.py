@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta, timezone
 from enum import Enum
@@ -172,15 +173,37 @@ class SignalUpdateEvent:
         )
 
 
+def round_price(val: float, min_decimals: int = 6, min_sig: int = 6) -> float:
+    """Round price keeping at least min_decimals and min_sig significant digits."""
+    if val == 0 or not math.isfinite(val):
+        return val
+    abs_v = abs(val)
+    if abs_v >= 1.0:
+        return round(val, min_decimals)
+    leading_zeros = max(0, -math.floor(math.log10(abs_v)) - 1)
+    decimals = min(12, max(min_decimals, leading_zeros + min_sig))
+    return round(val, decimals)
+
+
 def _fmt_num(val: float | str) -> str:
     if isinstance(val, str):
         return val
+    if not math.isfinite(val):
+        return str(val)
     abs_v = abs(val)
+    if abs_v == 0:
+        return "0"
     if abs_v >= 1000:
         return f"{val:,.2f}"
-    if abs_v >= 1:
-        return f"{val:,.4f}".rstrip("0").rstrip(".")
-    return f"{val:g}"
+    if abs_v >= 10:
+        s = f"{val:,.3f}"
+    elif abs_v >= 1:
+        s = f"{val:,.4f}"
+    else:
+        leading_zeros = max(0, -math.floor(math.log10(abs_v)) - 1)
+        decimals = min(12, max(4, leading_zeros + 4))
+        s = f"{val:,.{decimals}f}"
+    return s.rstrip("0").rstrip(".") if "." in s else s
 
 
 def _fmt_usd_compact(val: float) -> str:

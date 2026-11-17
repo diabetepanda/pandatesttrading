@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261117a" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261117b" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -44,6 +44,7 @@
       </div>
     </div>
     <nav class="main-nav" aria-label="主導覽">
+      <a href="#/simple" class="nav-link" data-route="simple">簡易訊號</a>
       <a href="#/wall" class="nav-link" data-route="wall">報單牆</a>
       <a href="#/results" class="nav-link" data-route="results">成績總表</a>
       <a href="#/stats" class="nav-link" data-route="stats">績效統計</a>
@@ -60,6 +61,21 @@
 
   <main class="container">
     <section id="fetch-error-box" class="error-box hidden"></section>
+
+    <!-- 簡易訊號 -->
+    <section id="view-simple" class="route-view hidden">
+      <section class="card">
+        <div class="section-header">
+          <div>
+            <h1>簡易訊號</h1>
+            <p class="subtitle">進行中持倉重點一覽（已驗證策略優先，依倉位由大到小排序）；僅供模擬驗證參考。</p>
+          </div>
+        </div>
+        <div id="simple-signals-grid" class="simple-grid">
+          <div class="empty-state">目前沒有持倉</div>
+        </div>
+      </section>
+    </section>
 
     <!-- 頁面 1：報單牆（首頁） -->
     <section id="view-wall" class="route-view">
@@ -414,7 +430,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261117a"></script>
-  <script src="./assets/app.js?v=20261117a"></script>
+  <script src="./assets/config.js?v=20261117b"></script>
+  <script src="./assets/app.js?v=20261117b"></script>
 </body>
 </html>

@@ -15,6 +15,7 @@ from numpy.lib.stride_tricks import sliding_window_view
 
 from src.data.models import OHLCVBar
 from src.indicators.technical import compute_atr_series
+from src.signals.models import _fmt_num
 
 
 @dataclass(frozen=True)
@@ -708,12 +709,7 @@ def evaluate_live_bar(
 
 
 def _fmt_price_str(val: float) -> str:
-    abs_v = abs(val)
-    if abs_v >= 1000:
-        return f"{val:,.2f}"
-    if abs_v >= 1:
-        return f"{val:,.4f}"
-    return f"{val:.6g}"
+    return _fmt_num(val)
 
 
 def compute_strategy_exit_info(

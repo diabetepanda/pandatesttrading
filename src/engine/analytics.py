@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from src.risk.manager import is_short_term_strategy
-from src.signals.models import LifecycleState
+from src.signals.models import LifecycleState, round_price
 
 
 def _parse_dt(ts: str) -> datetime:
@@ -327,12 +327,12 @@ def build_risk_status(
                 "direction": tr.direction,
                 "state": tr.state.value,
                 "entered_at_utc": tr.entered_at_utc or tr.published_at_utc,
-                "avg_entry_price": round(tr.avg_entry_price, 6),
+                "avg_entry_price": round_price(tr.avg_entry_price),
                 "total_qty": round(tr.remaining_qty, 8),
                 "notional_usd": est["effective_notional_usd"],
                 "notional_pct_subaccount": est["notional_pct_subaccount"],
                 "subaccount_capital_usd": round(sub_eq, 2),
-                "mark_price": round(mark_px, 6),
+                "mark_price": round_price(mark_px),
                 "unrealized_pnl_usd": round(tr.unrealized_pnl_usd(mark_px), 2) if tr.remaining_qty > 0 else 0.0,
                 "current_stop_loss": tr.current_stop_loss,
                 "take_profit": tr.take_profit,
