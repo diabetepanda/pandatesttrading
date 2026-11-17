@@ -8,6 +8,7 @@ on strictly closed OHLCV bars.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from typing import Any
 
 import numpy as np
@@ -214,67 +215,33 @@ def _rolling_extrema(arr: np.ndarray, window: int) -> tuple[list[float | None], 
     return hi_out, lo_out
 
 
-def _parse_hhmm_minutes(hhmm: str) -> int:
-    hh, mm = hhmm.split(":")
-    return int(hh) * 60 + int(mm)
+def _rolling_max_inclusive(arr: np.ndarray, window: int) -> list[float | None]:
+    """Compute inclusive `[idx - window + 1 : idx + 1]` rolling max."""
+    n = len(arr)
+    out: list[float | None] = [None] * n
+    if window <= 0 or n < window:
+        return out
+    w = sliding_window_view(arr, window)
+    maxs = w.max(axis=1).tolist()
+    for k, mx in enumerate(maxs):
+        out[window - 1 + k] = float(mx)
+    return out
 
 
-def _orb_series(
-    bars: list[OHLCVBar],
-    session_open_utc: str,
-    range_minutes: int,
-    eod_exit_bar_min: int,
-    allow_short: bool,
-) -> tuple[list[str], list[float | None], list[float | None], list[int]]:
-    """Causally compute first daily opening-range breakout per UTC session day (<= 1 trade/day)."""
-    start_min = _parse_hhmm_minutes(session_open_utc)
-    end_min = start_min + max(15, range_minutes)
-    needed_bars = max(1, range_minutes // 15)
-
-    n = len(bars)
-    entry_dir: list[str] = [""] * n
-    rng_hi_out: list[float | None] = [None] * n
-    rng_lo_out: list[float | None] = [None] * n
-    mins_out: list[int] = [0] * n
-
-    cur_day = ""
-    day_bars_count = 0
-    day_hi = -1e18
-    day_lo = 1e18
-    day_triggered = False
-
-    for i, b in enumerate(bars):
-        ts = b.ts_utc
-        day = ts[:10]
-        hhmm = int(ts[11:13]) * 60 + int(ts[14:16])
-        mins_out[i] = hhmm
-        if day != cur_day:
-            cur_day = day
-            day_bars_count = 0
-            day_hi = -1e18
-            day_lo = 1e18
-            day_triggered = False
-
-        if start_min <= hhmm < end_min:
-            if b.high > day_hi:
-                day_hi = b.high
-            if b.low < day_lo:
-                day_lo = b.low
-            day_bars_count += 1
-            continue
-
-        if day_bars_count >= needed_bars and hhmm >= end_min and hhmm < eod_exit_bar_min:
-            rng_hi_out[i] = day_hi
-            rng_lo_out[i] = day_lo
-            if not day_triggered:
-                if b.close > day_hi:
-                    entry_dir[i] = "long"
-                    day_triggered = True
-                elif allow_short and b.close < day_lo:
-                    entry_dir[i] = "short"
-                    day_triggered = True
-
-    return entry_dir, rng_hi_out, rng_lo_out, mins_out
+def _is_l4_week_end(bars: list[OHLCVBar], idx: int, market: str) -> bool:
+    """Return True if bars[idx] is the final closed daily bar of its ISO week (Sun crypto / Fri non-crypto)."""
+    dt = datetime.strptime(bars[idx].ts_utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    if market == "crypto":
+        if idx + 1 < len(bars):
+            dt_next = datetime.strptime(bars[idx + 1].ts_utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+            return dt.isocalendar()[:2] != dt_next.isocalendar()[:2]
+        return dt.weekday() == 6
+    if dt.weekday() == 4:
+        return True
+    if dt.weekday() < 4 and idx + 1 < len(bars):
+        dt_next = datetime.strptime(bars[idx + 1].ts_utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+        return dt.isocalendar()[:2] != dt_next.isocalendar()[:2]
+    return False
 
 
 def build_symbol_base_cache(
@@ -296,10 +263,11 @@ def build_symbol_base_cache(
         "highs_arr": np.asarray(highs, dtype=np.float64),
         "lows_arr": np.asarray(lows, dtype=np.float64),
         "atr": _atr_aligned(bars, period=atr_period, market=market, interval=interval),
+        "atr_cache": {},
+        "max_close_cache": {},
         "sma_cache": {},
         "rsi_cache": {},
         "extrema_cache": {},
-        "orb_cache": {},
     }
 
 
@@ -327,29 +295,7 @@ def precompute_series(
         "atr": base["atr"],
     }
 
-    if strategy_id == "S1":
-        session_open = str(params.get("session_open_utc", "00:00"))
-        range_min = int(params.get("range_minutes", 60))
-        eod_close = str(params.get("eod_close_utc", "23:45"))
-        # Close triggered on the 15m bar starting at eod_exit_bar_min (e.g. 23:15 closes 23:30 < 23:45)
-        eod_exit_bar_min = _parse_hhmm_minutes(eod_close) - 30
-        orb_key = (session_open, range_min, eod_exit_bar_min, allow_short)
-        if orb_key not in base["orb_cache"]:
-            base["orb_cache"][orb_key] = _orb_series(
-                base["bars"],
-                session_open_utc=session_open,
-                range_minutes=range_min,
-                eod_exit_bar_min=eod_exit_bar_min,
-                allow_short=allow_short,
-            )
-        ed, rhi, rlo, mins = base["orb_cache"][orb_key]
-        data["orb_dir"] = ed
-        data["orb_hi"] = rhi
-        data["orb_lo"] = rlo
-        data["bar_mins"] = mins
-        data["eod_exit_bar_min"] = eod_exit_bar_min
-
-    elif strategy_id == "S2":
+    if strategy_id == "S2":
         bo_p = int(params.get("breakout_bars", 20))
         tr_p = int(params.get("trail_bars", 8))
         for p in (bo_p, tr_p):
@@ -391,6 +337,23 @@ def precompute_series(
         data["don_exit_hi"] = base["extrema_cache"][("high", exit_p)]
         data["don_exit_lo"] = base["extrema_cache"][("low", exit_p)]
 
+    elif strategy_id == "L4":
+        sma_p = int(params.get("sma_period", 100))
+        atr_p = int(params.get("atr_period", 20))
+        high_lb = int(params.get("high_lookback", 60))
+        if sma_p not in base["sma_cache"]:
+            base["sma_cache"][sma_p] = _sma_series_np(closes_arr, sma_p)
+        if atr_p not in base["atr_cache"]:
+            base["atr_cache"][atr_p] = _atr_aligned(base["bars"], period=atr_p, market=market, interval=interval)
+        if high_lb not in base["max_close_cache"]:
+            base["max_close_cache"][high_lb] = _rolling_max_inclusive(closes_arr, high_lb)
+        if "l4_week_end" not in base:
+            base["l4_week_end"] = [_is_l4_week_end(base["bars"], i, market) for i in range(len(base["bars"]))]
+        data["l4_sma"] = base["sma_cache"][sma_p]
+        data["l4_atr"] = base["atr_cache"][atr_p]
+        data["l4_hi_close"] = base["max_close_cache"][high_lb]
+        data["l4_week_end"] = base["l4_week_end"]
+
     return data
 
 
@@ -405,61 +368,53 @@ def decide_strategy_step(
 ) -> SignalAction:
     """Single shared step decision function used identically by backtest and live execution."""
     closes = series["closes"]
-    atr_val = series["atr"][idx]
     close = closes[idx]
 
-    if atr_val is None or atr_val <= 0:
-        return SignalAction(action="hold", reason="ATR 尚未就緒")
+    if strategy_id == "L4":
+        sma_p = int(params.get("sma_period", 100))
+        k_mult = float(params.get("atr_mult", 3.0))
+        sma_v = series["l4_sma"][idx]
+        atr_v = series["l4_atr"][idx]
+        hi_c = series["l4_hi_close"][idx]
+        is_wend = bool(series["l4_week_end"][idx])
+        if sma_v is None or atr_v is None or atr_v <= 0 or hi_c is None:
+            return SignalAction(action="hold", reason="L4 週線趨勢指標暖機中")
 
-    if strategy_id == "S1":
-        # Strategy S1: Opening Range Breakout (15m, max 1 trade/day, flat before UTC 23:45)
-        bar_min = series["bar_mins"][idx]
-        eod_min = series["eod_exit_bar_min"]
-        if position_dir in ("long", "short"):
-            if bar_min >= eod_min:
+        trailing_cand = hi_c - k_mult * atr_v
+        if position_dir == "long":
+            if is_wend and close < sma_v:
                 return SignalAction(
                     action="exit",
-                    direction=position_dir,
-                    reason="S1 臨近 UTC 23:45 日內強制平倉",
+                    direction="long",
+                    stop_loss=trailing_cand,
+                    reason=f"L4 週末日線收盤 {close:g} 跌破 {sma_p} 日均線 {sma_v:g} 出場",
                 )
-            return SignalAction(action="hold")
+            return SignalAction(
+                action="hold",
+                stop_loss=trailing_cand,
+                reason="L4 持有中（每日更新移動停損）",
+            )
 
-        orb_dir = series["orb_dir"][idx]
-        if not orb_dir:
-            return SignalAction(action="hold", reason="S1 尚未突破開盤 1 小時區間或當日已達 1 筆上限")
-
-        rhi = series["orb_hi"][idx]
-        rlo = series["orb_lo"][idx]
-        if rhi is None or rlo is None:
-            return SignalAction(action="hold", reason="S1 開盤區間建立中")
-
-        sl_mode = str(params.get("sl_mode", "range_edge"))
-        sess_label = str(params.get("session_open_utc", "00:00"))
-        if orb_dir == "long":
-            if sl_mode == "range_edge":
-                sl_px = rlo if rlo < close else (close - 1.5 * atr_val)
-            else:
-                mult = float(sl_mode.split("_")[1]) if "_" in sl_mode else 1.5
-                sl_px = close - mult * atr_val
+        if not is_wend:
+            return SignalAction(action="hold", reason="L4 非週末收盤，等待週線結算判斷")
+        if close > sma_v:
+            sl_px = close - k_mult * atr_v
+            if sl_px <= 0:
+                return SignalAction(action="hold", reason="L4 初始止損價 <= 0，略過進場")
             return SignalAction(
                 action="enter_long",
                 direction="long",
                 stop_loss=sl_px,
-                reason=f"S1 ({sess_label} UTC 開盤區間 {rlo:g}~{rhi:g}) 15m 收盤 {close:g} 向上突破",
+                reason=f"L4 週末日線收盤 {close:g} 站上 {sma_p} 日均線 {sma_v:g}",
             )
-        if allow_short and orb_dir == "short":
-            if sl_mode == "range_edge":
-                sl_px = rhi if rhi > close else (close + 1.5 * atr_val)
-            else:
-                mult = float(sl_mode.split("_")[1]) if "_" in sl_mode else 1.5
-                sl_px = close + mult * atr_val
-            return SignalAction(
-                action="enter_short",
-                direction="short",
-                stop_loss=sl_px,
-                reason=f"S1 ({sess_label} UTC 開盤區間 {rlo:g}~{rhi:g}) 15m 收盤 {close:g} 向下跌破",
-            )
-        return SignalAction(action="hold")
+        return SignalAction(
+            action="hold",
+            reason=f"L4 週末日線收盤 {close:g} 未高於 {sma_p} 日均線 {sma_v:g}",
+        )
+
+    atr_val = series["atr"][idx]
+    if atr_val is None or atr_val <= 0:
+        return SignalAction(action="hold", reason="ATR 尚未就緒")
 
     if strategy_id == "S2":
         # Strategy S2: 4h Channel Breakout + ATR SL + Trailing Exit + Multi-day Hold
@@ -721,13 +676,7 @@ def compute_strategy_exit_info(
     interval: str = "1d",
     atr_period: int = 14,
 ) -> tuple[str, float | None]:
-    """Return plain-Chinese exit rule sentence and live trailing exit line price (for S2, L1, L2)."""
-    if strategy_id == "S1":
-        eod_utc = str(params.get("eod_close_utc", "23:45"))
-        hh, mm = eod_utc.split(":")
-        taipei_hh = (int(hh) + 8) % 24
-        return f"止損，或台北時間 {taipei_hh:02d}:{mm} 前強制平倉", None
-
+    """Return plain-Chinese exit rule sentence and live trailing exit line price (for S2, L1, L2, L4)."""
     if strategy_id == "S3":
         exit_ma_p = int(params.get("exit_ma_period", 5))
         max_hold = int(params.get("max_hold_bars", 10))
@@ -757,6 +706,11 @@ def compute_strategy_exit_info(
         elif strategy_id in ("L1", "L2"):
             raw = series["don_exit_lo"][idx] if direction == "long" else series["don_exit_hi"][idx]
             trailing_px = float(raw) if raw is not None else None
+        elif strategy_id == "L4":
+            hi_c = series["l4_hi_close"][idx]
+            atr_v = series["l4_atr"][idx]
+            k_mult = float(params.get("atr_mult", 3.0))
+            trailing_px = float(hi_c - k_mult * atr_v) if (hi_c is not None and atr_v is not None and atr_v > 0) else None
 
     if strategy_id == "S2":
         trail_p = int(params.get("trail_bars", 8))
@@ -773,5 +727,10 @@ def compute_strategy_exit_info(
         verb = "跌破" if direction == "long" else "站上"
         side_txt = "低點" if direction == "long" else "高點"
         return f"止損，或日線{verb} {exit_p} 日反向通道移動出場線{px_txt}", trailing_px
+
+    if strategy_id == "L4":
+        sma_p = int(params.get("sma_period", 100))
+        k_mult = float(params.get("atr_mult", 3.0))
+        return f"移動停損（近 60 日最高收盤 − {k_mult:g}×ATR）或週收盤跌破 {sma_p} 日均線", trailing_px
 
     return "依策略規則出場或觸及止損", None

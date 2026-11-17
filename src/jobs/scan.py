@@ -20,7 +20,7 @@ from src.data.adapters import (
 from src.data.models import FetchResult, OHLCVBar
 from src.data.quality import _parse_iso_utc, check_continuity
 from src.data.resample import resample_1m_to_15m
-from src.engine.simulator import MarketBar, SimulationEngine
+from src.engine.simulator import Ledger, MarketBar, SimulationEngine
 from src.indicators.technical import compute_atr, compute_atr_ratio, resample_15m_to_1h, resample_1h_to_4h
 from src.jobs.live_strategy import (
     evaluate_live_single_strategy_step,
@@ -439,12 +439,14 @@ def run_scan(
         atr_1h_by_sym[sym] = atr_1h
         atr_ratio_by_sym[sym] = atr_rat
 
-    # Close active trades on disabled instruments using latest available price at market
+    # Close active trades on disabled instruments or retired strategies using latest available price at market
     for trade in list(engine.ledger.trades.values()):
         if trade.state != LifecycleState.ACTIVE:
             continue
         inst_meta = engine.instruments.get(trade.symbol, {})
-        if not inst_meta.get("enabled", True):
+        is_disabled_inst = not inst_meta.get("enabled", True)
+        is_retired_strat = trade.strategy not in Ledger.STRATEGY_IDS
+        if is_disabled_inst or is_retired_strat:
             sym = trade.symbol
             b1m = bars_1m_by_sym.get(sym, [])
             b15 = bars_15m_by_sym.get(sym, [])
@@ -461,7 +463,10 @@ def run_scan(
             else:
                 latest_px = trade.avg_entry_price
 
-            engine.close_disabled_instrument_trade(trade, float(latest_px), latest_ts)
+            if is_retired_strat:
+                engine.close_retired_strategy_trade(trade, float(latest_px), latest_ts)
+            else:
+                engine.close_disabled_instrument_trade(trade, float(latest_px), latest_ts)
 
     for sym in sorted(symbols_with_open_trades):
         inst_meta = engine.instruments.get(sym, {})
@@ -493,7 +498,6 @@ def run_scan(
     runtime_cfgs = load_strategy_runtime_configs(out_dir, config)
     signals_before = set(engine.ledger.trades.keys())
     watch_today_items: list[dict[str, Any]] = []
-    s1_cfg = config.get("strategies", {}).get("S1", {})
     s2_cfg = config.get("strategies", {}).get("S2", {})
 
     def _find_next_open_1m_bar(bars_1m_list: list[OHLCVBar], closed_bars_strat: list[OHLCVBar], iv_sec: int) -> MarketBar | None:
@@ -543,28 +547,6 @@ def run_scan(
         strat_judgments: dict[str, dict[str, str]] = {}
         strat_msgs: list[str] = []
 
-        if "S1" in runtime_cfgs and is_instrument_eligible_for_strategy(inst, s1_cfg):
-            if b15:
-                nxt1 = _find_next_open_1m_bar(b1m, b15, 900)
-                ok1, msg1 = evaluate_live_single_strategy_step(
-                    engine=engine,
-                    strategy_id="S1",
-                    inst=inst,
-                    closed_bars=b15,
-                    runtime_cfg=runtime_cfgs["S1"],
-                    now_iso=now_iso,
-                    control=control,
-                    allow_new_entry=allow_entry,
-                    next_bar=nxt1,
-                )
-            else:
-                ok1, msg1 = False, f"S1 ({runtime_cfgs['S1'][1]}): 資料過期（缺少已收盤 15m K 線）"
-            published_any = published_any or ok1
-            st_lbl1 = "signal" if ok1 else ("expired" if "資料過期" in msg1 else "watch")
-            strat_judgments["S1"] = {"status": st_lbl1, "reason": msg1}
-            if msg1:
-                strat_msgs.append(msg1)
-
         if "S2" in runtime_cfgs and is_instrument_eligible_for_strategy(inst, s2_cfg):
             if b4h:
                 nxt2 = _find_next_open_1m_bar(b1m, b4h, 14400)
@@ -600,11 +582,11 @@ def run_scan(
             prefix_notes.append(f"衍生品狀態：{deriv_record.get('status')}（未進場）")
 
         reason_parts = prefix_notes + strat_msgs
-        watch_reason = "；".join(reason_parts) if reason_parts else "未觸及 S1/S2 入場條件"
+        watch_reason = "；".join(reason_parts) if reason_parts else "未觸及 S2 入場條件"
         decision = "signal" if published_any else ("watch" if "資料過期" not in watch_reason and not is_unstable else "watch")
 
         if not published_any:
-            engine._record_watch(sym, "S1", now_iso, watch_reason)
+            engine._record_watch(sym, "S2", now_iso, watch_reason)
 
         item_entry: dict[str, Any] = {
             "symbol": sym,

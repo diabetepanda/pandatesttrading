@@ -43,6 +43,8 @@ VALID_CLOSE_REASONS: set[str] = {
     "logic_invalidated",
     "risk_forced_close",
     "instrument_disabled",
+    "trend_exit",
+    "strategy_retired",
 }
 
 VALID_CANCEL_REASONS: set[str] = {
@@ -77,7 +79,7 @@ class Signal:
     signal_id: str
     published_at_utc: str
     entered_at_utc: str
-    strategy: str  # "S1", "S2", "S3", "L1", "L2", or "L3"
+    strategy: str  # "S2", "S3", "L1", "L2", "L3", or "L4" (plus historical "S1")
     symbol: str
     market: str
     direction: str  # "long" or "short"
@@ -105,7 +107,7 @@ class Signal:
         else:
             entry_px = (float(data.get("entry_low", 0.0)) + float(data.get("entry_high", 0.0))) / 2.0
         strat = str(data["strategy"])
-        default_cap = 10000.0 if strat.startswith("S") else 23333.33
+        default_cap = 10000.0 if strat.startswith("S") else 20000.0
         reasons = tuple(data.get("reasons", []))
         return cls(
             signal_id=data["signal_id"],
@@ -227,12 +229,13 @@ def format_taipei_mmdd_hhmm(ts_utc: str) -> str:
 
 
 STRATEGY_LABELS: dict[str, str] = {
-    "S1": "S1 開盤區間突破（短線）",
+    "S1": "S1 開盤區間突破（已停用）",
     "S2": "S2 4 小時突破（短線）",
     "S3": "S3 日線 RSI 回檔（短線）",
     "L1": "L1 波動度調整趨勢跟隨（長線）",
     "L2": "L2 精簡標的趨勢跟隨（長線）",
     "L3": "L3 雙動能（長線）",
+    "L4": "L4 主流週線趨勢（長線）",
 }
 
 EXIT_REASON_LABELS: dict[str, str] = {
@@ -245,6 +248,8 @@ EXIT_REASON_LABELS: dict[str, str] = {
     "logic_invalidated": "移動停利",
     "risk_forced_close": "強制平倉",
     "instrument_disabled": "標的停用平倉",
+    "trend_exit": "跌破均線出場",
+    "strategy_retired": "策略停用平倉",
 }
 
 
@@ -252,7 +257,7 @@ def format_signal_text(signal: Signal, exit_rule_override: str | None = None) ->
     """Format signal into plain text matching unified rules & Taipei timestamps."""
     dir_zh = "做多" if signal.direction == "long" else "做空"
     strat_zh = STRATEGY_LABELS.get(signal.strategy, f"策略 {signal.strategy}")
-    sub_cap = signal.subaccount_capital_usd or (10000.0 if signal.strategy.startswith("S") else 23333.33)
+    sub_cap = signal.subaccount_capital_usd or (10000.0 if signal.strategy.startswith("S") else 20000.0)
     notional_pct = (signal.notional_usd / sub_cap * 100.0) if sub_cap > 0 else 0.0
     sl_pct = (signal.risk_usd / sub_cap * 100.0) if sub_cap > 0 else signal.risk_pct_pool
     entered_tp = format_taipei_mmdd_hhmm(signal.entered_at_utc or signal.published_at_utc)

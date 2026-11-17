@@ -25,19 +25,19 @@ def _sample_signal(signal_id: str = "SIG-20261116-001") -> Signal:
         signal_id=signal_id,
         published_at_utc="2026-11-16T02:00:00Z",
         entered_at_utc="2026-11-16T02:00:00Z",
-        strategy="S1",
+        strategy="S2",
         symbol="BTCUSDT",
         market="crypto",
         direction="long",
         entry_price=65291.0,
         stop_loss=64013.62,
         take_profit=None,
-        exit_rule="止損，或台北時間 07:45 前強制平倉",
+        exit_rule="止損或 6 根 4h K 線低點出場",
         risk_pct_pool=1.0,
         risk_usd=100.0,
         notional_usd=5100.0,
         subaccount_capital_usd=10000.0,
-        reasons=("S1 開盤區間突破", "15m 收盤突破區間高點"),
+        reasons=("S2 突破最近 20 根 4h 高點", "4h 收盤確認突破"),
         snapshot_id="SNAP-20261116-001",
     )
 
@@ -114,6 +114,8 @@ def test_signal_lifecycle_state_transitions() -> None:
     assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="session_stop") == LifecycleState.CLOSED
     assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="rebalance_exit") == LifecycleState.CLOSED
     assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="instrument_disabled") == LifecycleState.CLOSED
+    assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="trend_exit") == LifecycleState.CLOSED
+    assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="strategy_retired") == LifecycleState.CLOSED
 
     with pytest.raises(InvalidStateTransitionError):
         validate_transition(LifecycleState.CLOSED, LifecycleState.ACTIVE)
@@ -133,9 +135,9 @@ def test_signal_copy_text_format() -> None:
     assert "台北時間 11/16 10:00 成交" in txt
     assert "64,013.62" in txt
     assert "-$100" in txt
-    assert "佔 S1 策略資金 1.0%" in txt
-    assert "出場規則：止損，或台北時間 07:45 前強制平倉" in txt
-    assert "倉位名目：$5,100（佔 S1 策略資金 51.0%）" in txt
+    assert "佔 S2 策略資金 1.0%" in txt
+    assert "出場規則：止損或 6 根 4h K 線低點出場" in txt
+    assert "倉位名目：$5,100（佔 S2 策略資金 51.0%）" in txt
     assert "TP1" not in txt and "TP2" not in txt and "槓桿" not in txt and "有效期限" not in txt
     import re
 

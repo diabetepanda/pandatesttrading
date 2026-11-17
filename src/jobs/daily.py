@@ -1,4 +1,4 @@
-"""Daily long-term & daily-swing job: replay open trades and evaluate S3, L1, L2, L3."""
+"""Daily long-term & daily-swing job: replay open trades and evaluate S3, L1, L2, L3, L4."""
 
 from __future__ import annotations
 
@@ -61,6 +61,27 @@ def _to_market_bars_15m(bars: list[OHLCVBar], now: datetime) -> list[MarketBar]:
     return out
 
 
+def _to_market_bars_1d(bars: list[OHLCVBar], now: datetime) -> list[MarketBar]:
+    out: list[MarketBar] = []
+    for b in bars:
+        open_dt = _parse_iso_utc(b.ts_utc)
+        close_dt = open_dt + timedelta(days=1)
+        if close_dt > now:
+            continue
+        out.append(
+            MarketBar(
+                ts_utc=b.ts_utc,
+                close_ts_utc=close_dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                open=b.open,
+                high=b.high,
+                low=b.low,
+                close=b.close,
+                volume=b.volume,
+            )
+        )
+    return out
+
+
 def run_daily(
     out_dir: Path,
     config_path: Path | None = None,
@@ -68,7 +89,7 @@ def run_daily(
     fetcher: FallbackDataFetcher | None = None,
     now_utc: datetime | None = None,
 ) -> dict[str, Any]:
-    """Replay open positions & evaluate daily strategies S3, L1, L2, L3 into simulated ledgers."""
+    """Replay open positions & evaluate daily strategies S3, L1, L2, L3, L4 into simulated ledgers."""
     t0 = time.monotonic()
     now = (now_utc or datetime.now(timezone.utc)).astimezone(timezone.utc)
     now_iso = now.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -93,7 +114,7 @@ def run_daily(
     open_daily_syms = {
         tr.symbol
         for tr in engine.ledger.trades.values()
-        if tr.strategy in ("S3", "L1", "L2", "L3")
+        if tr.strategy in ("S3", "L1", "L2", "L3", "L4")
         and tr.state == LifecycleState.ACTIVE
     }
 
@@ -109,11 +130,16 @@ def run_daily(
         if res_1d.ok and res_1d.bars:
             engine.latest_marks[sym] = res_1d.bars[-1].close
 
-        if sym in open_daily_syms and not bool(inst.get("daily_only", False)) and mkt != "index":
-            res_15m = data_fetcher.fetch(inst, "15m", limit=500, now_utc=now)
-            if res_15m.ok and res_15m.bars:
-                m_bars = _to_market_bars_15m(res_15m.bars, now)
-                engine.replay_bars(sym, m_bars)
+        if sym in open_daily_syms:
+            if not bool(inst.get("daily_only", False)) and mkt != "index":
+                res_15m = data_fetcher.fetch(inst, "15m", limit=500, now_utc=now)
+                if res_15m.ok and res_15m.bars:
+                    m_bars = _to_market_bars_15m(res_15m.bars, now)
+                    engine.replay_bars(sym, m_bars)
+            elif res_1d.ok and res_1d.bars:
+                m_bars_1d = _to_market_bars_1d(res_1d.bars, now)
+                if m_bars_1d:
+                    engine.replay_bars(sym, m_bars_1d)
 
         st_1d = rep_1d.get("status", "failed")
         if st_1d in ("failed", "unstable") or not (res_1d.ok and res_1d.bars):
@@ -133,7 +159,7 @@ def run_daily(
         strat_judgments: dict[str, dict[str, str]] = {}
         msgs: list[str] = []
         pub_any = False
-        for sid in ("S3", "L1", "L2"):
+        for sid in ("S3", "L1", "L2", "L4"):
             if sid in runtime_cfgs and is_instrument_eligible_for_strategy(inst, strats_cfg.get(sid, {})):
                 ok_s, msg_s = evaluate_live_single_strategy_step(
                     engine=engine,

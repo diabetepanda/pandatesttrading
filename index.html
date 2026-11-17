@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261117b" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261117c" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -28,11 +28,11 @@
       </div>
       <div class="metric">
         <span class="metric-label">短線池</span>
-        <span id="short-equity" class="metric-value">$30,000</span>
+        <span id="short-equity" class="metric-value">$20,000</span>
       </div>
       <div class="metric">
         <span class="metric-label">長線池</span>
-        <span id="long-equity" class="metric-value">$70,000</span>
+        <span id="long-equity" class="metric-value">$80,000</span>
       </div>
       <div class="metric">
         <span class="metric-label">即時價格更新 (瀏覽器)</span>
@@ -114,12 +114,13 @@
         <div class="filter-controls">
           <select id="wall-filter-strategy" aria-label="策略篩選">
             <option value="all">全部策略</option>
-            <option value="S1">S1 開盤區間突破</option>
             <option value="S2">S2 4 小時突破</option>
             <option value="S3">S3 日線 RSI 回檔</option>
             <option value="L1">L1 波動度調整趨勢跟隨</option>
             <option value="L2">L2 精簡標的趨勢跟隨</option>
             <option value="L3">L3 雙動能</option>
+            <option value="L4">L4 主流週線趨勢</option>
+            <option value="S1">S1 開盤區間突破（已停用）</option>
           </select>
           <select id="wall-filter-market" aria-label="市場篩選">
             <option value="all">全部市場</option>
@@ -143,10 +144,10 @@
 
       <section class="card">
         <h2>今日觀望與策略判斷</h2>
-        <p class="subtitle">每次掃描完整重寫；可切換檢視短線掃描（S1、S2）與每日掃描（S3、L1～L3）在各適用標的的目前判斷與原因（依接近觸發程度排序）。</p>
+        <p class="subtitle">每次掃描完整重寫；可切換檢視短線掃描（S2）與每日掃描（S3、L1～L4）在各適用標的的目前判斷與原因（依接近觸發程度排序）。</p>
         <div id="watch-scope-tabs" class="tabs" style="margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <button class="tab active" data-scope="intraday" type="button">短線掃描（S1 / S2）</button>
-          <button class="tab" data-scope="daily" type="button">每日掃描（S3 / L1～L3）</button>
+          <button class="tab active" data-scope="intraday" type="button">短線掃描（S2）</button>
+          <button class="tab" data-scope="daily" type="button">每日掃描（S3 / L1～L4）</button>
           <span id="watch-scope-updated" class="muted" style="margin-left:auto;font-size:12px;"></span>
         </div>
         <div id="watch-summary-bar" class="watch-summary-bar"></div>
@@ -345,7 +346,7 @@
         <div class="section-header">
           <div>
             <h1>模擬帳戶與資金曲線</h1>
-            <p class="subtitle">虛擬總資金 100,000 USD（6 個獨立策略子帳戶：S1～S3 各 $10,000，L1～L3 各約 $23,333）；現價浮動損益由瀏覽器即時價格估算。</p>
+            <p class="subtitle">虛擬總資金 100,000 USD（6 個獨立策略子帳戶：S2～S3 各 $10,000，L1～L4 各 $20,000）；現價浮動損益由瀏覽器即時價格估算。</p>
           </div>
           <span class="badge badge-warn">模擬驗證中，非投資建議</span>
         </div>
@@ -430,7 +431,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261117b"></script>
-  <script src="./assets/app.js?v=20261117b"></script>
+  <script src="./assets/config.js?v=20261117c"></script>
+  <script src="./assets/app.js?v=20261117c"></script>
 </body>
 </html>

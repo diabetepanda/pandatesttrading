@@ -32,13 +32,17 @@
   let activeEquityChart = null;
 
   const STRATEGY_NAMES = {
-    S1: "S1 開盤區間突破（短線）",
+    S1: "S1 開盤區間突破（已停用）",
     S2: "S2 4 小時突破（短線）",
     S3: "S3 日線 RSI 回檔（短線）",
     L1: "L1 波動度調整趨勢跟隨（長線）",
     L2: "L2 精簡標的趨勢跟隨（長線）",
     L3: "L3 雙動能（長線）",
+    L4: "L4 主流週線趨勢（長線）",
   };
+
+  const S1_RETIRED_NOTE =
+    "經討論後停用：這套做法實際跑下來會虧錢，5 年回測虧損 97%，已由 L4 主流週線趨勢取代。歷史紀錄僅供參考。";
 
   function formatTaipeiTime(isoOrDate) {
     if (!isoOrDate) return "--";
@@ -135,6 +139,8 @@
       logic_invalidated: "移動停利",
       risk_forced_close: "強制平倉",
       instrument_disabled: "標的停用平倉",
+      trend_exit: "跌破均線出場",
+      strategy_retired: "策略停用平倉",
       expired: "已取消",
       pre_entry_invalidated: "已取消",
       risk_cancelled: "已取消",
@@ -391,11 +397,11 @@
   }
 
   function computeCardEstimates(s) {
-    const strat = String(s.strategy || "S1");
+    const strat = String(s.strategy || "S2");
     const subRow = Array.isArray(cachedRisk?.subaccounts)
       ? cachedRisk.subaccounts.find((x) => x.strategy_id === strat)
       : null;
-    const defaultCap = strat.startsWith("S") ? 10000 : 23333.33;
+    const defaultCap = strat.startsWith("S") ? 10000 : 20000;
     const subEq = Number(s.subaccount_capital_usd || subRow?.realized_equity_usd || defaultCap);
     const notional = Number(s.effective_notional_usd ?? s.notional_usd ?? 0);
     const notionalPct = s.notional_pct_subaccount !== undefined && s.notional_pct_subaccount !== null
@@ -408,6 +414,14 @@
     return { subEq, notional, notionalPct, slUsd, slPct };
   }
 
+  function getStrategyExitRuleText(s) {
+    if (s && s.exit_rule) return convertReasonUtcToTaipei(s.exit_rule);
+    if (s && s.strategy === "L4") {
+      return "移動停損（近 60 日最高收盤 − K×ATR）或週收盤跌破 N 日均線";
+    }
+    return convertReasonUtcToTaipei(s?.invalidation_cond || "依策略規則出場");
+  }
+
   function formatSignalCopyText(s) {
     const dirZh = s.direction === "long" ? "做多" : "做空";
     const stratZh = STRATEGY_NAMES[s.strategy] || `策略 ${s.strategy}`;
@@ -417,7 +431,7 @@
     const curSl = s.current_stop_loss ?? s.stop_loss;
     const slStr = formatNumber(curSl) || String(curSl);
     const enteredTp = formatTaipeiTime(s.entered_at_utc || s.published_at_utc);
-    const ruleTxt = convertReasonUtcToTaipei(s.exit_rule || s.invalidation_cond || "依策略規則出場");
+    const ruleTxt = getStrategyExitRuleText(s);
     return [
       `【Signal Desk 報單】${s.signal_id}（${stratZh}）`,
       `標的：${s.symbol}｜方向：${dirZh}`,
@@ -658,7 +672,7 @@
         const entryPx = Number(s.avg_entry_price || s.entry_price || s.entry_low || 0);
         const entryStr = formatNumber(entryPx) || String(entryPx);
         const enteredTp = formatTaipeiTime(s.entered_at_utc || s.published_at_utc);
-        const ruleTxt = convertReasonUtcToTaipei(s.exit_rule || s.invalidation_cond || "依策略規則出場");
+        const ruleTxt = getStrategyExitRuleText(s);
 
         let liveHtml = "";
         if (s.lifecycle_state === "closed" || s.lifecycle_state === "cancelled") {
@@ -764,7 +778,7 @@
     const curSl = sig.current_stop_loss ?? sig.stop_loss;
     const entryPx = Number(sig.avg_entry_price || sig.entry_price || sig.entry_low || 0);
     const enteredTp = formatTaipeiTime(sig.entered_at_utc || sig.published_at_utc);
-    const ruleTxt = convertReasonUtcToTaipei(sig.exit_rule || sig.invalidation_cond || "依策略規則出場");
+    const ruleTxt = getStrategyExitRuleText(sig);
     const exitLbl = sig.exit_reason ? (sig.exit_reason_label || exitReasonLabel(sig.exit_reason)) : "--";
 
     const reasonsHtml = Array.isArray(sig.reasons)
@@ -1288,9 +1302,29 @@
     const s = cachedBacktest.summary || {};
     metaEl.textContent = `最新回測 (台北)：${formatTaipeiTime(cachedBacktest.generated_at_utc)}｜共 ${s.total_strategies ?? list.length} 個策略｜通過 ${s.passed ?? 0} 個｜未通過 ${s.failed ?? 0} 個｜歷史不足 5 年 ${s.insufficient_history ?? 0} 個（歷史不代表未來）`;
 
-    tbody.innerHTML = list
+    const orderedList = [
+      ...list.filter((item) => item.strategy_id !== "S1"),
+      ...list.filter((item) => item.strategy_id === "S1"),
+    ];
+    if (!orderedList.some((item) => item.strategy_id === "S1")) {
+      orderedList.push({
+        strategy_id: "S1",
+        name: "開盤區間突破（已停用）",
+        pool: "short_term",
+        interval: "15m",
+        capital_usd: 10000,
+        passed: false,
+        verification_label: "已停用",
+        reason: "已停止開新倉，歷史紀錄保留供對照。",
+      });
+    }
+
+    tbody.innerHTML = orderedList
       .map((item) => {
-        const label = item.verification_label || (item.passed ? "已驗證" : (item.status === "insufficient_history" ? "資料不足，觀察中" : "觀察中（未通過驗證）"));
+        const isRetiredS1 = item.strategy_id === "S1";
+        const label = isRetiredS1
+          ? "已停用"
+          : (item.verification_label || (item.passed ? "已驗證" : (item.status === "insufficient_history" ? "資料不足，觀察中" : "觀察中（未通過驗證）")));
         const statusBadge = item.passed
           ? `<span class="pill pill-ok">${escapeHtml(label)}</span>`
           : `<span class="pill pill-warn">${escapeHtml(label)}</span>`;
@@ -1302,15 +1336,19 @@
         const ddVal = oos.max_drawdown_pct !== undefined && oos.max_drawdown_pct !== null ? `${Number(oos.max_drawdown_pct).toFixed(2)}%` : "--";
         const yrsNum = Number(item.history_years || 0);
         const yrsText = yrsNum > 0 ? `${yrsNum < 0.1 ? yrsNum.toFixed(4) : yrsNum.toFixed(2)} 年` : "--";
-        const appTxt = `${item.eligible_instruments ?? 0} / ${item.applicable_instruments ?? 0} 檔（可用 ${yrsText}）`;
+        const appTxt = isRetiredS1 ? "--" : `${item.eligible_instruments ?? 0} / ${item.applicable_instruments ?? 0} 檔（可用 ${yrsText}）`;
         const poolLabel = item.pool === "short_term" ? "短線" : "長線";
         const noteHtml = item.data_note ? `<div class="muted" style="margin-top:4px;font-size:0.82rem;">註：${escapeHtml(item.data_note)}</div>` : "";
+        const retiredHtml = isRetiredS1
+          ? `<div class="muted" style="margin-top:4px;font-size:0.78rem;white-space:normal;">${escapeHtml(S1_RETIRED_NOTE)}</div>`
+          : "";
         const paramsText = item.chosen_params && Object.keys(item.chosen_params).length > 0
           ? Object.entries(item.chosen_params).map(([k, v]) => `${k}=${v}`).join(", ")
           : "--";
         const detailHtml = `
           <div>${escapeHtml(item.reason || "--")}</div>
           ${noteHtml}
+          ${retiredHtml}
           <details class="bt-details">
             <summary>參數與樣本內詳細</summary>
             <div class="bt-details-body">
@@ -1323,7 +1361,7 @@
 
         return `
           <tr>
-            <td data-label="策略"><strong>${escapeHtml(item.strategy_id || item.symbol)}</strong> ${escapeHtml(item.name || "")}<br><span class="muted">${poolLabel}・${escapeHtml(item.interval || "")}</span></td>
+            <td data-label="策略"><strong>${escapeHtml(item.strategy_id || item.symbol)}</strong> ${escapeHtml(item.name || "")}<br><span class="muted">${poolLabel}・${escapeHtml(item.interval || "")}</span>${retiredHtml}</td>
             <td data-label="通過狀態">${statusBadge}</td>
             <td data-label="樣本外交易數">${tradesTxt}</td>
             <td data-label="期望值">${expVal}</td>
@@ -1362,20 +1400,28 @@
     const minN = cachedPerf.min_verified_trades || 50;
     metaEl.textContent = `最後統計時間 (台北)：${formatTaipeiTime(cachedPerf.updated_at_utc)}｜最低驗證樣本門檻：${minN} 筆`;
 
+    const s1Stats = cachedPerf.by_strategy?.S1 || {
+      retired: true,
+      verified: false,
+      closed_trades: 0,
+      min_trades_required: minN,
+    };
+
     const rows = [
-      ["總計 (Overall)", cachedPerf.overall],
-      [STRATEGY_NAMES.S1, cachedPerf.by_strategy?.S1],
-      [STRATEGY_NAMES.S2, cachedPerf.by_strategy?.S2],
-      [STRATEGY_NAMES.S3, cachedPerf.by_strategy?.S3],
-      [STRATEGY_NAMES.L1, cachedPerf.by_strategy?.L1],
-      [STRATEGY_NAMES.L2, cachedPerf.by_strategy?.L2],
-      [STRATEGY_NAMES.L3, cachedPerf.by_strategy?.L3],
-      ["市場：加密貨幣", cachedPerf.by_market?.crypto],
-      ["市場：外匯", cachedPerf.by_market?.forex],
-      ["市場：商品", cachedPerf.by_market?.commodity],
-      ["市場：指數", cachedPerf.by_market?.index],
-      ["方向：做多", cachedPerf.by_direction?.long],
-      ["方向：做空", cachedPerf.by_direction?.short],
+      ["總計 (Overall)", cachedPerf.overall, false],
+      [STRATEGY_NAMES.S2, cachedPerf.by_strategy?.S2, false],
+      [STRATEGY_NAMES.S3, cachedPerf.by_strategy?.S3, false],
+      [STRATEGY_NAMES.L1, cachedPerf.by_strategy?.L1, false],
+      [STRATEGY_NAMES.L2, cachedPerf.by_strategy?.L2, false],
+      [STRATEGY_NAMES.L3, cachedPerf.by_strategy?.L3, false],
+      [STRATEGY_NAMES.L4, cachedPerf.by_strategy?.L4, false],
+      ["市場：加密貨幣", cachedPerf.by_market?.crypto, false],
+      ["市場：外匯", cachedPerf.by_market?.forex, false],
+      ["市場：商品", cachedPerf.by_market?.commodity, false],
+      ["市場：指數", cachedPerf.by_market?.index, false],
+      ["方向：做多", cachedPerf.by_direction?.long, false],
+      ["方向：做空", cachedPerf.by_direction?.short, false],
+      [STRATEGY_NAMES.S1, s1Stats, true],
     ].filter(([, m]) => Boolean(m));
 
     if (!cachedPerf.overall.verified) {
@@ -1386,13 +1432,16 @@
     }
 
     tbody.innerHTML = rows
-      .map(([label, m]) => {
+      .map(([label, m, isRetiredS1]) => {
         const verBadge = m.verified ? '<span class="pill pill-ok">已驗證</span>' : '<span class="pill pill-warn">尚未驗證</span>';
         const cntText = `${m.closed_trades || 0} / ${m.min_trades_required || minN}`;
+        const labelHtml = `<strong>${escapeHtml(label)}</strong>${
+          isRetiredS1 ? `<div class="muted" style="font-size:0.78rem;margin-top:2px;white-space:normal;">${escapeHtml(S1_RETIRED_NOTE)}</div>` : ""
+        }`;
         if (!m.verified) {
           return `
             <tr>
-              <td><strong>${escapeHtml(label)}</strong></td>
+              <td>${labelHtml}</td>
               <td>${verBadge}</td>
               <td>${cntText}</td>
               <td>${unverifiedCell()}</td>
@@ -1407,7 +1456,7 @@
         }
         return `
           <tr>
-            <td><strong>${escapeHtml(label)}</strong></td>
+            <td>${labelHtml}</td>
             <td>${verBadge}</td>
             <td>${cntText}</td>
             <td>${Number(m.win_rate_pct).toFixed(2)}%</td>

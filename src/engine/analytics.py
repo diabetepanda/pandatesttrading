@@ -218,8 +218,11 @@ def build_performance_stats(
 
     by_strategy = {
         s: _calc_group([t for t in trades if t.strategy == s])
-        for s in ("S1", "S2", "S3", "L1", "L2", "L3")
+        for s in ("S2", "S3", "L1", "L2", "L3", "L4")
     }
+    s1_stats = _calc_group([t for t in trades if t.strategy == "S1"])
+    s1_stats["retired"] = True
+    by_strategy["S1"] = s1_stats
     by_market = {
         m: _calc_group([t for t in trades if t.market == m])
         for m in ("crypto", "forex", "commodity", "index")
@@ -268,7 +271,7 @@ def build_risk_status(
     total_open_risk = 0.0
     total_open_notional = 0.0
 
-    for sid in ("S1", "S2", "S3", "L1", "L2", "L3"):
+    for sid in ("S2", "S3", "L1", "L2", "L3", "L4"):
         scfg = strats_cfg.get(sid, {})
         init_cap = float(ledger.strategy_capitals.get(sid, scfg.get("capital_usd", 10000.0)))
         realized_eq = float(ledger.compute_strategy_realized_equity(sid))

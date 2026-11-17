@@ -150,14 +150,20 @@ def _conservative_entry_candidate_indices(
     atr = series["atr"]
     out: list[int] = []
 
-    if strategy_id == "S1":
-        orb_dir = series["orb_dir"]
+    if strategy_id == "L4":
+        l4_sma = series["l4_sma"]
+        l4_atr = series["l4_atr"]
+        l4_hi = series["l4_hi_close"]
+        l4_wend = series["l4_week_end"]
         for i in range(start_bar_idx, end_bar_idx):
-            av = atr[i]
-            od = orb_dir[i]
-            if av is None or av <= 0 or not od:
+            if not l4_wend[i]:
                 continue
-            if od == "long" or (allow_short and od == "short"):
+            sv = l4_sma[i]
+            av = l4_atr[i]
+            hc = l4_hi[i]
+            if sv is None or av is None or av <= 0 or hc is None:
+                continue
+            if closes[i] > sv:
                 out.append(i)
         return out
 
@@ -490,6 +496,15 @@ def simulate_portfolio_strategy(
                     trace.append((sym, bar.ts_utc, act.action, act.direction, sl_round))
                     next_t = sym_t_by_bidx[sym][bidx + 1]
                     pending_exits[next_t].append((sym, bidx + 1))
+                elif strategy_id == "L4":
+                    ser_l4 = series_by_sym[sym]
+                    hi_c = ser_l4["l4_hi_close"][bidx]
+                    atr_v = ser_l4["l4_atr"][bidx]
+                    k_mult = float(params.get("atr_mult", 3.0))
+                    if hi_c is not None and atr_v is not None and atr_v > 0:
+                        cand_sl = hi_c - k_mult * atr_v
+                        if cand_sl > pos["sl_px"]:
+                            pos["sl_px"] = cand_sl
 
         # 4) Candidate entries at close of t_idx
         if t_idx in entry_triggers_by_t and len(open_pos) < max_concurrent:
@@ -759,19 +774,19 @@ def simulate_l3_dual_momentum(
 
 def _build_param_grid(strategy_id: str, strat_cfg: dict[str, Any]) -> list[dict[str, Any]]:
     cand = strat_cfg.get("candidates", {})
-    if strategy_id == "S1":
-        sessions = cand.get("session_opens_utc", ["00:00", "13:30"])
-        rng_m = int(cand.get("range_minutes", 60))
-        sl_modes = cand.get("sl_modes", ["range_edge", "atr_1.5", "atr_2.0"])
-        eod = str(cand.get("eod_close_utc", "23:45"))
+    if strategy_id == "L4":
+        smas = cand.get("sma_periods", [100, 200])
+        mults = cand.get("atr_mults", [3.0, 5.0])
+        atr_p = int(cand.get("atr_period", 20))
+        high_lb = int(cand.get("high_lookback", 60))
         return [
             {
-                "session_open_utc": str(so),
-                "range_minutes": rng_m,
-                "sl_mode": str(sm),
-                "eod_close_utc": eod,
+                "sma_period": int(n),
+                "atr_mult": float(k),
+                "atr_period": atr_p,
+                "high_lookback": high_lb,
             }
-            for so, sm in itertools.product(sessions, sl_modes)
+            for n, k in itertools.product(smas, mults)
         ]
 
     if strategy_id == "S2":
@@ -1105,7 +1120,7 @@ def screen_all_six_strategies(
     config: dict[str, Any],
     backup_notes: dict[str, str] | None = None,
 ) -> list[dict[str, Any]]:
-    """Run portfolio screening sequentially for S1, S2, S3, L1, L2, L3."""
-    order = ["S1", "S2", "S3", "L1", "L2", "L3"]
+    """Run portfolio screening sequentially for S2, S3, L1, L2, L3, L4."""
+    order = ["S2", "S3", "L1", "L2", "L3", "L4"]
     strats_cfg = config.get("strategies", {})
     return [screen_single_strategy(sid, bars_by_interval, config, backup_notes=backup_notes) for sid in order if sid in strats_cfg]

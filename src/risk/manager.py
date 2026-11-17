@@ -22,8 +22,8 @@ class RiskCheckResult:
 
 
 def is_short_term_strategy(strategy: str) -> bool:
-    """Classify short-term strategies (S1-S3)."""
-    return strategy in ("S1", "S2", "S3")
+    """Classify active short-term strategies (S2-S3) while preserving historical S1 pool attribution."""
+    return strategy in ("S2", "S3") or strategy == "S1"
 
 
 class RiskManager:
@@ -71,7 +71,7 @@ class RiskManager:
             )
 
         strat_cfg = self.strategies_cfg.get(strategy, {})
-        default_sub_cap = float(strat_cfg.get("capital_usd", 10000.0 if is_short_term_strategy(strategy) else 23333.33))
+        default_sub_cap = float(strat_cfg.get("capital_usd", 10000.0 if is_short_term_strategy(strategy) else 20000.0))
         sub_eq = float(account_state.get("subaccount_equity_usd", default_sub_cap))
         vol_mult = float(account_state.get("subaccount_risk_multiplier", 1.0))
 

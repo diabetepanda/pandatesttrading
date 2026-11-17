@@ -164,6 +164,8 @@ def _step_live_sequence(
                     sl_r = round(act.stop_loss, 6) if act.stop_loss is not None else None
                     trace.append((bar.ts_utc, act.action, act.direction, sl_r))
                     pending_exit = True
+                elif strategy_id == "L4" and act.stop_loss is not None:
+                    sl_px = max(sl_px, act.stop_loss) if sl_px is not None else act.stop_loss
 
         if not in_pos and not exited_this_bar and i < len(bars) - 1:
             act = evaluate_live_bar(
@@ -185,7 +187,7 @@ def _step_live_sequence(
 
 
 def test_backtest_and_live_produce_identical_signals_for_all_six_strategies() -> None:
-    """Prove backtest and live decision functions produce 100% identical entries & exits across Round-2 S1-S3, L1-L3."""
+    """Prove backtest and live decision functions produce 100% identical entries & exits across S2-S3, L1-L4."""
     cfg = load_config()
     btc = next(i for i in cfg["instruments"] if i["symbol"] == "BTCUSDT")
 
@@ -197,13 +199,6 @@ def test_backtest_and_live_produce_identical_signals_for_all_six_strategies() ->
     assert bars_4h_res[1].ts_utc == "2025-01-01T04:00:00Z"
 
     cases = [
-        (
-            "S1",
-            _make_bars(480, 15, "orb_break", start=datetime(2024, 1, 1, 0, 0, tzinfo=timezone.utc)),
-            {"session_open_utc": "00:00", "range_minutes": 60, "sl_mode": "atr_2.0", "eod_close_utc": "23:45"},
-            "15m",
-            True,
-        ),
         (
             "S2",
             _make_bars(260, 240, "trend_wave"),
@@ -241,6 +236,13 @@ def test_backtest_and_live_produce_identical_signals_for_all_six_strategies() ->
             "1d",
             True,
         ),
+        (
+            "L4",
+            _make_bars(420, 1440, "trend_wave", start=datetime(2024, 1, 1, 0, 0, tzinfo=timezone.utc)),
+            {"sma_period": 100, "atr_mult": 3.0, "atr_period": 20, "high_lookback": 60},
+            "1d",
+            False,
+        ),
     ]
 
     for sid, bars, params, interval, allow_short in cases:
@@ -248,15 +250,6 @@ def test_backtest_and_live_produce_identical_signals_for_all_six_strategies() ->
         live_trace = _step_live_sequence(sid, bars, params, btc, interval, allow_short=allow_short)
         assert len(bt_trace) > 0, f"{sid} should produce real signals in test fixture"
         assert bt_trace == live_trace, f"Mismatch between backtest and live decisions for {sid}"
-        if sid == "S1":
-            entries_per_day: dict[str, int] = {}
-            for ts, act, _, _ in live_trace:
-                if act in ("enter_long", "enter_short"):
-                    day = ts[:10]
-                    entries_per_day[day] = entries_per_day.get(day, 0) + 1
-                elif act == "exit":
-                    assert ts[11:16] == "23:15"
-            assert all(cnt <= 1 for cnt in entries_per_day.values()), "S1 exceeded 1 trade/day limit"
 
     # L3 cross-asset Dual Momentum parity proof (crypto + index)
     cryptos = [i for i in cfg["instruments"] if i["market"] == "crypto"][:3]
@@ -538,9 +531,9 @@ def test_dukascopy_bi5_parser_and_paxgusdt_gold_backup(tmp_path: Path) -> None:
         now_utc=datetime(2026, 4, 20, 0, 15, tzinfo=timezone.utc),
     )
     by_id = {r["strategy_id"]: r for r in res["strategies"]}
-    assert "PAXGUSDT" in by_id["S1"]["data_note"]
-    assert by_id["S1"]["verification_label"] in ("資料不足，觀察中", "觀察中（未通過驗證）", "已驗證")
-    assert "NAS100" not in by_id["S1"].get("symbols_covered", [])
+    assert "PAXGUSDT" in by_id["S2"]["data_note"]
+    assert by_id["S2"]["verification_label"] in ("資料不足，觀察中", "觀察中（未通過驗證）", "已驗證")
+    assert "EURUSD" not in by_id["S2"].get("symbols_covered", [])
 
 
 def test_live_scan_and_daily_emit_signals_with_verification_status(tmp_path: Path) -> None:
@@ -752,7 +745,7 @@ def test_weekly_job_outputs_six_strategies_json(tmp_path: Path) -> None:
     res = run_weekly_screening(out_dir=tmp_path, fetcher=_FakeFetcher(), now_utc=now)
     assert res["summary"]["total_strategies"] == 6
     saved = json.loads((tmp_path / "backtest_results.json").read_text(encoding="utf-8"))
-    assert [s["strategy_id"] for s in saved["strategies"]] == ["S1", "S2", "S3", "L1", "L2", "L3"]
+    assert [s["strategy_id"] for s in saved["strategies"]] == ["S2", "S3", "L1", "L2", "L3", "L4"]
     assert all("verification_label" in s for s in saved["strategies"])
 
 
@@ -957,3 +950,192 @@ def test_closed_at_utc_never_earlier_than_published_at_utc_and_purges_corrupted_
         assert not (purge_dir / "signals" / f"{sid}.json").exists()
         assert not (purge_dir / "snapshots" / f"SNAP-{sid}.json").exists()
     assert json.loads((purge_dir / "signals_index.json").read_text(encoding="utf-8")) == []
+
+
+def test_l4_majors_weekly_trend_rules_and_reentry(tmp_path: Path) -> None:
+    """Verify all L4 rules: weekend-only crypto/non-crypto entry, upward-only trailing stop, trend_exit, and re-entry."""
+    from src.engine.simulator import MarketBar, SimulationEngine
+    from src.jobs.live_strategy import evaluate_live_single_strategy_step
+
+    cfg = load_config()
+    btc = next(i for i in cfg["instruments"] if i["symbol"] == "BTCUSDT")
+    sp500 = next(i for i in cfg["instruments"] if i["symbol"] == "SP500")
+    params = {"sma_period": 100, "atr_mult": 3.0, "atr_period": 20, "high_lookback": 60}
+
+    # 1) & 2) Non-weekend does NOT enter; week-end (Sunday for crypto, Friday for non-crypto) enters > SMA(100)
+    # 2026-05-04 is Monday
+    t0 = datetime(2026, 5, 4, 0, 0, tzinfo=timezone.utc)
+    crypto_bars: list[OHLCVBar] = []
+    for i in range(106):  # day 104 is Sunday 2026-08-16; day 105 is Monday 2026-08-17
+        dt = t0 + timedelta(days=i)
+        c = 100.0 if i < 102 else 110.0
+        crypto_bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), c, c + 1.5, c - 1.5, c, 1000.0))
+
+    # Day 103 is Saturday (close 110 > SMA(100)) -> must hold
+    act_sat = evaluate_live_bar("L4", crypto_bars[:104], "", params, market="crypto", interval="1d", allow_short=False)
+    assert act_sat.action == "hold"
+    # Day 104 is Sunday (close 110 > SMA(100)) -> must enter_long
+    act_sun = evaluate_live_bar("L4", crypto_bars[:105], "", params, market="crypto", interval="1d", allow_short=False)
+    assert act_sun.action == "enter_long" and act_sun.stop_loss is not None
+    # Day 105 is Monday -> must hold
+    act_mon = evaluate_live_bar("L4", crypto_bars[:106], "", params, market="crypto", interval="1d", allow_short=False)
+    assert act_mon.action == "hold"
+
+    # Non-crypto (SP500 weekdays Mon..Fri only): 105 weekday bars (21 weeks): idx 103=Thu, idx 104=Fri
+    weekday_bars: list[OHLCVBar] = []
+    cur = t0
+    while len(weekday_bars) < 105:
+        if cur.weekday() < 5:
+            idx = len(weekday_bars)
+            c = 100.0 if idx < 102 else 110.0
+            weekday_bars.append(OHLCVBar(cur.strftime("%Y-%m-%dT%H:%M:%SZ"), c, c + 1.5, c - 1.5, c, 1000.0))
+        cur += timedelta(days=1)
+    assert datetime.strptime(weekday_bars[103].ts_utc, "%Y-%m-%dT%H:%M:%SZ").weekday() == 3  # Thursday
+    assert datetime.strptime(weekday_bars[104].ts_utc, "%Y-%m-%dT%H:%M:%SZ").weekday() == 4  # Friday
+    assert evaluate_live_bar("L4", weekday_bars[:104], "", params, market="index", interval="1d", allow_short=False).action == "hold"
+    assert evaluate_live_bar("L4", weekday_bars[:105], "", params, market="index", interval="1d", allow_short=False).action == "enter_long"
+
+    # 3) Ratcheting trailing stop only moves UP, never down, and triggers trailing_stop on hit
+    ratchet_bars: list[OHLCVBar] = []
+    for i in range(126):
+        dt = t0 + timedelta(days=i)
+        if i < 104:
+            o, h, l, c = 100.0, 101.5, 98.5, 100.0
+        elif i == 104:  # Sunday entry signal (> SMA100)
+            o, h, l, c = 101.0, 111.0, 100.5, 110.0
+        elif i <= 112:  # Climb to 130
+            px = 110.0 + 2.5 * (i - 104)
+            o, h, l, c = px - 1.0, px + 1.5, px - 1.5, px
+        elif i == 113:  # Slight dip + wider range (candidate SL might dip slightly -> SL must NOT drop)
+            o, h, l, c = 128.0, 129.0, 125.0, 126.0
+        else:  # Sharp drop hits trailing SL
+            px = 125.0 - 5.0 * (i - 113)
+            o, h, l, c = px, px + 1.0, px - 2.0, px - 1.0
+        ratchet_bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), o, h, l, c, 1000.0))
+
+    eng = SimulationEngine(cfg, out_dir=tmp_path / "ratchet")
+    sl_history: list[float] = []
+    ctrl = {"paused": False}
+    for idx in range(100, len(ratchet_bars) - 1):
+        b = ratchet_bars[idx]
+        nxt = ratchet_bars[idx + 1]
+        b_close = (datetime.strptime(b.ts_utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc) + timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        n_close = (datetime.strptime(nxt.ts_utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc) + timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        nxt_mkt = MarketBar(nxt.ts_utc, n_close, nxt.open, nxt.high, nxt.low, nxt.close, nxt.volume)
+        evaluate_live_single_strategy_step(
+            engine=eng,
+            strategy_id="L4",
+            inst=btc,
+            closed_bars=ratchet_bars[: idx + 1],
+            runtime_cfg=(params, "觀察中（未通過驗證）"),
+            now_iso=b_close,
+            control=ctrl,
+            allow_new_entry=True,
+            next_bar=nxt_mkt,
+        )
+        for tr in eng.ledger.trades.values():
+            if tr.state == LifecycleState.ACTIVE:
+                sl_history.append(tr.current_stop_loss)
+        eng.process_bar("BTCUSDT", nxt_mkt)
+
+    assert len(sl_history) >= 3
+    assert sl_history == sorted(sl_history), f"Trailing SL lowered unexpectedly: {sl_history}"
+    assert sl_history[-1] > sl_history[0]
+    closed_ratchet = [t for t in eng.ledger.trades.values() if t.state == LifecycleState.CLOSED]
+    assert len(closed_ratchet) == 1
+    assert closed_ratchet[0].exit_reason == "trailing_stop"
+
+    # 4) Weekend close below SMA(N) triggers trend_exit, whereas weekday dip below SMA(N) does NOT;
+    # 5) After SL/exit, re-entering on next weekend > SMA(N) succeeds
+    cycle_bars: list[OHLCVBar] = []
+    # 2026-05-04 is Monday:
+    # 0..103: ~100.0 (TR=2.0 -> ATR=2.0); idx 104 (Sun): close=110 (>SMA~100) -> enters bar 105 (Mon)
+    # idx 105..109 (Mon..Fri): quick spike to 120 then dip to 98 on idx 109 (Fri) & idx 110 (Sat) staying ABOVE SL (max60=120 -> SL~120-5*2=110? Wait use wide atr_mult=10 or tight prices so SL is not hit!)
+    wide_params = {"sma_period": 100, "atr_mult": 5.0, "atr_period": 20, "high_lookback": 60}
+    for i in range(130):
+        dt = t0 + timedelta(days=i)
+        if i < 104:
+            o, h, l, c = 100.0, 102.0, 98.0, 100.0  # TR=4.0 -> ATR(20)=4.0, 5*ATR=20
+        elif i == 104:  # Sun: entry > SMA(100)
+            o, h, l, c = 101.0, 107.0, 100.5, 106.0  # SL ~ 106 - 20 = 86 (won't hit during dip to 95)
+        elif i <= 108:  # Mon..Thu stay >= 101
+            o, h, l, c = 105.0, 106.0, 103.0, 104.0
+        elif i in (109, 110):  # Fri & Sat dip below SMA(100) (~100.2) -> NOT week-end, must NOT exit!
+            o, h, l, c = 97.0, 98.0, 96.0, 96.5
+        elif i == 111:  # Sun: still below SMA(100) -> MUST trigger trend_exit!
+            o, h, l, c = 96.5, 97.0, 95.0, 95.5
+        elif i < 118:  # Next week climbs back above SMA(100)
+            px = 102.0 + 1.5 * (i - 112)
+            o, h, l, c = px, px + 1.5, px - 1.0, px + 1.0
+        elif i == 118:  # Following Sunday (> SMA100) -> re-entry!
+            o, h, l, c = 112.0, 114.0, 111.0, 113.0
+        elif i == 125:  # Next Sunday close < SMA(100) so trade 2 closes for simulate_single_symbol accounting
+            o, h, l, c = 98.0, 98.5, 95.5, 96.0
+        else:
+            o, h, l, c = 113.0, 114.0, 112.0, 113.0
+        cycle_bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), o, h, l, c, 1000.0))
+
+    # Check weekday vs Sunday trend_exit directly via evaluate_live_bar
+    assert evaluate_live_bar("L4", cycle_bars[:110], "long", wide_params, market="crypto", interval="1d", allow_short=False).action == "hold"
+    assert evaluate_live_bar("L4", cycle_bars[:111], "long", wide_params, market="crypto", interval="1d", allow_short=False).action == "hold"
+    act_trend_exit = evaluate_live_bar("L4", cycle_bars[:112], "long", wide_params, market="crypto", interval="1d", allow_short=False)
+    assert act_trend_exit.action == "exit"
+
+    # Full backtest + live parity on cycle_bars: 1st trade exits as trend_exit, 2nd trade re-enters on next Sunday!
+    bt_trades, _ = simulate_single_symbol(cycle_bars, "L4", wide_params, btc, cfg, interval="1d", allow_short=False)
+    assert len(bt_trades) == 2
+    assert bt_trades[0].exit_ts_utc == cycle_bars[112].ts_utc  # Mon after Sun idx=111
+    assert bt_trades[1].entry_ts_utc == cycle_bars[119].ts_utc  # Mon after Sun idx=118 re-entry
+
+    eng_cycle = SimulationEngine(cfg, out_dir=tmp_path / "cycle")
+    for idx in range(100, len(cycle_bars) - 1):
+        b = cycle_bars[idx]
+        nxt = cycle_bars[idx + 1]
+        b_close = (datetime.strptime(b.ts_utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc) + timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        n_close = (datetime.strptime(nxt.ts_utc, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc) + timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        nxt_mkt = MarketBar(nxt.ts_utc, n_close, nxt.open, nxt.high, nxt.low, nxt.close, nxt.volume)
+        evaluate_live_single_strategy_step(
+            engine=eng_cycle,
+            strategy_id="L4",
+            inst=btc,
+            closed_bars=cycle_bars[: idx + 1],
+            runtime_cfg=(wide_params, "觀察中（未通過驗證）"),
+            now_iso=b_close,
+            control=ctrl,
+            allow_new_entry=True,
+            next_bar=nxt_mkt,
+        )
+        eng_cycle.process_bar("BTCUSDT", nxt_mkt)
+    live_cycle = sorted([t for t in eng_cycle.ledger.trades.values() if t.state == LifecycleState.CLOSED], key=lambda t: t.entered_at_utc or "")
+    assert len(live_cycle) == 2
+    assert live_cycle[0].exit_reason == "trend_exit"
+    assert live_cycle[0].closed_at_utc == cycle_bars[112].ts_utc
+    assert live_cycle[1].entered_at_utc == cycle_bars[119].ts_utc
+
+    # Also verify SL hit -> next weekend re-entry
+    reentry_sl_bars: list[OHLCVBar] = []
+    for i in range(122):
+        dt = t0 + timedelta(days=i)
+        if i < 104:
+            o, h, l, c = 100.0, 101.0, 99.0, 100.0
+        elif i == 104:  # Sun -> enter Mon 105
+            o, h, l, c = 101.0, 109.0, 100.5, 108.0  # ATR~2.3, SL ~ 108 - 3*2.3 ~ 101
+        elif i == 105:  # Mon fill bar stays safely above SL
+            o, h, l, c = 108.0, 109.0, 107.0, 108.5
+        elif i == 106:  # Tue plunge triggers trailing_stop
+            o, h, l, c = 107.0, 107.5, 95.0, 99.0
+        elif 107 <= i < 111:  # Recovery before next Sunday (idx 111)
+            px = 103.0 + (i - 107)
+            o, h, l, c = px, px + 1.0, px - 0.5, px + 0.5
+        elif i == 111:  # Next Sun above SMA(100) -> must re-enter Mon 112
+            o, h, l, c = 108.0, 110.0, 107.5, 109.5
+        elif i == 115:  # Close out 2nd trade via trailing_stop so simulate_single_symbol records it
+            o, h, l, c = 108.0, 108.5, 95.0, 97.0
+        else:
+            o, h, l, c = 109.5, 110.5, 109.0, 110.0
+        reentry_sl_bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), o, h, l, c, 1000.0))
+
+    bt_re, _ = simulate_single_symbol(reentry_sl_bars, "L4", params, btc, cfg, interval="1d", allow_short=False)
+    assert len(bt_re) == 2
+    assert bt_re[0].exit_ts_utc == reentry_sl_bars[106].ts_utc
+    assert bt_re[1].entry_ts_utc == reentry_sl_bars[112].ts_utc

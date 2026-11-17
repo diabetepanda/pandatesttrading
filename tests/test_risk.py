@@ -14,7 +14,7 @@ from src.signals.models import InputSnapshot
 
 def _candidate(
     symbol: str = "BTCUSDT",
-    strategy: str = "S1",
+    strategy: str = "S2",
     direction: str = "long",
     ref_price: float = 90000.0,
     sl: float = 89000.0,
@@ -25,7 +25,7 @@ def _candidate(
         direction=direction,
         ref_price=ref_price,
         stop_loss=sl,
-        exit_rule="止損，或台北時間 07:45 前強制平倉",
+        exit_rule="止損或移動出場",
         reasons=("規則成立",),
         snapshot=InputSnapshot(
             snapshot_id="SNAP-TEMP",
@@ -39,8 +39,8 @@ def _candidate(
     )
 
 
-def test_s1_10k_1pct_sl_sizing() -> None:
-    """Requirement F: S1 subaccount $10,000 with 1% SL -> risk $100, notional ~$9,804-$9,960 after cost."""
+def test_s2_10k_1pct_sl_sizing() -> None:
+    """Requirement F: S2 subaccount $10,000 with 1% SL -> risk $100, notional ~$9,804-$9,960 after cost."""
     cfg = load_config()
     rm = RiskManager(cfg)
 
@@ -48,7 +48,7 @@ def test_s1_10k_1pct_sl_sizing() -> None:
     comm_inst = next(i for i in cfg["instruments"] if i["symbol"] == "XAUUSD")
     res_comm = rm.check_new_signal(
         instrument=comm_inst,
-        strategy="S1",
+        strategy="S2",
         direction="long",
         entry_price=100.00,
         stop_loss=99.00,
@@ -61,12 +61,12 @@ def test_s1_10k_1pct_sl_sizing() -> None:
     expected_comm_notional = 100.0 / (0.01 + 2.0 * (float(comm_inst["fee_rate"]) + 0.0001))
     assert res_comm.notional_usd == pytest.approx(expected_comm_notional, abs=0.5)
 
-    # 10,000 S1 account, 1% SL, zero-cost baseline -> $10,000; 2 bps round-trip -> $9,960.16
+    # 10,000 S2 account, 1% SL, zero-cost baseline -> $10,000; 2 bps round-trip -> $9,960.16
     zero_cost_inst = {"symbol": "TEST", "market": "commodity", "fee_rate": 0.0}
     rm_low_slip = RiskManager({**cfg, "risk": {**cfg["risk"], "default_slippage_bps": 0.2}})
     res_exact = rm_low_slip.check_new_signal(
         instrument=zero_cost_inst,
-        strategy="S1",
+        strategy="S2",
         direction="long",
         entry_price=100.0,
         stop_loss=99.0,
@@ -88,7 +88,7 @@ def test_11th_position_rejected_and_notional_risk_caps_enforced() -> None:
     # 1) 10 open positions -> 11th rejected
     res_11 = rm.check_new_signal(
         instrument=inst,
-        strategy="S1",
+        strategy="S2",
         direction="long",
         entry_price=1.0000,
         stop_loss=0.9900,
@@ -107,7 +107,7 @@ def test_11th_position_rejected_and_notional_risk_caps_enforced() -> None:
     # 2) Notional sum > $50,000 (5x of $10,000): $46,000 open -> scales new trade down to $4,000
     res_notional_scale = rm.check_new_signal(
         instrument=inst,
-        strategy="S1",
+        strategy="S2",
         direction="long",
         entry_price=1.0000,
         stop_loss=0.9900,
@@ -127,7 +127,7 @@ def test_11th_position_rejected_and_notional_risk_caps_enforced() -> None:
     # At $50,000 open notional -> rejected
     res_notional_full = rm.check_new_signal(
         instrument=inst,
-        strategy="S1",
+        strategy="S2",
         direction="long",
         entry_price=1.0000,
         stop_loss=0.9900,
@@ -146,7 +146,7 @@ def test_11th_position_rejected_and_notional_risk_caps_enforced() -> None:
     # 3) Total risk > 10% ($1,000 on $10,000): $960 open risk -> scales down to $40 risk; $1,000 -> rejected
     res_risk_scale = rm.check_new_signal(
         instrument=inst,
-        strategy="S1",
+        strategy="S2",
         direction="long",
         entry_price=1.0000,
         stop_loss=0.9900,
@@ -164,7 +164,7 @@ def test_11th_position_rejected_and_notional_risk_caps_enforced() -> None:
 
     res_risk_full = rm.check_new_signal(
         instrument=inst,
-        strategy="S1",
+        strategy="S2",
         direction="long",
         entry_price=1.0000,
         stop_loss=0.9900,
@@ -199,11 +199,11 @@ def test_manual_pause_and_duplicate_pair_rejected(tmp_path: Path) -> None:
     btc = next(i for i in cfg["instruments"] if i["symbol"] == "BTCUSDT")
     dup = rm.check_new_signal(
         instrument=btc,
-        strategy="S1",
+        strategy="S2",
         direction="long",
         entry_price=90000.0,
         stop_loss=89000.0,
-        account_state={"active_symbol_strategies": {("BTCUSDT", "S1")}},
+        account_state={"active_symbol_strategies": {("BTCUSDT", "S2")}},
         control={"paused": False},
         now_utc="2026-11-16T02:05:00Z",
     )

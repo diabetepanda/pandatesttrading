@@ -127,8 +127,8 @@ def _compute_bars_held(tr: Any, closed_bars: list[OHLCVBar], interval: str) -> i
 
 
 def _map_strategy_exit_reason(strategy_id: str, reason_text: str) -> str:
-    if strategy_id == "S1":
-        return "session_stop"
+    if strategy_id == "L4":
+        return "trend_exit"
     if strategy_id == "L3":
         return "rebalance_exit"
     if strategy_id in ("S2", "S3") and ("最長" in reason_text or "上限" in reason_text or "時間" in reason_text):
@@ -189,6 +189,12 @@ def _submit_action_as_candidate(
         filter_checks={"data_ok": True, "subaccount_risk_ok": True},
     )
 
+    if strategy_id == "L4":
+        eff_trail = max(sl_px, float(trailing_px)) if trailing_px is not None else sl_px
+        trailing_out = round_price(eff_trail)
+    else:
+        trailing_out = round_price(trailing_px) if trailing_px is not None else None
+
     cand = CandidateSignal(
         strategy=strategy_id,
         symbol=inst["symbol"],
@@ -197,7 +203,7 @@ def _submit_action_as_candidate(
         stop_loss=round_price(sl_px),
         take_profit=round_price(tp_px) if tp_px is not None else None,
         exit_rule=exit_rule,
-        trailing_exit_price=round_price(trailing_px) if trailing_px is not None else None,
+        trailing_exit_price=trailing_out,
         reasons=(f"策略狀態：{ver_label}", act.reason),
         snapshot=snap,
         verification_status=ver_label,
@@ -226,7 +232,7 @@ def evaluate_live_single_strategy_step(
     allow_new_entry: bool = True,
     next_bar: MarketBar | None = None,
 ) -> tuple[bool, str]:
-    """Run live exit/entry check for S1, S2, S3, L1, or L2 on closed_bars."""
+    """Run live exit/entry check for S2, S3, L1, L2, or L4 on closed_bars."""
     strat_cfg = engine.config.get("strategies", {}).get(strategy_id, {})
     if not is_instrument_eligible_for_strategy(inst, strat_cfg):
         return False, ""
@@ -259,7 +265,12 @@ def evaluate_live_single_strategy_step(
             atr_period=atr_period,
         )
         open_tr.exit_rule = exit_rule
-        open_tr.trailing_exit_price = round_price(trailing_px) if trailing_px is not None else None
+        if strategy_id == "L4" and trailing_px is not None:
+            new_sl = round_price(max(open_tr.current_stop_loss, float(trailing_px)))
+            open_tr.current_stop_loss = new_sl
+            open_tr.trailing_exit_price = new_sl
+        else:
+            open_tr.trailing_exit_price = round_price(trailing_px) if trailing_px is not None else None
 
     act = evaluate_live_bar(
         strategy_id=strategy_id,

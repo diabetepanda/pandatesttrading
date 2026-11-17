@@ -61,7 +61,6 @@ def run_weekly_screening(
     )
 
     instruments = [inst for inst in config.get("instruments", []) if inst.get("enabled", True)]
-    s1_symbols = set(config.get("strategies", {}).get("S1", {}).get("symbols", []))
     bars_by_interval: dict[str, dict[str, list[Any]]] = {"1d": {}, "15m": {}, "1h": {}, "4h": {}}
     backup_notes: dict[str, str] = {}
 
@@ -80,24 +79,12 @@ def run_weekly_screening(
         if mkt == "crypto":
             bin_code = inst.get("sources", {}).get("binance_vision")
             if bin_archive is not None and bin_code:
-                bars_15m: list[Any] = []
-                if sym in s1_symbols or not s1_symbols:
-                    bars_15m = bin_archive.fetch_history(
-                        bin_code,
-                        "15m",
-                        years=min_years + 0.15,
-                        now_utc=now,
-                    )
-                    if bars_15m:
-                        bars_by_interval["15m"][sym] = bars_15m
                 bars_1h = bin_archive.fetch_history(
                     bin_code,
                     "1h",
                     years=min_years + 0.15,
                     now_utc=now,
                 )
-                if not bars_1h and bars_15m:
-                    bars_1h = resample_15m_to_1h(bars_15m, now_utc=now)
                 if bars_1h:
                     bars_by_interval["1h"][sym] = bars_1h
                     bars_4h = resample_1h_to_4h(bars_1h, now_utc=now)
@@ -115,7 +102,7 @@ def run_weekly_screening(
                             bars_by_interval["4h"][sym] = bars_4h
             continue
 
-        # FX and commodities: try Dukascopy 5y free archives; never mix in 1-month Yahoo intraday data
+        # Commodities: try Dukascopy 5y free archives (1h -> 4h for S2); never mix in 1-month Yahoo intraday data
         if duka_archive is not None:
             duka_1h = duka_archive.fetch_history(sym, "1h", years=min_years + 0.15, now_utc=now)
             if duka_1h:
@@ -123,35 +110,20 @@ def run_weekly_screening(
                 duka_4h = resample_1h_to_4h(duka_1h, now_utc=now)
                 if duka_4h:
                     bars_by_interval["4h"][sym] = duka_4h
-            if sym in s1_symbols:
-                duka_15m = duka_archive.fetch_history(sym, "15m", years=min_years + 0.15, now_utc=now)
-                if duka_15m:
-                    bars_by_interval["15m"][sym] = duka_15m
 
         # Gold backup: if XAUUSD lacks 5y Dukascopy data, use Binance PAXGUSDT 5y+ history
-        if sym == "XAUUSD" and bin_archive is not None and not bars_by_interval["15m"].get("XAUUSD"):
-            paxg_15m = bin_archive.fetch_history(
-                gold_backup_sym,
-                "15m",
-                years=min_years + 0.15,
-                now_utc=now,
-            )
+        if sym == "XAUUSD" and bin_archive is not None and not bars_by_interval["1h"].get("XAUUSD"):
             paxg_1h = bin_archive.fetch_history(
                 gold_backup_sym,
                 "1h",
                 years=min_years + 0.15,
                 now_utc=now,
             )
-            if not paxg_1h and paxg_15m:
-                paxg_1h = resample_15m_to_1h(paxg_15m, now_utc=now)
-            if paxg_15m:
-                bars_by_interval["15m"]["XAUUSD"] = paxg_15m
             if paxg_1h:
                 bars_by_interval["1h"]["XAUUSD"] = paxg_1h
                 paxg_4h = resample_1h_to_4h(paxg_1h, now_utc=now)
                 if paxg_4h:
                     bars_by_interval["4h"]["XAUUSD"] = paxg_4h
-            if paxg_15m or paxg_1h:
                 backup_notes["XAUUSD"] = (
                     f"黃金 (XAUUSD) Dukascopy 無法連線，改用 Binance {gold_backup_sym} 5 年歷史資料備援"
                 )

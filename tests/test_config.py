@@ -10,11 +10,11 @@ def test_config_has_required_sections() -> None:
     assert cfg["project"]["github_owner"] == "diabetepanda"
     assert cfg["project"]["github_repo"] == "pandatesttrading"
     assert cfg["account"]["initial_capital_usd"] == 100000.0
-    assert cfg["account"]["pools"]["short_term"]["capital_usd"] == 30000.0
-    assert cfg["account"]["pools"]["long_term"]["capital_usd"] == 70000.0
+    assert cfg["account"]["pools"]["short_term"]["capital_usd"] == 20000.0
+    assert cfg["account"]["pools"]["long_term"]["capital_usd"] == 80000.0
     assert "strategy_a" not in cfg
     assert "strategy_b" not in cfg
-    assert set(cfg["strategies"].keys()) == {"S1", "S2", "S3", "L1", "L2", "L3"}
+    assert set(cfg["strategies"].keys()) == {"S2", "S3", "L1", "L2", "L3", "L4"}
     total_sub = sum(float(v["capital_usd"]) for v in cfg["strategies"].values())
     assert abs(total_sub - 100000.0) < 0.05
     assert cfg["backtest"]["risk_per_trade_pct"] == 1.0
@@ -154,7 +154,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261117b" in index_html
+    assert "?v=20261117c" in index_html
     assert "simple-signals-grid" in index_html
     assert ".simple-grid" in style_css
     assert "trades.json" in app_js
@@ -164,8 +164,10 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     assert "liquidity_heatmap.json" not in app_js
     assert "短線池 (A)" not in index_html
     assert "長線池 (B)" not in index_html
-    assert "$30,000" in index_html
-    assert "$70,000" in index_html
+    assert "$20,000" in index_html
+    assert "$80,000" in index_html
+    assert "L4" in index_html
+    assert "S1_RETIRED_NOTE" in app_js
 
     # Mobile responsive card table + horizontal nav scroll rules
     assert "@media (max-width: 640px)" in style_css
@@ -236,7 +238,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
         }}
         const copyTxt = u.formatSignalCopyText({{
           signal_id: 'SIG-20261116-0009',
-          strategy: 'S1',
+          strategy: 'S2',
           symbol: 'BTCUSDT',
           direction: 'long',
           avg_entry_price: 65291,
@@ -291,7 +293,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
           [
             {{ signal_id: 'SIG-1', strategy: 'S2', symbol: 'ICPUSDT', market: 'crypto', direction: 'short', state: 'active', entry_price: 2.4631, avg_entry_price: 2.4631, remaining_qty: 1000, current_stop_loss: 2.6, trailing_exit_price: 2.55, planned_notional_usd: 15000, realized_pnl_usd: -5 }},
             {{ signal_id: 'SIG-2', strategy: 'L3', symbol: 'BTCUSDT', market: 'crypto', direction: 'long', state: 'active', entry_price: 90000, avg_entry_price: 90000, remaining_qty: 0.1, current_stop_loss: 85000, trailing_exit_price: null, planned_notional_usd: 9000, realized_pnl_usd: -2 }},
-            {{ signal_id: 'SIG-3', strategy: 'S1', symbol: 'COPPER', market: 'commodity', direction: 'long', state: 'closed', entry_price: 4.5, avg_entry_price: 4.5, remaining_qty: 0, current_stop_loss: 4.3, planned_notional_usd: 5000, realized_pnl_usd: 10 }},
+            {{ signal_id: 'SIG-3', strategy: 'L4', symbol: 'COPPER', market: 'commodity', direction: 'long', state: 'closed', entry_price: 4.5, avg_entry_price: 4.5, remaining_qty: 0, current_stop_loss: 4.3, planned_notional_usd: 5000, realized_pnl_usd: 10 }},
           ],
           {{
             'SIG-1': {{ signal_id: 'SIG-1', verification_status: '觀察中（未通過驗證）', reasons: ['策略狀態：觀察中（未通過驗證）', 'S2 跌破低點'] }},

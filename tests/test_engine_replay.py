@@ -18,7 +18,7 @@ from src.signals.models import InputSnapshot, LifecycleState
 
 def _make_candidate(
     symbol: str = "BTCUSDT",
-    strategy: str = "S1",
+    strategy: str = "S2",
     direction: str = "long",
     ref_price: float = 100.0,
     stop_loss: float = 98.0,
@@ -128,8 +128,8 @@ def test_schedule_delay_blocks_new_signal_and_logs_watch(tmp_path: Path) -> None
     eng = SimulationEngine(cfg, out_dir=tmp_path)
     delayed_sig = eng.submit_candidate_signal(
         _make_candidate(),
-        now_utc="2026-11-16T02:35:00Z",
-        latest_bar_close_utc="2026-11-16T02:00:00Z",  # 35m delay > 20m threshold
+        now_utc="2026-11-16T06:30:00Z",
+        latest_bar_close_utc="2026-11-16T02:00:00Z",  # 270m delay > 260m S2 4h threshold
         control=_ctrl_ok(),
     )
     assert delayed_sig is None
@@ -296,30 +296,31 @@ def test_legacy_state_migration_resets_sl_removes_tp_keeps_closed_intact(tmp_pat
     closed_row = next(r for r in idx if r["signal_id"] == closed_sid)
     assert closed_row["realized_pnl_usd"] == pytest.approx(-7.28, abs=0.01)
     assert closed_row["exit_reason_label"] == "止損"
+    # Historical retired S1 closed PnL is preserved in short_term pool equity (no equity jump)
+    assert eng.ledger.retired_short_term_realized_pnl == pytest.approx(-7.282, abs=1e-4)
+    assert eng.ledger.compute_pool_equity("short_term") == pytest.approx(20000.0 - 7.282 - 0.2478, abs=1e-3)
 
 
 def _make_parity_bars(strategy_id: str) -> tuple[list[OHLCVBar], str, dict]:
-    if strategy_id == "S1":
-        # 15m bars across 2 UTC days: Day 1 builds ATR, Day 2 00:00-01:00 builds ORB ~100..101,
-        # breaks out at 01:15 -> enters at 01:30 open -> hits EOD exit at 23:15 -> closes at 23:30 open
+    if strategy_id == "L4":
+        # Daily bars starting 2026-05-04 (Monday): 104 calm bars ~100, Sunday bar 104 breaks > SMA(100),
+        # enters Monday bar 105 open, climbs to ratchet trailing stop upward, then hits trailing_stop on pullback
         bars: list[OHLCVBar] = []
-        t0 = datetime(2026, 11, 1, 0, 0, tzinfo=timezone.utc)
-        for i in range(96):  # Day 1: 96 bars
-            dt = t0 + timedelta(minutes=15 * i)
-            bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 100.0, 100.6, 99.4, 100.0, 100.0))
-        for i in range(96):  # Day 2
-            dt = t0 + timedelta(days=1, minutes=15 * i)
-            if i < 4:  # 00:00..00:45 ORB window (range 99.5..100.5)
-                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 100.0, 100.5, 99.5, 100.1, 100.0))
-            elif i == 5:  # 01:15 breakout close > 100.5 -> triggers entry at 01:30 open
-                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 100.2, 101.8, 100.1, 101.5, 100.0))
-            elif i < 93:
-                px = 102.0 + 0.02 * (i - 5)
-                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), px, px + 0.3, px - 0.2, px + 0.1, 100.0))
-            else:
-                # 23:15 triggers EOD close -> exits at 23:30 open!
-                bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), 103.5, 103.7, 103.3, 103.4, 100.0))
-        return bars, "15m", {"session_open_utc": "00:00", "range_minutes": 60, "sl_mode": "atr_2.0", "eod_close_utc": "23:45"}
+        t0 = datetime(2026, 5, 4, 0, 0, tzinfo=timezone.utc)
+        for i in range(122):
+            dt = t0 + timedelta(days=i)
+            if i < 104:
+                o, h, l, c = 100.0, 101.5, 98.5, 100.0
+            elif i == 104:  # Sunday (104 % 7 == 6): close above SMA(100)
+                o, h, l, c = 100.5, 108.5, 100.0, 108.0
+            elif i <= 110:  # Climb steadily to push max_60_close and ratchet SL up
+                base = 108.0 + 2.5 * (i - 105)
+                o, h, l, c = base, base + 3.0, base - 0.5, base + 2.5
+            else:  # Drop below ratcheted trailing stop
+                base = 123.0 - 4.0 * (i - 110)
+                o, h, l, c = base, base + 0.5, base - 2.0, base - 1.5
+            bars.append(OHLCVBar(dt.strftime("%Y-%m-%dT%H:%M:%SZ"), o, h, l, c, 1000.0))
+        return bars, "1d", {"sma_period": 100, "atr_mult": 3.0, "atr_period": 20, "high_lookback": 60}
 
     if strategy_id == "S2":
         # 4h bars: 25 calm bars (100..101), breakout up on bar 25 -> enter bar 26 open -> drift down below 6-bar low -> exit next open
@@ -380,7 +381,7 @@ def _make_parity_bars(strategy_id: str) -> tuple[list[OHLCVBar], str, dict]:
     return bars, "1d", {"entry_period": 20, "exit_period": 10, "sl_atr_mult": 2.5, "vol_target_pct": 0.015}
 
 
-@pytest.mark.parametrize("strategy_id", ["S1", "S2", "S3", "L1"])
+@pytest.mark.parametrize("strategy_id", ["S2", "S3", "L1", "L4"])
 def test_backtest_screener_vs_live_simulator_exact_parity(tmp_path: Path, strategy_id: str) -> None:
     """Requirement F: screener and live simulator produce identical entry/exit time, price, qty, and PnL."""
     cfg = load_config()

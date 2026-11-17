@@ -19,9 +19,9 @@ account:
   initial_capital_usd: 100000.0
   pools:
     short_term:
-      capital_usd: 30000.0
+      capital_usd: 20000.0
     long_term:
-      capital_usd: 70000.0
+      capital_usd: 80000.0
 
 risk:
   maintenance_margin_ratio: 0.50
@@ -53,30 +53,6 @@ backtest:
   gold_backup_symbol: PAXGUSDT
 
 strategies:
-  S1:
-    name: 開盤區間突破
-    pool: short_term
-    capital_usd: 10000.0
-    interval: 15m
-    symbols:
-      - BTCUSDT
-      - ETHUSDT
-      - SOLUSDT
-      - BNBUSDT
-      - XRPUSDT
-      - DOGEUSDT
-      - ADAUSDT
-      - AVAXUSDT
-      - LINKUSDT
-      - LTCUSDT
-      - XAUUSD
-      - WTI
-    allow_short: true
-    candidates:
-      session_opens_utc: ["00:00", "13:30"]
-      range_minutes: 60
-      sl_modes: ["range_edge", "atr_1.5", "atr_2.0"]
-      eod_close_utc: "23:45"
   S2:
     name: 4 小時突破
     pool: short_term
@@ -107,7 +83,7 @@ strategies:
   L1:
     name: 波動度調整趨勢跟隨
     pool: long_term
-    capital_usd: 23333.33
+    capital_usd: 20000.0
     interval: 1d
     markets: ["crypto", "commodity", "index"]
     allow_short: true
@@ -119,7 +95,7 @@ strategies:
   L2:
     name: 精簡標的趨勢跟隨
     pool: long_term
-    capital_usd: 23333.33
+    capital_usd: 20000.0
     interval: 1d
     symbols:
       - BTCUSDT
@@ -147,7 +123,7 @@ strategies:
   L3:
     name: 雙動能
     pool: long_term
-    capital_usd: 23333.34
+    capital_usd: 20000.0
     interval: 1d
     markets: ["crypto", "index"]
     allow_short: false
@@ -157,6 +133,23 @@ strategies:
       top_k_index_list: [1, 2]
       rebalance_days: 7
       sl_atr_mults: [2.5, 3.0]
+  L4:
+    name: 主流週線趨勢
+    pool: long_term
+    capital_usd: 20000.0
+    interval: 1d
+    symbols:
+      - BTCUSDT
+      - ETHUSDT
+      - XAUUSD
+      - NAS100
+      - SP500
+    allow_short: false
+    candidates:
+      sma_periods: [100, 200]
+      atr_mults: [3.0, 5.0]
+      atr_period: 20
+      high_lookback: 60
 
 data_quality:
   max_missing_ratio: 0.10

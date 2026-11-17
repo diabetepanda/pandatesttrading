@@ -64,7 +64,7 @@ class MarketBar:
 class CandidateSignal:
     """Candidate signal produced by a strategy prior to risk/allocation check."""
 
-    strategy: str  # "S1", "S2", "S3", "L1", "L2", or "L3"
+    strategy: str  # "S2", "S3", "L1", "L2", "L3", or "L4" (plus historical "S1")
     symbol: str
     direction: str  # "long" or "short"
     ref_price: float
@@ -246,18 +246,19 @@ class TradeRecord:
 
 
 class Ledger:
-    """Single virtual account ledger with isolated per-strategy sub-accounts (S1-S3, L1-L3)."""
+    """Single virtual account ledger with isolated per-strategy sub-accounts (S2-S3, L1-L4)."""
 
-    STRATEGY_IDS = ("S1", "S2", "S3", "L1", "L2", "L3")
+    STRATEGY_IDS = ("S2", "S3", "L1", "L2", "L3", "L4")
 
     def __init__(self, config: dict[str, Any]) -> None:
         self.config = config
         strats_cfg = config.get("strategies", {})
         self.strategy_capitals: dict[str, float] = {
-            sid: float(strats_cfg.get(sid, {}).get("capital_usd", 10000.0 if sid.startswith("S") else 23333.33))
+            sid: float(strats_cfg.get(sid, {}).get("capital_usd", 10000.0 if sid.startswith("S") else 20000.0))
             for sid in self.STRATEGY_IDS
         }
         self.strategy_realized_pnl: dict[str, float] = {sid: 0.0 for sid in self.STRATEGY_IDS}
+        self.retired_short_term_realized_pnl: float = 0.0
         self.peak_equity_usd: float = sum(self.strategy_capitals.values())
         self.trades: dict[str, TradeRecord] = {}
         self.fills: list[FillRecord] = []
@@ -279,8 +280,20 @@ class Ledger:
         return max(0.01, base + realized + unrealized)
 
     def compute_pool_equity(self, pool_name: str, mark_prices: dict[str, float] | None = None) -> float:
-        sids = ("S1", "S2", "S3") if pool_name == "short_term" else ("L1", "L2", "L3")
-        return sum(self.compute_strategy_equity(sid, mark_prices) for sid in sids)
+        sids = ("S2", "S3") if pool_name == "short_term" else ("L1", "L2", "L3", "L4")
+        eq = sum(self.compute_strategy_equity(sid, mark_prices) for sid in sids)
+        if pool_name == "short_term":
+            eq += self.retired_short_term_realized_pnl
+            marks = mark_prices or {}
+            for tr in self.trades.values():
+                if (
+                    tr.state == LifecycleState.ACTIVE
+                    and tr.strategy not in self.strategy_capitals
+                    and is_short_term_strategy(tr.strategy)
+                ):
+                    mp = marks.get(tr.symbol, tr.avg_entry_price)
+                    eq += tr.unrealized_pnl_usd(mp) + tr.realized_pnl_usd
+        return max(0.01, eq)
 
     def compute_equity(self, mark_prices: dict[str, float] | None = None) -> float:
         eq = self.compute_pool_equity("short_term", mark_prices) + self.compute_pool_equity("long_term", mark_prices)
@@ -322,6 +335,7 @@ class Ledger:
     def to_dict(self) -> dict[str, Any]:
         return {
             "strategy_realized_pnl": self.strategy_realized_pnl,
+            "retired_short_term_realized_pnl": self.retired_short_term_realized_pnl,
             "peak_equity_usd": self.peak_equity_usd,
             "trades": {k: v.to_dict() for k, v in self.trades.items()},
             "fills": [f.to_dict() for f in self.fills],
@@ -334,18 +348,26 @@ class Ledger:
         led.trades = {k: TradeRecord.from_dict(v, config) for k, v in data.get("trades", {}).items()}
         led.fills = [FillRecord(**f) for f in data.get("fills", [])]
 
+        if "retired_short_term_realized_pnl" in data:
+            led.retired_short_term_realized_pnl = float(data.get("retired_short_term_realized_pnl") or 0.0)
+
         if isinstance(data.get("strategy_realized_pnl"), dict):
             for sid in cls.STRATEGY_IDS:
                 led.strategy_realized_pnl[sid] = float(data["strategy_realized_pnl"].get(sid, 0.0))
+            if "retired_short_term_realized_pnl" not in data:
+                led.retired_short_term_realized_pnl = float(data["strategy_realized_pnl"].get("S1", 0.0))
         else:
             # Reconstruct per-strategy closed realized PnL from closed trades' fills
             fills_by_sig: dict[str, float] = {}
             for f in led.fills:
                 fills_by_sig[f.signal_id] = fills_by_sig.get(f.signal_id, 0.0) + f.realized_pnl_usd
             for sid, tr in led.trades.items():
-                if tr.state == LifecycleState.CLOSED and tr.strategy in led.strategy_realized_pnl:
+                if tr.state == LifecycleState.CLOSED:
                     pnl_val = fills_by_sig.get(sid, tr.realized_pnl_usd)
-                    led.strategy_realized_pnl[tr.strategy] += pnl_val
+                    if tr.strategy in led.strategy_realized_pnl:
+                        led.strategy_realized_pnl[tr.strategy] += pnl_val
+                    elif is_short_term_strategy(tr.strategy) and "retired_short_term_realized_pnl" not in data:
+                        led.retired_short_term_realized_pnl += pnl_val
         return led
 
 
@@ -400,6 +422,9 @@ class SimulationEngine:
         inst = self.instruments.get(candidate.symbol)
         if inst is None or not inst.get("enabled", True):
             self._record_watch(candidate.symbol, candidate.strategy, now_utc, f"標的未啟用或未知: {candidate.symbol}")
+            return None
+        if candidate.strategy not in Ledger.STRATEGY_IDS:
+            self._record_watch(candidate.symbol, candidate.strategy, now_utc, f"策略已停用: {candidate.strategy}")
             return None
 
         sched_cfg = self.config.get("schedule", {})
@@ -628,11 +653,14 @@ class SimulationEngine:
         trade.remaining_qty = max(0.0, trade.remaining_qty - qty)
 
         # Match screener.py equity accounting: update strategy realized PnL once at close
-        strat_eq = self.ledger.compute_strategy_realized_equity(trade.strategy)
-        clamped_pnl = max(-(strat_eq - 0.01), trade.realized_pnl_usd)
-        self.ledger.strategy_realized_pnl[trade.strategy] = (
-            self.ledger.strategy_realized_pnl.get(trade.strategy, 0.0) + clamped_pnl
-        )
+        if trade.strategy in self.ledger.strategy_realized_pnl:
+            strat_eq = self.ledger.compute_strategy_realized_equity(trade.strategy)
+            clamped_pnl = max(-(strat_eq - 0.01), trade.realized_pnl_usd)
+            self.ledger.strategy_realized_pnl[trade.strategy] = (
+                self.ledger.strategy_realized_pnl.get(trade.strategy, 0.0) + clamped_pnl
+            )
+        elif is_short_term_strategy(trade.strategy):
+            self.ledger.retired_short_term_realized_pnl += trade.realized_pnl_usd
 
         self.ledger.fills.append(
             FillRecord(
@@ -693,14 +721,15 @@ class SimulationEngine:
         sl_px = trade.current_stop_loss
         tp_px = trade.take_profit
 
-        # Fixed SL and optional fixed TP matching backtest screener.py L418-L443
+        # Fixed SL (or L4 ratcheting trailing stop) and optional fixed TP matching screener.py
+        sl_reason = "trailing_stop" if trade.strategy == "L4" else "stop_loss"
         if trade.direction == "long":
             open_bid = _bid_price(bar.open, spread)
             if open_bid <= sl_px:
-                self._finalize_close(trade, open_bid * (1.0 - slip), bar.ts_utc, "stop_loss", events_out)
+                self._finalize_close(trade, open_bid * (1.0 - slip), bar.ts_utc, sl_reason, events_out)
                 return
             if _bid_price(bar.low, spread) <= sl_px:
-                self._finalize_close(trade, sl_px * (1.0 - slip), bar.ts_utc, "stop_loss", events_out)
+                self._finalize_close(trade, sl_px * (1.0 - slip), bar.ts_utc, sl_reason, events_out)
                 return
             if tp_px is not None and _bid_price(bar.high, spread) >= tp_px:
                 self._finalize_close(trade, tp_px * (1.0 - slip), bar.ts_utc, "take_profit", events_out)
@@ -708,10 +737,10 @@ class SimulationEngine:
         else:
             open_ask = _ask_price(bar.open, spread)
             if open_ask >= sl_px:
-                self._finalize_close(trade, open_ask * (1.0 + slip), bar.ts_utc, "stop_loss", events_out)
+                self._finalize_close(trade, open_ask * (1.0 + slip), bar.ts_utc, sl_reason, events_out)
                 return
             if _ask_price(bar.high, spread) >= sl_px:
-                self._finalize_close(trade, sl_px * (1.0 + slip), bar.ts_utc, "stop_loss", events_out)
+                self._finalize_close(trade, sl_px * (1.0 + slip), bar.ts_utc, sl_reason, events_out)
                 return
             if tp_px is not None and _ask_price(bar.low, spread) <= tp_px:
                 self._finalize_close(trade, tp_px * (1.0 + slip), bar.ts_utc, "take_profit", events_out)
@@ -774,13 +803,14 @@ class SimulationEngine:
             self._finalize_close(trade, exec_px, ts_utc, exit_reason, events_out)
         return events_out
 
-    def close_disabled_instrument_trade(
+    def close_trade_at_market(
         self,
         trade: TradeRecord,
         close_price: float,
         ts_utc: str,
+        exit_reason: str,
     ) -> list[SignalUpdateEvent]:
-        """Close active trade on a disabled instrument using market price."""
+        """Close an active trade at market price with the specified exit reason."""
         if trade.state != LifecycleState.ACTIVE:
             return []
         events_out: list[SignalUpdateEvent] = []
@@ -792,8 +822,26 @@ class SimulationEngine:
             if trade.direction == "long"
             else _ask_price(close_price, spread) * (1.0 + slip)
         )
-        self._finalize_close(trade, exec_px, ts_utc, "instrument_disabled", events_out)
+        self._finalize_close(trade, exec_px, ts_utc, exit_reason, events_out)
         return events_out
+
+    def close_disabled_instrument_trade(
+        self,
+        trade: TradeRecord,
+        close_price: float,
+        ts_utc: str,
+    ) -> list[SignalUpdateEvent]:
+        """Close active trade on a disabled instrument using market price."""
+        return self.close_trade_at_market(trade, close_price, ts_utc, "instrument_disabled")
+
+    def close_retired_strategy_trade(
+        self,
+        trade: TradeRecord,
+        close_price: float,
+        ts_utc: str,
+    ) -> list[SignalUpdateEvent]:
+        """Close active trade belonging to a retired strategy using market price."""
+        return self.close_trade_at_market(trade, close_price, ts_utc, "strategy_retired")
 
     def save_state(self, snapshot_ts_utc: str | None = None) -> None:
         """Persist single ledger, fills, equity snapshots, and analytics to out_dir."""
