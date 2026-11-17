@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-11-17T07:17:52Z",
+  "updated_at_utc": "2026-11-17T07:50:17Z",
   "items": [
     {
       "symbol": "BTCUSDT",
@@ -325,8 +325,8 @@
     {
       "symbol": "NEARUSDT",
       "market": "crypto",
-      "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 非每週再平衡日（L3 雙動能通過：過去 120 日報酬 +64.8% > 0 且為 crypto 前 3 強）",
+      "decision": "signal",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；已發布 SIG-20261117-0025（L3 / 已驗證）",
       "strategies": {
         "S3": {
           "status": "watch",
@@ -337,8 +337,8 @@
           "reason": "L1 (已驗證): L1 未突破 Donchian 通道"
         },
         "L3": {
-          "status": "watch",
-          "reason": "L3 (已驗證): 非每週再平衡日（L3 雙動能通過：過去 120 日報酬 +64.8% > 0 且為 crypto 前 3 強）"
+          "status": "signal",
+          "reason": "已發布 SIG-20261117-0025（L3 / 已驗證）"
         }
       },
       "data_status_1d": "ok"
@@ -409,8 +409,8 @@
     {
       "symbol": "UNIUSDT",
       "market": "crypto",
-      "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 非每週再平衡日（L3 雙動能通過：過去 120 日報酬 +46.9% > 0 且為 crypto 前 3 強）",
+      "decision": "signal",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；已發布 SIG-20261117-0026（L3 / 已驗證）",
       "strategies": {
         "S3": {
           "status": "watch",
@@ -421,8 +421,8 @@
           "reason": "L1 (已驗證): L1 未突破 Donchian 通道"
         },
         "L3": {
-          "status": "watch",
-          "reason": "L3 (已驗證): 非每週再平衡日（L3 雙動能通過：過去 120 日報酬 +46.9% > 0 且為 crypto 前 3 強）"
+          "status": "signal",
+          "reason": "已發布 SIG-20261117-0026（L3 / 已驗證）"
         }
       },
       "data_status_1d": "ok"
@@ -493,8 +493,8 @@
     {
       "symbol": "ARBUSDT",
       "market": "crypto",
-      "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 非每週再平衡日（L3 雙動能通過：過去 120 日報酬 +47.4% > 0 且為 crypto 前 3 強）",
+      "decision": "signal",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；已發布 SIG-20261117-0024（L3 / 已驗證）",
       "strategies": {
         "S3": {
           "status": "watch",
@@ -505,8 +505,8 @@
           "reason": "L1 (已驗證): L1 未突破 Donchian 通道"
         },
         "L3": {
-          "status": "watch",
-          "reason": "L3 (已驗證): 非每週再平衡日（L3 雙動能通過：過去 120 日報酬 +47.4% > 0 且為 crypto 前 3 強）"
+          "status": "signal",
+          "reason": "已發布 SIG-20261117-0024（L3 / 已驗證）"
         }
       },
       "data_status_1d": "ok"
@@ -536,7 +536,7 @@
       "symbol": "INJUSDT",
       "market": "crypto",
       "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 平倉（L3 每週雙動能調出（未入選同類前 K 名或過去報酬轉負））",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 未入選雙動能前排名",
       "strategies": {
         "S3": {
           "status": "watch",
@@ -548,7 +548,7 @@
         },
         "L3": {
           "status": "watch",
-          "reason": "L3 (已驗證): 平倉（L3 每週雙動能調出（未入選同類前 K 名或過去報酬轉負））"
+          "reason": "L3 (已驗證): 未入選雙動能前排名"
         }
       },
       "data_status_1d": "ok"
@@ -683,7 +683,7 @@
       "symbol": "PEPEUSDT",
       "market": "crypto",
       "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 平倉（L3 每週雙動能調出（未入選同類前 K 名或過去報酬轉負））",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 未入選雙動能前排名",
       "strategies": {
         "S3": {
           "status": "watch",
@@ -695,7 +695,7 @@
         },
         "L3": {
           "status": "watch",
-          "reason": "L3 (已驗證): 平倉（L3 每週雙動能調出（未入選同類前 K 名或過去報酬轉負））"
+          "reason": "L3 (已驗證): 未入選雙動能前排名"
         }
       },
       "data_status_1d": "ok"
@@ -745,20 +745,20 @@
     {
       "symbol": "XAUUSD",
       "market": "commodity",
-      "decision": "signal",
-      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；已發布 SIG-20261117-0022（L1 / 已驗證）；已發布 SIG-20261117-0023（L2 / 已驗證）；L4 (已驗證): L4 非週末收盤，等待週線結算判斷",
+      "decision": "watch",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): 已有持倉（SIG-20261117-0022）；L2 (已驗證): 已有持倉（SIG-20261117-0023）；L4 (已驗證): L4 非週末收盤，等待週線結算判斷",
       "strategies": {
         "S3": {
           "status": "watch",
           "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件"
         },
         "L1": {
-          "status": "signal",
-          "reason": "已發布 SIG-20261117-0022（L1 / 已驗證）"
+          "status": "watch",
+          "reason": "L1 (已驗證): 已有持倉（SIG-20261117-0022）"
         },
         "L2": {
-          "status": "signal",
-          "reason": "已發布 SIG-20261117-0023（L2 / 已驗證）"
+          "status": "watch",
+          "reason": "L2 (已驗證): 已有持倉（SIG-20261117-0023）"
         },
         "L4": {
           "status": "watch",
