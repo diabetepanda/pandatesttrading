@@ -113,6 +113,7 @@ def test_signal_lifecycle_state_transitions() -> None:
     assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="time_stop") == LifecycleState.CLOSED
     assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="session_stop") == LifecycleState.CLOSED
     assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="rebalance_exit") == LifecycleState.CLOSED
+    assert validate_transition(LifecycleState.ACTIVE, LifecycleState.CLOSED, exit_reason="instrument_disabled") == LifecycleState.CLOSED
 
     with pytest.raises(InvalidStateTransitionError):
         validate_transition(LifecycleState.CLOSED, LifecycleState.ACTIVE)

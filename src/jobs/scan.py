@@ -173,20 +173,29 @@ def run_scan(
     step_timings_sec["load_and_cleanup_sec"] = round(time.monotonic() - t_step, 3)
 
     t_step = time.monotonic()
-    instruments_cfg = [inst for inst in config.get("instruments", []) if inst.get("enabled", True)]
+    instruments_cfg = [
+        inst for inst in config.get("instruments", [])
+        if inst.get("enabled", True) or inst["symbol"] in symbols_with_open_trades
+    ]
     use_cache = fetcher is None
     bar_cache = _ScanBarCache(sched_cfg.get("scan_cache_dir", ".cache/scan_bars")) if use_cache else None
 
     def _process_one_instrument(inst: dict[str, Any]) -> dict[str, Any]:
         symbol = inst["symbol"]
         market = inst["market"]
+        is_disabled = not bool(inst.get("enabled", True))
         is_daily_only = bool(inst.get("daily_only", False)) or market == "index"
 
         intervals_reports: dict[str, dict[str, Any]] = {}
         fetch_results: dict[str, FetchResult] = {}
         local_probe_rows: list[dict[str, Any]] = []
         local_attempts = []
-        ivs_to_fetch = ("1d",) if is_daily_only else ("1m", "15m", "1d")
+        if is_disabled:
+            ivs_to_fetch = ("1m", "15m")
+        elif is_daily_only:
+            ivs_to_fetch = ("1d",)
+        else:
+            ivs_to_fetch = ("1m", "15m", "1d")
 
         for iv in ivs_to_fetch:
             cached_ts_iso, cached_src, cached_bars = (None, None, [])
@@ -270,7 +279,15 @@ def run_scan(
                     }
                 )
 
-        if is_daily_only:
+        if is_disabled:
+            intervals_reports["1d"] = {
+                "status": "skipped",
+                "reason": "標的已停用，僅抓取 1m/15m 管理持倉",
+                "latest_close": None,
+                "latest_ts_utc": None,
+                "source_used": None,
+            }
+        elif is_daily_only:
             intervals_reports["1m"] = {
                 "status": "skipped",
                 "reason": "指數僅用於日線與長線策略",
@@ -336,7 +353,9 @@ def run_scan(
                     source_used = intervals_reports[fallback_iv]["source_used"]
                     break
 
-        if is_daily_only:
+        if is_disabled:
+            overall_status = intervals_reports.get("15m", {}).get("status") or intervals_reports.get("1m", {}).get("status", "ok")
+        elif is_daily_only:
             overall_status = intervals_reports["1d"]["status"]
         else:
             statuses = {intervals_reports[iv]["status"] for iv in ("1m", "15m", "1d")}
@@ -420,10 +439,36 @@ def run_scan(
         atr_1h_by_sym[sym] = atr_1h
         atr_ratio_by_sym[sym] = atr_rat
 
+    # Close active trades on disabled instruments using latest available price at market
+    for trade in list(engine.ledger.trades.values()):
+        if trade.state != LifecycleState.ACTIVE:
+            continue
+        inst_meta = engine.instruments.get(trade.symbol, {})
+        if not inst_meta.get("enabled", True):
+            sym = trade.symbol
+            b1m = bars_1m_by_sym.get(sym, [])
+            b15 = bars_15m_by_sym.get(sym, [])
+            latest_px = None
+            latest_ts = now_iso
+            if b1m:
+                latest_px = b1m[-1].close
+                latest_ts = b1m[-1].ts_utc
+            elif b15:
+                latest_px = b15[-1].close
+                latest_ts = b15[-1].ts_utc
+            elif sym in engine.latest_marks:
+                latest_px = engine.latest_marks[sym]
+            else:
+                latest_px = trade.avg_entry_price
+
+            engine.close_disabled_instrument_trade(trade, float(latest_px), latest_ts)
+
     for sym in sorted(symbols_with_open_trades):
-        m_bars = _to_market_bars_1m(bars_1m_by_sym.get(sym, []), now)
-        if m_bars:
-            engine.replay_bars(sym, m_bars)
+        inst_meta = engine.instruments.get(sym, {})
+        if inst_meta.get("enabled", True):
+            m_bars = _to_market_bars_1m(bars_1m_by_sym.get(sym, []), now)
+            if m_bars:
+                engine.replay_bars(sym, m_bars)
     step_timings_sec["indicators_and_replay_sec"] = round(time.monotonic() - t_step, 3)
 
     t_step = time.monotonic()
@@ -431,7 +476,7 @@ def run_scan(
     crypto_intraday = [
         inst
         for inst in instruments_cfg
-        if inst["market"] == "crypto" and not bool(inst.get("daily_only", False))
+        if inst["market"] == "crypto" and inst.get("enabled", True) and not bool(inst.get("daily_only", False))
     ]
     deriv_by_sym: dict[str, dict[str, Any]] = {}
     if crypto_intraday:
@@ -473,6 +518,8 @@ def run_scan(
     for inst in instruments_cfg:
         sym = inst["symbol"]
         mkt = inst["market"]
+        if not inst.get("enabled", True):
+            continue
         if bool(inst.get("daily_only", False)) or mkt == "index":
             continue
 

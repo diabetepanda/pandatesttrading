@@ -166,3 +166,150 @@ def test_run_scan_logs_insufficient_derivatives_data_when_missing(tmp_path: Path
     by_sym = {item["symbol"]: item for item in watch["items"]}
     assert "抓取失敗" in by_sym["BTCUSDT"]["reason"]
     assert by_sym["BTCUSDT"]["derivatives"]["status"] == "抓取失敗"
+
+
+def test_run_scan_closes_active_trade_on_disabled_instrument(tmp_path: Path) -> None:
+    from src.config_loader import load_config
+    import pytest
+
+    cfg = load_config()
+    eur_inst = next(i for i in cfg["instruments"] if i["symbol"] == "EURUSD")
+    assert eur_inst["enabled"] is False
+
+    sid = "SIG-20261116-0001"
+    entered_time = "2026-11-16T12:00:00Z"
+    scan_time = datetime(2026, 11, 16, 13, 0, tzinfo=timezone.utc)
+
+    qty = 10000.0
+    entry_px = 1.0800
+    spread_bps = float(eur_inst.get("assumed_spread_bps", 1.0))
+    fee_rate = float(eur_inst.get("fee_rate", 0.0001))
+    slip_bps = 1.0
+    overnight_bps = float(eur_inst.get("overnight_cost_daily_bps", 1.0))
+
+    entry_fee = entry_px * qty * fee_rate
+    legacy_state = {
+        "sequences": {"signal": 1, "event": 1, "fill": 1},
+        "latest_marks": {"EURUSD": entry_px},
+        "ledger": {
+            "initial_capital_usd": 100000.0,
+            "strategy_capitals": {"S2": 10000.0},
+            "strategy_realized_pnl": {"S2": 0.0},
+            "trades": {
+                sid: {
+                    "signal_id": sid,
+                    "strategy": "S2",
+                    "symbol": "EURUSD",
+                    "market": "forex",
+                    "correlation_group": "usd_fx",
+                    "direction": "long",
+                    "state": "active",
+                    "entry_price": entry_px,
+                    "avg_entry_price": entry_px,
+                    "remaining_qty": qty,
+                    "initial_stop_loss": 1.0700,
+                    "current_stop_loss": 1.0700,
+                    "take_profit": None,
+                    "r_plan_usd": 100.0,
+                    "planned_notional_usd": entry_px * qty,
+                    "subaccount_capital_usd": 10000.0,
+                    "assumed_spread_bps": spread_bps,
+                    "fee_rate": fee_rate,
+                    "slippage_bps": slip_bps,
+                    "overnight_cost_daily_bps": overnight_bps,
+                    "entered_at_utc": entered_time,
+                    "published_at_utc": entered_time,
+                    "realized_pnl_usd": -entry_fee,
+                    "total_fees_usd": entry_fee,
+                    "total_overnight_usd": 0.0,
+                }
+            },
+            "fills": [
+                {
+                    "fill_id": "FILL-1",
+                    "signal_id": sid,
+                    "symbol": "EURUSD",
+                    "side": "buy",
+                    "action": "entry",
+                    "price": entry_px,
+                    "qty": qty,
+                    "notional_usd": entry_px * qty,
+                    "fee_usd": entry_fee,
+                    "realized_pnl_usd": -entry_fee,
+                    "ts_utc": entered_time,
+                }
+            ],
+        },
+    }
+    (tmp_path / "ledgers_state.json").write_text(json.dumps(legacy_state), encoding="utf-8")
+    (tmp_path / "signals").mkdir(parents=True, exist_ok=True)
+    (tmp_path / "signals" / f"{sid}.json").write_text(
+        json.dumps({
+            "signal_id": sid,
+            "strategy": "S2",
+            "symbol": "EURUSD",
+            "market": "forex",
+            "direction": "long",
+            "published_at_utc": entered_time,
+            "entered_at_utc": entered_time,
+            "lifecycle_state": "active",
+            "entry_price": entry_px,
+            "stop_loss": 1.0700,
+        }),
+        encoding="utf-8",
+    )
+
+    exit_mid = 1.0900
+
+    class FxCloseAdapter(DummyAdapter):
+        def fetch_bars(self, source_symbol: str, interval: str, limit: int = 200, now_utc=None):
+            if "EURUSD" in source_symbol:
+                step = {"1m": 1, "15m": 15, "1d": 1440}.get(interval, 1)
+                now = now_utc or scan_time
+                bars = []
+                for i in range(5):
+                    dt = now - timedelta(minutes=step * (5 - i))
+                    bars.append(
+                        OHLCVBar(
+                            ts_utc=dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                            open=exit_mid,
+                            high=exit_mid + 0.0005,
+                            low=exit_mid - 0.0005,
+                            close=exit_mid,
+                            volume=100.0,
+                        )
+                    )
+                return bars
+            return super().fetch_bars(source_symbol, interval, limit=limit, now_utc=now_utc)
+
+    fetcher = FallbackDataFetcher(
+        adapters={k: FxCloseAdapter() for k in ("binance_vision", "okx", "bybit", "kraken", "coinbase", "yfinance", "stooq")}
+    )
+
+    run_scan(
+        out_dir=tmp_path,
+        fetcher=fetcher,
+        now_utc=scan_time,
+        probe_all_adapters=False,
+    )
+
+    saved_trades = json.loads((tmp_path / "trades.json").read_text(encoding="utf-8"))
+    trade_out = next(t for t in saved_trades if t["signal_id"] == sid)
+    assert trade_out["state"] == "closed"
+    assert trade_out["exit_reason"] == "instrument_disabled"
+
+    signals_idx = json.loads((tmp_path / "signals_index.json").read_text(encoding="utf-8"))
+    sig_out = next(s for s in signals_idx if s["signal_id"] == sid)
+    assert sig_out["lifecycle_state"] == "closed"
+    assert sig_out["exit_reason"] == "instrument_disabled"
+    assert sig_out["exit_reason_label"] == "標的停用平倉"
+
+    bid_px = exit_mid * (1.0 - spread_bps / 20000.0)
+    exec_px = bid_px * (1.0 - slip_bps / 10000.0)
+    gross_pnl = (exec_px - entry_px) * qty
+    exit_notional = exec_px * qty
+    exit_fee = exit_notional * fee_rate
+    days = 1.0 / 24.0
+    overnight = (entry_px * qty) * (overnight_bps / 10000.0) * days
+    expected_net_pnl = gross_pnl - entry_fee - exit_fee - overnight
+    assert trade_out["realized_pnl_usd"] == pytest.approx(expected_net_pnl, abs=0.05)

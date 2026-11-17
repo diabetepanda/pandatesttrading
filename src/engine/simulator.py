@@ -773,6 +773,27 @@ class SimulationEngine:
             self._finalize_close(trade, exec_px, ts_utc, exit_reason, events_out)
         return events_out
 
+    def close_disabled_instrument_trade(
+        self,
+        trade: TradeRecord,
+        close_price: float,
+        ts_utc: str,
+    ) -> list[SignalUpdateEvent]:
+        """Close active trade on a disabled instrument using market price."""
+        if trade.state != LifecycleState.ACTIVE:
+            return []
+        events_out: list[SignalUpdateEvent] = []
+        spread = trade.assumed_spread_bps
+        slip_default = float(self.config.get("risk", {}).get("default_slippage_bps", 1.0)) / 10000.0
+        slip = trade.slippage_bps / 10000.0 if trade.slippage_bps else slip_default
+        exec_px = (
+            _bid_price(close_price, spread) * (1.0 - slip)
+            if trade.direction == "long"
+            else _ask_price(close_price, spread) * (1.0 + slip)
+        )
+        self._finalize_close(trade, exec_px, ts_utc, "instrument_disabled", events_out)
+        return events_out
+
     def save_state(self, snapshot_ts_utc: str | None = None) -> None:
         """Persist single ledger, fills, equity snapshots, and analytics to out_dir."""
         ts = snapshot_ts_utc or max(self.last_processed_ts.values(), default=_fmt_utc(datetime.now(timezone.utc)))

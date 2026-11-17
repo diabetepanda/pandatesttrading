@@ -128,6 +128,7 @@
       take_profit: "止盈",
       logic_invalidated: "移動停利",
       risk_forced_close: "強制平倉",
+      instrument_disabled: "標的停用平倉",
       expired: "已取消",
       pre_entry_invalidated: "已取消",
       risk_cancelled: "已取消",

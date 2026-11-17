@@ -41,6 +41,7 @@ VALID_CLOSE_REASONS: set[str] = {
     "take_profit",
     "logic_invalidated",
     "risk_forced_close",
+    "instrument_disabled",
 }
 
 VALID_CANCEL_REASONS: set[str] = {
@@ -220,6 +221,7 @@ EXIT_REASON_LABELS: dict[str, str] = {
     "take_profit": "止盈",
     "logic_invalidated": "移動停利",
     "risk_forced_close": "強制平倉",
+    "instrument_disabled": "標的停用平倉",
 }
 
 
