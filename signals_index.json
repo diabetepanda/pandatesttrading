@@ -209,7 +209,7 @@
     "risk_pct_pool": 1.0,
     "risk_usd": 99.99,
     "notional_usd": 4564.71,
-    "subaccount_capital_usd": 9999.34,
+    "subaccount_capital_usd": 9899.15,
     "reasons": [
       "策略狀態：觀察中（未通過驗證）",
       "S2 4H 收盤 5.9745 跌破近 30 根低點 5.976"
@@ -229,9 +229,9 @@
     "closed_at_utc": null,
     "exit_price": null,
     "effective_notional_usd": 4564.71,
-    "notional_pct_subaccount": 45.65,
+    "notional_pct_subaccount": 46.11,
     "estimated_stop_loss_usd": 99.99,
-    "estimated_stop_loss_pct_pool": 1.0
+    "estimated_stop_loss_pct_pool": 1.01
   },
   {
     "signal_id": "SIG-20261117-0020",
@@ -443,7 +443,7 @@
     "risk_pct_pool": 1.0,
     "risk_usd": 100.0,
     "notional_usd": 2806.67,
-    "subaccount_capital_usd": 9999.34,
+    "subaccount_capital_usd": 9899.15,
     "reasons": [
       "策略狀態：觀察中（未通過驗證）",
       "S2 4H 收盤 46.64 跌破近 12 根低點 47.065"
@@ -463,9 +463,9 @@
     "closed_at_utc": null,
     "exit_price": null,
     "effective_notional_usd": 2806.67,
-    "notional_pct_subaccount": 28.07,
+    "notional_pct_subaccount": 28.35,
     "estimated_stop_loss_usd": 100.0,
-    "estimated_stop_loss_pct_pool": 1.0
+    "estimated_stop_loss_pct_pool": 1.01
   },
   {
     "signal_id": "SIG-20261116-0014",
@@ -482,29 +482,29 @@
     "risk_pct_pool": 1.0,
     "risk_usd": 100.0,
     "notional_usd": 1279.1,
-    "subaccount_capital_usd": 9999.34,
+    "subaccount_capital_usd": 9899.15,
     "reasons": [
       "策略狀態：觀察中（未通過驗證）",
       "S2 4H 收盤 2.46 突破近 12 根高點 2.414"
     ],
     "snapshot_id": "SNAP-SIG-20261116-0014",
     "verification_status": "觀察中（未通過驗證）",
-    "lifecycle_state": "active",
+    "lifecycle_state": "closed",
     "avg_entry_price": 2.463108,
-    "remaining_qty": 519.30323946,
+    "remaining_qty": 0.0,
     "current_stop_loss": 2.273498,
     "trailing_exit_price": 2.159,
-    "realized_pnl_usd": -0.64,
-    "r_multiple": 0.0,
+    "realized_pnl_usd": -100.19,
+    "r_multiple": -1.0,
     "r_plan_usd": 100.0,
-    "exit_reason": null,
-    "exit_reason_label": null,
-    "closed_at_utc": null,
-    "exit_price": null,
+    "exit_reason": "stop_loss",
+    "exit_reason_label": "止損",
+    "closed_at_utc": "2026-11-17T15:46:00Z",
+    "exit_price": 2.2732706502,
     "effective_notional_usd": 1279.1,
-    "notional_pct_subaccount": 12.79,
+    "notional_pct_subaccount": 12.92,
     "estimated_stop_loss_usd": 100.0,
-    "estimated_stop_loss_pct_pool": 1.0
+    "estimated_stop_loss_pct_pool": 1.01
   },
   {
     "signal_id": "SIG-20261116-0013",
@@ -801,8 +801,8 @@
     "closed_at_utc": "2026-11-17T03:20:00Z",
     "exit_price": 1.429809779250216,
     "effective_notional_usd": 660.8,
-    "notional_pct_subaccount": 6.61,
-    "subaccount_capital_usd": 9999.34,
+    "notional_pct_subaccount": 6.68,
+    "subaccount_capital_usd": 9899.15,
     "estimated_stop_loss_usd": 2.78,
     "estimated_stop_loss_pct_pool": 0.03
   },
@@ -851,8 +851,8 @@
     "closed_at_utc": "2026-11-17T03:20:00Z",
     "exit_price": 0.8392830806061468,
     "effective_notional_usd": 660.87,
-    "notional_pct_subaccount": 6.61,
-    "subaccount_capital_usd": 9999.34,
+    "notional_pct_subaccount": 6.68,
+    "subaccount_capital_usd": 9899.15,
     "estimated_stop_loss_usd": 3.05,
     "estimated_stop_loss_pct_pool": 0.03
   },
@@ -901,8 +901,8 @@
     "closed_at_utc": "2026-11-17T03:20:00Z",
     "exit_price": 1.3195268890831384,
     "effective_notional_usd": 660.87,
-    "notional_pct_subaccount": 6.61,
-    "subaccount_capital_usd": 9999.34,
+    "notional_pct_subaccount": 6.68,
+    "subaccount_capital_usd": 9899.15,
     "estimated_stop_loss_usd": 2.67,
     "estimated_stop_loss_pct_pool": 0.03
   },
@@ -951,8 +951,8 @@
     "closed_at_utc": "2026-11-17T03:20:00Z",
     "exit_price": 1.1011230196687605,
     "effective_notional_usd": 660.87,
-    "notional_pct_subaccount": 6.61,
-    "subaccount_capital_usd": 9999.34,
+    "notional_pct_subaccount": 6.68,
+    "subaccount_capital_usd": 9899.15,
     "estimated_stop_loss_usd": 2.88,
     "estimated_stop_loss_pct_pool": 0.03
   }
