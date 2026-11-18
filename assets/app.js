@@ -2010,6 +2010,33 @@
       : `<ul class="timeline">${revents.map((ev) => `<li class="timeline-item"><strong>台北 ${formatTaipeiTime(ev.ts_utc)}</strong>｜<code>${escapeHtml(ev.event_type)}</code>｜${escapeHtml(convertReasonUtcToTaipei(ev.reason || ev.note || ""))}</li>`).join("")}</ul>`;
   }
 
+  let cachedResearch = null;
+
+  async function fetchResearch() {
+    if (cachedResearch) return cachedResearch;
+    try {
+      const resp = await fetch(`data/research.json?t=${Date.now()}`);
+      if (resp.ok) {
+        cachedResearch = await resp.json();
+        return cachedResearch;
+      }
+    } catch (_) {}
+    try {
+      const resp = await fetch(`assets/research.json?t=${Date.now()}`);
+      if (resp.ok) {
+        cachedResearch = await resp.json();
+        return cachedResearch;
+      }
+    } catch (_) {}
+    try {
+      cachedResearch = await fetchDataJson("research.json");
+      return cachedResearch;
+    } catch (err) {
+      console.warn("Failed to load research json:", err);
+      return null;
+    }
+  }
+
   async function fetchContestResearch() {
     if (cachedContestResearch) return cachedContestResearch;
     try {
@@ -2097,8 +2124,245 @@
     }).join("");
   }
 
+  function scrollToResearchArticle(id) {
+    const body = document.getElementById(`body-${id}`);
+    const btn = document.getElementById(`toggle-btn-${id}`);
+    if (body && body.classList.contains("collapsed")) {
+      body.classList.remove("collapsed");
+      if (btn) btn.textContent = "收折";
+    }
+    const el = document.getElementById(`article-${id}`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+  window.scrollToResearchArticle = scrollToResearchArticle;
+
+  function toggleResearchArticle(id) {
+    const body = document.getElementById(`body-${id}`);
+    const btn = document.getElementById(`toggle-btn-${id}`);
+    if (!body) return;
+    const isCollapsed = body.classList.toggle("collapsed");
+    if (btn) btn.textContent = isCollapsed ? "展開閱讀" : "收折";
+  }
+  window.toggleResearchArticle = toggleResearchArticle;
+
+  function renderLockboxTableRows(rows) {
+    if (!Array.isArray(rows) || rows.length === 0) {
+      return '<tr><td colspan="6" class="muted center">尚無鎖定段資料</td></tr>';
+    }
+    return rows.map((r) => {
+      const isBase = Boolean(r.is_baseline);
+      const rowCls = isBase ? 'class="highlight-row"' : "";
+      return `
+        <tr ${rowCls}>
+          <td data-label="策略"><strong>${escapeHtml(r.name || r.id)}</strong> ${isBase ? '<span class="badge badge-warn">基準</span>' : ""}</td>
+          <td data-label="期望值 R">${formatContestExpR(r.expectancy_r)}</td>
+          <td data-label="獲利因子 (PF)">${formatContestPfCell(r.profit_factor)}</td>
+          <td data-label="年化報酬 (CAGR)"><span class="${r.cagr_pct > 0 ? "text-success" : (r.cagr_pct < 0 ? "text-danger" : "")}">${formatContestPct(r.cagr_pct, true)}</span></td>
+          <td data-label="最大回撤 (MaxDD)"><span class="text-danger">-${Math.abs(Number(r.max_drawdown_pct || 0)).toFixed(2)}%</span></td>
+          <td data-label="收益回撤比 (MAR)">${r.mar_ratio !== undefined && r.mar_ratio !== null ? Number(r.mar_ratio).toFixed(2) : "--"}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function renderKrakenTableRows(rows) {
+    if (!Array.isArray(rows) || rows.length === 0) {
+      return '<tr><td colspan="5" class="muted center">尚無海妖考試模擬資料</td></tr>';
+    }
+    return rows.map((r) => {
+      const isBase = Boolean(r.is_baseline);
+      const rowCls = isBase ? 'class="highlight-row"' : "";
+      const passCls = r.pass_rate_pct >= 80 ? "text-success" : (r.pass_rate_pct < 30 ? "text-danger" : "");
+      const bustCls = r.bust_rate_pct >= 40 ? "text-danger" : (r.bust_rate_pct <= 10 ? "text-success" : "");
+      const medDays = r.median_days !== null && r.median_days !== undefined ? `${Number(r.median_days).toFixed(1)} 天` : "--";
+      return `
+        <tr ${rowCls}>
+          <td data-label="策略"><strong>${escapeHtml(r.name || r.id)}</strong> ${isBase ? '<span class="badge badge-warn">基準</span>' : ""}</td>
+          <td data-label="通關率"><span class="${passCls}"><strong>${formatContestPct(r.pass_rate_pct)}</strong></span></td>
+          <td data-label="爆倉出局率"><span class="${bustCls}">${formatContestPct(r.bust_rate_pct)}</span></td>
+          <td data-label="中位通關天數">${medDays}</td>
+          <td data-label="實戰特性備註" class="muted">${escapeHtml(r.notes || "")}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function renderComboArticleHtml(art) {
+    if (!art) return "";
+    const takeaway = escapeHtml(art.takeaway || "");
+    const sec = art.sections || {};
+    const anti = sec.anti_self_deception || {};
+    const truly = sec.truly_useful || {};
+    const appar = sec.apparent_improvement || {};
+    const use = sec.proven_useless || {};
+    const caut = sec.cautions || {};
+    const tbls = art.tables || {};
+    const lockboxRows = tbls.lockbox_comparison || [];
+    const krakenRows = tbls.kraken_scenarios || [];
+
+    return `
+      <section class="card research-article" id="article-combo">
+        <div class="section-header article-header" onclick="toggleResearchArticle('combo')">
+          <div>
+            <h2>第 1 篇：${escapeHtml(art.title)}</h2>
+            <p class="subtitle">${escapeHtml(art.subtitle || "")}</p>
+          </div>
+          <div class="article-header-actions" onclick="event.stopPropagation()">
+            <span class="badge badge-ok">${escapeHtml(art.badge || "研究完成")}</span>
+            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-combo" onclick="toggleResearchArticle('combo')">收折</button>
+          </div>
+        </div>
+
+        <div class="article-body" id="body-combo">
+          <div class="callout callout-takeaway">
+            <p>💡 <strong>核心結論：</strong>${takeaway}</p>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(anti.title || "一、怎麼防止自欺：三段切分、61 組參數與統計檢定")}</h2>
+            ${(anti.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(truly.title || "二、真的有用：5a 多策略組合把回撤砍半，碰巧機率僅 1%")}</h2>
+            ${(truly.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+            ${truly.takeaway_pill ? `<div class="takeaway-pill">🎯 <strong>核心指引</strong>：${escapeHtml(truly.takeaway_pill)}</div>` : ""}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(appar.title || "三、看起來有進步但要打折：策略合議實質加槓桿，週線過濾犧牲抗震力")}</h2>
+            ${(appar.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(use.title || "四、實測無效的迷思：等回檔漏大魚、平半倉腰斬利潤、S2 正式退休")}</h2>
+            ${(use.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(caut.title || "五、注意事項：鎖定段大牛市背景，切勿把順風當常態")}</h2>
+            ${(caut.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section">
+            <h2>六、實測數據總表（鎖定段盲測與海妖考試模擬）</h2>
+            <h3 style="margin: 16px 0 8px;">1. 鎖定段（2025-05 至 2026-11 盲測）候選策略 vs 原版基準</h3>
+            <div class="table-wrap table-responsive">
+              <table class="data-table mobile-cards">
+                <thead>
+                  <tr>
+                    <th>策略</th>
+                    <th>期望值 (Expectancy R)</th>
+                    <th>獲利因子 (PF)</th>
+                    <th>年化報酬 (CAGR)</th>
+                    <th>最大回撤 (MaxDD)</th>
+                    <th>收益回撤比 (MAR)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${renderLockboxTableRows(lockboxRows)}
+                </tbody>
+              </table>
+            </div>
+
+            <h3 style="margin: 24px 0 8px;">2. 海妖考試情境模擬（單槽持倉限制、10% 目標、5% 回撤淘汰）</h3>
+            <div class="table-wrap table-responsive">
+              <table class="data-table mobile-cards">
+                <thead>
+                  <tr>
+                    <th>策略</th>
+                    <th>通關率</th>
+                    <th>爆倉出局率</th>
+                    <th>中位通關天數</th>
+                    <th>實戰特性備註</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${renderKrakenTableRows(krakenRows)}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="research-section disclaimer-box">
+            <p>⚠️ <strong>免責聲明</strong>：研究結果僅供參考，過去表現不代表未來，不構成投資建議。</p>
+            <div class="github-links">
+              <a href="${escapeHtml(art.github_report || 'https://github.com/diabetepanda/pandatesttrading/blob/main/research/combo/report.md')}" target="_blank" rel="noopener noreferrer" class="ext-link">🔗 完整組合研究報告 (report.md)</a>
+              <a href="${escapeHtml(art.github_code || 'https://github.com/diabetepanda/pandatesttrading/tree/main/research/combo')}" target="_blank" rel="noopener noreferrer" class="ext-link">🔗 組合研究程式碼 (research/combo)</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderResearchHtml(data) {
+    if (!data) return '<p class="muted">深度研究資料為空。</p>';
+    if (!data.articles && data.strategies_intro) {
+      return renderContestResearchHtml(data);
+    }
+    const articles = Array.isArray(data.articles) ? data.articles : [];
+    const comboArt = articles.find((a) => a.id === "combo") || articles[0];
+    const shortArt = articles.find((a) => a.id === "short_term") || articles[1];
+
+    return `
+      <section class="card">
+        <div class="section-header">
+          <div>
+            <h1>深度研究 (In-Depth Research)</h1>
+            <p class="subtitle">${escapeHtml(data.subtitle || "Signal Desk 策略量化實證、多週期盲測與組合實驗報告")}</p>
+          </div>
+        </div>
+
+        <div class="research-toc">
+          <div class="research-toc-card" onclick="scrollToResearchArticle('combo')">
+            <div class="toc-card-header">
+              <span class="badge badge-ok">${escapeHtml(comboArt?.badge || "研究完成")}</span>
+              <span class="toc-num">第 1 篇</span>
+            </div>
+            <h3 class="toc-title">${escapeHtml(comboArt?.title || "截長補短，能不能把策略組合得更好？")}</h3>
+            <p class="toc-takeaway">${escapeHtml(comboArt?.takeaway || "")}</p>
+            <div class="toc-action">點擊展開閱讀 ➔</div>
+          </div>
+
+          <div class="research-toc-card" onclick="scrollToResearchArticle('short_term')">
+            <div class="toc-card-header">
+              <span class="badge badge-danger">${escapeHtml(shortArt?.badge || "全部未通過")}</span>
+              <span class="toc-num">第 2 篇</span>
+            </div>
+            <h3 class="toc-title">${escapeHtml(shortArt?.title || "短線策略能拿去比賽嗎？")}</h3>
+            <p class="toc-takeaway">${escapeHtml(shortArt?.takeaway || "")}</p>
+            <div class="toc-action">點擊展開閱讀 ➔</div>
+          </div>
+        </div>
+      </section>
+
+      ${renderComboArticleHtml(comboArt)}
+      <section class="card research-article" id="article-short_term">
+        <div class="section-header article-header" onclick="toggleResearchArticle('short_term')">
+          <div>
+            <h2>第 2 篇：${escapeHtml(shortArt?.title || "短線策略能拿去比賽嗎？")}</h2>
+            <p class="subtitle">${escapeHtml(shortArt?.subtitle || "")}</p>
+          </div>
+          <div class="article-header-actions" onclick="event.stopPropagation()">
+            <span class="badge badge-danger">${escapeHtml(shortArt?.badge || "全部未通過")}</span>
+            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-short_term" onclick="toggleResearchArticle('short_term')">收折</button>
+          </div>
+        </div>
+        <div class="article-body" id="body-short_term">
+          ${renderContestResearchHtml(shortArt)}
+        </div>
+      </section>
+    `;
+  }
+
   function renderContestResearchHtml(data) {
     if (!data) return '<p class="muted">短線策略研究資料為空。</p>';
+    if (data.articles) {
+      return renderResearchHtml(data);
+    }
     const takeaway = escapeHtml(data.takeaway || "");
     const stratsIntro = Array.isArray(data.strategies_intro) ? data.strategies_intro : [];
     const meth = data.methodology || {};
@@ -2260,18 +2524,22 @@
     `;
   }
 
-  async function renderContestResearchView() {
-    const container = document.getElementById("contest-research-container");
+  async function renderResearchView() {
+    const container = document.getElementById("research-container") || document.getElementById("contest-research-container");
     if (!container) return;
-    if (!cachedContestResearch) {
-      container.innerHTML = '<p class="muted">短線策略研究資料載入中...</p>';
-      const data = await fetchContestResearch();
+    if (!cachedResearch) {
+      container.innerHTML = '<p class="muted">深度研究資料載入中...</p>';
+      const data = await fetchResearch();
       if (!data) {
-        container.innerHTML = '<p class="muted">無法載入短線策略研究資料，請確認 <code>data/contest_research.json</code> 存在。</p>';
+        container.innerHTML = '<p class="muted">無法載入深度研究資料，請確認 <code>data/research.json</code> 存在。</p>';
         return;
       }
     }
-    container.innerHTML = renderContestResearchHtml(cachedContestResearch);
+    container.innerHTML = renderResearchHtml(cachedResearch);
+  }
+
+  async function renderContestResearchView() {
+    return renderResearchView();
   }
 
   function renderDataExtras() {
@@ -2328,9 +2596,12 @@
       document.querySelector('.nav-link[data-route="data"]')?.classList.add("active");
       renderDataExtras();
     } else if (route === "contest-research" || route === "research-short") {
-      document.getElementById("view-contest-research")?.classList.remove("hidden");
-      document.querySelector('.nav-link[data-route="contest-research"]')?.classList.add("active");
-      renderContestResearchView();
+      window.location.hash = "#/research";
+      return;
+    } else if (route === "research") {
+      document.getElementById("view-research")?.classList.remove("hidden");
+      document.querySelector('.nav-link[data-route="research"]')?.classList.add("active");
+      renderResearchView();
     } else {
       document.getElementById("view-wall").classList.remove("hidden");
       document.querySelector('.nav-link[data-route="wall"]')?.classList.add("active");
@@ -2406,11 +2677,15 @@
       cachedEquity = eqRes.status === "fulfilled" ? eqRes.value : null;
       cachedEvents = evRes.status === "fulfilled" ? evRes.value : null;
       if (contestRes.status === "fulfilled" && contestRes.value) {
-        cachedContestResearch = contestRes.value;
+        if (contestRes.value.articles) {
+          cachedResearch = contestRes.value;
+        } else {
+          cachedContestResearch = contestRes.value;
+        }
       }
       const curHash = window.location.hash || "";
-      if (curHash.includes("contest-research") || curHash.includes("research-short")) {
-        renderContestResearchView();
+      if (curHash.includes("research") || curHash.includes("contest-research")) {
+        renderResearchView();
       }
 
       const sigMap = {};
@@ -2568,6 +2843,12 @@
     renderContestResearchHtml,
     renderContestResearchView,
     fetchContestResearch,
+    renderResearchHtml,
+    renderResearchView,
+    fetchResearch,
+    scrollToResearchArticle,
+    toggleResearchArticle,
+    applyRoute,
   };
 
   window.addEventListener("hashchange", applyRoute);

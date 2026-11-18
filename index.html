@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261118d" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261119a" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -51,7 +51,7 @@
       <a href="#/account" class="nav-link" data-route="account">模擬帳戶</a>
       <a href="#/risk" class="nav-link" data-route="risk">風控中心</a>
       <a href="#/data" class="nav-link" data-route="data">市場與資料</a>
-      <a href="#/contest-research" class="nav-link" data-route="contest-research">短線策略研究</a>
+      <a href="#/research" class="nav-link" data-route="research">深度研究</a>
       <button id="refresh-btn" class="btn btn-sm" type="button">重新整理</button>
     </nav>
     <div id="delay-banner" class="alert-banner hidden">
@@ -455,20 +455,11 @@
       </section>
     </section>
 
-    <!-- 頁面 8：短線策略研究 -->
-    <section id="view-contest-research" class="route-view hidden">
-      <section class="card">
-        <div class="section-header">
-          <div>
-            <h1>短線策略研究（交易競賽回測結果）</h1>
-            <p class="subtitle">為交易競賽進行之 15 分 K 與 1 小時 K 短線研究，兩輪共 7 種策略，扣除真實交易成本與嚴格樣本外驗證。</p>
-          </div>
-          <span class="badge badge-danger">全部未通過上線門檻</span>
-        </div>
-        <div id="contest-research-container">
-          <p class="muted">短線策略研究資料載入中...</p>
-        </div>
-      </section>
+    <!-- 頁面 8：深度研究 -->
+    <section id="view-research" class="route-view hidden">
+      <div id="research-container">
+        <p class="muted">深度研究資料載入中...</p>
+      </div>
     </section>
   </main>
 
@@ -476,7 +467,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261118d"></script>
-  <script src="./assets/app.js?v=20261118d"></script>
+  <script src="./assets/config.js?v=20261119a"></script>
+  <script src="./assets/app.js?v=20261119a"></script>
 </body>
 </html>

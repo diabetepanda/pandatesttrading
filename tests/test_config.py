@@ -119,7 +119,7 @@ def test_frontend_assets_and_relative_paths() -> None:
     assert "TONUSDT" in config_js
 
     # Stage 4, 5 & 6 hash routes, disclaimer, backtest results, and fixed CDN check
-    for route in ("#/simple", "#/wall", "#/results", "#/stats", "#/account", "#/risk", "#/data", "#/contest-research"):
+    for route in ("#/simple", "#/wall", "#/results", "#/stats", "#/account", "#/risk", "#/data", "#/research"):
         assert route in index_html
     nav_block = index_html.split('<nav class="main-nav"', 1)[1].split("</nav>", 1)[0]
     assert nav_block.index("#/simple") < nav_block.index("#/wall")
@@ -154,7 +154,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261118d" in index_html
+    assert "?v=20261119a" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -819,5 +819,185 @@ def test_contest_research_json_and_tab_rendering() -> None:
         assert proc.returncode == 0, f"JS render check failed: {proc.stderr or proc.stdout}"
     finally:
         Path(tmp_js).unlink(missing_ok=True)
+
+
+def test_in_depth_research_json_and_rendering() -> None:
+    """Verify in-depth research JSON structure, Article 1 & 2 content, and JS rendering & redirect."""
+    import json
+    import shutil
+    import subprocess
+    import tempfile
+    from pathlib import Path
+
+    from research.build_research_json import build_research_dict
+
+    root = Path(__file__).resolve().parent.parent
+    data = build_research_dict()
+
+    # 1. Articles structure validation
+    assert len(data["articles"]) == 2
+    art1, art2 = data["articles"][0], data["articles"][1]
+
+    # Article 1: Combo research
+    assert art1["title"] == "截長補短，能不能把策略組合得更好？"
+    assert "把幾個長線策略一起跑能把回撤砍半" in art1["takeaway"]
+    assert "考試帳戶仍用原版 L2" in art1["takeaway"]
+
+    sec1 = art1["sections"]
+    assert "三段切分" in sec1["anti_self_deception"]["title"]
+    assert "61 組" in sec1["anti_self_deception"]["title"] or "61" in str(sec1["anti_self_deception"])
+    assert "5a 多策略組合" in sec1["truly_useful"]["title"]
+    assert "回撤砍半" in sec1["truly_useful"]["title"]
+    assert "18.4%" in str(sec1["truly_useful"]["content"]) or "18%" in str(sec1["truly_useful"]["content"])
+    assert "4a 長線策略合議" in sec1["apparent_improvement"]["title"] or "策略合議" in sec1["apparent_improvement"]["title"]
+    assert "3d" in str(sec1["apparent_improvement"]["content"])
+    assert "S2 正式退休" in sec1["proven_useless"]["title"] or "S2" in str(sec1["proven_useless"]["content"])
+    assert "大牛市" in sec1["cautions"]["title"] or "大牛市" in str(sec1["cautions"]["content"])
+
+    # Tables in Article 1
+    lockbox_table = art1["tables"]["lockbox_comparison"]
+    assert len(lockbox_table) >= 7  # L2, L1 + 5 candidates
+    l2_row = next(r for r in lockbox_table if r["id"] == "L2_orig")
+    assert l2_row["profit_factor"] >= 3.0
+    l1_row = next(r for r in lockbox_table if r["id"] == "L1_orig")
+    assert l1_row["profit_factor"] >= 1.5
+
+    kraken_table = art1["tables"]["kraken_scenarios"]
+    assert len(kraken_table) >= 8
+    k_l2 = next(r for r in kraken_table if r["id"] == "L2_orig")
+    assert k_l2["pass_rate_pct"] > 90.0
+    assert k_l2["bust_rate_pct"] < 6.0
+    k_5a = next(r for r in kraken_table if r["id"] == "5a_multi_combo")
+    assert k_5a["pass_rate_pct"] < 25.0
+    assert k_5a["bust_rate_pct"] > 50.0
+
+    # Article 2: Contest short-term
+    assert art2["title"] == "短線策略能拿去比賽嗎？"
+    assert "我們測了 7 種短線策略" in art2["takeaway"]
+    assert "沒有一個有穩定優勢" in art2["takeaway"]
+
+    # Files existence
+    data_json_path = root / "data" / "research.json"
+    assets_json_path = root / "assets" / "research.json"
+    assert data_json_path.exists()
+    assert assets_json_path.exists()
+
+    # 2. JS rendering test via Node / JSC
+    app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
+    js_bin = shutil.which("node")
+    if not js_bin:
+        jsc_path = Path("/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc")
+        if jsc_path.exists():
+            js_bin = str(jsc_path)
+    assert js_bin is not None
+
+    script = f"""
+        const stubEl = () => ({{
+          classList: {{
+            _classes: new Set(),
+            add: function(c) {{ this._classes.add(c); }},
+            remove: function(c) {{ this._classes.delete(c); }},
+            contains: function(c) {{ return this._classes.has(c); }},
+            toggle: function(c) {{
+              if (this._classes.has(c)) {{ this._classes.delete(c); return false; }}
+              this._classes.add(c); return true;
+            }}
+          }},
+          addEventListener: () => {{}},
+          scrollIntoView: () => {{}},
+          innerHTML: '',
+          textContent: '',
+          value: 'all',
+          dataset: {{}},
+          disabled: false,
+        }});
+        var navigator = {{}};
+        var window = {{
+          location: {{ hash: '#/research' }},
+          addEventListener: () => {{}},
+          SIGNAL_DESK_CONFIG: {{}},
+        }};
+        var document = {{
+          getElementById: () => stubEl(),
+          querySelectorAll: () => [],
+          querySelector: () => stubEl(),
+          body: {{ appendChild: () => {{}}, removeChild: () => {{}} }},
+          createElement: () => ({{ value: '', style: {{}}, setAttribute: () => {{}}, focus: () => {{}}, select: () => {{}} }}),
+          execCommand: () => true,
+        }};
+        function setInterval() {{}}
+        function setTimeout() {{ return 1; }}
+        function clearTimeout() {{}}
+        async function fetch() {{ return {{ ok: false }}; }}
+
+        {app_js}
+
+        const u = window.__SIGNAL_DESK_UTILS__;
+        const mockData = {json.dumps(data)};
+        const html = u.renderResearchHtml(mockData);
+
+        // Verify TOC
+        if (!html.includes('research-toc')) {{
+          throw new Error('renderResearchHtml missing research-toc');
+        }}
+        if (!html.includes('第 1 篇') || !html.includes('第 2 篇')) {{
+          throw new Error('renderResearchHtml missing TOC article markers');
+        }}
+
+        // Verify Article 1 content
+        if (!html.includes('截長補短，能不能把策略組合得更好？')) {{
+          throw new Error('renderResearchHtml missing Article 1 title');
+        }}
+        if (!html.includes('5a 多策略組合')) {{
+          throw new Error('renderResearchHtml missing 5a combo');
+        }}
+        if (!html.includes('S2 正式退休')) {{
+          throw new Error('renderResearchHtml missing S2 retirement');
+        }}
+        if (!html.includes('海妖考試情境模擬')) {{
+          throw new Error('renderResearchHtml missing Kraken simulation');
+        }}
+
+        // Verify Article 2 content
+        if (!html.includes('短線策略能拿去比賽嗎？')) {{
+          throw new Error('renderResearchHtml missing Article 2 title');
+        }}
+        if (!html.includes('我們測了 7 種短線策略')) {{
+          throw new Error('renderResearchHtml missing Article 2 takeaway');
+        }}
+
+        // Verify responsive table wrapper and disclaimers
+        if (!html.includes('table-responsive')) {{
+          throw new Error('renderResearchHtml missing table-responsive');
+        }}
+        if (!html.includes('免責聲明') || !html.includes('過去表現不代表未來')) {{
+          throw new Error('renderResearchHtml missing disclaimer');
+        }}
+        if (!html.includes('research/combo/report.md')) {{
+          throw new Error('renderResearchHtml missing combo report github link');
+        }}
+
+        // 3. Test routing redirect for legacy routes
+        window.location.hash = '#/contest-research';
+        u.applyRoute();
+        if (window.location.hash !== '#/research') {{
+          throw new Error('Redirect failed for #/contest-research, got: ' + window.location.hash);
+        }}
+
+        window.location.hash = '#/research-short';
+        u.applyRoute();
+        if (window.location.hash !== '#/research') {{
+          throw new Error('Redirect failed for #/research-short, got: ' + window.location.hash);
+        }}
+    """
+    with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as tf:
+        tf.write(script)
+        tmp_js = tf.name
+    try:
+        proc = subprocess.run([js_bin, tmp_js], capture_output=True, text=True)
+        assert proc.returncode == 0, f"JS render and route check failed: {proc.stderr or proc.stdout}"
+    finally:
+        Path(tmp_js).unlink(missing_ok=True)
+
 
 
