@@ -154,7 +154,11 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261117c" in index_html
+    assert "?v=20261118a" in index_html
+    assert "simple-open-now-grid" in index_html
+    assert "simple-copy-all-btn" in index_html
+    assert "simple-tp-explainer" in index_html
+    assert "怎麼止盈？" in index_html
     assert "simple-signals-grid" in index_html
     assert ".simple-grid" in style_css
     assert "trades.json" in app_js
@@ -187,12 +191,15 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     assert "排程延遲" in app_js
     assert "convertReasonUtcToTaipei" in app_js
 
-    # If node is available, verify JS helper behavior directly
-    node_bin = shutil.which("node")
-    if node_bin:
-        script = f"""
-        const fs = require('fs');
-        const vm = require('vm');
+    # Run JS helper verification under Node (CI) or JavaScriptCore (macOS)
+    js_bin = shutil.which("node")
+    if not js_bin:
+        jsc_path = Path("/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc")
+        if jsc_path.exists():
+            js_bin = str(jsc_path)
+    assert js_bin is not None, "Expected either node or macOS jsc to verify frontend helpers"
+
+    script = f"""
         const stubEl = () => ({{
           classList: {{ add: () => {{}}, remove: () => {{}} }},
           addEventListener: () => {{}},
@@ -200,36 +207,28 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
           textContent: '',
           value: 'all',
           dataset: {{}},
+          disabled: false,
         }});
-        const sandbox = {{
-          window: {{
-            location: {{ hash: '#/wall' }},
-            addEventListener: () => {{}},
-            SIGNAL_DESK_CONFIG: {{}},
-          }},
-          document: {{
-            getElementById: stubEl,
-            querySelectorAll: () => [],
-            querySelector: () => stubEl(),
-          }},
-          setInterval: () => {{}},
-          setTimeout: () => {{}},
-          clearTimeout: () => {{}},
-          fetch: async () => ({{ ok: false }}),
-          console,
-          Date,
-          Intl,
-          Math,
-          Number,
-          String,
-          Array,
-          Object,
-          Set,
-          Map,
-          JSON,
+        var navigator = {{}};
+        var window = {{
+          location: {{ hash: '#/wall' }},
+          addEventListener: () => {{}},
+          SIGNAL_DESK_CONFIG: {{}},
         }};
-        vm.runInNewContext(fs.readFileSync({repr(str(root / "assets" / "app.js"))}, 'utf8'), sandbox);
-        const u = sandbox.window.__SIGNAL_DESK_UTILS__;
+        var document = {{
+          getElementById: stubEl,
+          querySelectorAll: () => [],
+          querySelector: () => stubEl(),
+          body: {{ appendChild: () => {{}}, removeChild: () => {{}} }},
+          createElement: () => ({{ value: '', style: {{}}, setAttribute: () => {{}}, focus: () => {{}}, select: () => {{}} }}),
+          execCommand: () => true,
+        }};
+        function setInterval() {{}}
+        function setTimeout() {{ return 1; }}
+        function clearTimeout() {{}}
+        async function fetch() {{ return {{ ok: false }}; }}
+        {app_js}
+        const u = window.__SIGNAL_DESK_UTILS__;
         if (u.formatTaipeiTime('2026-11-16T14:51:00Z') !== '11/16 22:51') {{
           throw new Error('formatTaipeiTime failed: ' + u.formatTaipeiTime('2026-11-16T14:51:00Z'));
         }}
@@ -264,6 +263,9 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
         }}
         if (u.formatNumber(47.0694) !== '47.069') {{
           throw new Error('47.069 precision failed: ' + u.formatNumber(47.0694));
+        }}
+        if (u.formatExactPrice(7339.245247) !== '7339.245247') {{
+          throw new Error('Exact price rounded unexpectedly: ' + u.formatExactPrice(7339.245247));
         }}
 
         // Simple Signal exit point rules: long (higher), short (lower), null trailing (SL), L3 suffix
@@ -312,9 +314,104 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
         if (cards[1].dot !== '🔴' || cards[1].displayName !== 'ICP' || cards[1].reasonLine !== 'S2 跌破低點（S2 短線，觀察中）' || cards[1].exitStr !== '2.55' || cards[1].pnlInfo.text !== '+$58') {{
           throw new Error('ICP card check failed: ' + JSON.stringify(cards[1]));
         }}
+
+        // --- Open-now signals eligibility, sizing %, history back-calc, sorting & copy formats ---
+        // 1) Long removal conditions: +0.5R boundary vs exceeded vs stop-hit
+        const longOk = u.evaluateOpenNowEligibility({{ state: 'active', strategy: 'L1', direction: 'long', avg_entry_price: 100, current_stop_loss: 90 }}, 105);
+        if (!longOk.eligible) throw new Error('Long exact +0.5R boundary should remain eligible');
+        const longTooFar = u.evaluateOpenNowEligibility({{ state: 'active', strategy: 'L1', direction: 'long', avg_entry_price: 100, current_stop_loss: 90 }}, 105.01);
+        if (longTooFar.eligible || longTooFar.reason !== 'exceeded_half_r') throw new Error('Long > +0.5R should be removed: ' + JSON.stringify(longTooFar));
+        const longStopped = u.evaluateOpenNowEligibility({{ state: 'active', strategy: 'L1', direction: 'long', avg_entry_price: 100, current_stop_loss: 90 }}, 90);
+        if (longStopped.eligible || longStopped.reason !== 'hit_stop') throw new Error('Long hit stop should be removed');
+
+        // 2) Short removal conditions: -0.5R boundary vs exceeded vs stop-hit, plus missing live price allowed
+        const shortOk = u.evaluateOpenNowEligibility({{ state: 'active', strategy: 'S2', direction: 'short', avg_entry_price: 100, current_stop_loss: 110 }}, 95);
+        if (!shortOk.eligible) throw new Error('Short exact -0.5R boundary should remain eligible');
+        const shortTooFar = u.evaluateOpenNowEligibility({{ state: 'active', strategy: 'S2', direction: 'short', avg_entry_price: 100, current_stop_loss: 110 }}, 94.99);
+        if (shortTooFar.eligible || shortTooFar.reason !== 'exceeded_half_r') throw new Error('Short > 0.5R favorable should be removed');
+        const shortStopped = u.evaluateOpenNowEligibility({{ state: 'active', strategy: 'S2', direction: 'short', avg_entry_price: 100, current_stop_loss: 110 }}, 110.5);
+        if (shortStopped.eligible || shortStopped.reason !== 'hit_stop') throw new Error('Short hit stop should be removed');
+        const noLive = u.evaluateOpenNowEligibility({{ state: 'active', strategy: 'S3', direction: 'long', avg_entry_price: 100, current_stop_loss: 96 }}, null);
+        if (!noLive.eligible || noLive.hasLivePrice !== false) throw new Error('Missing live price should still be eligible');
+        const closedSkip = u.evaluateOpenNowEligibility({{ state: 'closed', strategy: 'L2', direction: 'long', avg_entry_price: 100, current_stop_loss: 96 }}, 100);
+        if (closedSkip.eligible) throw new Error('Closed trade must be removed');
+
+        // 3) Position % formula: 4% SL -> 25%; >100% leverage note; cap 500%
+        const p25 = u.computeOpenNowPositionPct(100, 96);
+        if (p25.posPct !== 25 || p25.showLeverage !== false) throw new Error('4% SL must yield 25% without leverage note: ' + JSON.stringify(p25));
+        const p250 = u.computeOpenNowPositionPct(100, 99.6);
+        if (p250.posPct !== 250 || p250.showLeverage !== true || p250.leverage !== '2.5') throw new Error('0.4% SL must yield 250% / 2.5x: ' + JSON.stringify(p250));
+        const pCap = u.computeOpenNowPositionPct(100, 99.9);
+        if (pCap.posPct !== 500 || pCap.leverage !== '5.0') throw new Error('0.1% SL must cap at 500%: ' + JSON.stringify(pCap));
+
+        // 4) History stats & avgWinR back-calculation formula: (expR + (1 - wr)) / wr
+        const mockBt = {{
+          strategies: [
+            {{ strategy_id: 'L2', name: '唐奇安突破', out_of_sample: {{ trades: 50, win_rate_pct: 31, expectancy_r: 0.302 }} }},
+            {{ strategy_id: 'S2', name: '4 小時突破', out_of_sample: {{ trades: 40, win_rate_pct: 35, expectancy_r: -0.05 }} }},
+            {{ strategy_id: 'L4', name: '主流週線趨勢', out_of_sample: {{ trades: 0, win_rate_pct: 0, expectancy_r: 0 }} }},
+          ],
+        }};
+        const hsL2 = u.computeOpenNowHistoryStats('L2', mockBt);
+        if (!hsL2.available || hsL2.winRateInt !== 31 || hsL2.avgWinStr !== '+3.2%' || hsL2.expStr !== '+0.30%' || hsL2.expCls !== 'chg-up') {{
+          throw new Error('L2 history stats failed: ' + JSON.stringify(hsL2));
+        }}
+        const hsS2 = u.computeOpenNowHistoryStats('S2', mockBt);
+        if (!hsS2.available || hsS2.expStr !== '-0.05%' || hsS2.expCls !== 'chg-down') {{
+          throw new Error('S2 negative exp stats failed: ' + JSON.stringify(hsS2));
+        }}
+        const hsL4 = u.computeOpenNowHistoryStats('L4', mockBt);
+        if (hsL4.available !== false || hsL4.copyStatsLine !== '歷史數據暫無') {{
+          throw new Error('Zero-trade strategy must show 歷史數據暫無');
+        }}
+
+        // 5) Full builder sorting (newest entered first), full precision, and copy format
+        const openCards = u.buildOpenNowCardsData(
+          [
+            {{ signal_id: 'SIG-OLD', strategy: 'L4', symbol: 'BTCUSDT', market: 'crypto', direction: 'long', state: 'active', avg_entry_price: 90000.123456, current_stop_loss: 86400.123456, entered_at_utc: '2026-11-16T00:00:00Z' }},
+            {{ signal_id: 'SIG-NEW', strategy: 'L2', symbol: 'SP500', market: 'index', direction: 'short', state: 'active', avg_entry_price: 7339.245247, current_stop_loss: 7625.250674, entered_at_utc: '2026-11-18T00:00:00Z' }},
+            {{ signal_id: 'SIG-SKIP', strategy: 'S1', symbol: 'ETHUSDT', market: 'crypto', direction: 'long', state: 'active', avg_entry_price: 3000, current_stop_loss: 2900, entered_at_utc: '2026-11-18T02:00:00Z' }},
+          ],
+          mockBt,
+          (sym) => (sym === 'SP500' ? 7300.5 : null),
+          []
+        );
+        if (openCards.length !== 2 || openCards[0].signal_id !== 'SIG-NEW' || openCards[1].signal_id !== 'SIG-OLD') {{
+          throw new Error('OpenNow sorting/filtering failed: ' + JSON.stringify(openCards));
+        }}
+        if (openCards[0].entryStr !== '7339.245247' || openCards[0].slStr !== '7625.250674' || openCards[0].posPct !== 26) {{
+          throw new Error('Full precision or 26% failed: ' + JSON.stringify(openCards[0]));
+        }}
+        if (openCards[1].livePriceText !== '現價暫無') {{
+          throw new Error('Missing live price text failed: ' + openCards[1].livePriceText);
+        }}
+        const singleCopy = openCards[0].copyText;
+        const expectedSingle = [
+          '【做空】S&P 500（標普 500）（L2 唐奇安突破）',
+          '入場：7339.245247',
+          '止損：7625.250674',
+          '倉位：總資產 26%（虧損上限 1%）',
+          '歷史勝率 31%｜贏時平均 +3.2%｜輸時 −1%',
+          '止盈：移動停利，詳見 https://diabetepanda.github.io/pandatesttrading/',
+        ].join('\\n');
+        if (singleCopy !== expectedSingle) {{
+          throw new Error('Single copy text mismatch:\\n' + singleCopy + '\\nVS\\n' + expectedSingle);
+        }}
+        const allCopy = u.formatOpenNowAllCopyText(openCards, '2026-11-18T05:30:00Z');
+        if (!allCopy.startsWith('📊 Signal Desk 可開單（11/18 13:30 台北時間）\\n\\n') || !allCopy.endsWith('https://diabetepanda.github.io/pandatesttrading/') || !allCopy.includes('歷史數據暫無')) {{
+          throw new Error('All copy text check failed:\\n' + allCopy);
+        }}
         """
-        proc = subprocess.run([node_bin, "-e", script], capture_output=True, text=True)
-        assert proc.returncode == 0, f"Node helper check failed: {proc.stderr or proc.stdout}"
+    import tempfile
+
+    with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as tf:
+        tf.write(script)
+        tmp_js = tf.name
+    try:
+        proc = subprocess.run([js_bin, tmp_js], capture_output=True, text=True)
+        assert proc.returncode == 0, f"JS helper check failed ({js_bin}): {proc.stderr or proc.stdout}"
+    finally:
+        Path(tmp_js).unlink(missing_ok=True)
 
 
 def test_no_legacy_strategy_ab_references() -> None:

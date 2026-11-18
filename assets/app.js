@@ -30,6 +30,12 @@
   let livePrices = {};
   let activeChart = null;
   let activeEquityChart = null;
+  let openNowCopyById = {};
+  let openNowCopiedAt = {};
+  let openNowAllCopyText = "";
+
+  const SITE_URL = "https://diabetepanda.github.io/pandatesttrading/";
+  const OPEN_NOW_STRATEGIES = new Set(["S2", "S3", "L1", "L2", "L3", "L4"]);
 
   const STRATEGY_NAMES = {
     S1: "S1 開盤區間突破（已停用）",
@@ -77,6 +83,16 @@
     const num = Number(val);
     if (num === 0) return "0";
     return num.toLocaleString("en-US", { maximumFractionDigits: getPricePrecision(num) });
+  }
+
+  function formatExactPrice(val) {
+    if (val === null || val === undefined || val === "" || Number.isNaN(Number(val))) return null;
+    const num = Number(val);
+    if (!Number.isFinite(num)) return null;
+    if (num === 0) return "0";
+    const raw = String(num);
+    if (!/[eE]/.test(raw)) return raw;
+    return num.toFixed(12).replace(/\.?0+$/, "");
   }
 
   function convertReasonUtcToTaipei(text) {
@@ -443,13 +459,53 @@
     ].join("\n");
   }
 
+  async function copyTextToClipboard(text) {
+    if (!text) return false;
+    if (typeof navigator !== "undefined" && navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (_) {
+        // fallback below when Clipboard API is blocked or unavailable
+      }
+    }
+    if (typeof document === "undefined" || !document.body || typeof document.createElement !== "function") {
+      return false;
+    }
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.top = "-9999px";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    let ok = false;
+    try {
+      ok = typeof document.execCommand === "function" && document.execCommand("copy");
+    } catch (_) {
+      ok = false;
+    }
+    document.body.removeChild(ta);
+    return Boolean(ok);
+  }
+
+  function flashCopySuccess(btn, labelDefault) {
+    if (!btn) return;
+    btn.textContent = "已複製 ✓";
+    clearTimeout(btn._copyResetTimer);
+    btn._copyResetTimer = setTimeout(() => {
+      btn.textContent = labelDefault;
+    }, 2000);
+  }
+
   function bindCopyButton(btn, textToCopy, labelDefault) {
     btn.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(textToCopy);
-        btn.textContent = "已複製！";
-        setTimeout(() => { btn.textContent = labelDefault; }, 1500);
-      } catch (_) {
+      const ok = await copyTextToClipboard(textToCopy);
+      if (ok) {
+        flashCopySuccess(btn, labelDefault);
+      } else {
         btn.textContent = "請手動複製";
       }
     });
@@ -577,7 +633,248 @@
     return cards;
   }
 
+  function getSimpleStrategyShortName(strategyId, backtestObj) {
+    const bt = backtestObj !== undefined ? backtestObj : cachedBacktest;
+    const list = bt ? (Array.isArray(bt.strategies) ? bt.strategies : bt.results) : null;
+    const row = Array.isArray(list) ? list.find((item) => item && item.strategy_id === strategyId) : null;
+    if (row && row.name) return `${strategyId} ${row.name}`;
+    const raw = STRATEGY_NAMES[strategyId] || strategyId;
+    return raw.replace(/（(?:短線|長線|已停用)）$/g, "");
+  }
+
+  function computeOpenNowHistoryStats(strategyId, backtestObj) {
+    const bt = backtestObj !== undefined ? backtestObj : cachedBacktest;
+    const list = bt ? (Array.isArray(bt.strategies) ? bt.strategies : bt.results) : null;
+    const row = Array.isArray(list) ? list.find((item) => item && item.strategy_id === strategyId) : null;
+    const oos = row && row.out_of_sample;
+    if (
+      !oos ||
+      Number(oos.trades || 0) <= 0 ||
+      oos.win_rate_pct === null ||
+      oos.win_rate_pct === undefined ||
+      Number.isNaN(Number(oos.win_rate_pct)) ||
+      oos.expectancy_r === null ||
+      oos.expectancy_r === undefined ||
+      Number.isNaN(Number(oos.expectancy_r))
+    ) {
+      return { available: false, copyStatsLine: "歷史數據暫無" };
+    }
+    const winRatePct = Number(oos.win_rate_pct);
+    const winRateInt = Math.round(winRatePct);
+    const wr = winRatePct / 100;
+    const expR = Number(oos.expectancy_r);
+    let avgWinR;
+    if (oos.avg_win_r !== null && oos.avg_win_r !== undefined && Number.isFinite(Number(oos.avg_win_r))) {
+      avgWinR = Number(oos.avg_win_r);
+    } else if (wr > 0) {
+      // backtest_results.json 的 out_of_sample 未提供贏單平均 R，
+      // 故假設單筆輸單平均為 -1R，依 E[R] = 勝率 * avgWinR - (1 - 勝率) * 1
+      // 反推公式：avgWinR = (期望R + (1 - 勝率)) ÷ 勝率
+      avgWinR = (expR + (1 - wr)) / wr;
+    } else {
+      avgWinR = 0;
+    }
+    const avgWinAssetPct = avgWinR * 1.0;
+    const avgWinRounded = Number(avgWinAssetPct.toFixed(1));
+    const avgWinStr = `${avgWinRounded >= 0 ? "+" : ""}${avgWinAssetPct.toFixed(1)}%`;
+    const expAssetPct = expR * 1.0;
+    const expRounded = Number(expAssetPct.toFixed(2));
+    const expStr = `${expRounded > 0 ? "+" : ""}${expAssetPct.toFixed(2)}%`;
+    const expCls = expRounded > 0 ? "chg-up" : (expRounded < 0 ? "chg-down" : "muted");
+    return {
+      available: true,
+      winRateInt,
+      avgWinR,
+      avgWinStr,
+      lossStr: "−1%",
+      expR,
+      expStr,
+      expCls,
+      copyStatsLine: `歷史勝率 ${winRateInt}%｜贏時平均 ${avgWinStr}｜輸時 −1%`,
+    };
+  }
+
+  function evaluateOpenNowEligibility(tradeObj, currentPrice) {
+    if (!tradeObj || tradeObj.state !== "active") {
+      return { eligible: false, reason: "not_active" };
+    }
+    if (!OPEN_NOW_STRATEGIES.has(tradeObj.strategy)) {
+      return { eligible: false, reason: "unsupported_strategy" };
+    }
+    const dir = tradeObj.direction;
+    if (dir !== "long" && dir !== "short") {
+      return { eligible: false, reason: "invalid_direction" };
+    }
+    const entryPx = Number(tradeObj.avg_entry_price || tradeObj.entry_price || 0);
+    const slPx = Number(tradeObj.current_stop_loss ?? tradeObj.initial_stop_loss ?? tradeObj.stop_loss ?? 0);
+    if (!Number.isFinite(entryPx) || entryPx <= 0 || !Number.isFinite(slPx) || slPx <= 0) {
+      return { eligible: false, reason: "invalid_price" };
+    }
+    const rDist = Math.abs(entryPx - slPx);
+    if (rDist <= 0) {
+      return { eligible: false, reason: "zero_stop_distance" };
+    }
+    const hasLivePrice =
+      currentPrice !== null &&
+      currentPrice !== undefined &&
+      currentPrice !== "" &&
+      !Number.isNaN(Number(currentPrice)) &&
+      Number.isFinite(Number(currentPrice));
+    if (hasLivePrice) {
+      const cur = Number(currentPrice);
+      if (dir === "long") {
+        if (cur <= slPx) return { eligible: false, reason: "hit_stop" };
+        if (cur > entryPx + 0.5 * rDist) return { eligible: false, reason: "exceeded_half_r" };
+      } else {
+        if (cur >= slPx) return { eligible: false, reason: "hit_stop" };
+        if (cur < entryPx - 0.5 * rDist) return { eligible: false, reason: "exceeded_half_r" };
+      }
+    }
+    return {
+      eligible: true,
+      hasLivePrice,
+      curPrice: hasLivePrice ? Number(currentPrice) : null,
+      entryPx,
+      slPx,
+      rDist,
+    };
+  }
+
+  function computeOpenNowPositionPct(entryPx, stopLossPx) {
+    const entry = Number(entryPx);
+    const sl = Number(stopLossPx);
+    if (!Number.isFinite(entry) || entry <= 0 || !Number.isFinite(sl) || sl <= 0) {
+      return { posPct: 0, leverage: "0.0", showLeverage: false };
+    }
+    const stopDistPct = Math.abs(entry - sl) / entry;
+    if (!Number.isFinite(stopDistPct) || stopDistPct <= 0) {
+      return { posPct: 500, leverage: "5.0", showLeverage: true };
+    }
+    // 倉位% = 1% ÷ (|進場價 − 止損價| ÷ 進場價)，四捨五入到整數 %，最高 500%
+    const posPct = Math.min(500, Math.round(1 / stopDistPct));
+    const showLeverage = posPct > 100;
+    const leverage = (posPct / 100).toFixed(1);
+    return { posPct, leverage, showLeverage };
+  }
+
+  function formatOpenNowSingleCopyText(card, includeUrl = true) {
+    const posLine = card.showLeverage
+      ? `倉位：總資產 ${card.posPct}%（虧損上限 1%，約 ${card.leverage} 倍槓桿）`
+      : `倉位：總資產 ${card.posPct}%（虧損上限 1%）`;
+    const histLine = card.historyStats && card.historyStats.available
+      ? card.historyStats.copyStatsLine
+      : "歷史數據暫無";
+    const tpLine = includeUrl
+      ? `止盈：移動停利，詳見 ${SITE_URL}`
+      : "止盈：移動停利";
+    return [
+      `【${card.dirZh}】${card.displayName}（${card.strategyLabel}）`,
+      `入場：${card.entryStr}`,
+      `止損：${card.slStr}`,
+      posLine,
+      histLine,
+      tpLine,
+    ].join("\n");
+  }
+
+  function formatOpenNowAllCopyText(cards, nowDate) {
+    if (!Array.isArray(cards) || cards.length === 0) return "";
+    const stamp = formatTaipeiTime(nowDate || new Date());
+    const header = `📊 Signal Desk 可開單（${stamp} 台北時間）`;
+    const blocks = cards.map((c) => formatOpenNowSingleCopyText(c, false));
+    return `${header}\n\n${blocks.join("\n\n")}\n\n詳見 ${SITE_URL}`;
+  }
+
+  function buildOpenNowCardsData(tradesList, backtestObj, priceLookupFn, instrumentsList) {
+    const cards = [];
+    for (const t of (Array.isArray(tradesList) ? tradesList : [])) {
+      const curPx = typeof priceLookupFn === "function" ? priceLookupFn(t?.symbol) : getDisplayPrice(t?.symbol).price;
+      const elig = evaluateOpenNowEligibility(t, curPx);
+      if (!elig.eligible) continue;
+      const isLong = t.direction === "long";
+      const posInfo = computeOpenNowPositionPct(elig.entryPx, elig.slPx);
+      const historyStats = computeOpenNowHistoryStats(t.strategy, backtestObj);
+      const entryStr = formatExactPrice(elig.entryPx) || "—";
+      const slStr = formatExactPrice(elig.slPx) || "—";
+      const liveStr = elig.hasLivePrice ? formatNumber(elig.curPrice) : null;
+      const card = {
+        signal_id: t.signal_id,
+        strategy: t.strategy,
+        symbol: t.symbol,
+        isLong,
+        dot: isLong ? "🟢" : "🔴",
+        dirZh: isLong ? "做多" : "做空",
+        displayName: formatSimpleSymbolName(t.symbol, t.market, instrumentsList),
+        strategyLabel: getSimpleStrategyShortName(t.strategy, backtestObj),
+        entryStr,
+        livePriceText: liveStr ? `現價 ${liveStr}` : "現價暫無",
+        slStr,
+        posPct: posInfo.posPct,
+        leverage: posInfo.leverage,
+        showLeverage: posInfo.showLeverage,
+        historyStats,
+        enteredAtMs: Date.parse(t.entered_at_utc || t.published_at_utc || "") || 0,
+      };
+      card.copyText = formatOpenNowSingleCopyText(card, true);
+      cards.push(card);
+    }
+    cards.sort((a, b) => (b.enteredAtMs - a.enteredAtMs) || String(b.signal_id || "").localeCompare(String(a.signal_id || "")));
+    return cards;
+  }
+
+  function renderOpenNowSignals() {
+    const grid = document.getElementById("simple-open-now-grid");
+    const copyAllBtn = document.getElementById("simple-copy-all-btn");
+    if (!grid) return;
+    const cards = buildOpenNowCardsData(
+      cachedTrades,
+      cachedBacktest,
+      (sym) => getDisplayPrice(sym).price,
+      cachedInstruments
+    );
+    openNowCopyById = {};
+    cards.forEach((c) => { openNowCopyById[c.signal_id] = c.copyText; });
+    openNowAllCopyText = formatOpenNowAllCopyText(cards);
+    if (copyAllBtn) {
+      copyAllBtn.disabled = cards.length === 0;
+    }
+    if (cards.length === 0) {
+      grid.innerHTML = '<div class="empty-state">目前沒有可以新開的單，等下一個訊號</div>';
+      return;
+    }
+    const nowMs = Date.now();
+    grid.innerHTML = cards
+      .map((c) => {
+        const recentCopied = openNowCopiedAt[c.signal_id] && (nowMs - openNowCopiedAt[c.signal_id] < 2000);
+        const copyLabel = recentCopied ? "已複製 ✓" : "複製";
+        const levHtml = c.showLeverage
+          ? `<div class="muted open-now-sub">約 ${escapeHtml(c.leverage)} 倍槓桿</div>`
+          : "";
+        const histHtml = c.historyStats.available
+          ? `<div class="open-now-history">歷史表現：勝率 ${c.historyStats.winRateInt}%｜贏時平均 ${escapeHtml(c.historyStats.avgWinStr)}｜輸時 ${escapeHtml(c.historyStats.lossStr)}｜期望值 <span class="${c.historyStats.expCls}">${escapeHtml(c.historyStats.expStr)}</span></div>`
+          : '<div class="open-now-history muted">歷史表現：歷史數據暫無</div>';
+        return `
+          <article class="simple-card open-now-card">
+            <div class="open-now-head">
+              <div class="open-now-product">
+                <span>${c.dot} ${escapeHtml(c.displayName)}</span>
+                <span class="pill ${c.isLong ? "pill-ok" : "pill-fail"}">${c.dirZh}</span>
+                <span class="open-now-strategy">${escapeHtml(c.strategyLabel)}</span>
+              </div>
+              <button class="btn btn-xs open-now-copy-btn" data-signal-id="${escapeHtml(c.signal_id)}" type="button">${copyLabel}</button>
+            </div>
+            <div class="simple-card-line">建議入場點位：<strong>${escapeHtml(c.entryStr)}</strong><span class="muted open-now-live">${escapeHtml(c.livePriceText)}</span></div>
+            <div class="simple-card-line">建議止損：<strong>${escapeHtml(c.slStr)}</strong></div>
+            <div class="simple-card-line">建議倉位：佔總資產 ${c.posPct}%${levHtml}</div>
+            ${histHtml}
+          </article>
+        `;
+      })
+      .join("");
+  }
+
   function renderSimpleSignals() {
+    renderOpenNowSignals();
     const grid = document.getElementById("simple-signals-grid");
     if (!grid) return;
     const cards = buildSimpleSignalCardsData(
@@ -1840,6 +2137,26 @@
     renderWatchToday();
   });
 
+  document.getElementById("simple-copy-all-btn")?.addEventListener("click", async (e) => {
+    if (!openNowAllCopyText) return;
+    const btn = e.currentTarget;
+    const ok = await copyTextToClipboard(openNowAllCopyText);
+    if (ok) flashCopySuccess(btn, "複製全部");
+  });
+
+  document.getElementById("simple-open-now-grid")?.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".open-now-copy-btn");
+    if (!btn) return;
+    const sid = btn.dataset.signalId;
+    const txt = sid ? openNowCopyById[sid] : "";
+    if (!txt) return;
+    const ok = await copyTextToClipboard(txt);
+    if (ok) {
+      openNowCopiedAt[sid] = Date.now();
+      flashCopySuccess(btn, "複製");
+    }
+  });
+
   document.getElementById("refresh-btn").addEventListener("click", () => {
     refreshAll();
     refreshLivePrices();
@@ -1847,6 +2164,7 @@
 
   window.__SIGNAL_DESK_UTILS__ = {
     formatNumber,
+    formatExactPrice,
     getPricePrecision,
     formatTaipeiTime,
     formatSignalCopyText,
@@ -1854,11 +2172,18 @@
     classifyWatchReason,
     formatSimpleSymbolName,
     getStrategyPoolKind,
+    getSimpleStrategyShortName,
     isStrategyVerified,
     extractSimpleReasonText,
     computeSimpleExitPoint,
     computeSimpleTradePnl,
     buildSimpleSignalCardsData,
+    computeOpenNowHistoryStats,
+    evaluateOpenNowEligibility,
+    computeOpenNowPositionPct,
+    formatOpenNowSingleCopyText,
+    formatOpenNowAllCopyText,
+    buildOpenNowCardsData,
   };
 
   window.addEventListener("hashchange", applyRoute);

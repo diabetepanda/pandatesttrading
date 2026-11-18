@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261117c" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261118a" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -64,10 +64,38 @@
 
     <!-- 簡易訊號 -->
     <section id="view-simple" class="route-view hidden">
+      <section class="card" id="simple-open-now-card">
+        <div class="section-header">
+          <div>
+            <h1>現在還可以開的單</h1>
+            <p class="subtitle">每筆都以虧損總資產 1% 為上限計算倉位</p>
+          </div>
+          <button id="simple-copy-all-btn" class="btn btn-sm" type="button">複製全部</button>
+        </div>
+        <div id="simple-open-now-grid" class="simple-grid">
+          <div class="empty-state">目前沒有可以新開的單，等下一個訊號</div>
+        </div>
+        <p class="muted simple-open-disclaimer">依過去回測統計，不代表這一單的結果</p>
+      </section>
+
+      <details class="card simple-tp-explainer" id="simple-tp-explainer" open>
+        <summary class="simple-tp-summary">怎麼止盈？</summary>
+        <div class="simple-tp-body">
+          <p>我們不設固定止盈價，而是用移動停利線：</p>
+          <ul>
+            <li>做多時，停利線是最近 N 根 K 線的最低點；收盤跌破就出場。</li>
+            <li>做空時，停利線是最近 N 根 K 線的最高點；收盤站上就出場。</li>
+            <li>停利線只會往有利的方向移動，不會退回去。剛開始它等於停損，價格走越遠，它就跟得越緊，鎖住越多獲利。</li>
+            <li>各策略的 N：L1 10 根日線、L2 20 根日線、S2 10 根 4 小時線；S3 是價格反彈到 5 日均線就出場（最多持有 10 天）；L3 每週檢查，掉出名單就換掉；L4 是週收盤跌破 100 日均線出場，或觸及移動停損。</li>
+            <li>最新的停利位置，請看下方各張訊號卡。</li>
+          </ul>
+        </div>
+      </details>
+
       <section class="card">
         <div class="section-header">
           <div>
-            <h1>簡易訊號</h1>
+            <h2>簡易訊號</h2>
             <p class="subtitle">進行中持倉重點一覽（已驗證策略優先，依倉位由大到小排序）；僅供模擬驗證參考。</p>
           </div>
         </div>
@@ -431,7 +459,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261117c"></script>
-  <script src="./assets/app.js?v=20261117c"></script>
+  <script src="./assets/config.js?v=20261118a"></script>
+  <script src="./assets/app.js?v=20261118a"></script>
 </body>
 </html>
