@@ -154,7 +154,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261118b" in index_html
+    assert "?v=20261118c" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -427,6 +427,63 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
         if (!allCopy.startsWith('📊 Signal Desk 可開單（11/18 13:30 台北時間）\\n\\n') || !allCopy.endsWith('https://diabetepanda.github.io/pandatesttrading/') || !allCopy.includes('策略歷史數據暫無') || !allCopy.includes('開 10 倍槓桿')) {{
           throw new Error('All copy text check failed:\\n' + allCopy);
         }}
+
+        // 6) Simulated account open positions table rendering with active positions
+        const mockPositions = [
+          {{
+            signal_id: 'SIG-20261118-0001',
+            symbol: 'BTCUSDT',
+            strategy: 'L1',
+            direction: 'long',
+            state: 'active',
+            entered_at_utc: '2026-11-18T10:00:00Z',
+            avg_entry_price: 90000,
+            remaining_qty: 0.1,
+            notional_usd: 9000,
+            mark_price: 90500,
+            unrealized_pnl_usd: 50,
+            current_stop_loss: 86400,
+            exit_rule: '移動停損出場',
+          }},
+          {{
+            signal_id: 'SIG-20261118-0002',
+            symbol: 'EURUSD',
+            strategy: 'S2',
+            direction: 'short',
+            state: 'active',
+            entered_at_utc: '2026-11-18T11:00:00Z',
+            avg_entry_price: 1.101156,
+            total_qty: 600,
+            planned_notional_usd: 660,
+            mark_price: 1.1012,
+            current_stop_loss: 1.105513,
+            exit_rule: '止損出場',
+          }},
+        ];
+        const openPosHtml = u.renderOpenPositionsHtml(mockPositions);
+        if (openPosHtml.includes('目前尚無模擬持倉資料') || openPosHtml.includes('目前無持倉')) {{
+          throw new Error('Positions table rendered empty state despite active positions: ' + openPosHtml);
+        }}
+        if (!openPosHtml.includes('SIG-20261118-0001') || !openPosHtml.includes('BTCUSDT') || !openPosHtml.includes('EURUSD')) {{
+          throw new Error('Positions table missing expected position details: ' + openPosHtml);
+        }}
+
+        let capturedTbodyHtml = '';
+        const prevGetElementById = document.getElementById;
+        document.getElementById = (id) => {{
+          if (id === 'account-positions-tbody') {{
+            return {{
+              set innerHTML(val) {{ capturedTbodyHtml = val; }},
+              get innerHTML() {{ return capturedTbodyHtml; }},
+            }};
+          }}
+          return stubEl();
+        }};
+        u.renderSimulatedAccount({{ account: {{ equity_usd: 100000 }}, open_positions: mockPositions }});
+        document.getElementById = prevGetElementById;
+        if (capturedTbodyHtml.includes('目前尚無模擬持倉資料') || !capturedTbodyHtml.includes('SIG-20261118-0001')) {{
+          throw new Error('renderSimulatedAccount failed to populate positions: ' + capturedTbodyHtml);
+        }}
         """
     import tempfile
 
@@ -510,3 +567,128 @@ def test_no_policy_shadow_target_stage_residues() -> None:
             if re.search(pat, text):
                 offenders.append(f"{path.relative_to(root)}: {label!r}")
     assert not offenders, "Legacy residues remain:\n" + "\n".join(offenders)
+
+
+def test_simulated_account_positions_table_rendering() -> None:
+    """Ensure simulated account positions table lists active positions and never shows empty state when positions exist."""
+    import shutil
+    import subprocess
+    import tempfile
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
+
+    js_bin = shutil.which("node")
+    if not js_bin:
+        jsc_path = Path("/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc")
+        if jsc_path.exists():
+            js_bin = str(jsc_path)
+    assert js_bin is not None, "Expected either node or macOS jsc"
+
+    script = f"""
+        const stubEl = () => ({{
+          classList: {{ add: () => {{}}, remove: () => {{}} }},
+          addEventListener: () => {{}},
+          innerHTML: '',
+          textContent: '',
+          value: 'all',
+          dataset: {{}},
+          disabled: false,
+        }});
+        var navigator = {{}};
+        var window = {{
+          location: {{ hash: '#/account' }},
+          addEventListener: () => {{}},
+          SIGNAL_DESK_CONFIG: {{}},
+        }};
+        let tbodyHtml = '';
+        var document = {{
+          getElementById: (id) => {{
+            if (id === 'account-positions-tbody') {{
+              return {{
+                set innerHTML(val) {{ tbodyHtml = val; }},
+                get innerHTML() {{ return tbodyHtml; }},
+              }};
+            }}
+            return stubEl();
+          }},
+          querySelectorAll: () => [],
+          querySelector: () => stubEl(),
+          body: {{ appendChild: () => {{}}, removeChild: () => {{}} }},
+          createElement: () => ({{ value: '', style: {{}}, setAttribute: () => {{}}, focus: () => {{}}, select: () => {{}} }}),
+          execCommand: () => true,
+        }};
+        function setInterval() {{}}
+        function setTimeout() {{ return 1; }}
+        function clearTimeout() {{}}
+        async function fetch() {{ return {{ ok: false }}; }}
+
+        {app_js}
+
+        const u = window.__SIGNAL_DESK_UTILS__;
+        const mockPositions = [
+          {{
+            signal_id: 'SIG-POS-001',
+            symbol: 'XAUUSD',
+            market: 'commodity',
+            strategy: 'L1',
+            direction: 'long',
+            state: 'active',
+            entered_at_utc: '2026-11-18T08:00:00Z',
+            avg_entry_price: 2650.5,
+            total_qty: 2.0,
+            notional_usd: 5301,
+            mark_price: 2680.0,
+            unrealized_pnl_usd: 59.0,
+            current_stop_loss: 2620.0,
+            exit_rule: '移動停損出場',
+          }},
+          {{
+            signal_id: 'SIG-POS-002',
+            symbol: 'NAS100',
+            market: 'index',
+            strategy: 'L2',
+            direction: 'short',
+            state: 'active',
+            entered_at_utc: '2026-11-18T09:00:00Z',
+            avg_entry_price: 21000,
+            remaining_qty: 0.5,
+            planned_notional_usd: 10500,
+            mark_price: 20950,
+            current_stop_loss: 21300,
+            exit_rule: '跌破均線出場',
+          }},
+        ];
+
+        // 1. Direct helper rendering
+        const html = u.renderOpenPositionsHtml(mockPositions);
+        if (html.includes('目前尚無模擬持倉資料') || html.includes('目前無持倉')) {{
+          throw new Error('renderOpenPositionsHtml produced empty text with active positions: ' + html);
+        }}
+        if (!html.includes('SIG-POS-001') || !html.includes('XAUUSD') || !html.includes('SIG-POS-002') || !html.includes('NAS100')) {{
+          throw new Error('renderOpenPositionsHtml missing positions: ' + html);
+        }}
+
+        // 2. Full renderSimulatedAccount integration with DOM
+        u.renderSimulatedAccount({{
+          account: {{ equity_usd: 100000, short_term_equity_usd: 20000, long_term_equity_usd: 80000, total_open_notional_usd: 15801 }},
+          open_positions: mockPositions,
+        }});
+        if (tbodyHtml.includes('目前尚無模擬持倉資料') || tbodyHtml.includes('目前無持倉')) {{
+          throw new Error('renderSimulatedAccount produced empty text with active positions: ' + tbodyHtml);
+        }}
+        if (!tbodyHtml.includes('SIG-POS-001') || !tbodyHtml.includes('2,650.5')) {{
+          throw new Error('renderSimulatedAccount did not populate tbody properly: ' + tbodyHtml);
+        }}
+    """
+
+    with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as tf:
+        tf.write(script)
+        tmp_js = tf.name
+    try:
+        proc = subprocess.run([js_bin, tmp_js], capture_output=True, text=True)
+        assert proc.returncode == 0, f"JS helper check failed ({js_bin}): {proc.stderr or proc.stdout}"
+    finally:
+        Path(tmp_js).unlink(missing_ok=True)
+

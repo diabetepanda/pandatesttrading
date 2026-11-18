@@ -470,11 +470,11 @@
       : null;
     const defaultCap = strat.startsWith("S") ? 10000 : 20000;
     const subEq = Number(s.subaccount_capital_usd || subRow?.realized_equity_usd || defaultCap);
-    const notional = Number(s.effective_notional_usd ?? s.notional_usd ?? 0);
+    const notional = Number(s.effective_notional_usd ?? s.notional_usd ?? s.planned_notional_usd ?? 0);
     const notionalPct = s.notional_pct_subaccount !== undefined && s.notional_pct_subaccount !== null
       ? Number(s.notional_pct_subaccount)
       : (subEq > 0 ? (notional / subEq) * 100 : 0);
-    const slUsd = Number(s.estimated_stop_loss_usd ?? s.risk_usd ?? 0);
+    const slUsd = Number(s.estimated_stop_loss_usd ?? s.risk_usd ?? s.r_plan_usd ?? 0);
     const slPct = s.estimated_stop_loss_pct_pool !== undefined && s.estimated_stop_loss_pct_pool !== null
       ? Number(s.estimated_stop_loss_pct_pool)
       : (subEq > 0 ? (slUsd / subEq) * 100 : Number(s.risk_pct_pool || 1));
@@ -1847,15 +1847,59 @@
       .join("");
   }
 
-  function renderSimulatedAccount() {
-    const acc = cachedRisk?.account;
-    document.getElementById("acc-total-eq").textContent = acc ? formatUsd(acc.equity_usd) : "--";
-    document.getElementById("acc-short-eq").textContent = acc ? formatUsd(acc.short_term_equity_usd) : "--";
-    document.getElementById("acc-long-eq").textContent = acc ? formatUsd(acc.long_term_equity_usd) : "--";
-    const positions = cachedRisk?.open_positions || [];
-    document.getElementById("acc-open-margin").textContent = acc
-      ? `${positions.length} 筆 / ${formatUsd(acc.total_open_notional_usd || 0)}`
-      : "--";
+
+  function renderOpenPositionsHtml(positionsList) {
+    if (!Array.isArray(positionsList) || positionsList.length === 0) {
+      return '<tr><td colspan="6" class="muted center">目前無持倉。</td></tr>';
+    }
+    return positionsList
+      .map((p) => {
+        const pxInfo = getDisplayPrice(p.symbol);
+        const refPx = pxInfo.price !== null ? pxInfo.price : (p.mark_price || p.avg_entry_price || 0);
+        const qty = Number(p.total_qty || p.remaining_qty || 0);
+        const entryPx = Number(p.avg_entry_price || p.entry_price || 0);
+        let floatUsd = p.unrealized_pnl_usd || 0;
+        if (pxInfo.price !== null && qty > 0 && entryPx > 0) {
+          floatUsd = p.direction === "long" ? (pxInfo.price - entryPx) * qty : (entryPx - pxInfo.price) * qty;
+        }
+        const est = computeCardEstimates(p);
+        const enteredTp = formatTaipeiTime(p.entered_at_utc || p.published_at_utc);
+        const ruleTxt = convertReasonUtcToTaipei(p.exit_rule || getStrategyExitRuleText(p) || "依策略規則出場");
+        const curSl = p.current_stop_loss ?? p.initial_stop_loss ?? p.stop_loss;
+        return `
+          <tr>
+            <td data-label="報單 / 標的"><a href="#/signal/${encodeURIComponent(p.signal_id)}">${escapeHtml(p.signal_id)}</a><br><strong>${escapeHtml(p.symbol)}</strong> (${escapeHtml(p.strategy)} / ${p.direction === "long" ? "多" : "空"})</td>
+            <td data-label="進場時間 (台北) / 成本 / 數量">台北 ${enteredTp}<br><span class="muted">${entryPx > 0 ? formatNumber(entryPx) : "--"} / ${qty}</span></td>
+            <td data-label="倉位名目 / 佔策略資金">$${fmtCompactUsd(est.notional)}<br><span class="muted">佔 ${escapeHtml(p.strategy)} ${est.notionalPct.toFixed(1)}%</span></td>
+            <td data-label="即時現價 / 未實現損益">${formatNumber(refPx) || "--"} (${escapeHtml(pxInfo.source)})<br><span class="${floatUsd >= 0 ? "chg-up" : "chg-down"}">${formatUsd(floatUsd)}</span></td>
+            <td data-label="止損 / 預估 SL 虧損">${formatNumber(curSl)}<br><span class="chg-down">-$${fmtCompactUsd(est.slUsd)} (${est.slPct.toFixed(1)}%)</span></td>
+            <td data-label="出場規則">${escapeHtml(ruleTxt)}</td>
+          </tr>
+        `;
+      })
+      .join("");
+  }
+
+
+  function renderSimulatedAccount(riskObj, tradesList) {
+    const risk = riskObj !== undefined ? riskObj : cachedRisk;
+    const trades = tradesList !== undefined ? tradesList : cachedTrades;
+    const acc = risk?.account;
+    const elTot = document.getElementById("acc-total-eq");
+    if (elTot) elTot.textContent = acc ? formatUsd(acc.equity_usd) : "--";
+    const elShort = document.getElementById("acc-short-eq");
+    if (elShort) elShort.textContent = acc ? formatUsd(acc.short_term_equity_usd) : "--";
+    const elLong = document.getElementById("acc-long-eq");
+    if (elLong) elLong.textContent = acc ? formatUsd(acc.long_term_equity_usd) : "--";
+    const positions = (Array.isArray(risk?.open_positions) && risk.open_positions.length > 0)
+      ? risk.open_positions
+      : (Array.isArray(trades) ? trades.filter((t) => t && t.state === "active") : []);
+    const elOpen = document.getElementById("acc-open-margin");
+    if (elOpen) {
+      elOpen.textContent = acc
+        ? `${positions.length} 筆 / ${formatUsd(acc.total_open_notional_usd || 0)}`
+        : "--";
+    }
 
     const chartBox = document.getElementById("equity-chart-box");
     const chartNote = document.getElementById("equity-chart-note");
@@ -1895,37 +1939,11 @@
 
     const posTbody = document.getElementById("account-positions-tbody");
     if (!posTbody) return;
-    if (!cachedRisk) {
+    if (!risk && (!trades || trades.length === 0)) {
       posTbody.innerHTML = '<tr><td colspan="6" class="muted center">目前尚無模擬持倉資料（等待排程產生 risk_status.json）。</td></tr>';
       return;
     }
-    if (positions.length === 0) {
-      posTbody.innerHTML = '<tr><td colspan="6" class="muted center">目前無持倉。</td></tr>';
-      return;
-    }
-    posTbody.innerHTML = positions
-      .map((p) => {
-        const pxInfo = getLivePriceInfo(p.symbol, null);
-        const refPx = pxInfo.price !== null ? pxInfo.price : p.mark_price;
-        let floatUsd = p.unrealized_pnl_usd || 0;
-        if (pxInfo.price !== null && p.total_qty > 0 && p.avg_entry_price > 0) {
-          floatUsd = p.direction === "long" ? (pxInfo.price - p.avg_entry_price) * p.total_qty : (p.avg_entry_price - pxInfo.price) * p.total_qty;
-        }
-        const est = computeCardEstimates(p);
-        const enteredTp = formatTaipeiTime(p.entered_at_utc);
-        const ruleTxt = convertReasonUtcToTaipei(p.exit_rule || "依策略規則出場");
-        return `
-          <tr>
-            <td data-label="報單 / 標的"><a href="#/signal/${encodeURIComponent(p.signal_id)}">${escapeHtml(p.signal_id)}</a><br><strong>${escapeHtml(p.symbol)}</strong> (${p.strategy} / ${p.direction === "long" ? "多" : "空"})</td>
-            <td data-label="進場時間 (台北) / 成本 / 數量">台北 ${enteredTp}<br><span class="muted">${p.avg_entry_price > 0 ? formatNumber(p.avg_entry_price) : "--"} / ${p.total_qty}</span></td>
-            <td data-label="倉位名目 / 佔策略資金">$${fmtCompactUsd(est.notional)}<br><span class="muted">佔 ${escapeHtml(p.strategy)} ${est.notionalPct.toFixed(1)}%</span></td>
-            <td data-label="即時現價 / 未實現損益">${formatNumber(refPx) || "--"} (${escapeHtml(pxInfo.source)})<br><span class="${floatUsd >= 0 ? "chg-up" : "chg-down"}">${formatUsd(floatUsd)}</span></td>
-            <td data-label="止損 / 預估 SL 虧損">${formatNumber(p.current_stop_loss)}<br><span class="chg-down">-$${fmtCompactUsd(est.slUsd)} (${est.slPct.toFixed(1)}%)</span></td>
-            <td data-label="出場規則">${escapeHtml(ruleTxt)}</td>
-          </tr>
-        `;
-      })
-      .join("");
+    posTbody.innerHTML = renderOpenPositionsHtml(positions);
   }
 
   function renderMeter(title, currentLabel, limitLabel, ratioPct) {
@@ -2268,6 +2286,8 @@
     formatOpenNowSingleCopyText,
     formatOpenNowAllCopyText,
     buildOpenNowCardsData,
+    renderOpenPositionsHtml,
+    renderSimulatedAccount,
   };
 
   window.addEventListener("hashchange", applyRoute);
