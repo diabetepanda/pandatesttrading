@@ -27,6 +27,7 @@
   let cachedRisk = null;
   let cachedEquity = null;
   let cachedEvents = null;
+  let cachedContestResearch = null;
   let livePrices = {};
   let activeChart = null;
   let activeEquityChart = null;
@@ -2009,6 +2010,270 @@
       : `<ul class="timeline">${revents.map((ev) => `<li class="timeline-item"><strong>台北 ${formatTaipeiTime(ev.ts_utc)}</strong>｜<code>${escapeHtml(ev.event_type)}</code>｜${escapeHtml(convertReasonUtcToTaipei(ev.reason || ev.note || ""))}</li>`).join("")}</ul>`;
   }
 
+  async function fetchContestResearch() {
+    if (cachedContestResearch) return cachedContestResearch;
+    try {
+      const resp = await fetch(`data/contest_research.json?t=${Date.now()}`);
+      if (resp.ok) {
+        cachedContestResearch = await resp.json();
+        return cachedContestResearch;
+      }
+    } catch (_) {}
+    try {
+      const resp = await fetch(`assets/contest_research.json?t=${Date.now()}`);
+      if (resp.ok) {
+        cachedContestResearch = await resp.json();
+        return cachedContestResearch;
+      }
+    } catch (_) {}
+    try {
+      cachedContestResearch = await fetchDataJson("contest_research.json");
+      return cachedContestResearch;
+    } catch (err) {
+      console.warn("Failed to load contest research json:", err);
+      return null;
+    }
+  }
+
+  function formatContestPfCell(pf) {
+    if (pf === null || pf === undefined || isNaN(Number(pf))) return "--";
+    const num = Number(pf);
+    const cls = num < 1.0 ? "pf-val pf-fail" : (num >= 1.2 ? "pf-val pf-pass" : "pf-val");
+    return `<span class="${cls}">${num.toFixed(3)}</span>`;
+  }
+
+  function formatContestExpR(r) {
+    if (r === null || r === undefined || isNaN(Number(r))) return "--";
+    const num = Number(r);
+    const sign = num > 0 ? "+" : "";
+    return `${sign}${num.toFixed(4)}R`;
+  }
+
+  function formatContestPct(p, withSign = false) {
+    if (p === null || p === undefined || isNaN(Number(p))) return "--";
+    const num = Number(p);
+    const sign = withSign && num > 0 ? "+" : "";
+    return `${sign}${num.toFixed(2)}%`;
+  }
+
+  function renderContestTableRows(strategies) {
+    if (!Array.isArray(strategies) || strategies.length === 0) {
+      return '<tr><td colspan="8" class="muted center">尚無回測資料</td></tr>';
+    }
+    return strategies.map((s) => `
+      <tr>
+        <td data-label="策略"><strong>${escapeHtml(s.title || s.name || s.id)}</strong></td>
+        <td data-label="交易數">${s.trades ?? "--"}</td>
+        <td data-label="勝率">${formatContestPct(s.win_rate_pct)}</td>
+        <td data-label="期望值 R">${formatContestExpR(s.expectancy_r)}</td>
+        <td data-label="獲利因子 (PF)">${formatContestPfCell(s.profit_factor)}</td>
+        <td data-label="壓力測試 PF">${formatContestPfCell(s.stress_pf)}</td>
+        <td data-label="零成本 PF">${formatContestPfCell(s.zero_cost_pf)}</td>
+        <td data-label="是否通過">
+          <span class="badge ${s.passed ? "badge-ok" : "badge-danger"}">${s.passed ? "✅ 通過" : "❌ 未通過"}</span>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  function renderContestSimRows(rows) {
+    if (!Array.isArray(rows) || rows.length === 0) {
+      return '<tr><td colspan="5" class="muted center">尚無模擬資料</td></tr>';
+    }
+    return rows.map((r) => {
+      const isBase = Boolean(r.is_baseline);
+      const rowCls = isBase ? 'class="highlight-row"' : "";
+      const medCls = r.median_return_pct < 0 ? 'class="text-danger"' : (r.median_return_pct > 0 ? 'class="text-success"' : "");
+      const bustCls = r.bust_rate_pct >= 40 ? 'class="text-danger"' : "";
+      return `
+        <tr ${rowCls}>
+          <td data-label="策略"><strong>${escapeHtml(r.strategy)}</strong> ${isBase ? '<span class="badge badge-warn">基準</span>' : ""}</td>
+          <td data-label="週期"><code>${escapeHtml(r.timeframe)}</code></td>
+          <td data-label="一週報酬中位數"><span ${medCls}>${formatContestPct(r.median_return_pct, true)}</span></td>
+          <td data-label="前 10% 報酬 (P90)"><span class="text-success">${formatContestPct(r.p90_return_pct, true)}</span></td>
+          <td data-label="出局率 (<$9,000)"><span ${bustCls}>${formatContestPct(r.bust_rate_pct)}</span></td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function renderContestResearchHtml(data) {
+    if (!data) return '<p class="muted">短線策略研究資料為空。</p>';
+    const takeaway = escapeHtml(data.takeaway || "");
+    const stratsIntro = Array.isArray(data.strategies_intro) ? data.strategies_intro : [];
+    const meth = data.methodology || {};
+    const defs = meth.definitions || {};
+    const r2 = data.round2 || {};
+    const tf1h = r2.tf_1h || {};
+    const tf15m = r2.tf_15m || {};
+    const r1 = data.round1_summary || {};
+    const sim = data.contest_sim || {};
+    const learnings = Array.isArray(data.learnings) ? data.learnings : [];
+    const disc = data.disclaimer || {};
+    const ghLinks = Array.isArray(disc.github_links) ? disc.github_links : [];
+
+    return `
+      <div class="callout callout-takeaway">
+        <p>📌 <strong>核心結論：</strong>${takeaway}</p>
+      </div>
+
+      <div class="research-section">
+        <h2>一、我們測了什麼？</h2>
+        <p class="muted">涵蓋 7 種短線交易常見策略，包含均線、突破、順勢回踩，以及訂單塊 (Order Block) 與掃停損 (Liquidity Sweep) 等價格行為與 SMC 技術：</p>
+        <ul class="research-strat-list">
+          ${stratsIntro.map((s) => `<li><strong>${escapeHtml(s.name)}</strong>：${escapeHtml(s.description)}</li>`).join("")}
+        </ul>
+      </div>
+
+      <div class="research-section">
+        <h2>二、怎麼測的？（嚴格驗證機制）</h2>
+        <ul>
+          <li><strong>資料期間</strong>：${escapeHtml(meth.period || "")}</li>
+          <li><strong>樣本切分</strong>：${escapeHtml(meth.split || "")}</li>
+          <li><strong>交易成本</strong>：${escapeHtml(meth.costs || "")}</li>
+          <li><strong>對照測試</strong>：${escapeHtml(meth.stress_and_zero || "")}</li>
+          <li><strong>通過門檻</strong>：${escapeHtml(meth.criteria || "")}</li>
+        </ul>
+        <div class="metrics-explainer">
+          <h4>📖 核心指標白話解釋：</h4>
+          <ul>
+            <li><strong>${escapeHtml(defs.pf || "獲利因子 (Profit Factor, PF) = 賺的總額 ÷ 賠的總額，大於 1 才有賺。")}</strong></li>
+            <li><strong>${escapeHtml(defs.exp_r || "期望值 (Expectancy R) = 平均每筆交易賺賠幾倍停損。")}</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="research-section">
+        <h2>三、回測結果表格（第二輪：The5ers MT5 極低成本）</h2>
+        
+        <h3>1. 1 小時 K 線（1h，涵蓋全部 18 個標的）</h3>
+        <p class="muted">測試標的：${escapeHtml(tf1h.symbols_list || "")}（全時段無重疊，一次只持有一單）</p>
+        <div class="table-wrap">
+          <table class="data-table mobile-cards">
+            <thead>
+              <tr>
+                <th>策略</th>
+                <th>交易數</th>
+                <th>勝率</th>
+                <th>期望值 R</th>
+                <th>獲利因子 (PF)</th>
+                <th>壓力測試 PF (點差×1.5)</th>
+                <th>零成本 PF</th>
+                <th>是否通過</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${renderContestTableRows(tf1h.strategies)}
+            </tbody>
+          </table>
+        </div>
+
+        <h3>2. 15 分 K 線（15m，四大市場代表標的）</h3>
+        <p class="muted">測試標的：${escapeHtml(tf15m.symbols_list || "")}（全時段無重疊，一次只持有一單）</p>
+        <div class="table-wrap">
+          <table class="data-table mobile-cards">
+            <thead>
+              <tr>
+                <th>策略</th>
+                <th>交易數</th>
+                <th>勝率</th>
+                <th>期望值 R</th>
+                <th>獲利因子 (PF)</th>
+                <th>壓力測試 PF (點差×1.5)</th>
+                <th>零成本 PF</th>
+                <th>是否通過</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${renderContestTableRows(tf15m.strategies)}
+            </tbody>
+          </table>
+        </div>
+
+        <details class="round1-details">
+          <summary><strong>點此展開：第一輪回測結果摘要（高手續費環境對比）</strong></summary>
+          <div class="details-body">
+            <p class="muted">${escapeHtml(r1.description || "")}</p>
+            <div class="table-wrap">
+              <table class="data-table mobile-cards">
+                <thead>
+                  <tr>
+                    <th>策略</th>
+                    <th>交易數</th>
+                    <th>勝率</th>
+                    <th>期望值 R</th>
+                    <th>獲利因子 (PF)</th>
+                    <th>壓力測試 PF</th>
+                    <th>零成本 PF</th>
+                    <th>是否通過</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${renderContestTableRows(r1.strategies)}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="research-section">
+        <h2>四、拿去比賽會怎樣？（競賽一週高槓桿模擬）</h2>
+        <p class="muted">${escapeHtml(sim.rules || "")}</p>
+        <blockquote class="quote-callout">
+          <p>「${escapeHtml(sim.quote || "偶爾一週能衝很高，但接近一半的機率被淘汰——那是運氣，不是策略。")}」</p>
+        </blockquote>
+        <div class="table-wrap">
+          <table class="data-table mobile-cards">
+            <thead>
+              <tr>
+                <th>策略</th>
+                <th>週期</th>
+                <th>一週報酬中位數</th>
+                <th>前 10% 報酬 (P90)</th>
+                <th>出局率 (&lt;$9,000)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${renderContestSimRows(sim.rows)}
+            </tbody>
+          </table>
+        </div>
+        <div class="note-box">
+          💡 <strong>${escapeHtml(sim.l2_note || "")}</strong>
+        </div>
+      </div>
+
+      <div class="research-section">
+        <h2>五、我們學到什麼？</h2>
+        <ol class="learnings-list">
+          ${learnings.map((l) => `<li>${escapeHtml(l)}</li>`).join("")}
+        </ol>
+      </div>
+
+      <div class="research-section disclaimer-box">
+        <p>⚠️ <strong>免責聲明</strong>：${escapeHtml(disc.text || "研究結果僅供參考，過去表現不代表未來，不構成投資建議。")}</p>
+        <div class="github-links">
+          ${ghLinks.map((l) => `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener noreferrer" class="ext-link">🔗 ${escapeHtml(l.title)}</a>`).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  async function renderContestResearchView() {
+    const container = document.getElementById("contest-research-container");
+    if (!container) return;
+    if (!cachedContestResearch) {
+      container.innerHTML = '<p class="muted">短線策略研究資料載入中...</p>';
+      const data = await fetchContestResearch();
+      if (!data) {
+        container.innerHTML = '<p class="muted">無法載入短線策略研究資料，請確認 <code>data/contest_research.json</code> 存在。</p>';
+        return;
+      }
+    }
+    container.innerHTML = renderContestResearchHtml(cachedContestResearch);
+  }
+
   function renderDataExtras() {
     const evTbody = document.getElementById("events-tbody");
     if (evTbody) {
@@ -2062,6 +2327,10 @@
       document.getElementById("view-data").classList.remove("hidden");
       document.querySelector('.nav-link[data-route="data"]')?.classList.add("active");
       renderDataExtras();
+    } else if (route === "contest-research" || route === "research-short") {
+      document.getElementById("view-contest-research")?.classList.remove("hidden");
+      document.querySelector('.nav-link[data-route="contest-research"]')?.classList.add("active");
+      renderContestResearchView();
     } else {
       document.getElementById("view-wall").classList.remove("hidden");
       document.querySelector('.nav-link[data-route="wall"]')?.classList.add("active");
@@ -2102,7 +2371,7 @@
     try {
       const [
         instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, tradesRes, watchRes, watchDailyRes, btRes,
-        perfRes, riskRes, eqRes, evRes,
+        perfRes, riskRes, eqRes, evRes, contestRes,
       ] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
         fetchDataJson("data_health.json"),
@@ -2118,6 +2387,7 @@
         fetchDataJson("risk_status.json"),
         fetchDataJson("equity_curve.json"),
         fetchDataJson("events_calendar.json"),
+        fetchContestResearch(),
       ]);
 
       if (instRes.status === "rejected") {
@@ -2135,6 +2405,13 @@
       cachedRisk = riskRes.status === "fulfilled" ? riskRes.value : null;
       cachedEquity = eqRes.status === "fulfilled" ? eqRes.value : null;
       cachedEvents = evRes.status === "fulfilled" ? evRes.value : null;
+      if (contestRes.status === "fulfilled" && contestRes.value) {
+        cachedContestResearch = contestRes.value;
+      }
+      const curHash = window.location.hash || "";
+      if (curHash.includes("contest-research") || curHash.includes("research-short")) {
+        renderContestResearchView();
+      }
 
       const sigMap = {};
       for (const s of cachedSignals) {
@@ -2288,6 +2565,9 @@
     buildOpenNowCardsData,
     renderOpenPositionsHtml,
     renderSimulatedAccount,
+    renderContestResearchHtml,
+    renderContestResearchView,
+    fetchContestResearch,
   };
 
   window.addEventListener("hashchange", applyRoute);

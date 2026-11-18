@@ -119,7 +119,7 @@ def test_frontend_assets_and_relative_paths() -> None:
     assert "TONUSDT" in config_js
 
     # Stage 4, 5 & 6 hash routes, disclaimer, backtest results, and fixed CDN check
-    for route in ("#/simple", "#/wall", "#/results", "#/stats", "#/account", "#/risk", "#/data"):
+    for route in ("#/simple", "#/wall", "#/results", "#/stats", "#/account", "#/risk", "#/data", "#/contest-research"):
         assert route in index_html
     nav_block = index_html.split('<nav class="main-nav"', 1)[1].split("</nav>", 1)[0]
     assert nav_block.index("#/simple") < nav_block.index("#/wall")
@@ -154,7 +154,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261118c" in index_html
+    assert "?v=20261118d" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -691,4 +691,133 @@ def test_simulated_account_positions_table_rendering() -> None:
         assert proc.returncode == 0, f"JS helper check failed ({js_bin}): {proc.stderr or proc.stdout}"
     finally:
         Path(tmp_js).unlink(missing_ok=True)
+
+
+def test_contest_research_json_and_tab_rendering() -> None:
+    """Verify contest research JSON structure and JS rendering."""
+    import json
+    import shutil
+    import subprocess
+    import tempfile
+    from pathlib import Path
+
+    from research.contest_15m.build_contest_research_json import build_contest_research_dict
+
+    root = Path(__file__).resolve().parent.parent
+    data = build_contest_research_dict()
+
+    # 1. Structure validations
+    assert "我們測了 7 種短線策略" in data["takeaway"]
+    assert "沒有一個有穩定優勢" in data["takeaway"]
+    assert len(data["strategies_intro"]) == 7
+    strat_ids = [s["id"] for s in data["strategies_intro"]]
+    assert strat_ids == ["A", "B", "C", "D", "E", "F", "G"]
+    assert "The5ers MT5" in data["methodology"]["costs"]
+    assert "0.001%" in data["methodology"]["costs"]
+    assert "獲利因子" in data["methodology"]["definitions"]["pf"]
+    assert "期望值" in data["methodology"]["definitions"]["exp_r"]
+
+    # Round 2: 7 strategies in 1h, 7 in 15m, all failed
+    assert len(data["round2"]["tf_1h"]["strategies"]) == 7
+    assert len(data["round2"]["tf_15m"]["strategies"]) == 7
+    assert all(not s["passed"] for s in data["round2"]["tf_1h"]["strategies"])
+    assert all(not s["passed"] for s in data["round2"]["tf_15m"]["strategies"])
+
+    # Round 1 summary
+    assert len(data["round1_summary"]["strategies"]) == 4
+
+    # Contest simulation
+    assert "那是運氣，不是策略" in data["contest_sim"]["quote"]
+    assert "L2 是日線長波段策略" in data["contest_sim"]["l2_note"] or "通常不出手" in data["contest_sim"]["l2_note"]
+    l2_row = next(r for r in data["contest_sim"]["rows"] if r.get("is_baseline"))
+    assert l2_row["median_return_pct"] == 0.0
+    assert l2_row["bust_rate_pct"] == 0.0
+
+    # Learnings
+    assert len(data["learnings"]) >= 4
+
+    # Static JSON files existence
+    data_json_path = root / "data" / "contest_research.json"
+    assets_json_path = root / "assets" / "contest_research.json"
+    assert data_json_path.exists()
+    assert assets_json_path.exists()
+
+    # 2. JS rendering test via Node / JavaScriptCore
+    app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
+    js_bin = shutil.which("node")
+    if not js_bin:
+        jsc_path = Path("/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc")
+        if jsc_path.exists():
+            js_bin = str(jsc_path)
+    assert js_bin is not None
+
+    script = f"""
+        const stubEl = () => ({{
+          classList: {{ add: () => {{}}, remove: () => {{}} }},
+          addEventListener: () => {{}},
+          innerHTML: '',
+          textContent: '',
+          value: 'all',
+          dataset: {{}},
+          disabled: false,
+        }});
+        var navigator = {{}};
+        var window = {{
+          location: {{ hash: '#/contest-research' }},
+          addEventListener: () => {{}},
+          SIGNAL_DESK_CONFIG: {{}},
+        }};
+        var document = {{
+          getElementById: () => stubEl(),
+          querySelectorAll: () => [],
+          querySelector: () => stubEl(),
+          body: {{ appendChild: () => {{}}, removeChild: () => {{}} }},
+          createElement: () => ({{ value: '', style: {{}}, setAttribute: () => {{}}, focus: () => {{}}, select: () => {{}} }}),
+          execCommand: () => true,
+        }};
+        function setInterval() {{}}
+        function setTimeout() {{ return 1; }}
+        function clearTimeout() {{}}
+        async function fetch() {{ return {{ ok: false }}; }}
+
+        {app_js}
+
+        const u = window.__SIGNAL_DESK_UTILS__;
+        const mockData = {json.dumps(data)};
+        const html = u.renderContestResearchHtml(mockData);
+
+        if (!html.includes('我們測了 7 種短線策略')) {{
+          throw new Error('renderContestResearchHtml missing takeaway: ' + html.slice(0, 300));
+        }}
+        if (!html.includes('A 跌深反轉') || !html.includes('G 掃停損反轉')) {{
+          throw new Error('renderContestResearchHtml missing strategy intro');
+        }}
+        if (!html.includes('The5ers MT5') || !html.includes('獲利因子 (Profit Factor, PF)')) {{
+          throw new Error('renderContestResearchHtml missing methodology');
+        }}
+        if (!html.includes('pf-fail')) {{
+          throw new Error('renderContestResearchHtml missing pf-fail styling');
+        }}
+        if (!html.includes('那是運氣，不是策略')) {{
+          throw new Error('renderContestResearchHtml missing contest quote');
+        }}
+        if (!html.includes('Signal Desk L2（基準）')) {{
+          throw new Error('renderContestResearchHtml missing L2 baseline row');
+        }}
+        if (!html.includes('五、我們學到什麼？')) {{
+          throw new Error('renderContestResearchHtml missing learnings');
+        }}
+        if (!html.includes('report_round2.md')) {{
+          throw new Error('renderContestResearchHtml missing github link');
+        }}
+    """
+    with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as tf:
+        tf.write(script)
+        tmp_js = tf.name
+    try:
+        proc = subprocess.run([js_bin, tmp_js], capture_output=True, text=True)
+        assert proc.returncode == 0, f"JS render check failed: {proc.stderr or proc.stdout}"
+    finally:
+        Path(tmp_js).unlink(missing_ok=True)
+
 

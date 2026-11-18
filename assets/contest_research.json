@@ -1,0 +1,545 @@
+{
+  "generated_at_utc": "2026-11-18T14:18:58.404299+00:00",
+  "takeaway": "我們測了 7 種短線策略、1 小時與 15 分鐘 K 線、最多 18 個商品，扣掉真實交易成本後，沒有一個有穩定優勢，所以目前不提供短線訊號。",
+  "strategies_intro": [
+    {
+      "id": "A",
+      "name": "A 跌深反轉",
+      "description": "價格偏離 EMA20 超過 2.0~2.5×ATR 且收出吞噬或針狀反轉 K 線時逆勢進場，捕捉超跌反彈。"
+    },
+    {
+      "id": "B",
+      "name": "B 開盤區間突破",
+      "description": "倫敦/紐約開盤前 1 小時震盪區間突破，且該區間小於 2.5×ATR 時順勢追單。"
+    },
+    {
+      "id": "C",
+      "name": "C 順勢回檔",
+      "description": "1 小時 EMA50 判定大趨勢方向，15 分 K 回測 EMA20 區域收出確認 K 線順勢進場。"
+    },
+    {
+      "id": "D",
+      "name": "D 布林擠壓突破",
+      "description": "布林帶寬壓縮至歷史前 10~15% 極窄區間後，帶量突破布林上下軌時順勢進場。"
+    },
+    {
+      "id": "E",
+      "name": "E 支撐壓力反彈",
+      "description": "過去 60~100 根 K 線確認之關鍵擺動高低點（Pivot），價格觸碰後收出確認反彈 K 線時進場。"
+    },
+    {
+      "id": "F",
+      "name": "F 訂單塊 (Order Block)",
+      "description": "大實體位移（≥1.5~2.0×ATR）前最後一根反向 K 線所形成的訂單塊，價格首次回測時進場。"
+    },
+    {
+      "id": "G",
+      "name": "G 掃停損反轉 (Liquidity Sweep)",
+      "description": "假突破前高或前低（刺破流動性）後 1~2 根迅速收回區間內，逆向做空或做多。"
+    }
+  ],
+  "methodology": {
+    "period": "2023-09 至 2026-11（3.17 年），採用 Dukascopy 真實報價歷史數據，並嚴格過濾週末與休市零成交量之平盤 K 線。",
+    "split": "前 70% 樣本內 (IS) 挑選最佳參數；後 30% 樣本外 (OOS) 嚴格凍結參數驗證，杜絕過度擬合。",
+    "costs": "The5ers MT5 實盤極低成本：每邊名目 0.001%（萬分之 0.1）手續費 ＋ 各商品典型點差（如 SP500 0.8 點、XAUUSD 0.20 點、EURUSD 0.1 pip）。",
+    "stress_and_zero": "加測兩組對照：點差 ×1.5 壓力測試，以及完全免點差、免手續費的「零成本」環境。",
+    "criteria": "通過門檻：樣本外交易次數 ≥ 100 筆、獲利因子 (PF) ≥ 1.20、期望值 R > 0、點差 ×1.5 壓力測試 PF ≥ 1.05。",
+    "definitions": {
+      "pf": "獲利因子 (Profit Factor, PF) = 賺的總額 ÷ 賠的總額。大於 1.0 才有賺，等於 1.0 為打平，小於 1.0 為虧損。本站上線標準為 1.20。",
+      "exp_r": "期望值 (Expectancy R) = 平均每筆交易賺賠幾倍停損。例如 +0.20R 代表每冒 100 元停損風險，長期平均能賺 20 元；負數代表每筆平均都在虧損。"
+    }
+  },
+  "round2": {
+    "tf_1h": {
+      "symbols_count": 18,
+      "symbols_list": "DAX40, JPN225, NAS100, SP500, UK100, US30, EURUSD, GBPUSD, USDJPY, USDCHF, USDCAD, AUDUSD, NZDUSD, XAUUSD, XAGUSD, WTI, BTCUSD, ETHUSD",
+      "strategies": [
+        {
+          "id": "A",
+          "title": "A 跌深反轉",
+          "trades": 708,
+          "win_rate_pct": 42.51,
+          "avg_win_r": 1.336,
+          "avg_loss_r": -0.988,
+          "expectancy_r": -0.0001,
+          "profit_factor": 1.0,
+          "stress_pf": 0.968,
+          "zero_cost_pf": 1.078,
+          "max_drawdown_pct": 25.81,
+          "max_consec_losses": 12,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -7.77,
+            "p90_return_pct": 19.64,
+            "bust_rate_pct": 46.81
+          }
+        },
+        {
+          "id": "B",
+          "title": "B 開盤區間突破",
+          "trades": 532,
+          "win_rate_pct": 46.99,
+          "avg_win_r": 0.912,
+          "avg_loss_r": -0.96,
+          "expectancy_r": -0.0802,
+          "profit_factor": 0.842,
+          "stress_pf": 0.834,
+          "zero_cost_pf": 0.926,
+          "max_drawdown_pct": 40.91,
+          "max_consec_losses": 8,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -8.62,
+            "p90_return_pct": 13.59,
+            "bust_rate_pct": 44.68
+          }
+        },
+        {
+          "id": "C",
+          "title": "C 順勢回檔",
+          "trades": 627,
+          "win_rate_pct": 34.13,
+          "avg_win_r": 1.569,
+          "avg_loss_r": -0.945,
+          "expectancy_r": -0.0869,
+          "profit_factor": 0.86,
+          "stress_pf": 0.855,
+          "zero_cost_pf": 0.915,
+          "max_drawdown_pct": 56.21,
+          "max_consec_losses": 16,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -9.4,
+            "p90_return_pct": 17.1,
+            "bust_rate_pct": 48.94
+          }
+        },
+        {
+          "id": "D",
+          "title": "D 布林擠壓突破",
+          "trades": 515,
+          "win_rate_pct": 43.11,
+          "avg_win_r": 1.339,
+          "avg_loss_r": -1.006,
+          "expectancy_r": 0.0047,
+          "profit_factor": 1.008,
+          "stress_pf": 0.957,
+          "zero_cost_pf": 1.06,
+          "max_drawdown_pct": 19.56,
+          "max_consec_losses": 10,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -1.81,
+            "p90_return_pct": 16.26,
+            "bust_rate_pct": 42.55
+          }
+        },
+        {
+          "id": "E",
+          "title": "E 支撐壓力反彈",
+          "trades": 859,
+          "win_rate_pct": 32.71,
+          "avg_win_r": 1.64,
+          "avg_loss_r": -0.99,
+          "expectancy_r": -0.1294,
+          "profit_factor": 0.806,
+          "stress_pf": 0.797,
+          "zero_cost_pf": 0.891,
+          "max_drawdown_pct": 71.16,
+          "max_consec_losses": 18,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -10.23,
+            "p90_return_pct": 16.64,
+            "bust_rate_pct": 55.32
+          }
+        },
+        {
+          "id": "F",
+          "title": "F 訂單塊 (Order Block)",
+          "trades": 455,
+          "win_rate_pct": 39.12,
+          "avg_win_r": 1.143,
+          "avg_loss_r": -0.943,
+          "expectancy_r": -0.127,
+          "profit_factor": 0.779,
+          "stress_pf": 0.771,
+          "zero_cost_pf": 0.803,
+          "max_drawdown_pct": 52.6,
+          "max_consec_losses": 10,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -6.25,
+            "p90_return_pct": 14.86,
+            "bust_rate_pct": 46.81
+          }
+        },
+        {
+          "id": "G",
+          "title": "G 掃停損反轉 (Liquidity Sweep)",
+          "trades": 791,
+          "win_rate_pct": 35.15,
+          "avg_win_r": 1.594,
+          "avg_loss_r": -0.998,
+          "expectancy_r": -0.0874,
+          "profit_factor": 0.865,
+          "stress_pf": 0.836,
+          "zero_cost_pf": 0.935,
+          "max_drawdown_pct": 60.04,
+          "max_consec_losses": 10,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -8.97,
+            "p90_return_pct": 16.05,
+            "bust_rate_pct": 48.94
+          }
+        }
+      ]
+    },
+    "tf_15m": {
+      "symbols_count": 5,
+      "symbols_list": "SP500, EURUSD, XAUUSD, BTCUSD, ETHUSD",
+      "strategies": [
+        {
+          "id": "A",
+          "title": "A 跌深反轉",
+          "trades": 758,
+          "win_rate_pct": 39.45,
+          "avg_win_r": 1.198,
+          "avg_loss_r": -0.91,
+          "expectancy_r": -0.0784,
+          "profit_factor": 0.858,
+          "stress_pf": 0.814,
+          "zero_cost_pf": 0.972,
+          "max_drawdown_pct": 51.27,
+          "max_consec_losses": 9,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -10.92,
+            "p90_return_pct": 13.15,
+            "bust_rate_pct": 62.5
+          }
+        },
+        {
+          "id": "B",
+          "title": "B 開盤區間突破",
+          "trades": 336,
+          "win_rate_pct": 39.58,
+          "avg_win_r": 0.766,
+          "avg_loss_r": -0.834,
+          "expectancy_r": -0.2008,
+          "profit_factor": 0.602,
+          "stress_pf": 0.556,
+          "zero_cost_pf": 0.74,
+          "max_drawdown_pct": 50.31,
+          "max_consec_losses": 12,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -7.37,
+            "p90_return_pct": 7.33,
+            "bust_rate_pct": 37.5
+          }
+        },
+        {
+          "id": "C",
+          "title": "C 順勢回檔",
+          "trades": 3152,
+          "win_rate_pct": 36.9,
+          "avg_win_r": 1.412,
+          "avg_loss_r": -0.943,
+          "expectancy_r": -0.074,
+          "profit_factor": 0.876,
+          "stress_pf": 0.821,
+          "zero_cost_pf": 1.012,
+          "max_drawdown_pct": 94.35,
+          "max_consec_losses": 14,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -10.55,
+            "p90_return_pct": 13.1,
+            "bust_rate_pct": 68.75
+          }
+        },
+        {
+          "id": "D",
+          "title": "D 布林擠壓突破",
+          "trades": 1491,
+          "win_rate_pct": 36.22,
+          "avg_win_r": 1.406,
+          "avg_loss_r": -0.963,
+          "expectancy_r": -0.1049,
+          "profit_factor": 0.829,
+          "stress_pf": 0.773,
+          "zero_cost_pf": 0.982,
+          "max_drawdown_pct": 81.48,
+          "max_consec_losses": 13,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -10.05,
+            "p90_return_pct": 21.0,
+            "bust_rate_pct": 52.08
+          }
+        },
+        {
+          "id": "E",
+          "title": "E 支撐壓力反彈",
+          "trades": 4303,
+          "win_rate_pct": 34.32,
+          "avg_win_r": 1.553,
+          "avg_loss_r": -0.982,
+          "expectancy_r": -0.112,
+          "profit_factor": 0.826,
+          "stress_pf": 0.79,
+          "zero_cost_pf": 0.979,
+          "max_drawdown_pct": 99.58,
+          "max_consec_losses": 21,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -10.73,
+            "p90_return_pct": 3.21,
+            "bust_rate_pct": 77.08
+          }
+        },
+        {
+          "id": "F",
+          "title": "F 訂單塊 (Order Block)",
+          "trades": 1467,
+          "win_rate_pct": 39.13,
+          "avg_win_r": 1.264,
+          "avg_loss_r": -0.89,
+          "expectancy_r": -0.0473,
+          "profit_factor": 0.913,
+          "stress_pf": 0.858,
+          "zero_cost_pf": 1.064,
+          "max_drawdown_pct": 54.84,
+          "max_consec_losses": 15,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -10.26,
+            "p90_return_pct": 21.56,
+            "bust_rate_pct": 60.42
+          }
+        },
+        {
+          "id": "G",
+          "title": "G 掃停損反轉 (Liquidity Sweep)",
+          "trades": 3363,
+          "win_rate_pct": 36.37,
+          "avg_win_r": 1.425,
+          "avg_loss_r": -0.964,
+          "expectancy_r": -0.0953,
+          "profit_factor": 0.845,
+          "stress_pf": 0.781,
+          "zero_cost_pf": 0.978,
+          "max_drawdown_pct": 96.98,
+          "max_consec_losses": 15,
+          "passed": false,
+          "contest_sim": {
+            "median_return_pct": -10.59,
+            "p90_return_pct": 10.34,
+            "bust_rate_pct": 72.92
+          }
+        }
+      ]
+    }
+  },
+  "round1_summary": {
+    "description": "第一輪研究（commit edd472b）使用較高之常規手續費（幣安每邊 0.05%）與點差，在 15 分 K 上測試代號 A–D 之 4 個短線方案。因高頻交易被手續費嚴重侵蝕，PF 僅落在 0.39 ~ 0.48，全數慘遭淘汰。",
+    "strategies": [
+      {
+        "id": "A",
+        "title": "A 跌深反轉",
+        "trades": 1279,
+        "win_rate_pct": 33.85,
+        "expectancy_r": -0.4501,
+        "profit_factor": 0.39,
+        "stress_pf": 0.361,
+        "zero_cost_pf": 0.951,
+        "passed": false
+      },
+      {
+        "id": "B",
+        "title": "B 開盤區間突破",
+        "trades": 735,
+        "win_rate_pct": 33.33,
+        "expectancy_r": -0.3512,
+        "profit_factor": 0.404,
+        "stress_pf": 0.372,
+        "zero_cost_pf": 0.834,
+        "passed": false
+      },
+      {
+        "id": "C",
+        "title": "C 順勢回檔",
+        "trades": 5900,
+        "win_rate_pct": 31.98,
+        "expectancy_r": -0.4598,
+        "profit_factor": 0.439,
+        "stress_pf": 0.402,
+        "zero_cost_pf": 1.043,
+        "passed": false
+      },
+      {
+        "id": "D",
+        "title": "D 布林擠壓突破",
+        "trades": 2201,
+        "win_rate_pct": 32.3,
+        "expectancy_r": -0.4127,
+        "profit_factor": 0.48,
+        "stress_pf": 0.447,
+        "zero_cost_pf": 1.032,
+        "passed": false
+      }
+    ]
+  },
+  "contest_sim": {
+    "rules": "1 萬美元初始資金、單筆 4.5% 高風險、單日虧損達 5% 暫停當日交易、淨值跌破 9,000 美元即刻淘汰出局。OOS 期間每 7 天滾動測試（47~48 週）。",
+    "quote": "偶爾一週能衝很高，但接近一半的機率被淘汰——那是運氣，不是策略。",
+    "l2_note": "L2 基準一週中位數 0% 原因：L2 是日線長波段策略（55 日突破），一週內通常不出手（47 週共只出手 7 筆），因此不會頻繁承受震盪與手續費磨損，出局率為 0.0%。",
+    "rows": [
+      {
+        "strategy": "Signal Desk L2（基準）",
+        "timeframe": "1d",
+        "median_return_pct": 0.0,
+        "p90_return_pct": 0.08,
+        "bust_rate_pct": 0.0,
+        "is_baseline": true
+      },
+      {
+        "strategy": "A 跌深反轉",
+        "timeframe": "1h",
+        "median_return_pct": -7.77,
+        "p90_return_pct": 19.64,
+        "bust_rate_pct": 46.81,
+        "is_baseline": false
+      },
+      {
+        "strategy": "B 開盤區間突破",
+        "timeframe": "1h",
+        "median_return_pct": -8.62,
+        "p90_return_pct": 13.59,
+        "bust_rate_pct": 44.68,
+        "is_baseline": false
+      },
+      {
+        "strategy": "C 順勢回檔",
+        "timeframe": "1h",
+        "median_return_pct": -9.4,
+        "p90_return_pct": 17.1,
+        "bust_rate_pct": 48.94,
+        "is_baseline": false
+      },
+      {
+        "strategy": "D 布林擠壓突破",
+        "timeframe": "1h",
+        "median_return_pct": -1.81,
+        "p90_return_pct": 16.26,
+        "bust_rate_pct": 42.55,
+        "is_baseline": false
+      },
+      {
+        "strategy": "E 支撐壓力反彈",
+        "timeframe": "1h",
+        "median_return_pct": -10.23,
+        "p90_return_pct": 16.64,
+        "bust_rate_pct": 55.32,
+        "is_baseline": false
+      },
+      {
+        "strategy": "F 訂單塊 (Order Block)",
+        "timeframe": "1h",
+        "median_return_pct": -6.25,
+        "p90_return_pct": 14.86,
+        "bust_rate_pct": 46.81,
+        "is_baseline": false
+      },
+      {
+        "strategy": "G 掃停損反轉 (Liquidity Sweep)",
+        "timeframe": "1h",
+        "median_return_pct": -8.97,
+        "p90_return_pct": 16.05,
+        "bust_rate_pct": 48.94,
+        "is_baseline": false
+      },
+      {
+        "strategy": "A 跌深反轉",
+        "timeframe": "15m",
+        "median_return_pct": -10.92,
+        "p90_return_pct": 13.15,
+        "bust_rate_pct": 62.5,
+        "is_baseline": false
+      },
+      {
+        "strategy": "B 開盤區間突破",
+        "timeframe": "15m",
+        "median_return_pct": -7.37,
+        "p90_return_pct": 7.33,
+        "bust_rate_pct": 37.5,
+        "is_baseline": false
+      },
+      {
+        "strategy": "C 順勢回檔",
+        "timeframe": "15m",
+        "median_return_pct": -10.55,
+        "p90_return_pct": 13.1,
+        "bust_rate_pct": 68.75,
+        "is_baseline": false
+      },
+      {
+        "strategy": "D 布林擠壓突破",
+        "timeframe": "15m",
+        "median_return_pct": -10.05,
+        "p90_return_pct": 21.0,
+        "bust_rate_pct": 52.08,
+        "is_baseline": false
+      },
+      {
+        "strategy": "E 支撐壓力反彈",
+        "timeframe": "15m",
+        "median_return_pct": -10.73,
+        "p90_return_pct": 3.21,
+        "bust_rate_pct": 77.08,
+        "is_baseline": false
+      },
+      {
+        "strategy": "F 訂單塊 (Order Block)",
+        "timeframe": "15m",
+        "median_return_pct": -10.26,
+        "p90_return_pct": 21.56,
+        "bust_rate_pct": 60.42,
+        "is_baseline": false
+      },
+      {
+        "strategy": "G 掃停損反轉 (Liquidity Sweep)",
+        "timeframe": "15m",
+        "median_return_pct": -10.59,
+        "p90_return_pct": 10.34,
+        "bust_rate_pct": 72.92,
+        "is_baseline": false
+      }
+    ]
+  },
+  "learnings": [
+    "成本吃掉短線大部分利潤：高頻短線交易受點差與手續費嚴重侵蝕。即便在 The5ers MT5 萬分之 0.1 極大手續費優惠下，15m 的 PF 依然只能在 0.83~0.91 徘徊。",
+    "零成本下也只是打平，代表策略本身沒有統計優勢：在 0 手續費、0 點差的理想環境中，1h 與 15m 的零成本 PF 最高也僅 1.078 與 1.064，未達到穩定獲利門檻（PF ≥ 1.20）。",
+    "訂單塊 (OB)／聰明錢 (SMC)／支撐壓力在短線上並無神奇魔力：坊間推崇的 SMC 或價格行為技術，在嚴格去未來函數、排除休市假棒的實證統計中，勝率僅 32%~39%，並未展現出勝過傳統指標的超額優勢。",
+    "長週期趨勢策略（L1、L2、L4）仍是本站唯一的核心基石：長線日線策略靠著大盈虧比（移動停利捕捉 +3R~+8R）、低交易頻率（避開點差摩擦），在多週期回測皆穩定維持 PF 1.48~2.14。我們堅持只提供真正經過驗證的訊號。"
+  ],
+  "disclaimer": {
+    "text": "研究結果僅供參考，過去表現不代表未來，不構成投資建議。",
+    "github_links": [
+      {
+        "title": "第二輪研究報告 (report_round2.md)",
+        "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/contest_15m/report_round2.md"
+      },
+      {
+        "title": "第一輪研究報告 (report.md)",
+        "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/contest_15m/report.md"
+      },
+      {
+        "title": "短線研究程式碼與設定 (research/contest_15m)",
+        "url": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/contest_15m"
+      }
+    ]
+  }
+}
