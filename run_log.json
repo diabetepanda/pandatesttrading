@@ -1,5 +1,23 @@
 [
   {
+    "run_at_utc": "2026-11-18T07:28:08Z",
+    "job": "scan",
+    "duration_sec": 5.98,
+    "step_timings_sec": {
+      "load_and_cleanup_sec": 0.042,
+      "fetch_and_quality_sec": 4.244,
+      "indicators_and_replay_sec": 0.411,
+      "derivatives_fetch_sec": 1.053,
+      "strategy_eval_sec": 0.207,
+      "export_and_save_sec": 0.024
+    },
+    "status": "ok",
+    "instruments_ok": 40,
+    "instruments_total": 42,
+    "signals_published": 0,
+    "watch_count": 38
+  },
+  {
     "run_at_utc": "2026-11-18T07:20:32Z",
     "job": "daily",
     "duration_sec": 22.11,
@@ -1764,24 +1782,6 @@
       "derivatives_fetch_sec": 1.329,
       "strategy_eval_sec": 0.232,
       "export_and_save_sec": 0.022
-    },
-    "status": "ok",
-    "instruments_ok": 40,
-    "instruments_total": 42,
-    "signals_published": 0,
-    "watch_count": 38
-  },
-  {
-    "run_at_utc": "2026-11-17T07:54:19Z",
-    "job": "scan",
-    "duration_sec": 6.9,
-    "step_timings_sec": {
-      "load_and_cleanup_sec": 0.041,
-      "fetch_and_quality_sec": 4.915,
-      "indicators_and_replay_sec": 0.385,
-      "derivatives_fetch_sec": 1.396,
-      "strategy_eval_sec": 0.139,
-      "export_and_save_sec": 0.021
     },
     "status": "ok",
     "instruments_ok": 40,
