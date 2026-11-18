@@ -154,7 +154,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261118a" in index_html
+    assert "?v=20261118b" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -336,24 +336,50 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
         const closedSkip = u.evaluateOpenNowEligibility({{ state: 'closed', strategy: 'L2', direction: 'long', avg_entry_price: 100, current_stop_loss: 96 }}, 100);
         if (closedSkip.eligible) throw new Error('Closed trade must be removed');
 
-        // 3) Position % formula: 4% SL -> 25%; >100% leverage note; cap 500%
-        const p25 = u.computeOpenNowPositionPct(100, 96);
-        if (p25.posPct !== 25 || p25.showLeverage !== false) throw new Error('4% SL must yield 25% without leverage note: ' + JSON.stringify(p25));
-        const p250 = u.computeOpenNowPositionPct(100, 99.6);
-        if (p250.posPct !== 250 || p250.showLeverage !== true || p250.leverage !== '2.5') throw new Error('0.4% SL must yield 250% / 2.5x: ' + JSON.stringify(p250));
-        const pCap = u.computeOpenNowPositionPct(100, 99.9);
-        if (pCap.posPct !== 500 || pCap.leverage !== '5.0') throw new Error('0.1% SL must cap at 500%: ' + JSON.stringify(pCap));
+        // 3) Position % formula & sizing (leverage, margin %, loss %)
+        const sz25 = u.computeOpenNowSizing(100, 96, 10);
+        if (sz25.marginPctStr !== '2.5%' || sz25.lossPctStr !== '1%') throw new Error('4% SL sizing failed: ' + JSON.stringify(sz25));
+        const sz250 = u.computeOpenNowSizing(100, 99.6, 10);
+        if (sz250.marginPctStr !== '25%' || sz250.lossPctStr !== '1%') throw new Error('0.4% SL sizing failed: ' + JSON.stringify(sz250));
+        const szCap = u.computeOpenNowSizing(100, 99.9, 10);
+        if (szCap.notionalPct !== 500 || szCap.marginPctStr !== '50%' || szCap.lossPctStr !== '0.5%') throw new Error('0.1% SL sizing cap failed: ' + JSON.stringify(szCap));
+        if (u.formatPercentDisplay(0.04) !== '<0.1%') throw new Error('<0.1% display failed: ' + u.formatPercentDisplay(0.04));
+        if (u.formatPercentDisplay(1.0) !== '1%') throw new Error('1% display failed: ' + u.formatPercentDisplay(1.0));
+        if (u.formatPercentDisplay(2.56) !== '2.6%') throw new Error('2.6% display failed: ' + u.formatPercentDisplay(2.56));
+
+        // formatCardPrice & formatCardPricePair tiered decimals:
+        // >=1000 -> 2; 100..1000 -> 3; 1..100 -> 5; <1 -> >=5 sig figs
+        if (u.formatCardPrice(7339.245247) !== '7339.25') throw new Error('formatCardPrice >=1000 failed: ' + u.formatCardPrice(7339.245247));
+        if (u.formatCardPrice(520.1234) !== '520.123') throw new Error('formatCardPrice 100..1000 failed: ' + u.formatCardPrice(520.1234));
+        if (u.formatCardPrice(1.321454) !== '1.32145') throw new Error('formatCardPrice 1..100 GBPUSD failed: ' + u.formatCardPrice(1.321454));
+        if (u.formatCardPrice(1.430123) !== '1.43012') throw new Error('formatCardPrice 1..100 USDCAD failed: ' + u.formatCardPrice(1.430123));
+        if (u.formatCardPrice(0.839612) !== '0.83961') throw new Error('formatCardPrice <1 0.83961 failed: ' + u.formatCardPrice(0.839612));
+        if (u.formatCardPrice(0.00000412345) !== '0.0000041235') throw new Error('formatCardPrice PEPE 5 sig figs failed: ' + u.formatCardPrice(0.00000412345));
+
+        // formatCardPricePair collision resolution (same entry/sl expands up to 8 decimals)
+        const pairEqualBase = u.formatCardPricePair(1.320001, 1.320004);
+        if (pairEqualBase.entryStr !== '1.320001' || pairEqualBase.slStr !== '1.320004') {{
+          throw new Error('Collision expansion failed: ' + JSON.stringify(pairEqualBase));
+        }}
+        const pairHigh = u.formatCardPricePair(1000.001, 1000.004);
+        if (pairHigh.entryStr !== '1000.001' || pairHigh.slStr !== '1000.004') {{
+          throw new Error('High price collision expansion failed: ' + JSON.stringify(pairHigh));
+        }}
+        const pairIdentical = u.formatCardPricePair(1.32, 1.32);
+        if (pairIdentical.entryStr !== '1.32000' || pairIdentical.slStr !== '1.32000') {{
+          throw new Error('Exact equal should not loop forever: ' + JSON.stringify(pairIdentical));
+        }}
 
         // 4) History stats & avgWinR back-calculation formula: (expR + (1 - wr)) / wr
         const mockBt = {{
           strategies: [
-            {{ strategy_id: 'L2', name: '唐奇安突破', out_of_sample: {{ trades: 50, win_rate_pct: 31, expectancy_r: 0.302 }} }},
+            {{ strategy_id: 'L2', name: '唐奇安突破', out_of_sample: {{ trades: 50, win_rate_pct: 37, expectancy_r: 0.443 }} }},
             {{ strategy_id: 'S2', name: '4 小時突破', out_of_sample: {{ trades: 40, win_rate_pct: 35, expectancy_r: -0.05 }} }},
             {{ strategy_id: 'L4', name: '主流週線趨勢', out_of_sample: {{ trades: 0, win_rate_pct: 0, expectancy_r: 0 }} }},
           ],
         }};
         const hsL2 = u.computeOpenNowHistoryStats('L2', mockBt);
-        if (!hsL2.available || hsL2.winRateInt !== 31 || hsL2.avgWinStr !== '+3.2%' || hsL2.expStr !== '+0.30%' || hsL2.expCls !== 'chg-up') {{
+        if (!hsL2.available || hsL2.winRateInt !== 37 || hsL2.avgWinStr !== '+2.9%' || hsL2.copyStatsLine !== '策略歷史勝率 37%｜贏時平均 +2.9%｜輸時 −1%') {{
           throw new Error('L2 history stats failed: ' + JSON.stringify(hsL2));
         }}
         const hsS2 = u.computeOpenNowHistoryStats('S2', mockBt);
@@ -361,11 +387,11 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
           throw new Error('S2 negative exp stats failed: ' + JSON.stringify(hsS2));
         }}
         const hsL4 = u.computeOpenNowHistoryStats('L4', mockBt);
-        if (hsL4.available !== false || hsL4.copyStatsLine !== '歷史數據暫無') {{
-          throw new Error('Zero-trade strategy must show 歷史數據暫無');
+        if (hsL4.available !== false || hsL4.copyStatsLine !== '策略歷史數據暫無') {{
+          throw new Error('Zero-trade strategy must show 策略歷史數據暫無: ' + JSON.stringify(hsL4));
         }}
 
-        // 5) Full builder sorting (newest entered first), full precision, and copy format
+        // 5) Full builder sorting (newest entered first), formatted prices, and copy format
         const openCards = u.buildOpenNowCardsData(
           [
             {{ signal_id: 'SIG-OLD', strategy: 'L4', symbol: 'BTCUSDT', market: 'crypto', direction: 'long', state: 'active', avg_entry_price: 90000.123456, current_stop_loss: 86400.123456, entered_at_utc: '2026-11-16T00:00:00Z' }},
@@ -379,8 +405,8 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
         if (openCards.length !== 2 || openCards[0].signal_id !== 'SIG-NEW' || openCards[1].signal_id !== 'SIG-OLD') {{
           throw new Error('OpenNow sorting/filtering failed: ' + JSON.stringify(openCards));
         }}
-        if (openCards[0].entryStr !== '7339.245247' || openCards[0].slStr !== '7625.250674' || openCards[0].posPct !== 26) {{
-          throw new Error('Full precision or 26% failed: ' + JSON.stringify(openCards[0]));
+        if (openCards[0].entryStr !== '7339.25' || openCards[0].slStr !== '7625.25' || openCards[0].marginPctStr !== '2.6%' || openCards[0].lossPctStr !== '1%') {{
+          throw new Error('Card formatted values failed: ' + JSON.stringify(openCards[0]));
         }}
         if (openCards[1].livePriceText !== '現價暫無') {{
           throw new Error('Missing live price text failed: ' + openCards[1].livePriceText);
@@ -388,17 +414,17 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
         const singleCopy = openCards[0].copyText;
         const expectedSingle = [
           '【做空】S&P 500（標普 500）（L2 唐奇安突破）',
-          '入場：7339.245247',
-          '止損：7625.250674',
-          '倉位：總資產 26%（虧損上限 1%）',
-          '歷史勝率 31%｜贏時平均 +3.2%｜輸時 −1%',
+          '入場：7339.25',
+          '止損：7625.25（打到停損，預計虧損約總資產的 1%）',
+          '建議：開 10 倍槓桿，用總資產的 2.6% 當保證金',
+          '策略歷史勝率 37%｜贏時平均 +2.9%｜輸時 −1%',
           '止盈：移動停利，詳見 https://diabetepanda.github.io/pandatesttrading/',
         ].join('\\n');
         if (singleCopy !== expectedSingle) {{
           throw new Error('Single copy text mismatch:\\n' + singleCopy + '\\nVS\\n' + expectedSingle);
         }}
         const allCopy = u.formatOpenNowAllCopyText(openCards, '2026-11-18T05:30:00Z');
-        if (!allCopy.startsWith('📊 Signal Desk 可開單（11/18 13:30 台北時間）\\n\\n') || !allCopy.endsWith('https://diabetepanda.github.io/pandatesttrading/') || !allCopy.includes('歷史數據暫無')) {{
+        if (!allCopy.startsWith('📊 Signal Desk 可開單（11/18 13:30 台北時間）\\n\\n') || !allCopy.endsWith('https://diabetepanda.github.io/pandatesttrading/') || !allCopy.includes('策略歷史數據暫無') || !allCopy.includes('開 10 倍槓桿')) {{
           throw new Error('All copy text check failed:\\n' + allCopy);
         }}
         """

@@ -37,6 +37,9 @@
   const SITE_URL = "https://diabetepanda.github.io/pandatesttrading/";
   const OPEN_NOW_STRATEGIES = new Set(["S2", "S3", "L1", "L2", "L3", "L4"]);
 
+  // 卡片建議的槓桿倍數，可調整
+  const SUGGESTED_LEVERAGE = 10;
+
   const STRATEGY_NAMES = {
     S1: "S1 開盤區間突破（已停用）",
     S2: "S2 4 小時突破（短線）",
@@ -93,6 +96,54 @@
     const raw = String(num);
     if (!/[eE]/.test(raw)) return raw;
     return num.toFixed(12).replace(/\.?0+$/, "");
+  }
+
+  function getCardPriceDecimals(val) {
+    const abs = Math.abs(Number(val));
+    if (!Number.isFinite(abs) || abs === 0) return 2;
+    if (abs >= 1000) return 2;
+    if (abs >= 100) return 3;
+    if (abs >= 1) return 5;
+    const leadingZeros = Math.max(0, -Math.floor(Math.log10(abs)) - 1);
+    return Math.max(2, leadingZeros + 5);
+  }
+
+  function formatCardPrice(val, forcedDecimals) {
+    if (val === null || val === undefined || val === "" || Number.isNaN(Number(val))) return "—";
+    const num = Number(val);
+    if (!Number.isFinite(num)) return "—";
+    const decimals = Number.isInteger(forcedDecimals) && forcedDecimals >= 0
+      ? forcedDecimals
+      : getCardPriceDecimals(num);
+    return num.toFixed(decimals);
+  }
+
+  function formatCardPricePair(entryVal, slVal) {
+    const entryDec = getCardPriceDecimals(entryVal);
+    const slDec = getCardPriceDecimals(slVal);
+    let entryStr = formatCardPrice(entryVal, entryDec);
+    let slStr = formatCardPrice(slVal, slDec);
+    if (entryStr !== "—" && slStr !== "—" && entryStr === slStr && Number(entryVal) !== Number(slVal)) {
+      let dec = Math.max(entryDec, slDec);
+      const limit = Math.max(8, dec);
+      while (entryStr === slStr && dec < limit) {
+        dec += 1;
+        entryStr = formatCardPrice(entryVal, dec);
+        slStr = formatCardPrice(slVal, dec);
+      }
+    }
+    return { entryStr, slStr };
+  }
+
+  function formatPercentDisplay(val) {
+    const num = Number(val);
+    if (!Number.isFinite(num) || num <= 0) return "0%";
+    if (num < 0.1) return "<0.1%";
+    const rounded = Math.round(num * 10) / 10;
+    if (rounded % 1 === 0) {
+      return `${Math.round(rounded)}%`;
+    }
+    return `${rounded.toFixed(1)}%`;
   }
 
   function convertReasonUtcToTaipei(text) {
@@ -657,7 +708,7 @@
       oos.expectancy_r === undefined ||
       Number.isNaN(Number(oos.expectancy_r))
     ) {
-      return { available: false, copyStatsLine: "歷史數據暫無" };
+      return { available: false, copyStatsLine: "策略歷史數據暫無" };
     }
     const winRatePct = Number(oos.win_rate_pct);
     const winRateInt = Math.round(winRatePct);
@@ -690,7 +741,7 @@
       expR,
       expStr,
       expCls,
-      copyStatsLine: `歷史勝率 ${winRateInt}%｜贏時平均 ${avgWinStr}｜輸時 −1%`,
+      copyStatsLine: `策略歷史勝率 ${winRateInt}%｜贏時平均 ${avgWinStr}｜輸時 −1%`,
     };
   }
 
@@ -740,38 +791,66 @@
     };
   }
 
-  function computeOpenNowPositionPct(entryPx, stopLossPx) {
+  function computeOpenNowSizing(entryPx, stopLossPx, leverage = SUGGESTED_LEVERAGE) {
     const entry = Number(entryPx);
     const sl = Number(stopLossPx);
     if (!Number.isFinite(entry) || entry <= 0 || !Number.isFinite(sl) || sl <= 0) {
-      return { posPct: 0, leverage: "0.0", showLeverage: false };
+      return {
+        notionalPct: 0,
+        marginPct: 0,
+        lossPct: 0,
+        marginPctStr: "0%",
+        lossPctStr: "0%",
+      };
     }
-    const stopDistPct = Math.abs(entry - sl) / entry;
-    if (!Number.isFinite(stopDistPct) || stopDistPct <= 0) {
-      return { posPct: 500, leverage: "5.0", showLeverage: true };
+    const stopDistRatio = Math.abs(entry - sl) / entry;
+    if (!Number.isFinite(stopDistRatio) || stopDistRatio <= 0) {
+      return {
+        notionalPct: 500,
+        marginPct: 500 / leverage,
+        lossPct: 0,
+        marginPctStr: formatPercentDisplay(500 / leverage),
+        lossPctStr: "0%",
+      };
     }
-    // 倉位% = 1% ÷ (|進場價 − 止損價| ÷ 進場價)，四捨五入到整數 %，最高 500%
-    const posPct = Math.min(500, Math.round(1 / stopDistPct));
+    // notionalPct = 1% ÷ (|entry−stop| / entry)，上限 500%（沿用現有公式）。
+    const notionalPct = Math.min(500, 1 / stopDistRatio);
+    // marginPct = notionalPct ÷ SUGGESTED_LEVERAGE。
+    const marginPct = notionalPct / leverage;
+    // lossPct = notionalPct × |entry−stop| / entry（通常 1%，被上限截斷時用實際值）。
+    const lossPct = notionalPct * stopDistRatio;
+
+    return {
+      notionalPct,
+      marginPct,
+      lossPct,
+      marginPctStr: formatPercentDisplay(marginPct),
+      lossPctStr: formatPercentDisplay(lossPct),
+    };
+  }
+
+  function computeOpenNowPositionPct(entryPx, stopLossPx) {
+    const sizing = computeOpenNowSizing(entryPx, stopLossPx, SUGGESTED_LEVERAGE);
+    const posPct = Math.round(sizing.notionalPct);
     const showLeverage = posPct > 100;
     const leverage = (posPct / 100).toFixed(1);
-    return { posPct, leverage, showLeverage };
+    return { posPct, leverage, showLeverage, ...sizing };
   }
 
   function formatOpenNowSingleCopyText(card, includeUrl = true) {
-    const posLine = card.showLeverage
-      ? `倉位：總資產 ${card.posPct}%（虧損上限 1%，約 ${card.leverage} 倍槓桿）`
-      : `倉位：總資產 ${card.posPct}%（虧損上限 1%）`;
+    const slLine = `止損：${card.slStr}（打到停損，預計虧損約總資產的 ${card.lossPctStr}）`;
+    const sugLine = `建議：開 ${card.suggestedLeverage || SUGGESTED_LEVERAGE} 倍槓桿，用總資產的 ${card.marginPctStr} 當保證金`;
     const histLine = card.historyStats && card.historyStats.available
       ? card.historyStats.copyStatsLine
-      : "歷史數據暫無";
+      : "策略歷史數據暫無";
     const tpLine = includeUrl
       ? `止盈：移動停利，詳見 ${SITE_URL}`
       : "止盈：移動停利";
     return [
       `【${card.dirZh}】${card.displayName}（${card.strategyLabel}）`,
       `入場：${card.entryStr}`,
-      `止損：${card.slStr}`,
-      posLine,
+      slLine,
+      sugLine,
       histLine,
       tpLine,
     ].join("\n");
@@ -792,11 +871,11 @@
       const elig = evaluateOpenNowEligibility(t, curPx);
       if (!elig.eligible) continue;
       const isLong = t.direction === "long";
-      const posInfo = computeOpenNowPositionPct(elig.entryPx, elig.slPx);
+      const sizing = computeOpenNowSizing(elig.entryPx, elig.slPx, SUGGESTED_LEVERAGE);
       const historyStats = computeOpenNowHistoryStats(t.strategy, backtestObj);
-      const entryStr = formatExactPrice(elig.entryPx) || "—";
-      const slStr = formatExactPrice(elig.slPx) || "—";
-      const liveStr = elig.hasLivePrice ? formatNumber(elig.curPrice) : null;
+      const historyLine = historyStats.available ? historyStats.copyStatsLine : "策略歷史數據暫無";
+      const { entryStr, slStr } = formatCardPricePair(elig.entryPx, elig.slPx);
+      const liveStr = elig.hasLivePrice ? formatCardPrice(elig.curPrice) : null;
       const card = {
         signal_id: t.signal_id,
         strategy: t.strategy,
@@ -807,12 +886,16 @@
         displayName: formatSimpleSymbolName(t.symbol, t.market, instrumentsList),
         strategyLabel: getSimpleStrategyShortName(t.strategy, backtestObj),
         entryStr,
-        livePriceText: liveStr ? `現價 ${liveStr}` : "現價暫無",
         slStr,
-        posPct: posInfo.posPct,
-        leverage: posInfo.leverage,
-        showLeverage: posInfo.showLeverage,
+        livePriceText: liveStr ? `現價 ${liveStr}` : "現價暫無",
+        suggestedLeverage: SUGGESTED_LEVERAGE,
+        notionalPct: sizing.notionalPct,
+        marginPct: sizing.marginPct,
+        lossPct: sizing.lossPct,
+        marginPctStr: sizing.marginPctStr,
+        lossPctStr: sizing.lossPctStr,
         historyStats,
+        historyLine,
         enteredAtMs: Date.parse(t.entered_at_utc || t.published_at_utc || "") || 0,
       };
       card.copyText = formatOpenNowSingleCopyText(card, true);
@@ -847,12 +930,6 @@
       .map((c) => {
         const recentCopied = openNowCopiedAt[c.signal_id] && (nowMs - openNowCopiedAt[c.signal_id] < 2000);
         const copyLabel = recentCopied ? "已複製 ✓" : "複製";
-        const levHtml = c.showLeverage
-          ? `<div class="muted open-now-sub">約 ${escapeHtml(c.leverage)} 倍槓桿</div>`
-          : "";
-        const histHtml = c.historyStats.available
-          ? `<div class="open-now-history">歷史表現：勝率 ${c.historyStats.winRateInt}%｜贏時平均 ${escapeHtml(c.historyStats.avgWinStr)}｜輸時 ${escapeHtml(c.historyStats.lossStr)}｜期望值 <span class="${c.historyStats.expCls}">${escapeHtml(c.historyStats.expStr)}</span></div>`
-          : '<div class="open-now-history muted">歷史表現：歷史數據暫無</div>';
         return `
           <article class="simple-card open-now-card">
             <div class="open-now-head">
@@ -863,10 +940,11 @@
               </div>
               <button class="btn btn-xs open-now-copy-btn" data-signal-id="${escapeHtml(c.signal_id)}" type="button">${copyLabel}</button>
             </div>
-            <div class="simple-card-line">建議入場點位：<strong>${escapeHtml(c.entryStr)}</strong><span class="muted open-now-live">${escapeHtml(c.livePriceText)}</span></div>
-            <div class="simple-card-line">建議止損：<strong>${escapeHtml(c.slStr)}</strong></div>
-            <div class="simple-card-line">建議倉位：佔總資產 ${c.posPct}%${levHtml}</div>
-            ${histHtml}
+            <div class="simple-card-line">入場：<strong>${escapeHtml(c.entryStr)}</strong><span class="muted open-now-live">${escapeHtml(c.livePriceText)}</span></div>
+            <div class="simple-card-line">止損：<strong>${escapeHtml(c.slStr)}</strong>（打到停損，預計虧損約總資產的 ${escapeHtml(c.lossPctStr)}）</div>
+            <div class="simple-card-line">建議：開 ${c.suggestedLeverage || SUGGESTED_LEVERAGE} 倍槓桿，用總資產的 ${escapeHtml(c.marginPctStr)} 當保證金</div>
+            <div class="open-now-history">${escapeHtml(c.historyLine)}</div>
+            <div class="simple-card-line muted" style="font-size:0.82rem;margin-top:2px;">止盈：移動停利</div>
           </article>
         `;
       })
@@ -2163,8 +2241,13 @@
   });
 
   window.__SIGNAL_DESK_UTILS__ = {
+    SUGGESTED_LEVERAGE,
     formatNumber,
     formatExactPrice,
+    getCardPriceDecimals,
+    formatCardPrice,
+    formatCardPricePair,
+    formatPercentDisplay,
     getPricePrecision,
     formatTaipeiTime,
     formatSignalCopyText,
@@ -2181,6 +2264,7 @@
     computeOpenNowHistoryStats,
     evaluateOpenNowEligibility,
     computeOpenNowPositionPct,
+    computeOpenNowSizing,
     formatOpenNowSingleCopyText,
     formatOpenNowAllCopyText,
     buildOpenNowCardsData,
