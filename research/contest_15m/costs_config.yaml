@@ -1,0 +1,141 @@
+# The5ers MT5 模擬成本設定檔（可隨時依實際帳戶點差與手續費微調）
+# 手續費：約名目的 0.001%（萬分之 0.1 = 0.00001）每邊
+# 實例：0.2 手 XAUUSD ≈ 20 oz × $4,000 = $80,000 名目 → 0.001% = $0.80 USD 每邊
+
+defaults:
+  fee_rate_per_side: 0.00001   # 名目 0.001% 每邊（0.1 bps）
+  slippage_bps_per_side: 0.0   # 已由實盤點差涵蓋，如需額外滑價可調高
+  stress_spread_multiplier: 1.5
+
+instruments:
+  DAX40:
+    market: index
+    session: london
+    dukascopy_pair: DEUIDXEUR
+    dukascopy_divisor: 1000.0
+    spread_points: 1.5         # 約 1.5 點
+    max_leverage: 20.0
+  JPN225:
+    market: index
+    session: tokyo
+    dukascopy_pair: JPNIDXJPY
+    dukascopy_divisor: 1000.0
+    spread_points: 8.0         # 約 8 點
+    max_leverage: 20.0
+  NAS100:
+    market: index
+    session: ny
+    dukascopy_pair: USATECHIDXUSD
+    dukascopy_divisor: 1000.0
+    spread_points: 1.5         # 約 1.5 點
+    max_leverage: 20.0
+  SP500:
+    market: index
+    session: ny
+    dukascopy_pair: USA500IDXUSD
+    dukascopy_divisor: 1000.0
+    spread_points: 0.8         # 約 0.8 點
+    max_leverage: 20.0
+  UK100:
+    market: index
+    session: london
+    dukascopy_pair: GBRIDXGBP
+    dukascopy_divisor: 1000.0
+    spread_points: 1.0         # 約 1.0 點
+    max_leverage: 20.0
+  US30:
+    market: index
+    session: ny
+    dukascopy_pair: USA30IDXUSD
+    dukascopy_divisor: 1000.0
+    spread_points: 2.5         # 約 2.5 點
+    max_leverage: 20.0
+
+  EURUSD:
+    market: forex
+    session: london
+    dukascopy_pair: EURUSD
+    dukascopy_divisor: 100000.0
+    spread_points: 0.00001     # 0.1 pip
+    max_leverage: 30.0
+  GBPUSD:
+    market: forex
+    session: london
+    dukascopy_pair: GBPUSD
+    dukascopy_divisor: 100000.0
+    spread_points: 0.00003     # 0.3 pip
+    max_leverage: 30.0
+  USDJPY:
+    market: forex
+    session: london
+    dukascopy_pair: USDJPY
+    dukascopy_divisor: 1000.0
+    spread_points: 0.003       # 0.3 pip
+    max_leverage: 30.0
+  USDCHF:
+    market: forex
+    session: london
+    dukascopy_pair: USDCHF
+    dukascopy_divisor: 100000.0
+    spread_points: 0.00004     # 0.4 pip
+    max_leverage: 30.0
+  USDCAD:
+    market: forex
+    session: london
+    dukascopy_pair: USDCAD
+    dukascopy_divisor: 100000.0
+    spread_points: 0.00004     # 0.4 pip
+    max_leverage: 30.0
+  AUDUSD:
+    market: forex
+    session: london
+    dukascopy_pair: AUDUSD
+    dukascopy_divisor: 100000.0
+    spread_points: 0.00003     # 0.3 pip
+    max_leverage: 30.0
+  NZDUSD:
+    market: forex
+    session: london
+    dukascopy_pair: NZDUSD
+    dukascopy_divisor: 100000.0
+    spread_points: 0.00005     # 0.5 pip
+    max_leverage: 30.0
+
+  XAUUSD:
+    market: commodity
+    session: ny
+    dukascopy_pair: XAUUSD
+    dukascopy_divisor: 1000.0
+    spread_points: 0.20        # 約 0.2 USD
+    max_leverage: 20.0
+  XAGUSD:
+    market: commodity
+    session: ny
+    dukascopy_pair: XAGUSD
+    dukascopy_divisor: 1000.0
+    spread_points: 0.025       # 約 0.025 USD
+    max_leverage: 20.0
+  WTI:
+    market: commodity
+    session: ny
+    dukascopy_pair: LIGHTCMDUSD
+    dukascopy_divisor: 1000.0
+    spread_points: 0.03        # 約 0.03 USD
+    max_leverage: 20.0
+
+  BTCUSD:
+    market: crypto
+    session: utc0
+    binance_alias: BTCUSDT
+    dukascopy_pair: BTCUSD
+    dukascopy_divisor: 1000.0
+    spread_points: 15.0        # 約 15 USD
+    max_leverage: 10.0
+  ETHUSD:
+    market: crypto
+    session: utc0
+    binance_alias: ETHUSDT
+    dukascopy_pair: ETHUSD
+    dukascopy_divisor: 1000.0
+    spread_points: 1.2         # 約 1.2 USD
+    max_leverage: 10.0

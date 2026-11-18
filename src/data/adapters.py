@@ -1029,7 +1029,7 @@ DUKASCOPY_SYMBOL_MAP: dict[str, tuple[str, float]] = {
     "XAGUSD": ("XAGUSD", 1000.0),
     "COPPER": ("COPPERCMDUSD", 1000.0),
     "WTI": ("LIGHTCMDUSD", 1000.0),
-    "NATGAS": ("NATGASCMDUSD", 1000.0),
+    "NATGAS": ("GASCMDUSD", 1000.0),
     "EURUSD": ("EURUSD", 100000.0),
     "GBPUSD": ("GBPUSD", 100000.0),
     "USDJPY": ("USDJPY", 1000.0),

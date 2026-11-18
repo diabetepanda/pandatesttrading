@@ -154,3 +154,78 @@ def test_weekly_contest_daily_stop_and_bust_rule() -> None:
     assert res["weeks"] == 1
     assert res["bust_rate_pct"] == 100.0
     assert res["median_return_pct"] < -10.0
+
+
+def test_round2_the5ers_mt5_costs_config_and_modes() -> None:
+    """Verify The5ers MT5 costs config (0.001% fee, typical spreads) and normal/stress/zero modes."""
+    from research.contest_15m.backtest_round2 import (
+        MAX_HOLD_BY_TF,
+        SignalCandidateR2,
+        load_costs_config,
+        precompute_symbol_series_r2,
+        simulate_candidate_r2,
+    )
+
+    cfg = load_costs_config()
+    assert cfg["defaults"]["fee_rate_per_side"] == 0.00001
+    assert cfg["instruments"]["XAUUSD"]["spread_points"] == 0.2
+    assert cfg["instruments"]["SP500"]["spread_points"] == 0.8
+    assert cfg["instruments"]["EURUSD"]["spread_points"] == 0.00001
+    assert MAX_HOLD_BY_TF["15m"] == 16
+    assert MAX_HOLD_BY_TF["1h"] == 24
+
+    bars = _make_bars(150, 2000.0)
+    bars[121] = OHLCVBar(ts_utc=bars[121].ts_utc, open=2000.0, high=2002.0, low=1999.0, close=2001.0, volume=100.0)
+    bars[122] = OHLCVBar(ts_utc=bars[122].ts_utc, open=2001.0, high=2015.0, low=2000.0, close=2012.0, volume=100.0)
+    ser = precompute_symbol_series_r2({
+        "symbol": "XAUUSD", "market": "commodity", "session": "ny", "timeframe": "1h",
+        "bars": bars, "spread_points": 0.20, "fee_rate": 0.00001, "slippage_bps": 0.0, "max_leverage": 20.0,
+    })
+    cand = SignalCandidateR2(
+        symbol="XAUUSD", strategy_id="E", signal_bar_idx=120, entry_bar_idx=121,
+        ts_utc=bars[121].ts_utc, direction="long", raw_open=2000.0,
+        sl_px=1990.0, tp_px=2010.0, sl_dist_pct=0.5,
+    )
+    t_zero = simulate_candidate_r2(ser, cand, len(bars), 24, spread_mult=0.0, zero_cost=True)
+    t_norm = simulate_candidate_r2(ser, cand, len(bars), 24, spread_mult=1.0, zero_cost=False)
+    t_stress = simulate_candidate_r2(ser, cand, len(bars), 24, spread_mult=1.5, zero_cost=False)
+    assert t_zero is not None and t_norm is not None and t_stress is not None
+    assert t_zero.r_multiple > t_norm.r_multiple > t_stress.r_multiple
+
+
+def test_round2_strategies_e_f_g_and_dukascopy_natgas_mapping() -> None:
+    """Verify new strategies E/F/G generate valid non-lookahead signals and NATGAS uses GASCMDUSD."""
+    from research.contest_15m.backtest_round2 import generate_signals_r2, precompute_symbol_series_r2
+    from src.data.adapters import DUKASCOPY_SYMBOL_MAP
+
+    assert DUKASCOPY_SYMBOL_MAP["NATGAS"][0] == "GASCMDUSD"
+
+    start = datetime(2025, 1, 1, 0, 0, tzinfo=timezone.utc)
+    bars: list[OHLCVBar] = []
+    for i in range(180):
+        ts = (start + timedelta(hours=i)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        px = 100.0
+        bars.append(OHLCVBar(ts_utc=ts, open=px, high=px + 0.4, low=px - 0.4, close=px, volume=100.0))
+
+    # Build a confirmed swing low at idx 120 (pivot_k=3 confirmed at 123), then poke & reclaim at 130 (Strategy G & E)
+    bars[120] = OHLCVBar(ts_utc=bars[120].ts_utc, open=99.5, high=99.8, low=98.0, close=99.2, volume=100.0)
+    bars[130] = OHLCVBar(ts_utc=bars[130].ts_utc, open=98.4, high=99.5, low=97.6, close=99.0, volume=100.0)
+    # Build bearish candle at 140 followed by strong bullish displacement >= 1.5*ATR at 141, retest at 144 (Strategy F)
+    bars[140] = OHLCVBar(ts_utc=bars[140].ts_utc, open=100.2, high=100.4, low=99.4, close=99.5, volume=100.0)
+    bars[141] = OHLCVBar(ts_utc=bars[141].ts_utc, open=99.5, high=104.0, low=99.5, close=103.5, volume=200.0)
+    bars[142] = OHLCVBar(ts_utc=bars[142].ts_utc, open=103.5, high=103.8, low=102.0, close=102.5, volume=100.0)
+    bars[143] = OHLCVBar(ts_utc=bars[143].ts_utc, open=102.5, high=102.6, low=101.0, close=101.2, volume=100.0)
+    bars[144] = OHLCVBar(ts_utc=bars[144].ts_utc, open=99.8, high=101.5, low=99.6, close=101.0, volume=150.0)
+
+    ser = precompute_symbol_series_r2({
+        "symbol": "TEST", "market": "forex", "session": "london", "timeframe": "1h",
+        "bars": bars, "spread_points": 0.01, "fee_rate": 0.00001, "slippage_bps": 0.0, "max_leverage": 20.0,
+    })
+    sig_e = generate_signals_r2(ser, "E", {"lookback": 60, "pivot_k": 3, "touch_atr": 0.5, "sl_buf_atr": 0.2, "tp_r": 1.0}, 124, 135)
+    sig_g = generate_signals_r2(ser, "G", {"lookback": 60, "pivot_k": 3, "sl_buf_atr": 0.2, "tp_r": 1.0}, 124, 135)
+    sig_f = generate_signals_r2(ser, "F", {"disp_atr": 1.5, "sl_buf_atr": 0.2, "max_age": 48, "tp_r": 1.0}, 136, 150)
+
+    assert any(s.direction == "long" and s.signal_bar_idx == 130 for s in sig_e)
+    assert any(s.direction == "long" and s.signal_bar_idx == 130 for s in sig_g)
+    assert any(s.direction == "long" and s.signal_bar_idx == 144 for s in sig_f)
+
