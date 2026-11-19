@@ -1088,7 +1088,7 @@ h1, h2 {
   display: block;
 }
 
-/* 技術分析展開面板（#/data 市場與資料頁） */
+/* 技術分析展開面板（#/data 市場與資料頁） - 3 秒看懂重構 */
 tr.instrument-row {
   cursor: pointer;
   transition: background 0.15s ease;
@@ -1099,12 +1099,12 @@ tr.instrument-row:hover {
 }
 
 tr.instrument-row.ta-expanded {
-  background: rgba(88, 166, 255, 0.1);
+  background: rgba(88, 166, 255, 0.12);
 }
 
 tr.ta-detail-row > td.ta-detail-cell {
   padding: 14px 16px;
-  background: #0d1218;
+  background: #090d13;
   border-bottom: 2px solid var(--accent);
   white-space: normal;
   text-align: left;
@@ -1113,106 +1113,492 @@ tr.ta-detail-row > td.ta-detail-cell {
 .ta-panel {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
-.ta-summary-box {
-  background: rgba(88, 166, 255, 0.1);
-  border-left: 4px solid var(--accent);
-  border-radius: 6px;
-  padding: 10px 14px;
-  font-size: 0.95rem;
-  line-height: 1.5;
+/* 桌面版左右並排，手機上下堆疊 */
+.ta-top-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 860px) {
+  .ta-top-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: stretch;
+  }
+}
+
+/* 第 1 層：重點卡 */
+.ta-hero-card {
+  background: #111722;
+  border: 1px solid rgba(88, 166, 255, 0.25);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.ta-hero-badges-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(48, 54, 61, 0.6);
+  padding-bottom: 10px;
+}
+
+.ta-trend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.ta-trend-up {
+  background: rgba(46, 160, 67, 0.22);
+  color: #3fb950;
+  border: 1px solid rgba(46, 160, 67, 0.5);
+}
+
+.ta-trend-down {
+  background: rgba(248, 81, 73, 0.22);
+  color: #f85149;
+  border: 1px solid rgba(248, 81, 73, 0.5);
+}
+
+.ta-trend-flat {
+  background: rgba(139, 148, 158, 0.18);
+  color: #8b949e;
+  border: 1px solid rgba(139, 148, 158, 0.4);
+}
+
+.ta-hero-sub-badges {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.ta-sq-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.ta-sq-squeeze {
+  background: rgba(210, 153, 34, 0.22);
+  color: #e3b341;
+  border: 1px solid rgba(210, 153, 34, 0.5);
+}
+
+.ta-sq-expand {
+  background: rgba(219, 109, 40, 0.22);
+  color: #f0883e;
+  border: 1px solid rgba(219, 109, 40, 0.5);
+}
+
+.ta-sq-normal {
+  background: rgba(139, 148, 158, 0.14);
+  color: #8b949e;
+  border: 1px solid rgba(139, 148, 158, 0.3);
+}
+
+.ta-pattern-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: rgba(88, 166, 255, 0.12);
+  color: #79c0ff;
+  border: 1px solid rgba(88, 166, 255, 0.3);
+}
+
+.ta-ref-tag {
+  font-size: 0.68rem;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(88, 166, 255, 0.25);
+  color: #c9d1d9;
+}
+
+/* 三格大數字並排 */
+.ta-big-numbers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
   gap: 8px;
+  text-align: center;
+  align-items: stretch;
 }
 
-.ta-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+.ta-num-col {
+  padding: 8px 6px;
   border-radius: 8px;
-  padding: 12px 14px;
+  background: rgba(13, 17, 23, 0.6);
+  border: 1px solid rgba(48, 54, 61, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.ta-card-title {
-  margin: 0 0 8px;
-  font-size: 0.9rem;
+.ta-num-col.is-res {
+  border-top: 3px solid #f85149;
+}
+
+.ta-num-col.is-cur {
+  border-top: 3px solid #58a6ff;
+  background: rgba(88, 166, 255, 0.08);
+}
+
+.ta-num-col.is-sup {
+  border-top: 3px solid #3fb950;
+}
+
+.ta-num-label {
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.ta-num-val {
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.2;
+  word-break: break-all;
+}
+
+.ta-num-col.is-res .ta-num-val {
+  color: #f85149;
+}
+
+.ta-num-col.is-cur .ta-val-cur {
+  color: #ffffff;
+  font-size: 1.32rem;
+  font-weight: 800;
+}
+
+.ta-num-col.is-sup .ta-num-val {
+  color: #3fb950;
+}
+
+.ta-num-sub {
+  font-size: 0.74rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.ta-num-col.is-res .ta-num-sub {
+  color: #ff7b72;
+}
+
+.ta-num-col.is-sup .ta-num-sub {
+  color: #56d364;
+}
+
+/* 預估範圍列 */
+.ta-range-box {
+  background: rgba(22, 27, 34, 0.8);
+  border: 1px dashed rgba(88, 166, 255, 0.35);
+  border-radius: 6px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: #c9d1d9;
+}
+
+.ta-range-icon {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* 第 2 層：垂直價格尺卡片 */
+.ta-ruler-card {
+  background: #111722;
+  border: 1px solid rgba(88, 166, 255, 0.25);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 250px;
+}
+
+.ta-ruler-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid rgba(48, 54, 61, 0.6);
+  padding-bottom: 6px;
+}
+
+.ta-ruler-title {
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--accent);
 }
 
-.ta-sr-group-title {
-  font-size: 0.78rem;
-  font-weight: 600;
+.ta-ruler-hint {
+  font-size: 0.72rem;
   color: var(--muted);
-  margin: 6px 0 4px;
 }
 
-.ta-sr-list {
+.ta-ruler-body {
+  position: relative;
+  flex: 1;
+  min-height: 190px;
+  margin: 6px 0;
+}
+
+.ta-ruler-axis {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 190px;
+}
+
+/* 本週預估色帶 */
+.ta-ruler-wk-band {
+  position: absolute;
+  left: 20px;
+  right: 6px;
+  background: rgba(88, 166, 255, 0.08);
+  border-left: 2px dashed rgba(88, 166, 255, 0.4);
+  border-radius: 0 4px 4px 0;
+  pointer-events: none;
+}
+
+/* 垂直主軸線 */
+.ta-ruler-spine {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(48, 54, 61, 0.85);
+}
+
+/* 尺上標記 */
+.ta-ruler-marker {
+  position: absolute;
+  left: 12px;
+  right: 6px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.ta-ruler-marker:hover {
+  transform: translateY(-50%) scale(1.02);
+  z-index: 10;
+}
+
+.ta-marker-line {
+  width: 16px;
+  height: 2px;
+  flex-shrink: 0;
+}
+
+.ta-marker-content {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.ta-marker-px {
+  font-size: 0.86rem;
+}
+
+.ta-marker-tag {
+  font-size: 0.7rem;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+/* 標記樣式區分：壓力、現價、支撐、斐波 */
+.ta-marker-res .ta-marker-line {
+  background: #f85149;
+}
+.ta-marker-res .ta-marker-content {
+  background: rgba(248, 81, 73, 0.12);
+  border: 1px solid rgba(248, 81, 73, 0.3);
+}
+.ta-marker-res .ta-marker-px {
+  color: #ff7b72;
+}
+.ta-marker-res .ta-marker-tag {
+  background: rgba(248, 81, 73, 0.25);
+  color: #ffa198;
+}
+
+.ta-marker-sup .ta-marker-line {
+  background: #3fb950;
+}
+.ta-marker-sup .ta-marker-content {
+  background: rgba(46, 160, 67, 0.12);
+  border: 1px solid rgba(46, 160, 67, 0.3);
+}
+.ta-marker-sup .ta-marker-px {
+  color: #7ee787;
+}
+.ta-marker-sup .ta-marker-tag {
+  background: rgba(46, 160, 67, 0.25);
+  color: #aff5b4;
+}
+
+.ta-marker-cur {
+  z-index: 5;
+}
+.ta-marker-cur .ta-marker-line {
+  background: #58a6ff;
+  height: 3px;
+  width: 20px;
+}
+.ta-marker-cur .ta-marker-content {
+  background: rgba(88, 166, 255, 0.24);
+  border: 1px solid #58a6ff;
+  outline: 1px solid rgba(88, 166, 255, 0.4);
+}
+.ta-marker-cur .ta-marker-px {
+  color: #ffffff;
+  font-size: 0.94rem;
+  font-weight: 800;
+}
+.ta-marker-cur .ta-marker-tag {
+  background: #58a6ff;
+  color: #0d1117;
+  font-weight: 700;
+}
+
+.ta-marker-fib .ta-marker-line {
+  background: transparent;
+  border-top: 1px dashed rgba(210, 153, 34, 0.6);
+  width: 16px;
+}
+.ta-marker-fib .ta-marker-content {
+  background: rgba(210, 153, 34, 0.08);
+  border: 1px dashed rgba(210, 153, 34, 0.35);
+  opacity: 0.88;
+}
+.ta-marker-fib .ta-marker-px {
+  color: #d29922;
+  font-size: 0.78rem;
+}
+.ta-marker-fib .ta-marker-tag {
+  background: rgba(210, 153, 34, 0.18);
+  color: #e3b341;
+  font-size: 0.66rem;
+}
+
+.ta-bt-sticky-note {
+  font-size: 0.75rem;
+  color: #8b949e;
+  border-top: 1px solid rgba(48, 54, 61, 0.6);
+  padding-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ta-note-icon {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* 第 3 層：詳細數據（預設收合） */
+.ta-details-wrapper {
+  background: #0d1218;
+  border: 1px solid rgba(48, 54, 61, 0.65);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ta-details-toggle-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(22, 27, 34, 0.7);
+  border: none;
+  color: var(--accent);
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ta-details-toggle-btn:hover {
+  background: rgba(88, 166, 255, 0.1);
+}
+
+.ta-toggle-arrow {
+  font-size: 0.9rem;
+  color: var(--muted);
+  transition: transform 0.15s ease;
+}
+
+.ta-details-body {
+  padding: 12px 14px;
+  border-top: 1px solid rgba(48, 54, 61, 0.6);
+}
+
+.ta-details-grid {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-
-.ta-sr-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 10px;
-  padding: 4px 6px;
-  border-radius: 4px;
-  font-size: 0.88rem;
-}
-
-.ta-sr-row.ta-cur-row {
-  background: rgba(88, 166, 255, 0.14);
-  border: 1px solid rgba(88, 166, 255, 0.4);
-  font-weight: 700;
-  margin: 4px 0;
-}
-
-.ta-algo {
-  font-size: 0.76rem;
-  color: var(--muted);
-  text-align: right;
-}
-
-.ta-cards-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
-
-@media (min-width: 720px) {
-  .ta-cards-grid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
-}
-
-.ta-kv-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
   gap: 8px;
-  font-size: 0.85rem;
-  padding: 3px 0;
-  border-bottom: 1px dashed rgba(48, 54, 61, 0.45);
 }
 
-.ta-kv-row:last-child {
+.ta-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.82rem;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed rgba(48, 54, 61, 0.4);
+}
+
+.ta-detail-item:last-child {
   border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ta-detail-label {
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.ta-detail-val {
+  color: #c9d1d9;
 }
 
 .ta-disclaimer {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--muted);
-  border-top: 1px solid var(--border);
-  padding-top: 8px;
-  margin-top: 2px;
+  text-align: center;
+  padding-top: 4px;
 }
+
 
 
 

@@ -220,10 +220,13 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
     style_css = (root / "assets" / "style.css").read_text(encoding="utf-8")
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
-    assert "?v=20261120a" in index_html
+    assert "?v=20261120b" in index_html
     assert "技術分析" in index_html
     assert ".ta-panel" in style_css
     assert ".ta-detail-row" in style_css
+    assert ".ta-hero-card" in style_css
+    assert ".ta-ruler-card" in style_css
+    assert ".ta-details-wrapper" in style_css
 
     js_bin = shutil.which("node")
     if not js_bin:
@@ -326,16 +329,19 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
           throw new Error('Expected no expanded panel by default');
         }}
 
-        // 2. Expand XAUUSD -> single detail row directly beneath XAUUSD using formatCardPrice
+        // 2. Expand XAUUSD -> single detail row directly beneath XAUUSD using formatPriceWithCommas
         u.toggleTaSymbolForTest('XAUUSD');
         const h1 = tbodyEl.innerHTML;
         const count1 = (h1.match(/ta-detail-row/g) || []).length;
         if (count1 !== 1) throw new Error('Expected 1 expanded TA panel, got ' + count1);
-        if (!h1.includes('4091.20') || !h1.includes('3879.30')) {{
-          throw new Error('Expected formatCardPrice formatted S/R in XAUUSD panel: ' + h1);
+        if (!h1.includes('4,091.20') || !h1.includes('3,879.30')) {{
+          throw new Error('Expected comma-formatted S/R in XAUUSD panel: ' + h1);
         }}
         if (!h1.includes('收斂中，可能變盤') || !h1.includes('以上為依歷史數據與技術指標計算的參考點位，不是預測，也不是投資建議。')) {{
           throw new Error('Missing squeeze warning or disclaimer');
+        }}
+        if (!h1.includes('看詳細數據') || !h1.includes('歷史上碰到支撐，5 日內守住 70.7%（150 次）')) {{
+          throw new Error('Missing details toggle or sticky backtest text');
         }}
         const idxXau = h1.indexOf('data-symbol="XAUUSD"');
         const idxEur = h1.indexOf('data-symbol="EURUSD"');
@@ -344,11 +350,21 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
           throw new Error('Detail row not placed directly beneath XAUUSD');
         }}
 
-        // 3. Click EURUSD -> XAUUSD collapses, only EURUSD expanded (1.09500 via formatCardPrice)
+        // 3. Click EURUSD -> XAUUSD collapses, only EURUSD expanded (1.09500 via formatPriceWithCommas)
         u.toggleTaSymbolForTest('EURUSD');
         const h2 = tbodyEl.innerHTML;
-        if ((h2.match(/ta-detail-row/g) || []).length !== 1 || !h2.includes('1.09500') || h2.includes('4091.20')) {{
+        if ((h2.match(/ta-detail-row/g) || []).length !== 1 || !h2.includes('1.09500') || h2.includes('4,091.20')) {{
           throw new Error('Switching expanded row failed');
+        }}
+
+        // Verify details expand / collapse toggle
+        if (!h2.includes('ta-details-body hidden')) {{
+          throw new Error('Details should be hidden by default');
+        }}
+        u.toggleTaDetailsForTest('EURUSD');
+        const h2Expanded = tbodyEl.innerHTML;
+        if (h2Expanded.includes('ta-details-body hidden')) {{
+          throw new Error('Details should expand when toggled');
         }}
 
         // 4. Click EURUSD again -> collapses completely
