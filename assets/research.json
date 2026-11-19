@@ -1,224 +1,9 @@
 {
-  "generated_at_utc": "2026-11-19T02:49:21.944519+00:00",
+  "generated_at_utc": "2026-11-19T03:39:01.409859+00:00",
   "title": "深度研究 (In-Depth Research)",
   "subtitle": "Signal Desk 策略量化實證、多週期盲測與組合實驗報告",
   "disclaimer": "研究結果僅供參考，過去表現不代表未來，不構成投資建議。",
   "articles": [
-    {
-      "id": "combo",
-      "slug": "combo",
-      "title": "截長補短，能不能把策略組合得更好？",
-      "subtitle": "多策略組合配置、進場時機、濾網與停利機制之 10 年三段嚴格盲測",
-      "takeaway": "把幾個長線策略一起跑能把回撤砍半；其他『改良』看起來有進步，但大多是多冒風險或碰巧，考試帳戶仍用原版 L2。",
-      "badge": "研究完成",
-      "updated_at": "2026-11",
-      "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/combo/report.md",
-      "github_code": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/combo",
-      "sections": {
-        "anti_self_deception": {
-          "title": "一、怎麼防止自欺：三段切分、61 組參數與統計檢定",
-          "content": [
-            "研發策略最怕「過度擬合（Overfitting）」——只要調夠多次參數，隨便一個垃圾點子都能在歷史數據跑出暴利。為杜絕自欺欺人，本研究採取嚴格三道防線：",
-            "1. 資料三段切分：開發段（最早 60%，2016-01 ~ 2022-06，發想點子與初篩）、驗證段（25%，2022-07 ~ 2025-04，凍結挑選出的候選）、鎖定段（最後 15%，2025-05 ~ 2026-11，長達 1.5 年的完全盲測，全過程封箱、最後才解封跑一次）。",
-            "2. 嚴格多重測試扣罰（Deflated Sharpe Ratio, DSR）：全研究共測試 20 個點子、61 組參數組合。根據統計學，當測試 61 次時，即便純擲銅板也會碰巧出現年化夏普近 1.0 的漂亮結果。DSR 扣除了多重測試的運氣膨脹，只有真實技術機率 > 95%（碰巧機率 < 5%）才算通過。",
-            "3. 區塊自助抽樣（Block Bootstrap 檢定）：重抽 2,000 次日收益序列，檢定候選改良是否真正「在統計上顯著超越原版基準」。若 p-value > 0.05，代表所謂的超額報酬無法排除只是運氣碰巧。"
-          ],
-          "stats_summary": {
-            "total_ideas": 20,
-            "total_param_combos": 61,
-            "dev_period": "2016-01 至 2022-06 (~60%)",
-            "val_period": "2022-07 至 2025-04 (~25%)",
-            "lockbox_period": "2025-05 至 2026-11 (~15% 盲測)"
-          }
-        },
-        "truly_useful": {
-          "title": "二、真的有用：5a 多策略組合把回撤砍半，碰巧機率僅 1%",
-          "content": [
-            "1. 5a 多策略組合配置（L1 + L2 + L3 + L4 + F4）：唯一通過 Deflated Sharpe 顯著性檢定的頂級資產配置方案。",
-            "回撤砍半、全天候穩健：日線趨勢（L1、L2）、週線趨勢（L4、F4）與動能策略（L3）彼此日報酬相關係數極低（-0.03 ~ +0.08），能完美互相填補回撤。在開發段與驗證段，最大回撤從原版 L2 的 22.6% 與 11.5% 大幅砍半至 10.2% 與 7.0%；在 1.5 年鎖定段更維持 +20.96% 年化與 2.87% 的極低回撤。",
-            "統計顯著：10 年全週期年化夏普高達 1.481。扣除 61 次多重測試扣罰後，DSR 真實技術機率達 98.85%（碰巧機率僅 1.15%）。",
-            "重要適用條件與致命限制：多策略組合的威力來自『多個策略各自同時持有不同倉位』。如果放在自有資金或網站主帳戶，這是首選配置；但若放在『一次只能持有一單』的海妖考試（Kraken Prop Exam），通關率會從原版 L2 的 93.0% 暴跌至 18.4%——因為高頻的 L1/L3 小單會佔用唯一的持倉槽，擋住 L2 捕捉數倍大行情的機會（劣幣驅逐良幣）。"
-          ],
-          "takeaway_pill": "多開倉帳戶必選 5a 組合（回撤砍半）；單槽考試帳戶切勿混用，務必單壓原版 L2。"
-        },
-        "apparent_improvement": {
-          "title": "三、看起來有進步但要打折：策略合議實質加槓桿，週線過濾犧牲抗震力",
-          "content": [
-            "1. 4a 長線策略合議（至少 2 策略同向才出手，3 策略全同向加碼 1.25 倍）：",
-            "表面看似暴利：在鎖定段年化報酬衝上 +47.25%（原版 L2 為 +35.56%）。但仔細檢視每筆期望值，僅從 +0.6516R 微幅升至 +0.6831R，超額利潤主要來自『加碼 1.25 倍槓桿』所承受的額外風險，而非策略選股勝率變高。",
-            "統計未達標：Bootstrap 檢定顯著超越基準的碰巧機率 p = 0.056 (5.6% > 5%)，未達統計顯著水準。",
-            "海妖考試隱患：雖然通關天數縮短 102 天，但爆倉率反而從 5.85% 升至 9.47%，在極限風控下容易被放大的槓桿反咬一口。",
-            "2. 3d 週線趨勢過濾（已收盤週線在 20 週均線同側才做日線突破）：",
-            "表面數據良好：鎖定段期望值達 +0.7128R、PF 3.555，剔除了逆週線大趨勢的假突破。",
-            "海妖考試大幅退步：通關率從 93.04% 降至 83.29%，爆倉率從 5.85% 激增至 15.60%！原因在於過濾掉交易後樣本數減少，單一連虧對資金池的傷害加劇，容錯空間大幅壓縮。"
-          ]
-        },
-        "proven_useless": {
-          "title": "四、實測無效的迷思：等回檔漏大魚、平半倉腰斬利潤、S2 正式退休",
-          "content": [
-            "1. 迷思一：『日線突破太慢，等 1 小時 K 線回檔或掛限價單買便宜一點更好』→ 實測大敗。真正大級別突破行情通常一去不回頭。回檔 0.5×ATR 限價單（1c）成交率僅 23.8%，漏掉了高達 57.7%（30/52 筆）原本獲利超過 +2R 的超級暴利單！",
-            "2. 迷思二：『先平半倉落袋為安，剩下讓利潤奔跑』→ 實測大敗。部分止盈表面上勝率提高，但把真正的大贏家利潤腰斬，全週期期望值暴跌，純屬心理安慰劑。",
-            "3. 迷思三：『用短線 15 分 / 1 小時指標當日線濾網』→ 實測無效。短線充滿隨機噪音，加入日線系統只會增加虛假過濾與過度擬合。",
-            "4. S2 4小時突破救援實驗宣告失敗，S2 正式退休：即便利用户群組 3 之長均線與環境濾網搶救，S2 在鎖定段獲利因子 PF 僅 0.851（淨虧損 -15.27%），驗證段 PF 也僅 1.017。數據證實 4 小時震盪突破無法克服點差摩擦，S2 正式從實盤名單除役。"
-          ]
-        },
-        "cautions": {
-          "title": "五、注意事項：鎖定段大牛市背景，切勿把順風當常態",
-          "content": [
-            "必須特別警惕：鎖定段（2025-05 ~ 2026-11，約 1.5 年）恰逢黃金歷史新高、加密貨幣爆發與美股長牛共振的罕見大多頭行情。",
-            "在此期間，所有順勢突破策略（包含原版 L2 PF 3.40、年化 +35.6%）均展現了遠高於歷史均值的爆發力。這段盲測證實了候選策略在大趨勢中能咬住行情，但絕不能將這段時間的極端高報酬視為未來的常態基準。"
-          ]
-        }
-      },
-      "tables": {
-        "lockbox_comparison": [
-          {
-            "id": "L2_orig",
-            "name": "原版 L2（基準：55 日突破 + 20 日低點移動停利）",
-            "is_baseline": true,
-            "expectancy_r": 0.6516,
-            "profit_factor": 3.399,
-            "cagr_pct": 35.56,
-            "max_drawdown_pct": 3.17,
-            "mar_ratio": 11.207
-          },
-          {
-            "id": "L1_orig",
-            "name": "原版 L1（基準：20 日突破 + EMA20 移動停利）",
-            "is_baseline": true,
-            "expectancy_r": 0.1459,
-            "profit_factor": 1.631,
-            "cagr_pct": 15.73,
-            "max_drawdown_pct": 6.73,
-            "mar_ratio": 2.336
-          },
-          {
-            "id": "3a_trend_regime",
-            "name": "3a 趨勢強度與長均線同側過濾（SMA200 同側 / ADX 門檻）",
-            "is_baseline": false,
-            "expectancy_r": 0.4731,
-            "profit_factor": 3.115,
-            "cagr_pct": 30.55,
-            "max_drawdown_pct": 6.95,
-            "mar_ratio": 4.397
-          },
-          {
-            "id": "5a_multi_combo",
-            "name": "5a 多策略組合配置（L1+L2+L3+L4+F4：等權 / 風險平價 / 相關性調權）",
-            "is_baseline": false,
-            "expectancy_r": 0.1532,
-            "profit_factor": 1.916,
-            "cagr_pct": 20.96,
-            "max_drawdown_pct": 2.87,
-            "mar_ratio": 7.299
-          },
-          {
-            "id": "2a_chandelier",
-            "name": "2a 移動停利改用 Chandelier ATR 倍數（2.5 / 3.0 / 4.0×ATR）",
-            "is_baseline": false,
-            "expectancy_r": 0.1949,
-            "profit_factor": 1.613,
-            "cagr_pct": 9.44,
-            "max_drawdown_pct": 4.3,
-            "mar_ratio": 2.196
-          },
-          {
-            "id": "4a_daily_consensus",
-            "name": "4a 長線策略合議（L1、L2、L4/F4 週線趨勢同向才做或動態加減碼）",
-            "is_baseline": false,
-            "expectancy_r": 0.6831,
-            "profit_factor": 3.648,
-            "cagr_pct": 47.25,
-            "max_drawdown_pct": 3.29,
-            "mar_ratio": 14.347
-          },
-          {
-            "id": "3d_mtf_weekly",
-            "name": "3d 多週期一致過濾（週線趨勢方向與日線突破訊號同向才做）",
-            "is_baseline": false,
-            "expectancy_r": 0.7128,
-            "profit_factor": 3.555,
-            "cagr_pct": 36.53,
-            "max_drawdown_pct": 3.18,
-            "mar_ratio": 11.5
-          }
-        ],
-        "kraken_scenarios": [
-          {
-            "id": "L2_orig",
-            "name": "原版 L2（基準：55 日突破）",
-            "is_baseline": true,
-            "pass_rate_pct": 93.04,
-            "bust_rate_pct": 5.85,
-            "median_days": 850.5,
-            "notes": "通關率高達 93%，爆倉率僅 5.8%，單槽考試帳戶首選主力"
-          },
-          {
-            "id": "4a_daily_consensus",
-            "name": "候選 4：4a 長線策略合議（全同向加碼 1.25x）",
-            "is_baseline": false,
-            "pass_rate_pct": 89.42,
-            "bust_rate_pct": 9.47,
-            "median_days": 748.0,
-            "notes": "加碼提高爆倉率至 9.5%，但達標天數比原版 L2 縮短 102 天"
-          },
-          {
-            "id": "3d_mtf_weekly",
-            "name": "候選 5：3d 週線一致過濾（20 週均線同側）",
-            "is_baseline": false,
-            "pass_rate_pct": 83.29,
-            "bust_rate_pct": 15.6,
-            "median_days": 720.0,
-            "notes": "過濾逆勢單後交易筆數減少，遇震盪回撤時抗爆倉韌性降低"
-          },
-          {
-            "id": "2a_chandelier",
-            "name": "候選 3：2a 移動停利改 Chandelier（4.0×ATR）",
-            "is_baseline": false,
-            "pass_rate_pct": 59.89,
-            "bust_rate_pct": 21.17,
-            "median_days": 625.0,
-            "notes": "急漲洗盤提早停利，在趨勢大年每筆獲利縮水，通關率跌破 60%"
-          },
-          {
-            "id": "3a_trend_regime",
-            "name": "候選 1：3a 趨勢強度過濾（SMA200 + ADX>20）",
-            "is_baseline": false,
-            "pass_rate_pct": 24.79,
-            "bust_rate_pct": 52.09,
-            "median_days": 329.0,
-            "notes": "門檻過嚴錯失低位第一波起漲，通關率崩跌至 24.8%"
-          },
-          {
-            "id": "L4_orig",
-            "name": "原版 L4（基準：主流週線趨勢）",
-            "is_baseline": true,
-            "pass_rate_pct": 19.22,
-            "bust_rate_pct": 0.0,
-            "median_days": 754.0,
-            "notes": "交易頻率極低、完全零爆倉，但在單槽考試中達標時間過長"
-          },
-          {
-            "id": "L1_orig",
-            "name": "原版 L1（基準：20 日突破）",
-            "is_baseline": true,
-            "pass_rate_pct": 18.66,
-            "bust_rate_pct": 40.39,
-            "median_days": 526.0,
-            "notes": "交易頻繁且震盪磨損較多，爆倉率高達 40.4%"
-          },
-          {
-            "id": "5a_multi_combo",
-            "name": "候選 2：5a 多策略組合配置（各 20% 等權）",
-            "is_baseline": false,
-            "pass_rate_pct": 18.38,
-            "bust_rate_pct": 51.53,
-            "median_days": 633.5,
-            "notes": "單槽限制下 L1/L3 小單佔用唯一持倉槽擋住 L2 大行情（劣幣驅逐良幣）"
-          }
-        ]
-      }
-    },
     {
       "id": "short_term",
       "slug": "contest-short",
@@ -765,6 +550,221 @@
           {
             "title": "短線研究程式碼與設定 (research/contest_15m)",
             "url": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/contest_15m"
+          }
+        ]
+      }
+    },
+    {
+      "id": "combo",
+      "slug": "combo",
+      "title": "截長補短，能不能把策略組合得更好？",
+      "subtitle": "多策略組合配置、進場時機、濾網與停利機制之 10 年三段嚴格盲測",
+      "takeaway": "把幾個長線策略一起跑能把回撤砍半；其他『改良』看起來有進步，但大多是多冒風險或碰巧，考試帳戶仍用原版 L2。",
+      "badge": "研究完成",
+      "updated_at": "2026-11",
+      "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/combo/report.md",
+      "github_code": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/combo",
+      "sections": {
+        "anti_self_deception": {
+          "title": "一、怎麼防止自欺：三段切分、61 組參數與統計檢定",
+          "content": [
+            "研發策略最怕「過度擬合（Overfitting）」——只要調夠多次參數，隨便一個垃圾點子都能在歷史數據跑出暴利。為杜絕自欺欺人，本研究採取嚴格三道防線：",
+            "1. 資料三段切分：開發段（最早 60%，2016-01 ~ 2022-06，發想點子與初篩）、驗證段（25%，2022-07 ~ 2025-04，凍結挑選出的候選）、鎖定段（最後 15%，2025-05 ~ 2026-11，長達 1.5 年的完全盲測，全過程封箱、最後才解封跑一次）。",
+            "2. 嚴格多重測試扣罰（Deflated Sharpe Ratio, DSR）：全研究共測試 20 個點子、61 組參數組合。根據統計學，當測試 61 次時，即便純擲銅板也會碰巧出現年化夏普近 1.0 的漂亮結果。DSR 扣除了多重測試的運氣膨脹，只有真實技術機率 > 95%（碰巧機率 < 5%）才算通過。",
+            "3. 區塊自助抽樣（Block Bootstrap 檢定）：重抽 2,000 次日收益序列，檢定候選改良是否真正「在統計上顯著超越原版基準」。若 p-value > 0.05，代表所謂的超額報酬無法排除只是運氣碰巧。"
+          ],
+          "stats_summary": {
+            "total_ideas": 20,
+            "total_param_combos": 61,
+            "dev_period": "2016-01 至 2022-06 (~60%)",
+            "val_period": "2022-07 至 2025-04 (~25%)",
+            "lockbox_period": "2025-05 至 2026-11 (~15% 盲測)"
+          }
+        },
+        "truly_useful": {
+          "title": "二、真的有用：5a 多策略組合把回撤砍半，碰巧機率僅 1%",
+          "content": [
+            "1. 5a 多策略組合配置（L1 + L2 + L3 + L4 + F4）：唯一通過 Deflated Sharpe 顯著性檢定的頂級資產配置方案。",
+            "回撤砍半、全天候穩健：日線趨勢（L1、L2）、週線趨勢（L4、F4）與動能策略（L3）彼此日報酬相關係數極低（-0.03 ~ +0.08），能完美互相填補回撤。在開發段與驗證段，最大回撤從原版 L2 的 22.6% 與 11.5% 大幅砍半至 10.2% 與 7.0%；在 1.5 年鎖定段更維持 +20.96% 年化與 2.87% 的極低回撤。",
+            "統計顯著：10 年全週期年化夏普高達 1.481。扣除 61 次多重測試扣罰後，DSR 真實技術機率達 98.85%（碰巧機率僅 1.15%）。",
+            "重要適用條件與致命限制：多策略組合的威力來自『多個策略各自同時持有不同倉位』。如果放在自有資金或網站主帳戶，這是首選配置；但若放在『一次只能持有一單』的海妖考試（Kraken Prop Exam），通關率會從原版 L2 的 93.0% 暴跌至 18.4%——因為高頻的 L1/L3 小單會佔用唯一的持倉槽，擋住 L2 捕捉數倍大行情的機會（劣幣驅逐良幣）。"
+          ],
+          "takeaway_pill": "多開倉帳戶必選 5a 組合（回撤砍半）；單槽考試帳戶切勿混用，務必單壓原版 L2。"
+        },
+        "apparent_improvement": {
+          "title": "三、看起來有進步但要打折：策略合議實質加槓桿，週線過濾犧牲抗震力",
+          "content": [
+            "1. 4a 長線策略合議（至少 2 策略同向才出手，3 策略全同向加碼 1.25 倍）：",
+            "表面看似暴利：在鎖定段年化報酬衝上 +47.25%（原版 L2 為 +35.56%）。但仔細檢視每筆期望值，僅從 +0.6516R 微幅升至 +0.6831R，超額利潤主要來自『加碼 1.25 倍槓桿』所承受的額外風險，而非策略選股勝率變高。",
+            "統計未達標：Bootstrap 檢定顯著超越基準的碰巧機率 p = 0.056 (5.6% > 5%)，未達統計顯著水準。",
+            "海妖考試隱患：雖然通關天數縮短 102 天，但爆倉率反而從 5.85% 升至 9.47%，在極限風控下容易被放大的槓桿反咬一口。",
+            "2. 3d 週線趨勢過濾（已收盤週線在 20 週均線同側才做日線突破）：",
+            "表面數據良好：鎖定段期望值達 +0.7128R、PF 3.555，剔除了逆週線大趨勢的假突破。",
+            "海妖考試大幅退步：通關率從 93.04% 降至 83.29%，爆倉率從 5.85% 激增至 15.60%！原因在於過濾掉交易後樣本數減少，單一連虧對資金池的傷害加劇，容錯空間大幅壓縮。"
+          ]
+        },
+        "proven_useless": {
+          "title": "四、實測無效的迷思：等回檔漏大魚、平半倉腰斬利潤、S2 正式退休",
+          "content": [
+            "1. 迷思一：『日線突破太慢，等 1 小時 K 線回檔或掛限價單買便宜一點更好』→ 實測大敗。真正大級別突破行情通常一去不回頭。回檔 0.5×ATR 限價單（1c）成交率僅 23.8%，漏掉了高達 57.7%（30/52 筆）原本獲利超過 +2R 的超級暴利單！",
+            "2. 迷思二：『先平半倉落袋為安，剩下讓利潤奔跑』→ 實測大敗。部分止盈表面上勝率提高，但把真正的大贏家利潤腰斬，全週期期望值暴跌，純屬心理安慰劑。",
+            "3. 迷思三：『用短線 15 分 / 1 小時指標當日線濾網』→ 實測無效。短線充滿隨機噪音，加入日線系統只會增加虛假過濾與過度擬合。",
+            "4. S2 4小時突破救援實驗宣告失敗，S2 正式退休：即便利用户群組 3 之長均線與環境濾網搶救，S2 在鎖定段獲利因子 PF 僅 0.851（淨虧損 -15.27%），驗證段 PF 也僅 1.017。數據證實 4 小時震盪突破無法克服點差摩擦，S2 正式從實盤名單除役。"
+          ]
+        },
+        "cautions": {
+          "title": "五、注意事項：鎖定段大牛市背景，切勿把順風當常態",
+          "content": [
+            "必須特別警惕：鎖定段（2025-05 ~ 2026-11，約 1.5 年）恰逢黃金歷史新高、加密貨幣爆發與美股長牛共振的罕見大多頭行情。",
+            "在此期間，所有順勢突破策略（包含原版 L2 PF 3.40、年化 +35.6%）均展現了遠高於歷史均值的爆發力。這段盲測證實了候選策略在大趨勢中能咬住行情，但絕不能將這段時間的極端高報酬視為未來的常態基準。"
+          ]
+        }
+      },
+      "tables": {
+        "lockbox_comparison": [
+          {
+            "id": "L2_orig",
+            "name": "原版 L2（基準：55 日突破 + 20 日低點移動停利）",
+            "is_baseline": true,
+            "expectancy_r": 0.6516,
+            "profit_factor": 3.399,
+            "cagr_pct": 35.56,
+            "max_drawdown_pct": 3.17,
+            "mar_ratio": 11.207
+          },
+          {
+            "id": "L1_orig",
+            "name": "原版 L1（基準：20 日突破 + EMA20 移動停利）",
+            "is_baseline": true,
+            "expectancy_r": 0.1459,
+            "profit_factor": 1.631,
+            "cagr_pct": 15.73,
+            "max_drawdown_pct": 6.73,
+            "mar_ratio": 2.336
+          },
+          {
+            "id": "3a_trend_regime",
+            "name": "3a 趨勢強度與長均線同側過濾（SMA200 同側 / ADX 門檻）",
+            "is_baseline": false,
+            "expectancy_r": 0.4731,
+            "profit_factor": 3.115,
+            "cagr_pct": 30.55,
+            "max_drawdown_pct": 6.95,
+            "mar_ratio": 4.397
+          },
+          {
+            "id": "5a_multi_combo",
+            "name": "5a 多策略組合配置（L1+L2+L3+L4+F4：等權 / 風險平價 / 相關性調權）",
+            "is_baseline": false,
+            "expectancy_r": 0.1532,
+            "profit_factor": 1.916,
+            "cagr_pct": 20.96,
+            "max_drawdown_pct": 2.87,
+            "mar_ratio": 7.299
+          },
+          {
+            "id": "2a_chandelier",
+            "name": "2a 移動停利改用 Chandelier ATR 倍數（2.5 / 3.0 / 4.0×ATR）",
+            "is_baseline": false,
+            "expectancy_r": 0.1949,
+            "profit_factor": 1.613,
+            "cagr_pct": 9.44,
+            "max_drawdown_pct": 4.3,
+            "mar_ratio": 2.196
+          },
+          {
+            "id": "4a_daily_consensus",
+            "name": "4a 長線策略合議（L1、L2、L4/F4 週線趨勢同向才做或動態加減碼）",
+            "is_baseline": false,
+            "expectancy_r": 0.6831,
+            "profit_factor": 3.648,
+            "cagr_pct": 47.25,
+            "max_drawdown_pct": 3.29,
+            "mar_ratio": 14.347
+          },
+          {
+            "id": "3d_mtf_weekly",
+            "name": "3d 多週期一致過濾（週線趨勢方向與日線突破訊號同向才做）",
+            "is_baseline": false,
+            "expectancy_r": 0.7128,
+            "profit_factor": 3.555,
+            "cagr_pct": 36.53,
+            "max_drawdown_pct": 3.18,
+            "mar_ratio": 11.5
+          }
+        ],
+        "kraken_scenarios": [
+          {
+            "id": "L2_orig",
+            "name": "原版 L2（基準：55 日突破）",
+            "is_baseline": true,
+            "pass_rate_pct": 93.04,
+            "bust_rate_pct": 5.85,
+            "median_days": 850.5,
+            "notes": "通關率高達 93%，爆倉率僅 5.8%，單槽考試帳戶首選主力"
+          },
+          {
+            "id": "4a_daily_consensus",
+            "name": "候選 4：4a 長線策略合議（全同向加碼 1.25x）",
+            "is_baseline": false,
+            "pass_rate_pct": 89.42,
+            "bust_rate_pct": 9.47,
+            "median_days": 748.0,
+            "notes": "加碼提高爆倉率至 9.5%，但達標天數比原版 L2 縮短 102 天"
+          },
+          {
+            "id": "3d_mtf_weekly",
+            "name": "候選 5：3d 週線一致過濾（20 週均線同側）",
+            "is_baseline": false,
+            "pass_rate_pct": 83.29,
+            "bust_rate_pct": 15.6,
+            "median_days": 720.0,
+            "notes": "過濾逆勢單後交易筆數減少，遇震盪回撤時抗爆倉韌性降低"
+          },
+          {
+            "id": "2a_chandelier",
+            "name": "候選 3：2a 移動停利改 Chandelier（4.0×ATR）",
+            "is_baseline": false,
+            "pass_rate_pct": 59.89,
+            "bust_rate_pct": 21.17,
+            "median_days": 625.0,
+            "notes": "急漲洗盤提早停利，在趨勢大年每筆獲利縮水，通關率跌破 60%"
+          },
+          {
+            "id": "3a_trend_regime",
+            "name": "候選 1：3a 趨勢強度過濾（SMA200 + ADX>20）",
+            "is_baseline": false,
+            "pass_rate_pct": 24.79,
+            "bust_rate_pct": 52.09,
+            "median_days": 329.0,
+            "notes": "門檻過嚴錯失低位第一波起漲，通關率崩跌至 24.8%"
+          },
+          {
+            "id": "L4_orig",
+            "name": "原版 L4（基準：主流週線趨勢）",
+            "is_baseline": true,
+            "pass_rate_pct": 19.22,
+            "bust_rate_pct": 0.0,
+            "median_days": 754.0,
+            "notes": "交易頻率極低、完全零爆倉，但在單槽考試中達標時間過長"
+          },
+          {
+            "id": "L1_orig",
+            "name": "原版 L1（基準：20 日突破）",
+            "is_baseline": true,
+            "pass_rate_pct": 18.66,
+            "bust_rate_pct": 40.39,
+            "median_days": 526.0,
+            "notes": "交易頻繁且震盪磨損較多，爆倉率高達 40.4%"
+          },
+          {
+            "id": "5a_multi_combo",
+            "name": "候選 2：5a 多策略組合配置（各 20% 等權）",
+            "is_baseline": false,
+            "pass_rate_pct": 18.38,
+            "bust_rate_pct": 51.53,
+            "median_days": 633.5,
+            "notes": "單槽限制下 L1/L3 小單佔用唯一持倉槽擋住 L2 大行情（劣幣驅逐良幣）"
           }
         ]
       }

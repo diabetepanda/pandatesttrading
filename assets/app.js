@@ -2206,16 +2206,16 @@
       <section class="card research-article" id="article-combo">
         <div class="section-header article-header" onclick="toggleResearchArticle('combo')">
           <div>
-            <h2>第 1 篇：${escapeHtml(art.title)}</h2>
+            <h2>第 2 篇：${escapeHtml(art.title)}</h2>
             <p class="subtitle">${escapeHtml(art.subtitle || "")}</p>
           </div>
           <div class="article-header-actions" onclick="event.stopPropagation()">
             <span class="badge badge-ok">${escapeHtml(art.badge || "研究完成")}</span>
-            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-combo" onclick="toggleResearchArticle('combo')">收折</button>
+            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-combo" onclick="toggleResearchArticle('combo')">展開閱讀</button>
           </div>
         </div>
 
-        <div class="article-body" id="body-combo">
+        <div class="article-body collapsed" id="body-combo">
           <div class="callout callout-takeaway">
             <p>💡 <strong>核心結論：</strong>${takeaway}</p>
           </div>
@@ -2521,8 +2521,8 @@
       return renderContestResearchHtml(data);
     }
     const articles = Array.isArray(data.articles) ? data.articles : [];
-    const comboArt = articles.find((a) => a.id === "combo") || articles[0];
-    const shortArt = articles.find((a) => a.id === "short_term") || articles[1];
+    const shortArt = articles.find((a) => a.id === "short_term") || articles[0];
+    const comboArt = articles.find((a) => a.id === "combo") || articles[1];
     const examArt = articles.find((a) => a.id === "exam_sensitivity") || articles[2];
 
     return `
@@ -2535,10 +2535,20 @@
         </div>
 
         <div class="research-toc">
+          <div class="research-toc-card" onclick="scrollToResearchArticle('short_term')">
+            <div class="toc-card-header">
+              <span class="badge badge-danger">${escapeHtml(shortArt?.badge || "全部未通過")}</span>
+              <span class="toc-num">第 1 篇</span>
+            </div>
+            <h3 class="toc-title">${escapeHtml(shortArt?.title || "短線策略能拿去比賽嗎？")}</h3>
+            <p class="toc-takeaway">${escapeHtml(shortArt?.takeaway || "")}</p>
+            <div class="toc-action">點擊展開閱讀 ➔</div>
+          </div>
+
           <div class="research-toc-card" onclick="scrollToResearchArticle('combo')">
             <div class="toc-card-header">
               <span class="badge badge-ok">${escapeHtml(comboArt?.badge || "研究完成")}</span>
-              <span class="toc-num">第 1 篇</span>
+              <span class="toc-num">第 2 篇</span>
             </div>
             <h3 class="toc-title">${escapeHtml(comboArt?.title || "截長補短，能不能把策略組合得更好？")}</h3>
             <p class="toc-takeaway">${escapeHtml(comboArt?.takeaway || "")}</p>
@@ -2554,36 +2564,27 @@
             <p class="toc-takeaway">${escapeHtml(examArt?.takeaway || "")}</p>
             <div class="toc-action">點擊展開閱讀 ➔</div>
           </div>
+        </div>
+      </section>
 
-          <div class="research-toc-card" onclick="scrollToResearchArticle('short_term')">
-            <div class="toc-card-header">
-              <span class="badge badge-danger">${escapeHtml(shortArt?.badge || "全部未通過")}</span>
-              <span class="toc-num">第 2 篇</span>
-            </div>
-            <h3 class="toc-title">${escapeHtml(shortArt?.title || "短線策略能拿去比賽嗎？")}</h3>
-            <p class="toc-takeaway">${escapeHtml(shortArt?.takeaway || "")}</p>
-            <div class="toc-action">點擊展開閱讀 ➔</div>
+      <section class="card research-article" id="article-short_term">
+        <div class="section-header article-header" onclick="toggleResearchArticle('short_term')">
+          <div>
+            <h2>第 1 篇：${escapeHtml(shortArt?.title || "短線策略能拿去比賽嗎？")}</h2>
+            <p class="subtitle">${escapeHtml(shortArt?.subtitle || "")}</p>
           </div>
+          <div class="article-header-actions" onclick="event.stopPropagation()">
+            <span class="badge badge-danger">${escapeHtml(shortArt?.badge || "全部未通過")}</span>
+            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-short_term" onclick="toggleResearchArticle('short_term')">收折</button>
+          </div>
+        </div>
+        <div class="article-body" id="body-short_term">
+          ${renderContestResearchHtml(shortArt)}
         </div>
       </section>
 
       ${renderComboArticleHtml(comboArt)}
       ${renderExamSensitivityArticleHtml(examArt)}
-      <section class="card research-article" id="article-short_term">
-        <div class="section-header article-header" onclick="toggleResearchArticle('short_term')">
-          <div>
-            <h2>第 2 篇：${escapeHtml(shortArt?.title || "短線策略能拿去比賽嗎？")}</h2>
-            <p class="subtitle">${escapeHtml(shortArt?.subtitle || "")}</p>
-          </div>
-          <div class="article-header-actions" onclick="event.stopPropagation()">
-            <span class="badge badge-danger">${escapeHtml(shortArt?.badge || "全部未通過")}</span>
-            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-short_term" onclick="toggleResearchArticle('short_term')">展開閱讀</button>
-          </div>
-        </div>
-        <div class="article-body collapsed" id="body-short_term">
-          ${renderContestResearchHtml(shortArt)}
-        </div>
-      </section>
     `;
   }
 

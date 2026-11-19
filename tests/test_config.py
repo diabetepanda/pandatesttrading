@@ -154,7 +154,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261119b" in index_html
+    assert "?v=20261119c" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -834,35 +834,42 @@ def test_in_depth_research_json_and_rendering() -> None:
     root = Path(__file__).resolve().parent.parent
     data = build_research_dict()
 
-    # 1. Articles structure validation
+    # 1. Articles structure validation (Chronological order: short_term -> combo -> exam_sensitivity)
     assert len(data["articles"]) == 3
     art1, art2, art3 = data["articles"][0], data["articles"][1], data["articles"][2]
 
-    # Article 1: Combo research
-    assert art1["title"] == "截長補短，能不能把策略組合得更好？"
-    assert "把幾個長線策略一起跑能把回撤砍半" in art1["takeaway"]
-    assert "考試帳戶仍用原版 L2" in art1["takeaway"]
+    # Article 1: Contest short-term (Earliest research)
+    assert art1["id"] == "short_term"
+    assert art1["title"] == "短線策略能拿去比賽嗎？"
+    assert "我們測了 7 種短線策略" in art1["takeaway"]
+    assert "沒有一個有穩定優勢" in art1["takeaway"]
 
-    sec1 = art1["sections"]
-    assert "三段切分" in sec1["anti_self_deception"]["title"]
-    assert "61 組" in sec1["anti_self_deception"]["title"] or "61" in str(sec1["anti_self_deception"])
-    assert "5a 多策略組合" in sec1["truly_useful"]["title"]
-    assert "回撤砍半" in sec1["truly_useful"]["title"]
-    assert "18.4%" in str(sec1["truly_useful"]["content"]) or "18%" in str(sec1["truly_useful"]["content"])
-    assert "4a 長線策略合議" in sec1["apparent_improvement"]["title"] or "策略合議" in sec1["apparent_improvement"]["title"]
-    assert "3d" in str(sec1["apparent_improvement"]["content"])
-    assert "S2 正式退休" in sec1["proven_useless"]["title"] or "S2" in str(sec1["proven_useless"]["content"])
-    assert "大牛市" in sec1["cautions"]["title"] or "大牛市" in str(sec1["cautions"]["content"])
+    # Article 2: Combo research (Second research)
+    assert art2["id"] == "combo"
+    assert art2["title"] == "截長補短，能不能把策略組合得更好？"
+    assert "把幾個長線策略一起跑能把回撤砍半" in art2["takeaway"]
+    assert "考試帳戶仍用原版 L2" in art2["takeaway"]
 
-    # Tables in Article 1
-    lockbox_table = art1["tables"]["lockbox_comparison"]
+    sec2 = art2["sections"]
+    assert "三段切分" in sec2["anti_self_deception"]["title"]
+    assert "61 組" in sec2["anti_self_deception"]["title"] or "61" in str(sec2["anti_self_deception"])
+    assert "5a 多策略組合" in sec2["truly_useful"]["title"]
+    assert "回撤砍半" in sec2["truly_useful"]["title"]
+    assert "18.4%" in str(sec2["truly_useful"]["content"]) or "18%" in str(sec2["truly_useful"]["content"])
+    assert "4a 長線策略合議" in sec2["apparent_improvement"]["title"] or "策略合議" in sec2["apparent_improvement"]["title"]
+    assert "3d" in str(sec2["apparent_improvement"]["content"])
+    assert "S2 正式退休" in sec2["proven_useless"]["title"] or "S2" in str(sec2["proven_useless"]["content"])
+    assert "大牛市" in sec2["cautions"]["title"] or "大牛市" in str(sec2["cautions"]["content"])
+
+    # Tables in Article 2
+    lockbox_table = art2["tables"]["lockbox_comparison"]
     assert len(lockbox_table) >= 7  # L2, L1 + 5 candidates
     l2_row = next(r for r in lockbox_table if r["id"] == "L2_orig")
     assert l2_row["profit_factor"] >= 3.0
     l1_row = next(r for r in lockbox_table if r["id"] == "L1_orig")
     assert l1_row["profit_factor"] >= 1.5
 
-    kraken_table = art1["tables"]["kraken_scenarios"]
+    kraken_table = art2["tables"]["kraken_scenarios"]
     assert len(kraken_table) >= 8
     k_l2 = next(r for r in kraken_table if r["id"] == "L2_orig")
     assert k_l2["pass_rate_pct"] > 90.0
@@ -871,12 +878,8 @@ def test_in_depth_research_json_and_rendering() -> None:
     assert k_5a["pass_rate_pct"] < 25.0
     assert k_5a["bust_rate_pct"] > 50.0
 
-    # Article 2: Contest short-term
-    assert art2["title"] == "短線策略能拿去比賽嗎？"
-    assert "我們測了 7 種短線策略" in art2["takeaway"]
-    assert "沒有一個有穩定優勢" in art2["takeaway"]
-
-    # Article 3: Exam sensitivity
+    # Article 3: Exam sensitivity (Latest research)
+    assert art3["id"] == "exam_sensitivity"
     assert art3["title"] == "考試回撤規則放寬，結果會不一樣嗎？"
     assert "回撤放寬到 10% 主要是讓爆倉風險幾乎歸零" in art3["takeaway"]
     assert "有 30 天時限的考試幾乎過不了" in art3["takeaway"]
@@ -959,10 +962,39 @@ def test_in_depth_research_json_and_rendering() -> None:
           throw new Error('renderResearchHtml missing TOC article markers');
         }}
 
-        // Verify Article 1 content
-        if (!html.includes('截長補短，能不能把策略組合得更好？')) {{
-          throw new Error('renderResearchHtml missing Article 1 title');
+        // Verify TOC order: short_term (1) -> combo (2) -> exam_sensitivity (3)
+        const tocShort = html.indexOf("scrollToResearchArticle('short_term')");
+        const tocCombo = html.indexOf("scrollToResearchArticle('combo')");
+        const tocExam = html.indexOf("scrollToResearchArticle('exam_sensitivity')");
+        if (tocShort === -1 || tocCombo === -1 || tocExam === -1 || tocShort >= tocCombo || tocCombo >= tocExam) {{
+          throw new Error('TOC cards not in chronological order (short_term -> combo -> exam_sensitivity)');
         }}
+
+        // Verify article headers order and numbering
+        const idx1 = html.indexOf('第 1 篇：短線策略能拿去比賽嗎？');
+        const idx2 = html.indexOf('第 2 篇：截長補短，能不能把策略組合得更好？');
+        const idx3 = html.indexOf('第 3 篇：考試回撤規則放寬，結果會不一樣嗎？');
+        if (idx1 === -1 || idx2 === -1 || idx3 === -1 || idx1 >= idx2 || idx2 >= idx3) {{
+          throw new Error('Article sections not rendered in chronological order (1 -> 2 -> 3)');
+        }}
+
+        // Verify default expansion: Article 1 expanded, Article 2 & 3 collapsed
+        if (html.includes('class="article-body collapsed" id="body-short_term"') || html.includes('id="body-short_term" class="article-body collapsed"')) {{
+          throw new Error('Article 1 should be expanded by default (no collapsed class)');
+        }}
+        if (!html.includes('class="article-body collapsed" id="body-combo"') && !html.includes('id="body-combo" class="article-body collapsed"')) {{
+          throw new Error('Article 2 should be collapsed by default');
+        }}
+        if (!html.includes('class="article-body collapsed" id="body-exam_sensitivity"') && !html.includes('id="body-exam_sensitivity" class="article-body collapsed"')) {{
+          throw new Error('Article 3 should be collapsed by default');
+        }}
+
+        // Verify Article 1 content (Contest short-term)
+        if (!html.includes('我們測了 7 種短線策略')) {{
+          throw new Error('renderResearchHtml missing Article 1 takeaway');
+        }}
+
+        // Verify Article 2 content (Combo)
         if (!html.includes('5a 多策略組合')) {{
           throw new Error('renderResearchHtml missing 5a combo');
         }}
@@ -973,18 +1005,7 @@ def test_in_depth_research_json_and_rendering() -> None:
           throw new Error('renderResearchHtml missing Kraken simulation');
         }}
 
-        // Verify Article 2 content
-        if (!html.includes('短線策略能拿去比賽嗎？')) {{
-          throw new Error('renderResearchHtml missing Article 2 title');
-        }}
-        if (!html.includes('我們測了 7 種短線策略')) {{
-          throw new Error('renderResearchHtml missing Article 2 takeaway');
-        }}
-
-        // Verify Article 3 content
-        if (!html.includes('考試回撤規則放寬，結果會不一樣嗎？')) {{
-          throw new Error('renderResearchHtml missing Article 3 title');
-        }}
+        // Verify Article 3 content (Exam sensitivity)
         if (!html.includes('回撤放寬到 10% 主要是讓爆倉風險幾乎歸零')) {{
           throw new Error('renderResearchHtml missing Article 3 takeaway');
         }}

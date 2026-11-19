@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Build static JSON for the Signal Desk "In-Depth Research" (深度研究) tab.
 
-Compiles data for:
-  - Article 1: 「截長補短，能不能把策略組合得更好？」(Combo research: L1/L2/L3/L4/F4 & improvements)
-  - Article 2: 「短線策略能拿去比賽嗎？」(Contest short-term research: 7 strategies on 1h/15m)
+Compiles data chronologically for:
+  - Article 1: 「短線策略能拿去比賽嗎？」(Contest short-term research: 7 strategies on 1h/15m)
+  - Article 2: 「截長補短，能不能把策略組合得更好？」(Combo research: L1/L2/L3/L4/F4 & improvements)
+  - Article 3: 「考試回撤規則放寬，結果會不一樣嗎？」(Exam drawdown sensitivity study)
 
 Outputs:
   - data/research.json
@@ -588,7 +589,7 @@ def build_research_dict() -> dict:
         "title": "深度研究 (In-Depth Research)",
         "subtitle": "Signal Desk 策略量化實證、多週期盲測與組合實驗報告",
         "disclaimer": "研究結果僅供參考，過去表現不代表未來，不構成投資建議。",
-        "articles": [article_combo, article_short, article_exam],
+        "articles": [article_short, article_combo, article_exam],
     }
     return full_payload
 
@@ -611,7 +612,7 @@ def main() -> None:
     print(f"Successfully generated {data_file} and {assets_file}")
 
     # Maintain contest_research.json for backward compatibility
-    article_short = payload["articles"][1]
+    article_short = next(a for a in payload["articles"] if a["id"] == "short_term")
     legacy_payload = {
         "generated_at_utc": payload["generated_at_utc"],
         "takeaway": article_short["takeaway"],
