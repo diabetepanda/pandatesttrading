@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-11-19T18:33:49Z",
+  "updated_at_utc": "2026-11-19T18:48:51Z",
   "disclaimer": "以上為依歷史數據與技術指標計算的參考點位，不是預測，也不是投資建議。",
   "symbols_count": 42,
   "symbols": {
@@ -7,18 +7,26 @@
       "symbol": "BTCUSDT",
       "display_name": "Bitcoin (BTC/USDT)",
       "market": "crypto",
-      "latest_price": 63275.64,
+      "latest_price": 63035.84,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
-      "summary": "下降趨勢，波動擴張中，上方壓力 65,223.50，下方支撐 62,005.00",
+      "summary": "下降趨勢，波動擴張中，上方壓力 64,000.00，下方支撐 62,005.00",
       "resistances": [
         {
-          "price": 65223.5,
-          "label": "前日高＋整數關卡",
-          "algo": "整數心理關卡 65,000；前一日高點（2026-11-17）",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 3.08
+          "price": 64000.0,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 64,000",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": 1.53
+        },
+        {
+          "price": 65447.0,
+          "label": "前日高",
+          "algo": "前一日高點（2026-11-17）",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": 3.83
         },
         {
           "price": 68446.21,
@@ -26,15 +34,7 @@
           "algo": "近 5 日最高",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 8.17
-        },
-        {
-          "price": 72220.94524999999,
-          "label": "SMA20＋Fibo 38.2%",
-          "algo": "斐波那契 38.2%（2026-10-02→2026-11-15）；20 日均線 SMA20",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 14.14
+          "dist_pct": 8.58
         }
       ],
       "supports": [
@@ -44,7 +44,7 @@
           "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 62,000",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -2.01
+          "dist_pct": -1.64
         }
       ],
       "fibonacci": {
@@ -63,13 +63,13 @@
       "volatility": {
         "atr20": 2539.697700589222,
         "tomorrow": {
-          "low": 60735.94229941077,
-          "high": 65815.33770058923,
+          "low": 60496.14229941077,
+          "high": 65575.53770058922,
           "days": 1
         },
         "week": {
-          "low": 56556.23147895834,
-          "high": 69995.04852104167,
+          "low": 56316.43147895834,
+          "high": 69755.24852104166,
           "days": 7
         }
       },
@@ -109,7 +109,7 @@
       "symbol": "ETHUSDT",
       "display_name": "Ethereum (ETH/USDT)",
       "market": "crypto",
-      "latest_price": 1787.71,
+      "latest_price": 1782.97,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 1,846.74，下方支撐 1,722.40",
@@ -120,7 +120,7 @@
           "algo": "前一日高點（2026-11-17）；整數心理關卡 1,850",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 3.3
+          "dist_pct": 3.58
         },
         {
           "price": 1918.245,
@@ -128,7 +128,7 @@
           "algo": "整數心理關卡 1,900；近 5 日最高",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 7.3
+          "dist_pct": 7.59
         },
         {
           "price": 2104.07575,
@@ -136,7 +136,7 @@
           "algo": "20 日均線 SMA20；斐波那契 38.2%（2026-10-02→2026-11-15）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 17.7
+          "dist_pct": 18.01
         }
       ],
       "supports": [
@@ -146,7 +146,7 @@
           "algo": "前一日低點（2026-11-17）；整數心理關卡 1,750；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 7,
-          "dist_pct": -3.65
+          "dist_pct": -3.4
         },
         {
           "price": 1700.0,
@@ -154,7 +154,7 @@
           "algo": "整數心理關卡 1,700",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -4.91
+          "dist_pct": -4.65
         }
       ],
       "fibonacci": {
@@ -173,13 +173,13 @@
       "volatility": {
         "atr20": 101.50081856992198,
         "tomorrow": {
-          "low": 1686.2091814300782,
-          "high": 1889.210818569922,
+          "low": 1681.4691814300782,
+          "high": 1884.470818569922,
           "days": 1
         },
         "week": {
-          "low": 1519.1640761944998,
-          "high": 2056.2559238055,
+          "low": 1514.4240761944998,
+          "high": 2051.5159238055003,
           "days": 7
         }
       },
@@ -219,18 +219,26 @@
       "symbol": "SOLUSDT",
       "display_name": "Solana (SOL/USDT)",
       "market": "crypto",
-      "latest_price": 74.63,
+      "latest_price": 74.4,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
-      "summary": "下降趨勢，波動擴張中，上方壓力 78.25，下方支撐 71.53",
+      "summary": "下降趨勢，波動擴張中，上方壓力 76，下方支撐 71.53",
       "resistances": [
         {
-          "price": 78.25,
-          "label": "5日高＋整數關卡",
-          "algo": "整數心理關卡 78；近 5 日最高",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 4.85
+          "price": 76.0,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 76",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": 2.15
+        },
+        {
+          "price": 78.5,
+          "label": "5日高",
+          "algo": "近 5 日最高",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": 5.51
         },
         {
           "price": 84.971,
@@ -238,15 +246,7 @@
           "algo": "20 日均線 SMA20",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 13.86
-        },
-        {
-          "price": 88.71676000000001,
-          "label": "Fibo 38.2%＋前週高＋前短低轉壓",
-          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-05）；前一週高點（2026-11-09~2026-11-15）；斐波那契 38.2%（2026-09-27→2026-11-15）",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": 18.88
+          "dist_pct": 14.21
         }
       ],
       "supports": [
@@ -256,7 +256,7 @@
           "algo": "整數心理關卡 72；前一日低點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": -4.15
+          "dist_pct": -3.85
         },
         {
           "price": 67.41,
@@ -264,7 +264,7 @@
           "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -9.67
+          "dist_pct": -9.4
         }
       ],
       "fibonacci": {
@@ -283,13 +283,13 @@
       "volatility": {
         "atr20": 4.664671804141055,
         "tomorrow": {
-          "low": 69.96532819585894,
-          "high": 79.29467180414105,
+          "low": 69.73532819585895,
+          "high": 79.06467180414106,
           "days": 1
         },
         "week": {
-          "low": 62.28843845850777,
-          "high": 86.97156154149222,
+          "low": 62.05843845850778,
+          "high": 86.74156154149223,
           "days": 7
         }
       },
@@ -329,7 +329,7 @@
       "symbol": "BNBUSDT",
       "display_name": "BNB (BNB/USDT)",
       "market": "crypto",
-      "latest_price": 589.33,
+      "latest_price": 588.32,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 599.71，下方支撐 580.78",
@@ -340,7 +340,7 @@
           "algo": "前一日高點（2026-11-17）；整數心理關卡 600",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 1.76
+          "dist_pct": 1.94
         },
         {
           "price": 632.47,
@@ -348,7 +348,7 @@
           "algo": "近 5 日最高",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 7.32
+          "dist_pct": 7.5
         },
         {
           "price": 654.60209,
@@ -356,7 +356,7 @@
           "algo": "整數心理關卡 650；斐波那契 38.2%（2026-10-05→2026-11-15）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 11.08
+          "dist_pct": 11.27
         }
       ],
       "supports": [
@@ -366,7 +366,7 @@
           "algo": "前一日低點（2026-11-17）",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -1.45
+          "dist_pct": -1.28
         },
         {
           "price": 566.0,
@@ -374,7 +374,7 @@
           "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -3.96
+          "dist_pct": -3.79
         },
         {
           "price": 550.0,
@@ -382,7 +382,7 @@
           "algo": "整數心理關卡 550",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -6.67
+          "dist_pct": -6.51
         }
       ],
       "fibonacci": {
@@ -401,13 +401,13 @@
       "volatility": {
         "atr20": 24.82970823782965,
         "tomorrow": {
-          "low": 564.5002917621704,
-          "high": 614.1597082378297,
+          "low": 563.4902917621704,
+          "high": 613.1497082378297,
           "days": 1
         },
         "week": {
-          "low": 523.636766876411,
-          "high": 655.0232331235891,
+          "low": 522.626766876411,
+          "high": 654.0132331235891,
           "days": 7
         }
       },
@@ -447,10 +447,10 @@
       "symbol": "XRPUSDT",
       "display_name": "XRP (XRP/USDT)",
       "market": "crypto",
-      "latest_price": 0.9786,
+      "latest_price": 0.9763,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
-      "summary": "下降趨勢，波動擴張中，上方壓力 1.007，下方支撐 0.9528",
+      "summary": "下降趨勢，波動擴張中，上方壓力 1.007，下方支撐 0.9478",
       "resistances": [
         {
           "price": 1.0069,
@@ -458,7 +458,7 @@
           "algo": "整數心理關卡 1.000；近 5 日最高",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 2.89
+          "dist_pct": 3.13
         },
         {
           "price": 1.120955,
@@ -466,7 +466,7 @@
           "algo": "20 日均線 SMA20；前一週高點（2026-11-09~2026-11-15）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 14.55
+          "dist_pct": 14.82
         },
         {
           "price": 1.1927341,
@@ -474,17 +474,17 @@
           "algo": "斐波那契 38.2%（2026-09-23→2026-11-14）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 21.88
+          "dist_pct": 22.17
         }
       ],
       "supports": [
         {
-          "price": 0.9528,
+          "price": 0.9478,
           "label": "前日低＋整數關卡",
-          "algo": "整數心理關卡 0.960；前一日低點（2026-11-17）",
+          "algo": "整數心理關卡 0.950；前一日低點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": -2.64
+          "dist_pct": -2.92
         },
         {
           "price": 0.893,
@@ -492,7 +492,7 @@
           "algo": "短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -8.75
+          "dist_pct": -8.53
         }
       ],
       "fibonacci": {
@@ -511,13 +511,13 @@
       "volatility": {
         "atr20": 0.06046910071062899,
         "tomorrow": {
-          "low": 0.9181308992893711,
-          "high": 1.039069100710629,
+          "low": 0.915830899289371,
+          "high": 1.036769100710629,
           "days": 1
         },
         "week": {
-          "low": 0.8186137975159566,
-          "high": 1.1385862024840434,
+          "low": 0.8163137975159565,
+          "high": 1.1362862024840434,
           "days": 7
         }
       },
@@ -557,7 +557,7 @@
       "symbol": "DOGEUSDT",
       "display_name": "Dogecoin (DOGE/USDT)",
       "market": "crypto",
-      "latest_price": 0.05907,
+      "latest_price": 0.05896,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.06073，下方支撐 0.05594",
@@ -568,7 +568,7 @@
           "algo": "前一日高點（2026-11-17）；整數心理關卡 0.0610",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 2.8
+          "dist_pct": 2.99
         },
         {
           "price": 0.06477,
@@ -576,7 +576,7 @@
           "algo": "近 5 日最高",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 9.65
+          "dist_pct": 9.85
         },
         {
           "price": 0.06934,
@@ -584,7 +584,7 @@
           "algo": "20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 17.39
+          "dist_pct": 17.61
         }
       ],
       "supports": [
@@ -594,7 +594,7 @@
           "algo": "前一日低點（2026-11-17）；整數心理關卡 0.0570；短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 7,
-          "dist_pct": -5.31
+          "dist_pct": -5.13
         }
       ],
       "fibonacci": {
@@ -613,13 +613,13 @@
       "volatility": {
         "atr20": 0.003951424177463427,
         "tomorrow": {
-          "low": 0.05511857582253657,
-          "high": 0.06302142417746343,
+          "low": 0.05500857582253657,
+          "high": 0.06291142417746343,
           "days": 1
         },
         "week": {
-          "low": 0.04861551430190381,
-          "high": 0.06952448569809619,
+          "low": 0.048505514301903814,
+          "high": 0.06941448569809619,
           "days": 7
         }
       },
@@ -659,7 +659,7 @@
       "symbol": "ADAUSDT",
       "display_name": "Cardano (ADA/USDT)",
       "market": "crypto",
-      "latest_price": 0.1544,
+      "latest_price": 0.154,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.16，下方支撐 0.1497",
@@ -670,7 +670,7 @@
           "algo": "整數心理關卡 0.160",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 3.63
+          "dist_pct": 3.9
         },
         {
           "price": 0.16949999999999998,
@@ -678,7 +678,7 @@
           "algo": "近 5 日最高；整數心理關卡 0.170",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 9.78
+          "dist_pct": 10.06
         },
         {
           "price": 0.17663,
@@ -686,7 +686,7 @@
           "algo": "20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 14.4
+          "dist_pct": 14.69
         }
       ],
       "supports": [
@@ -696,7 +696,7 @@
           "algo": "整數心理關卡 0.150；前一日低點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": -3.08
+          "dist_pct": -2.82
         },
         {
           "price": 0.1421666666666667,
@@ -704,7 +704,7 @@
           "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 0.140",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -7.92
+          "dist_pct": -7.68
         }
       ],
       "fibonacci": {
@@ -723,13 +723,13 @@
       "volatility": {
         "atr20": 0.011993096397685522,
         "tomorrow": {
-          "low": 0.14240690360231448,
-          "high": 0.16639309639768554,
+          "low": 0.14200690360231447,
+          "high": 0.16599309639768553,
           "days": 1
         },
         "week": {
-          "low": 0.12266924948209952,
-          "high": 0.1861307505179005,
+          "low": 0.12226924948209951,
+          "high": 0.1857307505179005,
           "days": 7
         }
       },
@@ -769,7 +769,7 @@
       "symbol": "AVAXUSDT",
       "display_name": "Avalanche (AVAX/USDT)",
       "market": "crypto",
-      "latest_price": 7.091,
+      "latest_price": 7.065,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 7.409，下方支撐 6.703",
@@ -780,7 +780,7 @@
           "algo": "前一日高點（2026-11-17）；整數心理關卡 7.50",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 4.48
+          "dist_pct": 4.87
         },
         {
           "price": 7.924333333333333,
@@ -788,7 +788,7 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-11-08）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；整數心理關卡 8.00",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 11.75
+          "dist_pct": 12.16
         },
         {
           "price": 8.1846875,
@@ -796,7 +796,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-05）；20 日均線 SMA20；近 5 日最高；前期短線低點（跌破轉壓力 2日確認 2026-11-02）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 15.42
+          "dist_pct": 15.85
         }
       ],
       "supports": [
@@ -806,7 +806,7 @@
           "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 6.50",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -5.48
+          "dist_pct": -5.13
         },
         {
           "price": 6.0,
@@ -814,7 +814,7 @@
           "algo": "整數心理關卡 6.00",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -15.39
+          "dist_pct": -15.07
         }
       ],
       "fibonacci": {
@@ -833,13 +833,13 @@
       "volatility": {
         "atr20": 0.598169012562204,
         "tomorrow": {
-          "low": 6.492830987437796,
-          "high": 7.689169012562204,
+          "low": 6.466830987437796,
+          "high": 7.6631690125622045,
           "days": 1
         },
         "week": {
-          "low": 5.508393550775337,
-          "high": 8.673606449224664,
+          "low": 5.482393550775337,
+          "high": 8.647606449224664,
           "days": 7
         }
       },
@@ -879,7 +879,7 @@
       "symbol": "LINKUSDT",
       "display_name": "Chainlink (LINK/USDT)",
       "market": "crypto",
-      "latest_price": 9.095,
+      "latest_price": 9.092,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 9.455，下方支撐 8.562",
@@ -890,7 +890,7 @@
           "algo": "前一日高點（2026-11-17）；整數心理關卡 9.50",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 3.96
+          "dist_pct": 3.99
         },
         {
           "price": 9.9495,
@@ -898,7 +898,7 @@
           "algo": "近 5 日最高；整數心理關卡 10.00",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 9.4
+          "dist_pct": 9.43
         },
         {
           "price": 10.390783333333333,
@@ -906,7 +906,7 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 14.25
+          "dist_pct": 14.28
         }
       ],
       "supports": [
@@ -916,7 +916,7 @@
           "algo": "短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 8.50",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -5.86
+          "dist_pct": -5.83
         },
         {
           "price": 8.0,
@@ -924,7 +924,7 @@
           "algo": "整數心理關卡 8.00",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -12.04
+          "dist_pct": -12.01
         }
       ],
       "fibonacci": {
@@ -943,13 +943,13 @@
       "volatility": {
         "atr20": 0.6733459523252155,
         "tomorrow": {
-          "low": 8.421654047674785,
-          "high": 9.768345952325216,
+          "low": 8.418654047674785,
+          "high": 9.765345952325216,
           "days": 1
         },
         "week": {
-          "low": 7.313494063835526,
-          "high": 10.876505936164476,
+          "low": 7.310494063835526,
+          "high": 10.873505936164475,
           "days": 7
         }
       },
@@ -989,7 +989,7 @@
       "symbol": "DOTUSDT",
       "display_name": "Polkadot (DOT/USDT)",
       "market": "crypto",
-      "latest_price": 0.722,
+      "latest_price": 0.723,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.7485，下方支撐 0.6842",
@@ -1000,7 +1000,7 @@
           "algo": "前一日高點（2026-11-17）；整數心理關卡 0.750",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 3.67
+          "dist_pct": 3.53
         },
         {
           "price": 0.821,
@@ -1008,7 +1008,7 @@
           "algo": "近 5 日最高",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 13.71
+          "dist_pct": 13.55
         },
         {
           "price": 0.8625499999999999,
@@ -1016,7 +1016,7 @@
           "algo": "20 日均線 SMA20；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 19.47
+          "dist_pct": 19.3
         }
       ],
       "supports": [
@@ -1026,7 +1026,7 @@
           "algo": "整數心理關卡 0.700；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -5.24
+          "dist_pct": -5.37
         }
       ],
       "fibonacci": {
@@ -1045,13 +1045,13 @@
       "volatility": {
         "atr20": 0.06409243405517698,
         "tomorrow": {
-          "low": 0.657907565944823,
-          "high": 0.7860924340551769,
+          "low": 0.658907565944823,
+          "high": 0.7870924340551769,
           "days": 1
         },
         "week": {
-          "low": 0.5524273585691947,
-          "high": 0.8915726414308053,
+          "low": 0.5534273585691947,
+          "high": 0.8925726414308053,
           "days": 7
         }
       },
@@ -1091,7 +1091,7 @@
       "symbol": "LTCUSDT",
       "display_name": "Litecoin (LTC/USDT)",
       "market": "crypto",
-      "latest_price": 42.95,
+      "latest_price": 43.09,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 44.72，下方支撐 42",
@@ -1102,7 +1102,7 @@
           "algo": "整數心理關卡 44；前一日高點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 4.12
+          "dist_pct": 3.78
         },
         {
           "price": 46.0,
@@ -1110,7 +1110,7 @@
           "algo": "整數心理關卡 46",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 7.1
+          "dist_pct": 6.75
         },
         {
           "price": 49.45,
@@ -1118,7 +1118,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-08）；近 5 日最高",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 15.13
+          "dist_pct": 14.76
         }
       ],
       "supports": [
@@ -1128,7 +1128,7 @@
           "algo": "整數心理關卡 42",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -2.21
+          "dist_pct": -2.53
         },
         {
           "price": 40.0,
@@ -1136,7 +1136,7 @@
           "algo": "整數心理關卡 40",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -6.87
+          "dist_pct": -7.17
         }
       ],
       "fibonacci": {
@@ -1155,13 +1155,13 @@
       "volatility": {
         "atr20": 2.8850621482766776,
         "tomorrow": {
-          "low": 40.06493785172333,
-          "high": 45.83506214827668,
+          "low": 40.20493785172333,
+          "high": 45.97506214827668,
           "days": 1
         },
         "week": {
-          "low": 35.31684303869416,
-          "high": 50.583156961305846,
+          "low": 35.45684303869416,
+          "high": 50.72315696130585,
           "days": 7
         }
       },
@@ -1319,18 +1319,18 @@
       "symbol": "BCHUSDT",
       "display_name": "Bitcoin Cash (BCH/USDT)",
       "market": "crypto",
-      "latest_price": 209.3,
+      "latest_price": 209.0,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
-      "summary": "下降趨勢，波動擴張中，上方壓力 214.00，下方支撐 204.30",
+      "summary": "下降趨勢，波動擴張中，上方壓力 213.90，下方支撐 204.00",
       "resistances": [
         {
-          "price": 214.0,
-          "label": "整數關卡",
-          "algo": "整數心理關卡 214",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": 2.25
+          "price": 213.9,
+          "label": "前日高＋整數關卡",
+          "algo": "前一日高點（2026-11-17）；整數心理關卡 214",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 2.34
         },
         {
           "price": 222.3,
@@ -1338,7 +1338,7 @@
           "algo": "近 5 日最高",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 6.21
+          "dist_pct": 6.36
         },
         {
           "price": 245.16,
@@ -1346,16 +1346,16 @@
           "algo": "前一週高點（2026-11-09~2026-11-15）；20 日均線 SMA20",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 17.13
+          "dist_pct": 17.3
         }
       ],
       "supports": [
         {
-          "price": 204.3,
-          "label": "前日低＋整數關卡",
-          "algo": "前一日低點（2026-11-17）；整數心理關卡 204",
-          "strength": 2,
-          "sources_count": 2,
+          "price": 204.0,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 204",
+          "strength": 1,
+          "sources_count": 1,
           "dist_pct": -2.39
         },
         {
@@ -1364,7 +1364,7 @@
           "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -6.5
+          "dist_pct": -6.36
         }
       ],
       "fibonacci": {
@@ -1383,13 +1383,13 @@
       "volatility": {
         "atr20": 15.436225324684427,
         "tomorrow": {
-          "low": 193.8637746753156,
-          "high": 224.73622532468443,
+          "low": 193.56377467531559,
+          "high": 224.43622532468441,
           "days": 1
         },
         "week": {
-          "low": 168.45958660932774,
-          "high": 250.14041339067228,
+          "low": 168.15958660932773,
+          "high": 249.84041339067227,
           "days": 7
         }
       },
@@ -1429,18 +1429,18 @@
       "symbol": "NEARUSDT",
       "display_name": "NEAR Protocol (NEAR/USDT)",
       "market": "crypto",
-      "latest_price": 3.302,
+      "latest_price": 3.28,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
-      "summary": "下降趨勢，波動正常，上方壓力 3.462，下方支撐 3.097",
+      "summary": "下降趨勢，波動正常，上方壓力 3.443，下方支撐 3.097",
       "resistances": [
         {
-          "price": 3.462,
-          "label": "5日高＋前短低轉壓",
-          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-08）；近 5 日最高",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 4.85
+          "price": 3.4433333333333334,
+          "label": "前日高＋5日高＋前短低轉壓",
+          "algo": "前一日高點（2026-11-17）；前期短線低點（跌破轉壓力 2日確認 2026-11-08）；近 5 日最高",
+          "strength": 3,
+          "sources_count": 3,
+          "dist_pct": 4.98
         },
         {
           "price": 3.7633666666666663,
@@ -1448,7 +1448,7 @@
           "algo": "20 日均線 SMA20；短線擺動高（2日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 13.97
+          "dist_pct": 14.74
         },
         {
           "price": 3.98733,
@@ -1456,7 +1456,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-10-30）；斐波那契 38.2%（2026-10-12→2026-11-14）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 20.75
+          "dist_pct": 21.56
         }
       ],
       "supports": [
@@ -1466,7 +1466,7 @@
           "algo": "前一日低點（2026-11-17）",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -6.21
+          "dist_pct": -5.58
         },
         {
           "price": 2.87,
@@ -1474,7 +1474,7 @@
           "algo": "短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -13.08
+          "dist_pct": -12.5
         }
       ],
       "fibonacci": {
@@ -1493,13 +1493,13 @@
       "volatility": {
         "atr20": 0.39583183899837104,
         "tomorrow": {
-          "low": 2.906168161001629,
-          "high": 3.697831838998371,
+          "low": 2.8841681610016288,
+          "high": 3.675831838998371,
           "days": 1
         },
         "week": {
-          "low": 2.254727393008952,
-          "high": 4.349272606991049,
+          "low": 2.2327273930089517,
+          "high": 4.327272606991048,
           "days": 7
         }
       },
@@ -1539,7 +1539,7 @@
       "symbol": "SUIUSDT",
       "display_name": "Sui (SUI/USDT)",
       "market": "crypto",
-      "latest_price": 0.7208,
+      "latest_price": 0.7193,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.7423，下方支撐 0.6796",
@@ -1550,7 +1550,7 @@
           "algo": "整數心理關卡 0.740；前一日高點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 2.98
+          "dist_pct": 3.2
         },
         {
           "price": 0.816493,
@@ -1558,7 +1558,7 @@
           "algo": "近 5 日最高；前期短線低點（跌破轉壓力 2日確認 2026-11-08）；20 日均線 SMA20；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 13.28
+          "dist_pct": 13.51
         },
         {
           "price": 0.88495,
@@ -1566,7 +1566,7 @@
           "algo": "前一週高點（2026-11-09~2026-11-15）；前期短線低點（跌破轉壓力 2日確認 2026-10-26）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 22.77
+          "dist_pct": 23.03
         }
       ],
       "supports": [
@@ -1576,7 +1576,7 @@
           "algo": "整數心理關卡 0.700；短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -5.72
+          "dist_pct": -5.52
         }
       ],
       "fibonacci": {
@@ -1595,13 +1595,13 @@
       "volatility": {
         "atr20": 0.06265367169004735,
         "tomorrow": {
-          "low": 0.6581463283099527,
-          "high": 0.7834536716900473,
+          "low": 0.6566463283099527,
+          "high": 0.7819536716900474,
           "days": 1
         },
         "week": {
-          "low": 0.5550339659830468,
-          "high": 0.8865660340169532,
+          "low": 0.5535339659830468,
+          "high": 0.8850660340169533,
           "days": 7
         }
       },
@@ -1743,7 +1743,7 @@
       "symbol": "APTUSDT",
       "display_name": "Aptos (APT/USDT)",
       "market": "crypto",
-      "latest_price": 0.4179,
+      "latest_price": 0.4172,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.4513，下方支撐 0.4",
@@ -1754,7 +1754,7 @@
           "algo": "整數心理關卡 0.440；前一日高點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 7.98
+          "dist_pct": 8.16
         },
         {
           "price": 0.5506866666666667,
@@ -1762,7 +1762,7 @@
           "algo": "近 5 日最高；前期短線低點（跌破轉壓力 2日確認 2026-11-08）；20 日均線 SMA20",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 31.77
+          "dist_pct": 32.0
         },
         {
           "price": 0.5722,
@@ -1770,7 +1770,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-05）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 36.92
+          "dist_pct": 37.15
         }
       ],
       "supports": [
@@ -1780,7 +1780,7 @@
           "algo": "整數心理關卡 0.400",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -4.28
+          "dist_pct": -4.12
         }
       ],
       "fibonacci": {
@@ -1799,13 +1799,13 @@
       "volatility": {
         "atr20": 0.052229647443079175,
         "tomorrow": {
-          "low": 0.3656703525569208,
-          "high": 0.47012964744307917,
+          "low": 0.36497035255692084,
+          "high": 0.4694296474430792,
           "days": 1
         },
         "week": {
-          "low": 0.2797133418010319,
-          "high": 0.5560866581989681,
+          "low": 0.27901334180103193,
+          "high": 0.5553866581989682,
           "days": 7
         }
       },
@@ -1845,7 +1845,7 @@
       "symbol": "UNIUSDT",
       "display_name": "Uniswap (UNI/USDT)",
       "market": "crypto",
-      "latest_price": 5.001,
+      "latest_price": 5.005,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 5.477，下方支撐 4.599",
@@ -1856,7 +1856,7 @@
           "algo": "前一日高點（2026-11-17）；整數心理關卡 5.50",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 9.52
+          "dist_pct": 9.43
         },
         {
           "price": 5.894,
@@ -1864,7 +1864,7 @@
           "algo": "近 5 日最高；整數心理關卡 6.00",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 17.86
+          "dist_pct": 17.76
         },
         {
           "price": 6.40005,
@@ -1872,7 +1872,7 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-29）；20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-10-24）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 27.98
+          "dist_pct": 27.87
         }
       ],
       "supports": [
@@ -1882,7 +1882,7 @@
           "algo": "短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 4.50",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -8.04
+          "dist_pct": -8.11
         },
         {
           "price": 4.0,
@@ -1890,7 +1890,7 @@
           "algo": "整數心理關卡 4.00",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -20.02
+          "dist_pct": -20.08
         }
       ],
       "fibonacci": {
@@ -1909,13 +1909,13 @@
       "volatility": {
         "atr20": 0.5663699520208184,
         "tomorrow": {
-          "low": 4.434630047979182,
-          "high": 5.567369952020819,
+          "low": 4.438630047979181,
+          "high": 5.571369952020818,
           "days": 1
         },
         "week": {
-          "low": 3.5025259568933307,
-          "high": 6.4994740431066695,
+          "low": 3.5065259568933302,
+          "high": 6.503474043106669,
           "days": 7
         }
       },
@@ -1955,7 +1955,7 @@
       "symbol": "ATOMUSDT",
       "display_name": "Cosmos (ATOM/USDT)",
       "market": "crypto",
-      "latest_price": 1.284,
+      "latest_price": 1.283,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，正在收斂，上方壓力 1.337，下方支撐 1.223",
@@ -1966,7 +1966,7 @@
           "algo": "整數心理關卡 1.320；前期短線低點（跌破轉壓力 2日確認 2026-11-05）；前一日高點（2026-11-17）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 4.13
+          "dist_pct": 4.21
         },
         {
           "price": 1.38245,
@@ -1974,7 +1974,7 @@
           "algo": "近 5 日最高；20 日均線 SMA20",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 7.67
+          "dist_pct": 7.75
         },
         {
           "price": 1.441,
@@ -1982,7 +1982,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-10-30）；擺動高點（5日確認 2026-11-13）；前一週高點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 12.23
+          "dist_pct": 12.31
         }
       ],
       "supports": [
@@ -1992,7 +1992,7 @@
           "algo": "整數心理關卡 1.250；短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -4.72
+          "dist_pct": -4.65
         }
       ],
       "fibonacci": {
@@ -2011,13 +2011,13 @@
       "volatility": {
         "atr20": 0.09358784428099909,
         "tomorrow": {
-          "low": 1.190412155719001,
-          "high": 1.377587844280999,
+          "low": 1.1894121557190007,
+          "high": 1.3765878442809991,
           "days": 1
         },
         "week": {
-          "low": 1.036389838293838,
-          "high": 1.5316101617061622,
+          "low": 1.0353898382938378,
+          "high": 1.530610161706162,
           "days": 7
         }
       },
@@ -2057,7 +2057,7 @@
       "symbol": "ETCUSDT",
       "display_name": "Ethereum Classic (ETC/USDT)",
       "market": "crypto",
-      "latest_price": 5.83,
+      "latest_price": 5.84,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 6.02，下方支撐 5.6",
@@ -2068,7 +2068,7 @@
           "algo": "整數心理關卡 6.00；前一日高點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 3.26
+          "dist_pct": 3.08
         },
         {
           "price": 6.5322499999999994,
@@ -2076,7 +2076,7 @@
           "algo": "近 5 日最高；前期短線低點（跌破轉壓力 2日確認 2026-11-08）；整數心理關卡 6.50；20 日均線 SMA20",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 12.05
+          "dist_pct": 11.85
         },
         {
           "price": 6.78,
@@ -2084,7 +2084,7 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 16.3
+          "dist_pct": 16.1
         }
       ],
       "supports": [
@@ -2094,7 +2094,7 @@
           "algo": "短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 5.50",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -3.95
+          "dist_pct": -4.11
         },
         {
           "price": 5.0,
@@ -2102,7 +2102,7 @@
           "algo": "整數心理關卡 5.00",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -14.24
+          "dist_pct": -14.38
         }
       ],
       "fibonacci": {
@@ -2121,13 +2121,13 @@
       "volatility": {
         "atr20": 0.38542250238862985,
         "tomorrow": {
-          "low": 5.4445774976113706,
-          "high": 6.21542250238863,
+          "low": 5.45457749761137,
+          "high": 6.225422502388629,
           "days": 1
         },
         "week": {
-          "low": 4.810267908991487,
-          "high": 6.849732091008513,
+          "low": 4.820267908991487,
+          "high": 6.859732091008513,
           "days": 7
         }
       },
@@ -2167,7 +2167,7 @@
       "symbol": "FILUSDT",
       "display_name": "Filecoin (FIL/USDT)",
       "market": "crypto",
-      "latest_price": 0.5735,
+      "latest_price": 0.5725,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.6068，下方支撐 0.55",
@@ -2178,7 +2178,7 @@
           "algo": "整數心理關卡 0.600；前一日高點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 5.81
+          "dist_pct": 5.99
         },
         {
           "price": 0.7151000000000001,
@@ -2186,7 +2186,7 @@
           "algo": "近 5 日最高；前期短線低點（跌破轉壓力 2日確認 2026-11-08）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 24.69
+          "dist_pct": 24.91
         },
         {
           "price": 0.763075,
@@ -2194,7 +2194,7 @@
           "algo": "20 日均線 SMA20；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 33.06
+          "dist_pct": 33.29
         }
       ],
       "supports": [
@@ -2204,7 +2204,7 @@
           "algo": "整數心理關卡 0.550",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -4.1
+          "dist_pct": -3.93
         }
       ],
       "fibonacci": {
@@ -2223,13 +2223,13 @@
       "volatility": {
         "atr20": 0.06715515392706498,
         "tomorrow": {
-          "low": 0.5063448460729351,
-          "high": 0.640655153927065,
+          "low": 0.5053448460729351,
+          "high": 0.639655153927065,
           "days": 1
         },
         "week": {
-          "low": 0.3958241634527234,
-          "high": 0.7511758365472766,
+          "low": 0.3948241634527234,
+          "high": 0.7501758365472766,
           "days": 7
         }
       },
@@ -2269,7 +2269,7 @@
       "symbol": "ARBUSDT",
       "display_name": "Arbitrum (ARB/USDT)",
       "market": "crypto",
-      "latest_price": 0.1253,
+      "latest_price": 0.125,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.1326，下方支撐 0.12",
@@ -2280,7 +2280,7 @@
           "algo": "整數心理關卡 0.130；前一日高點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 5.79
+          "dist_pct": 6.04
         },
         {
           "price": 0.14295,
@@ -2288,7 +2288,7 @@
           "algo": "整數心理關卡 0.140；近 5 日最高",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 14.09
+          "dist_pct": 14.36
         },
         {
           "price": 0.15041000000000002,
@@ -2296,7 +2296,7 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前期擺動低點（跌破轉壓力 5日確認 2026-11-05）；20 日均線 SMA20",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 20.04
+          "dist_pct": 20.33
         }
       ],
       "supports": [
@@ -2306,7 +2306,7 @@
           "algo": "整數心理關卡 0.120",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -4.23
+          "dist_pct": -4.0
         },
         {
           "price": 0.11,
@@ -2314,7 +2314,7 @@
           "algo": "整數心理關卡 0.110",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -12.21
+          "dist_pct": -12.0
         }
       ],
       "fibonacci": {
@@ -2333,13 +2333,13 @@
       "volatility": {
         "atr20": 0.014112513280618442,
         "tomorrow": {
-          "low": 0.11118748671938156,
-          "high": 0.13941251328061843,
+          "low": 0.11088748671938156,
+          "high": 0.13911251328061844,
           "days": 1
         },
         "week": {
-          "low": 0.08796179948538731,
-          "high": 0.1626382005146127,
+          "low": 0.08766179948538731,
+          "high": 0.16233820051461267,
           "days": 7
         }
       },
@@ -2379,7 +2379,7 @@
       "symbol": "OPUSDT",
       "display_name": "Optimism (OP/USDT)",
       "market": "crypto",
-      "latest_price": 0.0761,
+      "latest_price": 0.0758,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.0801，下方支撐 0.073",
@@ -2390,7 +2390,7 @@
           "algo": "整數心理關卡 0.0790；前一日高點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 5.26
+          "dist_pct": 5.67
         },
         {
           "price": 0.09400000000000001,
@@ -2398,7 +2398,7 @@
           "algo": "近 5 日最高；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前期短線低點（跌破轉壓力 2日確認 2026-11-08）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 23.52
+          "dist_pct": 24.01
         },
         {
           "price": 0.0989125,
@@ -2406,7 +2406,7 @@
           "algo": "20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 29.98
+          "dist_pct": 30.49
         }
       ],
       "supports": [
@@ -2416,7 +2416,7 @@
           "algo": "整數心理關卡 0.0730",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -4.07
+          "dist_pct": -3.69
         }
       ],
       "fibonacci": {
@@ -2435,13 +2435,13 @@
       "volatility": {
         "atr20": 0.009315527126318062,
         "tomorrow": {
-          "low": 0.06678447287368194,
-          "high": 0.08541552712631806,
+          "low": 0.06648447287368195,
+          "high": 0.08511552712631806,
           "days": 1
         },
         "week": {
-          "low": 0.051453431892286225,
-          "high": 0.10074656810771378,
+          "low": 0.05115343189228623,
+          "high": 0.10044656810771378,
           "days": 7
         }
       },
@@ -2481,7 +2481,7 @@
       "symbol": "INJUSDT",
       "display_name": "Injective (INJ/USDT)",
       "market": "crypto",
-      "latest_price": 7.213,
+      "latest_price": 7.14,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "盤整，波動正常，上方壓力 7.594，下方支撐 6.681",
@@ -2492,7 +2492,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-10-24）；斐波那契 61.8%（2026-11-03→2026-11-05）；整數心理關卡 7.50；20 日均線 SMA20；斐波那契 50.0%（2026-11-03→2026-11-05）；前一日高點（2026-11-17）；50 日均線 SMA50",
           "strength": 3,
           "sources_count": 7,
-          "dist_pct": 5.28
+          "dist_pct": 6.35
         },
         {
           "price": 7.903432666666667,
@@ -2500,7 +2500,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-10-18）；斐波那契 38.2%（2026-11-03→2026-11-05）；整數心理關卡 8.00",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 9.57
+          "dist_pct": 10.69
         },
         {
           "price": 8.418142857142858,
@@ -2508,7 +2508,7 @@
           "algo": "近 5 日最高；短線擺動高（2日確認 2026-10-27）；擺動高點（5日確認 2026-10-06）；短線擺動高（2日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-15）；擺動高點（5日確認 2026-11-05）；近 20 日最高",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": 16.71
+          "dist_pct": 17.9
         }
       ],
       "supports": [
@@ -2518,7 +2518,7 @@
           "algo": "短線擺動低（2日確認 2026-10-30）；前一日低點（2026-11-17）；擺動低點（5日確認 2026-11-03）；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -7.37
+          "dist_pct": -6.42
         },
         {
           "price": 6.4446666666666665,
@@ -2526,7 +2526,7 @@
           "algo": "整數心理關卡 6.50；擺動低點（5日確認 2026-10-08）；近 60 日最低",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": -10.65
+          "dist_pct": -9.74
         },
         {
           "price": 6.0,
@@ -2534,7 +2534,7 @@
           "algo": "整數心理關卡 6.00",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -16.82
+          "dist_pct": -15.97
         }
       ],
       "fibonacci": {
@@ -2553,13 +2553,13 @@
       "volatility": {
         "atr20": 0.7185049301684026,
         "tomorrow": {
-          "low": 6.494495069831597,
-          "high": 7.931504930168403,
+          "low": 6.421495069831597,
+          "high": 7.858504930168403,
           "days": 1
         },
         "week": {
-          "low": 5.3120146390005765,
-          "high": 9.113985360999424,
+          "low": 5.239014639000576,
+          "high": 9.040985360999423,
           "days": 7
         }
       },
@@ -2599,7 +2599,7 @@
       "symbol": "AAVEUSDT",
       "display_name": "Aave (AAVE/USDT)",
       "market": "crypto",
-      "latest_price": 105.99,
+      "latest_price": 105.67,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 113.01，下方支撐 102.00",
@@ -2610,7 +2610,7 @@
           "algo": "整數心理關卡 110；近 5 日最高；前一日高點（2026-11-17）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 6.62
+          "dist_pct": 6.94
         },
         {
           "price": 115.23,
@@ -2618,7 +2618,7 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 8.72
+          "dist_pct": 9.05
         },
         {
           "price": 122.32124999999999,
@@ -2626,7 +2626,7 @@
           "algo": "20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 15.41
+          "dist_pct": 15.76
         }
       ],
       "supports": [
@@ -2636,7 +2636,7 @@
           "algo": "整數心理關卡 102",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -3.76
+          "dist_pct": -3.47
         },
         {
           "price": 96.6,
@@ -2644,7 +2644,7 @@
           "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -8.86
+          "dist_pct": -8.58
         }
       ],
       "fibonacci": {
@@ -2663,13 +2663,13 @@
       "volatility": {
         "atr20": 9.40197778172184,
         "tomorrow": {
-          "low": 96.58802221827816,
-          "high": 115.39197778172183,
+          "low": 96.26802221827816,
+          "high": 115.07197778172184,
           "days": 1
         },
         "week": {
-          "low": 81.11470495740929,
-          "high": 130.8652950425907,
+          "low": 80.7947049574093,
+          "high": 130.5452950425907,
           "days": 7
         }
       },
@@ -2709,7 +2709,7 @@
       "symbol": "XLMUSDT",
       "display_name": "Stellar (XLM/USDT)",
       "market": "crypto",
-      "latest_price": 0.1352,
+      "latest_price": 0.1348,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.1409，下方支撐 0.13",
@@ -2720,7 +2720,7 @@
           "algo": "整數心理關卡 0.140；前期短線低點（跌破轉壓力 2日確認 2026-11-10）；前一日高點（2026-11-17）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 4.22
+          "dist_pct": 4.53
         },
         {
           "price": 0.14834999999999998,
@@ -2728,7 +2728,7 @@
           "algo": "近 5 日最高；整數心理關卡 0.150",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 9.73
+          "dist_pct": 10.05
         },
         {
           "price": 0.15229666666666666,
@@ -2736,7 +2736,7 @@
           "algo": "20 日均線 SMA20；短線擺動高（2日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 12.65
+          "dist_pct": 12.98
         }
       ],
       "supports": [
@@ -2746,7 +2746,7 @@
           "algo": "短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 0.130",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -3.85
+          "dist_pct": -3.56
         },
         {
           "price": 0.12000000000000001,
@@ -2754,7 +2754,7 @@
           "algo": "整數心理關卡 0.120",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -11.24
+          "dist_pct": -10.98
         }
       ],
       "fibonacci": {
@@ -2773,13 +2773,13 @@
       "volatility": {
         "atr20": 0.009271567212857821,
         "tomorrow": {
-          "low": 0.12592843278714216,
-          "high": 0.1444715672128578,
+          "low": 0.12552843278714218,
+          "high": 0.14407156721285783,
           "days": 1
         },
         "week": {
-          "low": 0.11066973889095794,
-          "high": 0.15973026110904204,
+          "low": 0.11026973889095795,
+          "high": 0.15933026110904205,
           "days": 7
         }
       },
@@ -2819,10 +2819,10 @@
       "symbol": "HBARUSDT",
       "display_name": "Hedera (HBAR/USDT)",
       "market": "crypto",
-      "latest_price": 0.05538,
+      "latest_price": 0.05509,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
-      "summary": "下降趨勢，波動擴張中，上方壓力 0.0579，下方支撐 0.054",
+      "summary": "下降趨勢，波動擴張中，上方壓力 0.0579，下方支撐 0.053",
       "resistances": [
         {
           "price": 0.057895,
@@ -2830,7 +2830,7 @@
           "algo": "整數心理關卡 0.0570；前一日高點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 4.54
+          "dist_pct": 5.09
         },
         {
           "price": 0.0617,
@@ -2838,7 +2838,7 @@
           "algo": "近 5 日最高",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 11.41
+          "dist_pct": 12.0
         },
         {
           "price": 0.065182,
@@ -2846,17 +2846,17 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-08）；20 日均線 SMA20；前期擺動低點（跌破轉壓力 5日確認 2026-10-29）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 17.7
+          "dist_pct": 18.32
         }
       ],
       "supports": [
         {
-          "price": 0.054,
+          "price": 0.053,
           "label": "整數關卡",
-          "algo": "整數心理關卡 0.0540",
+          "algo": "整數心理關卡 0.0530",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -2.49
+          "dist_pct": -3.79
         }
       ],
       "fibonacci": {
@@ -2875,13 +2875,13 @@
       "volatility": {
         "atr20": 0.004486137284601059,
         "tomorrow": {
-          "low": 0.05089386271539894,
-          "high": 0.05986613728460106,
+          "low": 0.05060386271539894,
+          "high": 0.05957613728460106,
           "days": 1
         },
         "week": {
-          "low": 0.043510796397651,
-          "high": 0.067249203602349,
+          "low": 0.043220796397651,
+          "high": 0.066959203602349,
           "days": 7
         }
       },
@@ -2921,7 +2921,7 @@
       "symbol": "ICPUSDT",
       "display_name": "Internet Computer (ICP/USDT)",
       "market": "crypto",
-      "latest_price": 2.203,
+      "latest_price": 2.205,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動正常，上方壓力 2.303，下方支撐 2.109",
@@ -2932,7 +2932,7 @@
           "algo": "整數心理關卡 2.270；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 4.52
+          "dist_pct": 4.43
         },
         {
           "price": 2.4712750000000003,
@@ -2940,7 +2940,7 @@
           "algo": "20 日均線 SMA20；前一日高點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 12.18
+          "dist_pct": 12.08
         },
         {
           "price": 2.612,
@@ -2948,7 +2948,7 @@
           "algo": "短線擺動高（2日確認 2026-11-16）；近 5 日最高；擺動高點（5日確認 2026-11-13）；前一週高點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 18.57
+          "dist_pct": 18.46
         }
       ],
       "supports": [
@@ -2958,7 +2958,7 @@
           "algo": "整數心理關卡 2.140；短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -4.26
+          "dist_pct": -4.35
         }
       ],
       "fibonacci": {
@@ -2977,13 +2977,13 @@
       "volatility": {
         "atr20": 0.20403080358719247,
         "tomorrow": {
-          "low": 1.9989691964128073,
-          "high": 2.407030803587192,
+          "low": 2.000969196412808,
+          "high": 2.4090308035871923,
           "days": 1
         },
         "week": {
-          "low": 1.6631852339116233,
-          "high": 2.7428147660883764,
+          "low": 1.6651852339116235,
+          "high": 2.7448147660883766,
           "days": 7
         }
       },
@@ -3023,7 +3023,7 @@
       "symbol": "SEIUSDT",
       "display_name": "Sei (SEI/USDT)",
       "market": "crypto",
-      "latest_price": 0.03842,
+      "latest_price": 0.03834,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動正常，上方壓力 0.0407，下方支撐 0.03643",
@@ -3034,7 +3034,7 @@
           "algo": "整數心理關卡 0.0400；前一日高點（2026-11-17）；前期短線低點（跌破轉壓力 2日確認 2026-11-08）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 5.94
+          "dist_pct": 6.16
         },
         {
           "price": 0.043767,
@@ -3042,7 +3042,7 @@
           "algo": "近 5 日最高；20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 13.92
+          "dist_pct": 14.15
         },
         {
           "price": 0.04527,
@@ -3050,7 +3050,7 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前一週高點（2026-11-09~2026-11-15）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 17.83
+          "dist_pct": 18.08
         }
       ],
       "supports": [
@@ -3060,7 +3060,7 @@
           "algo": "整數心理關卡 0.0370；短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -5.19
+          "dist_pct": -4.99
         }
       ],
       "fibonacci": {
@@ -3079,13 +3079,13 @@
       "volatility": {
         "atr20": 0.003733404853608812,
         "tomorrow": {
-          "low": 0.03468659514639119,
-          "high": 0.042153404853608814,
+          "low": 0.03460659514639119,
+          "high": 0.04207340485360881,
           "days": 1
         },
         "week": {
-          "low": 0.028542339213829582,
-          "high": 0.04829766078617043,
+          "low": 0.02846233921382958,
+          "high": 0.048217660786170416,
           "days": 7
         }
       },
@@ -3125,44 +3125,44 @@
       "symbol": "TIAUSDT",
       "display_name": "Celestia (TIA/USDT)",
       "market": "crypto",
-      "latest_price": 0.3443,
+      "latest_price": 0.3454,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
-      "summary": "下降趨勢，波動正常，上方壓力 0.3615，下方支撐 0.3265",
+      "summary": "下降趨勢，波動正常，上方壓力 0.3728，下方支撐 0.3282",
       "resistances": [
         {
-          "price": 0.36145000000000005,
-          "label": "前日高＋整數關卡",
-          "algo": "整數心理關卡 0.360；前一日高點（2026-11-17）",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 4.98
+          "price": 0.3727666666666667,
+          "label": "前日高＋5日高＋整數關卡",
+          "algo": "前一日高點（2026-11-17）；整數心理關卡 0.370；近 5 日最高",
+          "strength": 3,
+          "sources_count": 3,
+          "dist_pct": 7.92
         },
         {
-          "price": 0.38945,
-          "label": "前低轉壓＋5日高",
-          "algo": "近 5 日最高；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 13.11
-        },
-        {
-          "price": 0.41845750000000004,
+          "price": 0.4047575,
           "label": "SMA20＋前低轉壓",
-          "algo": "20 日均線 SMA20；前期擺動低點（跌破轉壓力 5日確認 2026-10-01）",
+          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；20 日均線 SMA20",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 21.54
+          "dist_pct": 17.19
+        },
+        {
+          "price": 0.4209,
+          "label": "前低轉壓",
+          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-01）",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": 21.86
         }
       ],
       "supports": [
         {
-          "price": 0.32649999999999996,
+          "price": 0.32816666666666666,
           "label": "20日低＋60日低＋5日低 等6項",
-          "algo": "短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 0.320",
+          "algo": "整數心理關卡 0.330；短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -5.17
+          "dist_pct": -4.99
         }
       ],
       "fibonacci": {
@@ -3181,13 +3181,13 @@
       "volatility": {
         "atr20": 0.049048624052179614,
         "tomorrow": {
-          "low": 0.29525137594782036,
-          "high": 0.39334862405217963,
+          "low": 0.29635137594782035,
+          "high": 0.3944486240521796,
           "days": 1
         },
         "week": {
-          "low": 0.21452953860803156,
-          "high": 0.4740704613919684,
+          "low": 0.21562953860803155,
+          "high": 0.4751704613919684,
           "days": 7
         }
       },
@@ -3227,7 +3227,7 @@
       "symbol": "PEPEUSDT",
       "display_name": "Pepe (PEPE/USDT)",
       "market": "crypto",
-      "latest_price": 3.81e-06,
+      "latest_price": 3.78e-06,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "盤整，波動擴張中，上方壓力 4.01e-06，下方支撐 3.638e-06",
@@ -3238,7 +3238,7 @@
           "algo": "前一日高點（2026-11-17）；50 日均線 SMA50；整數心理關卡 0.00000400；前期擺動低點（跌破轉壓力 5日確認 2026-09-29）",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 5.25
+          "dist_pct": 6.08
         },
         {
           "price": 4.31732e-06,
@@ -3246,7 +3246,7 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-26）；前期短線低點（跌破轉壓力 2日確認 2026-10-30）；擺動高點（5日確認 2026-10-12）；斐波那契 61.8%（2026-10-08→2026-10-29）",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 13.32
+          "dist_pct": 14.21
         },
         {
           "price": 4.5825e-06,
@@ -3254,7 +3254,7 @@
           "algo": "近 5 日最高；前期短線低點（跌破轉壓力 2日確認 2026-11-02）；前期短線低點（跌破轉壓力 2日確認 2026-11-05）；斐波那契 50.0%（2026-10-08→2026-10-29）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 20.28
+          "dist_pct": 21.23
         }
       ],
       "supports": [
@@ -3264,7 +3264,7 @@
           "algo": "近 5 日最低；近 20 日最低；前一日低點（2026-11-17）；擺動低點（5日確認 2026-10-08）；近 60 日最低；整數心理關卡 0.00000360",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -4.51
+          "dist_pct": -3.75
         }
       ],
       "fibonacci": {
@@ -3283,13 +3283,13 @@
       "volatility": {
         "atr20": 4.3126687403012066e-07,
         "tomorrow": {
-          "low": 3.378733125969879e-06,
-          "high": 4.241266874030121e-06,
+          "low": 3.348733125969879e-06,
+          "high": 4.21126687403012e-06,
           "days": 1
         },
         "week": {
-          "low": 2.668975102616081e-06,
-          "high": 4.951024897383919e-06,
+          "low": 2.6389751026160803e-06,
+          "high": 4.921024897383919e-06,
           "days": 7
         }
       },
@@ -3329,7 +3329,7 @@
       "symbol": "WLDUSDT",
       "display_name": "Worldcoin (WLD/USDT)",
       "market": "crypto",
-      "latest_price": 0.2628,
+      "latest_price": 0.2627,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.2883，下方支撐 0.2442",
@@ -3340,7 +3340,7 @@
           "algo": "整數心理關卡 0.280；近 5 日最高",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 9.68
+          "dist_pct": 9.73
         },
         {
           "price": 0.32621,
@@ -3348,7 +3348,7 @@
           "algo": "20 日均線 SMA20；前一週高點（2026-11-09~2026-11-15）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 24.13
+          "dist_pct": 24.18
         },
         {
           "price": 0.36,
@@ -3356,7 +3356,7 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 36.99
+          "dist_pct": 37.04
         }
       ],
       "supports": [
@@ -3366,7 +3366,7 @@
           "algo": "整數心理關卡 0.250；短線擺動低（2日確認 2026-11-14）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -7.09
+          "dist_pct": -7.05
         }
       ],
       "fibonacci": {
@@ -3385,13 +3385,13 @@
       "volatility": {
         "atr20": 0.03505592217866415,
         "tomorrow": {
-          "low": 0.22774407782133582,
-          "high": 0.29785592217866413,
+          "low": 0.22764407782133583,
+          "high": 0.29775592217866415,
           "days": 1
         },
         "week": {
-          "low": 0.17005074793522104,
-          "high": 0.35554925206477894,
+          "low": 0.16995074793522105,
+          "high": 0.35544925206477895,
           "days": 7
         }
       },
@@ -3431,26 +3431,26 @@
       "symbol": "RENDERUSDT",
       "display_name": "Render (RENDER/USDT)",
       "market": "crypto",
-      "latest_price": 1.417,
+      "latest_price": 1.404,
       "latest_bar_date": "2026-11-18",
       "bars_count": 61,
-      "summary": "下降趨勢，波動正常，上方壓力 1.485，下方支撐 1.324",
+      "summary": "下降趨勢，波動正常，上方壓力 1.466，下方支撐 1.322",
       "resistances": [
         {
-          "price": 1.4854500000000002,
-          "label": "SMA20＋前日高＋前短低轉壓 等4項",
-          "algo": "整數心理關卡 1.460；前期短線低點（跌破轉壓力 2日確認 2026-11-08）；前一日高點（2026-11-17）；20 日均線 SMA20",
+          "price": 1.4660000000000002,
+          "label": "前日高＋前短低轉壓＋整數關卡",
+          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-10-30）；整數心理關卡 1.450；前期短線低點（跌破轉壓力 2日確認 2026-11-08）；前一日高點（2026-11-17）",
           "strength": 3,
-          "sources_count": 4,
-          "dist_pct": 4.83
+          "sources_count": 3,
+          "dist_pct": 4.42
         },
         {
-          "price": 1.546,
-          "label": "5日高",
-          "algo": "近 5 日最高",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": 9.1
+          "price": 1.5319,
+          "label": "SMA20＋5日高",
+          "algo": "20 日均線 SMA20；近 5 日最高",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 9.11
         },
         {
           "price": 1.6447006666666668,
@@ -3458,17 +3458,17 @@
           "algo": "擺動高點（5日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-15）；擺動高點（5日確認 2026-11-04）；近 20 日最高；前期短線低點（跌破轉壓力 2日確認 2026-10-24）；斐波那契 38.2%（2026-10-13→2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": 16.07
+          "dist_pct": 17.14
         }
       ],
       "supports": [
         {
-          "price": 1.3237142857142856,
+          "price": 1.3222857142857143,
           "label": "20日低＋60日低＋前日低 等7項",
-          "algo": "整數心理關卡 1.370；前一日低點（2026-11-17）；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
+          "algo": "整數心理關卡 1.360；前一日低點（2026-11-17）；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 7,
-          "dist_pct": -6.58
+          "dist_pct": -5.82
         }
       ],
       "fibonacci": {
@@ -3487,13 +3487,13 @@
       "volatility": {
         "atr20": 0.12547027558048604,
         "tomorrow": {
-          "low": 1.291529724419514,
-          "high": 1.542470275580486,
+          "low": 1.278529724419514,
+          "high": 1.5294702755804859,
           "days": 1
         },
         "week": {
-          "low": 1.0850368538832935,
-          "high": 1.7489631461167066,
+          "low": 1.0720368538832934,
+          "high": 1.7359631461167064,
           "days": 7
         }
       },
@@ -3533,7 +3533,7 @@
       "symbol": "XAUUSD",
       "display_name": "黃金 (Gold)",
       "market": "commodity",
-      "latest_price": 3680.10009765625,
+      "latest_price": 3687.10009765625,
       "latest_bar_date": "2026-11-18",
       "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 3,721.80，下方支撐 3,600.00",
@@ -3544,7 +3544,7 @@
           "algo": "近 5 日最低；近 20 日最低；近 60 日最低",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 1.13
+          "dist_pct": 0.94
         },
         {
           "price": 3819.5999755859375,
@@ -3552,7 +3552,7 @@
           "algo": "整數心理關卡 3,800；前一日低點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 3.79
+          "dist_pct": 3.59
         },
         {
           "price": 3882.5,
@@ -3560,7 +3560,7 @@
           "algo": "前一週低點（2026-11-09~2026-11-13）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前一日高點（2026-11-17）；整數心理關卡 3,900",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 5.5
+          "dist_pct": 5.3
         }
       ],
       "supports": [
@@ -3570,7 +3570,7 @@
           "algo": "整數心理關卡 3,600",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -2.18
+          "dist_pct": -2.36
         },
         {
           "price": 3500.0,
@@ -3578,7 +3578,7 @@
           "algo": "整數心理關卡 3,500",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -4.89
+          "dist_pct": -5.07
         }
       ],
       "fibonacci": {
@@ -3597,13 +3597,13 @@
       "volatility": {
         "atr20": 91.29910637802774,
         "tomorrow": {
-          "low": 3588.800991278222,
-          "high": 3771.399204034278,
+          "low": 3595.800991278222,
+          "high": 3778.399204034278,
           "days": 1
         },
         "week": {
-          "low": 3475.9490895099952,
-          "high": 3884.2511058025048,
+          "low": 3482.9490895099952,
+          "high": 3891.2511058025048,
           "days": 5
         }
       },
@@ -3643,10 +3643,10 @@
       "symbol": "XAGUSD",
       "display_name": "白銀 (Silver)",
       "market": "commodity",
-      "latest_price": 44.369998931884766,
+      "latest_price": 44.53499984741211,
       "latest_bar_date": "2026-11-18",
       "bars_count": 62,
-      "summary": "下降趨勢，波動擴張中，上方壓力 46，下方支撐 42",
+      "summary": "下降趨勢，波動擴張中，上方壓力 46，下方支撐 44",
       "resistances": [
         {
           "price": 46.0,
@@ -3654,7 +3654,7 @@
           "algo": "整數心理關卡 46",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 3.67
+          "dist_pct": 3.29
         },
         {
           "price": 47.36000061035156,
@@ -3662,7 +3662,7 @@
           "algo": "前一日低點（2026-11-17）；前一日高點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 6.74
+          "dist_pct": 6.34
         },
         {
           "price": 48.3033332824707,
@@ -3670,25 +3670,25 @@
           "algo": "整數心理關卡 48；前一週低點（2026-11-09~2026-11-13）；前期擺動低點（跌破轉壓力 5日確認 2026-11-03）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 8.86
+          "dist_pct": 8.46
         }
       ],
       "supports": [
+        {
+          "price": 44.0,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 44",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": -1.2
+        },
         {
           "price": 42.0,
           "label": "整數關卡",
           "algo": "整數心理關卡 42",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -5.34
-        },
-        {
-          "price": 40.0,
-          "label": "整數關卡",
-          "algo": "整數心理關卡 40",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": -9.85
+          "dist_pct": -5.69
         }
       ],
       "fibonacci": {
@@ -3707,13 +3707,13 @@
       "volatility": {
         "atr20": 1.552638513645069,
         "tomorrow": {
-          "low": 42.817360418239694,
-          "high": 45.92263744552984,
+          "low": 42.98236133376704,
+          "high": 46.08763836105718,
           "days": 1
         },
         "week": {
-          "low": 40.89819367089016,
-          "high": 47.84180419287937,
+          "low": 41.0631945864175,
+          "high": 48.006805108406716,
           "days": 5
         }
       },
@@ -3753,7 +3753,7 @@
       "symbol": "WTI",
       "display_name": "WTI 原油",
       "market": "commodity",
-      "latest_price": 83.22000122070312,
+      "latest_price": 83.18000030517578,
       "latest_bar_date": "2026-11-18",
       "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 85.85，下方支撐 79.81",
@@ -3764,7 +3764,7 @@
           "algo": "前一日低點（2026-11-17）；整數心理關卡 86；前期擺動低點（跌破轉壓力 5日確認 2026-10-06）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 3.16
+          "dist_pct": 3.21
         },
         {
           "price": 88.20249938964844,
@@ -3772,7 +3772,7 @@
           "algo": "前一日高點（2026-11-17）；整數心理關卡 88；前期短線低點（跌破轉壓力 2日確認 2026-09-23）；前期短線低點（跌破轉壓力 2日確認 2026-09-04）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 5.99
+          "dist_pct": 6.04
         },
         {
           "price": 90.23333231608073,
@@ -3780,7 +3780,7 @@
           "algo": "短線擺動高（2日確認 2026-11-13）；近 5 日最高；前一週高點（2026-11-09~2026-11-13）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 8.43
+          "dist_pct": 8.48
         }
       ],
       "supports": [
@@ -3790,7 +3790,7 @@
           "algo": "整數心理關卡 80；近 60 日最低",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": -4.1
+          "dist_pct": -4.05
         }
       ],
       "fibonacci": {
@@ -3809,13 +3809,13 @@
       "volatility": {
         "atr20": 4.369119982660103,
         "tomorrow": {
-          "low": 78.85088123804302,
-          "high": 87.58912120336323,
+          "low": 78.81088032251567,
+          "high": 87.54912028783589,
           "days": 1
         },
         "week": {
-          "low": 73.45035193762243,
-          "high": 92.98965050378382,
+          "low": 73.41035102209509,
+          "high": 92.94964958825648,
           "days": 5
         }
       },
@@ -3855,28 +3855,28 @@
       "symbol": "NATGAS",
       "display_name": "天然氣 (Natural Gas)",
       "market": "commodity",
-      "latest_price": 3.321000099182129,
+      "latest_price": 3.2909998893737793,
       "latest_bar_date": "2026-11-18",
       "bars_count": 62,
-      "summary": "盤整，波動擴張中，上方壓力 3.403，下方支撐 3.254",
+      "summary": "盤整，波動擴張中，上方壓力 3.398，下方支撐 3.239",
       "resistances": [
         {
-          "price": 3.4030000162124634,
+          "price": 3.3980000162124635,
           "label": "20日高＋60日高＋前週高 等6項",
-          "algo": "整數心理關卡 3.370；短線擺動高（2日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-13）；近 5 日最高；近 20 日最高；近 60 日最高",
+          "algo": "整數心理關卡 3.340；短線擺動高（2日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-13）；近 5 日最高；近 20 日最高；近 60 日最高",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": 2.47
+          "dist_pct": 3.25
         }
       ],
       "supports": [
         {
-          "price": 3.2539999580383303,
+          "price": 3.23899995803833,
           "label": "前日高＋整數關卡",
-          "algo": "整數心理關卡 3.270；前一日高點（2026-11-17）",
+          "algo": "整數心理關卡 3.240；前一日高點（2026-11-17）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": -2.02
+          "dist_pct": -1.58
         },
         {
           "price": 3.0478379988125397,
@@ -3884,7 +3884,7 @@
           "algo": "短線擺動低（2日確認 2026-10-12）；前期擺動高點（突破轉支撐 5日確認 2026-10-29）；近 5 日最低；前一日低點（2026-11-17）；前期擺動高點（突破轉支撐 5日確認 2026-09-03）；50 日均線 SMA50；斐波那契 61.8%（2026-10-14→2026-10-26）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -8.23
+          "dist_pct": -7.39
         },
         {
           "price": 2.9954499580383303,
@@ -3892,7 +3892,7 @@
           "algo": "20 日均線 SMA20；前一週低點（2026-11-09~2026-11-13）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": -9.8
+          "dist_pct": -8.98
         }
       ],
       "fibonacci": {
@@ -3911,13 +3911,13 @@
       "volatility": {
         "atr20": 0.15721546660510066,
         "tomorrow": {
-          "low": 3.1637846325770282,
-          "high": 3.4782155657872296,
+          "low": 3.1337844227686786,
+          "high": 3.44821535597888,
           "days": 1
         },
         "week": {
-          "low": 2.9694556287387757,
-          "high": 3.672544569625482,
+          "low": 2.939455418930426,
+          "high": 3.6425443598171325,
           "days": 5
         }
       },
@@ -3957,7 +3957,7 @@
       "symbol": "COPPER",
       "display_name": "銅 (Copper)",
       "market": "commodity",
-      "latest_price": 5.619500160217285,
+      "latest_price": 5.640999794006348,
       "latest_bar_date": "2026-11-18",
       "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 5.984，下方支撐 5.5",
@@ -3968,7 +3968,7 @@
           "algo": "前一日低點（2026-11-17）；前一日高點（2026-11-17）；整數心理關卡 6.00",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 6.49
+          "dist_pct": 6.08
         },
         {
           "price": 6.076017434120178,
@@ -3976,7 +3976,7 @@
           "algo": "前一週低點（2026-11-09~2026-11-13）；斐波那契 38.2%（2026-09-22→2026-11-18）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 8.12
+          "dist_pct": 7.71
         },
         {
           "price": 6.200083414713542,
@@ -3984,7 +3984,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-06）；近 5 日最高；斐波那契 50.0%（2026-09-22→2026-11-18）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 10.33
+          "dist_pct": 9.91
         }
       ],
       "supports": [
@@ -3994,7 +3994,7 @@
           "algo": "整數心理關卡 5.50",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -2.13
+          "dist_pct": -2.5
         },
         {
           "price": 5.0,
@@ -4002,7 +4002,7 @@
           "algo": "整數心理關卡 5.00",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -11.02
+          "dist_pct": -11.36
         }
       ],
       "fibonacci": {
@@ -4021,13 +4021,13 @@
       "volatility": {
         "atr20": 0.11150476855267888,
         "tomorrow": {
-          "low": 5.507995391664606,
-          "high": 5.7310049287699645,
+          "low": 5.529495025453668,
+          "high": 5.752504562559027,
           "days": 1
         },
         "week": {
-          "low": 5.370167917918114,
-          "high": 5.868832402516456,
+          "low": 5.391667551707177,
+          "high": 5.8903320363055185,
           "days": 5
         }
       },
