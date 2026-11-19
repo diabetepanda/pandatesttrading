@@ -199,7 +199,7 @@ def test_generate_ta_file_and_jobs_integration(tmp_path: Path) -> None:
     assert (daily_dir / "ta.json").exists()
 
 
-def test_real_data_ta_json_has_all_symbols_and_xauusd_sane() -> None:
+def test_real_data_ta_json_has_all_symbols_and_btcusdt_constraints() -> None:
     root = Path(__file__).resolve().parent.parent
     ta_path = root / "data" / "ta.json"
     assert ta_path.exists(), "Expected committed data/ta.json"
@@ -207,11 +207,55 @@ def test_real_data_ta_json_has_all_symbols_and_xauusd_sane() -> None:
     assert doc["disclaimer"] == TA_DISCLAIMER
     assert doc["symbols_count"] >= 40
     assert "XAUUSD" in doc["symbols"]
+    assert "BTCUSDT" in doc["symbols"]
+
     xau = doc["symbols"]["XAUUSD"]
     assert xau["trend"]["state"] in {"上升趨勢", "下降趨勢", "盤整"}
     assert 5.0 < xau["trend"]["adx14"] < 80.0
     assert xau["backtest"]["support_samples"] >= 30
     assert xau["backtest"]["resistance_samples"] >= 30
+
+    # BTCUSDT nearest resistance distance must be < 3 * ATR20 and max 3 per side
+    btc = doc["symbols"]["BTCUSDT"]
+    assert 1 <= len(btc["resistances"]) <= 3
+    assert 1 <= len(btc["supports"]) <= 3
+    btc_atr = btc["volatility"]["atr20"]
+    btc_cur = btc["latest_price"]
+    assert (btc["resistances"][0]["price"] - btc_cur) < 3.0 * btc_atr
+    assert (btc["resistances"][0]["price"] - btc_cur) > 0.3 * btc_atr
+    for lvl in btc["resistances"] + btc["supports"]:
+        assert lvl["label"]
+        assert 1 <= lvl["strength"] <= 3
+
+    # Any symbol with > 2 years daily bars (> 500 bars) must have > 0 backtest samples
+    for sym, entry in doc["symbols"].items():
+        if entry["bars_count"] >= 500:
+            assert entry["backtest"]["support_samples"] > 0, f"{sym} support_samples == 0"
+            assert entry["backtest"]["resistance_samples"] > 0, f"{sym} resistance_samples == 0"
+
+
+def test_btcusdt_2y_backtest_nonzero_and_short_bars_fallback(tmp_path: Path) -> None:
+    # 1. Synthetic > 2y crypto (with weekends, 750 days) must yield > 0 samples
+    closes = [60000.0 + 4000.0 * math.sin(i * 0.25) for i in range(750)]
+    crypto_2y = _make_daily_bars(closes, spread=900.0, start_year=2024)
+    bt = backtest_sr_hold_rates(crypto_2y, market="crypto")
+    assert bt["support_samples"] > 0
+    assert bt["resistance_samples"] > 0
+
+    # 2. Short 60-bar live scan into fresh out_dir must preserve BTCUSDT historical backtest from data/ta.json
+    cfg = load_config()
+    btc_inst = next(i for i in cfg["instruments"] if i["symbol"] == "BTCUSDT")
+    small_cfg = dict(cfg, instruments=[dict(btc_inst, enabled=True)])
+    res = generate_ta_file(
+        out_dir=tmp_path,
+        config=small_cfg,
+        bars_1d_by_sym={"BTCUSDT": crypto_2y[-60:]},
+        fetch_10y_if_missing=False,
+    )
+    btc_bt = res["symbols"]["BTCUSDT"]["backtest"]
+    assert btc_bt["support_samples"] > 0
+    assert btc_bt["resistance_samples"] > 0
+    assert "0 次" not in btc_bt["support_label"]
 
 
 def test_frontend_ta_expand_collapse_and_formatting() -> None:
@@ -220,13 +264,14 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
     style_css = (root / "assets" / "style.css").read_text(encoding="utf-8")
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
-    assert "?v=20261120b" in index_html
+    assert "?v=20261120c" in index_html
     assert "技術分析" in index_html
     assert ".ta-panel" in style_css
     assert ".ta-detail-row" in style_css
     assert ".ta-hero-card" in style_css
-    assert ".ta-ruler-card" in style_css
-    assert ".ta-details-wrapper" in style_css
+    assert ".ta-detail-panel" in style_css
+    assert ".ta-detail-grid-2x2" in style_css
+    assert ".ta-ruler-card" not in style_css
 
     js_bin = shutil.which("node")
     if not js_bin:
@@ -292,8 +337,8 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
               latest_price: 3985.5,
               latest_bar_date: '2026-11-15',
               summary: '下降趨勢，波動正常',
-              resistances: [{{ price: 4091.2, algo: '擺動高點' }}],
-              supports: [{{ price: 3879.3, algo: '近 20 日最低' }}],
+              resistances: [{{ price: 4091.2, label: 'SMA20＋Fibo 50.0%', algo: '擺動高點', strength: 2 }}],
+              supports: [{{ price: 3879.3, label: '20日低', algo: '近 20 日最低', strength: 1 }}],
               fibonacci: {{
                 direction_label: '下跌波段反彈',
                 start_date: '2026-10-01',
@@ -305,15 +350,15 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
               volatility: {{ atr20: 55.1, tomorrow: {{ low: 3930.4, high: 4040.6 }}, week: {{ low: 3839.7, high: 4131.3 }} }},
               trend: {{ state: '下降趨勢', sma20: 4010.0, sma50: 4050.0, sma200: 3900.0, adx14: 25.5, detail: '空頭排列' }},
               squeeze: {{ bb_width_pct: 15.2, is_squeezing: true, label: '收斂中，可能變盤' }},
-              pattern: {{ name: '下降通道', note: '參考用' }},
+              pattern: {{ name: '下降通道', note: '通道下探（僅供參考）' }},
               backtest: {{ years: 10.0, support_label: '70.7%（150 次，10.0 年）', resistance_label: '62.8%（180 次，10.0 年）' }},
             }},
             EURUSD: {{
               symbol: 'EURUSD',
               latest_price: 1.0825,
-              resistances: [{{ price: 1.095, algo: '近 20 日最高' }}],
-              supports: [{{ price: 1.071, algo: '近 20 日最低' }}],
-              trend: {{ state: '盤整', adx14: 14.2 }},
+              resistances: [{{ price: 1.095, label: '20日高', algo: '近 20 日最高', strength: 1 }}],
+              supports: [{{ price: 1.071, label: '20日低', algo: '近 20 日最低', strength: 1 }}],
+              trend: {{ state: '盤整', sma20: 1.08, sma50: 1.09, sma200: null, adx14: 14.2 }},
               squeeze: {{ bb_width_pct: 48.0, is_squeezing: false, label: '波動正常' }},
               pattern: {{ name: '箱型', note: '區間震盪' }},
               backtest: {{ years: 10.0, support_label: '68.0%（110 次，10.0 年）', resistance_label: '64.0%（105 次，10.0 年）' }},
@@ -329,19 +374,28 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
           throw new Error('Expected no expanded panel by default');
         }}
 
-        // 2. Expand XAUUSD -> single detail row directly beneath XAUUSD using formatPriceWithCommas
+        // 2. Expand XAUUSD -> left hero + right 2x2 detail panel (no ruler, no collapsed toggle)
         u.toggleTaSymbolForTest('XAUUSD');
         const h1 = tbodyEl.innerHTML;
         const count1 = (h1.match(/ta-detail-row/g) || []).length;
         if (count1 !== 1) throw new Error('Expected 1 expanded TA panel, got ' + count1);
-        if (!h1.includes('4,091.20') || !h1.includes('3,879.30')) {{
-          throw new Error('Expected comma-formatted S/R in XAUUSD panel: ' + h1);
+        if (!h1.includes('4,091.20') || !h1.includes('3,879.30') || !h1.includes('SMA20＋Fibo 50.0%')) {{
+          throw new Error('Expected comma-formatted S/R and merged label in XAUUSD panel: ' + h1);
+        }}
+        if (h1.includes('ta-ruler-card') || h1.includes('看詳細數據')) {{
+          throw new Error('Old ruler card or hidden details toggle should be removed');
+        }}
+        if (!h1.includes('詳細數據') || !h1.includes('支撐壓力表') || !h1.includes('均線與趨勢') || !h1.includes('斐波那契與型態')) {{
+          throw new Error('Missing 2x2 detail subcards');
+        }}
+        if (!h1.includes('★★☆') || !h1.includes('25.5（有趨勢）') || h1.includes('（僅供參考）')) {{
+          throw new Error('Expected stars, ADX plain label, and stripped duplicate 僅供參考');
         }}
         if (!h1.includes('收斂中，可能變盤') || !h1.includes('以上為依歷史數據與技術指標計算的參考點位，不是預測，也不是投資建議。')) {{
           throw new Error('Missing squeeze warning or disclaimer');
         }}
-        if (!h1.includes('看詳細數據') || !h1.includes('歷史上碰到支撐，5 日內守住 70.7%（150 次）')) {{
-          throw new Error('Missing details toggle or sticky backtest text');
+        if (!h1.includes('歷史驗證（觸及後 5 日）') || !h1.includes('70.7%（150 次，10.0 年）')) {{
+          throw new Error('Missing historical validation bar');
         }}
         const idxXau = h1.indexOf('data-symbol="XAUUSD"');
         const idxEur = h1.indexOf('data-symbol="EURUSD"');
@@ -350,21 +404,14 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
           throw new Error('Detail row not placed directly beneath XAUUSD');
         }}
 
-        // 3. Click EURUSD -> XAUUSD collapses, only EURUSD expanded (1.09500 via formatPriceWithCommas)
+        // 3. Click EURUSD -> XAUUSD collapses, only EURUSD expanded, missing SMA200 shows 資料不足
         u.toggleTaSymbolForTest('EURUSD');
         const h2 = tbodyEl.innerHTML;
         if ((h2.match(/ta-detail-row/g) || []).length !== 1 || !h2.includes('1.09500') || h2.includes('4,091.20')) {{
           throw new Error('Switching expanded row failed');
         }}
-
-        // Verify details expand / collapse toggle
-        if (!h2.includes('ta-details-body hidden')) {{
-          throw new Error('Details should be hidden by default');
-        }}
-        u.toggleTaDetailsForTest('EURUSD');
-        const h2Expanded = tbodyEl.innerHTML;
-        if (h2Expanded.includes('ta-details-body hidden')) {{
-          throw new Error('Details should expand when toggled');
+        if (!h2.includes('資料不足') || !h2.includes('14.2（無趨勢）')) {{
+          throw new Error('Expected 資料不足 for null SMA200 and 無趨勢 for ADX < 20');
         }}
 
         // 4. Click EURUSD again -> collapses completely

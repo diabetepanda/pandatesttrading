@@ -1125,7 +1125,7 @@ tr.ta-detail-row > td.ta-detail-cell {
 
 @media (min-width: 860px) {
   .ta-top-grid {
-    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-columns: 0.9fr 1.1fr;
     align-items: stretch;
   }
 }
@@ -1325,19 +1325,27 @@ tr.ta-detail-row > td.ta-detail-cell {
   font-weight: bold;
 }
 
-/* 第 2 層：垂直價格尺卡片 */
-.ta-ruler-card {
+.ta-num-src {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 右側：詳細數據卡（2x2 格線，手機 1 欄） */
+.ta-detail-panel {
   background: #111722;
   border: 1px solid rgba(88, 166, 255, 0.25);
   border-radius: 10px;
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-height: 250px;
+  gap: 10px;
 }
 
-.ta-ruler-header {
+.ta-detail-header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -1345,258 +1353,177 @@ tr.ta-detail-row > td.ta-detail-cell {
   padding-bottom: 6px;
 }
 
-.ta-ruler-title {
-  font-size: 0.88rem;
+.ta-detail-title {
+  font-size: 0.92rem;
   font-weight: 700;
   color: var(--accent);
 }
 
-.ta-ruler-hint {
+.ta-detail-date {
   font-size: 0.72rem;
   color: var(--muted);
 }
 
-.ta-ruler-body {
-  position: relative;
-  flex: 1;
-  min-height: 190px;
-  margin: 6px 0;
+.ta-detail-grid-2x2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
 
-.ta-ruler-axis {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 190px;
+@media (min-width: 680px) {
+  .ta-detail-grid-2x2 {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-/* 本週預估色帶 */
-.ta-ruler-wk-band {
-  position: absolute;
-  left: 20px;
-  right: 6px;
-  background: rgba(88, 166, 255, 0.08);
-  border-left: 2px dashed rgba(88, 166, 255, 0.4);
-  border-radius: 0 4px 4px 0;
-  pointer-events: none;
-}
-
-/* 垂直主軸線 */
-.ta-ruler-spine {
-  position: absolute;
-  left: 20px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: rgba(48, 54, 61, 0.85);
-}
-
-/* 尺上標記 */
-.ta-ruler-marker {
-  position: absolute;
-  left: 12px;
-  right: 6px;
-  transform: translateY(-50%);
+.ta-subcard {
+  background: rgba(13, 17, 23, 0.65);
+  border: 1px solid rgba(48, 54, 61, 0.65);
+  border-radius: 8px;
+  padding: 10px 12px;
   display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: transform 0.1s ease;
-}
-
-.ta-ruler-marker:hover {
-  transform: translateY(-50%) scale(1.02);
-  z-index: 10;
-}
-
-.ta-marker-line {
-  width: 16px;
-  height: 2px;
-  flex-shrink: 0;
-}
-
-.ta-marker-content {
-  display: flex;
-  align-items: baseline;
+  flex-direction: column;
   gap: 6px;
-  padding: 2px 6px;
+}
+
+.ta-subcard-title {
+  margin: 0 0 2px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #79c0ff;
+  border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+  padding-bottom: 4px;
+}
+
+/* 支撐壓力表 */
+.ta-sr-table {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ta-sr-row {
+  display: grid;
+  grid-template-columns: auto 48px 1fr auto;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  padding: 3px 5px;
   border-radius: 4px;
-  font-size: 0.82rem;
-  white-space: nowrap;
 }
 
-.ta-marker-px {
-  font-size: 0.86rem;
-}
-
-.ta-marker-tag {
-  font-size: 0.7rem;
-  padding: 1px 4px;
-  border-radius: 3px;
-}
-
-/* 標記樣式區分：壓力、現價、支撐、斐波 */
-.ta-marker-res .ta-marker-line {
-  background: #f85149;
-}
-.ta-marker-res .ta-marker-content {
-  background: rgba(248, 81, 73, 0.12);
-  border: 1px solid rgba(248, 81, 73, 0.3);
-}
-.ta-marker-res .ta-marker-px {
+.ta-sr-row.is-res .ta-sr-px {
   color: #ff7b72;
-}
-.ta-marker-res .ta-marker-tag {
-  background: rgba(248, 81, 73, 0.25);
-  color: #ffa198;
-}
-
-.ta-marker-sup .ta-marker-line {
-  background: #3fb950;
-}
-.ta-marker-sup .ta-marker-content {
-  background: rgba(46, 160, 67, 0.12);
-  border: 1px solid rgba(46, 160, 67, 0.3);
-}
-.ta-marker-sup .ta-marker-px {
-  color: #7ee787;
-}
-.ta-marker-sup .ta-marker-tag {
-  background: rgba(46, 160, 67, 0.25);
-  color: #aff5b4;
-}
-
-.ta-marker-cur {
-  z-index: 5;
-}
-.ta-marker-cur .ta-marker-line {
-  background: #58a6ff;
-  height: 3px;
-  width: 20px;
-}
-.ta-marker-cur .ta-marker-content {
-  background: rgba(88, 166, 255, 0.24);
-  border: 1px solid #58a6ff;
-  outline: 1px solid rgba(88, 166, 255, 0.4);
-}
-.ta-marker-cur .ta-marker-px {
-  color: #ffffff;
-  font-size: 0.94rem;
-  font-weight: 800;
-}
-.ta-marker-cur .ta-marker-tag {
-  background: #58a6ff;
-  color: #0d1117;
   font-weight: 700;
 }
 
-.ta-marker-fib .ta-marker-line {
-  background: transparent;
-  border-top: 1px dashed rgba(210, 153, 34, 0.6);
-  width: 16px;
-}
-.ta-marker-fib .ta-marker-content {
-  background: rgba(210, 153, 34, 0.08);
-  border: 1px dashed rgba(210, 153, 34, 0.35);
-  opacity: 0.88;
-}
-.ta-marker-fib .ta-marker-px {
-  color: #d29922;
-  font-size: 0.78rem;
-}
-.ta-marker-fib .ta-marker-tag {
-  background: rgba(210, 153, 34, 0.18);
-  color: #e3b341;
-  font-size: 0.66rem;
+.ta-sr-row.is-res .ta-sr-dist {
+  color: #ffa198;
 }
 
-.ta-bt-sticky-note {
-  font-size: 0.75rem;
-  color: #8b949e;
-  border-top: 1px solid rgba(48, 54, 61, 0.6);
-  padding-top: 6px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.ta-sr-row.is-sup .ta-sr-px {
+  color: #56d364;
+  font-weight: 700;
 }
 
-.ta-note-icon {
-  color: var(--accent);
-  font-weight: bold;
+.ta-sr-row.is-sup .ta-sr-dist {
+  color: #7ee787;
 }
 
-/* 第 3 層：詳細數據（預設收合） */
-.ta-details-wrapper {
-  background: #0d1218;
-  border: 1px solid rgba(48, 54, 61, 0.65);
-  border-radius: 8px;
+.ta-sr-row.is-cur {
+  background: rgba(88, 166, 255, 0.16);
+  border: 1px solid rgba(88, 166, 255, 0.45);
+  color: #ffffff;
+  font-weight: 700;
+  margin: 2px 0;
+}
+
+.ta-sr-dist {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ta-sr-src {
+  color: #c9d1d9;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.ta-details-toggle-btn {
-  width: 100%;
+.ta-sr-stars {
+  color: #e3b341;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+}
+
+.ta-sr-empty {
+  font-size: 0.76rem;
+  padding: 2px 4px;
+}
+
+/* 均線、波動、斐波那契列 */
+.ta-kv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ta-kv-line {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  background: rgba(22, 27, 34, 0.7);
-  border: none;
-  color: var(--accent);
-  padding: 8px 14px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.ta-details-toggle-btn:hover {
-  background: rgba(88, 166, 255, 0.1);
-}
-
-.ta-toggle-arrow {
-  font-size: 0.9rem;
-  color: var(--muted);
-  transition: transform 0.15s ease;
-}
-
-.ta-details-body {
-  padding: 12px 14px;
-  border-top: 1px solid rgba(48, 54, 61, 0.6);
-}
-
-.ta-details-grid {
-  display: flex;
-  flex-direction: column;
+  align-items: baseline;
   gap: 8px;
-}
-
-.ta-detail-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 0.82rem;
-  padding-bottom: 6px;
+  font-size: 0.79rem;
+  padding: 2px 0;
   border-bottom: 1px dashed rgba(48, 54, 61, 0.4);
 }
 
-.ta-detail-item:last-child {
+.ta-kv-line:last-child {
   border-bottom: none;
-  padding-bottom: 0;
 }
 
-.ta-detail-label {
-  font-size: 0.74rem;
+.ta-kv-line > span:first-child {
   color: var(--muted);
+  flex-shrink: 0;
 }
 
-.ta-detail-val {
+.ta-kv-line > strong,
+.ta-kv-wrap {
+  text-align: right;
+  color: #e6edf3;
+}
+
+.ta-ma-up {
+  color: #3fb950;
+  font-weight: 800;
+}
+
+.ta-ma-down {
+  color: #f85149;
+  font-weight: 800;
+}
+
+.ta-sub-pct {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+
+.ta-bt-bar {
+  background: rgba(22, 27, 34, 0.75);
+  border: 1px solid rgba(48, 54, 61, 0.65);
+  border-radius: 6px;
+  padding: 7px 12px;
+  font-size: 0.78rem;
   color: #c9d1d9;
+  text-align: center;
 }
 
 .ta-disclaimer {
   font-size: 0.74rem;
   color: var(--muted);
   text-align: center;
-  padding-top: 4px;
+  padding-top: 2px;
 }
 
 

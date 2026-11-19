@@ -63,50 +63,171 @@ def find_swing_points(
     return highs, lows
 
 
-def _merge_sr_levels(
-    raw_levels: list[tuple[float, str, str]],
-    cur_px: float,
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    """Deduplicate identical price levels and split into resistances (>= cur) and supports (< cur)."""
-    tol = max(1e-9, abs(cur_px) * 1e-6)
-    merged: list[dict[str, Any]] = []
+def _round_level_step(price: float) -> float:
+    """Choose a human-meaningful round-number grid step based on asset price magnitude."""
+    if price >= 20000:
+        return 1000.0
+    if price >= 10000:
+        return 500.0
+    if price >= 2000:
+        return 100.0
+    if price >= 500:
+        return 50.0
+    if price >= 250:
+        return 10.0
+    if price >= 100:
+        return 2.0
+    if price >= 20:
+        return 2.0
+    if price >= 5:
+        return 0.5
+    if price >= 0.5:
+        return 0.01
+    if price <= 0:
+        return 1.0
+    exp = math.floor(math.log10(price)) - 1
+    return max(1e-8, 10.0**exp)
 
-    for px, algo, kind in raw_levels:
+
+def _format_round_label(val: float, step: float) -> str:
+    if step >= 1.0:
+        return f"{val:,.0f}"
+    dec = max(0, min(8, -math.floor(math.log10(step)) + 1))
+    return f"{val:.{dec}f}"
+
+
+def _previous_week_high_low(bars: list[OHLCVBar]) -> tuple[float, float, str] | None:
+    """Return (high, low, label_date) of the most recent completed calendar week."""
+    if len(bars) < 7:
+        return None
+    try:
+        latest_dt = datetime.strptime(bars[-1].ts_utc[:10], "%Y-%m-%d").date()
+        cur_yw = latest_dt.isocalendar()[:2]
+        by_week: dict[tuple[int, int], list[OHLCVBar]] = {}
+        for b in bars:
+            d = datetime.strptime(b.ts_utc[:10], "%Y-%m-%d").date()
+            yw = d.isocalendar()[:2]
+            if yw < cur_yw:
+                by_week.setdefault(yw, []).append(b)
+        if by_week:
+            prev_yw = max(by_week.keys())
+            wk_bars = by_week[prev_yw]
+            return (
+                max(b.high for b in wk_bars),
+                min(b.low for b in wk_bars),
+                f"{wk_bars[0].ts_utc[:10]}~{wk_bars[-1].ts_utc[:10]}",
+            )
+    except Exception:
+        pass
+    slice_bars = bars[-14:-7] if len(bars) >= 14 else bars[:-5]
+    if not slice_bars:
+        return None
+    return (
+        max(b.high for b in slice_bars),
+        min(b.low for b in slice_bars),
+        f"{slice_bars[0].ts_utc[:10]}~{slice_bars[-1].ts_utc[:10]}",
+    )
+
+
+def _select_sr_zones(
+    raw_levels: list[tuple[float, str, str, str]],
+    cur_px: float,
+    atr20: float | None,
+    max_per_side: int = 3,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Filter near-price noise (<0.3*ATR20), merge close zones (<0.5*ATR20), score strength, and keep top 3/side.
+
+    Each raw tuple is `(price, short_label, full_algo, kind)`.
+    """
+    if cur_px <= 0:
+        return [], []
+
+    has_atr = atr20 is not None and math.isfinite(atr20) and atr20 > 0
+    near_excl = 0.3 * atr20 if has_atr else cur_px * 1e-4
+    merge_gap = 0.5 * atr20 if has_atr else cur_px * 5e-4
+
+    res_candidates: list[dict[str, Any]] = []
+    sup_candidates: list[dict[str, Any]] = []
+
+    for px, short_lbl, full_algo, kind in raw_levels:
         if px is None or not math.isfinite(px) or px <= 0:
             continue
-        matched = None
-        for m in merged:
-            if abs(m["price"] - px) <= tol:
-                matched = m
-                break
-        if matched is not None:
-            if algo not in matched["algos"]:
-                matched["algos"].append(algo)
-        else:
-            merged.append({"price": float(px), "algos": [algo], "kind": kind})
+        if abs(px - cur_px) <= near_excl:
+            continue
 
-    resistances: list[dict[str, Any]] = []
-    supports: list[dict[str, Any]] = []
-    for item in merged:
-        is_res = item["price"] >= cur_px
-        algos = list(item["algos"])
-        if is_res and item["kind"] == "swing_low":
-            algos = [a.replace("擺動低點（", "前期擺動低點（跌破轉壓力 ") for a in algos]
-        elif (not is_res) and item["kind"] == "swing_high":
-            algos = [a.replace("擺動高點（", "前期擺動高點（突破轉支撐 ") for a in algos]
-        entry = {
-            "price": item["price"],
-            "algo": "／".join(algos),
-        }
+        is_res = px > cur_px
+        s_lbl = short_lbl
+        f_algo = full_algo
+        if is_res and kind in ("swing_low", "swing2_low"):
+            s_lbl = "前低轉壓" if kind == "swing_low" else "前短低轉壓"
+            f_algo = full_algo.replace("擺動低點（", "前期擺動低點（跌破轉壓力 ").replace("短線擺動低（", "前期短線低點（跌破轉壓力 ")
+        elif (not is_res) and kind in ("swing_high", "swing2_high"):
+            s_lbl = "前高轉支" if kind == "swing_high" else "前短高轉支"
+            f_algo = full_algo.replace("擺動高點（", "前期擺動高點（突破轉支撐 ").replace("短線擺動高（", "前期短線高點（突破轉支撐 ")
+
+        item = {"price": float(px), "label": s_lbl, "algo": f_algo, "kind": kind}
         if is_res:
-            resistances.append(entry)
+            res_candidates.append(item)
         else:
-            supports.append(entry)
+            sup_candidates.append(item)
 
-    # Nearest to farthest
-    resistances.sort(key=lambda x: x["price"])
-    supports.sort(key=lambda x: x["price"], reverse=True)
-    return resistances, supports
+    _PRIORITY_ORDER = {
+        "SMA20": 0, "SMA50": 0, "SMA200": 0,
+        "Fibo 38.2%": 1, "Fibo 50.0%": 1, "Fibo 61.8%": 1,
+        "60日高": 2, "60日低": 2, "20日高": 2, "20日低": 2,
+        "擺動高": 3, "擺動低": 3, "前低轉壓": 3, "前高轉支": 3,
+        "5日高": 4, "5日低": 4, "前週高": 4, "前週低": 4, "前日高": 4, "前日低": 4,
+        "短擺動高": 5, "短擺動低": 5, "前短低轉壓": 5, "前短高轉支": 5,
+        "整數關卡": 6,
+    }
+
+    def _cluster_side(items: list[dict[str, Any]], ascending: bool) -> list[dict[str, Any]]:
+        ordered = sorted(items, key=lambda x: x["price"], reverse=not ascending)
+        clusters: list[list[dict[str, Any]]] = []
+        for item in ordered:
+            if not clusters:
+                clusters.append([item])
+                continue
+            anchor_px = clusters[-1][0]["price"]
+            if abs(item["price"] - anchor_px) < merge_gap:
+                # Never merge a second round number into a cluster that already has one
+                if item["kind"] == "round" and any(m["kind"] == "round" for m in clusters[-1]):
+                    continue
+                clusters[-1].append(item)
+            else:
+                clusters.append([item])
+
+        zones: list[dict[str, Any]] = []
+        for cl in clusters:
+            uniq_labels: list[str] = []
+            uniq_algos: list[str] = []
+            for m in cl:
+                if m["label"] not in uniq_labels:
+                    uniq_labels.append(m["label"])
+                if m["algo"] not in uniq_algos:
+                    uniq_algos.append(m["algo"])
+            avg_px = sum(m["price"] for m in cl) / len(cl)
+            src_cnt = len(uniq_labels)
+            strength = min(3, max(1, src_cnt))
+            sorted_lbls = sorted(uniq_labels, key=lambda lb: _PRIORITY_ORDER.get(lb, 9))
+            display_lbl = "＋".join(sorted_lbls[:3])
+            if len(sorted_lbls) > 3:
+                display_lbl += f" 等{len(sorted_lbls)}項"
+            dist_pct = round((avg_px - cur_px) / cur_px * 100.0, 2)
+            zones.append(
+                {
+                    "price": avg_px,
+                    "label": display_lbl,
+                    "algo": "；".join(uniq_algos),
+                    "strength": strength,
+                    "sources_count": src_cnt,
+                    "dist_pct": dist_pct,
+                }
+            )
+        zones.sort(key=lambda z: z["price"], reverse=not ascending)
+        return zones[:max_per_side]
+
+    return _cluster_side(res_candidates, ascending=True), _cluster_side(sup_candidates, ascending=False)
 
 
 def compute_fibonacci_retracement(
@@ -325,7 +446,7 @@ def backtest_sr_hold_rates(
 ) -> dict[str, Any]:
     """Causal 10-year historical test of 5-day support/resistance hold rates within 1*ATR."""
     n = len(bars)
-    if n < 80:
+    if n < 40:
         return {
             "years": round(n / 252.0, 1) if market != "crypto" else round(n / 365.0, 1),
             "support_hold_rate_pct": None,
@@ -370,11 +491,11 @@ def backtest_sr_hold_rates(
         if t in sl_by_confirm:
             for px in sl_by_confirm[t]:
                 active_supports.append(px)
-            active_supports = active_supports[-3:]
+            active_supports = active_supports[-5:]
         if t in sh_by_confirm:
             for px in sh_by_confirm[t]:
                 active_resistances.append(px)
-            active_resistances = active_resistances[-3:]
+            active_resistances = active_resistances[-5:]
 
         av = atr20[t]
         if av is None or av <= 0:
@@ -464,30 +585,100 @@ def analyze_symbol_ta(
     cur_px = float(latest_price) if (latest_price is not None and latest_price > 0) else float(eff_bars[-1].close)
     latest_date = eff_bars[-1].ts_utc[:10]
 
-    # 1. Support & Resistance (3 swing highs, 3 swing lows, 20d H/L, 60d H/L)
+    # Swing points (k=5 major + k=2 short-term)
     swing_highs, swing_lows = find_swing_points(eff_bars, left_right=5)
-    raw_levels: list[tuple[float, str, str]] = []
-    for _, dt_s, px in swing_highs[-3:]:
-        raw_levels.append((px, f"擺動高點（5日確認 {dt_s}）", "swing_high"))
-    for _, dt_s, px in swing_lows[-3:]:
-        raw_levels.append((px, f"擺動低點（5日確認 {dt_s}）", "swing_low"))
-
-    win20 = eff_bars[-20:]
-    raw_levels.append((max(b.high for b in win20), "近 20 日最高", "20d_high"))
-    raw_levels.append((min(b.low for b in win20), "近 20 日最低", "20d_low"))
-
-    if len(eff_bars) >= 60:
-        win60 = eff_bars[-60:]
-        raw_levels.append((max(b.high for b in win60), "近 60 日最高", "60d_high"))
-        raw_levels.append((min(b.low for b in win60), "近 60 日最低", "60d_low"))
-
-    resistances, supports = _merge_sr_levels(raw_levels, cur_px)
+    swing2_highs, swing2_lows = find_swing_points(eff_bars, left_right=2)
 
     # 3. Volatility Range (ATR20 * sqrt(days))
     atr20 = compute_atr(eff_bars, period=20, market="crypto", interval="1d")
 
     # 2. Fibonacci Retracement (computed with ATR20 scale check)
     fibo = compute_fibonacci_retracement(eff_bars, swing_highs, swing_lows, atr20=atr20)
+
+    # 4. Trend State (SMA20/50/200 + ADX14)
+    trend = classify_trend(eff_bars, cur_px, market=market)
+
+    # 1. Support & Resistance (expanded candidates -> filter <0.3*ATR20 -> merge <0.5*ATR20 -> top 3/side)
+    raw_levels: list[tuple[float, str, str, str]] = []
+    sh5_recent = swing_highs[-4:]
+    sl5_recent = swing_lows[-4:]
+    sh5_idx = {idx for idx, _, _ in sh5_recent}
+    sl5_idx = {idx for idx, _, _ in sl5_recent}
+
+    for _, dt_s, px in sh5_recent:
+        raw_levels.append((px, "擺動高", f"擺動高點（5日確認 {dt_s}）", "swing_high"))
+    for _, dt_s, px in sl5_recent:
+        raw_levels.append((px, "擺動低", f"擺動低點（5日確認 {dt_s}）", "swing_low"))
+
+    for idx, dt_s, px in swing2_highs[-5:]:
+        if idx not in sh5_idx:
+            raw_levels.append((px, "短擺動高", f"短線擺動高（2日確認 {dt_s}）", "swing2_high"))
+    for idx, dt_s, px in swing2_lows[-5:]:
+        if idx not in sl5_idx:
+            raw_levels.append((px, "短擺動低", f"短線擺動低（2日確認 {dt_s}）", "swing2_low"))
+
+    win5 = eff_bars[-5:]
+    raw_levels.append((max(b.high for b in win5), "5日高", "近 5 日最高", "5d_high"))
+    raw_levels.append((min(b.low for b in win5), "5日低", "近 5 日最低", "5d_low"))
+
+    win20 = eff_bars[-20:]
+    raw_levels.append((max(b.high for b in win20), "20日高", "近 20 日最高", "20d_high"))
+    raw_levels.append((min(b.low for b in win20), "20日低", "近 20 日最低", "20d_low"))
+
+    if len(eff_bars) >= 60:
+        win60 = eff_bars[-60:]
+        raw_levels.append((max(b.high for b in win60), "60日高", "近 60 日最高", "60d_high"))
+        raw_levels.append((min(b.low for b in win60), "60日低", "近 60 日最低", "60d_low"))
+
+    if len(eff_bars) >= 2:
+        prev_bar = eff_bars[-2]
+        raw_levels.append((prev_bar.high, "前日高", f"前一日高點（{prev_bar.ts_utc[:10]}）", "prev_day_high"))
+        raw_levels.append((prev_bar.low, "前日低", f"前一日低點（{prev_bar.ts_utc[:10]}）", "prev_day_low"))
+
+    prev_wk = _previous_week_high_low(eff_bars)
+    if prev_wk is not None:
+        wk_hi, wk_lo, wk_span = prev_wk
+        raw_levels.append((wk_hi, "前週高", f"前一週高點（{wk_span}）", "prev_week_high"))
+        raw_levels.append((wk_lo, "前週低", f"前一週低點（{wk_span}）", "prev_week_low"))
+
+    for sma_key, sma_lbl, sma_desc in (
+        ("sma20", "SMA20", "20 日均線 SMA20"),
+        ("sma50", "SMA50", "50 日均線 SMA50"),
+        ("sma200", "SMA200", "200 日均線 SMA200"),
+    ):
+        sma_val = trend.get(sma_key)
+        if sma_val is not None:
+            raw_levels.append((float(sma_val), sma_lbl, sma_desc, sma_key))
+
+    if fibo and isinstance(fibo.get("levels"), dict):
+        for lvl_k, lvl_v in fibo["levels"].items():
+            if lvl_v is not None:
+                raw_levels.append(
+                    (
+                        float(lvl_v),
+                        f"Fibo {lvl_k}",
+                        f"斐波那契 {lvl_k}（{fibo['start_date']}→{fibo['end_date']}）",
+                        "fibo",
+                    )
+                )
+
+    step = _round_level_step(cur_px)
+    near_excl = 0.3 * atr20 if (atr20 is not None and math.isfinite(atr20) and atr20 > 0) else cur_px * 1e-4
+    base_round = math.floor(cur_px / step) * step
+    round_above: list[float] = []
+    round_below: list[float] = []
+    for k in range(0, 8):
+        up_p = base_round + (k + 1) * step
+        if up_p - cur_px > near_excl and len(round_above) < 2:
+            round_above.append(up_p)
+        dn_p = base_round - k * step
+        if dn_p > 0 and cur_px - dn_p > near_excl and len(round_below) < 2:
+            round_below.append(dn_p)
+    for rp in round_above + round_below:
+        raw_levels.append((rp, "整數關卡", f"整數心理關卡 {_format_round_label(rp, step)}", "round"))
+
+    resistances, supports = _select_sr_zones(raw_levels, cur_px, atr20=atr20, max_per_side=3)
+
     week_days = 7 if market == "crypto" else 5
     vol_info: dict[str, Any] = {
         "atr20": atr20,
@@ -507,9 +698,6 @@ def analyze_symbol_ta(
             "days": week_days,
         }
 
-    # 4. Trend State
-    trend = classify_trend(eff_bars, cur_px, market=market)
-
     # 5. Compression (Bollinger BandWidth 20,2 percentile over 1y)
     lb_year = 365 if market == "crypto" else 252
     bb_pct = compute_bollinger_bandwidth_percentile(
@@ -522,7 +710,11 @@ def analyze_symbol_ta(
     pattern = detect_chart_pattern(swing_highs, swing_lows, atr20, cur_px)
 
     # 7. Historical 10Y Validation
-    if len(eff_bars) < 500 and existing_backtest and (existing_backtest.get("years") or 0) > 3.0:
+    if len(eff_bars) < 500 and existing_backtest and (
+        (existing_backtest.get("support_samples") or 0) > 0
+        or (existing_backtest.get("resistance_samples") or 0) > 0
+        or (existing_backtest.get("years") or 0) >= 2.0
+    ):
         backtest = existing_backtest
     else:
         backtest = backtest_sr_hold_rates(eff_bars, market=market, left_right=5, hold_days=5)
@@ -587,15 +779,22 @@ def generate_ta_file(
     now_iso = now.strftime("%Y-%m-%dT%H:%M:%SZ")
 
     research_1d = _load_research_1d_cache()
-    existing_symbols: dict[str, Any] = {}
-    ta_path = out_dir / "ta.json"
-    if ta_path.exists():
+
+    def _load_ta_symbols(p: Path) -> dict[str, Any]:
+        if not p.exists():
+            return {}
         try:
-            old_doc = json.loads(ta_path.read_text(encoding="utf-8"))
+            old_doc = json.loads(p.read_text(encoding="utf-8"))
             if isinstance(old_doc, dict) and isinstance(old_doc.get("symbols"), dict):
-                existing_symbols = old_doc["symbols"]
+                return old_doc["symbols"]
         except Exception:
-            existing_symbols = {}
+            pass
+        return {}
+
+    ta_path = out_dir / "ta.json"
+    existing_symbols = _load_ta_symbols(ta_path)
+    repo_ta_path = ROOT_DIR / "data" / "ta.json"
+    fallback_symbols = _load_ta_symbols(repo_ta_path) if repo_ta_path.resolve() != ta_path.resolve() else {}
 
     bars_map = bars_1d_by_sym or {}
     marks = latest_prices or {}
@@ -609,8 +808,9 @@ def generate_ta_file(
 
         live_bars = list(bars_map.get(sym, []))
         cached_10y = list(research_1d.get(sym, []))
+        uniq_dates = {b.ts_utc[:10] for b in cached_10y} | {b.ts_utc[:10] for b in live_bars}
 
-        if fetch_10y_if_missing and data_fetcher is not None and (len(cached_10y) + len(live_bars)) < 500:
+        if fetch_10y_if_missing and data_fetcher is not None and len(uniq_dates) < 500:
             try:
                 res_long = data_fetcher.fetch(inst, "1d", limit=2600, now_utc=now)
                 if res_long.ok and res_long.bars:
@@ -620,6 +820,11 @@ def generate_ta_file(
 
         old_sym_ta = existing_symbols.get(sym) or {}
         old_bt = old_sym_ta.get("backtest") if isinstance(old_sym_ta, dict) else None
+        if not (isinstance(old_bt, dict) and ((old_bt.get("support_samples") or 0) > 0 or (old_bt.get("resistance_samples") or 0) > 0)):
+            fb_ta = fallback_symbols.get(sym) or {}
+            fb_bt = fb_ta.get("backtest") if isinstance(fb_ta, dict) else None
+            if isinstance(fb_bt, dict) and ((fb_bt.get("support_samples") or 0) > 0 or (fb_bt.get("resistance_samples") or 0) > 0):
+                old_bt = fb_bt
 
         ta_entry = analyze_symbol_ta(
             symbol=sym,
