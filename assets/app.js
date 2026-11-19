@@ -2298,6 +2298,223 @@
     `;
   }
 
+  function renderBestCombosTableRows(rows) {
+    if (!Array.isArray(rows) || rows.length === 0) {
+      return '<tr><td colspan="9" class="muted center">尚無各回撤底線最佳配置資料</td></tr>';
+    }
+    return rows.map((r) => {
+      const is10 = r.dd_floor_pct === 10.0;
+      const rowCls = is10 ? 'class="highlight-row"' : "";
+      const passCls = r.pass_rate_pct >= 95 ? "text-success" : (r.pass_rate_pct >= 80 ? "" : "text-danger");
+      const bustCls = r.bust_rate_pct === 0 ? "text-success" : (r.bust_rate_pct <= 5 ? "" : "text-danger");
+      const medDays = r.median_days !== null && r.median_days !== undefined ? `${Number(r.median_days).toFixed(1)} 天` : "--";
+      const prePass = r.pre_lockbox_pass_rate_pct !== null && r.pre_lockbox_pass_rate_pct !== undefined ? `${Number(r.pre_lockbox_pass_rate_pct).toFixed(1)}%` : "--";
+
+      return `
+        <tr ${rowCls}>
+          <td data-label="回撤底線"><strong>${escapeHtml(r.label || `${r.dd_floor_pct}%`)}</strong></td>
+          <td data-label="最佳策略"><strong>${escapeHtml(r.strategy)}</strong></td>
+          <td data-label="每單風險">${r.risk_pct}%</td>
+          <td data-label="持倉限制">${escapeHtml(r.position_limit || "1")}</td>
+          <td data-label="過關率 (全期間)"><span class="${passCls}"><strong>${Number(r.pass_rate_pct).toFixed(2)}%</strong></span></td>
+          <td data-label="爆倉率 (全期間)"><span class="${bustCls}">${Number(r.bust_rate_pct).toFixed(2)}%</span></td>
+          <td data-label="中位通關天數">${medDays}</td>
+          <td data-label="去牛市過關率"><span class="text-success">${prePass}</span></td>
+          <td data-label="白話點評" class="muted">${escapeHtml(r.notes || "")}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function renderSensitivityMatrixTableRows(rows) {
+    if (!Array.isArray(rows) || rows.length === 0) {
+      return '<tr><td colspan="6" class="muted center">尚無矩陣資料</td></tr>';
+    }
+    const riskLevels = ["0.5", "0.75", "1.0", "1.5", "2.0"];
+    return rows.map((r) => {
+      const sname = escapeHtml(r.strategy_name || r.strategy_id);
+      const isL2 = r.strategy_id === "L2";
+      const cellsHtml = riskLevels.map((rl) => {
+        const c = (r.cells && r.cells[rl]) || {};
+        const p = Number(c.pass_rate_pct || 0);
+        const b = Number(c.bust_rate_pct || 0);
+        const d = c.median_days !== null && c.median_days !== undefined ? `${Number(c.median_days).toFixed(0)}天` : "--";
+
+        let cellCls = "matrix-cell";
+        if (p >= 90 && b <= 2) {
+          cellCls += " pass-high";
+        } else if (b >= 20 || p < 30) {
+          cellCls += " bust-high";
+        }
+
+        const passColor = p >= 90 ? "text-success" : (p < 30 ? "text-danger" : "");
+        const bustColor = b >= 15 ? "text-danger" : (b === 0 ? "text-success" : "");
+
+        return `
+          <td class="${cellCls}" data-label="風險 ${rl}%">
+            <span class="matrix-pass ${passColor}"><strong>${p.toFixed(1)}%</strong></span>
+            <span class="matrix-bust ${bustColor}">爆 ${b.toFixed(1)}%</span>
+            <span class="matrix-days">${d}</span>
+          </td>
+        `;
+      }).join("");
+
+      return `
+        <tr ${isL2 ? 'class="highlight-row"' : ""}>
+          <td data-label="策略"><strong>${sname}</strong></td>
+          ${cellsHtml}
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function renderExamSensitivityArticleHtml(art) {
+    if (!art) return "";
+    const takeaway = escapeHtml(art.takeaway || "");
+    const sec = art.sections || {};
+    const what = sec.what_we_simulated || {};
+    const best = sec.best_combos || {};
+    const matrix = sec.matrix_10pct || {};
+    const findings = sec.three_findings || {};
+    const findList = Array.isArray(findings.findings) ? findings.findings : [];
+    const caveats = sec.caveats || {};
+    const advice = sec.advice || {};
+    const advList = Array.isArray(advice.points) ? advice.points : [];
+    const tbls = art.tables || {};
+    const bestRows = tbls.best_combos || [];
+    const singleRows = tbls.single_slot_matrix || [];
+    const multiRows = tbls.multi_slot_matrix || [];
+    const disc = art.disclaimer || {};
+    const ghLinks = Array.isArray(disc.github_links) ? disc.github_links : [];
+
+    return `
+      <section class="card research-article" id="article-exam_sensitivity">
+        <div class="section-header article-header" onclick="toggleResearchArticle('exam_sensitivity')">
+          <div>
+            <h2>第 3 篇：${escapeHtml(art.title)}</h2>
+            <p class="subtitle">${escapeHtml(art.subtitle || "")}</p>
+          </div>
+          <div class="article-header-actions" onclick="event.stopPropagation()">
+            <span class="badge badge-ok">${escapeHtml(art.badge || "研究完成")}</span>
+            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-exam_sensitivity" onclick="toggleResearchArticle('exam_sensitivity')">展開閱讀</button>
+          </div>
+        </div>
+
+        <div class="article-body collapsed" id="body-exam_sensitivity">
+          <div class="callout callout-takeaway">
+            <p>💡 <strong>核心結論：</strong>${takeaway}</p>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(what.title || "一、我們模擬了什麼？（白話名詞與研究架構）")}</h2>
+            ${(what.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(best.title || "二、主要結果表：各回撤底線下的最佳配置")}</h2>
+            ${(best.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+            <div class="table-wrap table-responsive" style="margin-top: 14px;">
+              <table class="data-table mobile-cards">
+                <thead>
+                  <tr>
+                    <th>回撤底線</th>
+                    <th>最佳策略</th>
+                    <th>每單風險</th>
+                    <th>持倉限制</th>
+                    <th>過關率 (全期間)</th>
+                    <th>爆倉率 (全期間)</th>
+                    <th>中位通關天數</th>
+                    <th>去牛市過關率</th>
+                    <th>白話點評</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${renderBestCombosTableRows(bestRows)}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(matrix.title || "三、10% 回撤策略矩陣：策略 × 每單風險（一次一單 vs 最多 3 單）")}</h2>
+            ${(matrix.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+
+            <h3 style="margin: 20px 0 8px;">1. 一次一單（Single Slot）：過關率／爆倉率／中位天數</h3>
+            <p class="muted" style="margin-bottom: 8px;">綠色底代表過關率 ≥ 90% 且極低爆倉；紅色底代表爆倉風險高或過關率過低。</p>
+            <div class="table-wrap table-responsive">
+              <table class="data-table mobile-cards">
+                <thead>
+                  <tr>
+                    <th>策略名稱</th>
+                    <th>風險 0.5%</th>
+                    <th>風險 0.75%</th>
+                    <th>風險 1.0%</th>
+                    <th>風險 1.5%</th>
+                    <th>風險 2.0%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${renderSensitivityMatrixTableRows(singleRows)}
+                </tbody>
+              </table>
+            </div>
+
+            <h3 style="margin: 28px 0 8px;">2. 最多 3 單（Max 3 Positions）：過關率／爆倉率／中位天數</h3>
+            <p class="muted" style="margin-bottom: 8px;">放寬持倉上限雖能縮短天數，但當各品種同步突破時，同向洗盤會大幅拉高爆倉率。</p>
+            <div class="table-wrap table-responsive">
+              <table class="data-table mobile-cards">
+                <thead>
+                  <tr>
+                    <th>策略名稱</th>
+                    <th>風險 0.5%</th>
+                    <th>風險 0.75%</th>
+                    <th>風險 1.0%</th>
+                    <th>風險 1.5%</th>
+                    <th>風險 2.0%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${renderSensitivityMatrixTableRows(multiRows)}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(findings.title || "四、三個重點發現")}</h2>
+            ${findList.map((f) => `
+              <div style="margin-bottom: 16px;">
+                <h3 style="margin: 8px 0 4px; color: var(--accent);">${escapeHtml(f.title)}</h3>
+                <p>${escapeHtml(f.text)}</p>
+              </div>
+            `).join("")}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(caveats.title || "五、要打折看的地方：歷史起點挪動與大趨勢段檢驗")}</h2>
+            ${(caveats.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(advice.title || "六、給考生的實戰操作建議（Cheat Sheet）")}</h2>
+            <ul>
+              ${advList.map((pt) => `<li>${escapeHtml(pt)}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="research-section disclaimer-box">
+            <p>⚠️ <strong>免責聲明</strong>：${escapeHtml(disc.text || "研究結果僅供參考，過去表現不代表未來，不構成投資建議。")}</p>
+            <div class="github-links">
+              ${ghLinks.map((g) => `
+                <a href="${escapeHtml(g.url)}" target="_blank" rel="noopener noreferrer" class="ext-link">🔗 ${escapeHtml(g.title)}</a>
+              `).join("")}
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
   function renderResearchHtml(data) {
     if (!data) return '<p class="muted">深度研究資料為空。</p>';
     if (!data.articles && data.strategies_intro) {
@@ -2306,6 +2523,7 @@
     const articles = Array.isArray(data.articles) ? data.articles : [];
     const comboArt = articles.find((a) => a.id === "combo") || articles[0];
     const shortArt = articles.find((a) => a.id === "short_term") || articles[1];
+    const examArt = articles.find((a) => a.id === "exam_sensitivity") || articles[2];
 
     return `
       <section class="card">
@@ -2327,6 +2545,16 @@
             <div class="toc-action">點擊展開閱讀 ➔</div>
           </div>
 
+          <div class="research-toc-card" onclick="scrollToResearchArticle('exam_sensitivity')">
+            <div class="toc-card-header">
+              <span class="badge badge-ok">${escapeHtml(examArt?.badge || "研究完成")}</span>
+              <span class="toc-num">第 3 篇</span>
+            </div>
+            <h3 class="toc-title">${escapeHtml(examArt?.title || "考試回撤規則放寬，結果會不一樣嗎？")}</h3>
+            <p class="toc-takeaway">${escapeHtml(examArt?.takeaway || "")}</p>
+            <div class="toc-action">點擊展開閱讀 ➔</div>
+          </div>
+
           <div class="research-toc-card" onclick="scrollToResearchArticle('short_term')">
             <div class="toc-card-header">
               <span class="badge badge-danger">${escapeHtml(shortArt?.badge || "全部未通過")}</span>
@@ -2340,6 +2568,7 @@
       </section>
 
       ${renderComboArticleHtml(comboArt)}
+      ${renderExamSensitivityArticleHtml(examArt)}
       <section class="card research-article" id="article-short_term">
         <div class="section-header article-header" onclick="toggleResearchArticle('short_term')">
           <div>
@@ -2348,10 +2577,10 @@
           </div>
           <div class="article-header-actions" onclick="event.stopPropagation()">
             <span class="badge badge-danger">${escapeHtml(shortArt?.badge || "全部未通過")}</span>
-            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-short_term" onclick="toggleResearchArticle('short_term')">收折</button>
+            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-short_term" onclick="toggleResearchArticle('short_term')">展開閱讀</button>
           </div>
         </div>
-        <div class="article-body" id="body-short_term">
+        <div class="article-body collapsed" id="body-short_term">
           ${renderContestResearchHtml(shortArt)}
         </div>
       </section>
@@ -2843,6 +3072,7 @@
     renderContestResearchHtml,
     renderContestResearchView,
     fetchContestResearch,
+    renderExamSensitivityArticleHtml,
     renderResearchHtml,
     renderResearchView,
     fetchResearch,

@@ -154,7 +154,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261119a" in index_html
+    assert "?v=20261119b" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -835,8 +835,8 @@ def test_in_depth_research_json_and_rendering() -> None:
     data = build_research_dict()
 
     # 1. Articles structure validation
-    assert len(data["articles"]) == 2
-    art1, art2 = data["articles"][0], data["articles"][1]
+    assert len(data["articles"]) == 3
+    art1, art2, art3 = data["articles"][0], data["articles"][1], data["articles"][2]
 
     # Article 1: Combo research
     assert art1["title"] == "截長補短，能不能把策略組合得更好？"
@@ -875,6 +875,21 @@ def test_in_depth_research_json_and_rendering() -> None:
     assert art2["title"] == "短線策略能拿去比賽嗎？"
     assert "我們測了 7 種短線策略" in art2["takeaway"]
     assert "沒有一個有穩定優勢" in art2["takeaway"]
+
+    # Article 3: Exam sensitivity
+    assert art3["title"] == "考試回撤規則放寬，結果會不一樣嗎？"
+    assert "回撤放寬到 10% 主要是讓爆倉風險幾乎歸零" in art3["takeaway"]
+    assert "有 30 天時限的考試幾乎過不了" in art3["takeaway"]
+    sec3 = art3["sections"]
+    assert "一、我們模擬了什麼？" in sec3["what_we_simulated"]["title"]
+    assert "二、主要結果表" in sec3["best_combos"]["title"]
+    assert "三、10% 回撤策略矩陣" in sec3["matrix_10pct"]["title"]
+    assert "四、三個重點發現" in sec3["three_findings"]["title"]
+    assert "五、要打折看的地方" in sec3["caveats"]["title"]
+    assert "六、給考生的實戰操作建議" in sec3["advice"]["title"]
+    assert len(art3["tables"]["best_combos"]) == 4
+    assert len(art3["tables"]["single_slot_matrix"]) == 6
+    assert len(art3["tables"]["multi_slot_matrix"]) == 6
 
     # Files existence
     data_json_path = root / "data" / "research.json"
@@ -940,7 +955,7 @@ def test_in_depth_research_json_and_rendering() -> None:
         if (!html.includes('research-toc')) {{
           throw new Error('renderResearchHtml missing research-toc');
         }}
-        if (!html.includes('第 1 篇') || !html.includes('第 2 篇')) {{
+        if (!html.includes('第 1 篇') || !html.includes('第 2 篇') || !html.includes('第 3 篇')) {{
           throw new Error('renderResearchHtml missing TOC article markers');
         }}
 
@@ -964,6 +979,26 @@ def test_in_depth_research_json_and_rendering() -> None:
         }}
         if (!html.includes('我們測了 7 種短線策略')) {{
           throw new Error('renderResearchHtml missing Article 2 takeaway');
+        }}
+
+        // Verify Article 3 content
+        if (!html.includes('考試回撤規則放寬，結果會不一樣嗎？')) {{
+          throw new Error('renderResearchHtml missing Article 3 title');
+        }}
+        if (!html.includes('回撤放寬到 10% 主要是讓爆倉風險幾乎歸零')) {{
+          throw new Error('renderResearchHtml missing Article 3 takeaway');
+        }}
+        if (!html.includes('各回撤底線下的最佳配置')) {{
+          throw new Error('renderResearchHtml missing Article 3 best combos');
+        }}
+        if (!html.includes('10% 回撤策略矩陣')) {{
+          throw new Error('renderResearchHtml missing Article 3 matrix');
+        }}
+        if (!html.includes('三個重點發現')) {{
+          throw new Error('renderResearchHtml missing Article 3 findings');
+        }}
+        if (!html.includes('exam_sensitivity.md')) {{
+          throw new Error('renderResearchHtml missing Article 3 github link');
         }}
 
         // Verify responsive table wrapper and disclaimers

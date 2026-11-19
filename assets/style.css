@@ -1048,4 +1048,45 @@ h1, h2 {
   margin: 8px 0;
 }
 
+.text-success {
+  color: #56d364;
+}
+
+.text-danger {
+  color: #ff7b72;
+}
+
+.matrix-cell {
+  text-align: center;
+  line-height: 1.35;
+  padding: 8px 6px;
+  vertical-align: middle;
+}
+
+.matrix-cell.pass-high {
+  background: rgba(46, 160, 67, 0.08);
+}
+
+.matrix-cell.bust-high {
+  background: rgba(248, 81, 73, 0.08);
+}
+
+.matrix-pass {
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: block;
+}
+
+.matrix-bust {
+  font-size: 0.82rem;
+  display: block;
+}
+
+.matrix-days {
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: block;
+}
+
+
 

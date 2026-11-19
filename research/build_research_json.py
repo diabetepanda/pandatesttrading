@@ -23,6 +23,7 @@ def build_research_dict() -> dict:
     combo_res_path = repo_root / "research" / "combo" / "results.json"
     r1_path = repo_root / "research" / "contest_15m" / "results.json"
     r2_path = repo_root / "research" / "contest_15m" / "results_round2.json"
+    exam_res_path = repo_root / "research" / "combo" / "exam_sensitivity_results.json"
 
     with open(combo_res_path, "r", encoding="utf-8") as f:
         combo_res = json.load(f)
@@ -30,6 +31,11 @@ def build_research_dict() -> dict:
         r1 = json.load(f)
     with open(r2_path, "r", encoding="utf-8") as f:
         r2 = json.load(f)
+    if exam_res_path.exists():
+        with open(exam_res_path, "r", encoding="utf-8") as f:
+            exam_res = json.load(f)
+    else:
+        exam_res = {}
 
     # -------------------------------------------------------------
     # Article 1: 截長補短，能不能把策略組合得更好？
@@ -398,12 +404,191 @@ def build_research_dict() -> dict:
         },
     }
 
+    # -------------------------------------------------------------
+    # Article 3: 考試回撤規則放寬，結果會不一樣嗎？ (Exam Sensitivity)
+    # -------------------------------------------------------------
+    sims = exam_res.get("simulations", {})
+
+    best_combos_table = [
+        {
+            "dd_floor_pct": 10.0,
+            "label": "10% 回撤底線",
+            "strategy": "原版 L2",
+            "risk_pct": 1.5,
+            "position_limit": "一次一單 (1)",
+            "pass_rate_pct": sims.get("L2|static|dd_10|r_1.5|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("pass_rate_pct", 99.72),
+            "bust_rate_pct": sims.get("L2|static|dd_10|r_1.5|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("bust_rate_pct", 0.0),
+            "median_days": sims.get("L2|static|dd_10|r_1.5|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("median_pass_days", 787.0),
+            "pre_lockbox_pass_rate_pct": sims.get("L2|static|dd_10|r_1.5|pos_1|tgt_10", {}).get("pre_lockbox", {}).get("none", {}).get("pass_rate_pct", 100.0),
+            "notes": "容錯空間極大，容許每單 1.0%~1.5% 風險加速通關，穩拿證書",
+        },
+        {
+            "dd_floor_pct": 8.0,
+            "label": "8% 回撤底線",
+            "strategy": "原版 L2",
+            "risk_pct": 1.5,
+            "position_limit": "一次一單 (1)",
+            "pass_rate_pct": sims.get("L2|static|dd_8|r_1.5|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("pass_rate_pct", 99.16),
+            "bust_rate_pct": sims.get("L2|static|dd_8|r_1.5|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("bust_rate_pct", 0.56),
+            "median_days": sims.get("L2|static|dd_8|r_1.5|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("median_pass_days", 783.5),
+            "pre_lockbox_pass_rate_pct": sims.get("L2|static|dd_8|r_1.5|pos_1|tgt_10", {}).get("pre_lockbox", {}).get("none", {}).get("pass_rate_pct", 100.0),
+            "notes": "主流考試標準配置（如 FTMO 10% / MFF 8%），勝率極佳",
+        },
+        {
+            "dd_floor_pct": 5.0,
+            "label": "5% 回撤底線",
+            "strategy": "原版 L2",
+            "risk_pct": 0.75,
+            "position_limit": "一次一單 (1)",
+            "pass_rate_pct": sims.get("L2|static|dd_5|r_0.75|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("pass_rate_pct", 98.61),
+            "bust_rate_pct": sims.get("L2|static|dd_5|r_0.75|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("bust_rate_pct", 0.28),
+            "median_days": sims.get("L2|static|dd_5|r_0.75|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("median_pass_days", 871.0),
+            "pre_lockbox_pass_rate_pct": sims.get("L2|static|dd_5|r_0.75|pos_1|tgt_10", {}).get("pre_lockbox", {}).get("none", {}).get("pass_rate_pct", 99.64),
+            "notes": "需將每單風險降至 0.5%~0.75%，過關天數拉長但爆倉率低",
+        },
+        {
+            "dd_floor_pct": 3.0,
+            "label": "3% 回撤底線",
+            "strategy": "原版 L2",
+            "risk_pct": 0.75,
+            "position_limit": "一次一單 (1)",
+            "pass_rate_pct": sims.get("L2|static|dd_3|r_0.75|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("pass_rate_pct", 93.04),
+            "bust_rate_pct": sims.get("L2|static|dd_3|r_0.75|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("bust_rate_pct", 5.85),
+            "median_days": sims.get("L2|static|dd_3|r_0.75|pos_1|tgt_10", {}).get("full_period", {}).get("none", {}).get("median_pass_days", 864.5),
+            "pre_lockbox_pass_rate_pct": sims.get("L2|static|dd_3|r_0.75|pos_1|tgt_10", {}).get("pre_lockbox", {}).get("none", {}).get("pass_rate_pct", 94.66),
+            "notes": "海妖極嚴格規則，容錯僅 3~4 次停損，需單押 L2 極限風控",
+        },
+    ]
+
+    strat_order = [
+        ("L2", "原版 L2"),
+        ("4a_daily_consensus", "4a 日線合議"),
+        ("3d_mtf_weekly", "3d 週線濾網"),
+        ("2a_chandelier", "2a 吊燈通道"),
+        ("5a_multi_combo", "5a 多策略組合"),
+        ("L1", "原版 L1"),
+    ]
+    risks = [0.5, 0.75, 1.0, 1.5, 2.0]
+
+    def _build_matrix_rows(pos_key: str) -> list[dict]:
+        rows = []
+        for sid, sname in strat_order:
+            cells = {}
+            for r in risks:
+                k = f"{sid}|static|dd_10|r_{r}|{pos_key}|tgt_10"
+                cell_data = sims.get(k, {}).get("full_period", {}).get("none", {})
+                cells[str(r)] = {
+                    "risk_pct": r,
+                    "pass_rate_pct": cell_data.get("pass_rate_pct", 0.0),
+                    "bust_rate_pct": cell_data.get("bust_rate_pct", 0.0),
+                    "median_days": cell_data.get("median_pass_days"),
+                }
+            rows.append({
+                "strategy_id": sid,
+                "strategy_name": sname,
+                "cells": cells,
+            })
+        return rows
+
+    single_slot_rows = _build_matrix_rows("pos_1")
+    multi_slot_rows = _build_matrix_rows("pos_3")
+
+    article_exam = {
+        "id": "exam_sensitivity",
+        "slug": "exam-sensitivity",
+        "title": "考試回撤規則放寬，結果會不一樣嗎？",
+        "subtitle": "當 Prop Firm 回撤底線從 3% 放寬至 10%：6 大策略、多重每單風險與持倉上限之全維度敏感度模擬",
+        "takeaway": "回撤放寬到 10% 主要是讓爆倉風險幾乎歸零，不太會讓過關變快；長線趨勢策略過考試大約要兩年，有 30 天時限的考試幾乎過不了。",
+        "badge": "研究完成",
+        "updated_at": "2026-11",
+        "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/combo/exam_sensitivity.md",
+        "github_code": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/combo/run_exam_sensitivity.py",
+        "sections": {
+            "what_we_simulated": {
+                "title": "一、我們模擬了什麼？（白話名詞與研究架構）",
+                "content": [
+                    "本研究以真實歷史交易紀錄為基底，進行全維度「考試情境敏感度」模擬，覆蓋：",
+                    "1. 測試維度：6 個策略（原版 L2、原版 L1、4a 日線合議、3d 週線濾網、5a 多策略組合、2a 吊燈通道）× 4 種回撤底線（3%、5%、8%、10%）× 5 種每單風險（0.5%、0.75%、1.0%、1.5%、2.0%）× 3 種持倉上限（一次一單 Single Slot、最多 3 單、不限持倉）× 2 種獲利目標（+8%、+10%）× 3 種時間限制（無時限、60 天、30 天）。",
+                    "2. 挪動起點測試：自 2019 年 1 月至 2026 年 11 月，每隔 7 天滾動開跑一個獨立模擬帳戶（全期間共 359 梯次；另有排除大牛市之 Pre-Lockbox 盲測段共 281 梯次），真實統計不同時空背景進場時的通關率與爆倉率。",
+                    "3. 白話名詞解說：",
+                    "• 回撤底線（Max Drawdown）：考試帳戶允許的最大虧損上限。例如「10% 回撤底線」代表 1 萬美元起始資金若虧損至 9,000 美元（或從最高點回吐 10%），帳戶即被立刻強制收回淘汰。海妖考試（Kraken）要求極為嚴苛的 3% 回撤，而主流現代 Prop Firm（如 FTMO、The5ers 等）通常給予 8%~10% 的較大容錯空間。",
+                    "• 每單風險（Risk per Trade）：每開一筆單如果打到停損，虧損金額佔總資產的比例。例如設定 1.0% 風險，意味著必須連續虧損 10 筆才會碰到 10% 底線；若開 2.0% 高風險，連輸 5 筆就會直接爆倉出局。",
+                ],
+            },
+            "best_combos": {
+                "title": "二、主要結果表：各回撤底線下的最佳配置",
+                "content": [
+                    "觀察重點（靜態回撤 Static DD、無時限、+10% 獲利目標）：",
+                    "• 3% 嚴苛規則下：最佳組合為「原版 L2 ＋ 0.75% 風險 ＋ 一次一單」，通關率約 93.04%、爆倉率約 5.85%、中位通關天數約 864.5 天。",
+                    "• 10% 放寬規則下：最佳組合為「原版 L2 ＋ 1.5% 風險 ＋ 一次一單」（或 1.0% 風險），通關率高達 99.72%、爆倉率 0.0%、中位通關天數約 787.0 天。",
+                    "• 關鍵結論：兩者的中位通關時間都在 800 天左右（約 2 年～2.3 年），放寬回撤底線到 10% 並不能讓長線趨勢策略通關大幅變快，但最顯著的改變是「把爆倉出局的風險徹底壓到近乎零」，容錯從容度有天壤之別。",
+                ],
+            },
+            "matrix_10pct": {
+                "title": "三、10% 回撤策略矩陣：策略 × 每單風險（一次一單 vs 最多 3 單）",
+                "content": [
+                    "在主流 10% 回撤底線、無時限、+10% 目標下，檢驗 6 大策略在不同每單風險與持倉槽位下的通關率、爆倉率與中位通關天數：",
+                ],
+            },
+            "three_findings": {
+                "title": "四、三個重點發現",
+                "findings": [
+                    {
+                        "title": "1. L2 不要同時開多單（多單同時虧損會致命）",
+                        "text": "在 10% 回撤、每單 0.75% 風險下，如果維持「一次一單」，爆倉率為 0.0%；但只要放寬為「最多 3 單」，爆倉率會立刻飆升到 15.88%（若開到 1.0% 風險，爆倉率更達 25.35%）！這是因為大趨勢突破信號常在同一天或相近幾天於美股、黃金、原油等不同品種同時出現，持倉方向往往高度一致；一旦遭遇突發洗盤或假突破，3 筆單會集體被打停損，瞬間吃掉 2.5%~3% 以上淨值。",
+                    },
+                    {
+                        "title": "2. 五策略組合（5a）只有在能開多單時才有用，而且不比單押 L2 快",
+                        "text": "在「一次一單」限制下，5a 通關率只有 18%~28%（頻繁的小單佔用唯一名額擋住 L2）；只有在能同時開多單（最多 3 單）時，5a 的通關率才能回到 90.53%（0.75% 風險）。但即便放寬多單，通關中位天數仍需 658 天，並未比單押 L2 快。因此如果目標是考過考試，原版 L2 依然是最簡單純粹、心理負擔最小的首選。",
+                    },
+                    {
+                        "title": "3. 有 30 天時限的考試，這些策略 98% 以上無法達標",
+                        "text": "趨勢跟隨是低勝率（35%~40%）、大盈虧比（+3R~+8R）的長跑策略。在 30 天的極端短時限內，往往連一波完整趨勢都等不到，未達標超時率高達 98%~100%。如果因為時間壓力把每單風險開大，只會導致爆倉淘汰；考生挑選評測商時，務必選擇「無時間限制」或「至少 60 天以上」的現代評測商。",
+                    },
+                ],
+            },
+            "caveats": {
+                "title": "五、要打折看的地方：歷史起點挪動與大趨勢段檢驗",
+                "content": [
+                    "1. 歷史挪動起點高度重疊：本次模擬是在 2019 至 2026 年同一段歷史中每隔 7 天設立一個新起點（共 359 梯次），不同起點的持倉時間高度重疊，並非「完全獨立的一百次新考試」。因此「99% 通關率」在統計上應理解為「很有機會」，而非「保證穩過」。",
+                    "2. 排除 2025–2026 大牛市（Pre-Lockbox 盲測）：為了驗證不是被近期的黃金、加密貨幣長牛灌水，我們額外跑了只到 2025-05 的盲測段（281 梯次）。結果顯示，在 10% 底線下原版 L2、4a 等策略過關率依然高達 100.0%（爆倉率 0.0%），證實其在震盪或平淡市場中依然具備強大的風控與穿越週期能力，結論完全成立。",
+                ],
+            },
+            "advice": {
+                "title": "六、給考生的實戰操作建議（Cheat Sheet）",
+                "points": [
+                    "回撤 3% 的考試（如海妖極限風控）：單押原版 L2、每單風險 0.75%、務必保持一次一單（過關率約 93%、爆倉率約 6%）。",
+                    "回撤 8%~10% 的考試（如主流 FTMO、The5ers 等）：單押原版 L2、每單風險 1.0%~1.5%、一次一單（過關率約 99%、爆倉率近 0%）。若想縮短時間可開最多 3 單，但每單風險嚴格壓低至 0.5%（過關率 92.5%、通關中位天數縮短至 615 天）。",
+                    "嚴格避開 30 天短時限考試：長線趨勢策略無法在 1 個月內保證獲利，短時限考試只會淪為純賭博。",
+                ],
+            },
+        },
+        "tables": {
+            "best_combos": best_combos_table,
+            "single_slot_matrix": single_slot_rows,
+            "multi_slot_matrix": multi_slot_rows,
+        },
+        "disclaimer": {
+            "text": "研究結果僅供參考，過去表現不代表未來，不構成投資建議。",
+            "github_links": [
+                {
+                    "title": "考試情境敏感度研究報告 (exam_sensitivity.md)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/combo/exam_sensitivity.md",
+                },
+                {
+                    "title": "敏感度模擬程式碼 (run_exam_sensitivity.py)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/combo/run_exam_sensitivity.py",
+                },
+            ],
+        },
+    }
+
     full_payload = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "title": "深度研究 (In-Depth Research)",
         "subtitle": "Signal Desk 策略量化實證、多週期盲測與組合實驗報告",
         "disclaimer": "研究結果僅供參考，過去表現不代表未來，不構成投資建議。",
-        "articles": [article_combo, article_short],
+        "articles": [article_combo, article_short, article_exam],
     }
     return full_payload
 
