@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-11-18T07:20:32Z",
+  "updated_at_utc": "2026-11-19T00:15:54Z",
   "items": [
     {
       "symbol": "BTCUSDT",
@@ -472,16 +472,16 @@
     {
       "symbol": "FILUSDT",
       "market": "crypto",
-      "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 未入選雙動能前排名",
+      "decision": "signal",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；已發布 SIG-20261119-0034（L1 / 已驗證）；L3 (已驗證): 未入選雙動能前排名",
       "strategies": {
         "S3": {
           "status": "watch",
           "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件"
         },
         "L1": {
-          "status": "watch",
-          "reason": "L1 (已驗證): L1 未突破 Donchian 通道"
+          "status": "signal",
+          "reason": "已發布 SIG-20261119-0034（L1 / 已驗證）"
         },
         "L3": {
           "status": "watch",
@@ -682,12 +682,12 @@
     {
       "symbol": "PEPEUSDT",
       "market": "crypto",
-      "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 未入選雙動能前排名",
+      "decision": "signal",
+      "reason": "已發布 SIG-20261119-0035（S3 / 觀察中（未通過驗證））；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 未入選雙動能前排名",
       "strategies": {
         "S3": {
-          "status": "watch",
-          "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件"
+          "status": "signal",
+          "reason": "已發布 SIG-20261119-0035（S3 / 觀察中（未通過驗證））"
         },
         "L1": {
           "status": "watch",
@@ -787,20 +787,20 @@
     {
       "symbol": "WTI",
       "market": "commodity",
-      "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L2 (已驗證): L2 未突破 Donchian 通道",
+      "decision": "signal",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；已發布 SIG-20261119-0036（L1 / 已驗證）；已發布 SIG-20261119-0037（L2 / 已驗證）",
       "strategies": {
         "S3": {
           "status": "watch",
           "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件"
         },
         "L1": {
-          "status": "watch",
-          "reason": "L1 (已驗證): L1 未突破 Donchian 通道"
+          "status": "signal",
+          "reason": "已發布 SIG-20261119-0036（L1 / 已驗證）"
         },
         "L2": {
-          "status": "watch",
-          "reason": "L2 (已驗證): L2 未突破 Donchian 通道"
+          "status": "signal",
+          "reason": "已發布 SIG-20261119-0037（L2 / 已驗證）"
         }
       },
       "data_status_1d": "ok"
