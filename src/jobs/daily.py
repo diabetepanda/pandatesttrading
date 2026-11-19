@@ -21,6 +21,7 @@ from src.jobs.live_strategy import (
     is_instrument_eligible_for_strategy,
     load_strategy_runtime_configs,
 )
+from src.jobs.ta import generate_ta_file
 from src.signals.models import LifecycleState
 
 
@@ -216,6 +217,15 @@ def run_daily(
     engine.save_state(now_iso)
     _write_json(out_dir / "watch_today_daily.json", {"updated_at_utc": now_iso, "items": watch_items})
     _write_json(out_dir / "new_signals_to_commit.json", {"signal_ids": new_signal_ids})
+    generate_ta_file(
+        out_dir=out_dir,
+        config=config,
+        bars_1d_by_sym=bars_1d_ok,
+        latest_prices=engine.latest_marks,
+        data_fetcher=data_fetcher,
+        now_utc=now,
+        fetch_10y_if_missing=True,
+    )
     save_sec = round(time.monotonic() - t_save, 3)
 
     duration_sec = round(time.monotonic() - t0, 2)

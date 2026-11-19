@@ -28,6 +28,8 @@
   let cachedEquity = null;
   let cachedEvents = null;
   let cachedContestResearch = null;
+  let cachedTa = null;
+  let expandedTaSymbol = null;
   let livePrices = {};
   let activeChart = null;
   let activeEquityChart = null;
@@ -239,6 +241,16 @@
 
   async function fetchDataText(filename) {
     return fetchWithTimeout(`${DATA_BASE}/${filename}?t=${Date.now()}`, true);
+  }
+
+  async function fetchTaData() {
+    try {
+      const data = await fetchDataJson("ta.json");
+      if (data && data.symbols) return data;
+    } catch (_err) {
+      // fallback to local data/ta.json when data branch does not yet have ta.json
+    }
+    return fetchWithTimeout(`data/ta.json?t=${Date.now()}`, false);
   }
 
   function isLiveCapable(symbol) {
@@ -1375,6 +1387,170 @@
     return `${schedStr} <span class="muted">(僅排程)</span>`;
   }
 
+  function renderTaPanelHtml(symbol, livePriceOverride, taOverride) {
+    const taRoot = taOverride || cachedTa;
+    const ta = taRoot && taRoot.symbols ? taRoot.symbols[symbol] : null;
+    if (!ta) {
+      return '<div class="ta-panel"><div class="ta-empty muted">技術分析資料暫無</div></div>';
+    }
+
+    const live = livePrices[symbol];
+    const curPrice = livePriceOverride !== undefined && livePriceOverride !== null
+      ? livePriceOverride
+      : (live && !live.failed && live.price !== undefined ? live.price : ta.latest_price);
+
+    const resistances = Array.isArray(ta.resistances) ? ta.resistances : [];
+    const supports = Array.isArray(ta.supports) ? ta.supports : [];
+    const nearRes = resistances.length > 0 ? resistances[0] : null;
+    const nearSup = supports.length > 0 ? supports[0] : null;
+
+    const trend = ta.trend || {};
+    const squeeze = ta.squeeze || {};
+    const trendState = trend.state || "盤整";
+    const squeezeLabel = squeeze.label || (squeeze.is_squeezing ? "收斂中，可能變盤" : "波動正常");
+    const summaryParts = [trendState, squeezeLabel];
+    if (nearRes && nearRes.price !== undefined) {
+      summaryParts.push(`上方壓力 ${formatCardPrice(nearRes.price)}`);
+    }
+    if (nearSup && nearSup.price !== undefined) {
+      summaryParts.push(`下方支撐 ${formatCardPrice(nearSup.price)}`);
+    }
+    const summaryText = summaryParts.length > 2 ? summaryParts.join("，") : (ta.summary || summaryParts.join("，"));
+
+    const resRowsHtml = resistances.length > 0
+      ? resistances
+          .map(
+            (lvl) => `
+              <div class="ta-sr-row is-resistance">
+                <div class="ta-sr-main">
+                  <span class="ta-sr-tag">壓力</span>
+                  <strong class="ta-price">${formatCardPrice(lvl.price)}</strong>
+                </div>
+                <div class="ta-algo">${escapeHtml(lvl.algo || "")}</div>
+              </div>`
+          )
+          .join("")
+      : '<div class="ta-sr-empty muted">近 60 日上方無顯著壓力位</div>';
+
+    const supRowsHtml = supports.length > 0
+      ? supports
+          .map(
+            (lvl) => `
+              <div class="ta-sr-row is-support">
+                <div class="ta-sr-main">
+                  <span class="ta-sr-tag">支撐</span>
+                  <strong class="ta-price">${formatCardPrice(lvl.price)}</strong>
+                </div>
+                <div class="ta-algo">${escapeHtml(lvl.algo || "")}</div>
+              </div>`
+          )
+          .join("")
+      : '<div class="ta-sr-empty muted">近 60 日下方無顯著支撐位</div>';
+
+    const fib = ta.fibonacci || {};
+    const fibLevels = fib.levels || {};
+    const fibHtml = fib.start_price !== undefined && fib.end_price !== undefined
+      ? `
+        <div class="ta-kv-row"><span>波段起訖</span><span>${escapeHtml(fib.start_date || "")} (${formatCardPrice(fib.start_price)}) → ${escapeHtml(fib.end_date || "")} (${formatCardPrice(fib.end_price)})</span></div>
+        <div class="ta-kv-row"><span>方向</span><span>${escapeHtml(fib.direction_label || "")}</span></div>
+        <div class="ta-kv-row"><span>38.2%</span><strong>${formatCardPrice(fibLevels["38.2%"])}</strong></div>
+        <div class="ta-kv-row"><span>50.0%</span><strong>${formatCardPrice(fibLevels["50.0%"])}</strong></div>
+        <div class="ta-kv-row"><span>61.8%</span><strong>${formatCardPrice(fibLevels["61.8%"])}</strong></div>`
+      : '<div class="muted">無足夠波段資料</div>';
+
+    const vol = ta.volatility || {};
+    const tom = vol.tomorrow || {};
+    const wk = vol.week || {};
+    const volHtml = vol.atr20 !== undefined
+      ? `
+        <div class="ta-kv-row"><span>ATR20</span><strong>${formatCardPrice(vol.atr20)}</strong></div>
+        <div class="ta-kv-row"><span>明日約</span><strong>${formatCardPrice(tom.low)} ~ ${formatCardPrice(tom.high)}</strong></div>
+        <div class="ta-kv-row"><span>本週約</span><strong>${formatCardPrice(wk.low)} ~ ${formatCardPrice(wk.high)}</strong></div>`
+      : '<div class="muted">無波動率資料</div>';
+
+    const smaLine = [
+      trend.sma20 !== undefined ? `SMA20 ${formatCardPrice(trend.sma20)}` : null,
+      trend.sma50 !== undefined ? `SMA50 ${formatCardPrice(trend.sma50)}` : null,
+      trend.sma200 !== undefined ? `SMA200 ${formatCardPrice(trend.sma200)}` : null,
+    ].filter(Boolean).join(" / ");
+    const trendHtml = `
+      <div class="ta-kv-row"><span>狀態</span><strong>${escapeHtml(trendState)}</strong></div>
+      <div class="ta-kv-row"><span>ADX14</span><strong>${trend.adx14 !== undefined && trend.adx14 !== null ? Number(trend.adx14).toFixed(1) : "—"}</strong></div>
+      ${trend.detail ? `<div class="ta-algo">${escapeHtml(trend.detail)}</div>` : ""}
+      ${smaLine ? `<div class="ta-algo">${escapeHtml(smaLine)}</div>` : ""}`;
+
+    const squeezePctText = squeeze.bb_width_pct !== undefined && squeeze.bb_width_pct !== null
+      ? `${Number(squeeze.bb_width_pct).toFixed(1)}%`
+      : "—";
+    const squeezeHtml = `
+      <div class="ta-kv-row"><span>布林寬度近 1 年百分位</span><strong>${escapeHtml(squeezePctText)}</strong></div>
+      <div class="ta-kv-row"><span>判斷</span><strong class="${squeeze.is_squeezing ? "ta-badge-warn" : ""}">${escapeHtml(squeezeLabel)}</strong></div>`;
+
+    const pattern = ta.pattern || {};
+    const patternHtml = `
+      <div class="ta-kv-row"><span>型態（僅供參考）</span><strong>${escapeHtml(pattern.name || "無明顯型態")}</strong></div>
+      ${pattern.note ? `<div class="ta-algo">${escapeHtml(pattern.note)}</div>` : ""}`;
+
+    const bt = ta.backtest || {};
+    const btYears = bt.years !== undefined ? `${bt.years} 年` : "歷史";
+    const btHtml = `
+      <div class="ta-kv-row"><span>觸及擺動支撐後 5 日守住率（${escapeHtml(btYears)}）</span><strong>${escapeHtml(bt.support_label || "樣本不足")}</strong></div>
+      <div class="ta-kv-row"><span>觸及擺動壓力後 5 日壓住率（${escapeHtml(btYears)}）</span><strong>${escapeHtml(bt.resistance_label || "樣本不足")}</strong></div>`;
+
+    const disclaimerText = (taRoot && taRoot.disclaimer)
+      || "以上為依歷史數據與技術指標計算的參考點位，不是預測，也不是投資建議。";
+
+    return `
+      <div class="ta-panel" data-ta-symbol="${escapeHtml(symbol)}">
+        <div class="ta-summary-box">
+          <div class="ta-summary-label">技術分析摘要${ta.latest_bar_date ? `（日線截至 ${escapeHtml(ta.latest_bar_date)}）` : ""}</div>
+          <div class="ta-summary-text">${escapeHtml(summaryText)}</div>
+        </div>
+
+        <div class="ta-card">
+          <h4>支撐與壓力價位（由近到遠）</h4>
+          <div class="ta-sr-group">
+            ${resRowsHtml}
+            <div class="ta-cur-row">
+              <span>目前價格</span>
+              <strong>${formatCardPrice(curPrice)}</strong>
+            </div>
+            ${supRowsHtml}
+          </div>
+        </div>
+
+        <div class="ta-cards-grid">
+          <div class="ta-card">
+            <h4>斐波那契回撤</h4>
+            ${fibHtml}
+          </div>
+          <div class="ta-card">
+            <h4>波動範圍估算（ATR20 × √天數）</h4>
+            ${volHtml}
+          </div>
+          <div class="ta-card">
+            <h4>趨勢狀態</h4>
+            ${trendHtml}
+          </div>
+          <div class="ta-card">
+            <h4>收斂判斷（BB 20,2）</h4>
+            ${squeezeHtml}
+          </div>
+          <div class="ta-card">
+            <h4>型態辨識</h4>
+            ${patternHtml}
+          </div>
+        </div>
+
+        <div class="ta-card">
+          <h4>歷史回測驗證（觸及後 5 個交易日 ±1 ATR 內守住機率）</h4>
+          ${btHtml}
+        </div>
+
+        <div class="ta-disclaimer">${escapeHtml(disclaimerText)}</div>
+      </div>`;
+  }
+
   function renderInstruments() {
     const tbody = document.getElementById("instruments-tbody");
     const rows = cachedInstruments.filter((item) => currentMarketFilter === "all" || item.market === currentMarketFilter);
@@ -1391,8 +1567,13 @@
         const note = r15m.reason || r1d.reason || "";
         const live = livePrices[item.symbol];
         const chgHtml = live && !live.failed ? formatChange(live.changePct) : '<span class="muted">--</span>';
+        const isExpanded = expandedTaSymbol === item.symbol;
+        const rowClass = `instrument-row${isExpanded ? " ta-expanded" : ""}`;
+        const detailRowHtml = isExpanded
+          ? `<tr class="ta-detail-row" data-symbol="${escapeHtml(item.symbol)}"><td colspan="9" class="ta-detail-cell">${renderTaPanelHtml(item.symbol)}</td></tr>`
+          : "";
         return `
-          <tr>
+          <tr class="${rowClass}" data-symbol="${escapeHtml(item.symbol)}">
             <td data-label="標的"><strong>${item.symbol}</strong><br><span class="muted">${item.display_name || ""}</span></td>
             <td data-label="市場">${marketLabel(item.market)}</td>
             <td data-label="最新價格">${renderPriceCell(item)}</td>
@@ -1402,7 +1583,7 @@
             <td data-label="15m">${statusPill(r15m.status)}</td>
             <td data-label="1d">${statusPill(r1d.status)}</td>
             <td data-label="狀態 / 備註">${statusPill(item.overall_status)} <span class="muted">${escapeHtml(note)}</span></td>
-          </tr>`;
+          </tr>${detailRowHtml}`;
       })
       .join("");
   }
@@ -2872,7 +3053,7 @@
     try {
       const [
         instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, tradesRes, watchRes, watchDailyRes, btRes,
-        perfRes, riskRes, eqRes, evRes, contestRes,
+        perfRes, riskRes, eqRes, evRes, contestRes, taRes,
       ] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
         fetchDataJson("data_health.json"),
@@ -2889,6 +3070,7 @@
         fetchDataJson("equity_curve.json"),
         fetchDataJson("events_calendar.json"),
         fetchContestResearch(),
+        fetchTaData(),
       ]);
 
       if (instRes.status === "rejected") {
@@ -2906,6 +3088,7 @@
       cachedRisk = riskRes.status === "fulfilled" ? riskRes.value : null;
       cachedEquity = eqRes.status === "fulfilled" ? eqRes.value : null;
       cachedEvents = evRes.status === "fulfilled" ? evRes.value : null;
+      cachedTa = taRes.status === "fulfilled" ? taRes.value : null;
       if (contestRes.status === "fulfilled" && contestRes.value) {
         if (contestRes.value.articles) {
           cachedResearch = contestRes.value;
@@ -2969,6 +3152,14 @@
     document.querySelectorAll("#market-filters .tab").forEach((el) => el.classList.remove("active"));
     btn.classList.add("active");
     currentMarketFilter = btn.dataset.market || "all";
+    renderInstruments();
+  });
+
+  document.getElementById("instruments-tbody").addEventListener("click", (e) => {
+    const row = e.target.closest("tr.instrument-row");
+    if (!row || !row.dataset.symbol) return;
+    const sym = row.dataset.symbol;
+    expandedTaSymbol = expandedTaSymbol === sym ? null : sym;
     renderInstruments();
   });
 
@@ -3080,6 +3271,20 @@
     scrollToResearchArticle,
     toggleResearchArticle,
     applyRoute,
+    renderTaPanelHtml,
+    renderInstruments,
+    setTaDataForTest(taObj, instrumentsArr) {
+      if (taObj !== undefined) cachedTa = taObj;
+      if (Array.isArray(instrumentsArr)) cachedInstruments = instrumentsArr;
+    },
+    toggleTaSymbolForTest(sym) {
+      expandedTaSymbol = expandedTaSymbol === sym ? null : sym;
+      renderInstruments();
+      return expandedTaSymbol;
+    },
+    getExpandedTaSymbol() {
+      return expandedTaSymbol;
+    },
   };
 
   window.addEventListener("hashchange", applyRoute);

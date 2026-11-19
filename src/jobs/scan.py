@@ -27,6 +27,7 @@ from src.jobs.live_strategy import (
     is_instrument_eligible_for_strategy,
     load_strategy_runtime_configs,
 )
+from src.jobs.ta import generate_ta_file
 from src.signals.models import LifecycleState, round_price
 
 LEGACY_OBSOLETE_FILES = ("watch_today_b.json", "liquidity_heatmap.json")
@@ -385,6 +386,7 @@ def run_scan(
             },
             "bars_1m": res_1m.bars if (res_1m and res_1m.ok) else [],
             "bars_15m": effective_15m_bars,
+            "bars_1d": fetch_results["1d"].bars if (fetch_results.get("1d") and fetch_results["1d"].ok) else [],
             "intervals_reports": intervals_reports,
             "probe_rows": local_probe_rows,
             "attempts": local_attempts,
@@ -403,6 +405,7 @@ def run_scan(
     source_stats: dict[str, dict[str, int]] = {}
     bars_1m_by_sym: dict[str, list[OHLCVBar]] = {}
     bars_15m_by_sym: dict[str, list[OHLCVBar]] = {}
+    bars_1d_by_sym: dict[str, list[OHLCVBar]] = {}
     reports_by_sym: dict[str, dict[str, dict[str, Any]]] = {}
 
     for b in fetched_bundles:
@@ -411,6 +414,7 @@ def run_scan(
         instruments_out.append(b["inst_out"])
         bars_1m_by_sym[sym] = b["bars_1m"]
         bars_15m_by_sym[sym] = b["bars_15m"]
+        bars_1d_by_sym[sym] = b["bars_1d"]
         reports_by_sym[sym] = b["intervals_reports"]
         probe_rows.extend(b["probe_rows"])
         for att in b["attempts"]:
@@ -657,6 +661,14 @@ def run_scan(
     _write_json(out_dir / "watch_today.json", {"updated_at_utc": now_iso, "items": watch_today_items})
     _write_json(out_dir / "events_calendar.json", {"updated_at_utc": now_iso, "events": events})
     _write_json(out_dir / "new_signals_to_commit.json", {"signal_ids": new_signal_ids})
+    generate_ta_file(
+        out_dir=out_dir,
+        config=config,
+        bars_1d_by_sym=bars_1d_by_sym,
+        latest_prices=engine.latest_marks,
+        now_utc=now,
+        fetch_10y_if_missing=False,
+    )
 
     if probe_all_adapters:
         _write_json(

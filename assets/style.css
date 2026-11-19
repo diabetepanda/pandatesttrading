@@ -1088,5 +1088,132 @@ h1, h2 {
   display: block;
 }
 
+/* 技術分析展開面板（#/data 市場與資料頁） */
+tr.instrument-row {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+tr.instrument-row:hover {
+  background: rgba(88, 166, 255, 0.06);
+}
+
+tr.instrument-row.ta-expanded {
+  background: rgba(88, 166, 255, 0.1);
+}
+
+tr.ta-detail-row > td.ta-detail-cell {
+  padding: 14px 16px;
+  background: #0d1218;
+  border-bottom: 2px solid var(--accent);
+  white-space: normal;
+  text-align: left;
+}
+
+.ta-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ta-summary-box {
+  background: rgba(88, 166, 255, 0.1);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.ta-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.ta-card-title {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.ta-sr-group-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 6px 0 4px;
+}
+
+.ta-sr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ta-sr-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+}
+
+.ta-sr-row.ta-cur-row {
+  background: rgba(88, 166, 255, 0.14);
+  border: 1px solid rgba(88, 166, 255, 0.4);
+  font-weight: 700;
+  margin: 4px 0;
+}
+
+.ta-algo {
+  font-size: 0.76rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+.ta-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 720px) {
+  .ta-cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+.ta-kv-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.85rem;
+  padding: 3px 0;
+  border-bottom: 1px dashed rgba(48, 54, 61, 0.45);
+}
+
+.ta-kv-row:last-child {
+  border-bottom: none;
+}
+
+.ta-disclaimer {
+  font-size: 0.78rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-top: 2px;
+}
+
+
 
 

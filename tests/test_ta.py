@@ -1,0 +1,367 @@
+"""Tests for daily Technical Analysis backend job and expandable frontend panel."""
+
+from __future__ import annotations
+
+import json
+import math
+import shutil
+import subprocess
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from typing import Any
+
+from src.config_loader import load_config
+from src.data.models import OHLCVBar
+from src.jobs.daily import run_daily
+from src.jobs.scan import run_scan
+from src.jobs.ta import (
+    TA_DISCLAIMER,
+    analyze_symbol_ta,
+    backtest_sr_hold_rates,
+    classify_trend,
+    compute_fibonacci_retracement,
+    detect_chart_pattern,
+    find_swing_points,
+    generate_ta_file,
+)
+
+
+def _make_daily_bars(closes: list[float], spread: float = 2.0, start_year: int = 2022) -> list[OHLCVBar]:
+    start = datetime(start_year, 1, 1, tzinfo=timezone.utc)
+    bars: list[OHLCVBar] = []
+    for i, c in enumerate(closes):
+        ts = (start + timedelta(days=i)).strftime("%Y-%m-%dT00:00:00Z")
+        bars.append(
+            OHLCVBar(
+                ts_utc=ts,
+                open=c - 0.3 * spread,
+                high=c + spread,
+                low=c - spread,
+                close=c,
+                volume=1000.0,
+            )
+        )
+    return bars
+
+
+def test_find_swing_points_and_fibonacci() -> None:
+    # Build wave with clear swing high and swing low (left_right=5)
+    closes = [100.0] * 12 + [102, 105, 110, 115, 120, 116, 112, 108, 104, 100, 95, 90, 94, 98, 102, 106, 110, 112]
+    bars = _make_daily_bars(closes, spread=1.0)
+    sh, sl = find_swing_points(bars, left_right=5)
+
+    assert any(abs(px - 121.0) < 1e-6 for _, _, px in sh)
+    assert any(abs(px - 89.0) < 1e-6 for _, _, px in sl)
+
+    fib = compute_fibonacci_retracement(bars, sh, sl)
+    assert fib is not None
+    assert fib["direction"] == "down"  # 121 peak came before 89 trough
+    assert fib["start_price"] == 121.0
+    assert fib["end_price"] == 89.0
+    assert abs(fib["levels"]["50.0%"] - 105.0) < 1e-6
+    assert abs(fib["levels"]["38.2%"] - (89.0 + 0.382 * 32.0)) < 1e-6
+    assert abs(fib["levels"]["61.8%"] - (89.0 + 0.618 * 32.0)) < 1e-6
+
+
+def test_classify_trend_adx_realistic_and_not_frozen() -> None:
+    # Strong uptrend over 250 daily bars should yield 上升趨勢 with realistic ADX14 (< 90)
+    closes = [100.0 + i * 0.4 + math.sin(i * 0.4) * 1.5 for i in range(250)]
+    bars = _make_daily_bars(closes, spread=2.0)
+    trend = classify_trend(bars, closes[-1], market="stocks")
+    assert trend["state"] == "上升趨勢"
+    assert trend["adx14"] is not None
+    assert 20.0 < trend["adx14"] < 85.0
+    assert trend["sma20"] > trend["sma50"] > trend["sma200"]
+
+    # Range-bound oscillation should classify as 盤整
+    flat_closes = [100.0 + math.sin(i * 0.3) * 2.0 for i in range(250)]
+    flat_bars = _make_daily_bars(flat_closes, spread=1.5)
+    flat_trend = classify_trend(flat_bars, flat_closes[-1], market="forex")
+    assert flat_trend["state"] == "盤整"
+
+
+def test_analyze_symbol_ta_sr_ordering_volatility_squeeze_pattern_and_insufficient_backtest() -> None:
+    # Construct 300 bars transitioning from wide swings into tight compression at end
+    closes: list[float] = []
+    for i in range(260):
+        closes.append(200.0 + 18.0 * math.sin(i * 0.28))
+    for i in range(40):
+        closes.append(200.0 + 0.3 * math.sin(i * 0.5))
+    bars: list[OHLCVBar] = []
+    start = datetime(2024, 1, 1, tzinfo=timezone.utc)
+    for i, c in enumerate(closes):
+        sp = 4.0 if i < 260 else 0.15
+        bars.append(
+            OHLCVBar(
+                ts_utc=(start + timedelta(days=i)).strftime("%Y-%m-%dT00:00:00Z"),
+                open=c,
+                high=c + sp,
+                low=c - sp,
+                close=c,
+                volume=100.0,
+            )
+        )
+
+    ta = analyze_symbol_ta("TESTSYM", "Test Symbol", "stocks", bars)
+    assert ta is not None
+    cur_px = ta["latest_price"]
+
+    # Resistances strictly sorted nearest-to-farthest above current price
+    res_prices = [r["price"] for r in ta["resistances"]]
+    assert res_prices == sorted(res_prices)
+    assert all(p >= cur_px for p in res_prices)
+    assert all(r["algo"] for r in ta["resistances"])
+
+    # Supports strictly sorted nearest-to-farthest below current price
+    sup_prices = [s["price"] for s in ta["supports"]]
+    assert sup_prices == sorted(sup_prices, reverse=True)
+    assert all(p < cur_px for p in sup_prices)
+    assert all(s["algo"] for s in ta["supports"])
+
+    # Volatility estimate formulas: cur +/- ATR20 * sqrt(days) (5 trading days for TradFi, 7 for crypto)
+    atr20 = ta["volatility"]["atr20"]
+    assert abs(ta["volatility"]["tomorrow"]["high"] - (cur_px + atr20)) < 1e-6
+    assert abs(ta["volatility"]["tomorrow"]["low"] - (cur_px - atr20)) < 1e-6
+    assert ta["volatility"]["week"]["days"] == 5
+    assert abs(ta["volatility"]["week"]["high"] - (cur_px + atr20 * math.sqrt(5))) < 1e-6
+
+    # Tight final 40 bars should produce squeeze percentile < 20%
+    assert ta["squeeze"]["bb_width_pct"] < 20.0
+    assert ta["squeeze"]["is_squeezing"] is True
+    assert ta["squeeze"]["label"] == "收斂中，可能變盤"
+
+    # Pattern field present
+    assert ta["pattern"]["name"] in {"三角收斂", "箱型", "上升通道", "下降通道", "無明顯型態"}
+
+    # Short 60-bar backtest (< 30 samples) must be flagged as 樣本不足
+    bt_short = backtest_sr_hold_rates(bars[:60], market="stocks")
+    assert bt_short["support_insufficient"] is True
+    assert bt_short["resistance_insufficient"] is True
+    assert "樣本不足" in bt_short["support_label"]
+
+
+def test_generate_ta_file_and_jobs_integration(tmp_path: Path) -> None:
+    cfg = load_config()
+    small_cfg = dict(cfg)
+    small_cfg["instruments"] = [dict(cfg["instruments"][0], enabled=True)]
+    sym = small_cfg["instruments"][0]["symbol"]
+
+    bars = _make_daily_bars([50000.0 + i * 20.0 + math.sin(i * 0.35) * 400.0 for i in range(280)], spread=250.0)
+    out = generate_ta_file(
+        out_dir=tmp_path,
+        config=small_cfg,
+        bars_1d_by_sym={sym: bars},
+        latest_prices={sym: bars[-1].close},
+        fetch_10y_if_missing=False,
+    )
+    assert out["disclaimer"] == TA_DISCLAIMER
+    assert sym in out["symbols"]
+    ta_json = json.loads((tmp_path / "ta.json").read_text(encoding="utf-8"))
+    assert sym in ta_json["symbols"]
+    assert "summary" in ta_json["symbols"][sym]
+
+    # Verify DummyAdapter wired cleanly in run_scan and run_daily writes ta.json without breaking
+    from src.data.adapters import FallbackDataFetcher
+
+    class _DummyAdapter:
+        def __init__(self) -> None:
+            self._bars: dict[str, list[OHLCVBar]] = {
+                "1m": bars[-5:],
+                "15m": bars[-5:],
+                "1d": bars[-250:],
+            }
+
+        def fetch_ohlcv(self, instrument: dict[str, Any], interval: str, limit: int = 300, now_utc: datetime | None = None) -> list[OHLCVBar]:
+            return list(self._bars[interval])
+
+    cfg_path = tmp_path / "cfg.json"
+    cfg_path.write_text(json.dumps(small_cfg, ensure_ascii=False), encoding="utf-8")
+    dummy_fetcher = FallbackDataFetcher(
+        adapters={"binance": _DummyAdapter(), "yahoo": _DummyAdapter(), "dukascopy": _DummyAdapter()}
+    )
+
+    scan_dir = tmp_path / "scan_out"
+    run_scan(
+        out_dir=scan_dir,
+        config_path=cfg_path,
+        fetcher=dummy_fetcher,
+        now_utc=datetime(2026, 3, 18, 12, 0, tzinfo=timezone.utc),
+    )
+    assert (scan_dir / "ta.json").exists()
+
+    daily_dir = tmp_path / "daily_out"
+    run_daily(
+        out_dir=daily_dir,
+        config_path=cfg_path,
+        fetcher=dummy_fetcher,
+        now_utc=datetime(2026, 3, 18, 12, 0, tzinfo=timezone.utc),
+    )
+    assert (daily_dir / "ta.json").exists()
+
+
+def test_real_data_ta_json_has_all_symbols_and_xauusd_sane() -> None:
+    root = Path(__file__).resolve().parent.parent
+    ta_path = root / "data" / "ta.json"
+    assert ta_path.exists(), "Expected committed data/ta.json"
+    doc = json.loads(ta_path.read_text(encoding="utf-8"))
+    assert doc["disclaimer"] == TA_DISCLAIMER
+    assert doc["symbols_count"] >= 40
+    assert "XAUUSD" in doc["symbols"]
+    xau = doc["symbols"]["XAUUSD"]
+    assert xau["trend"]["state"] in {"上升趨勢", "下降趨勢", "盤整"}
+    assert 5.0 < xau["trend"]["adx14"] < 80.0
+    assert xau["backtest"]["support_samples"] >= 30
+    assert xau["backtest"]["resistance_samples"] >= 30
+
+
+def test_frontend_ta_expand_collapse_and_formatting() -> None:
+    root = Path(__file__).resolve().parent.parent
+    index_html = (root / "index.html").read_text(encoding="utf-8")
+    style_css = (root / "assets" / "style.css").read_text(encoding="utf-8")
+    app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
+
+    assert "?v=20261120a" in index_html
+    assert "技術分析" in index_html
+    assert ".ta-panel" in style_css
+    assert ".ta-detail-row" in style_css
+
+    js_bin = shutil.which("node")
+    if not js_bin:
+        jsc_path = Path("/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc")
+        if jsc_path.exists():
+            js_bin = str(jsc_path)
+    assert js_bin is not None
+
+    script = f"""
+        const tbodyEl = {{
+          classList: {{ add: () => {{}}, remove: () => {{}} }},
+          addEventListener: () => {{}},
+          innerHTML: '',
+          textContent: '',
+          dataset: {{}},
+        }};
+        const elements = {{ 'instruments-tbody': tbodyEl }};
+        const stubEl = (id) => {{
+          if (!elements[id]) {{
+            elements[id] = {{
+              classList: {{ add: () => {{}}, remove: () => {{}} }},
+              addEventListener: () => {{}},
+              innerHTML: '',
+              textContent: '',
+              value: 'all',
+              dataset: {{}},
+              disabled: false,
+            }};
+          }}
+          return elements[id];
+        }};
+        var navigator = {{}};
+        var window = {{
+          location: {{ hash: '#/data' }},
+          addEventListener: () => {{}},
+          SIGNAL_DESK_CONFIG: {{}},
+        }};
+        var document = {{
+          getElementById: stubEl,
+          querySelectorAll: () => [],
+          querySelector: () => stubEl('_q'),
+          body: {{ appendChild: () => {{}}, removeChild: () => {{}} }},
+          createElement: () => ({{ value: '', style: {{}}, setAttribute: () => {{}}, focus: () => {{}}, select: () => {{}} }}),
+          execCommand: () => true,
+        }};
+        function setInterval() {{}}
+        function setTimeout() {{ return 1; }}
+        function clearTimeout() {{}}
+        async function fetch() {{ return {{ ok: false }}; }}
+        {app_js}
+
+        const u = window.__SIGNAL_DESK_UTILS__;
+        const mockInstruments = [
+          {{ symbol: 'XAUUSD', display_name: 'Gold', market: 'commodities', latest_price: 3985.5, overall_status: 'healthy', intervals: {{}} }},
+          {{ symbol: 'EURUSD', display_name: 'EUR/USD', market: 'forex', latest_price: 1.0825, overall_status: 'healthy', intervals: {{}} }},
+          {{ symbol: 'MISSING', display_name: 'No TA', market: 'forex', latest_price: 1.0, overall_status: 'healthy', intervals: {{}} }},
+        ];
+        const mockTa = {{
+          disclaimer: '以上為依歷史數據與技術指標計算的參考點位，不是預測，也不是投資建議。',
+          symbols: {{
+            XAUUSD: {{
+              symbol: 'XAUUSD',
+              latest_price: 3985.5,
+              latest_bar_date: '2026-11-15',
+              summary: '下降趨勢，波動正常',
+              resistances: [{{ price: 4091.2, algo: '擺動高點' }}],
+              supports: [{{ price: 3879.3, algo: '近 20 日最低' }}],
+              fibonacci: {{
+                direction_label: '下跌波段反彈',
+                start_date: '2026-10-01',
+                start_price: 4200.0,
+                end_date: '2026-11-05',
+                end_price: 3800.0,
+                levels: {{ '38.2%': 3952.8, '50.0%': 4000.0, '61.8%': 4047.2 }},
+              }},
+              volatility: {{ atr20: 55.1, tomorrow: {{ low: 3930.4, high: 4040.6 }}, week: {{ low: 3839.7, high: 4131.3 }} }},
+              trend: {{ state: '下降趨勢', sma20: 4010.0, sma50: 4050.0, sma200: 3900.0, adx14: 25.5, detail: '空頭排列' }},
+              squeeze: {{ bb_width_pct: 15.2, is_squeezing: true, label: '收斂中，可能變盤' }},
+              pattern: {{ name: '下降通道', note: '參考用' }},
+              backtest: {{ years: 10.0, support_label: '70.7%（150 次，10.0 年）', resistance_label: '62.8%（180 次，10.0 年）' }},
+            }},
+            EURUSD: {{
+              symbol: 'EURUSD',
+              latest_price: 1.0825,
+              resistances: [{{ price: 1.095, algo: '近 20 日最高' }}],
+              supports: [{{ price: 1.071, algo: '近 20 日最低' }}],
+              trend: {{ state: '盤整', adx14: 14.2 }},
+              squeeze: {{ bb_width_pct: 48.0, is_squeezing: false, label: '波動正常' }},
+              pattern: {{ name: '箱型', note: '區間震盪' }},
+              backtest: {{ years: 10.0, support_label: '68.0%（110 次，10.0 年）', resistance_label: '64.0%（105 次，10.0 年）' }},
+            }},
+          }},
+        }};
+
+        u.setTaDataForTest(mockTa, mockInstruments);
+
+        // 1. Initially all rows collapsed; table HTML unchanged from normal rows
+        u.renderInstruments();
+        if (tbodyEl.innerHTML.includes('ta-detail-row')) {{
+          throw new Error('Expected no expanded panel by default');
+        }}
+
+        // 2. Expand XAUUSD -> single detail row directly beneath XAUUSD using formatCardPrice
+        u.toggleTaSymbolForTest('XAUUSD');
+        const h1 = tbodyEl.innerHTML;
+        const count1 = (h1.match(/ta-detail-row/g) || []).length;
+        if (count1 !== 1) throw new Error('Expected 1 expanded TA panel, got ' + count1);
+        if (!h1.includes('4091.20') || !h1.includes('3879.30')) {{
+          throw new Error('Expected formatCardPrice formatted S/R in XAUUSD panel: ' + h1);
+        }}
+        if (!h1.includes('收斂中，可能變盤') || !h1.includes('以上為依歷史數據與技術指標計算的參考點位，不是預測，也不是投資建議。')) {{
+          throw new Error('Missing squeeze warning or disclaimer');
+        }}
+        const idxXau = h1.indexOf('data-symbol="XAUUSD"');
+        const idxEur = h1.indexOf('data-symbol="EURUSD"');
+        const idxDetail = h1.indexOf('class="ta-detail-row"');
+        if (!(idxXau < idxDetail && idxDetail < idxEur)) {{
+          throw new Error('Detail row not placed directly beneath XAUUSD');
+        }}
+
+        // 3. Click EURUSD -> XAUUSD collapses, only EURUSD expanded (1.09500 via formatCardPrice)
+        u.toggleTaSymbolForTest('EURUSD');
+        const h2 = tbodyEl.innerHTML;
+        if ((h2.match(/ta-detail-row/g) || []).length !== 1 || !h2.includes('1.09500') || h2.includes('4091.20')) {{
+          throw new Error('Switching expanded row failed');
+        }}
+
+        // 4. Click EURUSD again -> collapses completely
+        u.toggleTaSymbolForTest('EURUSD');
+        if (tbodyEl.innerHTML.includes('ta-detail-row')) {{
+          throw new Error('Re-clicking active row should collapse it');
+        }}
+
+        // 5. Missing symbol -> 技術分析資料暫無
+        u.toggleTaSymbolForTest('MISSING');
+        if (!tbodyEl.innerHTML.includes('技術分析資料暫無')) {{
+          throw new Error('Missing TA symbol should render 技術分析資料暫無');
+        }}
+    """
+    proc = subprocess.run([js_bin, "-e", script], capture_output=True, text=True, check=False)
+    assert proc.returncode == 0, f"JS TA verification failed:\nSTDOUT:\n{proc.stdout}\nSTDERR:\n{proc.stderr}"
