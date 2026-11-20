@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-11-20T00:19:36Z",
+  "updated_at_utc": "2026-11-20T00:34:37Z",
   "disclaimer": "以上為依歷史數據與技術指標計算的參考點位，不是預測，也不是投資建議。",
   "symbols_count": 42,
   "symbols": {
@@ -7,9 +7,9 @@
       "symbol": "BTCUSDT",
       "display_name": "Bitcoin (BTC/USDT)",
       "market": "crypto",
-      "latest_price": 61986.73,
+      "latest_price": 62093.68,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
+      "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 63,000.00，下方支撐 61,000.00",
       "resistances": [
         {
@@ -18,7 +18,7 @@
           "algo": "整數心理關卡 63,000",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 1.63
+          "dist_pct": 1.46
         },
         {
           "price": 65567.005,
@@ -26,15 +26,15 @@
           "algo": "前一日高點（2026-11-18）；近 5 日最高",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 5.78
+          "dist_pct": 5.59
         },
         {
-          "price": 69105.66336,
-          "label": "Fibo 61.8%",
-          "algo": "斐波那契 61.8%（2026-07-01→2026-09-21）",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": 11.48
+          "price": 71657.87259,
+          "label": "SMA20＋Fibo 38.2%",
+          "algo": "斐波那契 38.2%（2026-10-02→2026-11-19）；20 日均線 SMA20",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 15.4
         }
       ],
       "supports": [
@@ -44,32 +44,32 @@
           "algo": "整數心理關卡 61,000",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -1.59
+          "dist_pct": -1.76
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-07-01",
-        "start_price": 57800.19,
-        "end_date": "2026-09-21",
-        "end_price": 87395.67,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-10-02",
+        "start_price": 87220.0,
+        "end_date": "2026-11-19",
+        "end_price": 61428.26,
         "levels": {
-          "38.2%": 76090.19664,
-          "50.0%": 72597.93,
-          "61.8%": 69105.66336
+          "38.2%": 71280.70468,
+          "50.0%": 74324.13,
+          "61.8%": 77367.55532
         }
       },
       "volatility": {
-        "atr20": 2539.2046502063713,
+        "atr20": 2545.339815559761,
         "tomorrow": {
-          "low": 59447.525349793636,
-          "high": 64525.93465020637,
+          "low": 59548.34018444024,
+          "high": 64639.01981555976,
           "days": 1
         },
         "week": {
-          "low": 55268.62596765519,
-          "high": 68704.83403234482,
+          "low": 55359.34384587786,
+          "high": 68828.01615412215,
           "days": 7
         }
       },
@@ -77,12 +77,12 @@
         "state": "下降趨勢",
         "sma20": 72035.0405,
         "sma50": 78236.2874,
-        "sma200": 72693.73275,
-        "adx14": 41.64,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 41.6"
+        "sma200": null,
+        "adx14": 41.16,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 41.2"
       },
       "squeeze": {
-        "bb_width_pct": 91.76,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -109,9 +109,9 @@
       "symbol": "ETHUSDT",
       "display_name": "Ethereum (ETH/USDT)",
       "market": "crypto",
-      "latest_price": 1757.32,
+      "latest_price": 1755.37,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
+      "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 1,813.29，下方支撐 1,709.23",
       "resistances": [
         {
@@ -120,7 +120,7 @@
           "algo": "整數心理關卡 1,800；前一日高點（2026-11-18）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 3.18
+          "dist_pct": 3.3
         },
         {
           "price": 1866.89,
@@ -128,15 +128,15 @@
           "algo": "近 5 日最高",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 6.24
+          "dist_pct": 6.35
         },
         {
-          "price": 2002.9141200000001,
-          "label": "Fibo 61.8%",
-          "algo": "斐波那契 61.8%（2026-06-06→2026-09-21）",
+          "price": 2065.353,
+          "label": "SMA20",
+          "algo": "20 日均線 SMA20",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 13.98
+          "dist_pct": 17.66
         }
       ],
       "supports": [
@@ -146,7 +146,7 @@
           "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 1,700",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -2.74
+          "dist_pct": -2.63
         },
         {
           "price": 1650.0,
@@ -154,32 +154,32 @@
           "algo": "整數心理關卡 1,650",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -6.11
+          "dist_pct": -6.0
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-06-06",
-        "start_price": 1505.68,
-        "end_date": "2026-09-21",
-        "end_price": 2807.34,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-10-02",
+        "start_price": 2777.33,
+        "end_date": "2026-11-15",
+        "end_price": 1711.08,
         "levels": {
-          "38.2%": 2310.10588,
-          "50.0%": 2156.51,
-          "61.8%": 2002.9141200000001
+          "38.2%": 2118.3875,
+          "50.0%": 2244.205,
+          "61.8%": 2370.0225
         }
       },
       "volatility": {
-        "atr20": 100.9386347627827,
+        "atr20": 100.49027764142588,
         "tomorrow": {
-          "low": 1656.3813652372173,
-          "high": 1858.2586347627825,
+          "low": 1654.879722358574,
+          "high": 1855.8602776414257,
           "days": 1
         },
         "week": {
-          "low": 1490.2614747392977,
-          "high": 2024.3785252607022,
+          "low": 1489.4977161809527,
+          "high": 2021.242283819047,
           "days": 7
         }
       },
@@ -187,12 +187,12 @@
         "state": "下降趨勢",
         "sma20": 2065.353,
         "sma50": 2309.1788,
-        "sma200": 2134.0335,
-        "adx14": 39.73,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 39.7"
+        "sma200": null,
+        "adx14": 40.81,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 40.8"
       },
       "squeeze": {
-        "bb_width_pct": 91.21,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -219,9 +219,9 @@
       "symbol": "SOLUSDT",
       "display_name": "Solana (SOL/USDT)",
       "market": "crypto",
-      "latest_price": 73.15,
+      "latest_price": 73.01,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2292,
+      "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 75.81，下方支撐 70",
       "resistances": [
         {
@@ -230,7 +230,7 @@
           "algo": "前一日高點（2026-11-18）；短線擺動高（2日確認 2026-11-17）；近 5 日最高；整數心理關卡 76",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 3.63
+          "dist_pct": 3.83
         },
         {
           "price": 78.0,
@@ -238,15 +238,15 @@
           "algo": "整數心理關卡 78",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 6.63
+          "dist_pct": 6.83
         },
         {
-          "price": 84.35037,
-          "label": "SMA20＋Fibo 61.8%",
-          "algo": "20 日均線 SMA20；斐波那契 61.8%（2026-06-06→2026-09-27）",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 15.31
+          "price": 83.8095,
+          "label": "SMA20",
+          "algo": "20 日均線 SMA20",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": 14.79
         }
       ],
       "supports": [
@@ -256,7 +256,7 @@
           "algo": "整數心理關卡 70",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -4.31
+          "dist_pct": -4.12
         },
         {
           "price": 67.41,
@@ -264,32 +264,32 @@
           "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -7.85
+          "dist_pct": -7.67
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-06-06",
-        "start_price": 60.13,
-        "end_date": "2026-09-27",
-        "end_price": 124.95,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-09-27",
+        "start_price": 124.95,
+        "end_date": "2026-11-15",
+        "end_price": 67.41,
         "levels": {
-          "38.2%": 100.18876,
-          "50.0%": 92.54,
-          "61.8%": 84.89124000000001
+          "38.2%": 89.39028,
+          "50.0%": 96.18,
+          "61.8%": 102.96972
         }
       },
       "volatility": {
-        "atr20": 4.5968258017150285,
+        "atr20": 4.608938213934003,
         "tomorrow": {
-          "low": 68.55317419828498,
-          "high": 77.74682580171503,
+          "low": 68.40106178606601,
+          "high": 77.618938213934,
           "days": 1
         },
         "week": {
-          "low": 60.98794210837693,
-          "high": 85.31205789162308,
+          "low": 60.815895677868426,
+          "high": 85.20410432213158,
           "days": 7
         }
       },
@@ -297,19 +297,19 @@
         "state": "下降趨勢",
         "sma20": 83.8095,
         "sma50": 98.2486,
-        "sma200": 88.6417,
-        "adx14": 48.65,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 48.6"
+        "sma200": null,
+        "adx14": 48.54,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 48.5"
       },
       "squeeze": {
-        "bb_width_pct": 90.11,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
       },
       "pattern": {
         "name": "無明顯型態",
-        "note": "近期擺動高低點連線未構成標準三角、箱型或通道（僅供參考）"
+        "note": "近期確認擺動高低點不足兩組，無法連線構成幾何型態（僅供參考）"
       },
       "backtest": {
         "years": 6.3,
@@ -329,9 +329,9 @@
       "symbol": "BNBUSDT",
       "display_name": "BNB (BNB/USDT)",
       "market": "crypto",
-      "latest_price": 580.25,
+      "latest_price": 580.43,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
+      "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 599.24，下方支撐 566.00",
       "resistances": [
         {
@@ -340,23 +340,23 @@
           "algo": "前一日高點（2026-11-18）；近 5 日最高；整數心理關卡 600",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 3.27
+          "dist_pct": 3.24
         },
         {
-          "price": 645.71834,
-          "label": "Fibo 61.8%＋整數關卡",
-          "algo": "斐波那契 61.8%（2026-07-01→2026-10-05）；整數心理關卡 650",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 11.28
+          "price": 655.8718933333333,
+          "label": "SMA20＋Fibo 38.2%＋整數關卡",
+          "algo": "整數心理關卡 650；20 日均線 SMA20；斐波那契 38.2%（2026-10-05→2026-11-15）",
+          "strength": 3,
+          "sources_count": 3,
+          "dist_pct": 13.0
         },
         {
-          "price": 658.157625,
-          "label": "SMA200＋SMA20",
-          "algo": "200 日均線 SMA200；20 日均線 SMA20",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 13.43
+          "price": 682.9116666666667,
+          "label": "Fibo 50.0%＋前低轉壓＋前短低轉壓",
+          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-29）；前期短線低點（跌破轉壓力 2日確認 2026-11-04）；斐波那契 50.0%（2026-10-05→2026-11-15）",
+          "strength": 3,
+          "sources_count": 3,
+          "dist_pct": 17.66
         }
       ],
       "supports": [
@@ -366,7 +366,7 @@
           "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -2.46
+          "dist_pct": -2.49
         },
         {
           "price": 550.0,
@@ -374,7 +374,7 @@
           "algo": "整數心理關卡 550",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -5.21
+          "dist_pct": -5.24
         },
         {
           "price": 500.0,
@@ -382,32 +382,32 @@
           "algo": "整數心理關卡 500",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -13.83
+          "dist_pct": -13.86
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-07-01",
-        "start_price": 537.25,
-        "end_date": "2026-10-05",
-        "end_price": 809.99,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-10-05",
+        "start_price": 809.99,
+        "end_date": "2026-11-15",
+        "end_price": 566.0,
         "levels": {
-          "38.2%": 705.80332,
-          "50.0%": 673.62,
-          "61.8%": 641.43668
+          "38.2%": 659.20418,
+          "50.0%": 687.995,
+          "61.8%": 716.7858200000001
         }
       },
       "volatility": {
-        "atr20": 24.40619862986456,
+        "atr20": 24.502722825938164,
         "tomorrow": {
-          "low": 555.8438013701355,
-          "high": 604.6561986298645,
+          "low": 555.9272771740618,
+          "high": 604.9327228259381,
           "days": 1
         },
         "week": {
-          "low": 515.6772679769331,
-          "high": 644.8227320230669,
+          "low": 515.6018889586218,
+          "high": 645.2581110413781,
           "days": 7
         }
       },
@@ -415,12 +415,12 @@
         "state": "下降趨勢",
         "sma20": 658.4115,
         "sma50": 710.5952,
-        "sma200": 657.90375,
-        "adx14": 45.1,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 45.1"
+        "sma200": null,
+        "adx14": 46.48,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 46.5"
       },
       "squeeze": {
-        "bb_width_pct": 95.33,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -447,9 +447,9 @@
       "symbol": "XRPUSDT",
       "display_name": "XRP (XRP/USDT)",
       "market": "crypto",
-      "latest_price": 0.9604,
+      "latest_price": 0.9609,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
+      "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.9985，下方支撐 0.94",
       "resistances": [
         {
@@ -458,7 +458,7 @@
           "algo": "整數心理關卡 0.980；近 5 日最高；前一日高點（2026-11-18）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 3.97
+          "dist_pct": 3.92
         },
         {
           "price": 1.0642888,
@@ -466,7 +466,7 @@
           "algo": "斐波那契 38.2%（2026-11-04→2026-11-14）",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 10.82
+          "dist_pct": 10.76
         },
         {
           "price": 1.114765,
@@ -474,7 +474,7 @@
           "algo": "20 日均線 SMA20；斐波那契 50.0%（2026-11-04→2026-11-14）；前一週高點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 16.07
+          "dist_pct": 16.01
         }
       ],
       "supports": [
@@ -484,7 +484,7 @@
           "algo": "整數心理關卡 0.940",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -2.12
+          "dist_pct": -2.18
         },
         {
           "price": 0.8942399999999999,
@@ -492,7 +492,7 @@
           "algo": "近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -6.89
+          "dist_pct": -6.94
         }
       ],
       "fibonacci": {
@@ -509,15 +509,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.05919715756839883,
+        "atr20": 0.059700645675097544,
         "tomorrow": {
-          "low": 0.9012028424316012,
-          "high": 1.0195971575683989,
+          "low": 0.9011993543249024,
+          "high": 1.0206006456750976,
           "days": 1
         },
         "week": {
-          "low": 0.8037790427521116,
-          "high": 1.1170209572478884,
+          "low": 0.802946938433708,
+          "high": 1.118853061566292,
           "days": 7
         }
       },
@@ -525,12 +525,12 @@
         "state": "下降趨勢",
         "sma20": 1.100695,
         "sma50": 1.259374,
-        "sma200": 1.24702,
-        "adx14": 38.49,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 38.5"
+        "sma200": null,
+        "adx14": 36.69,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 36.7"
       },
       "squeeze": {
-        "bb_width_pct": 93.13,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -557,9 +557,9 @@
       "symbol": "DOGEUSDT",
       "display_name": "Dogecoin (DOGE/USDT)",
       "market": "crypto",
-      "latest_price": 0.05823,
+      "latest_price": 0.05818,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
+      "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.06026，下方支撐 0.0557",
       "resistances": [
         {
@@ -568,7 +568,7 @@
           "algo": "整數心理關卡 0.0600；前一日高點（2026-11-18）；短線擺動高（2日確認 2026-11-17）；近 5 日最高",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 3.49
+          "dist_pct": 3.58
         },
         {
           "price": 0.06418162000000001,
@@ -576,7 +576,7 @@
           "algo": "斐波那契 38.2%（2026-11-04→2026-11-14）",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 10.22
+          "dist_pct": 10.32
         },
         {
           "price": 0.06723950000000001,
@@ -584,7 +584,7 @@
           "algo": "斐波那契 50.0%（2026-11-04→2026-11-14）；20 日均線 SMA20",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 15.47
+          "dist_pct": 15.57
         }
       ],
       "supports": [
@@ -594,7 +594,7 @@
           "algo": "整數心理關卡 0.0570；近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -4.35
+          "dist_pct": -4.27
         }
       ],
       "fibonacci": {
@@ -611,15 +611,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.0037847022372737406,
+        "atr20": 0.003874352968590256,
         "tomorrow": {
-          "low": 0.054445297762726254,
-          "high": 0.06201470223727374,
+          "low": 0.05430564703140975,
+          "high": 0.06205435296859026,
           "days": 1
         },
         "week": {
-          "low": 0.04821661909374391,
-          "high": 0.06824338090625609,
+          "low": 0.047929425553825344,
+          "high": 0.06843057444617466,
           "days": 7
         }
       },
@@ -627,12 +627,12 @@
         "state": "下降趨勢",
         "sma20": 0.067594,
         "sma50": 0.077218,
-        "sma200": 0.083302,
-        "adx14": 49.45,
-        "detail": "SMA20 < SMA50 < SMA200 空頭排列，ADX14 = 49.5"
+        "sma200": null,
+        "adx14": 47.23,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 47.2"
       },
       "squeeze": {
-        "bb_width_pct": 93.96,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -659,18 +659,18 @@
       "symbol": "ADAUSDT",
       "display_name": "Cardano (ADA/USDT)",
       "market": "crypto",
-      "latest_price": 0.1519,
+      "latest_price": 0.152,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
-      "summary": "下降趨勢，波動擴張中，上方壓力 0.1574，下方支撐 0.1435",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 0.1583，下方支撐 0.1435",
       "resistances": [
         {
-          "price": 0.15736666666666668,
-          "label": "前日高＋5日高＋整數關卡",
-          "algo": "前一日高點（2026-11-18）；近 5 日最高；整數心理關卡 0.160",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": 3.6
+          "price": 0.15835,
+          "label": "5日高＋整數關卡",
+          "algo": "近 5 日最高；整數心理關卡 0.160",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 4.18
         },
         {
           "price": 0.1716975,
@@ -678,7 +678,7 @@
           "algo": "整數心理關卡 0.170；20 日均線 SMA20",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 13.03
+          "dist_pct": 12.96
         },
         {
           "price": 0.18100000000000002,
@@ -686,7 +686,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-05）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前一週高點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 19.16
+          "dist_pct": 19.08
         }
       ],
       "supports": [
@@ -696,7 +696,7 @@
           "algo": "前一日低點（2026-11-18）；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -5.52
+          "dist_pct": -5.58
         },
         {
           "price": 0.13999999999999999,
@@ -704,7 +704,7 @@
           "algo": "整數心理關卡 0.140",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -7.83
+          "dist_pct": -7.89
         },
         {
           "price": 0.13,
@@ -712,32 +712,32 @@
           "algo": "整數心理關卡 0.130",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -14.42
+          "dist_pct": -14.47
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-06-25",
-        "start_price": 0.1382,
-        "end_date": "2026-10-06",
-        "end_price": 0.2824,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-10-06",
+        "start_price": 0.2824,
+        "end_date": "2026-11-15",
+        "end_price": 0.1426,
         "levels": {
-          "38.2%": 0.22731559999999998,
-          "50.0%": 0.2103,
-          "61.8%": 0.1932844
+          "38.2%": 0.1960036,
+          "50.0%": 0.2125,
+          "61.8%": 0.2289964
         }
       },
       "volatility": {
-        "atr20": 0.011502988530915345,
+        "atr20": 0.011698441577801246,
         "tomorrow": {
-          "low": 0.14039701146908468,
-          "high": 0.16340298853091534,
+          "low": 0.14030155842219874,
+          "high": 0.16369844157780125,
           "days": 1
         },
         "week": {
-          "low": 0.12146595301316979,
-          "high": 0.18233404698683023,
+          "low": 0.12104883285811983,
+          "high": 0.18295116714188017,
           "days": 7
         }
       },
@@ -745,12 +745,12 @@
         "state": "下降趨勢",
         "sma20": 0.173395,
         "sma50": 0.20671,
-        "sma200": 0.202264,
-        "adx14": 45.28,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 45.3"
+        "sma200": null,
+        "adx14": 45.27,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 45.3"
       },
       "squeeze": {
-        "bb_width_pct": 81.04,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -777,34 +777,34 @@
       "symbol": "AVAXUSDT",
       "display_name": "Avalanche (AVAX/USDT)",
       "market": "crypto",
-      "latest_price": 6.993,
+      "latest_price": 6.977,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2250,
-      "summary": "下降趨勢，波動擴張中，上方壓力 7.27，下方支撐 6.703",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 7.38，下方支撐 6.703",
       "resistances": [
         {
-          "price": 7.27,
-          "label": "前低轉壓＋前日高＋5日高",
-          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-09-16）；前一日高點（2026-11-18）；近 5 日最高",
+          "price": 7.380333333333333,
+          "label": "前日高＋5日高＋整數關卡",
+          "algo": "前一日高點（2026-11-18）；近 5 日最高；整數心理關卡 7.50",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 3.96
+          "dist_pct": 5.78
         },
         {
-          "price": 7.6365,
-          "label": "前低轉壓＋整數關卡",
-          "algo": "整數心理關卡 7.50；前期擺動低點（跌破轉壓力 5日確認 2026-11-08）",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 9.2
-        },
-        {
-          "price": 8.075768428571427,
-          "label": "SMA20＋SMA200＋Fibo 61.8% 等6項",
-          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；整數心理關卡 8.00；20 日均線 SMA20；200 日均線 SMA200；前期短線低點（跌破轉壓力 2日確認 2026-11-05）；斐波那契 61.8%（2026-06-19→2026-09-29）；前期短線低點（跌破轉壓力 2日確認 2026-11-02）",
+          "price": 7.9509375,
+          "label": "SMA20＋前低轉壓＋整數關卡",
+          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-11-08）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；整數心理關卡 8.00；20 日均線 SMA20",
           "strength": 3,
-          "sources_count": 6,
-          "dist_pct": 15.48
+          "sources_count": 3,
+          "dist_pct": 13.96
+        },
+        {
+          "price": 8.180499999999999,
+          "label": "前短低轉壓",
+          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-05）；前期短線低點（跌破轉壓力 2日確認 2026-11-02）",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": 17.25
         }
       ],
       "supports": [
@@ -814,7 +814,7 @@
           "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 6.50",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -4.15
+          "dist_pct": -3.93
         },
         {
           "price": 6.0,
@@ -822,32 +822,32 @@
           "algo": "整數心理關卡 6.00",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -14.2
+          "dist_pct": -14.0
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-06-19",
-        "start_price": 5.681,
-        "end_date": "2026-09-29",
-        "end_price": 12.008,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-09-29",
+        "start_price": 12.008,
+        "end_date": "2026-11-15",
+        "end_price": 6.743,
         "levels": {
-          "38.2%": 9.591085999999999,
-          "50.0%": 8.8445,
-          "61.8%": 8.097914
+          "38.2%": 8.75423,
+          "50.0%": 9.375499999999999,
+          "61.8%": 9.99677
         }
       },
       "volatility": {
-        "atr20": 0.5622158350933374,
+        "atr20": 0.5828605619340939,
         "tomorrow": {
-          "low": 6.430784164906663,
-          "high": 7.555215835093338,
+          "low": 6.394139438065906,
+          "high": 7.559860561934094,
           "days": 1
         },
         "week": {
-          "low": 5.505516717200529,
-          "high": 8.480483282799472,
+          "low": 5.434895904095027,
+          "high": 8.519104095904973,
           "days": 7
         }
       },
@@ -855,12 +855,12 @@
         "state": "下降趨勢",
         "sma20": 8.03075,
         "sma50": 9.18198,
-        "sma200": 8.040715,
-        "adx14": 25.59,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 25.6"
+        "sma200": null,
+        "adx14": 24.64,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 24.6"
       },
       "squeeze": {
-        "bb_width_pct": 81.04,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -887,9 +887,9 @@
       "symbol": "LINKUSDT",
       "display_name": "Chainlink (LINK/USDT)",
       "market": "crypto",
-      "latest_price": 9.005,
+      "latest_price": 8.997,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
+      "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 9.412，下方支撐 8.569",
       "resistances": [
         {
@@ -898,15 +898,15 @@
           "algo": "前一日高點（2026-11-18）；短線擺動高（2日確認 2026-11-17）；近 5 日最高；整數心理關卡 9.50",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 4.52
+          "dist_pct": 4.61
         },
         {
-          "price": 9.999216333333333,
-          "label": "SMA200＋Fibo 38.2%＋整數關卡",
-          "algo": "斐波那契 38.2%（2026-10-29→2026-11-14）；整數心理關卡 10.00；200 日均線 SMA200",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": 11.04
+          "price": 9.944422,
+          "label": "Fibo 38.2%＋整數關卡",
+          "algo": "斐波那契 38.2%（2026-10-29→2026-11-14）；整數心理關卡 10.00",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 10.53
         },
         {
           "price": 10.3360875,
@@ -914,7 +914,7 @@
           "algo": "20 日均線 SMA20；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；斐波那契 50.0%（2026-10-29→2026-11-14）；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 14.78
+          "dist_pct": 14.88
         }
       ],
       "supports": [
@@ -924,7 +924,7 @@
           "algo": "近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 8.50",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -4.84
+          "dist_pct": -4.75
         },
         {
           "price": 8.0,
@@ -932,7 +932,7 @@
           "algo": "整數心理關卡 8.00",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -11.16
+          "dist_pct": -11.08
         }
       ],
       "fibonacci": {
@@ -949,15 +949,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.6483165210438897,
+        "atr20": 0.6605286547089548,
         "tomorrow": {
-          "low": 8.35668347895611,
-          "high": 9.653316521043891,
+          "low": 8.336471345291045,
+          "high": 9.657528654708955,
           "days": 1
         },
         "week": {
-          "low": 7.289715714463295,
-          "high": 10.720284285536707,
+          "low": 7.249405445808052,
+          "high": 10.744594554191947,
           "days": 7
         }
       },
@@ -965,12 +965,12 @@
         "state": "下降趨勢",
         "sma20": 10.26735,
         "sma50": 11.64756,
-        "sma200": 10.108805,
-        "adx14": 39.27,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 39.3"
+        "sma200": null,
+        "adx14": 38.36,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 38.4"
       },
       "squeeze": {
-        "bb_width_pct": 87.09,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -997,9 +997,9 @@
       "symbol": "DOTUSDT",
       "display_name": "Polkadot (DOT/USDT)",
       "market": "crypto",
-      "latest_price": 0.714,
+      "latest_price": 0.715,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2285,
+      "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.7447，下方支撐 0.6825",
       "resistances": [
         {
@@ -1008,7 +1008,7 @@
           "algo": "整數心理關卡 0.740；前一日高點（2026-11-18）；短線擺動高（2日確認 2026-11-17）；近 5 日最高",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 4.31
+          "dist_pct": 4.16
         },
         {
           "price": 0.856025,
@@ -1016,15 +1016,15 @@
           "algo": "20 日均線 SMA20；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 19.89
+          "dist_pct": 19.72
         },
         {
-          "price": 0.894,
-          "label": "前週高",
-          "algo": "前一週高點（2026-11-09~2026-11-15）",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": 25.21
+          "price": 0.9068750000000001,
+          "label": "Fibo 38.2%＋前週高",
+          "algo": "前一週高點（2026-11-09~2026-11-15）；斐波那契 38.2%（2026-09-26→2026-11-15）",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 26.84
         }
       ],
       "supports": [
@@ -1034,32 +1034,32 @@
           "algo": "整數心理關卡 0.690；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -4.41
+          "dist_pct": -4.55
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-08-18",
-        "start_price": 0.723,
-        "end_date": "2026-09-26",
-        "end_price": 1.306,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-09-26",
+        "start_price": 1.306,
+        "end_date": "2026-11-15",
+        "end_price": 0.681,
         "levels": {
-          "38.2%": 1.083294,
-          "50.0%": 1.0145,
-          "61.8%": 0.9457059999999999
+          "38.2%": 0.9197500000000001,
+          "50.0%": 0.9935,
+          "61.8%": 1.06725
         }
       },
       "volatility": {
-        "atr20": 0.060876161389976605,
+        "atr20": 0.06203781235241812,
         "tomorrow": {
-          "low": 0.6531238386100233,
-          "high": 0.7748761613899766,
+          "low": 0.6529621876475818,
+          "high": 0.7770378123524181,
           "days": 1
         },
         "week": {
-          "low": 0.5529368161898898,
-          "high": 0.8750631838101102,
+          "low": 0.5508633766330107,
+          "high": 0.8791366233669893,
           "days": 7
         }
       },
@@ -1067,12 +1067,12 @@
         "state": "下降趨勢",
         "sma20": 0.84305,
         "sma50": 1.01302,
-        "sma200": 0.99414,
-        "adx14": 41.37,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 41.4"
+        "sma200": null,
+        "adx14": 42.0,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 42.0"
       },
       "squeeze": {
-        "bb_width_pct": 88.19,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -1099,34 +1099,34 @@
       "symbol": "LTCUSDT",
       "display_name": "Litecoin (LTC/USDT)",
       "market": "crypto",
-      "latest_price": 42.33,
+      "latest_price": 42.34,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
-      "summary": "下降趨勢，波動擴張中，上方壓力 43.7，下方支撐 40",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 44.69，下方支撐 40",
       "resistances": [
         {
-          "price": 43.695,
-          "label": "前低轉壓＋整數關卡",
-          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-08-14）；整數心理關卡 44",
+          "price": 44.69,
+          "label": "前日高＋整數關卡",
+          "algo": "整數心理關卡 44；前一日高點（2026-11-18）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 3.22
+          "dist_pct": 5.55
         },
         {
-          "price": 45.72666666666667,
-          "label": "前日高＋5日高＋整數關卡",
-          "algo": "前一日高點（2026-11-18）；近 5 日最高；整數心理關卡 46",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": 8.02
+          "price": 45.9,
+          "label": "5日高＋整數關卡",
+          "algo": "近 5 日最高；整數心理關卡 46",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 8.41
         },
         {
-          "price": 47.41,
-          "label": "前低轉壓",
-          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-08-30）",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": 12.0
+          "price": 49.6395,
+          "label": "SMA20＋前短低轉壓",
+          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-08）；20 日均線 SMA20",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 17.24
         }
       ],
       "supports": [
@@ -1136,7 +1136,7 @@
           "algo": "整數心理關卡 40",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -5.5
+          "dist_pct": -5.53
         },
         {
           "price": 38.0,
@@ -1144,32 +1144,32 @@
           "algo": "整數心理關卡 38",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -10.23
+          "dist_pct": -10.25
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-06-25",
-        "start_price": 39.28,
-        "end_date": "2026-09-26",
-        "end_price": 75.0,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-09-26",
+        "start_price": 75.0,
+        "end_date": "2026-11-19",
+        "end_price": 41.69,
         "levels": {
-          "38.2%": 61.35496,
-          "50.0%": 57.14,
-          "61.8%": 52.925039999999996
+          "38.2%": 54.41442,
+          "50.0%": 58.345,
+          "61.8%": 62.27558
         }
       },
       "volatility": {
-        "atr20": 2.8002002544986713,
+        "atr20": 2.8963090408628442,
         "tomorrow": {
-          "low": 39.52979974550133,
-          "high": 45.13020025449867,
+          "low": 39.44369095913716,
+          "high": 45.23630904086285,
           "days": 1
         },
         "week": {
-          "low": 34.92136650541674,
-          "high": 49.738633494583254,
+          "low": 34.677086557888906,
+          "high": 50.0029134421111,
           "days": 7
         }
       },
@@ -1177,19 +1177,19 @@
         "state": "下降趨勢",
         "sma20": 50.019,
         "sma50": 57.1458,
-        "sma200": 51.6392,
-        "adx14": 46.58,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 46.6"
+        "sma200": null,
+        "adx14": 43.54,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 43.5"
       },
       "squeeze": {
-        "bb_width_pct": 89.84,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
       },
       "pattern": {
-        "name": "三角收斂",
-        "note": "擺動高點下移／低點墊高，波動區間逐步收窄（僅供參考）"
+        "name": "無明顯型態",
+        "note": "近期確認擺動高低點不足兩組，無法連線構成幾何型態（僅供參考）"
       },
       "backtest": {
         "years": 7.1,
@@ -1209,9 +1209,9 @@
       "symbol": "TRXUSDT",
       "display_name": "TRON (TRX/USDT)",
       "market": "crypto",
-      "latest_price": 0.3104,
+      "latest_price": 0.3105,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
+      "bars_count": 62,
       "summary": "盤整，波動正常，上方壓力 0.3149，下方支撐 0.3074",
       "resistances": [
         {
@@ -1220,7 +1220,7 @@
           "algo": "近 5 日最高；20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-11-05）；前期短線低點（跌破轉壓力 2日確認 2026-11-09）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 1.45
+          "dist_pct": 1.42
         },
         {
           "price": 0.3205,
@@ -1228,7 +1228,7 @@
           "algo": "整數心理關卡 0.320；前一週高點（2026-11-09~2026-11-15）；短線擺動高（2日確認 2026-11-08）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 3.25
+          "dist_pct": 3.22
         },
         {
           "price": 0.32565869999999997,
@@ -1236,7 +1236,7 @@
           "algo": "短線擺動高（2日確認 2026-11-03）；50 日均線 SMA50；斐波那契 38.2%（2026-10-29→2026-11-01）；前期擺動低點（跌破轉壓力 5日確認 2026-10-13）",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 4.92
+          "dist_pct": 4.88
         }
       ],
       "supports": [
@@ -1246,7 +1246,7 @@
           "algo": "前一日低點（2026-11-18）",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -0.97
+          "dist_pct": -1.0
         },
         {
           "price": 0.30232857142857145,
@@ -1254,7 +1254,7 @@
           "algo": "前一週低點（2026-11-09~2026-11-15）；短線擺動低（2日確認 2026-11-16）；近 5 日最低；擺動低點（5日確認 2026-10-31）；擺動低點（5日確認 2026-11-01）；近 20 日最低；近 60 日最低",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -2.6
+          "dist_pct": -2.63
         },
         {
           "price": 0.3,
@@ -1262,7 +1262,7 @@
           "algo": "整數心理關卡 0.300",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -3.35
+          "dist_pct": -3.38
         }
       ],
       "fibonacci": {
@@ -1279,15 +1279,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.005765751927679733,
+        "atr20": 0.005773127583485486,
         "tomorrow": {
-          "low": 0.30463424807232026,
-          "high": 0.31616575192767976,
+          "low": 0.3047268724165145,
+          "high": 0.31627312758348547,
           "days": 1
         },
         "week": {
-          "low": 0.29514525427806815,
-          "high": 0.32565474572193187,
+          "low": 0.2952257401270501,
+          "high": 0.3257742598729499,
           "days": 7
         }
       },
@@ -1295,12 +1295,12 @@
         "state": "盤整",
         "sma20": 0.314035,
         "sma50": 0.325216,
-        "sma200": 0.33258,
-        "adx14": 13.82,
-        "detail": "均線空頭排列但 ADX < 20 動能偏弱，ADX14 = 13.8"
+        "sma200": null,
+        "adx14": 14.06,
+        "detail": "均線糾結盤整 (歷史未滿 200 日)，ADX14 = 14.1"
       },
       "squeeze": {
-        "bb_width_pct": 60.71,
+        "bb_width_pct": 53.66,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動正常"
@@ -1327,10 +1327,10 @@
       "symbol": "BCHUSDT",
       "display_name": "Bitcoin Cash (BCH/USDT)",
       "market": "crypto",
-      "latest_price": 206.4,
+      "latest_price": 206.1,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2549,
-      "summary": "下降趨勢，波動擴張中，上方壓力 213.00，下方支撐 196.75",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 213.00，下方支撐 196.42",
       "resistances": [
         {
           "price": 213.0,
@@ -1338,7 +1338,7 @@
           "algo": "整數心理關卡 212；前一日高點（2026-11-18）；短線擺動高（2日確認 2026-11-17）；近 5 日最高",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 3.2
+          "dist_pct": 3.35
         },
         {
           "price": 242.9675,
@@ -1346,50 +1346,50 @@
           "algo": "20 日均線 SMA20；前一週高點（2026-11-09~2026-11-15）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 17.72
+          "dist_pct": 17.89
         },
         {
-          "price": 254.01139999999998,
-          "label": "Fibo 61.8%＋前低轉壓",
-          "algo": "斐波那契 61.8%（2026-06-24→2026-09-23）；前期擺動低點（跌破轉壓力 5日確認 2026-10-15）",
+          "price": 260.1358,
+          "label": "Fibo 38.2%＋前低轉壓",
+          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-15）；斐波那契 38.2%（2026-09-23→2026-11-15）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 23.07
+          "dist_pct": 26.22
         }
       ],
       "supports": [
         {
-          "price": 196.75,
+          "price": 196.41666666666666,
           "label": "20日低＋60日低＋5日低 等6項",
-          "algo": "整數心理關卡 202；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
+          "algo": "整數心理關卡 200；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -4.68
+          "dist_pct": -4.7
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-06-24",
-        "start_price": 181.0,
-        "end_date": "2026-09-23",
-        "end_price": 366.4,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-09-23",
+        "start_price": 366.4,
+        "end_date": "2026-11-15",
+        "end_price": 195.7,
         "levels": {
-          "38.2%": 295.5772,
-          "50.0%": 273.7,
-          "61.8%": 251.82279999999997
+          "38.2%": 260.9074,
+          "50.0%": 281.04999999999995,
+          "61.8%": 301.19259999999997
         }
       },
       "volatility": {
-        "atr20": 14.6188519778215,
+        "atr20": 15.064414058450206,
         "tomorrow": {
-          "low": 191.7811480221785,
-          "high": 221.0188519778215,
+          "low": 191.03558594154978,
+          "high": 221.1644140584502,
           "days": 1
         },
         "week": {
-          "low": 167.72215321341957,
-          "high": 245.07784678658044,
+          "low": 166.2433067544355,
+          "high": 245.95669324556448,
           "days": 7
         }
       },
@@ -1397,19 +1397,19 @@
         "state": "下降趨勢",
         "sma20": 241.035,
         "sma50": 268.76,
-        "sma200": 264.7515,
-        "adx14": 43.87,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 43.9"
+        "sma200": null,
+        "adx14": 39.6,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 39.6"
       },
       "squeeze": {
-        "bb_width_pct": 87.64,
+        "bb_width_pct": 97.56,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
       },
       "pattern": {
-        "name": "三角收斂",
-        "note": "擺動高點下移／低點墊高，波動區間逐步收窄（僅供參考）"
+        "name": "無明顯型態",
+        "note": "近期擺動高低點連線未構成標準三角、箱型或通道（僅供參考）"
       },
       "backtest": {
         "years": 7.0,
@@ -1429,9 +1429,9 @@
       "symbol": "NEARUSDT",
       "display_name": "NEAR Protocol (NEAR/USDT)",
       "market": "crypto",
-      "latest_price": 3.216,
+      "latest_price": 3.2,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2228,
+      "bars_count": 62,
       "summary": "下降趨勢，波動正常，上方壓力 3.49，下方支撐 2.88",
       "resistances": [
         {
@@ -1440,7 +1440,7 @@
           "algo": "前一日高點（2026-11-18）；前期短線低點（跌破轉壓力 2日確認 2026-11-08）；近 5 日最高；20 日均線 SMA20",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 8.51
+          "dist_pct": 9.05
         },
         {
           "price": 3.8487355,
@@ -1448,7 +1448,7 @@
           "algo": "短線擺動高（2日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-15）；斐波那契 38.2%（2026-10-21→2026-11-14）；前期短線低點（跌破轉壓力 2日確認 2026-10-30）",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 19.67
+          "dist_pct": 20.27
         },
         {
           "price": 4.237166666666666,
@@ -1456,7 +1456,7 @@
           "algo": "斐波那契 50.0%（2026-10-21→2026-11-14）；前期短線低點（跌破轉壓力 2日確認 2026-10-24）；前期擺動低點（跌破轉壓力 5日確認 2026-10-08）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 31.75
+          "dist_pct": 32.41
         }
       ],
       "supports": [
@@ -1466,23 +1466,7 @@
           "algo": "近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -10.45
-        },
-        {
-          "price": 2.72947,
-          "label": "SMA200＋前高轉支",
-          "algo": "200 日均線 SMA200；前期擺動高點（突破轉支撐 5日確認 2026-09-11）",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": -15.13
-        },
-        {
-          "price": 1.779,
-          "label": "擺動低",
-          "algo": "擺動低點（5日確認 2026-08-29）",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": -44.68
+          "dist_pct": -10.0
         }
       ],
       "fibonacci": {
@@ -1499,15 +1483,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.37596801681997927,
+        "atr20": 0.39219024704845257,
         "tomorrow": {
-          "low": 2.8400319831800207,
-          "high": 3.5919680168199797,
+          "low": 2.8078097529515476,
+          "high": 3.592190247048453,
           "days": 1
         },
         "week": {
-          "low": 2.221282126580186,
-          "high": 4.2107178734198145,
+          "low": 2.162362139684811,
+          "high": 4.237637860315189,
           "days": 7
         }
       },
@@ -1515,12 +1499,12 @@
         "state": "下降趨勢",
         "sma20": 3.6057,
         "sma50": 4.37758,
-        "sma200": 2.73094,
-        "adx14": 26.73,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 26.7"
+        "sma200": null,
+        "adx14": 25.44,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 25.4"
       },
       "squeeze": {
-        "bb_width_pct": 67.03,
+        "bb_width_pct": 68.29,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動正常"
@@ -1547,10 +1531,10 @@
       "symbol": "SUIUSDT",
       "display_name": "Sui (SUI/USDT)",
       "market": "crypto",
-      "latest_price": 0.7106,
+      "latest_price": 0.71,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 1297,
-      "summary": "下降趨勢，波動正常，上方壓力 0.7396，下方支撐 0.6773",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 0.7396，下方支撐 0.678",
       "resistances": [
         {
           "price": 0.7396,
@@ -1558,7 +1542,7 @@
           "algo": "整數心理關卡 0.730；前一日高點（2026-11-18）；短線擺動高（2日確認 2026-11-17）；近 5 日最高",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 4.08
+          "dist_pct": 4.17
         },
         {
           "price": 0.7914401,
@@ -1566,7 +1550,7 @@
           "algo": "斐波那契 38.2%（2026-11-04→2026-11-14）；前期短線低點（跌破轉壓力 2日確認 2026-11-08）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 11.38
+          "dist_pct": 11.47
         },
         {
           "price": 0.82237125,
@@ -1574,17 +1558,17 @@
           "algo": "20 日均線 SMA20；斐波那契 50.0%（2026-11-04→2026-11-14）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 15.73
+          "dist_pct": 15.83
         }
       ],
       "supports": [
         {
-          "price": 0.6772714285714285,
+          "price": 0.6779833333333333,
           "label": "20日低＋60日低＋擺動低 等6項",
-          "algo": "整數心理關卡 0.690；近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；擺動低點（5日確認 2026-09-15）",
+          "algo": "整數心理關卡 0.690；近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -4.69
+          "dist_pct": -4.51
         }
       ],
       "fibonacci": {
@@ -1601,15 +1585,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.05850742803032538,
+        "atr20": 0.06127098810554498,
         "tomorrow": {
-          "low": 0.6520925719696746,
-          "high": 0.7691074280303254,
+          "low": 0.648729011894455,
+          "high": 0.771270988105545,
           "days": 1
         },
         "week": {
-          "low": 0.5558038955817495,
-          "high": 0.8653961044182505,
+          "low": 0.5478922028895314,
+          "high": 0.8721077971104685,
           "days": 7
         }
       },
@@ -1617,15 +1601,15 @@
         "state": "下降趨勢",
         "sma20": 0.815335,
         "sma50": 0.948962,
-        "sma200": 0.853056,
-        "adx14": 37.99,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 38.0"
+        "sma200": null,
+        "adx14": 34.29,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 34.3"
       },
       "squeeze": {
-        "bb_width_pct": 70.6,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
-        "label": "波動正常"
+        "label": "波動擴張中"
       },
       "pattern": {
         "name": "下降通道",
@@ -1651,8 +1635,8 @@
       "market": "crypto",
       "latest_price": 1.013,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 644,
-      "summary": "下降趨勢，波動正常，上方壓力 1.04，下方支撐 0.99",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 1.04，下方支撐 0.99",
       "resistances": [
         {
           "price": 1.04,
@@ -1692,26 +1676,26 @@
       "fibonacci": {
         "direction": "down",
         "direction_label": "下跌波段反彈",
-        "start_date": "2026-06-01",
-        "start_price": 2.266,
+        "start_date": "2026-09-28",
+        "start_price": 1.731,
         "end_date": "2026-11-09",
         "end_price": 0.997,
         "levels": {
-          "38.2%": 1.4817580000000001,
-          "50.0%": 1.6315,
-          "61.8%": 1.7812420000000002
+          "38.2%": 1.277388,
+          "50.0%": 1.364,
+          "61.8%": 1.450612
         }
       },
       "volatility": {
-        "atr20": 0.06752791750809164,
+        "atr20": 0.06944809227485416,
         "tomorrow": {
-          "low": 0.9454720824919083,
-          "high": 1.0805279175080915,
+          "low": 0.9435519077251457,
+          "high": 1.082448092274854,
           "days": 1
         },
         "week": {
-          "low": 0.8343379237195049,
-          "high": 1.1916620762804948,
+          "low": 0.8292576188128699,
+          "high": 1.19674238118713,
           "days": 7
         }
       },
@@ -1719,15 +1703,15 @@
         "state": "下降趨勢",
         "sma20": 1.1039,
         "sma50": 1.26346,
-        "sma200": 1.521435,
-        "adx14": 30.44,
-        "detail": "SMA20 < SMA50 < SMA200 空頭排列，ADX14 = 30.4"
+        "sma200": null,
+        "adx14": 27.86,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 27.9"
       },
       "squeeze": {
-        "bb_width_pct": 68.96,
+        "bb_width_pct": 87.8,
         "lookback_days": 365,
         "is_squeezing": false,
-        "label": "波動正常"
+        "label": "波動擴張中"
       },
       "pattern": {
         "name": "下降通道",
@@ -1751,9 +1735,9 @@
       "symbol": "APTUSDT",
       "display_name": "Aptos (APT/USDT)",
       "market": "crypto",
-      "latest_price": 0.412,
+      "latest_price": 0.4105,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 1493,
+      "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 0.4289，下方支撐 0.39",
       "resistances": [
         {
@@ -1762,7 +1746,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-14）；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 0.430",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 4.09
+          "dist_pct": 4.47
         },
         {
           "price": 0.46285,
@@ -1770,15 +1754,15 @@
           "algo": "前一日高點（2026-11-18）；近 5 日最高",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 12.34
+          "dist_pct": 12.75
         },
         {
-          "price": 0.536435,
-          "label": "SMA20＋前低轉壓",
-          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-09-16）；20 日均線 SMA20",
+          "price": 0.5571566666666667,
+          "label": "SMA20＋前短低轉壓",
+          "algo": "20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-11-08）；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 30.2
+          "dist_pct": 35.73
         }
       ],
       "supports": [
@@ -1788,32 +1772,32 @@
           "algo": "整數心理關卡 0.390",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -5.34
+          "dist_pct": -4.99
         }
       ],
       "fibonacci": {
         "direction": "down",
         "direction_label": "下跌波段反彈",
-        "start_date": "2026-05-26",
-        "start_price": 1.01,
+        "start_date": "2026-10-11",
+        "start_price": 0.9655,
         "end_date": "2026-11-19",
         "end_price": 0.4067,
         "levels": {
-          "38.2%": 0.6371606,
-          "50.0%": 0.70835,
-          "61.8%": 0.7795394
+          "38.2%": 0.6201616,
+          "50.0%": 0.6860999999999999,
+          "61.8%": 0.7520384
         }
       },
       "volatility": {
-        "atr20": 0.04989186539118367,
+        "atr20": 0.051143165070925214,
         "tomorrow": {
-          "low": 0.3621081346088163,
-          "high": 0.46189186539118365,
+          "low": 0.3593568349290748,
+          "high": 0.4616431650709252,
           "days": 1
         },
         "week": {
-          "low": 0.2799985317298177,
-          "high": 0.5440014682701823,
+          "low": 0.2751879039616068,
+          "high": 0.5458120960383932,
           "days": 7
         }
       },
@@ -1821,12 +1805,12 @@
         "state": "下降趨勢",
         "sma20": 0.54887,
         "sma50": 0.68625,
-        "sma200": 0.696426,
-        "adx14": 42.16,
-        "detail": "SMA20 < SMA50 < SMA200 空頭排列，ADX14 = 42.2"
+        "sma200": null,
+        "adx14": 42.35,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 42.4"
       },
       "squeeze": {
-        "bb_width_pct": 89.29,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -1853,9 +1837,9 @@
       "symbol": "UNIUSDT",
       "display_name": "Uniswap (UNI/USDT)",
       "market": "crypto",
-      "latest_price": 4.943,
+      "latest_price": 4.933,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2255,
+      "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 5.409，下方支撐 4.631",
       "resistances": [
         {
@@ -1864,7 +1848,7 @@
           "algo": "前一日高點（2026-11-18）；短線擺動高（2日確認 2026-11-17）；近 5 日最高",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 9.43
+          "dist_pct": 9.65
         },
         {
           "price": 5.841782,
@@ -1872,7 +1856,7 @@
           "algo": "斐波那契 38.2%（2026-11-04→2026-11-14）",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 18.18
+          "dist_pct": 18.42
         },
         {
           "price": 6.264116666666666,
@@ -1880,7 +1864,7 @@
           "algo": "斐波那契 50.0%（2026-11-04→2026-11-14）；前期擺動低點（跌破轉壓力 5日確認 2026-10-29）；20 日均線 SMA20",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 26.73
+          "dist_pct": 26.98
         }
       ],
       "supports": [
@@ -1890,7 +1874,7 @@
           "algo": "近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -6.31
+          "dist_pct": -6.12
         }
       ],
       "fibonacci": {
@@ -1907,15 +1891,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.5462349316111211,
+        "atr20": 0.5553014544197775,
         "tomorrow": {
-          "low": 4.396765068388879,
-          "high": 5.48923493161112,
+          "low": 4.377698545580222,
+          "high": 5.488301454419777,
           "days": 1
         },
         "week": {
-          "low": 3.497798213540599,
-          "high": 6.3882017864594,
+          "low": 3.4638104489327994,
+          "high": 6.402189551067201,
           "days": 7
         }
       },
@@ -1923,12 +1907,12 @@
         "state": "下降趨勢",
         "sma20": 6.31885,
         "sma50": 7.0747,
-        "sma200": 5.000955,
-        "adx14": 40.08,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 40.1"
+        "sma200": null,
+        "adx14": 39.33,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 39.3"
       },
       "squeeze": {
-        "bb_width_pct": 91.21,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -1955,26 +1939,26 @@
       "symbol": "ATOMUSDT",
       "display_name": "Cosmos (ATOM/USDT)",
       "market": "crypto",
-      "latest_price": 1.263,
+      "latest_price": 1.261,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
-      "summary": "下降趨勢，波動正常，上方壓力 1.326，下方支撐 1.221",
+      "bars_count": 62,
+      "summary": "下降趨勢，正在收斂，上方壓力 1.312，下方支撐 1.221",
       "resistances": [
         {
-          "price": 1.3260000000000003,
-          "label": "前日高＋前短低轉壓＋整數關卡",
-          "algo": "整數心理關卡 1.300；前一日高點（2026-11-18）；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": 4.99
-        },
-        {
-          "price": 1.3652250000000001,
-          "label": "SMA20＋5日高",
-          "algo": "近 5 日最高；20 日均線 SMA20",
+          "price": 1.312,
+          "label": "前日高＋整數關卡",
+          "algo": "整數心理關卡 1.290；前一日高點（2026-11-18）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 8.09
+          "dist_pct": 4.04
+        },
+        {
+          "price": 1.3581500000000002,
+          "label": "SMA20＋5日高＋前短低轉壓",
+          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-05）；近 5 日最高；20 日均線 SMA20",
+          "strength": 3,
+          "sources_count": 3,
+          "dist_pct": 7.7
         },
         {
           "price": 1.441,
@@ -1982,7 +1966,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-10-30）；擺動高點（5日確認 2026-11-13）；前一週高點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 14.09
+          "dist_pct": 14.27
         }
       ],
       "supports": [
@@ -1992,32 +1976,32 @@
           "algo": "整數心理關卡 1.230；近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -3.31
+          "dist_pct": -3.16
         }
       ],
       "fibonacci": {
         "direction": "down",
         "direction_label": "下跌波段反彈",
-        "start_date": "2026-05-26",
-        "start_price": 2.298,
-        "end_date": "2026-08-01",
-        "end_price": 1.212,
+        "start_date": "2026-10-09",
+        "start_price": 2.087,
+        "end_date": "2026-11-14",
+        "end_price": 1.218,
         "levels": {
-          "38.2%": 1.626852,
-          "50.0%": 1.755,
-          "61.8%": 1.883148
+          "38.2%": 1.5499580000000002,
+          "50.0%": 1.6525,
+          "61.8%": 1.755042
         }
       },
       "volatility": {
-        "atr20": 0.0912063378372247,
+        "atr20": 0.09230845206694914,
         "tomorrow": {
-          "low": 1.1717936621627751,
-          "high": 1.3542063378372247,
+          "low": 1.1686915479330509,
+          "high": 1.353308452066949,
           "days": 1
         },
         "week": {
-          "low": 1.0216907120897627,
-          "high": 1.504309287910237,
+          "low": 1.0167747919215262,
+          "high": 1.5052252080784736,
           "days": 7
         }
       },
@@ -2025,15 +2009,15 @@
         "state": "下降趨勢",
         "sma20": 1.37345,
         "sma50": 1.59156,
-        "sma200": 1.653935,
-        "adx14": 27.73,
-        "detail": "SMA20 < SMA50 < SMA200 空頭排列，ADX14 = 27.7"
+        "sma200": null,
+        "adx14": 28.63,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 28.6"
       },
       "squeeze": {
-        "bb_width_pct": 31.04,
+        "bb_width_pct": 0.0,
         "lookback_days": 365,
-        "is_squeezing": false,
-        "label": "波動正常"
+        "is_squeezing": true,
+        "label": "收斂中，可能變盤"
       },
       "pattern": {
         "name": "下降通道",
@@ -2057,9 +2041,9 @@
       "symbol": "ETCUSDT",
       "display_name": "Ethereum Classic (ETC/USDT)",
       "market": "crypto",
-      "latest_price": 5.81,
+      "latest_price": 5.8,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
+      "bars_count": 62,
       "summary": "下降趨勢，波動擴張中，上方壓力 6.03，下方支撐 5.605",
       "resistances": [
         {
@@ -2068,7 +2052,7 @@
           "algo": "整數心理關卡 6.00；前一日高點（2026-11-18）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 3.79
+          "dist_pct": 3.97
         },
         {
           "price": 6.3,
@@ -2076,7 +2060,7 @@
           "algo": "近 5 日最高",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 8.43
+          "dist_pct": 8.62
         },
         {
           "price": 6.529333333333334,
@@ -2084,7 +2068,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-08）；整數心理關卡 6.50；20 日均線 SMA20",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 12.38
+          "dist_pct": 12.57
         }
       ],
       "supports": [
@@ -2094,7 +2078,7 @@
           "algo": "近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 5.50",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -3.53
+          "dist_pct": -3.36
         },
         {
           "price": 5.0,
@@ -2102,7 +2086,7 @@
           "algo": "整數心理關卡 5.00",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -13.94
+          "dist_pct": -13.79
         }
       ],
       "fibonacci": {
@@ -2119,15 +2103,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.38589709584761644,
+        "atr20": 0.39565137726919836,
         "tomorrow": {
-          "low": 5.424102904152383,
-          "high": 6.1958970958476165,
+          "low": 5.404348622730802,
+          "high": 6.195651377269198,
           "days": 1
         },
         "week": {
-          "low": 4.789012252725151,
-          "high": 6.830987747274849,
+          "low": 4.753204849865507,
+          "high": 6.846795150134493,
           "days": 7
         }
       },
@@ -2135,12 +2119,12 @@
         "state": "下降趨勢",
         "sma20": 6.588,
         "sma50": 7.4864,
-        "sma200": 7.594,
-        "adx14": 46.08,
-        "detail": "SMA20 < SMA50 < SMA200 空頭排列，ADX14 = 46.1"
+        "sma200": null,
+        "adx14": 44.2,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 44.2"
       },
       "squeeze": {
-        "bb_width_pct": 84.07,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -2167,10 +2151,10 @@
       "symbol": "FILUSDT",
       "display_name": "Filecoin (FIL/USDT)",
       "market": "crypto",
-      "latest_price": 0.5727,
+      "latest_price": 0.5707,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2227,
-      "summary": "下降趨勢，波動擴張中，上方壓力 0.6123，下方支撐 0.5523",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 0.6123，下方支撐 0.55",
       "resistances": [
         {
           "price": 0.6123,
@@ -2178,7 +2162,7 @@
           "algo": "整數心理關卡 0.600；前一日高點（2026-11-18）；近 5 日最高",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 6.91
+          "dist_pct": 7.29
         },
         {
           "price": 0.7297,
@@ -2186,50 +2170,50 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-08）；20 日均線 SMA20",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 27.41
+          "dist_pct": 27.86
         },
         {
-          "price": 0.7633000000000001,
-          "label": "前低轉壓",
-          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-09-16）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": 33.28
+          "price": 0.7807999999999999,
+          "label": "前低轉壓＋前週高",
+          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前一週高點（2026-11-09~2026-11-15）",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 36.81
         }
       ],
       "supports": [
         {
-          "price": 0.5522500000000001,
-          "label": "20日低＋60日低＋5日低 等4項",
-          "algo": "近 5 日最低；近 20 日最低；近 60 日最低；整數心理關卡 0.550",
-          "strength": 3,
-          "sources_count": 4,
-          "dist_pct": -3.57
+          "price": 0.55,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 0.550",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": -3.63
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-08-18",
-        "start_price": 0.6095,
-        "end_date": "2026-10-11",
-        "end_price": 1.2764,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-10-11",
+        "start_price": 1.2764,
+        "end_date": "2026-11-19",
+        "end_price": 0.553,
         "levels": {
-          "38.2%": 1.0216442,
-          "50.0%": 0.94295,
-          "61.8%": 0.8642558
+          "38.2%": 0.8293388,
+          "50.0%": 0.9147000000000001,
+          "61.8%": 1.0000612
         }
       },
       "volatility": {
-        "atr20": 0.06447450586599558,
+        "atr20": 0.06544739623071172,
         "tomorrow": {
-          "low": 0.5082254941340044,
-          "high": 0.6371745058659956,
+          "low": 0.5052526037692883,
+          "high": 0.6361473962307117,
           "days": 1
         },
         "week": {
-          "low": 0.40211649157480056,
-          "high": 0.7432835084251994,
+          "low": 0.3975424656168307,
+          "high": 0.7438575343831693,
           "days": 7
         }
       },
@@ -2237,12 +2221,12 @@
         "state": "下降趨勢",
         "sma20": 0.7405,
         "sma50": 0.920058,
-        "sma200": 0.852787,
-        "adx14": 51.82,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 51.8"
+        "sma200": null,
+        "adx14": 52.91,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 52.9"
       },
       "squeeze": {
-        "bb_width_pct": 97.53,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -2269,10 +2253,10 @@
       "symbol": "ARBUSDT",
       "display_name": "Arbitrum (ARB/USDT)",
       "market": "crypto",
-      "latest_price": 0.1221,
+      "latest_price": 0.1214,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 1338,
-      "summary": "盤整，波動正常，上方壓力 0.1319，下方支撐 0.11",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 0.1319，下方支撐 0.11",
       "resistances": [
         {
           "price": 0.13185000000000002,
@@ -2280,15 +2264,15 @@
           "algo": "整數心理關卡 0.130；前一日高點（2026-11-18）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 7.99
+          "dist_pct": 8.61
         },
         {
-          "price": 0.13952333333333333,
-          "label": "Fibo 61.8%＋5日高＋整數關卡",
-          "algo": "近 5 日最高；整數心理關卡 0.140；斐波那契 61.8%（2026-06-25→2026-09-23）",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": 14.27
+          "price": 0.1387,
+          "label": "5日高＋整數關卡",
+          "algo": "近 5 日最高；整數心理關卡 0.140",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 14.25
         },
         {
           "price": 0.14973,
@@ -2296,7 +2280,7 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前期擺動低點（跌破轉壓力 5日確認 2026-11-05）；20 日均線 SMA20",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 22.63
+          "dist_pct": 23.34
         }
       ],
       "supports": [
@@ -2306,7 +2290,7 @@
           "algo": "整數心理關卡 0.110",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -9.91
+          "dist_pct": -9.39
         },
         {
           "price": 0.09999999999999999,
@@ -2314,48 +2298,48 @@
           "algo": "整數心理關卡 0.100",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -18.1
+          "dist_pct": -17.63
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-06-25",
-        "start_price": 0.0705,
-        "end_date": "2026-09-23",
-        "end_price": 0.2555,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-09-23",
+        "start_price": 0.2555,
+        "end_date": "2026-11-19",
+        "end_price": 0.1214,
         "levels": {
-          "38.2%": 0.18483,
-          "50.0%": 0.163,
-          "61.8%": 0.14117000000000002
+          "38.2%": 0.1726262,
+          "50.0%": 0.18845,
+          "61.8%": 0.2042738
         }
       },
       "volatility": {
-        "atr20": 0.013552731573029548,
+        "atr20": 0.013761887616587521,
         "tomorrow": {
-          "low": 0.10854726842697045,
-          "high": 0.13565273157302954,
+          "low": 0.10763811238341248,
+          "high": 0.1351618876165875,
           "days": 1
         },
         "week": {
-          "low": 0.0862428426721506,
-          "high": 0.1579571573278494,
+          "low": 0.08498946779569,
+          "high": 0.15781053220431,
           "days": 7
         }
       },
       "trend": {
-        "state": "盤整",
+        "state": "下降趨勢",
         "sma20": 0.15109,
         "sma50": 0.171142,
-        "sma200": 0.124918,
-        "adx14": 23.31,
-        "detail": "均線交錯或尚未形成一致方向，ADX14 = 23.3"
+        "sma200": null,
+        "adx14": 24.15,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 24.1"
       },
       "squeeze": {
-        "bb_width_pct": 75.0,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
-        "label": "波動正常"
+        "label": "波動擴張中"
       },
       "pattern": {
         "name": "下降通道",
@@ -2379,10 +2363,10 @@
       "symbol": "OPUSDT",
       "display_name": "Optimism (OP/USDT)",
       "market": "crypto",
-      "latest_price": 0.075,
+      "latest_price": 0.0746,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 1633,
-      "summary": "下降趨勢，波動擴張中，上方壓力 0.07845，下方支撐 0.072",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 0.07845，下方支撐 0.071",
       "resistances": [
         {
           "price": 0.07844999999999999,
@@ -2390,58 +2374,58 @@
           "algo": "整數心理關卡 0.0780；前一日高點（2026-11-18）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 4.6
+          "dist_pct": 5.16
         },
         {
-          "price": 0.08385000000000001,
-          "label": "前低轉壓＋5日高",
-          "algo": "近 5 日最高；前期擺動低點（跌破轉壓力 5日確認 2026-08-30）",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 11.8
-        },
-        {
-          "price": 0.0922,
-          "label": "前低轉壓",
-          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-09-16）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
+          "price": 0.0829,
+          "label": "5日高",
+          "algo": "近 5 日最高",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 22.93
+          "dist_pct": 11.13
+        },
+        {
+          "price": 0.09498333333333332,
+          "label": "SMA20＋前低轉壓＋前短低轉壓",
+          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前期短線低點（跌破轉壓力 2日確認 2026-11-08）；20 日均線 SMA20",
+          "strength": 3,
+          "sources_count": 3,
+          "dist_pct": 27.32
         }
       ],
       "supports": [
         {
-          "price": 0.072,
+          "price": 0.071,
           "label": "整數關卡",
-          "algo": "整數心理關卡 0.0720",
+          "algo": "整數心理關卡 0.0710",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -4.0
+          "dist_pct": -4.83
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-08-18",
-        "start_price": 0.0807,
-        "end_date": "2026-10-14",
-        "end_price": 0.1625,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-10-14",
+        "start_price": 0.1625,
+        "end_date": "2026-11-19",
+        "end_price": 0.0737,
         "levels": {
-          "38.2%": 0.1312524,
-          "50.0%": 0.1216,
-          "61.8%": 0.11194760000000001
+          "38.2%": 0.10762160000000001,
+          "50.0%": 0.11810000000000001,
+          "61.8%": 0.1285784
         }
       },
       "volatility": {
-        "atr20": 0.008823360330842547,
+        "atr20": 0.00903975077000216,
         "tomorrow": {
-          "low": 0.06617663966915745,
-          "high": 0.08382336033084255,
+          "low": 0.06556024922999784,
+          "high": 0.08363975077000216,
           "days": 1
         },
         "week": {
-          "low": 0.051655582836678024,
-          "high": 0.09834441716332197,
+          "low": 0.05068306754856964,
+          "high": 0.09851693245143037,
           "days": 7
         }
       },
@@ -2449,19 +2433,19 @@
         "state": "下降趨勢",
         "sma20": 0.09595,
         "sma50": 0.114644,
-        "sma200": 0.109643,
-        "adx14": 33.59,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 33.6"
+        "sma200": null,
+        "adx14": 33.68,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 33.7"
       },
       "squeeze": {
-        "bb_width_pct": 90.11,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
       },
       "pattern": {
-        "name": "三角收斂",
-        "note": "擺動高點下移／低點墊高，波動區間逐步收窄（僅供參考）"
+        "name": "下降通道",
+        "note": "擺動高點與擺動低點同步走低，呈現下降通道軌跡（僅供參考）"
       },
       "backtest": {
         "years": 4.5,
@@ -2481,26 +2465,26 @@
       "symbol": "INJUSDT",
       "display_name": "Injective (INJ/USDT)",
       "market": "crypto",
-      "latest_price": 7.101,
+      "latest_price": 7.022,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2221,
-      "summary": "盤整，波動正常，上方壓力 7.453，下方支撐 6.683",
+      "bars_count": 62,
+      "summary": "盤整，波動正常，上方壓力 7.594，下方支撐 6.511",
       "resistances": [
         {
-          "price": 7.453076,
-          "label": "SMA20＋Fibo 38.2%＋前日高 等5項",
-          "algo": "斐波那契 38.2%（2026-08-18→2026-10-21）；前期短線低點（跌破轉壓力 2日確認 2026-10-24）；前一日高點（2026-11-18）；整數心理關卡 7.50；20 日均線 SMA20",
+          "price": 7.594086888888888,
+          "label": "SMA20＋SMA50＋Fibo 61.8% 等9項",
+          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-10-24）；前一日高點（2026-11-18）；斐波那契 61.8%（2026-11-03→2026-11-05）；整數心理關卡 7.50；20 日均線 SMA20；斐波那契 50.0%（2026-11-03→2026-11-05）；短線擺動高（2日確認 2026-11-17）；近 5 日最高；50 日均線 SMA50",
           "strength": 3,
-          "sources_count": 5,
-          "dist_pct": 4.96
+          "sources_count": 9,
+          "dist_pct": 8.15
         },
         {
-          "price": 7.802496,
-          "label": "SMA50＋5日高＋短擺動高 等5項",
-          "algo": "短線擺動高（2日確認 2026-11-17）；近 5 日最高；50 日均線 SMA50；前期短線低點（跌破轉壓力 2日確認 2026-10-18）；整數心理關卡 8.00",
+          "price": 7.903432666666667,
+          "label": "Fibo 38.2%＋前短低轉壓＋整數關卡",
+          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-10-18）；斐波那契 38.2%（2026-11-03→2026-11-05）；整數心理關卡 8.00",
           "strength": 3,
-          "sources_count": 5,
-          "dist_pct": 9.88
+          "sources_count": 3,
+          "dist_pct": 12.55
         },
         {
           "price": 8.446166666666668,
@@ -2508,58 +2492,50 @@
           "algo": "短線擺動高（2日確認 2026-10-27）；擺動高點（5日確認 2026-10-06）；短線擺動高（2日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-15）；擺動高點（5日確認 2026-11-05）；近 20 日最高",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 18.94
+          "dist_pct": 20.28
         }
       ],
       "supports": [
         {
-          "price": 6.683000000000001,
-          "label": "Fibo 50.0%＋20日低＋擺動低 等7項",
-          "algo": "短線擺動低（2日確認 2026-10-30）；前一日低點（2026-11-18）；擺動低點（5日確認 2026-11-03）；斐波那契 50.0%（2026-08-18→2026-10-21）；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；前一週低點（2026-11-09~2026-11-15）",
+          "price": 6.510571428571429,
+          "label": "20日低＋60日低＋擺動低 等7項",
+          "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 6.50；擺動低點（5日確認 2026-10-08）；近 60 日最低",
           "strength": 3,
           "sources_count": 7,
-          "dist_pct": -5.89
+          "dist_pct": -7.28
         },
         {
-          "price": 6.4446666666666665,
-          "label": "60日低＋擺動低＋整數關卡",
-          "algo": "整數心理關卡 6.50；擺動低點（5日確認 2026-10-08）；近 60 日最低",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": -9.24
-        },
-        {
-          "price": 5.980245,
-          "label": "SMA200＋Fibo 61.8%＋整數關卡",
-          "algo": "斐波那契 61.8%（2026-08-18→2026-10-21）；整數心理關卡 6.00；200 日均線 SMA200",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": -15.78
+          "price": 6.0,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 6.00",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": -14.55
         }
       ],
       "fibonacci": {
         "direction": "up",
         "direction_label": "上漲波段回撤",
-        "start_date": "2026-08-18",
-        "start_price": 3.957,
-        "end_date": "2026-10-21",
-        "end_price": 9.417,
+        "start_date": "2026-11-03",
+        "start_price": 6.823,
+        "end_date": "2026-11-05",
+        "end_price": 8.584,
         "levels": {
-          "38.2%": 7.33128,
-          "50.0%": 6.686999999999999,
-          "61.8%": 6.04272
+          "38.2%": 7.911298,
+          "50.0%": 7.7035,
+          "61.8%": 7.495702
         }
       },
       "volatility": {
-        "atr20": 0.7061597715176293,
+        "atr20": 0.7116796836599826,
         "tomorrow": {
-          "low": 6.394840228482371,
-          "high": 7.807159771517629,
+          "low": 6.310320316340018,
+          "high": 7.733679683659982,
           "days": 1
         },
         "week": {
-          "low": 5.23267685868616,
-          "high": 8.96932314131384,
+          "low": 5.1390725438985685,
+          "high": 8.904927456101433,
           "days": 7
         }
       },
@@ -2567,12 +2543,12 @@
         "state": "盤整",
         "sma20": 7.5371,
         "sma50": 7.74148,
-        "sma200": 5.898015,
-        "adx14": 11.53,
-        "detail": "均線交錯或尚未形成一致方向，ADX14 = 11.5"
+        "sma200": null,
+        "adx14": 10.64,
+        "detail": "均線糾結盤整 (歷史未滿 200 日)，ADX14 = 10.6"
       },
       "squeeze": {
-        "bb_width_pct": 45.05,
+        "bb_width_pct": 58.54,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動正常"
@@ -2599,77 +2575,69 @@
       "symbol": "AAVEUSDT",
       "display_name": "Aave (AAVE/USDT)",
       "market": "crypto",
-      "latest_price": 104.76,
+      "latest_price": 104.06,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2227,
-      "summary": "下降趨勢，波動正常，上方壓力 109.15，下方支撐 102.00",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 108.00，下方支撐 97.17",
       "resistances": [
         {
-          "price": 109.15367499999999,
-          "label": "SMA200＋整數關卡",
-          "algo": "整數心理關卡 108；200 日均線 SMA200",
+          "price": 108.0,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 108",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": 3.79
+        },
+        {
+          "price": 114.30250000000001,
+          "label": "前低轉壓＋前日高＋5日高 等4項",
+          "algo": "前一日高點（2026-11-18）；短線擺動高（2日確認 2026-11-17）；近 5 日最高；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
+          "strength": 3,
+          "sources_count": 4,
+          "dist_pct": 9.84
+        },
+        {
+          "price": 121.71125,
+          "label": "SMA20＋前短低轉壓",
+          "algo": "20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-11-05）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 4.19
-        },
-        {
-          "price": 114.08,
-          "label": "前低轉壓＋前日高＋5日高 等4項",
-          "algo": "前一日高點（2026-11-18）；前期擺動低點（跌破轉壓力 5日確認 2026-09-16）；短線擺動高（2日確認 2026-11-17）；近 5 日最高；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
-          "strength": 3,
-          "sources_count": 4,
-          "dist_pct": 8.9
-        },
-        {
-          "price": 121.22849999999998,
-          "label": "SMA20＋Fibo 50.0%＋前低轉壓 等4項",
-          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-08-28）；前期擺動低點（跌破轉壓力 5日確認 2026-09-10）；20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-11-05）；斐波那契 50.0%（2026-06-06→2026-10-06）",
-          "strength": 3,
-          "sources_count": 4,
-          "dist_pct": 15.72
+          "dist_pct": 16.96
         }
       ],
       "supports": [
         {
-          "price": 102.0,
-          "label": "整數關卡",
-          "algo": "整數心理關卡 102",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": -2.63
-        },
-        {
-          "price": 96.6,
-          "label": "20日低＋60日低＋5日低 等5項",
-          "algo": "短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
+          "price": 97.16666666666667,
+          "label": "20日低＋60日低＋5日低 等6項",
+          "algo": "整數心理關卡 100；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
-          "sources_count": 5,
-          "dist_pct": -7.79
+          "sources_count": 6,
+          "dist_pct": -6.62
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-06-06",
-        "start_price": 57.83,
-        "end_date": "2026-10-06",
-        "end_price": 187.59,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-10-06",
+        "start_price": 187.59,
+        "end_date": "2026-11-15",
+        "end_price": 96.6,
         "levels": {
-          "38.2%": 138.02168,
-          "50.0%": 122.71000000000001,
-          "61.8%": 107.39832000000001
+          "38.2%": 131.35818,
+          "50.0%": 142.095,
+          "61.8%": 152.83182
         }
       },
       "volatility": {
-        "atr20": 9.167224829260688,
+        "atr20": 9.342378892635748,
         "tomorrow": {
-          "low": 95.59277517073932,
-          "high": 113.9272248292607,
+          "low": 94.71762110736425,
+          "high": 113.40237889263575,
           "days": 1
         },
         "week": {
-          "low": 80.50580288915967,
-          "high": 129.01419711084034,
+          "low": 79.34238879634681,
+          "high": 128.77761120365318,
           "days": 7
         }
       },
@@ -2677,19 +2645,19 @@
         "state": "下降趨勢",
         "sma20": 120.9625,
         "sma50": 142.1514,
-        "sma200": 110.30735,
-        "adx14": 34.2,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 34.2"
+        "sma200": null,
+        "adx14": 33.51,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 33.5"
       },
       "squeeze": {
-        "bb_width_pct": 74.73,
+        "bb_width_pct": 97.56,
         "lookback_days": 365,
         "is_squeezing": false,
-        "label": "波動正常"
+        "label": "波動擴張中"
       },
       "pattern": {
         "name": "無明顯型態",
-        "note": "近期擺動高低點連線未構成標準三角、箱型或通道（僅供參考）"
+        "note": "近期確認擺動高低點不足兩組，無法連線構成幾何型態（僅供參考）"
       },
       "backtest": {
         "years": 6.1,
@@ -2709,10 +2677,10 @@
       "symbol": "XLMUSDT",
       "display_name": "Stellar (XLM/USDT)",
       "market": "crypto",
-      "latest_price": 0.1328,
+      "latest_price": 0.1332,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
-      "summary": "下降趨勢，波動正常，上方壓力 0.1416，下方支撐 0.13",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動正常，上方壓力 0.1416，下方支撐 0.1301",
       "resistances": [
         {
           "price": 0.14160000000000003,
@@ -2720,7 +2688,7 @@
           "algo": "整數心理關卡 0.140；前期短線低點（跌破轉壓力 2日確認 2026-11-10）；近 5 日最高；前一日高點（2026-11-18）",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 6.63
+          "dist_pct": 6.31
         },
         {
           "price": 0.15136708,
@@ -2728,7 +2696,7 @@
           "algo": "20 日均線 SMA20；整數心理關卡 0.150；斐波那契 38.2%（2026-10-21→2026-11-14）；短線擺動高（2日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": 13.98
+          "dist_pct": 13.64
         },
         {
           "price": 0.15815,
@@ -2736,17 +2704,17 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-10-30）；斐波那契 50.0%（2026-10-21→2026-11-14）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 19.09
+          "dist_pct": 18.73
         }
       ],
       "supports": [
         {
-          "price": 0.13,
-          "label": "20日低＋60日低＋擺動低 等5項",
-          "algo": "擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 0.130",
+          "price": 0.13006666666666666,
+          "label": "20日低＋60日低＋擺動低 等6項",
+          "algo": "近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 0.130",
           "strength": 3,
-          "sources_count": 5,
-          "dist_pct": -2.11
+          "sources_count": 6,
+          "dist_pct": -2.35
         },
         {
           "price": 0.12000000000000001,
@@ -2754,7 +2722,7 @@
           "algo": "整數心理關卡 0.120",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -9.64
+          "dist_pct": -9.91
         }
       ],
       "fibonacci": {
@@ -2771,15 +2739,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.009010138540937558,
+        "atr20": 0.00921298885221493,
         "tomorrow": {
-          "low": 0.12378986145906244,
-          "high": 0.14181013854093755,
+          "low": 0.12398701114778508,
+          "high": 0.14241298885221496,
           "days": 1
         },
         "week": {
-          "low": 0.10896141414244086,
-          "high": 0.15663858585755913,
+          "low": 0.1088247226654289,
+          "high": 0.15757527733457113,
           "days": 7
         }
       },
@@ -2787,12 +2755,12 @@
         "state": "下降趨勢",
         "sma20": 0.149785,
         "sma50": 0.172918,
-        "sma200": 0.181646,
-        "adx14": 45.95,
-        "detail": "SMA20 < SMA50 < SMA200 空頭排列，ADX14 = 45.9"
+        "sma200": null,
+        "adx14": 44.73,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 44.7"
       },
       "squeeze": {
-        "bb_width_pct": 75.27,
+        "bb_width_pct": 78.05,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動正常"
@@ -2819,18 +2787,18 @@
       "symbol": "HBARUSDT",
       "display_name": "Hedera (HBAR/USDT)",
       "market": "crypto",
-      "latest_price": 0.05376,
+      "latest_price": 0.0538,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2600,
-      "summary": "下降趨勢，波動擴張中，上方壓力 0.05552，下方支撐 0.052",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 0.056，下方支撐 0.052",
       "resistances": [
         {
-          "price": 0.055515,
-          "label": "前日低＋整數關卡",
-          "algo": "前一日低點（2026-11-18）；整數心理關卡 0.0560",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 3.26
+          "price": 0.056,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 0.0560",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": 4.09
         },
         {
           "price": 0.0589,
@@ -2838,7 +2806,7 @@
           "algo": "前一日高點（2026-11-18）；近 5 日最高",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 9.56
+          "dist_pct": 9.48
         },
         {
           "price": 0.06487266666666668,
@@ -2846,7 +2814,7 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-08）；20 日均線 SMA20；前期擺動低點（跌破轉壓力 5日確認 2026-10-29）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 20.67
+          "dist_pct": 20.58
         }
       ],
       "supports": [
@@ -2856,7 +2824,7 @@
           "algo": "整數心理關卡 0.0520",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -3.27
+          "dist_pct": -3.35
         }
       ],
       "fibonacci": {
@@ -2873,15 +2841,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.004155253824682283,
+        "atr20": 0.004436330420371006,
         "tomorrow": {
-          "low": 0.04960474617531772,
-          "high": 0.05791525382468229,
+          "low": 0.049363669579628996,
+          "high": 0.058236330420371005,
           "days": 1
         },
         "week": {
-          "low": 0.0427662317455407,
-          "high": 0.0647537682544593,
+          "low": 0.04206257297398769,
+          "high": 0.06553742702601231,
           "days": 7
         }
       },
@@ -2889,12 +2857,12 @@
         "state": "下降趨勢",
         "sma20": 0.064398,
         "sma50": 0.077884,
-        "sma200": 0.078711,
-        "adx14": 40.69,
-        "detail": "SMA20 < SMA50 < SMA200 空頭排列，ADX14 = 40.7"
+        "sma200": null,
+        "adx14": 35.95,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 36.0"
       },
       "squeeze": {
-        "bb_width_pct": 89.01,
+        "bb_width_pct": 92.68,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -2921,18 +2889,18 @@
       "symbol": "ICPUSDT",
       "display_name": "Internet Computer (ICP/USDT)",
       "market": "crypto",
-      "latest_price": 2.175,
+      "latest_price": 2.167,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2019,
-      "summary": "盤整，波動正常，上方壓力 2.274，下方支撐 2.104",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動正常，上方壓力 2.271，下方支撐 2.103",
       "resistances": [
         {
-          "price": 2.27375,
+          "price": 2.27125,
           "label": "前低轉壓＋前日高＋整數關卡",
-          "algo": "整數心理關卡 2.240；前期擺動低點（跌破轉壓力 5日確認 2026-11-08）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前一日高點（2026-11-18）",
+          "algo": "整數心理關卡 2.230；前期擺動低點（跌破轉壓力 5日確認 2026-11-08）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前一日高點（2026-11-18）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 4.54
+          "dist_pct": 4.81
         },
         {
           "price": 2.3911249999999997,
@@ -2940,63 +2908,63 @@
           "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-05）；20 日均線 SMA20",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 9.94
+          "dist_pct": 10.34
         },
         {
-          "price": 2.5752025,
-          "label": "SMA200＋Fibo 61.8%＋5日高 等4項",
-          "algo": "200 日均線 SMA200；短線擺動高（2日確認 2026-11-16）；近 5 日最高；斐波那契 61.8%（2026-08-01→2026-10-05）",
+          "price": 2.612,
+          "label": "擺動高＋5日高＋前週高 等4項",
+          "algo": "短線擺動高（2日確認 2026-11-16）；近 5 日最高；擺動高點（5日確認 2026-11-13）；前一週高點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 18.4
+          "dist_pct": 20.54
         }
       ],
       "supports": [
         {
-          "price": 2.1043333333333334,
+          "price": 2.1026666666666665,
           "label": "20日低＋60日低＋擺動低 等6項",
-          "algo": "整數心理關卡 2.110；近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
+          "algo": "近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 2.100",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -3.25
+          "dist_pct": -2.97
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-08-01",
-        "start_price": 1.994,
-        "end_date": "2026-10-05",
-        "end_price": 3.609,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-10-05",
+        "start_price": 3.609,
+        "end_date": "2026-11-14",
+        "end_price": 2.103,
         "levels": {
-          "38.2%": 2.99207,
-          "50.0%": 2.8015,
-          "61.8%": 2.6109299999999998
+          "38.2%": 2.678292,
+          "50.0%": 2.856,
+          "61.8%": 3.033708
         }
       },
       "volatility": {
-        "atr20": 0.19603351910258895,
+        "atr20": 0.20002926340783286,
         "tomorrow": {
-          "low": 1.9789664808974108,
-          "high": 2.3710335191025886,
+          "low": 1.966970736592167,
+          "high": 2.3670292634078325,
           "days": 1
         },
         "week": {
-          "low": 1.6563440598217196,
-          "high": 2.69365594017828,
+          "low": 1.6377723140874416,
+          "high": 2.6962276859125582,
           "days": 7
         }
       },
       "trend": {
-        "state": "盤整",
+        "state": "下降趨勢",
         "sma20": 2.41625,
         "sma50": 2.75774,
-        "sma200": 2.55588,
-        "adx14": 24.05,
-        "detail": "均線交錯或尚未形成一致方向，ADX14 = 24.1"
+        "sma200": null,
+        "adx14": 23.51,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 23.5"
       },
       "squeeze": {
-        "bb_width_pct": 42.31,
+        "bb_width_pct": 41.46,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動正常"
@@ -3023,44 +2991,44 @@
       "symbol": "SEIUSDT",
       "display_name": "Sei (SEI/USDT)",
       "market": "crypto",
-      "latest_price": 0.03806,
+      "latest_price": 0.0379,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 1193,
-      "summary": "下降趨勢，波動正常，上方壓力 0.04023，下方支撐 0.03647",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動正常，上方壓力 0.0399，下方支撐 0.0363",
       "resistances": [
         {
-          "price": 0.040233333333333336,
+          "price": 0.0399,
           "label": "5日高＋前日高＋整數關卡",
-          "algo": "整數心理關卡 0.0400；近 5 日最高；前一日高點（2026-11-18）",
+          "algo": "整數心理關卡 0.0390；近 5 日最高；前一日高點（2026-11-18）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 5.71
+          "dist_pct": 5.28
         },
         {
-          "price": 0.04177,
-          "label": "前短低轉壓",
-          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-08）",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": 9.75
+          "price": 0.042679,
+          "label": "SMA20＋前短低轉壓",
+          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-08）；20 日均線 SMA20",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 12.61
         },
         {
-          "price": 0.04431933333333334,
-          "label": "SMA20＋前低轉壓＋前短低轉壓",
-          "algo": "20 日均線 SMA20；前期短線低點（跌破轉壓力 2日確認 2026-11-05）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
+          "price": 0.04493333333333333,
+          "label": "前低轉壓＋前週高＋前短低轉壓",
+          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-05）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；前一週高點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 16.45
+          "dist_pct": 18.56
         }
       ],
       "supports": [
         {
-          "price": 0.036465000000000004,
+          "price": 0.03629833333333334,
           "label": "20日低＋60日低＋擺動低 等6項",
-          "algo": "整數心理關卡 0.0370；近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
+          "algo": "近 5 日最低；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 0.0360",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": -4.19
+          "dist_pct": -4.23
         }
       ],
       "fibonacci": {
@@ -3077,15 +3045,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.003452370540845841,
+        "atr20": 0.003646734610928372,
         "tomorrow": {
-          "low": 0.03460762945915415,
-          "high": 0.04151237054084584,
+          "low": 0.034253265389071634,
+          "high": 0.04154673461092837,
           "days": 1
         },
         "week": {
-          "low": 0.028925886115276342,
-          "high": 0.04719411388472365,
+          "low": 0.028251647122031643,
+          "high": 0.04754835287796837,
           "days": 7
         }
       },
@@ -3093,19 +3061,19 @@
         "state": "下降趨勢",
         "sma20": 0.043588,
         "sma50": 0.054919,
-        "sma200": 0.052819,
-        "adx14": 40.22,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 40.2"
+        "sma200": null,
+        "adx14": 35.94,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 35.9"
       },
       "squeeze": {
-        "bb_width_pct": 67.86,
+        "bb_width_pct": 48.78,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動正常"
       },
       "pattern": {
-        "name": "無明顯型態",
-        "note": "近期擺動高低點連線未構成標準三角、箱型或通道（僅供參考）"
+        "name": "下降通道",
+        "note": "擺動高點與擺動低點同步走低，呈現下降通道軌跡（僅供參考）"
       },
       "backtest": {
         "years": 3.3,
@@ -3125,9 +3093,9 @@
       "symbol": "TIAUSDT",
       "display_name": "Celestia (TIA/USDT)",
       "market": "crypto",
-      "latest_price": 0.345,
+      "latest_price": 0.3447,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 1116,
+      "bars_count": 62,
       "summary": "下降趨勢，波動正常，上方壓力 0.3613，下方支撐 0.3282",
       "resistances": [
         {
@@ -3136,15 +3104,15 @@
           "algo": "前一日高點（2026-11-18）；整數心理關卡 0.360；近 5 日最高",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 4.72
+          "dist_pct": 4.82
         },
         {
-          "price": 0.40271733333333337,
-          "label": "SMA200＋SMA20＋前低轉壓",
-          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；200 日均線 SMA200；20 日均線 SMA20",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": 16.73
+          "price": 0.40149250000000003,
+          "label": "SMA20＋前低轉壓",
+          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）；20 日均線 SMA20",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 16.48
         },
         {
           "price": 0.4209,
@@ -3152,7 +3120,7 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-01）",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 22.0
+          "dist_pct": 22.11
         }
       ],
       "supports": [
@@ -3162,32 +3130,32 @@
           "algo": "整數心理關卡 0.330；擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
           "sources_count": 5,
-          "dist_pct": -4.86
+          "dist_pct": -4.78
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-06-06",
-        "start_price": 0.2777,
-        "end_date": "2026-10-17",
-        "end_price": 0.769,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-10-17",
+        "start_price": 0.769,
+        "end_date": "2026-11-14",
+        "end_price": 0.3278,
         "levels": {
-          "38.2%": 0.5813234,
-          "50.0%": 0.52335,
-          "61.8%": 0.46537660000000003
+          "38.2%": 0.49633839999999996,
+          "50.0%": 0.5484,
+          "61.8%": 0.6004616
         }
       },
       "volatility": {
-        "atr20": 0.046892642015807645,
+        "atr20": 0.047676192849570635,
         "tomorrow": {
-          "low": 0.2981073579841923,
-          "high": 0.39189264201580765,
+          "low": 0.29702380715042936,
+          "high": 0.39237619284957065,
           "days": 1
         },
         "week": {
-          "low": 0.22093373090739438,
-          "high": 0.46906626909260557,
+          "low": 0.21856065026168023,
+          "high": 0.47083934973831976,
           "days": 7
         }
       },
@@ -3195,12 +3163,12 @@
         "state": "下降趨勢",
         "sma20": 0.409485,
         "sma50": 0.488836,
-        "sma200": 0.405167,
-        "adx14": 35.07,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 35.1"
+        "sma200": null,
+        "adx14": 35.19,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 35.2"
       },
       "squeeze": {
-        "bb_width_pct": 68.68,
+        "bb_width_pct": 43.9,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動正常"
@@ -3227,77 +3195,69 @@
       "symbol": "PEPEUSDT",
       "display_name": "Pepe (PEPE/USDT)",
       "market": "crypto",
-      "latest_price": 3.73e-06,
+      "latest_price": 3.72e-06,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 1295,
-      "summary": "盤整，波動擴張中，上方壓力 3.999e-06，下方支撐 3.574e-06",
+      "bars_count": 62,
+      "summary": "盤整，波動擴張中，上方壓力 4.01e-06，下方支撐 3.5e-06",
       "resistances": [
         {
-          "price": 3.999166666666667e-06,
-          "label": "SMA50＋SMA200＋Fibo 50.0% 等6項",
-          "algo": "整數心理關卡 0.00000390；斐波那契 50.0%（2026-07-01→2026-10-29）；50 日均線 SMA50；200 日均線 SMA200；前期擺動低點（跌破轉壓力 5日確認 2026-09-29）；近 5 日最高",
+          "price": 4.01e-06,
+          "label": "SMA50＋前低轉壓＋5日高 等4項",
+          "algo": "整數心理關卡 0.00000390；50 日均線 SMA50；前期擺動低點（跌破轉壓力 5日確認 2026-09-29）；近 5 日最高",
           "strength": 3,
-          "sources_count": 6,
-          "dist_pct": 7.22
+          "sources_count": 4,
+          "dist_pct": 7.8
         },
         {
-          "price": 4.3007e-06,
-          "label": "Fibo 38.2%＋前低轉壓＋擺動高",
-          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-26）；擺動高點（5日確認 2026-10-12）；斐波那契 38.2%（2026-07-01→2026-10-29）",
+          "price": 4.3197599999999994e-06,
+          "label": "Fibo 61.8%＋前低轉壓＋擺動高",
+          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-26）；擺動高點（5日確認 2026-10-12）；斐波那契 61.8%（2026-10-08→2026-10-29）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 15.3
+          "dist_pct": 16.12
         },
         {
-          "price": 4.6875000000000004e-06,
-          "label": "擺動高＋前短低轉壓",
-          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-02）；前期短線低點（跌破轉壓力 2日確認 2026-11-05）；擺動高點（5日確認 2026-10-02）；前期短線低點（跌破轉壓力 2日確認 2026-11-08）",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": 25.67
+          "price": 4.682e-06,
+          "label": "Fibo 50.0%＋擺動高＋前短低轉壓",
+          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-02）；前期短線低點（跌破轉壓力 2日確認 2026-11-05）；斐波那契 50.0%（2026-10-08→2026-10-29）；擺動高點（5日確認 2026-10-02）；前期短線低點（跌破轉壓力 2日確認 2026-11-08）",
+          "strength": 3,
+          "sources_count": 3,
+          "dist_pct": 25.86
         }
       ],
       "supports": [
         {
-          "price": 3.57395e-06,
-          "label": "Fibo 61.8%＋整數關卡",
-          "algo": "整數心理關卡 0.00000360；斐波那契 61.8%（2026-07-01→2026-10-29）",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": -4.18
-        },
-        {
-          "price": 3.2e-06,
-          "label": "擺動低",
-          "algo": "擺動低點（5日確認 2026-09-11）",
+          "price": 3.4999999999999995e-06,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 0.00000350",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -14.21
+          "dist_pct": -5.91
         }
       ],
       "fibonacci": {
         "direction": "up",
         "direction_label": "上漲波段回撤",
-        "start_date": "2026-07-01",
-        "start_price": 2.23e-06,
+        "start_date": "2026-10-08",
+        "start_price": 3.64e-06,
         "end_date": "2026-10-29",
         "end_price": 5.68e-06,
         "levels": {
-          "38.2%": 4.3621e-06,
-          "50.0%": 3.955e-06,
-          "61.8%": 3.5479e-06
+          "38.2%": 4.90072e-06,
+          "50.0%": 4.6599999999999994e-06,
+          "61.8%": 4.41928e-06
         }
       },
       "volatility": {
-        "atr20": 4.231240892842186e-07,
+        "atr20": 4.297035303286146e-07,
         "tomorrow": {
-          "low": 3.306875910715781e-06,
-          "high": 4.153124089284218e-06,
+          "low": 3.2902964696713853e-06,
+          "high": 4.149703530328614e-06,
           "days": 1
         },
         "week": {
-          "low": 2.6105188860332676e-06,
-          "high": 4.8494811139667326e-06,
+          "low": 2.5831113212639848e-06,
+          "high": 4.856888678736015e-06,
           "days": 7
         }
       },
@@ -3305,12 +3265,12 @@
         "state": "盤整",
         "sma20": 5e-06,
         "sma50": 4e-06,
-        "sma200": 4e-06,
-        "adx14": 25.57,
-        "detail": "均線交錯或尚未形成一致方向，ADX14 = 25.6"
+        "sma200": null,
+        "adx14": 24.58,
+        "detail": "均線糾結盤整 (歷史未滿 200 日)，ADX14 = 24.6"
       },
       "squeeze": {
-        "bb_width_pct": 83.79,
+        "bb_width_pct": 100.0,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -3337,10 +3297,10 @@
       "symbol": "WLDUSDT",
       "display_name": "Worldcoin (WLD/USDT)",
       "market": "crypto",
-      "latest_price": 0.2532,
+      "latest_price": 0.2522,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 1215,
-      "summary": "下降趨勢，波動擴張中，上方壓力 0.2713，下方支撐 0.2424",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動正常，上方壓力 0.2713，下方支撐 0.24",
       "resistances": [
         {
           "price": 0.271275,
@@ -3348,7 +3308,7 @@
           "algo": "整數心理關卡 0.270；前一日高點（2026-11-18）；短線擺動高（2日確認 2026-11-17）；近 5 日最高",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": 7.14
+          "dist_pct": 7.56
         },
         {
           "price": 0.32235250000000004,
@@ -3356,7 +3316,7 @@
           "algo": "20 日均線 SMA20；前一週高點（2026-11-09~2026-11-15）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 27.31
+          "dist_pct": 27.82
         },
         {
           "price": 0.36,
@@ -3364,17 +3324,17 @@
           "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 42.18
+          "dist_pct": 42.74
         }
       ],
       "supports": [
         {
-          "price": 0.2424,
-          "label": "20日低＋60日低＋擺動低 等5項",
-          "algo": "擺動低點（5日確認 2026-11-14）；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；整數心理關卡 0.240",
-          "strength": 3,
-          "sources_count": 5,
-          "dist_pct": -4.27
+          "price": 0.24,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 0.240",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": -4.84
         }
       ],
       "fibonacci": {
@@ -3391,15 +3351,15 @@
         }
       },
       "volatility": {
-        "atr20": 0.03299516729938219,
+        "atr20": 0.034218126069730945,
         "tomorrow": {
-          "low": 0.2202048327006178,
-          "high": 0.28619516729938216,
+          "low": 0.21798187393026902,
+          "high": 0.28641812606973094,
           "days": 1
         },
         "week": {
-          "low": 0.16590299285886403,
-          "high": 0.34049700714113595,
+          "low": 0.16166734808883587,
+          "high": 0.3427326519111641,
           "days": 7
         }
       },
@@ -3407,15 +3367,15 @@
         "state": "下降趨勢",
         "sma20": 0.317705,
         "sma50": 0.43251,
-        "sma200": 0.401991,
-        "adx14": 44.99,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 45.0"
+        "sma200": null,
+        "adx14": 43.83,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 43.8"
       },
       "squeeze": {
-        "bb_width_pct": 88.46,
+        "bb_width_pct": 78.05,
         "lookback_days": 365,
         "is_squeezing": false,
-        "label": "波動擴張中"
+        "label": "波動正常"
       },
       "pattern": {
         "name": "無明顯型態",
@@ -3441,16 +3401,16 @@
       "market": "crypto",
       "latest_price": 1.383,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 847,
-      "summary": "盤整，波動正常，上方壓力 1.446，下方支撐 1.311",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動正常，上方壓力 1.449，下方支撐 1.316",
       "resistances": [
         {
-          "price": 1.44625,
+          "price": 1.4487500000000002,
           "label": "前低轉壓＋前短低轉壓＋整數關卡",
-          "algo": "整數心理關卡 1.420；前期擺動低點（跌破轉壓力 5日確認 2026-11-04）；前期短線低點（跌破轉壓力 2日確認 2026-10-30）；前期短線低點（跌破轉壓力 2日確認 2026-11-08）",
+          "algo": "整數心理關卡 1.430；前期擺動低點（跌破轉壓力 5日確認 2026-11-04）；前期短線低點（跌破轉壓力 2日確認 2026-10-30）；前期短線低點（跌破轉壓力 2日確認 2026-11-08）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 4.57
+          "dist_pct": 4.75
         },
         {
           "price": 1.4997833333333332,
@@ -3461,60 +3421,60 @@
           "dist_pct": 8.44
         },
         {
-          "price": 1.6486988571428571,
-          "label": "SMA200＋Fibo 38.2%＋20日高 等6項",
-          "algo": "擺動高點（5日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-15）；擺動高點（5日確認 2026-11-04）；近 20 日最高；前期短線低點（跌破轉壓力 2日確認 2026-10-24）；200 日均線 SMA200；斐波那契 38.2%（2026-05-26→2026-08-11）",
+          "price": 1.6447006666666668,
+          "label": "Fibo 38.2%＋20日高＋擺動高 等5項",
+          "algo": "擺動高點（5日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-15）；擺動高點（5日確認 2026-11-04）；近 20 日最高；前期短線低點（跌破轉壓力 2日確認 2026-10-24）；斐波那契 38.2%（2026-10-13→2026-11-15）",
           "strength": 3,
-          "sources_count": 6,
-          "dist_pct": 19.21
+          "sources_count": 5,
+          "dist_pct": 18.92
         }
       ],
       "supports": [
         {
-          "price": 1.3112857142857144,
-          "label": "20日低＋60日低＋擺動低 等7項",
-          "algo": "整數心理關卡 1.340；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）；擺動低點（5日確認 2026-09-16）",
+          "price": 1.3158333333333332,
+          "label": "20日低＋60日低＋5日低 等6項",
+          "algo": "整數心理關卡 1.340；短線擺動低（2日確認 2026-11-15）；近 5 日最低；近 20 日最低；近 60 日最低；前一週低點（2026-11-09~2026-11-15）",
           "strength": 3,
-          "sources_count": 7,
-          "dist_pct": -5.19
+          "sources_count": 6,
+          "dist_pct": -4.86
         }
       ],
       "fibonacci": {
         "direction": "down",
         "direction_label": "下跌波段反彈",
-        "start_date": "2026-05-26",
-        "start_price": 2.437,
-        "end_date": "2026-08-11",
-        "end_price": 1.226,
+        "start_date": "2026-10-13",
+        "start_price": 2.233,
+        "end_date": "2026-11-15",
+        "end_price": 1.311,
         "levels": {
-          "38.2%": 1.688602,
-          "50.0%": 1.8315,
-          "61.8%": 1.9743979999999999
+          "38.2%": 1.663204,
+          "50.0%": 1.772,
+          "61.8%": 1.8807960000000001
         }
       },
       "volatility": {
-        "atr20": 0.1205190070446292,
+        "atr20": 0.12399676180146174,
         "tomorrow": {
-          "low": 1.2624809929553709,
-          "high": 1.5035190070446292,
+          "low": 1.2590032381985383,
+          "high": 1.5069967618014617,
           "days": 1
         },
         "week": {
-          "low": 1.0641366791034697,
-          "high": 1.7018633208965304,
+          "low": 1.054935404896019,
+          "high": 1.7110645951039811,
           "days": 7
         }
       },
       "trend": {
-        "state": "盤整",
+        "state": "下降趨勢",
         "sma20": 1.50735,
         "sma50": 1.72434,
-        "sma200": 1.64729,
-        "adx14": 22.74,
-        "detail": "均線交錯或尚未形成一致方向，ADX14 = 22.7"
+        "sma200": null,
+        "adx14": 21.71,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 21.7"
       },
       "squeeze": {
-        "bb_width_pct": 39.01,
+        "bb_width_pct": 53.66,
         "lookback_days": 365,
         "is_squeezing": false,
         "label": "波動正常"
@@ -3541,10 +3501,10 @@
       "symbol": "XAUUSD",
       "display_name": "黃金 (Gold)",
       "market": "commodity",
-      "latest_price": 3618.89990234375,
+      "latest_price": 3618.199951171875,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2515,
-      "summary": "下降趨勢，波動正常，上方壓力 3,710.90，下方支撐 3,500.00",
+      "bars_count": 63,
+      "summary": "下降趨勢，波動擴張中，上方壓力 3,710.90，下方支撐 3,500.00",
       "resistances": [
         {
           "price": 3710.9000244140625,
@@ -3552,7 +3512,7 @@
           "algo": "整數心理關卡 3,700；前一日低點（2026-11-18）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 2.54
+          "dist_pct": 2.56
         },
         {
           "price": 3800.0,
@@ -3560,7 +3520,7 @@
           "algo": "整數心理關卡 3,800",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": 5.0
+          "dist_pct": 5.02
         },
         {
           "price": 3865.1000162760415,
@@ -3568,7 +3528,7 @@
           "algo": "前一週低點（2026-11-09~2026-11-13）；前一日高點（2026-11-18）；前期擺動低點（跌破轉壓力 5日確認 2026-10-30）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 6.8
+          "dist_pct": 6.82
         }
       ],
       "supports": [
@@ -3578,7 +3538,7 @@
           "algo": "整數心理關卡 3,500",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -3.29
+          "dist_pct": -3.27
         },
         {
           "price": 3400.0,
@@ -3586,48 +3546,48 @@
           "algo": "整數心理關卡 3,400",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -6.05
+          "dist_pct": -6.03
         }
       ],
       "fibonacci": {
         "direction": "down",
         "direction_label": "下跌波段反彈",
-        "start_date": "2026-04-17",
-        "start_price": 4917.7001953125,
+        "start_date": "2026-08-25",
+        "start_price": 4755.0,
         "end_date": "2026-11-19",
         "end_price": 3591.89990234375,
         "levels": {
-          "38.2%": 4098.355614257813,
-          "50.0%": 4254.800048828125,
-          "61.8%": 4411.244483398437
+          "38.2%": 4036.2041396484374,
+          "50.0%": 4173.449951171875,
+          "61.8%": 4310.695762695313
         }
       },
       "volatility": {
-        "atr20": 93.82889673455236,
+        "atr20": 94.23415105912636,
         "tomorrow": {
-          "low": 3525.0710056091975,
-          "high": 3712.7287990783025,
+          "low": 3523.9658001127486,
+          "high": 3712.4341022310014,
           "days": 1
         },
         "week": {
-          "low": 3409.092110991483,
-          "high": 3828.707693696017,
+          "low": 3407.4859836016844,
+          "high": 3828.9139187420656,
           "days": 5
         }
       },
       "trend": {
         "state": "下降趨勢",
-        "sma20": 3963.449976,
-        "sma50": 4127.39998,
-        "sma200": 4451.217994,
-        "adx14": 30.7,
-        "detail": "SMA20 < SMA50 < SMA200 空頭排列，ADX14 = 30.7"
+        "sma20": 3962.95498,
+        "sma50": 4127.201982,
+        "sma200": null,
+        "adx14": 36.21,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 36.2"
       },
       "squeeze": {
-        "bb_width_pct": 74.9,
+        "bb_width_pct": 100.0,
         "lookback_days": 252,
         "is_squeezing": false,
-        "label": "波動正常"
+        "label": "波動擴張中"
       },
       "pattern": {
         "name": "下降通道",
@@ -3651,10 +3611,10 @@
       "symbol": "XAGUSD",
       "display_name": "白銀 (Silver)",
       "market": "commodity",
-      "latest_price": 42.83000183105469,
+      "latest_price": 42.85499954223633,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2514,
-      "summary": "下降趨勢，波動正常，上方壓力 44.3，下方支撐 42.09",
+      "bars_count": 63,
+      "summary": "下降趨勢，波動擴張中，上方壓力 44.3，下方支撐 42.09",
       "resistances": [
         {
           "price": 44.29999923706055,
@@ -3662,7 +3622,7 @@
           "algo": "整數心理關卡 44；前一日低點（2026-11-18）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 3.43
+          "dist_pct": 3.37
         },
         {
           "price": 45.90749931335449,
@@ -3670,7 +3630,7 @@
           "algo": "前一日高點（2026-11-18）；整數心理關卡 46",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 7.19
+          "dist_pct": 7.12
         },
         {
           "price": 48.454999923706055,
@@ -3678,7 +3638,7 @@
           "algo": "前一週低點（2026-11-09~2026-11-13）；前期擺動低點（跌破轉壓力 5日確認 2026-11-03）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 13.13
+          "dist_pct": 13.07
         }
       ],
       "supports": [
@@ -3688,7 +3648,7 @@
           "algo": "近 5 日最低；近 20 日最低；近 60 日最低；整數心理關卡 42",
           "strength": 3,
           "sources_count": 4,
-          "dist_pct": -1.74
+          "dist_pct": -1.79
         },
         {
           "price": 40.0,
@@ -3696,48 +3656,48 @@
           "algo": "整數心理關卡 40",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -6.61
+          "dist_pct": -6.66
         }
       ],
       "fibonacci": {
         "direction": "down",
         "direction_label": "下跌波段反彈",
-        "start_date": "2026-05-13",
-        "start_price": 88.88800048828125,
+        "start_date": "2026-08-28",
+        "start_price": 71.16000366210938,
         "end_date": "2026-11-19",
         "end_price": 42.1150016784668,
         "levels": {
-          "38.2%": 59.982287223815916,
-          "50.0%": 65.50150108337402,
-          "61.8%": 71.02071494293213
+          "38.2%": 53.210192436218264,
+          "50.0%": 56.637502670288086,
+          "61.8%": 60.06481290435791
         }
       },
       "volatility": {
-        "atr20": 1.6148299218470905,
+        "atr20": 1.6192065315052961,
         "tomorrow": {
-          "low": 41.2151719092076,
-          "high": 44.44483175290178,
+          "low": 41.23579301073103,
+          "high": 44.47420607374163,
           "days": 1
         },
         "week": {
-          "low": 39.21913235370392,
-          "high": 46.440871308405455,
+          "low": 39.23434366817883,
+          "high": 46.475655416293826,
           "days": 5
         }
       },
       "trend": {
         "state": "下降趨勢",
-        "sma20": 50.48855,
-        "sma50": 56.82274,
-        "sma200": 67.67987,
-        "adx14": 44.98,
-        "detail": "SMA20 < SMA50 < SMA200 空頭排列，ADX14 = 45.0"
+        "sma20": 50.4728,
+        "sma50": 56.81644,
+        "sma200": null,
+        "adx14": 48.57,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 48.6"
       },
       "squeeze": {
-        "bb_width_pct": 53.78,
+        "bb_width_pct": 97.62,
         "lookback_days": 252,
         "is_squeezing": false,
-        "label": "波動正常"
+        "label": "波動擴張中"
       },
       "pattern": {
         "name": "下降通道",
@@ -3761,10 +3721,10 @@
       "symbol": "WTI",
       "display_name": "WTI 原油",
       "market": "commodity",
-      "latest_price": 82.91000366210938,
+      "latest_price": 82.87999725341797,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2515,
-      "summary": "下降趨勢，波動擴張中，上方壓力 86.27，下方支撐 80.09",
+      "bars_count": 63,
+      "summary": "下降趨勢，波動擴張中，上方壓力 86.27，下方支撐 80.33",
       "resistances": [
         {
           "price": 86.26999918619792,
@@ -3772,33 +3732,33 @@
           "algo": "前一日高點（2026-11-18）；整數心理關卡 86；前期擺動低點（跌破轉壓力 5日確認 2026-10-06）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 4.05
+          "dist_pct": 4.09
         },
         {
-          "price": 88.98304984741212,
-          "label": "SMA200＋擺動高＋5日高 等5項",
-          "algo": "200 日均線 SMA200；前期短線低點（跌破轉壓力 2日確認 2026-09-23）；前期短線低點（跌破轉壓力 2日確認 2026-09-04）；擺動高點（5日確認 2026-08-20）；短線擺動高（2日確認 2026-11-13）；近 5 日最高",
+          "price": 89.17749977111816,
+          "label": "5日高＋前短低轉壓＋短擺動高",
+          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-09-23）；前期短線低點（跌破轉壓力 2日確認 2026-09-04）；短線擺動高（2日確認 2026-11-13）；近 5 日最高",
           "strength": 3,
-          "sources_count": 5,
-          "dist_pct": 7.32
+          "sources_count": 3,
+          "dist_pct": 7.6
         },
         {
-          "price": 91.96250521850585,
+          "price": 91.96033855183919,
           "label": "SMA20＋Fibo 38.2%＋前週高",
           "algo": "前一週高點（2026-11-09~2026-11-13）；斐波那契 38.2%（2026-10-30→2026-11-10）；20 日均線 SMA20",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 10.92
+          "dist_pct": 10.96
         }
       ],
       "supports": [
         {
-          "price": 80.09000142415364,
-          "label": "60日低＋擺動低＋整數關卡",
-          "algo": "近 60 日最低；整數心理關卡 80；擺動低點（5日確認 2026-08-26）",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": -3.4
+          "price": 80.32500076293945,
+          "label": "60日低＋整數關卡",
+          "algo": "近 60 日最低；整數心理關卡 80",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": -3.08
         },
         {
           "price": 78.0,
@@ -3806,15 +3766,7 @@
           "algo": "整數心理關卡 78",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -5.92
-        },
-        {
-          "price": 74.23999786376953,
-          "label": "擺動低",
-          "algo": "擺動低點（5日確認 2026-08-05）",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": -10.46
+          "dist_pct": -5.89
         }
       ],
       "fibonacci": {
@@ -3831,35 +3783,35 @@
         }
       },
       "volatility": {
-        "atr20": 4.158722743380162,
+        "atr20": 4.174664151373778,
         "tomorrow": {
-          "low": 78.75128091872921,
-          "high": 87.06872640548954,
+          "low": 78.7053331020442,
+          "high": 87.05466140479174,
           "days": 1
         },
         "week": {
-          "low": 73.61081690833691,
-          "high": 92.20919041588184,
+          "low": 73.54516442771472,
+          "high": 92.21483007912121,
           "days": 5
         }
       },
       "trend": {
         "state": "下降趨勢",
-        "sma20": 92.5235,
-        "sma50": 94.4644,
-        "sma200": 88.1883,
-        "adx14": 26.21,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 26.2"
+        "sma20": 92.517,
+        "sma50": 94.4618,
+        "sma200": null,
+        "adx14": 26.66,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 26.7"
       },
       "squeeze": {
-        "bb_width_pct": 80.48,
+        "bb_width_pct": 97.62,
         "lookback_days": 252,
         "is_squeezing": false,
         "label": "波動擴張中"
       },
       "pattern": {
-        "name": "三角收斂",
-        "note": "擺動高點下移／低點墊高，波動區間逐步收窄（僅供參考）"
+        "name": "箱型",
+        "note": "擺動高點與低點落在相近水平區間內來回震盪（僅供參考）"
       },
       "backtest": {
         "years": 10.0,
@@ -3879,10 +3831,10 @@
       "symbol": "NATGAS",
       "display_name": "天然氣 (Natural Gas)",
       "market": "commodity",
-      "latest_price": 3.246999979019165,
+      "latest_price": 3.244999885559082,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2516,
-      "summary": "盤整，波動正常，上方壓力 3.312，下方支撐 3.177",
+      "bars_count": 63,
+      "summary": "盤整，波動擴張中，上方壓力 3.312，下方支撐 3.172",
       "resistances": [
         {
           "price": 3.312250030040741,
@@ -3890,7 +3842,7 @@
           "algo": "短線擺動高（2日確認 2026-10-08）；整數心理關卡 3.300；擺動高點（5日確認 2026-09-24）；擺動高點（5日確認 2026-10-14）",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 2.01
+          "dist_pct": 2.07
         },
         {
           "price": 3.4110000133514404,
@@ -3898,74 +3850,74 @@
           "algo": "短線擺動高（2日確認 2026-11-11）；前一週高點（2026-11-09~2026-11-13）；近 5 日最高；近 20 日最高；近 60 日最高；前一日高點（2026-11-18）",
           "strength": 3,
           "sources_count": 6,
-          "dist_pct": 5.05
+          "dist_pct": 5.12
         }
       ],
       "supports": [
         {
-          "price": 3.1765000581741334,
+          "price": 3.1715000581741335,
           "label": "前日低＋整數關卡",
-          "algo": "整數心理關卡 3.200；前一日低點（2026-11-18）",
+          "algo": "整數心理關卡 3.190；前一日低點（2026-11-18）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": -2.17
+          "dist_pct": -2.27
         },
         {
-          "price": 3.068442982969284,
-          "label": "SMA50＋Fibo 61.8%＋前高轉支 等5項",
-          "algo": "斐波那契 61.8%（2026-03-09→2026-04-28）；短線擺動低（2日確認 2026-10-12）；前期擺動高點（突破轉支撐 5日確認 2026-10-29）；短線擺動低（2日確認 2026-11-17）；近 5 日最低；50 日均線 SMA50",
+          "price": 3.0460807489609723,
+          "label": "SMA50＋SMA20＋Fibo 61.8% 等6項",
+          "algo": "短線擺動低（2日確認 2026-10-12）；前期擺動高點（突破轉支撐 5日確認 2026-10-29）；短線擺動低（2日確認 2026-11-17）；近 5 日最低；50 日均線 SMA50；前期擺動高點（突破轉支撐 5日確認 2026-09-03）；20 日均線 SMA20；斐波那契 61.8%（2026-10-14→2026-10-26）",
           "strength": 3,
-          "sources_count": 5,
-          "dist_pct": -5.5
+          "sources_count": 6,
+          "dist_pct": -6.13
         },
         {
-          "price": 2.998903987602234,
-          "label": "SMA20＋SMA200＋Fibo 50.0% 等5項",
-          "algo": "前期擺動高點（突破轉支撐 5日確認 2026-09-03）；20 日均線 SMA20；斐波那契 50.0%（2026-03-09→2026-04-28）；前一週低點（2026-11-09~2026-11-13）；200 日均線 SMA200",
+          "price": 2.9384999672571817,
+          "label": "Fibo 50.0%＋擺動低＋前週低",
+          "algo": "前一週低點（2026-11-09~2026-11-13）；斐波那契 50.0%（2026-10-14→2026-10-26）；擺動低點（5日確認 2026-10-02）",
           "strength": 3,
-          "sources_count": 5,
-          "dist_pct": -7.64
+          "sources_count": 3,
+          "dist_pct": -9.45
         }
       ],
       "fibonacci": {
         "direction": "down",
         "direction_label": "下跌波段反彈",
-        "start_date": "2026-03-09",
-        "start_price": 3.49399995803833,
-        "end_date": "2026-04-28",
-        "end_price": 2.4830000400543213,
+        "start_date": "2026-10-14",
+        "start_price": 3.3340001106262207,
+        "end_date": "2026-10-26",
+        "end_price": 2.496999979019165,
         "levels": {
-          "38.2%": 2.8692020087242125,
-          "50.0%": 2.9884999990463257,
-          "61.8%": 3.107797989368439
+          "38.2%": 2.8167340292930603,
+          "50.0%": 2.915500044822693,
+          "61.8%": 3.0142660603523255
         }
       },
       "volatility": {
-        "atr20": 0.15586452483343793,
+        "atr20": 0.15590469537292914,
         "tomorrow": {
-          "low": 3.091135454185727,
-          "high": 3.402864503852603,
+          "low": 3.089095190186153,
+          "high": 3.400904580932011,
           "days": 1
         },
         "week": {
-          "low": 2.8984763062108936,
-          "high": 3.5955236518274365,
+          "low": 2.8963863886938155,
+          "high": 3.5936133824243486,
           "days": 5
         }
       },
       "trend": {
         "state": "盤整",
-        "sma20": 3.02545,
-        "sma50": 3.03186,
-        "sma200": 2.96657,
-        "adx14": 27.47,
-        "detail": "均線交錯或尚未形成一致方向，ADX14 = 27.5"
+        "sma20": 3.0255,
+        "sma50": 3.03188,
+        "sma200": null,
+        "adx14": 28.48,
+        "detail": "均線糾結盤整 (歷史未滿 200 日)，ADX14 = 28.5"
       },
       "squeeze": {
-        "bb_width_pct": 78.09,
+        "bb_width_pct": 97.62,
         "lookback_days": 252,
         "is_squeezing": false,
-        "label": "波動正常"
+        "label": "波動擴張中"
       },
       "pattern": {
         "name": "下降通道",
@@ -3989,9 +3941,9 @@
       "symbol": "COPPER",
       "display_name": "銅 (Copper)",
       "market": "commodity",
-      "latest_price": 5.585000038146973,
+      "latest_price": 5.5879998207092285,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2515,
+      "bars_count": 63,
       "summary": "下降趨勢，波動擴張中，上方壓力 5.665，下方支撐 5.5",
       "resistances": [
         {
@@ -4000,23 +3952,23 @@
           "algo": "前一日低點（2026-11-18）；前一日高點（2026-11-18）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 1.43
+          "dist_pct": 1.37
         },
         {
-          "price": 5.864684048652649,
-          "label": "Fibo 61.8%",
-          "algo": "斐波那契 61.8%（2026-03-20→2026-09-22）",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": 5.01
-        },
-        {
-          "price": 6.024500012397766,
-          "label": "Fibo 50.0%＋整數關卡",
-          "algo": "整數心理關卡 6.00；斐波那契 50.0%（2026-03-20→2026-09-22）",
+          "price": 6.02241555261612,
+          "label": "Fibo 38.2%＋整數關卡",
+          "algo": "整數心理關卡 6.00；斐波那契 38.2%（2026-09-22→2026-11-19）",
           "strength": 2,
           "sources_count": 2,
-          "dist_pct": 7.87
+          "dist_pct": 7.77
+        },
+        {
+          "price": 6.069499969482422,
+          "label": "前週低＋5日高",
+          "algo": "前一週低點（2026-11-09~2026-11-13）；近 5 日最高",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 8.62
         }
       ],
       "supports": [
@@ -4026,7 +3978,7 @@
           "algo": "整數心理關卡 5.50",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -1.52
+          "dist_pct": -1.57
         },
         {
           "price": 5.0,
@@ -4034,42 +3986,42 @@
           "algo": "整數心理關卡 5.00",
           "strength": 1,
           "sources_count": 1,
-          "dist_pct": -10.47
+          "dist_pct": -10.52
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-03-20",
-        "start_price": 5.26800012588501,
-        "end_date": "2026-09-22",
-        "end_price": 6.829999923706055,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-09-22",
+        "start_price": 6.829999923706055,
+        "end_date": "2026-11-19",
+        "end_price": 5.559500217437744,
         "levels": {
-          "38.2%": 6.233316000938416,
-          "50.0%": 6.049000024795532,
-          "61.8%": 5.864684048652649
+          "38.2%": 6.044831105232239,
+          "50.0%": 6.194750070571899,
+          "61.8%": 6.34466903591156
         }
       },
       "volatility": {
-        "atr20": 0.109539461503849,
+        "atr20": 0.11092952535667336,
         "tomorrow": {
-          "low": 5.4754605766431235,
-          "high": 5.694539499650822,
+          "low": 5.477070295352555,
+          "high": 5.698929346065902,
           "days": 1
         },
         "week": {
-          "low": 5.340062356005645,
-          "high": 5.8299377202883,
+          "low": 5.339953861299921,
+          "high": 5.836045780118536,
           "days": 5
         }
       },
       "trend": {
         "state": "下降趨勢",
-        "sma20": 6.269075,
-        "sma50": 6.44683,
-        "sma200": 6.225197,
-        "adx14": 31.78,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 31.8"
+        "sma20": 6.2686,
+        "sma50": 6.44664,
+        "sma200": null,
+        "adx14": 31.84,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 31.8"
       },
       "squeeze": {
         "bb_width_pct": 100.0,
@@ -4101,7 +4053,7 @@
       "market": "index",
       "latest_price": 26517.05078125,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2513,
+      "bars_count": 63,
       "summary": "下降趨勢，波動擴張中，上方壓力 26,924.46，下方支撐 26,000.00",
       "resistances": [
         {
@@ -4121,12 +4073,12 @@
           "dist_pct": 2.7
         },
         {
-          "price": 28032.05685553125,
-          "label": "SMA200＋SMA20＋前短低轉壓 等4項",
-          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-02）；整數心理關卡 28,000；200 日均線 SMA200；20 日均線 SMA20",
+          "price": 28019.10947270833,
+          "label": "SMA20＋前短低轉壓＋整數關卡",
+          "algo": "前期短線低點（跌破轉壓力 2日確認 2026-11-02）；整數心理關卡 28,000；20 日均線 SMA20",
           "strength": 3,
-          "sources_count": 4,
-          "dist_pct": 5.71
+          "sources_count": 3,
+          "dist_pct": 5.66
         }
       ],
       "supports": [
@@ -4161,15 +4113,15 @@
         }
       },
       "volatility": {
-        "atr20": 648.4428646902261,
+        "atr20": 641.5713545651428,
         "tomorrow": {
-          "low": 25868.607916559773,
-          "high": 27165.493645940227,
+          "low": 25875.47942668486,
+          "high": 27158.62213581514,
           "days": 1
         },
         "week": {
-          "low": 25067.088456277957,
-          "high": 27967.013106222043,
+          "low": 25082.45362002572,
+          "high": 27951.64794247428,
           "days": 5
         }
       },
@@ -4177,12 +4129,12 @@
         "state": "下降趨勢",
         "sma20": 28089.888965,
         "sma50": 29311.050586,
-        "sma200": 28070.899004,
-        "adx14": 31.13,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 31.1"
+        "sma200": null,
+        "adx14": 31.48,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 31.5"
       },
       "squeeze": {
-        "bb_width_pct": 91.24,
+        "bb_width_pct": 95.24,
         "lookback_days": 252,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -4211,42 +4163,42 @@
       "market": "index",
       "latest_price": 7175.830078125,
       "latest_bar_date": "2026-11-19",
-      "bars_count": 2513,
-      "summary": "盤整，波動擴張中，上方壓力 7,282.24，下方支撐 7,090.36",
+      "bars_count": 63,
+      "summary": "盤整，波動擴張中，上方壓力 7,292.88，下方支撐 7,100.00",
       "resistances": [
         {
-          "price": 7282.244272460938,
-          "label": "Fibo 38.2%＋前日低＋整數關卡",
-          "algo": "斐波那契 38.2%（2026-03-30→2026-10-06）；前一日低點（2026-11-18）；整數心理關卡 7,300",
+          "price": 7292.8798828125,
+          "label": "前日低＋整數關卡",
+          "algo": "前一日低點（2026-11-18）；整數心理關卡 7,300",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 1.63
+        },
+        {
+          "price": 7372.6767578125,
+          "label": "前低轉壓＋前日高＋整數關卡",
+          "algo": "前期擺動低點（跌破轉壓力 5日確認 2026-11-05）；前一日高點（2026-11-18）；整數心理關卡 7,400",
           "strength": 3,
           "sources_count": 3,
-          "dist_pct": 1.48
+          "dist_pct": 2.74
         },
         {
-          "price": 7366.512658609375,
-          "label": "SMA200＋前低轉壓＋前日高 等4項",
-          "algo": "200 日均線 SMA200；前期擺動低點（跌破轉壓力 5日確認 2026-11-05）；前一日高點（2026-11-18）；整數心理關卡 7,400",
-          "strength": 3,
-          "sources_count": 4,
-          "dist_pct": 2.66
-        },
-        {
-          "price": 7422.240234375,
-          "label": "前週低",
-          "algo": "前一週低點（2026-11-09~2026-11-13）",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": 3.43
+          "price": 7426.0750747070315,
+          "label": "Fibo 38.2%＋前週低",
+          "algo": "前一週低點（2026-11-09~2026-11-13）；斐波那契 38.2%（2026-10-06→2026-11-19）",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 3.49
         }
       ],
       "supports": [
         {
-          "price": 7090.3575439453125,
-          "label": "Fibo 50.0%＋整數關卡",
-          "algo": "整數心理關卡 7,100；斐波那契 50.0%（2026-03-30→2026-10-06）",
-          "strength": 2,
-          "sources_count": 2,
-          "dist_pct": -1.19
+          "price": 7100.0,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 7,100",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": -1.06
         },
         {
           "price": 7000.0,
@@ -4255,39 +4207,31 @@
           "strength": 1,
           "sources_count": 1,
           "dist_pct": -2.45
-        },
-        {
-          "price": 6900.457124023437,
-          "label": "Fibo 61.8%",
-          "algo": "斐波那契 61.8%（2026-03-30→2026-10-06）",
-          "strength": 1,
-          "sources_count": 1,
-          "dist_pct": -3.84
         }
       ],
       "fibonacci": {
-        "direction": "up",
-        "direction_label": "上漲波段回撤",
-        "start_date": "2026-03-30",
-        "start_price": 6316.91015625,
-        "end_date": "2026-10-06",
-        "end_price": 7844.52001953125,
+        "direction": "down",
+        "direction_label": "下跌波段反彈",
+        "start_date": "2026-10-06",
+        "start_price": 7844.52001953125,
+        "end_date": "2026-11-19",
+        "end_price": 7173.6298828125,
         "levels": {
-          "38.2%": 7260.973051757813,
-          "50.0%": 7080.715087890625,
-          "61.8%": 6900.457124023437
+          "38.2%": 7429.909915039063,
+          "50.0%": 7509.074951171875,
+          "61.8%": 7588.239987304687
         }
       },
       "volatility": {
-        "atr20": 109.91892495878975,
+        "atr20": 109.42323756191149,
         "tomorrow": {
-          "low": 7065.91115316621,
-          "high": 7285.74900308379,
+          "low": 7066.406840563089,
+          "high": 7285.253315686911,
           "days": 1
         },
         "week": {
-          "low": 6930.043889903448,
-          "high": 7421.616266346552,
+          "low": 6931.152280618458,
+          "high": 7420.507875631542,
           "days": 5
         }
       },
@@ -4295,12 +4239,12 @@
         "state": "盤整",
         "sma20": 7534.895972,
         "sma50": 7640.188203,
-        "sma200": 7348.020361,
-        "adx14": 19.48,
-        "detail": "均線交錯或尚未形成一致方向，ADX14 = 19.5"
+        "sma200": null,
+        "adx14": 19.12,
+        "detail": "均線糾結盤整 (歷史未滿 200 日)，ADX14 = 19.1"
       },
       "squeeze": {
-        "bb_width_pct": 90.44,
+        "bb_width_pct": 100.0,
         "lookback_days": 252,
         "is_squeezing": false,
         "label": "波動擴張中"
@@ -4329,7 +4273,7 @@
       "market": "index",
       "latest_price": 59024.28125,
       "latest_bar_date": "2026-11-18",
-      "bars_count": 2440,
+      "bars_count": 62,
       "summary": "下降趨勢，波動正常，上方壓力 60,000.00，下方支撐 58,018.14",
       "resistances": [
         {
@@ -4349,12 +4293,12 @@
           "dist_pct": 3.93
         },
         {
-          "price": 62008.1419945125,
-          "label": "SMA200＋Fibo 38.2%＋5日高 等5項",
-          "algo": "短線擺動高（2日確認 2026-11-13）；近 5 日最高；前一週高點（2026-11-09~2026-11-13）；斐波那契 38.2%（2026-10-06→2026-11-06）；200 日均線 SMA200",
+          "price": 61955.370369140626,
+          "label": "Fibo 38.2%＋5日高＋前週高 等4項",
+          "algo": "短線擺動高（2日確認 2026-11-13）；近 5 日最高；前一週高點（2026-11-09~2026-11-13）；斐波那契 38.2%（2026-10-06→2026-11-06）",
           "strength": 3,
-          "sources_count": 5,
-          "dist_pct": 5.06
+          "sources_count": 4,
+          "dist_pct": 4.97
         }
       ],
       "supports": [
@@ -4389,15 +4333,15 @@
         }
       },
       "volatility": {
-        "atr20": 1544.8060965348748,
+        "atr20": 1523.2877893569553,
         "tomorrow": {
-          "low": 57479.47515346512,
-          "high": 60569.08734653488,
+          "low": 57500.99346064305,
+          "high": 60547.56903935695,
           "days": 1
         },
         "week": {
-          "low": 55569.989806091915,
-          "high": 62478.572693908085,
+          "low": 55618.10620370247,
+          "high": 62430.45629629753,
           "days": 5
         }
       },
@@ -4405,12 +4349,12 @@
         "state": "下降趨勢",
         "sma20": 61567.964648,
         "sma50": 64340.099453,
-        "sma200": 62219.228496,
-        "adx14": 33.87,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 33.9"
+        "sma200": null,
+        "adx14": 35.87,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 35.9"
       },
       "squeeze": {
-        "bb_width_pct": 69.32,
+        "bb_width_pct": 48.78,
         "lookback_days": 252,
         "is_squeezing": false,
         "label": "波動正常"
@@ -4439,16 +4383,16 @@
       "market": "index",
       "latest_price": 40194.91015625,
       "latest_bar_date": "2026-11-18",
-      "bars_count": 2428,
-      "summary": "下降趨勢，波動擴張中，上方壓力 41,335.29，下方支撐 39,215.28",
+      "bars_count": 62,
+      "summary": "下降趨勢，波動擴張中，上方壓力 41,266.92，下方支撐 39,523.72",
       "resistances": [
         {
-          "price": 41335.29255191667,
-          "label": "SMA200＋前日高＋整數關卡",
-          "algo": "整數心理關卡 41,000；200 日均線 SMA200；前一日高點（2026-11-17）",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": 2.84
+          "price": 41266.919921875,
+          "label": "前日高＋整數關卡",
+          "algo": "整數心理關卡 41,000；前一日高點（2026-11-17）",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": 2.67
         },
         {
           "price": 42235.71276953125,
@@ -4469,12 +4413,20 @@
       ],
       "supports": [
         {
-          "price": 39215.279947916664,
-          "label": "擺動低＋5日低＋整數關卡",
-          "algo": "擺動低點（5日確認 2026-07-29）；近 5 日最低；整數心理關卡 39,000",
-          "strength": 3,
-          "sources_count": 3,
-          "dist_pct": -2.44
+          "price": 39523.71875,
+          "label": "前日低＋5日低",
+          "algo": "前一日低點（2026-11-17）；近 5 日最低",
+          "strength": 2,
+          "sources_count": 2,
+          "dist_pct": -1.67
+        },
+        {
+          "price": 39000.0,
+          "label": "整數關卡",
+          "algo": "整數心理關卡 39,000",
+          "strength": 1,
+          "sources_count": 1,
+          "dist_pct": -2.97
         },
         {
           "price": 37877.7880859375,
@@ -4499,15 +4451,15 @@
         }
       },
       "volatility": {
-        "atr20": 1372.211746766795,
+        "atr20": 1356.8645161058519,
         "tomorrow": {
-          "low": 38822.69840948321,
-          "high": 41567.12190301679,
+          "low": 38838.04564014415,
+          "high": 41551.77467235585,
           "days": 1
         },
         "week": {
-          "low": 37126.55141095572,
-          "high": 43263.26890154428,
+          "low": 37160.86886197996,
+          "high": 43228.95145052004,
           "days": 5
         }
       },
@@ -4515,12 +4467,12 @@
         "state": "下降趨勢",
         "sma20": 43655.595117,
         "sma50": 46017.640547,
-        "sma200": 41472.037812,
-        "adx14": 35.29,
-        "detail": "價格位於 SMA20/50 之下且 ADX ≥ 25，ADX14 = 35.3"
+        "sma200": null,
+        "adx14": 35.76,
+        "detail": "短中期均線空頭排列 (歷史未滿 200 日)，ADX14 = 35.8"
       },
       "squeeze": {
-        "bb_width_pct": 95.22,
+        "bb_width_pct": 92.68,
         "lookback_days": 252,
         "is_squeezing": false,
         "label": "波動擴張中"
