@@ -140,10 +140,11 @@ class BinanceVisionAdapter(DataAdapter):
 
 
 class OkxAdapter(DataAdapter):
-    """OKX public market candles API."""
+    """OKX public market candles API (with history-candles pagination for > 300 bars)."""
 
     name = "okx"
     BASE_URL = "https://www.okx.com/api/v5/market/candles"
+    HISTORY_URL = "https://www.okx.com/api/v5/market/history-candles"
     INTERVAL_MAP = {"1m": "1m", "15m": "15m", "1h": "1H", "1d": "1Dutc"}
 
     def fetch_bars(
@@ -156,9 +157,33 @@ class OkxAdapter(DataAdapter):
         bar_param = self.INTERVAL_MAP.get(interval)
         if not bar_param:
             raise ValueError(f"Unsupported interval: {interval}")
+        now_sec = (now_utc or datetime.now(timezone.utc)).timestamp()
+        bars_by_ts: dict[str, OHLCVBar] = {}
+
+        def _consume(raw_rows: list[Any]) -> int | None:
+            min_ms: int | None = None
+            for row in raw_rows:
+                open_ms = int(row[0])
+                if min_ms is None or open_ms < min_ms:
+                    min_ms = open_ms
+                confirm = str(row[8]) if len(row) > 8 else "1"
+                if confirm != "1" and not _is_closed_bar(open_ms / 1000.0, interval, now_sec):
+                    continue
+                ts_iso = _ms_to_iso_utc(open_ms)
+                bars_by_ts[ts_iso] = OHLCVBar(
+                    ts_utc=ts_iso,
+                    open=float(row[1]),
+                    high=float(row[2]),
+                    low=float(row[3]),
+                    close=float(row[4]),
+                    volume=float(row[5]),
+                )
+            return min_ms
+
+        first_batch = min(limit, 300)
         resp = requests.get(
             self.BASE_URL,
-            params={"instId": source_symbol, "bar": bar_param, "limit": min(limit, 300)},
+            params={"instId": source_symbol, "bar": bar_param, "limit": first_batch},
             headers={"User-Agent": USER_AGENT},
             timeout=self.timeout_sec,
         )
@@ -167,30 +192,39 @@ class OkxAdapter(DataAdapter):
         if payload.get("code") != "0":
             raise ValueError(f"OKX API error: {payload}")
         raw = payload.get("data", [])
+        earliest_ms = _consume(raw)
 
-        now_sec = (now_utc or datetime.now(timezone.utc)).timestamp()
-        bars: list[OHLCVBar] = []
-        for row in raw:
-            open_ms = int(row[0])
-            confirm = str(row[8]) if len(row) > 8 else "1"
-            if confirm != "1" and not _is_closed_bar(open_ms / 1000.0, interval, now_sec):
-                continue
-            bars.append(
-                OHLCVBar(
-                    ts_utc=_ms_to_iso_utc(open_ms),
-                    open=float(row[1]),
-                    high=float(row[2]),
-                    low=float(row[3]),
-                    close=float(row[4]),
-                    volume=float(row[5]),
+        # Page backwards with history-candles (max 100/page) when caller requests > 300 bars
+        if limit > 300 and len(raw) >= 200 and earliest_ms is not None and len(bars_by_ts) < limit:
+            max_hist_pages = min(30, ((limit - len(bars_by_ts)) + 99) // 100 + 2)
+            for _ in range(max_hist_pages):
+                if len(bars_by_ts) >= limit or earliest_ms is None:
+                    break
+                h_resp = requests.get(
+                    self.HISTORY_URL,
+                    params={"instId": source_symbol, "bar": bar_param, "limit": 100, "after": str(earliest_ms)},
+                    headers={"User-Agent": USER_AGENT},
+                    timeout=self.timeout_sec,
                 )
-            )
-        bars.sort(key=lambda b: b.ts_utc)
-        return bars
+                h_resp.raise_for_status()
+                h_payload = h_resp.json()
+                if h_payload.get("code") != "0":
+                    break
+                h_raw = h_payload.get("data", [])
+                if not h_raw:
+                    break
+                prev_ms = earliest_ms
+                new_min_ms = _consume(h_raw)
+                if len(h_raw) < 100 or new_min_ms is None or new_min_ms >= prev_ms:
+                    break
+                earliest_ms = new_min_ms
+
+        bars = sorted(bars_by_ts.values(), key=lambda b: b.ts_utc)
+        return bars[-limit:]
 
 
 class BybitAdapter(DataAdapter):
-    """Bybit v5 public spot kline API."""
+    """Bybit v5 public spot kline API (with `end` pagination for > 1000 bars)."""
 
     name = "bybit"
     BASE_URL = "https://api.bybit.com/v5/market/kline"
@@ -206,36 +240,60 @@ class BybitAdapter(DataAdapter):
         iv = self.INTERVAL_MAP.get(interval)
         if not iv:
             raise ValueError(f"Unsupported interval: {interval}")
-        resp = requests.get(
-            self.BASE_URL,
-            params={"category": "spot", "symbol": source_symbol, "interval": iv, "limit": min(limit, 1000)},
-            headers={"User-Agent": USER_AGENT},
-            timeout=self.timeout_sec,
-        )
-        resp.raise_for_status()
-        payload = resp.json()
-        if payload.get("retCode") != 0:
-            raise ValueError(f"Bybit API error: {payload}")
-        raw = payload.get("result", {}).get("list", [])
-
         now_sec = (now_utc or datetime.now(timezone.utc)).timestamp()
-        bars: list[OHLCVBar] = []
-        for row in raw:
-            open_ms = int(row[0])
-            if not _is_closed_bar(open_ms / 1000.0, interval, now_sec):
-                continue
-            bars.append(
-                OHLCVBar(
-                    ts_utc=_ms_to_iso_utc(open_ms),
+        bars_by_ts: dict[str, OHLCVBar] = {}
+        end_ms: int | None = None
+        remaining = max(1, limit)
+        max_pages = 1 if limit <= 1000 else min(6, (limit + 999) // 1000)
+
+        for _ in range(max_pages):
+            batch_limit = min(remaining, 1000)
+            params: dict[str, Any] = {
+                "category": "spot",
+                "symbol": source_symbol,
+                "interval": iv,
+                "limit": batch_limit,
+            }
+            if end_ms is not None:
+                params["end"] = end_ms
+            resp = requests.get(
+                self.BASE_URL,
+                params=params,
+                headers={"User-Agent": USER_AGENT},
+                timeout=self.timeout_sec,
+            )
+            resp.raise_for_status()
+            payload = resp.json()
+            if payload.get("retCode") != 0:
+                raise ValueError(f"Bybit API error: {payload}")
+            raw = payload.get("result", {}).get("list", [])
+            if not raw:
+                break
+
+            earliest_ms: int | None = None
+            for row in raw:
+                open_ms = int(row[0])
+                if earliest_ms is None or open_ms < earliest_ms:
+                    earliest_ms = open_ms
+                if not _is_closed_bar(open_ms / 1000.0, interval, now_sec):
+                    continue
+                ts_iso = _ms_to_iso_utc(open_ms)
+                bars_by_ts[ts_iso] = OHLCVBar(
+                    ts_utc=ts_iso,
                     open=float(row[1]),
                     high=float(row[2]),
                     low=float(row[3]),
                     close=float(row[4]),
                     volume=float(row[5]),
                 )
-            )
-        bars.sort(key=lambda b: b.ts_utc)
-        return bars
+
+            if len(raw) < batch_limit or len(bars_by_ts) >= limit or earliest_ms is None:
+                break
+            end_ms = earliest_ms - 1
+            remaining = max(1, limit - len(bars_by_ts))
+
+        bars = sorted(bars_by_ts.values(), key=lambda b: b.ts_utc)
+        return bars[-limit:]
 
 
 class KrakenAdapter(DataAdapter):

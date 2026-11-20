@@ -220,6 +220,7 @@ def run_daily(
         data_fetcher=data_fetcher,
         now_utc=now,
         fetch_10y_if_missing=True,
+        update_history_store=True,
     )
     save_sec = round(time.monotonic() - t_save, 3)
 

@@ -1598,6 +1598,7 @@
                 <span class="ta-badge-text">${escapeHtml(trendState)}</span>
               </div>
               <div class="ta-hero-sub-badges">
+                ${ta.updating || ta.data_status === "資料更新中" ? '<span class="ta-sq-badge ta-sq-squeeze">資料更新中</span>' : ""}
                 <span class="ta-sq-badge ${sqBadgeCls}">${escapeHtml(sqBadgeLabel)}</span>
                 <span class="ta-pattern-badge">${escapeHtml(patternRaw)}<span class="ta-ref-tag">參考</span></span>
               </div>

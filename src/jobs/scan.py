@@ -668,6 +668,7 @@ def run_scan(
         latest_prices=engine.latest_marks,
         now_utc=now,
         fetch_10y_if_missing=False,
+        update_history_store=False,
     )
 
     if probe_all_adapters:

@@ -264,7 +264,7 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
     style_css = (root / "assets" / "style.css").read_text(encoding="utf-8")
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
-    assert "?v=20261120f" in index_html
+    assert "?v=20261121a" in index_html
     assert "技術分析" in index_html
     assert ".ta-panel" in style_css
     assert ".ta-detail-row" in style_css
@@ -520,3 +520,89 @@ def test_60d_low_has_real_support_and_only_ath_atl_use_fibo_extension() -> None:
     assert all(r.get("is_extension") is True for r in ta_ath["resistances"])
     assert all(r["strength"] == 1 for r in ta_ath["resistances"])
     assert all("延伸參考" in r["label"] for r in ta_ath["resistances"])
+
+
+def test_short_bars_do_not_overwrite_valid_ta_and_history_archive_works(tmp_path: Path) -> None:
+    """(a) 59 bars alone will not overwrite normal TA; (b) long history ensures BTC/ETH supports; (c) short_listing wording."""
+    from src.jobs.ta import HISTORY_1D_FILENAME, SHORT_LISTING_NOTE_KEYWORD
+
+    cfg = load_config()
+    eth_inst = next(i for i in cfg["instruments"] if i["symbol"] == "ETHUSDT")
+    btc_inst = next(i for i in cfg["instruments"] if i["symbol"] == "BTCUSDT")
+    sub_cfg = dict(cfg, instruments=[dict(eth_inst, enabled=True), dict(btc_inst, enabled=True)])
+
+    # Build > 2y oscillating history and populate history_1d.json.gz via update_history_store=True
+    eth_long = _make_daily_bars([2000.0 + 350.0 * math.sin(i * 0.12) for i in range(900)], spread=45.0, start_year=2024)
+    btc_long = _make_daily_bars([65000.0 + 7000.0 * math.sin(i * 0.12) for i in range(900)], spread=1200.0, start_year=2024)
+    now = datetime(2026, 11, 20, 12, 0, tzinfo=timezone.utc)
+
+    res_full = generate_ta_file(
+        out_dir=tmp_path,
+        config=sub_cfg,
+        bars_1d_by_sym={"ETHUSDT": eth_long, "BTCUSDT": btc_long},
+        now_utc=now,
+        fetch_10y_if_missing=False,
+        update_history_store=True,
+        use_local_cache=False,
+    )
+    assert (tmp_path / HISTORY_1D_FILENAME).exists()
+    for s in ("ETHUSDT", "BTCUSDT"):
+        assert res_full["symbols"][s]["bars_count"] == 900
+        assert res_full["symbols"][s]["support_status"] == "ok"
+        assert len(res_full["symbols"][s]["supports"]) >= 1
+        assert res_full["symbols"][s]["data_status"] == "ok"
+
+    # (a) Remove history_1d.json.gz, pass only 59 declining bars (and inject a legacy round item in prior ta.json to ensure sanitization)
+    (tmp_path / HISTORY_1D_FILENAME).unlink()
+    ta_doc = json.loads((tmp_path / "ta.json").read_text(encoding="utf-8"))
+    ta_doc["symbols"]["ETHUSDT"]["supports"].append({"price": 1500.0, "label": "整數關卡", "algo": "整數心理關卡 1,500", "strength": 1})
+    (tmp_path / "ta.json").write_text(json.dumps(ta_doc, ensure_ascii=False), encoding="utf-8")
+
+    bars_59 = _make_daily_bars([1800.0 - i * 4.0 for i in range(59)], spread=15.0, start_year=2026)
+    res_short = generate_ta_file(
+        out_dir=tmp_path,
+        config=sub_cfg,
+        bars_1d_by_sym={"ETHUSDT": bars_59, "BTCUSDT": btc_long[-59:]},
+        now_utc=now,
+        fetch_10y_if_missing=False,
+        update_history_store=False,
+        use_local_cache=False,
+    )
+    eth_after = res_short["symbols"]["ETHUSDT"]
+    assert eth_after["bars_count"] == 900  # Not overwritten by 59 bars
+    assert eth_after["data_status"] == "資料更新中"
+    assert eth_after["updating"] is True
+    assert len(eth_after["supports"]) >= 1
+    assert all("整數" not in s["label"] for s in eth_after["supports"])
+    assert SHORT_LISTING_NOTE_KEYWORD not in (eth_after.get("support_note") or "")
+
+    # (c) Without short_listing flag, even cold 59-bar ATL failure must NOT claim 上市或可用歷史較短
+    cold_dir = tmp_path / "cold"
+    res_cold_fail = generate_ta_file(
+        out_dir=cold_dir,
+        config=dict(cfg, instruments=[dict(eth_inst, enabled=True)]),
+        bars_1d_by_sym={"ETHUSDT": bars_59},
+        now_utc=now,
+        fetch_10y_if_missing=False,
+        update_history_store=False,
+        use_local_cache=False,
+    )
+    eth_cold = res_cold_fail["symbols"]["ETHUSDT"]
+    assert eth_cold["data_status"] == "資料更新中"
+    assert SHORT_LISTING_NOTE_KEYWORD not in (eth_cold.get("support_note") or "")
+    assert SHORT_LISTING_NOTE_KEYWORD not in (eth_cold.get("resistance_note") or "")
+
+    # Real new listing (< 2.2 years) fetched at limit>=1000 cleanly CAN display 上市或可用歷史較短 on an empty side
+    new_bars = _make_daily_bars([100.0 - i * 1.2 for i in range(60)], spread=1.5, start_year=2026)
+    ta_new_listing = analyze_symbol_ta("NEWIPO", "New IPO", "stock", new_bars, is_short_listing=True)
+    assert ta_new_listing is not None
+    assert ta_new_listing["support_status"] == "無明確支撐"
+    assert SHORT_LISTING_NOTE_KEYWORD in ta_new_listing["support_note"]
+
+    # Also verify real data/ta.json satisfies (b) for BTCUSDT & ETHUSDT
+    repo_ta = json.loads((Path(__file__).resolve().parent.parent / "data" / "ta.json").read_text(encoding="utf-8"))
+    for sym in ("BTCUSDT", "ETHUSDT"):
+        e = repo_ta["symbols"][sym]
+        assert e["bars_count"] >= 2000
+        assert e["support_status"] == "ok"
+        assert len(e["supports"]) >= 1

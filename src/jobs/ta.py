@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import math
 import pickle
-from datetime import datetime, timezone
+from collections import deque
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +25,9 @@ from src.indicators.technical import (
 
 TA_DISCLAIMER = "以上為依歷史數據與技術指標計算的參考點位，不是預測，也不是投資建議。"
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+HISTORY_1D_FILENAME = "history_1d.json.gz"
+MAX_HISTORY_1D_BARS = 2700
+SHORT_LISTING_NOTE_KEYWORD = "上市或可用歷史較短"
 
 
 def _sma(values: list[float], period: int) -> float | None:
@@ -77,8 +83,7 @@ def resample_1d_to_1w(bars: list[OHLCVBar]) -> tuple[list[OHLCVBar], list[int]]:
 
     for idx, b in enumerate(bars):
         try:
-            d = datetime.strptime(b.ts_utc[:10], "%Y-%m-%d").date()
-            iso = d.isocalendar()
+            iso = date.fromisoformat(b.ts_utc[:10]).isocalendar()
             wk_key = (int(iso[0]), int(iso[1]))
         except Exception:
             wk_key = (idx // 5, 0)
@@ -100,25 +105,27 @@ def find_swing_points(
     """Return confirmed swing highs and swing lows: list[(idx, date_str, price)]."""
     n = len(bars)
     k = max(1, left_right)
-    highs: list[tuple[int, str, float]] = []
-    lows: list[tuple[int, str, float]] = []
+    highs_out: list[tuple[int, str, float]] = []
+    lows_out: list[tuple[int, str, float]] = []
     if n < 2 * k + 1:
-        return highs, lows
+        return highs_out, lows_out
 
+    hi_arr = [b.high for b in bars]
+    lo_arr = [b.low for b in bars]
     for i in range(k, n - k):
-        hi_i = bars[i].high
-        lo_i = bars[i].low
-        left_hi = max(bars[j].high for j in range(i - k, i))
-        right_hi = max(bars[j].high for j in range(i + 1, i + k + 1))
+        hi_i = hi_arr[i]
+        lo_i = lo_arr[i]
+        left_hi = max(hi_arr[i - k : i])
+        right_hi = max(hi_arr[i + 1 : i + k + 1])
         if (hi_i >= left_hi and hi_i > right_hi) or (hi_i > left_hi and hi_i >= right_hi):
-            highs.append((i, bars[i].ts_utc[:10], float(hi_i)))
+            highs_out.append((i, bars[i].ts_utc[:10], float(hi_i)))
 
-        left_lo = min(bars[j].low for j in range(i - k, i))
-        right_lo = min(bars[j].low for j in range(i + 1, i + k + 1))
+        left_lo = min(lo_arr[i - k : i])
+        right_lo = min(lo_arr[i + 1 : i + k + 1])
         if (lo_i <= left_lo and lo_i < right_lo) or (lo_i < left_lo and lo_i <= right_lo):
-            lows.append((i, bars[i].ts_utc[:10], float(lo_i)))
+            lows_out.append((i, bars[i].ts_utc[:10], float(lo_i)))
 
-    return highs, lows
+    return highs_out, lows_out
 
 
 def find_consolidation_zones(
@@ -133,20 +140,64 @@ def find_consolidation_zones(
     if n < min_bars + 2:
         return []
 
+    hi_arr = [b.high for b in bars]
+    lo_arr = [b.low for b in bars]
+    c_arr = [b.close for b in bars]
+
+    # O(N) monotonic deque sliding window max/min + prefix sum for ATR20 mean
+    dq_hi_max: deque[int] = deque()
+    dq_lo_min: deque[int] = deque()
+    dq_c_max: deque[int] = deque()
+    dq_c_min: deque[int] = deque()
+    atr_pref = [0.0] * (n + 1)
+    atr_cnt = [0] * (n + 1)
+    for k in range(n):
+        v = atr20_series[k] if k < len(atr20_series) else None
+        if v is not None and v > 0:
+            atr_pref[k + 1] = atr_pref[k] + v
+            atr_cnt[k + 1] = atr_cnt[k] + 1
+        else:
+            atr_pref[k + 1] = atr_pref[k]
+            atr_cnt[k + 1] = atr_cnt[k]
+
     raw_boxes: list[dict[str, Any]] = []
-    for i in range(min_bars - 1, n):
+    for i in range(n):
         win_start = i - min_bars + 1
-        win = bars[win_start : i + 1]
-        atrs = [atr20_series[k] for k in range(win_start, i + 1) if k < len(atr20_series) and atr20_series[k] is not None and atr20_series[k] > 0]
-        atr_ref = (sum(atrs) / len(atrs)) if atrs else fallback_atr
+        while dq_hi_max and dq_hi_max[0] < win_start:
+            dq_hi_max.popleft()
+        while dq_hi_max and hi_arr[dq_hi_max[-1]] <= hi_arr[i]:
+            dq_hi_max.pop()
+        dq_hi_max.append(i)
+
+        while dq_lo_min and dq_lo_min[0] < win_start:
+            dq_lo_min.popleft()
+        while dq_lo_min and lo_arr[dq_lo_min[-1]] >= lo_arr[i]:
+            dq_lo_min.pop()
+        dq_lo_min.append(i)
+
+        while dq_c_max and dq_c_max[0] < win_start:
+            dq_c_max.popleft()
+        while dq_c_max and c_arr[dq_c_max[-1]] <= c_arr[i]:
+            dq_c_max.pop()
+        dq_c_max.append(i)
+
+        while dq_c_min and dq_c_min[0] < win_start:
+            dq_c_min.popleft()
+        while dq_c_min and c_arr[dq_c_min[-1]] >= c_arr[i]:
+            dq_c_min.pop()
+        dq_c_min.append(i)
+
+        if win_start < 0:
+            continue
+        cnt = atr_cnt[i + 1] - atr_cnt[win_start]
+        atr_ref = ((atr_pref[i + 1] - atr_pref[win_start]) / cnt) if cnt > 0 else fallback_atr
         if atr_ref is None or atr_ref <= 0:
             continue
-        hi = max(b.high for b in win)
-        lo = min(b.low for b in win)
-        # Allow minor single-wick spikes up to 2.5*ATR while requiring body/range containment <= 2.0*ATR
-        c_hi = max(b.close for b in win)
-        c_lo = min(b.close for b in win)
-        if (hi - lo) <= max_atr_amp * atr_ref or (c_hi - c_lo) <= max_atr_amp * atr_ref and (hi - lo) <= (max_atr_amp + 0.6) * atr_ref:
+        hi = hi_arr[dq_hi_max[0]]
+        lo = lo_arr[dq_lo_min[0]]
+        c_hi = c_arr[dq_c_max[0]]
+        c_lo = c_arr[dq_c_min[0]]
+        if (hi - lo) <= max_atr_amp * atr_ref or ((c_hi - c_lo) <= max_atr_amp * atr_ref and (hi - lo) <= (max_atr_amp + 0.6) * atr_ref):
             raw_boxes.append(
                 {
                     "start_idx": win_start,
@@ -417,6 +468,7 @@ def _select_sr_zones_tiered(
     swing_highs: list[tuple[int, str, float]],
     swing_lows: list[tuple[int, str, float]],
     max_per_side: int = 3,
+    is_short_listing: bool = False,
 ) -> dict[str, Any]:
     """Filter >=0.3*ATR, merge <0.5*ATR, score 1-3 stars, search 4*ATR -> 8*ATR -> all, fallback Fibo ext."""
     if cur_px <= 0:
@@ -579,8 +631,10 @@ def _select_sr_zones_tiered(
     if not res_out:
         res_status = "無明確壓力"
         prior_hi = max(b.high for b in bars[:-10]) if n > 15 else max(b.high for b in bars)
-        if n < 60:
-            res_note = "上市或可用歷史較短，上方尚無歷史價位"
+        if is_short_listing:
+            res_note = f"{SHORT_LISTING_NOTE_KEYWORD}（未滿 2 年），上方尚無歷史價位"
+        elif n < 500:
+            res_note = f"日線資料更新中（目前僅可用 {n} 根），上方尚無完整歷史壓力"
         elif cur_px >= max(b.high for b in bars) - near_excl:
             res_note = "現價創歷史新高或逼近歷史最高點，上方無歷史成交價位"
         elif cur_px >= prior_hi - near_excl:
@@ -602,13 +656,18 @@ def _select_sr_zones_tiered(
     if not sup_out:
         sup_status = "無明確支撐"
         prior_lo = min(b.low for b in bars[:-10]) if n > 15 else min(b.low for b in bars)
-        if n < 60:
-            sup_note = "上市或可用歷史較短，下方尚無歷史價位"
+        post_day0_lo = min(b.low for b in bars[1:-10]) if n > 20 else prior_lo
+        if is_short_listing:
+            sup_note = f"{SHORT_LISTING_NOTE_KEYWORD}（未滿 2 年），下方尚無歷史價位"
+        elif n < 500:
+            sup_note = f"日線資料更新中（目前僅可用 {n} 根），下方尚無完整歷史支撐"
         elif cur_px <= min(b.low for b in bars) + near_excl:
             sup_note = "現價創歷史新低或逼近歷史最低點，下方無歷史成交價位"
         elif cur_px <= prior_lo + near_excl:
             recent_atl = min(b.low for b in bars)
             sup_note = f"近 10 日剛跌破歷史前低（最低曾觸及 {recent_atl:,.4g}），下方尚無已確認歷史支撐"
+        elif cur_px <= post_day0_lo + near_excl:
+            sup_note = f"現價已跌破上市首日以外之所有歷史低點（最低僅上市首日 {bars[0].low:,.4g}），下方無已成交支撐區"
         else:
             sup_note = "可用歷史區間下方無有效支壓價位"
         sup_out = _build_fibo_extension_fallbacks(
@@ -728,7 +787,7 @@ def classify_trend(
     w_sma20 = _sma(w_closes, 20)
     w_sma50 = _sma(w_closes, 50)
 
-    adx14 = compute_adx(bars, period=14, market="crypto", interval="1d")
+    adx14 = compute_adx(bars[-250:], period=14, market="crypto", interval="1d")
 
     state = "盤整"
     detail_parts: list[str] = []
@@ -979,6 +1038,8 @@ def analyze_symbol_ta(
     latest_price: float | None = None,
     long_bars_1d: list[OHLCVBar] | None = None,
     existing_backtest: dict[str, Any] | None = None,
+    is_short_listing: bool = False,
+    recompute_backtest: bool = True,
 ) -> dict[str, Any] | None:
     """Compute complete technical analysis snapshot for a single symbol."""
     eff_bars = sorted({b.ts_utc[:10]: b for b in (long_bars_1d or bars_1d)}.values(), key=lambda x: x.ts_utc)
@@ -1226,6 +1287,7 @@ def analyze_symbol_ta(
         swing_highs=swing5_h,
         swing_lows=swing5_l,
         max_per_side=3,
+        is_short_listing=is_short_listing,
     )
     resistances = sr_result["resistances"]
     supports = sr_result["supports"]
@@ -1251,7 +1313,7 @@ def analyze_symbol_ta(
 
     # 5. Compression (Bollinger BandWidth 20,2 percentile over 1y)
     bb_pct = compute_bollinger_bandwidth_percentile(
-        eff_bars, period=20, num_std=2.0, lookback=min(lb_1y, max(30, n - 20))
+        eff_bars[-(lb_1y + 25) :], period=20, num_std=2.0, lookback=min(lb_1y, max(30, n - 20))
     )
     is_squeezing = bb_pct is not None and bb_pct < 20.0
     squeeze_label = "收斂中，可能變盤" if is_squeezing else ("波動擴張中" if (bb_pct is not None and bb_pct >= 80.0) else "波動正常")
@@ -1259,8 +1321,13 @@ def analyze_symbol_ta(
     # 6. Pattern Recognition
     pattern = detect_chart_pattern(swing5_h, swing5_l, atr20, cur_px)
 
-    # 7. Historical Causal Validation
-    if n < 500 and existing_backtest and (
+    # 7. Historical Causal Validation (reuse same-day backtest on intraday 15m scans when passed)
+    if not recompute_backtest and existing_backtest and (
+        (existing_backtest.get("support_samples") or 0) > 0
+        or (existing_backtest.get("resistance_samples") or 0) > 0
+    ):
+        backtest = existing_backtest
+    elif n < 500 and existing_backtest and (
         (existing_backtest.get("support_samples") or 0) > 0
         or (existing_backtest.get("resistance_samples") or 0) > 0
         or (existing_backtest.get("years") or 0) >= 2.0
@@ -1310,6 +1377,131 @@ def analyze_symbol_ta(
     }
 
 
+def _compact_num(val: float) -> float:
+    if not math.isfinite(val):
+        return 0.0
+    abs_v = abs(val)
+    if abs_v >= 100:
+        return round(val, 4)
+    if abs_v >= 1:
+        return round(val, 5)
+    return round(val, 8)
+
+
+def _is_genuine_short_listing(bars: list[OHLCVBar], now: datetime) -> bool:
+    """Return True only when full-history fetch shows asset has < 500 bars and listed within ~2.2 years."""
+    if not (25 <= len(bars) < 500):
+        return False
+    try:
+        first_dt = datetime.strptime(bars[0].ts_utc[:10], "%Y-%m-%d").date()
+        age_days = (now.date() - first_dt).days
+        return 0 <= age_days <= 800
+    except Exception:
+        return False
+
+
+def _has_round_text(lvl: dict[str, Any]) -> bool:
+    lbl = str(lvl.get("label", ""))
+    algo = str(lvl.get("algo", ""))
+    return ("整數" in lbl) or ("心理關卡" in lbl) or ("整數" in algo) or ("心理關卡" in algo)
+
+
+def _sanitize_ta_entry(entry: dict[str, Any]) -> dict[str, Any]:
+    """Deep-copy a TA entry while stripping any residual round-number levels."""
+    cleaned = dict(entry)
+    for key in ("resistances", "supports"):
+        raw_list = cleaned.get(key)
+        if isinstance(raw_list, list):
+            cleaned[key] = [dict(x) for x in raw_list if isinstance(x, dict) and not _has_round_text(x)]
+    return cleaned
+
+
+def _load_history_1d_store(out_dir: Path) -> dict[str, dict[str, Any]]:
+    """Load compressed per-symbol daily OHLCV archive from `out_dir/history_1d.json.gz`."""
+    hist_path = out_dir / HISTORY_1D_FILENAME
+    if not hist_path.exists():
+        return {}
+    try:
+        doc = json.loads(gzip.decompress(hist_path.read_bytes()).decode("utf-8"))
+        syms_raw = doc.get("symbols") if isinstance(doc, dict) else None
+        if not isinstance(syms_raw, dict):
+            return {}
+        store: dict[str, dict[str, Any]] = {}
+        for sym, rec in syms_raw.items():
+            if not isinstance(rec, dict):
+                continue
+            bars: list[OHLCVBar] = []
+            for row in rec.get("bars") or []:
+                if not isinstance(row, (list, tuple)) or len(row) < 5:
+                    continue
+                d_str = str(row[0])[:10]
+                if len(d_str) != 10:
+                    continue
+                v = float(row[5]) if len(row) >= 6 and row[5] is not None else 0.0
+                bars.append(
+                    OHLCVBar(
+                        ts_utc=f"{d_str}T00:00:00Z",
+                        open=float(row[1]),
+                        high=float(row[2]),
+                        low=float(row[3]),
+                        close=float(row[4]),
+                        volume=v,
+                    )
+                )
+            bars.sort(key=lambda b: b.ts_utc)
+            store[sym] = {
+                "short_listing": bool(rec.get("short_listing", False)),
+                "full_fetch_at_utc": rec.get("full_fetch_at_utc"),
+                "bars": bars,
+            }
+        return store
+    except Exception:
+        return {}
+
+
+def _save_history_1d_store(out_dir: Path, store: dict[str, dict[str, Any]], now_iso: str) -> None:
+    """Persist compressed daily OHLCV archive to `out_dir/history_1d.json.gz`."""
+    out_syms: dict[str, Any] = {}
+    for sym in sorted(store.keys()):
+        rec = store[sym]
+        bars: list[OHLCVBar] = rec.get("bars") or []
+        if not bars:
+            continue
+        by_day = {b.ts_utc[:10]: b for b in bars}
+        ordered = [by_day[d] for d in sorted(by_day.keys())[-MAX_HISTORY_1D_BARS:]]
+        compact_rows = [
+            [
+                b.ts_utc[:10],
+                _compact_num(b.open),
+                _compact_num(b.high),
+                _compact_num(b.low),
+                _compact_num(b.close),
+                _compact_num(b.volume),
+            ]
+            for b in ordered
+        ]
+        out_syms[sym] = {
+            "short_listing": bool(rec.get("short_listing", False)),
+            "full_fetch_at_utc": rec.get("full_fetch_at_utc"),
+            "bars": compact_rows,
+        }
+    payload = {"version": 1, "updated_at_utc": now_iso, "symbols": out_syms}
+    raw_bytes = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    gz_bytes = gzip.compress(raw_bytes, compresslevel=9)
+    hist_path = out_dir / HISTORY_1D_FILENAME
+    hist_path.parent.mkdir(parents=True, exist_ok=True)
+    hist_path.write_bytes(gz_bytes)
+
+
+def _merge_daily_bars(*bar_lists: list[OHLCVBar]) -> list[OHLCVBar]:
+    merged: dict[str, OHLCVBar] = {}
+    for bars in bar_lists:
+        for b in bars:
+            merged[b.ts_utc[:10]] = b
+    ordered = [merged[d] for d in sorted(merged.keys())]
+    return ordered[-MAX_HISTORY_1D_BARS:] if len(ordered) > MAX_HISTORY_1D_BARS else ordered
+
+
 def _load_research_1d_cache() -> dict[str, list[OHLCVBar]]:
     out: dict[str, list[OHLCVBar]] = {}
     for fname in ("research_1d_bars.pkl", "ta_1d_bars.pkl"):
@@ -1357,6 +1549,28 @@ def _load_scan_bars_1d(symbol: str) -> list[OHLCVBar]:
     return []
 
 
+def _needs_full_history_fetch(
+    merged_count: int,
+    rec: dict[str, Any] | None,
+    now: datetime,
+) -> bool:
+    if merged_count >= 2000:
+        return False
+    full_at_str = (rec or {}).get("full_fetch_at_utc")
+    age_days: float | None = None
+    if isinstance(full_at_str, str) and full_at_str:
+        try:
+            age_days = (now - datetime.fromisoformat(full_at_str.replace("Z", "+00:00"))).total_seconds() / 86400.0
+        except Exception:
+            age_days = None
+    if merged_count < 500:
+        if rec and rec.get("short_listing") and age_days is not None and age_days < 7.0:
+            return False
+        return True
+    # Between 500 and 1999 bars: backfill only if not already checked recently within 30 days
+    return age_days is None or age_days >= 30.0
+
+
 def generate_ta_file(
     out_dir: Path,
     config: dict[str, Any] | None = None,
@@ -1365,13 +1579,16 @@ def generate_ta_file(
     data_fetcher: FallbackDataFetcher | None = None,
     now_utc: datetime | None = None,
     fetch_10y_if_missing: bool = False,
+    update_history_store: bool = False,
+    use_local_cache: bool = True,
 ) -> dict[str, Any]:
     """Build technical analysis for all active instruments and write `out_dir/ta.json`."""
     cfg = config or load_config()
     now = (now_utc or datetime.now(timezone.utc)).astimezone(timezone.utc)
     now_iso = now.strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    research_1d = _load_research_1d_cache()
+    history_store = _load_history_1d_store(out_dir)
+    research_1d = _load_research_1d_cache() if use_local_cache else {}
 
     def _load_ta_symbols(p: Path) -> dict[str, Any]:
         if not p.exists():
@@ -1393,35 +1610,125 @@ def generate_ta_file(
     marks = latest_prices or {}
     instruments = [inst for inst in cfg.get("instruments", []) if inst.get("enabled", True)]
 
-    out_symbols: dict[str, Any] = {}
+    # Step 1: Collect live + archived bars and determine which symbols need 10y fetch (daily job)
+    live_by_sym: dict[str, list[OHLCVBar]] = {}
+    cached_by_sym: dict[str, list[OHLCVBar]] = {}
+    fetch_targets: list[dict[str, Any]] = []
+
+    for inst in instruments:
+        sym = inst["symbol"]
+        live_bars = list(bars_map.get(sym, []))
+        if not live_bars and fetch_10y_if_missing and use_local_cache:
+            live_bars = _load_scan_bars_1d(sym)
+        live_by_sym[sym] = live_bars
+
+        hist_rec = history_store.get(sym)
+        hist_bars = list(hist_rec.get("bars") or []) if hist_rec else []
+        local_10y = list(research_1d.get(sym, []))
+        combined = _merge_daily_bars(local_10y, hist_bars, live_bars)
+        cached_by_sym[sym] = _merge_daily_bars(local_10y, hist_bars)
+
+        if fetch_10y_if_missing and data_fetcher is not None and _needs_full_history_fetch(len(combined), hist_rec, now):
+            fetch_targets.append(inst)
+
     fetched_for_cache: dict[str, list[OHLCVBar]] = {}
+    if fetch_targets and data_fetcher is not None:
+        def _fetch_one(inst_item: dict[str, Any]) -> tuple[str, bool, list[OHLCVBar]]:
+            s = inst_item["symbol"]
+            try:
+                res_long = data_fetcher.fetch(inst_item, "1d", limit=2600, now_utc=now)
+                if res_long.ok and res_long.bars:
+                    return s, True, list(res_long.bars)
+            except Exception:
+                pass
+            return s, False, []
+
+        with ThreadPoolExecutor(max_workers=6) as pool:
+            futs = [pool.submit(_fetch_one, inst_item) for inst_item in fetch_targets]
+            for fut in as_completed(futs):
+                s, ok_long, fetched_bars = fut.result()
+                if ok_long and fetched_bars:
+                    fetched_for_cache[s] = fetched_bars
+                    prior_hist = cached_by_sym.get(s, [])
+                    merged_long = _merge_daily_bars(prior_hist, fetched_bars, live_by_sym.get(s, []))
+                    cached_by_sym[s] = merged_long
+                    short_flag = _is_genuine_short_listing(merged_long, now)
+                    history_store[s] = {
+                        "short_listing": short_flag,
+                        "full_fetch_at_utc": now_iso,
+                        "bars": merged_long,
+                    }
+
+    # Step 2: Update compressed history archive when invoked by daily / explicit build
+    if update_history_store:
+        for inst in instruments:
+            s = inst["symbol"]
+            rec = history_store.get(s, {})
+            merged_hist = _merge_daily_bars(cached_by_sym.get(s, []), live_by_sym.get(s, []))
+            if merged_hist:
+                history_store[s] = {
+                    "short_listing": bool(rec.get("short_listing", False)) if len(merged_hist) < 500 else False,
+                    "full_fetch_at_utc": rec.get("full_fetch_at_utc"),
+                    "bars": merged_hist,
+                }
+        _save_history_1d_store(out_dir, history_store, now_iso=now_iso)
+
+    if fetched_for_cache and use_local_cache:
+        _save_ta_1d_cache(fetched_for_cache)
+
+    # Step 3: Analyze each symbol with safeguard against short-bar overwrites
+    out_symbols: dict[str, Any] = {}
     for inst in instruments:
         sym = inst["symbol"]
         mkt = inst["market"]
         disp = inst.get("display_name", sym)
 
-        live_bars = list(bars_map.get(sym, []))
-        if not live_bars and fetch_10y_if_missing:
-            live_bars = _load_scan_bars_1d(sym)
-        cached_10y = list(research_1d.get(sym, []))
-        uniq_dates = {b.ts_utc[:10] for b in cached_10y} | {b.ts_utc[:10] for b in live_bars}
+        live_bars = live_by_sym.get(sym, [])
+        long_bars = cached_by_sym.get(sym, [])
+        eff_bars = _merge_daily_bars(long_bars, live_bars)
+        hist_rec = history_store.get(sym)
+        is_short_listing = bool(hist_rec and hist_rec.get("short_listing") and _is_genuine_short_listing(eff_bars, now))
 
-        if fetch_10y_if_missing and data_fetcher is not None and len(uniq_dates) < 500:
-            try:
-                res_long = data_fetcher.fetch(inst, "1d", limit=2600, now_utc=now)
-                if res_long.ok and res_long.bars:
-                    cached_10y = res_long.bars
-                    fetched_for_cache[sym] = res_long.bars
-            except Exception:
-                pass
+        old_raw = existing_symbols.get(sym)
+        fb_raw = fallback_symbols.get(sym)
+        prev_existing = _sanitize_ta_entry(old_raw) if isinstance(old_raw, dict) else None
+        prev_fallback = _sanitize_ta_entry(fb_raw) if isinstance(fb_raw, dict) else None
 
-        old_sym_ta = existing_symbols.get(sym) or {}
-        old_bt = old_sym_ta.get("backtest") if isinstance(old_sym_ta, dict) else None
+        # Choose valid prior reference (>=500 bars and not already marked updating if a cleaner one exists)
+        prev_valid: dict[str, Any] | None = None
+        for cand_prev in (prev_existing, prev_fallback):
+            if cand_prev and (cand_prev.get("bars_count") or 0) >= 500:
+                if cand_prev.get("resistances") or cand_prev.get("supports"):
+                    prev_valid = cand_prev
+                    break
+
+        old_bt = (prev_existing or {}).get("backtest")
         if not (isinstance(old_bt, dict) and ((old_bt.get("support_samples") or 0) > 0 or (old_bt.get("resistance_samples") or 0) > 0)):
-            fb_ta = fallback_symbols.get(sym) or {}
-            fb_bt = fb_ta.get("backtest") if isinstance(fb_ta, dict) else None
+            fb_bt = (prev_fallback or {}).get("backtest")
             if isinstance(fb_bt, dict) and ((fb_bt.get("support_samples") or 0) > 0 or (fb_bt.get("resistance_samples") or 0) > 0):
                 old_bt = fb_bt
+
+        # Safeguard: Never overwrite a normal >=500-bar TA entry with incomplete (<500) fetch bars
+        if len(eff_bars) < 500 and not is_short_listing and prev_valid is not None:
+            preserved = _sanitize_ta_entry(prev_valid)
+            preserved["data_status"] = "資料更新中"
+            preserved["updating"] = True
+            preserved["updating_notice"] = f"日線資料更新中（僅取得 {len(eff_bars)} 根），暫保留前次完整分析結果"
+            out_symbols[sym] = preserved
+            continue
+
+        latest_eff_date = eff_bars[-1].ts_utc[:10] if eff_bars else ""
+        same_day_cached = (
+            not fetch_10y_if_missing
+            and prev_existing is not None
+            and prev_existing.get("latest_bar_date") == latest_eff_date
+            and prev_existing.get("bars_count") == len(eff_bars)
+            and isinstance(prev_existing.get("backtest"), dict)
+            and (
+                (prev_existing["backtest"].get("support_samples") or 0) > 0
+                or (prev_existing["backtest"].get("resistance_samples") or 0) > 0
+            )
+        )
 
         ta_entry = analyze_symbol_ta(
             symbol=sym,
@@ -1429,14 +1736,26 @@ def generate_ta_file(
             market=mkt,
             bars_1d=live_bars,
             latest_price=marks.get(sym),
-            long_bars_1d=cached_10y,
+            long_bars_1d=long_bars,
             existing_backtest=old_bt,
+            is_short_listing=is_short_listing,
+            recompute_backtest=not same_day_cached,
         )
         if ta_entry is not None:
-            out_symbols[sym] = ta_entry
-
-    if fetched_for_cache:
-        _save_ta_1d_cache(fetched_for_cache)
+            if len(eff_bars) < 500 and not is_short_listing:
+                ta_entry["data_status"] = "資料更新中"
+                ta_entry["updating"] = True
+                ta_entry["updating_notice"] = f"長日線資料更新中（目前僅可用 {len(eff_bars)} 根）"
+            else:
+                ta_entry["data_status"] = "ok"
+                ta_entry["updating"] = False
+            out_symbols[sym] = _sanitize_ta_entry(ta_entry)
+        elif prev_valid is not None:
+            preserved = _sanitize_ta_entry(prev_valid)
+            preserved["data_status"] = "資料更新中"
+            preserved["updating"] = True
+            preserved["updating_notice"] = f"日線資料更新中（可用 {len(eff_bars)} 根），暫保留前次分析結果"
+            out_symbols[sym] = preserved
 
     payload = {
         "updated_at_utc": now_iso,
@@ -1453,6 +1772,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Generate daily technical analysis data/ta.json")
     parser.add_argument("--out-dir", type=Path, default=Path("data"))
     parser.add_argument("--fetch-10y", action="store_true", help="Fetch 10y 1d history if local cache missing")
+    parser.add_argument("--build-history", action="store_true", help="Persist history_1d.json.gz alongside ta.json")
     args = parser.parse_args()
 
     cfg = load_config()
@@ -1462,6 +1782,7 @@ def main() -> None:
         config=cfg,
         data_fetcher=fetcher,
         fetch_10y_if_missing=args.fetch_10y,
+        update_history_store=args.build_history or args.fetch_10y,
     )
     print(f"Generated {args.out_dir / 'ta.json'} for {payload['symbols_count']} symbols.")
 

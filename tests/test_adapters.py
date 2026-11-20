@@ -155,3 +155,34 @@ def test_fetch_crypto_derivatives_meta_okx_and_fallback() -> None:
         meta_fail = fetch_crypto_derivatives_meta(inst)
     assert meta_fail["status"] == "抓取失敗"
     assert meta_fail["funding_rate"] is None
+
+
+def test_okx_and_bybit_paginate_past_single_page_cap() -> None:
+    now = datetime(2026, 11, 20, 12, 0, tzinfo=timezone.utc)
+    base_ms = int(datetime(2026, 11, 19, 0, 0, tzinfo=timezone.utc).timestamp() * 1000)
+    day_ms = 86400 * 1000
+
+    # OKX: first page returns 300 rows from /candles, second page returns 50 older rows from /history-candles
+    okx_p1 = [[str(base_ms - i * day_ms), "100", "105", "95", "101", "10", "0", "0", "1"] for i in range(300)]
+    okx_p2 = [[str(base_ms - (300 + i) * day_ms), "90", "95", "85", "91", "10", "0", "0", "1"] for i in range(50)]
+    resp_okx_1 = MagicMock()
+    resp_okx_1.json.return_value = {"code": "0", "data": okx_p1}
+    resp_okx_2 = MagicMock()
+    resp_okx_2.json.return_value = {"code": "0", "data": okx_p2}
+    with patch("src.data.adapters.requests.get", side_effect=[resp_okx_1, resp_okx_2]) as mock_get:
+        bars_okx = OkxAdapter().fetch_bars("BTC-USDT", "1d", limit=400, now_utc=now)
+    assert len(bars_okx) == 350
+    assert bars_okx[0].ts_utc < bars_okx[-1].ts_utc
+    assert "history-candles" in mock_get.call_args_list[1].args[0]
+
+    # Bybit: first page 1000 rows, second page 100 rows
+    by_p1 = [[str(base_ms - i * day_ms), "100", "105", "95", "101", "10", "1000"] for i in range(1000)]
+    by_p2 = [[str(base_ms - (1000 + i) * day_ms), "90", "95", "85", "91", "10", "900"] for i in range(100)]
+    resp_by_1 = MagicMock()
+    resp_by_1.json.return_value = {"retCode": 0, "result": {"list": by_p1}}
+    resp_by_2 = MagicMock()
+    resp_by_2.json.return_value = {"retCode": 0, "result": {"list": by_p2}}
+    with patch("src.data.adapters.requests.get", side_effect=[resp_by_1, resp_by_2]):
+        bars_by = BybitAdapter().fetch_bars("BTCUSDT", "1d", limit=1150, now_utc=now)
+    assert len(bars_by) == 1100
+    assert bars_by[0].ts_utc < bars_by[-1].ts_utc
