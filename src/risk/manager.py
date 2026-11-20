@@ -70,6 +70,24 @@ class RiskManager:
                 reason=f"{symbol} 策略 {strategy} 已有進行中持倉，不重複開單",
             )
 
+        corr_group = str(instrument.get("correlation_group") or "")
+        if corr_group:
+            grp_cfg = self.config.get("correlation_groups", {}).get(corr_group, {})
+            max_grp_pos = grp_cfg.get("max_positions")
+            if max_grp_pos is not None:
+                grp_counts = account_state.get("subaccount_group_counts", {})
+                cur_grp_cnt = int(grp_counts.get(corr_group, 0))
+                if cur_grp_cnt >= int(max_grp_pos):
+                    grp_name = grp_cfg.get("name", corr_group)
+                    return RiskCheckResult(
+                        approved=False,
+                        r_plan_usd=0.0,
+                        notional_usd=0.0,
+                        qty=0.0,
+                        risk_status="normal",
+                        reason=f"{symbol} 同相關性群組（{grp_name}）持倉已達上限 ({cur_grp_cnt}/{int(max_grp_pos)})",
+                    )
+
         strat_cfg = self.strategies_cfg.get(strategy, {})
         default_sub_cap = float(strat_cfg.get("capital_usd", 10000.0 if is_short_term_strategy(strategy) else 20000.0))
         sub_eq = float(account_state.get("subaccount_equity_usd", default_sub_cap))

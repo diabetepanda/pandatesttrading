@@ -262,7 +262,13 @@ def run_scan(
                 if iv in ("1m", "15m") and res.ok and len(res.bars) > 120
                 else res
             )
-            report = check_continuity(eval_res, market=market, quality_config=quality_cfg, now_utc=now)
+            report = check_continuity(
+                eval_res,
+                market=market,
+                quality_config=quality_cfg,
+                now_utc=now,
+                trading_hours=inst.get("trading_hours"),
+            )
             intervals_reports[iv] = report.to_dict()
 
             if probe_all_adapters:
@@ -291,14 +297,14 @@ def run_scan(
         elif is_daily_only:
             intervals_reports["1m"] = {
                 "status": "skipped",
-                "reason": "指數僅用於日線與長線策略",
+                "reason": "此標的僅用於日線與長線策略",
                 "latest_close": None,
                 "latest_ts_utc": None,
                 "source_used": None,
             }
             intervals_reports["15m"] = {
                 "status": "skipped",
-                "reason": "指數不進 15 分鐘掃描",
+                "reason": "日線標的不進 15 分鐘掃描",
                 "latest_close": None,
                 "latest_ts_utc": None,
                 "source_used": None,
@@ -372,12 +378,14 @@ def run_scan(
         return {
             "symbol": symbol,
             "market": market,
+            "enabled": bool(inst.get("enabled", True)),
             "overall_status": overall_status,
             "inst_out": {
                 "symbol": symbol,
                 "display_name": inst.get("display_name", symbol),
                 "market": market,
                 "correlation_group": inst.get("correlation_group", ""),
+                "trading_hours": inst.get("trading_hours", ""),
                 "latest_price": latest_price,
                 "latest_ts_utc": latest_ts,
                 "source_used": source_used,
@@ -410,8 +418,9 @@ def run_scan(
 
     for b in fetched_bundles:
         sym = b["symbol"]
-        status_counts[b["overall_status"]] = status_counts.get(b["overall_status"], 0) + 1
-        instruments_out.append(b["inst_out"])
+        if not (b["market"] == "forex" and not b.get("enabled", True)):
+            status_counts[b["overall_status"]] = status_counts.get(b["overall_status"], 0) + 1
+            instruments_out.append(b["inst_out"])
         bars_1m_by_sym[sym] = b["bars_1m"]
         bars_15m_by_sym[sym] = b["bars_15m"]
         bars_1d_by_sym[sym] = b["bars_1d"]

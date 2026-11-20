@@ -223,9 +223,22 @@ def build_performance_stats(
     s1_stats = _calc_group([t for t in trades if t.strategy == "S1"])
     s1_stats["retired"] = True
     by_strategy["S1"] = s1_stats
+    inst_by_sym = {i["symbol"]: i for i in cfg.get("instruments", [])}
+
+    def _ui_market_bucket(tr: Any) -> str:
+        mkt = str(getattr(tr, "market", "") or "")
+        if mkt != "stock":
+            return mkt
+        inst = inst_by_sym.get(getattr(tr, "symbol", ""), {})
+        th = str(inst.get("trading_hours", "") or "")
+        grp = str(inst.get("correlation_group", "") or getattr(tr, "correlation_group", "") or "")
+        if th == "TW_STOCK" or grp.startswith("tw_") or str(getattr(tr, "symbol", "")).isdigit():
+            return "tw_stock"
+        return "us_stock"
+
     by_market = {
-        m: _calc_group([t for t in trades if t.market == m])
-        for m in ("crypto", "forex", "commodity", "index")
+        m: _calc_group([t for t in trades if _ui_market_bucket(t) == m])
+        for m in ("crypto", "tw_stock", "us_stock", "commodity", "index")
     }
     by_direction = {
         d: _calc_group([t for t in trades if t.direction == d])

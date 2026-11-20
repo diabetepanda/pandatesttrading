@@ -26,18 +26,30 @@ def is_weekend_closure(dt: datetime) -> bool:
     return False
 
 
-def is_market_open(market: str, dt: datetime) -> bool:
+def is_market_open(market: str, dt: datetime, trading_hours: str | None = None) -> bool:
     """Approximate whether a market is expected to be trading at dt (UTC)."""
     if market == "crypto":
         return True
-    if market in ("forex", "commodity", "index"):
-        return not is_weekend_closure(dt)
-    if market == "stock":
-        # US equities: Mon-Fri 13:30 - 20:00 UTC (approx)
+    if trading_hours in ("TW_STOCK", "TW_INDEX"):
         if dt.weekday() >= 5:
             return False
         minutes = dt.hour * 60 + dt.minute
-        return (13 * 60 + 30) <= minutes <= (20 * 60)
+        # TWSE 09:00-13:30 Asia/Taipei == 01:00-05:30 UTC
+        return (1 * 60) <= minutes <= (5 * 60 + 30)
+    if trading_hours in ("KR_STOCK", "JP_INDEX"):
+        if dt.weekday() >= 5:
+            return False
+        minutes = dt.hour * 60 + dt.minute
+        # KRX 09:00-15:30 KST / TSE 09:00-15:30 JST == 00:00-06:30 UTC
+        return 0 <= minutes <= (6 * 60 + 30)
+    if market in ("forex", "commodity", "index"):
+        return not is_weekend_closure(dt)
+    if market == "stock":
+        # US equities: Mon-Fri 13:30 - 21:00 UTC (covers EDT & EST)
+        if dt.weekday() >= 5:
+            return False
+        minutes = dt.hour * 60 + dt.minute
+        return (13 * 60 + 30) <= minutes <= (21 * 60)
     return True
 
 
@@ -109,6 +121,7 @@ def check_continuity(
     market: str,
     quality_config: dict[str, Any],
     now_utc: datetime | None = None,
+    trading_hours: str | None = None,
 ) -> QualityReport:
     """Evaluate bar continuity, delay, and abnormal gaps."""
     now = (now_utc or datetime.now(timezone.utc)).astimezone(timezone.utc)
@@ -145,6 +158,16 @@ def check_continuity(
             continue
         if _is_expected_break(prev_dt, curr_dt, market, interval):
             expected_bars += 1
+        elif interval == "1d" and market != "crypto":
+            # Exclude Saturdays/Sundays when counting missed daily bars around weekday market holidays
+            missed_weekdays = 0
+            cursor = prev_dt + timedelta(days=1)
+            while cursor.date() < curr_dt.date():
+                if cursor.weekday() < 5:
+                    missed_weekdays += 1
+                cursor += timedelta(days=1)
+            expected_bars += 1 + missed_weekdays
+            missing_bars += missed_weekdays
         else:
             steps = max(1, round(diff_sec / interval_sec))
             expected_bars += steps
@@ -179,7 +202,7 @@ def check_continuity(
         status = "unstable"
         reasons.append(f"缺 K 線比例過高 ({missing_ratio:.1%} > {max_missing:.1%})")
 
-    market_open_now = is_market_open(market, now)
+    market_open_now = is_market_open(market, now, trading_hours=trading_hours)
     if market_open_now and delay_minutes > max_delay:
         if status == "ok":
             status = "stale"

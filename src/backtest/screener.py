@@ -363,9 +363,20 @@ def simulate_portfolio_strategy(
 
         # 2) Pending entries at bar open using shared allocate_subaccount_position
         if t_idx in pending_entries:
+            corr_groups_cfg = config.get("correlation_groups", {})
             for sym, fill_bidx, act in pending_entries.pop(t_idx):
                 if sym in open_pos:
                     continue
+                inst_entry = instruments_by_sym[sym]
+                corr_group = str(inst_entry.get("correlation_group") or "")
+                max_grp = corr_groups_cfg.get(corr_group, {}).get("max_positions") if corr_group else None
+                if max_grp is not None:
+                    cur_grp_cnt = sum(
+                        1 for osym in open_pos
+                        if str(instruments_by_sym.get(osym, {}).get("correlation_group") or "") == corr_group
+                    )
+                    if cur_grp_cnt >= int(max_grp):
+                        continue
                 bar = bars_by_symbol[sym][fill_bidx]
                 spread_bps, fee_rate, overnight_bps = inst_params[sym]
                 direction = act.direction

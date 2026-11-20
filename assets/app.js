@@ -218,9 +218,32 @@
     return map[reason] || reason || "--";
   }
 
-  function marketLabel(market) {
-    const map = { crypto: "加密貨幣", forex: "外匯", commodity: "商品", index: "指數", stock: "股票" };
-    return map[market] || market;
+  function getUiMarketKey(market, symbol, instrumentObj) {
+    const m = String(market || "");
+    if (m === "tw_stock" || m === "us_stock") return m;
+    if (m !== "stock") return m;
+    const inst = instrumentObj || cachedInstruments.find((i) => i && i.symbol === symbol) || null;
+    const th = String(inst?.trading_hours || "");
+    const grp = String(inst?.correlation_group || "");
+    if (th === "TW_STOCK" || grp.startsWith("tw_") || /^\d{4}$/.test(String(symbol || ""))) {
+      return "tw_stock";
+    }
+    return "us_stock";
+  }
+
+  function formatInstrumentTitle(symbol, instrumentObj) {
+    const sym = String(symbol || "");
+    const inst = instrumentObj || cachedInstruments.find((i) => i && i.symbol === sym) || null;
+    if (inst && inst.display_name && (inst.market === "stock" || inst.market === "index")) {
+      return inst.display_name;
+    }
+    return sym;
+  }
+
+  function marketLabel(market, symbol, instrumentObj) {
+    const key = getUiMarketKey(market, symbol, instrumentObj);
+    const map = { crypto: "加密貨幣", tw_stock: "台股", us_stock: "美股／個股", stock: "美股／個股", commodity: "商品", index: "指數" };
+    return map[key] || (key === "forex" ? "歷史標的" : key);
   }
 
   async function fetchWithTimeout(url, asText = false) {
@@ -1039,7 +1062,7 @@
         if (Number.isNaN(t) || t < cutoff30) return false;
       }
       if (fStrat !== "all" && s.strategy !== fStrat) return false;
-      if (fMkt !== "all" && s.market !== fMkt) return false;
+      if (fMkt !== "all" && getUiMarketKey(s.market, s.symbol) !== fMkt) return false;
       if (fDir !== "all" && s.direction !== fDir) return false;
       if (fSym && !s.symbol.toUpperCase().includes(fSym)) return false;
       return true;
@@ -1097,7 +1120,7 @@
           <article class="signal-card" data-sid="${s.signal_id}">
             <div class="signal-card-head">
               <div>
-                <div class="signal-card-title">${s.symbol} ${dirBadge}</div>
+                <div class="signal-card-title">${escapeHtml(formatInstrumentTitle(s.symbol))} ${dirBadge}</div>
                 <div class="muted">${s.signal_id}｜${STRATEGY_NAMES[s.strategy] || `策略 ${s.strategy}`}｜台北 ${enteredTp}</div>
               </div>
               <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
@@ -1338,7 +1361,7 @@
     const rows = cachedSignals.filter((s) => {
       if (s.lifecycle_state !== "closed" && s.lifecycle_state !== "cancelled") return false;
       if (fStrat !== "all" && s.strategy !== fStrat) return false;
-      if (fMkt !== "all" && s.market !== fMkt) return false;
+      if (fMkt !== "all" && getUiMarketKey(s.market, s.symbol) !== fMkt) return false;
       if (fDir !== "all" && s.direction !== fDir) return false;
       if (fReason !== "all" && s.exit_reason !== fReason) return false;
       return true;
@@ -1655,7 +1678,7 @@
           <!-- 右側：詳細數據卡（2x2 格線） -->
           <div class="ta-detail-panel">
             <div class="ta-detail-header">
-              <span class="ta-detail-title">詳細數據</span>
+              <span class="ta-detail-title">詳細數據${ta.display_name ? ` — ${escapeHtml(ta.display_name)}` : ""}</span>
               <span class="ta-detail-date">${ta.latest_bar_date ? `日線截至 ${escapeHtml(ta.latest_bar_date)}` : ""}</span>
             </div>
 
@@ -1714,7 +1737,10 @@
 
   function renderInstruments() {
     const tbody = document.getElementById("instruments-tbody");
-    const rows = cachedInstruments.filter((item) => currentMarketFilter === "all" || item.market === currentMarketFilter);
+    const rows = cachedInstruments.filter((item) => {
+      if (!item || item.market === "forex") return false;
+      return currentMarketFilter === "all" || getUiMarketKey(item.market, item.symbol, item) === currentMarketFilter;
+    });
     if (rows.length === 0) {
       tbody.innerHTML = '<tr><td colspan="9" class="muted center">無符合條件的標的資料</td></tr>';
       return;
@@ -1736,7 +1762,7 @@
         return `
           <tr class="${rowClass}" data-symbol="${escapeHtml(item.symbol)}">
             <td data-label="標的"><strong>${item.symbol}</strong><br><span class="muted">${item.display_name || ""}</span></td>
-            <td data-label="市場">${marketLabel(item.market)}</td>
+            <td data-label="市場">${marketLabel(item.market, item.symbol, item)}</td>
             <td data-label="最新價格">${renderPriceCell(item)}</td>
             <td data-label="24h 漲跌">${chgHtml}</td>
             <td data-label="排程來源">${item.source_used || '<span class="muted">無</span>'}</td>
@@ -1792,7 +1818,8 @@
         ? `更新時間 (台北)：${formatTaipeiTime(watchData.updated_at_utc)}`
         : (currentWatchScope === "daily" ? "尚無每日掃描紀錄（Daily Scan 後更新）" : "");
     }
-    const items = watchData && Array.isArray(watchData.items) ? watchData.items : [];
+    const rawItems = watchData && Array.isArray(watchData.items) ? watchData.items : [];
+    const items = rawItems.filter((w) => w && w.market !== "forex");
     if (items.length === 0) {
       if (sumBar) sumBar.innerHTML = "";
       if (moreWrap) moreWrap.classList.add("hidden");
@@ -1864,8 +1891,8 @@
         const strategiesHtml = formatStrategyJudgments(w);
         return `
           <tr>
-            <td data-label="標的"><strong>${escapeHtml(w.symbol)}</strong></td>
-            <td data-label="市場">${marketLabel(w.market)}</td>
+            <td data-label="標的"><strong>${escapeHtml(formatInstrumentTitle(w.symbol))}</strong></td>
+            <td data-label="市場">${marketLabel(w.market, w.symbol)}</td>
             <td data-label="判定">${badge}</td>
             <td data-label="波動 / 狀態指標">${indTxt}</td>
             <td data-label="各策略目前判斷與原因">${strategiesHtml}</td>
@@ -1883,9 +1910,10 @@
       tableEl.classList.add("hidden");
       return;
     }
-    summaryEl.textContent = `實測時間 (台北)：${formatTaipeiTime(probeData.generated_at_utc)}，共 ${probeData.results.length} 組測試。`;
+    const probeRows = probeData.results.filter((r) => r && r.market !== "forex");
+    summaryEl.textContent = `實測時間 (台北)：${formatTaipeiTime(probeData.generated_at_utc)}，共 ${probeRows.length} 組測試。`;
     tableEl.classList.remove("hidden");
-    tbody.innerHTML = probeData.results
+    tbody.innerHTML = probeRows
       .map((row) => {
         const attemptsHtml = (row.attempts || [])
           .map((a) => `<span class="pill ${a.ok ? "pill-ok" : "pill-fail"}" title="${a.error || ""}">${a.ok ? `${a.adapter}: OK (${a.bar_count}根, ${a.latency_ms}ms)` : `${a.adapter}: 失敗`}</span>`)
@@ -2134,7 +2162,8 @@
       [STRATEGY_NAMES.L3, cachedPerf.by_strategy?.L3, false],
       [STRATEGY_NAMES.L4, cachedPerf.by_strategy?.L4, false],
       ["市場：加密貨幣", cachedPerf.by_market?.crypto, false],
-      ["市場：外匯", cachedPerf.by_market?.forex, false],
+      ["市場：台股", cachedPerf.by_market?.tw_stock, false],
+      ["市場：美股／個股", cachedPerf.by_market?.us_stock, false],
       ["市場：商品", cachedPerf.by_market?.commodity, false],
       ["市場：指數", cachedPerf.by_market?.index, false],
       ["方向：做多", cachedPerf.by_direction?.long, false],
@@ -3437,6 +3466,8 @@
     scrollToResearchArticle,
     toggleResearchArticle,
     applyRoute,
+    getUiMarketKey,
+    marketLabel,
     renderTaPanelHtml,
     renderInstruments,
     formatPriceWithCommas,

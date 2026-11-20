@@ -264,7 +264,7 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
     style_css = (root / "assets" / "style.css").read_text(encoding="utf-8")
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
-    assert "?v=20261120c" in index_html
+    assert "?v=20261120d" in index_html
     assert "技術分析" in index_html
     assert ".ta-panel" in style_css
     assert ".ta-detail-row" in style_css
@@ -325,9 +325,9 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
 
         const u = window.__SIGNAL_DESK_UTILS__;
         const mockInstruments = [
-          {{ symbol: 'XAUUSD', display_name: 'Gold', market: 'commodities', latest_price: 3985.5, overall_status: 'healthy', intervals: {{}} }},
-          {{ symbol: 'EURUSD', display_name: 'EUR/USD', market: 'forex', latest_price: 1.0825, overall_status: 'healthy', intervals: {{}} }},
-          {{ symbol: 'MISSING', display_name: 'No TA', market: 'forex', latest_price: 1.0, overall_status: 'healthy', intervals: {{}} }},
+          {{ symbol: 'XAUUSD', display_name: 'Gold', market: 'commodity', latest_price: 3985.5, overall_status: 'healthy', intervals: {{}} }},
+          {{ symbol: '2330', display_name: '台積電 (2330)', market: 'stock', trading_hours: 'TW_STOCK', correlation_group: 'tw_semis', latest_price: 2100.0, overall_status: 'healthy', intervals: {{}} }},
+          {{ symbol: 'MISSING', display_name: 'No TA', market: 'stock', trading_hours: 'US_EQUITIES', latest_price: 100.0, overall_status: 'healthy', intervals: {{}} }},
         ];
         const mockTa = {{
           disclaimer: '以上為依歷史數據與技術指標計算的參考點位，不是預測，也不是投資建議。',
@@ -353,12 +353,13 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
               pattern: {{ name: '下降通道', note: '通道下探（僅供參考）' }},
               backtest: {{ years: 10.0, support_label: '70.7%（150 次，10.0 年）', resistance_label: '62.8%（180 次，10.0 年）' }},
             }},
-            EURUSD: {{
-              symbol: 'EURUSD',
-              latest_price: 1.0825,
-              resistances: [{{ price: 1.095, label: '20日高', algo: '近 20 日最高', strength: 1 }}],
-              supports: [{{ price: 1.071, label: '20日低', algo: '近 20 日最低', strength: 1 }}],
-              trend: {{ state: '盤整', sma20: 1.08, sma50: 1.09, sma200: null, adx14: 14.2 }},
+            '2330': {{
+              symbol: '2330',
+              display_name: '台積電 (2330)',
+              latest_price: 2100.0,
+              resistances: [{{ price: 2200.0, label: '整數關卡', algo: '整數心理關卡 2,200', strength: 1 }}],
+              supports: [{{ price: 2000.0, label: '整數關卡', algo: '整數心理關卡 2,000', strength: 1 }}],
+              trend: {{ state: '盤整', sma20: 2090.0, sma50: 2050.0, sma200: null, adx14: 14.2 }},
               squeeze: {{ bb_width_pct: 48.0, is_squeezing: false, label: '波動正常' }},
               pattern: {{ name: '箱型', note: '區間震盪' }},
               backtest: {{ years: 10.0, support_label: '68.0%（110 次，10.0 年）', resistance_label: '64.0%（105 次，10.0 年）' }},
@@ -398,24 +399,24 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
           throw new Error('Missing historical validation bar');
         }}
         const idxXau = h1.indexOf('data-symbol="XAUUSD"');
-        const idxEur = h1.indexOf('data-symbol="EURUSD"');
+        const idxTw = h1.indexOf('data-symbol="2330"');
         const idxDetail = h1.indexOf('class="ta-detail-row"');
-        if (!(idxXau < idxDetail && idxDetail < idxEur)) {{
+        if (!(idxXau < idxDetail && idxDetail < idxTw)) {{
           throw new Error('Detail row not placed directly beneath XAUUSD');
         }}
 
-        // 3. Click EURUSD -> XAUUSD collapses, only EURUSD expanded, missing SMA200 shows 資料不足
-        u.toggleTaSymbolForTest('EURUSD');
+        // 3. Click 2330 -> XAUUSD collapses, only 2330 expanded, missing SMA200 shows 資料不足
+        u.toggleTaSymbolForTest('2330');
         const h2 = tbodyEl.innerHTML;
-        if ((h2.match(/ta-detail-row/g) || []).length !== 1 || !h2.includes('1.09500') || h2.includes('4,091.20')) {{
+        if ((h2.match(/ta-detail-row/g) || []).length !== 1 || !h2.includes('2,200.00') || h2.includes('4,091.20')) {{
           throw new Error('Switching expanded row failed');
         }}
         if (!h2.includes('資料不足') || !h2.includes('14.2（無趨勢）')) {{
           throw new Error('Expected 資料不足 for null SMA200 and 無趨勢 for ADX < 20');
         }}
 
-        // 4. Click EURUSD again -> collapses completely
-        u.toggleTaSymbolForTest('EURUSD');
+        // 4. Click 2330 again -> collapses completely
+        u.toggleTaSymbolForTest('2330');
         if (tbodyEl.innerHTML.includes('ta-detail-row')) {{
           throw new Error('Re-clicking active row should collapse it');
         }}

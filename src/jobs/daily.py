@@ -126,7 +126,13 @@ def run_daily(
         sym = inst["symbol"]
         mkt = inst["market"]
         res_1d = data_fetcher.fetch(inst, "1d", limit=320, now_utc=now)
-        rep_1d = check_continuity(res_1d, market=mkt, quality_config=quality_cfg, now_utc=now).to_dict()
+        rep_1d = check_continuity(
+            res_1d,
+            market=mkt,
+            quality_config=quality_cfg,
+            now_utc=now,
+            trading_hours=inst.get("trading_hours"),
+        ).to_dict()
 
         if res_1d.ok and res_1d.bars:
             engine.latest_marks[sym] = res_1d.bars[-1].close

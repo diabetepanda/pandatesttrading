@@ -53,18 +53,8 @@
       COPPER: "HG",
     },
 
-    // TradingView 公開報價端點代碼（外匯 10 檔與能源 2 檔主來源，金屬備援與漲跌幅來源）
+    // TradingView 公開報價端點代碼（能源 2 檔、指數 4 檔及金屬備援／漲跌幅來源）
     LIVE_TRADINGVIEW_SYMBOLS: {
-      EURUSD: "FX:EURUSD",
-      GBPUSD: "FX:GBPUSD",
-      USDJPY: "FX:USDJPY",
-      AUDUSD: "FX:AUDUSD",
-      USDCAD: "FX:USDCAD",
-      USDCHF: "FX:USDCHF",
-      NZDUSD: "FX:NZDUSD",
-      EURJPY: "FX:EURJPY",
-      EURGBP: "FX:EURGBP",
-      GBPJPY: "FX:GBPJPY",
       XAUUSD: "COMEX:GC1!",
       XAGUSD: "COMEX:SI1!",
       COPPER: "COMEX:HG1!",

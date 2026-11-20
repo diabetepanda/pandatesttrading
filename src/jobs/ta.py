@@ -76,7 +76,7 @@ def _round_level_step(price: float) -> float:
     if price >= 250:
         return 10.0
     if price >= 100:
-        return 2.0
+        return 5.0
     if price >= 20:
         return 2.0
     if price >= 5:

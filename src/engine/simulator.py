@@ -315,21 +315,26 @@ class Ledger:
         }
 
     def build_subaccount_state(self, strategy_id: str) -> dict[str, Any]:
-        """Aggregate open risk/notional and realized equity for one strategy sub-account."""
+        """Aggregate open risk/notional, group counts, and realized equity for one strategy sub-account."""
         sub_eq = self.compute_strategy_realized_equity(strategy_id)
         open_cnt = 0
         open_risk = 0.0
         open_notional = 0.0
+        group_counts: dict[str, int] = {}
         for tr in self.trades.values():
             if tr.strategy == strategy_id and tr.state == LifecycleState.ACTIVE:
                 open_cnt += 1
                 open_risk += tr.r_plan_usd
                 open_notional += tr.planned_notional_usd
+                grp = str(tr.correlation_group or "")
+                if grp:
+                    group_counts[grp] = group_counts.get(grp, 0) + 1
         return {
             "subaccount_equity_usd": sub_eq,
             "subaccount_open_positions": open_cnt,
             "subaccount_open_risk_usd": open_risk,
             "subaccount_open_notional_usd": open_notional,
+            "subaccount_group_counts": group_counts,
         }
 
     def to_dict(self) -> dict[str, Any]:

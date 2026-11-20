@@ -44,14 +44,15 @@ def test_config_has_required_sections() -> None:
     ):
         assert removed_sig_key not in cfg["signals"]
     enabled = [inst for inst in cfg["instruments"] if inst.get("enabled", True)]
-    assert len(enabled) == 42
+    assert len(enabled) == 59
     assert sum(1 for inst in enabled if inst["market"] == "crypto") == 33
     assert sum(1 for inst in enabled if inst["market"] == "commodity") == 5
     assert sum(1 for inst in enabled if inst["market"] == "forex") == 0
     assert sum(1 for inst in enabled if inst["market"] == "index") == 4
+    assert sum(1 for inst in enabled if inst["market"] == "stock") == 17
     index_syms = {inst["symbol"] for inst in enabled if inst["market"] == "index"}
     assert index_syms == {"NAS100", "SP500", "JP225", "TWII"}
-    assert all(inst.get("daily_only") is True for inst in enabled if inst["market"] == "index")
+    assert all(inst.get("daily_only") is True for inst in enabled if inst["market"] in ("index", "stock"))
 
 
 def test_instruments_have_valid_fields() -> None:
@@ -100,10 +101,6 @@ def test_frontend_assets_and_relative_paths() -> None:
     assert "LIVE_METAL_SYMBOLS" in config_js
     assert "LIVE_TRADINGVIEW_SYMBOLS" in config_js
     for code in (
-        "FX:EURUSD",
-        "FX:USDJPY",
-        "FX:EURGBP",
-        "FX:GBPJPY",
         "NYMEX:CL1!",
         "NYMEX:NG1!",
         "COMEX:GC1!",
@@ -115,6 +112,12 @@ def test_frontend_assets_and_relative_paths() -> None:
         "TWSE:IX0001",
     ):
         assert code in config_js
+    assert "FX:" not in config_js
+    assert "外匯" not in index_html
+    assert 'data-market="forex"' not in index_html
+    assert 'value="forex"' not in index_html
+    assert 'data-market="tw_stock"' in index_html
+    assert 'data-market="us_stock"' in index_html
     assert "PEPEUSDT" in config_js
     assert "TONUSDT" in config_js
 
@@ -154,7 +157,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261120c" in index_html
+    assert "?v=20261120d" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html

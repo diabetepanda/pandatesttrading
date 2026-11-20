@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261120c" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261120d" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -154,7 +154,8 @@
           <select id="wall-filter-market" aria-label="市場篩選">
             <option value="all">全部市場</option>
             <option value="crypto">加密貨幣</option>
-            <option value="forex">外匯</option>
+            <option value="tw_stock">台股</option>
+            <option value="us_stock">美股／個股</option>
             <option value="commodity">商品</option>
             <option value="index">指數</option>
           </select>
@@ -259,7 +260,8 @@
         <div class="filter-tabs" id="market-filters">
           <button class="tab active" data-market="all" type="button">全部</button>
           <button class="tab" data-market="crypto" type="button">加密貨幣</button>
-          <button class="tab" data-market="forex" type="button">外匯</button>
+          <button class="tab" data-market="tw_stock" type="button">台股</button>
+          <button class="tab" data-market="us_stock" type="button">美股／個股</button>
           <button class="tab" data-market="commodity" type="button">商品</button>
           <button class="tab" data-market="index" type="button">指數</button>
         </div>
@@ -467,7 +469,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261120c"></script>
-  <script src="./assets/app.js?v=20261120c"></script>
+  <script src="./assets/config.js?v=20261120d"></script>
+  <script src="./assets/app.js?v=20261120d"></script>
 </body>
 </html>

@@ -70,7 +70,7 @@ strategies:
     pool: short_term
     capital_usd: 10000.0
     interval: 1d
-    markets: ["crypto", "commodity", "index"]
+    markets: ["crypto", "commodity", "index", "stock"]
     allow_short: true
     candidates:
       trend_ma_period: 200
@@ -85,7 +85,7 @@ strategies:
     pool: long_term
     capital_usd: 20000.0
     interval: 1d
-    markets: ["crypto", "commodity", "index"]
+    markets: ["crypto", "commodity", "index", "stock"]
     allow_short: true
     candidates:
       entry_periods: [20, 55]
@@ -114,6 +114,23 @@ strategies:
       - SP500
       - JP225
       - TWII
+      - "2330"
+      - "2454"
+      - "3711"
+      - "2317"
+      - "2382"
+      - "2308"
+      - "2881"
+      - "2882"
+      - "2891"
+      - "2603"
+      - "1301"
+      - "2412"
+      - TSLA
+      - GOOGL
+      - AAPL
+      - SNDK
+      - SPCX
     allow_short: true
     candidates:
       entry_periods: [20, 55]
@@ -187,6 +204,27 @@ correlation_groups:
     name: 全球主要指數
   us_equities:
     name: 美股大型股
+  tw_semis:
+    name: 台股半導體
+    max_positions: 2
+  tw_tech_hw:
+    name: 台股電子代工與電源
+    max_positions: 2
+  tw_financials:
+    name: 台股金融
+    max_positions: 2
+  tw_others:
+    name: 台股航運塑化電信
+    max_positions: 2
+  us_megacap:
+    name: 美股大型科技
+    max_positions: 2
+  memory_semis:
+    name: 記憶體半導體
+    max_positions: 2
+  us_aerospace:
+    name: 美股航太科技
+    max_positions: 2
 
 instruments:
   # --- 加密貨幣 (24/7) ---
@@ -1065,6 +1103,279 @@ instruments:
     overnight_cost_daily_bps: 1.5
     sources:
       yfinance: "^TWII"
+
+  # --- 台股（僅日線，09:00–13:30 台北時間；單邊手續費 0.1425%＋賣出證交稅 0.3% 平攤為雙邊各 0.2925%） ---
+  - symbol: "2330"
+    display_name: 台積電 (2330)
+    market: stock
+    correlation_group: tw_semis
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 1.0
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 2330.TW
+
+  - symbol: "2454"
+    display_name: 聯發科 (2454)
+    market: stock
+    correlation_group: tw_semis
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 1.0
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 2454.TW
+
+  - symbol: "3711"
+    display_name: 日月光投控 (3711)
+    market: stock
+    correlation_group: tw_semis
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 0.5
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 3711.TW
+
+  - symbol: "2317"
+    display_name: 鴻海 (2317)
+    market: stock
+    correlation_group: tw_tech_hw
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 0.5
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 2317.TW
+
+  - symbol: "2382"
+    display_name: 廣達 (2382)
+    market: stock
+    correlation_group: tw_tech_hw
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 0.5
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 2382.TW
+
+  - symbol: "2308"
+    display_name: 台達電 (2308)
+    market: stock
+    correlation_group: tw_tech_hw
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 0.5
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 2308.TW
+
+  - symbol: "2881"
+    display_name: 富邦金 (2881)
+    market: stock
+    correlation_group: tw_financials
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 0.1
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 2881.TW
+
+  - symbol: "2882"
+    display_name: 國泰金 (2882)
+    market: stock
+    correlation_group: tw_financials
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 0.1
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 2882.TW
+
+  - symbol: "2891"
+    display_name: 中信金 (2891)
+    market: stock
+    correlation_group: tw_financials
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 0.1
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 2891.TW
+
+  - symbol: "2603"
+    display_name: 長榮 (2603)
+    market: stock
+    correlation_group: tw_others
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 0.5
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 2603.TW
+
+  - symbol: "1301"
+    display_name: 台塑 (1301)
+    market: stock
+    correlation_group: tw_others
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 0.1
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 1301.TW
+
+  - symbol: "2412"
+    display_name: 中華電 (2412)
+    market: stock
+    correlation_group: tw_others
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 5.0
+    fee_rate: 0.002925
+    tick_size: 0.5
+    trading_hours: "TW_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 2412.TW
+
+  # --- 美股／韓股（僅日線） ---
+  - symbol: TSLA
+    display_name: 特斯拉 (TSLA)
+    market: stock
+    correlation_group: us_megacap
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 2.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "US_EQUITIES"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: TSLA
+
+  - symbol: GOOGL
+    display_name: Google (GOOGL)
+    market: stock
+    correlation_group: us_megacap
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 2.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "US_EQUITIES"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: GOOGL
+
+  - symbol: AAPL
+    display_name: 蘋果 (AAPL)
+    market: stock
+    correlation_group: us_megacap
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 2.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "US_EQUITIES"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: AAPL
+
+  - symbol: SNDK
+    display_name: 閃迪 SanDisk (SNDK)
+    market: stock
+    correlation_group: memory_semis
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 2.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "US_EQUITIES"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: SNDK
+
+  - symbol: SPCX
+    display_name: SpaceX (SPCX)
+    market: stock
+    correlation_group: us_aerospace
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 2.0
+    fee_rate: 0.0005
+    tick_size: 0.01
+    trading_hours: "US_EQUITIES"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: SPCX
+
+  # SK 海力士為韓元計價，引擎目前無 KRW->USD 匯率換算機制，先停用避免名目與損益幣別誤算
+  - symbol: 000660.KS
+    display_name: SK 海力士 (000660.KS)
+    market: stock
+    correlation_group: memory_semis
+    enabled: false
+    daily_only: true
+    assumed_spread_bps: 2.0
+    fee_rate: 0.0005
+    tick_size: 100.0
+    trading_hours: "KR_STOCK"
+    max_leverage: 1.0
+    overnight_cost_daily_bps: 0.0
+    sources:
+      yfinance: 000660.KS
 
   # --- 股票 (選配，預設關閉) ---
   - symbol: SPY
