@@ -264,7 +264,7 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
     style_css = (root / "assets" / "style.css").read_text(encoding="utf-8")
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
-    assert "?v=20261120e" in index_html
+    assert "?v=20261120f" in index_html
     assert "技術分析" in index_html
     assert ".ta-panel" in style_css
     assert ".ta-detail-row" in style_css
@@ -357,12 +357,27 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
               symbol: '2330',
               display_name: '台積電 (2330)',
               latest_price: 2100.0,
-              resistances: [{{ price: 2200.0, label: '整數關卡', algo: '整數心理關卡 2,200', strength: 1 }}],
-              supports: [{{ price: 2000.0, label: '整數關卡', algo: '整數心理關卡 2,000', strength: 1 }}],
+              resistance_status: 'ok',
+              support_status: 'ok',
+              resistances: [{{ price: 2200.0, label: '盤整區上緣（2026/08–10）', algo: '前期盤整區間上緣（2026-08-01~2026-10-15）', strength: 2 }}],
+              supports: [{{ price: 2000.0, label: '2026/09 波段低 ＋1 項', algo: '2026-09-10 波段低點', strength: 2 }}],
               trend: {{ state: '盤整', sma20: 2090.0, sma50: 2050.0, sma200: null, adx14: 14.2 }},
               squeeze: {{ bb_width_pct: 48.0, is_squeezing: false, label: '波動正常' }},
               pattern: {{ name: '箱型', note: '區間震盪' }},
               backtest: {{ years: 10.0, support_label: '68.0%（110 次，10.0 年）', resistance_label: '64.0%（105 次，10.0 年）' }},
+            }},
+            ATHSYM: {{
+              symbol: 'ATHSYM',
+              display_name: 'All Time High Sym',
+              latest_price: 500.0,
+              resistance_status: '無明確壓力',
+              support_status: 'ok',
+              resistances: [{{ price: 540.0, label: 'Fibo 1.272（延伸參考）', algo: 'Fibonacci 1.272 延伸參考', strength: 1, is_extension: true }}],
+              supports: [{{ price: 470.0, label: '2026/10 波段高（前壓力）', algo: '突破轉支撐', strength: 2 }}],
+              trend: {{ state: '上升趨勢', sma20: 480.0, sma50: 460.0, sma200: 420.0, adx14: 32.0 }},
+              squeeze: {{ bb_width_pct: 55.0, is_squeezing: false, label: '波動正常' }},
+              pattern: {{ name: '上升通道', note: '上升通道' }},
+              backtest: {{ years: 5.0, support_label: '70.0%（60 次，5.0 年）', resistance_label: '65.0%（55 次，5.0 年）' }},
             }},
           }},
         }};
@@ -426,6 +441,82 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
         if (!tbodyEl.innerHTML.includes('技術分析資料暫無')) {{
           throw new Error('Missing TA symbol should render 技術分析資料暫無');
         }}
+
+        // 6. ATH fallback renders 無明確壓力 + 延伸參考 without truncation
+        const athHtml = u.renderTaPanelHtml('ATHSYM', null, mockTa);
+        if (!athHtml.includes('無明確壓力') || !athHtml.includes('Fibo 1.272（延伸參考）') || athHtml.includes('整數關卡')) {{
+          throw new Error('ATH fallback rendering failed: ' + athHtml);
+        }}
     """
     proc = subprocess.run([js_bin, "-e", script], capture_output=True, text=True, check=False)
     assert proc.returncode == 0, f"JS TA verification failed:\nSTDOUT:\n{proc.stdout}\nSTDERR:\n{proc.stderr}"
+
+
+def test_no_round_numbers_and_no_ellipsis_truncation_in_ta() -> None:
+    """(a) Zero round-number S/R sources anywhere; (c) zero `…` / `...` truncation in labels."""
+    root = Path(__file__).resolve().parent.parent
+    ta_py = (root / "src" / "jobs" / "ta.py").read_text(encoding="utf-8")
+    app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
+    style_css = (root / "assets" / "style.css").read_text(encoding="utf-8")
+
+    assert "整數關卡" not in ta_py
+    assert "整數心理關卡" not in ta_py
+    assert "_round_level_step" not in ta_py
+    assert "整數關卡" not in app_js
+
+    # CSS labels must wrap cleanly rather than truncating via ellipsis
+    src_block = style_css.split(".ta-sr-src {", 1)[1].split("}", 1)[0]
+    num_src_block = style_css.split(".ta-num-src {", 1)[1].split("}", 1)[0]
+    assert "ellipsis" not in src_block
+    assert "ellipsis" not in num_src_block
+
+    doc = json.loads((root / "data" / "ta.json").read_text(encoding="utf-8"))
+    for sym, entry in doc["symbols"].items():
+        for lvl in entry.get("resistances", []) + entry.get("supports", []):
+            lbl = lvl.get("label", "")
+            algo = lvl.get("algo", "")
+            assert "整數" not in lbl and "心理關卡" not in lbl, f"{sym} kept round label: {lbl}"
+            assert "整數" not in algo and "心理關卡" not in algo, f"{sym} kept round algo: {algo}"
+            assert "…" not in lbl and "..." not in lbl, f"{sym} truncated label: {lbl}"
+
+
+def test_60d_low_has_real_support_and_only_ath_atl_use_fibo_extension() -> None:
+    """(b) A 60-day low still finds historical/MA support; only true ATH/ATL triggers 無明確支撐/壓力 + Fibo ext."""
+    # Construct 360-bar series: base in [60, 85] with multiple swings, rally to 145, pullback to 60-day low at 95
+    closes: list[float] = []
+    for i in range(220):
+        closes.append(72.0 + 10.0 * math.sin(i * 0.22))
+    for i in range(80):
+        closes.append(75.0 + i * 0.85)  # rally to ~142
+    for i in range(60):
+        closes.append(142.0 - i * 0.78)  # drop to ~96 (strictly a 60d low, still > earlier 62..82 history!)
+
+    bars_60d_low = _make_daily_bars(closes, spread=2.0, start_year=2024)
+    ta_60 = analyze_symbol_ta("LOW60D", "60D Low Test", "stock", bars_60d_low)
+    assert ta_60 is not None
+    assert ta_60["support_status"] == "ok", f"60d low should find earlier historical/MA support: {ta_60}"
+    assert len(ta_60["supports"]) >= 1
+    assert all(not s.get("is_extension") for s in ta_60["supports"])
+    assert ta_60["supports"][0]["price"] < ta_60["latest_price"]
+
+    # True all-time low breakdown (drops far below every historical bar & MA) -> 無明確支撐 + Fibo extension
+    atl_closes = [120.0 + 6.0 * math.sin(i * 0.25) for i in range(250)] + [120.0 - i * 2.2 for i in range(1, 36)]
+    bars_atl = _make_daily_bars(atl_closes, spread=2.0, start_year=2024)
+    ta_atl = analyze_symbol_ta("ATLSYM", "ATL Test", "stock", bars_atl)
+    assert ta_atl is not None
+    assert ta_atl["support_status"] == "無明確支撐"
+    assert len(ta_atl["supports"]) >= 1
+    assert all(s.get("is_extension") is True for s in ta_atl["supports"])
+    assert all(s["strength"] == 1 for s in ta_atl["supports"])
+    assert all("延伸參考" in s["label"] for s in ta_atl["supports"])
+
+    # True all-time high breakout -> 無明確壓力 + Fibo extension
+    ath_closes = [100.0 + 5.0 * math.sin(i * 0.25) for i in range(250)] + [100.0 + i * 2.5 for i in range(1, 36)]
+    bars_ath = _make_daily_bars(ath_closes, spread=2.0, start_year=2024)
+    ta_ath = analyze_symbol_ta("ATHSYM", "ATH Test", "stock", bars_ath)
+    assert ta_ath is not None
+    assert ta_ath["resistance_status"] == "無明確壓力"
+    assert len(ta_ath["resistances"]) >= 1
+    assert all(r.get("is_extension") is True for r in ta_ath["resistances"])
+    assert all(r["strength"] == 1 for r in ta_ath["resistances"])
+    assert all("延伸參考" in r["label"] for r in ta_ath["resistances"])

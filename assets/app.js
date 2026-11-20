@@ -1370,20 +1370,8 @@
 
   function shortenSrAlgo(algoStr) {
     if (!algoStr) return "參考位";
-    const parts = String(algoStr).split("／");
-    const shortNames = parts.map((raw) => {
-      const s = raw.trim();
-      if (s.includes("20 日最高") || s.includes("20日最高")) return "20日高";
-      if (s.includes("20 日最低") || s.includes("20日最低")) return "20日低";
-      if (s.includes("60 日最高") || s.includes("60日最高")) return "60日高";
-      if (s.includes("60 日最低") || s.includes("60日最低")) return "60日低";
-      if (s.includes("跌破轉壓力")) return "前低轉壓";
-      if (s.includes("突破轉支撐")) return "前高轉支";
-      if (s.includes("擺動高點")) return "擺動高";
-      if (s.includes("擺動低點")) return "擺動低";
-      return s.slice(0, 5);
-    });
-    return Array.from(new Set(shortNames)).join("／");
+    const first = String(algoStr).split(/[；／]/)[0].trim();
+    return first || "參考位";
   }
 
   function formatSrStars(strength) {
@@ -1409,26 +1397,40 @@
     const vol = ta.volatility || {};
     const atr20 = vol.atr20 !== undefined && vol.atr20 !== null ? Number(vol.atr20) : null;
 
-    // Re-bucket S/R relative to active curPrice so live drift never flips + / - sides
-    const rawRes = Array.isArray(ta.resistances) ? ta.resistances : [];
-    const rawSup = Array.isArray(ta.supports) ? ta.supports : [];
-    const allSr = [...rawRes, ...rawSup]
+    // Re-bucket historical S/R relative to active curPrice; keep Fibo extensions only when a side has no historical level
+    const normalizeSr = (x, fallbackSide) => ({
+      price: Number(x.price),
+      label: x.label || shortenSrAlgo(x.algo),
+      algo: x.algo || "",
+      strength: x.is_extension ? 1 : (Number(x.strength) || 1),
+      is_extension: Boolean(x.is_extension),
+      side: fallbackSide,
+    });
+    const rawRes = (Array.isArray(ta.resistances) ? ta.resistances : [])
       .filter((x) => x && x.price !== undefined && x.price !== null && Number.isFinite(Number(x.price)))
-      .map((x) => ({
-        price: Number(x.price),
-        label: x.label || shortenSrAlgo(x.algo),
-        algo: x.algo || "",
-        strength: Number(x.strength) || 1,
-      }));
+      .map((x) => normalizeSr(x, "res"));
+    const rawSup = (Array.isArray(ta.supports) ? ta.supports : [])
+      .filter((x) => x && x.price !== undefined && x.price !== null && Number.isFinite(Number(x.price)))
+      .map((x) => normalizeSr(x, "sup"));
 
-    const resistances = allSr
+    const realLevels = [...rawRes, ...rawSup].filter((x) => !x.is_extension);
+    const realRes = realLevels
       .filter((x) => x.price >= curPrice)
       .sort((a, b) => a.price - b.price)
       .slice(0, 3);
-    const supports = allSr
+    const realSup = realLevels
       .filter((x) => x.price < curPrice)
       .sort((a, b) => b.price - a.price)
       .slice(0, 3);
+
+    const resExt = rawRes.filter((x) => x.is_extension && x.price > curPrice).sort((a, b) => a.price - b.price);
+    const supExt = rawSup.filter((x) => x.is_extension && x.price < curPrice).sort((a, b) => b.price - a.price);
+
+    const resNoClear = realRes.length === 0 && (ta.resistance_status === "無明確壓力" || resExt.length > 0);
+    const supNoClear = realSup.length === 0 && (ta.support_status === "無明確支撐" || supExt.length > 0);
+
+    const resistances = resNoClear ? resExt.slice(0, 3) : realRes;
+    const supports = supNoClear ? supExt.slice(0, 3) : realSup;
 
     const nearRes = resistances.length > 0 ? resistances[0] : null;
     const nearSup = supports.length > 0 ? supports[0] : null;
@@ -1468,13 +1470,21 @@
       return `${diffPct >= 0 ? "+" : ""}${diffPct.toFixed(1)}%`;
     };
 
-    const resStr = nearRes ? formatPriceWithCommas(nearRes.price) : "—";
-    const resDistStr = nearRes ? fmtDist(nearRes.price) : "--";
-    const resSrcStr = nearRes ? nearRes.label : "無";
+    const resStr = resNoClear
+      ? "無明確壓力"
+      : (nearRes ? formatPriceWithCommas(nearRes.price) : "無明確壓力");
+    const resDistStr = resNoClear
+      ? (nearRes ? `延伸參考 ${formatPriceWithCommas(nearRes.price)} (${fmtDist(nearRes.price)})` : "上方無歷史價位")
+      : (nearRes ? fmtDist(nearRes.price) : "--");
+    const resSrcStr = nearRes ? nearRes.label : (ta.resistance_note || "上方無歷史價位");
 
-    const supStr = nearSup ? formatPriceWithCommas(nearSup.price) : "—";
-    const supDistStr = nearSup ? fmtDist(nearSup.price) : "--";
-    const supSrcStr = nearSup ? nearSup.label : "無";
+    const supStr = supNoClear
+      ? "無明確支撐"
+      : (nearSup ? formatPriceWithCommas(nearSup.price) : "無明確支撐");
+    const supDistStr = supNoClear
+      ? (nearSup ? `延伸參考 ${formatPriceWithCommas(nearSup.price)} (${fmtDist(nearSup.price)})` : "下方無歷史價位")
+      : (nearSup ? fmtDist(nearSup.price) : "--");
+    const supSrcStr = nearSup ? nearSup.label : (ta.support_note || "下方無歷史價位");
 
     const tom = vol.tomorrow || {};
     const wk = vol.week || {};
@@ -1632,9 +1642,11 @@
               <div class="ta-subcard">
                 <h5 class="ta-subcard-title">支撐壓力表</h5>
                 <div class="ta-sr-table">
-                  ${resTableRows || '<div class="ta-sr-empty muted">上方暫無壓力</div>'}
+                  ${resNoClear ? '<div class="ta-sr-empty muted">無明確壓力（以下為 Fibonacci 延伸參考）</div>' : ""}
+                  ${resTableRows || '<div class="ta-sr-empty muted">無明確壓力</div>'}
                   ${srCurRow}
-                  ${supTableRows || '<div class="ta-sr-empty muted">下方暫無支撐</div>'}
+                  ${supNoClear ? '<div class="ta-sr-empty muted">無明確支撐（以下為 Fibonacci 延伸參考）</div>' : ""}
+                  ${supTableRows || '<div class="ta-sr-empty muted">無明確支撐</div>'}
                 </div>
               </div>
 

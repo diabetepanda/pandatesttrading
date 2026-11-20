@@ -1294,9 +1294,10 @@ tr.ta-detail-row > td.ta-detail-cell {
   font-size: 0.7rem;
   color: var(--muted);
   margin-top: 3px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-height: 1.3;
 }
 
 /* 右側：詳細數據卡（2x2 格線，手機 1 欄） */
@@ -1410,9 +1411,10 @@ tr.ta-detail-row > td.ta-detail-cell {
 
 .ta-sr-src {
   color: #c9d1d9;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-height: 1.3;
 }
 
 .ta-sr-stars {
