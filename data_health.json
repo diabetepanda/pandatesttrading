@@ -1,29 +1,33 @@
 {
-  "updated_at_utc": "2026-11-20T04:50:07Z",
-  "total_instruments": 42,
+  "updated_at_utc": "2026-11-20T05:05:08Z",
+  "total_instruments": 59,
   "status_counts": {
-    "ok": 40,
-    "unstable": 2,
+    "ok": 59,
+    "unstable": 0,
     "stale": 0,
     "failed": 0
   },
   "sources": {
     "binance_vision": {
-      "ok": 64,
+      "ok": 96,
       "fail": 0
     },
     "kraken": {
-      "ok": 2,
+      "ok": 3,
       "fail": 0
     },
     "yfinance": {
-      "ok": 10,
-      "fail": 0
+      "ok": 35,
+      "fail": 1
+    },
+    "stooq": {
+      "ok": 0,
+      "fail": 1
     }
   },
   "runs_last_24h": 100,
-  "total_equity_usd": 102771.12,
-  "short_term_equity_usd": 20971.84,
-  "long_term_equity_usd": 81799.29,
-  "overall": "degraded"
+  "total_equity_usd": 102707.03,
+  "short_term_equity_usd": 20945.38,
+  "long_term_equity_usd": 81761.65,
+  "overall": "ok"
 }
