@@ -17,7 +17,7 @@ from src.data.adapters import (
     FallbackDataFetcher,
 )
 from src.indicators.technical import resample_15m_to_1h, resample_1h_to_4h
-from src.jobs.data_sync import append_run_log
+from src.jobs.data_sync import append_run_log, cleanup_obsolete_data_files
 
 
 def _write_json(path: Path, data: Any) -> None:
@@ -147,7 +147,7 @@ def run_weekly_screening(
     }
 
     _write_json(out_dir / "backtest_results.json", payload)
-    _write_json(out_dir / "backtests" / "latest.json", payload)
+    cleanup_obsolete_data_files(out_dir)
     keep_n = int(config.get("schedule", {}).get("keep_run_logs", 100))
     append_run_log(
         out_dir,

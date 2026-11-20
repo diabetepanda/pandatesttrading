@@ -8,8 +8,6 @@ Compiles data chronologically for:
 
 Outputs:
   - data/research.json
-  - assets/research.json
-  - (Also maintains data/contest_research.json & assets/contest_research.json for backward compatibility)
 """
 
 from __future__ import annotations
@@ -597,37 +595,14 @@ def build_research_dict() -> dict:
 def main() -> None:
     repo_root = Path(__file__).resolve().parent.parent
     data_dir = repo_root / "data"
-    assets_dir = repo_root / "assets"
     data_dir.mkdir(parents=True, exist_ok=True)
-    assets_dir.mkdir(parents=True, exist_ok=True)
 
     payload = build_research_dict()
     text = json.dumps(payload, ensure_ascii=False, indent=2)
 
     data_file = data_dir / "research.json"
-    assets_file = assets_dir / "research.json"
-
     data_file.write_text(text, encoding="utf-8")
-    assets_file.write_text(text, encoding="utf-8")
-    print(f"Successfully generated {data_file} and {assets_file}")
-
-    # Maintain contest_research.json for backward compatibility
-    article_short = next(a for a in payload["articles"] if a["id"] == "short_term")
-    legacy_payload = {
-        "generated_at_utc": payload["generated_at_utc"],
-        "takeaway": article_short["takeaway"],
-        "strategies_intro": article_short["strategies_intro"],
-        "methodology": article_short["methodology"],
-        "round2": article_short["round2"],
-        "round1_summary": article_short["round1_summary"],
-        "contest_sim": article_short["contest_sim"],
-        "learnings": article_short["learnings"],
-        "disclaimer": article_short["disclaimer"],
-    }
-    legacy_text = json.dumps(legacy_payload, ensure_ascii=False, indent=2)
-    (data_dir / "contest_research.json").write_text(legacy_text, encoding="utf-8")
-    (assets_dir / "contest_research.json").write_text(legacy_text, encoding="utf-8")
-    print("Maintained legacy contest_research.json files.")
+    print(f"Successfully generated {data_file}")
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261120d" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261120e" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -291,29 +291,34 @@
       </section>
 
       <section class="card">
-        <h2>資料來源實測報告（GitHub Actions）</h2>
-        <p class="subtitle">顯示各標的在 1m / 15m / 1d 週期下，主來源與備援來源的連線實測結果。</p>
-        <div id="probe-summary" class="muted">尚無實測報告（請先於 GitHub Actions 手動觸發一次 Market Scan）。</div>
-        <div class="table-wrap">
-          <table class="data-table hidden" id="probe-table">
-            <thead>
-              <tr>
-                <th>標的</th>
-                <th>週期</th>
-                <th>品質狀態</th>
-                <th>各來源測試結果</th>
-              </tr>
-            </thead>
-            <tbody id="probe-tbody"></tbody>
-          </table>
-        </div>
+        <details class="probe-details">
+          <summary class="probe-summary-toggle">
+            <span class="probe-summary-title">資料來源實測報告（GitHub Actions）</span>
+            <span class="probe-summary-meta">實測日期：<span id="probe-date-badge">尚未實測</span>｜手動執行才會更新</span>
+          </summary>
+          <p class="subtitle" style="margin-top:10px;">顯示各標的在 1m / 15m / 1d 週期下，主來源與備援來源的連線實測結果（僅於手動執行實測時更新）。</p>
+          <div id="probe-summary" class="muted">尚無實測報告（請先於 GitHub Actions 手動觸發一次實測）。</div>
+          <div class="table-wrap">
+            <table class="data-table hidden" id="probe-table">
+              <thead>
+                <tr>
+                  <th>標的</th>
+                  <th>週期</th>
+                  <th>品質狀態</th>
+                  <th>各來源測試結果</th>
+                </tr>
+              </thead>
+              <tbody id="probe-tbody"></tbody>
+            </table>
+          </div>
+        </details>
       </section>
 
       <section class="card">
         <h2>高影響經濟事件日曆（台北時間）</h2>
         <p class="subtitle">供市場風險參考，時間一律以台北時間 (Asia/Taipei) 顯示。</p>
         <div class="table-wrap">
-          <table class="data-table mobile-cards" id="instruments-table">
+          <table class="data-table mobile-cards">
             <thead>
               <tr>
                 <th>事件名稱</th>
@@ -330,7 +335,7 @@
 
       <section class="card">
         <h2>近期排程執行紀錄</h2>
-        <p id="sched-summary" class="subtitle">排程頻率：每小時台北時間 :15/:30/:45/:00 前後（UTC 07/22/37/52 分）自動執行</p>
+        <p id="sched-summary" class="subtitle">排程頻率：每小時台北時間 :07/:22/:37/:52 前後（UTC 07/22/37/52 分）自動執行</p>
         <div id="run-log-box" class="muted">尚無排程紀錄。</div>
       </section>
     </section>
@@ -348,7 +353,7 @@
         <div id="stats-notice" class="alert-banner hidden"></div>
         <p id="stats-meta" class="muted">目前尚無績效統計資料。</p>
         <div class="table-wrap">
-          <table class="data-table mobile-cards" id="instruments-table">
+          <table class="data-table mobile-cards">
             <thead>
               <tr>
                 <th>分組</th>
@@ -395,7 +400,7 @@
       <section class="card">
         <h2>目前持倉明細</h2>
         <div class="table-wrap">
-          <table class="data-table mobile-cards" id="instruments-table">
+          <table class="data-table mobile-cards">
             <thead>
               <tr>
                 <th>報單 / 標的</th>
@@ -469,7 +474,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261120d"></script>
-  <script src="./assets/app.js?v=20261120d"></script>
+  <script src="./assets/config.js?v=20261120e"></script>
+  <script src="./assets/app.js?v=20261120e"></script>
 </body>
 </html>

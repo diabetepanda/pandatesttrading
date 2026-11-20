@@ -587,15 +587,6 @@ h1, h2 {
   line-height: 1.5;
 }
 
-.bt-near-box {
-  background: rgba(88, 166, 255, 0.08);
-  border: 1px solid rgba(88, 166, 255, 0.25);
-  border-radius: 8px;
-  padding: 8px 12px;
-  margin-bottom: 12px;
-  font-size: 0.84rem;
-}
-
 .meter-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -636,27 +627,6 @@ h1, h2 {
 
 .meter-fill.danger {
   background: var(--danger);
-}
-
-.hour-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px;
-}
-
-.hour-chip {
-  font-size: 0.72rem;
-  padding: 1px 5px;
-  border-radius: 3px;
-  border: 1px solid var(--border);
-  color: var(--muted);
-}
-
-.hour-low {
-  background: rgba(88, 166, 255, 0.18);
-  border-color: rgba(88, 166, 255, 0.5);
-  color: #79c0ff;
-  font-weight: 600;
 }
 
 .simple-grid {
@@ -720,11 +690,6 @@ h1, h2 {
 .open-now-live {
   font-size: 0.8rem;
   margin-left: 6px;
-}
-
-.open-now-sub {
-  font-size: 0.8rem;
-  margin-top: 2px;
 }
 
 .open-now-history {
@@ -1524,6 +1489,41 @@ tr.ta-detail-row > td.ta-detail-cell {
   color: var(--muted);
   text-align: center;
   padding-top: 2px;
+}
+
+.probe-details > summary.probe-summary-toggle {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  list-style: none;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.probe-details > summary.probe-summary-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.probe-summary-title::before {
+  content: "▸ ";
+  color: var(--muted);
+}
+
+.probe-details[open] > summary.probe-summary-toggle .probe-summary-title::before {
+  content: "▾ ";
+}
+
+.probe-summary-title {
+  font-size: 1.05rem;
+}
+
+.probe-summary-meta {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--muted);
 }
 
 

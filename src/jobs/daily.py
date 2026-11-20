@@ -14,7 +14,7 @@ from src.data.adapters import FallbackDataFetcher
 from src.data.models import OHLCVBar
 from src.data.quality import _parse_iso_utc, check_continuity
 from src.engine.simulator import MarketBar, SimulationEngine
-from src.jobs.data_sync import append_run_log
+from src.jobs.data_sync import append_run_log, cleanup_obsolete_data_files
 from src.jobs.live_strategy import (
     evaluate_live_l3_rebalance,
     evaluate_live_single_strategy_step,
@@ -23,17 +23,6 @@ from src.jobs.live_strategy import (
 )
 from src.jobs.ta import generate_ta_file
 from src.signals.models import LifecycleState
-
-
-LEGACY_OBSOLETE_FILES = ("watch_today_b.json", "liquidity_heatmap.json")
-
-
-def _cleanup_legacy_files(out_dir: Path) -> None:
-    for name in LEGACY_OBSOLETE_FILES:
-        try:
-            (out_dir / name).unlink(missing_ok=True)
-        except Exception:
-            pass
 
 
 def _write_json(path: Path, data: Any) -> None:
@@ -101,7 +90,7 @@ def run_daily(
     timeout_sec = min(10, int(quality_cfg.get("request_timeout_sec", 15)))
     data_fetcher = fetcher or FallbackDataFetcher(timeout_sec=timeout_sec)
 
-    _cleanup_legacy_files(out_dir)
+    cleanup_obsolete_data_files(out_dir)
     engine = SimulationEngine(config, out_dir=out_dir)
     engine.load_state()
     runtime_cfgs = load_strategy_runtime_configs(out_dir, config)

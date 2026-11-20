@@ -10,6 +10,27 @@ from pathlib import Path
 from typing import Any
 
 
+OBSOLETE_DATA_BRANCH_FILES = (
+    "orders.json",
+    "trade_stages.json",
+    "backtests/latest.json",
+)
+
+
+def cleanup_obsolete_data_files(out_dir: Path) -> list[str]:
+    """Remove retired data-branch files on scan/daily/weekly runs while preserving probe reports."""
+    removed: list[str] = []
+    for rel in OBSOLETE_DATA_BRANCH_FILES:
+        target = out_dir / rel
+        try:
+            if target.exists():
+                target.unlink()
+                removed.append(rel)
+        except Exception:
+            pass
+    return removed
+
+
 def merge_run_logs(remote_items: list[dict[str, Any]], local_items: list[dict[str, Any]], keep_n: int = 200) -> list[dict[str, Any]]:
     """Merge two run_log.json arrays without dropping entries from either workflow."""
     merged: dict[tuple[str, str], dict[str, Any]] = {}
@@ -174,16 +195,6 @@ def merge_conflicted_content(rel_path: str, remote_text: str, local_text: str) -
 
         if norm == "trades.json" and isinstance(remote_obj, list) and isinstance(local_obj, list):
             return json.dumps(_merge_list_by_id(remote_obj, local_obj, ("signal_id",)), ensure_ascii=False, indent=2) + "\n"
-
-        if norm == "trade_stages.json" and isinstance(remote_obj, list) and isinstance(local_obj, list):
-            return json.dumps(
-                _merge_list_by_id(remote_obj, local_obj, ("signal_id", "stage_index")),
-                ensure_ascii=False,
-                indent=2,
-            ) + "\n"
-
-        if norm == "orders.json" and isinstance(remote_obj, list) and isinstance(local_obj, list):
-            return json.dumps(_merge_list_by_id(remote_obj, local_obj, ("order_id",)), ensure_ascii=False, indent=2) + "\n"
 
         if norm == "equity_curve.json" and isinstance(remote_obj, dict) and isinstance(local_obj, dict):
             merged_pts = _merge_list_by_id(

@@ -23,6 +23,7 @@ def test_config_has_required_sections() -> None:
     assert cfg["backtest"]["max_position_notional_pct"] == 500.0
     assert cfg["backtest"]["max_total_notional_multiple"] == 5.0
     for removed_risk_key in (
+        "maintenance_margin_ratio",
         "max_total_stop_risk_usd",
         "max_margin_usage_pct",
         "max_group_stop_risk_usd",
@@ -34,15 +35,10 @@ def test_config_has_required_sections() -> None:
         "long_term_min_rr",
     ):
         assert removed_risk_key not in cfg["risk"]
-    for removed_sig_key in (
-        "tp1_close_fraction",
-        "breakeven_trigger_r",
-        "trailing_stop_trigger_r",
-        "order_expiry_hours",
-        "max_hold_bars_15m",
-        "max_daily_signals",
-    ):
-        assert removed_sig_key not in cfg["signals"]
+    assert "signals" not in cfg
+    assert "out_sample_ratio" not in cfg["backtest"]
+    assert "scan_interval_minutes" not in cfg["schedule"]
+    assert "ui_stale_warning_minutes" not in cfg["schedule"]
     enabled = [inst for inst in cfg["instruments"] if inst.get("enabled", True)]
     assert len(enabled) == 59
     assert sum(1 for inst in enabled if inst["market"] == "crypto") == 33
@@ -157,7 +153,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261120d" in index_html
+    assert "?v=20261120e" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -696,136 +692,8 @@ def test_simulated_account_positions_table_rendering() -> None:
         Path(tmp_js).unlink(missing_ok=True)
 
 
-def test_contest_research_json_and_tab_rendering() -> None:
-    """Verify contest research JSON structure and JS rendering."""
-    import json
-    import shutil
-    import subprocess
-    import tempfile
-    from pathlib import Path
-
-    from research.contest_15m.build_contest_research_json import build_contest_research_dict
-
-    root = Path(__file__).resolve().parent.parent
-    data = build_contest_research_dict()
-
-    # 1. Structure validations
-    assert "我們測了 7 種短線策略" in data["takeaway"]
-    assert "沒有一個有穩定優勢" in data["takeaway"]
-    assert len(data["strategies_intro"]) == 7
-    strat_ids = [s["id"] for s in data["strategies_intro"]]
-    assert strat_ids == ["A", "B", "C", "D", "E", "F", "G"]
-    assert "The5ers MT5" in data["methodology"]["costs"]
-    assert "0.001%" in data["methodology"]["costs"]
-    assert "獲利因子" in data["methodology"]["definitions"]["pf"]
-    assert "期望值" in data["methodology"]["definitions"]["exp_r"]
-
-    # Round 2: 7 strategies in 1h, 7 in 15m, all failed
-    assert len(data["round2"]["tf_1h"]["strategies"]) == 7
-    assert len(data["round2"]["tf_15m"]["strategies"]) == 7
-    assert all(not s["passed"] for s in data["round2"]["tf_1h"]["strategies"])
-    assert all(not s["passed"] for s in data["round2"]["tf_15m"]["strategies"])
-
-    # Round 1 summary
-    assert len(data["round1_summary"]["strategies"]) == 4
-
-    # Contest simulation
-    assert "那是運氣，不是策略" in data["contest_sim"]["quote"]
-    assert "L2 是日線長波段策略" in data["contest_sim"]["l2_note"] or "通常不出手" in data["contest_sim"]["l2_note"]
-    l2_row = next(r for r in data["contest_sim"]["rows"] if r.get("is_baseline"))
-    assert l2_row["median_return_pct"] == 0.0
-    assert l2_row["bust_rate_pct"] == 0.0
-
-    # Learnings
-    assert len(data["learnings"]) >= 4
-
-    # Static JSON files existence
-    data_json_path = root / "data" / "contest_research.json"
-    assets_json_path = root / "assets" / "contest_research.json"
-    assert data_json_path.exists()
-    assert assets_json_path.exists()
-
-    # 2. JS rendering test via Node / JavaScriptCore
-    app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
-    js_bin = shutil.which("node")
-    if not js_bin:
-        jsc_path = Path("/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc")
-        if jsc_path.exists():
-            js_bin = str(jsc_path)
-    assert js_bin is not None
-
-    script = f"""
-        const stubEl = () => ({{
-          classList: {{ add: () => {{}}, remove: () => {{}} }},
-          addEventListener: () => {{}},
-          innerHTML: '',
-          textContent: '',
-          value: 'all',
-          dataset: {{}},
-          disabled: false,
-        }});
-        var navigator = {{}};
-        var window = {{
-          location: {{ hash: '#/contest-research' }},
-          addEventListener: () => {{}},
-          SIGNAL_DESK_CONFIG: {{}},
-        }};
-        var document = {{
-          getElementById: () => stubEl(),
-          querySelectorAll: () => [],
-          querySelector: () => stubEl(),
-          body: {{ appendChild: () => {{}}, removeChild: () => {{}} }},
-          createElement: () => ({{ value: '', style: {{}}, setAttribute: () => {{}}, focus: () => {{}}, select: () => {{}} }}),
-          execCommand: () => true,
-        }};
-        function setInterval() {{}}
-        function setTimeout() {{ return 1; }}
-        function clearTimeout() {{}}
-        async function fetch() {{ return {{ ok: false }}; }}
-
-        {app_js}
-
-        const u = window.__SIGNAL_DESK_UTILS__;
-        const mockData = {json.dumps(data)};
-        const html = u.renderContestResearchHtml(mockData);
-
-        if (!html.includes('我們測了 7 種短線策略')) {{
-          throw new Error('renderContestResearchHtml missing takeaway: ' + html.slice(0, 300));
-        }}
-        if (!html.includes('A 跌深反轉') || !html.includes('G 掃停損反轉')) {{
-          throw new Error('renderContestResearchHtml missing strategy intro');
-        }}
-        if (!html.includes('The5ers MT5') || !html.includes('獲利因子 (Profit Factor, PF)')) {{
-          throw new Error('renderContestResearchHtml missing methodology');
-        }}
-        if (!html.includes('pf-fail')) {{
-          throw new Error('renderContestResearchHtml missing pf-fail styling');
-        }}
-        if (!html.includes('那是運氣，不是策略')) {{
-          throw new Error('renderContestResearchHtml missing contest quote');
-        }}
-        if (!html.includes('Signal Desk L2（基準）')) {{
-          throw new Error('renderContestResearchHtml missing L2 baseline row');
-        }}
-        if (!html.includes('五、我們學到什麼？')) {{
-          throw new Error('renderContestResearchHtml missing learnings');
-        }}
-        if (!html.includes('report_round2.md')) {{
-          throw new Error('renderContestResearchHtml missing github link');
-        }}
-    """
-    with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as tf:
-        tf.write(script)
-        tmp_js = tf.name
-    try:
-        proc = subprocess.run([js_bin, tmp_js], capture_output=True, text=True)
-        assert proc.returncode == 0, f"JS render check failed: {proc.stderr or proc.stdout}"
-    finally:
-        Path(tmp_js).unlink(missing_ok=True)
-
-
 def test_in_depth_research_json_and_rendering() -> None:
-    """Verify in-depth research JSON structure, Article 1 & 2 content, and JS rendering & redirect."""
+    """Verify in-depth research JSON structure, Article 1/2/3 content, and JS rendering & redirect."""
     import json
     import shutil
     import subprocess
@@ -846,6 +714,23 @@ def test_in_depth_research_json_and_rendering() -> None:
     assert art1["title"] == "短線策略能拿去比賽嗎？"
     assert "我們測了 7 種短線策略" in art1["takeaway"]
     assert "沒有一個有穩定優勢" in art1["takeaway"]
+    assert len(art1["strategies_intro"]) == 7
+    assert [s["id"] for s in art1["strategies_intro"]] == ["A", "B", "C", "D", "E", "F", "G"]
+    assert "The5ers MT5" in art1["methodology"]["costs"]
+    assert "0.001%" in art1["methodology"]["costs"]
+    assert "獲利因子" in art1["methodology"]["definitions"]["pf"]
+    assert "期望值" in art1["methodology"]["definitions"]["exp_r"]
+    assert len(art1["round2"]["tf_1h"]["strategies"]) == 7
+    assert len(art1["round2"]["tf_15m"]["strategies"]) == 7
+    assert all(not s["passed"] for s in art1["round2"]["tf_1h"]["strategies"])
+    assert all(not s["passed"] for s in art1["round2"]["tf_15m"]["strategies"])
+    assert len(art1["round1_summary"]["strategies"]) == 4
+    assert "那是運氣，不是策略" in art1["contest_sim"]["quote"]
+    assert "L2 是日線長波段策略" in art1["contest_sim"]["l2_note"] or "通常不出手" in art1["contest_sim"]["l2_note"]
+    l2_short_row = next(r for r in art1["contest_sim"]["rows"] if r.get("is_baseline"))
+    assert l2_short_row["median_return_pct"] == 0.0
+    assert l2_short_row["bust_rate_pct"] == 0.0
+    assert len(art1["learnings"]) >= 4
 
     # Article 2: Combo research (Second research)
     assert art2["id"] == "combo"
@@ -897,11 +782,12 @@ def test_in_depth_research_json_and_rendering() -> None:
     assert len(art3["tables"]["single_slot_matrix"]) == 6
     assert len(art3["tables"]["multi_slot_matrix"]) == 6
 
-    # Files existence
+    # Files existence (single canonical data/research.json; legacy copies removed)
     data_json_path = root / "data" / "research.json"
-    assets_json_path = root / "assets" / "research.json"
     assert data_json_path.exists()
-    assert assets_json_path.exists()
+    assert not (root / "assets" / "research.json").exists()
+    assert not (root / "data" / "contest_research.json").exists()
+    assert not (root / "assets" / "contest_research.json").exists()
 
     # 2. JS rendering test via Node / JSC
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
@@ -955,6 +841,29 @@ def test_in_depth_research_json_and_rendering() -> None:
 
         const u = window.__SIGNAL_DESK_UTILS__;
         const mockData = {json.dumps(data)};
+        const contestHtml = u.renderContestResearchHtml(mockData.articles[0]);
+        if (!contestHtml.includes('A 跌深反轉') || !contestHtml.includes('G 掃停損反轉')) {{
+          throw new Error('renderContestResearchHtml missing strategy intro');
+        }}
+        if (!contestHtml.includes('The5ers MT5') || !contestHtml.includes('獲利因子 (Profit Factor, PF)')) {{
+          throw new Error('renderContestResearchHtml missing methodology');
+        }}
+        if (!contestHtml.includes('pf-fail')) {{
+          throw new Error('renderContestResearchHtml missing pf-fail styling');
+        }}
+        if (!contestHtml.includes('那是運氣，不是策略')) {{
+          throw new Error('renderContestResearchHtml missing contest quote');
+        }}
+        if (!contestHtml.includes('Signal Desk L2（基準）')) {{
+          throw new Error('renderContestResearchHtml missing L2 baseline row');
+        }}
+        if (!contestHtml.includes('五、我們學到什麼？')) {{
+          throw new Error('renderContestResearchHtml missing learnings');
+        }}
+        if (!contestHtml.includes('report_round2.md')) {{
+          throw new Error('renderContestResearchHtml missing github link');
+        }}
+
         const html = u.renderResearchHtml(mockData);
 
         // Verify TOC

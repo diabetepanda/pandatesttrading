@@ -27,7 +27,6 @@
   let cachedRisk = null;
   let cachedEquity = null;
   let cachedEvents = null;
-  let cachedContestResearch = null;
   let cachedTa = null;
   let expandedTaSymbol = null;
   let livePrices = {};
@@ -1338,60 +1337,6 @@
     if (note) note.textContent = `圖表週期：${chartData.interval}（已標示進場、止損與移動出場線）`;
   }
 
-  function formatDuration(startIso, endIso) {
-    if (!startIso || !endIso) return "--";
-    const ms = new Date(endIso).getTime() - new Date(startIso).getTime();
-    if (Number.isNaN(ms) || ms < 0) return "--";
-    const mins = Math.round(ms / 60000);
-    if (mins < 60) return `${mins} 分`;
-    const hrs = Math.floor(mins / 60);
-    const rem = mins % 60;
-    return `${hrs} 小時 ${rem} 分`;
-  }
-
-  function renderResultsTable() {
-    const tbody = document.getElementById("results-tbody");
-    const fStratEl = document.getElementById("res-filter-strategy");
-    if (!tbody || !fStratEl) return;
-    const fStrat = fStratEl.value;
-    const fMkt = document.getElementById("res-filter-market")?.value || "all";
-    const fDir = document.getElementById("res-filter-direction")?.value || "all";
-    const fReason = document.getElementById("res-filter-reason")?.value || "all";
-
-    const rows = cachedSignals.filter((s) => {
-      if (s.lifecycle_state !== "closed" && s.lifecycle_state !== "cancelled") return false;
-      if (fStrat !== "all" && s.strategy !== fStrat) return false;
-      if (fMkt !== "all" && getUiMarketKey(s.market, s.symbol) !== fMkt) return false;
-      if (fDir !== "all" && s.direction !== fDir) return false;
-      if (fReason !== "all" && s.exit_reason !== fReason) return false;
-      return true;
-    });
-
-    if (rows.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="9" class="muted center">目前尚無符合條件的已結束報單。</td></tr>';
-      return;
-    }
-
-    tbody.innerHTML = rows
-      .map((s) => {
-        const rVal = Number(s.r_multiple || 0);
-        const rCls = rVal > 0 ? "chg-up" : rVal < 0 ? "chg-down" : "muted";
-        return `
-          <tr>
-            <td data-label="報單編號"><a href="#/signal/${encodeURIComponent(s.signal_id)}" style="color:var(--accent);">${s.signal_id}</a></td>
-            <td data-label="策略">策略 ${s.strategy}</td>
-            <td data-label="標的"><strong>${s.symbol}</strong></td>
-            <td data-label="方向">${s.direction === "long" ? "做多" : "做空"}</td>
-            <td data-label="R 值" class="${rCls}">${rVal.toFixed(2)}R</td>
-            <td data-label="美元損益" class="${rCls}">${formatUsd(s.realized_pnl_usd)}</td>
-            <td data-label="持倉時間">${formatDuration(s.entered_at_utc, s.closed_at_utc)}</td>
-            <td data-label="出場原因">${escapeHtml(s.exit_reason_label || exitReasonLabel(s.exit_reason))}</td>
-            <td data-label="結束時間 (台北)">${formatTaipeiTime(s.closed_at_utc)}</td>
-          </tr>`;
-      })
-      .join("");
-  }
-
   function renderPriceCell(item) {
     const schedStr = formatNumber(item.latest_price);
     const live = livePrices[item.symbol];
@@ -1903,15 +1848,19 @@
 
   function renderProbe(probeData) {
     const summaryEl = document.getElementById("probe-summary");
+    const badgeEl = document.getElementById("probe-date-badge");
     const tableEl = document.getElementById("probe-table");
     const tbody = document.getElementById("probe-tbody");
     if (!probeData || !Array.isArray(probeData.results) || probeData.results.length === 0) {
-      summaryEl.textContent = "尚無實測報告（請先於 GitHub Actions 手動觸發一次 Market Scan）。";
+      if (badgeEl) badgeEl.textContent = "尚未實測";
+      summaryEl.textContent = "尚無實測報告（手動執行才會更新，請於 GitHub Actions 手動觸發實測）。";
       tableEl.classList.add("hidden");
       return;
     }
     const probeRows = probeData.results.filter((r) => r && r.market !== "forex");
-    summaryEl.textContent = `實測時間 (台北)：${formatTaipeiTime(probeData.generated_at_utc)}，共 ${probeRows.length} 組測試。`;
+    const probeTime = formatTaipeiTime(probeData.generated_at_utc);
+    if (badgeEl) badgeEl.textContent = probeTime;
+    summaryEl.textContent = `實測時間 (台北)：${probeTime}，共 ${probeRows.length} 組測試（手動執行才會更新）。`;
     tableEl.classList.remove("hidden");
     tbody.innerHTML = probeRows
       .map((row) => {
@@ -1930,7 +1879,7 @@
     const box = document.getElementById("run-log-box");
     const sumEl = document.getElementById("sched-summary");
     if (sumEl && health && health.runs_last_24h !== undefined) {
-      sumEl.textContent = `近 24 小時排程執行次數：${health.runs_last_24h} 次｜自動排程時間：每小時台北時間 :15/:30/:45/:00 前後`;
+      sumEl.textContent = `近 24 小時排程執行次數：${health.runs_last_24h} 次｜自動排程時間：每小時台北時間 :07/:22/:37/:52 前後`;
     }
     if (!Array.isArray(runLog) || runLog.length === 0) {
       box.textContent = "尚無排程紀錄。";
@@ -2123,11 +2072,6 @@
 
   function unverifiedCell() {
     return '<span class="pill pill-warn">尚未驗證</span>';
-  }
-
-  function formatPctOrUnverified(val, verified, suffix = "%") {
-    if (!verified || val === null || val === undefined) return unverifiedCell();
-    return `${Number(val).toFixed(2)}${suffix}`;
   }
 
   function renderPerformanceStats() {
@@ -2393,42 +2337,10 @@
       }
     } catch (_) {}
     try {
-      const resp = await fetch(`assets/research.json?t=${Date.now()}`);
-      if (resp.ok) {
-        cachedResearch = await resp.json();
-        return cachedResearch;
-      }
-    } catch (_) {}
-    try {
       cachedResearch = await fetchDataJson("research.json");
       return cachedResearch;
     } catch (err) {
       console.warn("Failed to load research json:", err);
-      return null;
-    }
-  }
-
-  async function fetchContestResearch() {
-    if (cachedContestResearch) return cachedContestResearch;
-    try {
-      const resp = await fetch(`data/contest_research.json?t=${Date.now()}`);
-      if (resp.ok) {
-        cachedContestResearch = await resp.json();
-        return cachedContestResearch;
-      }
-    } catch (_) {}
-    try {
-      const resp = await fetch(`assets/contest_research.json?t=${Date.now()}`);
-      if (resp.ok) {
-        cachedContestResearch = await resp.json();
-        return cachedContestResearch;
-      }
-    } catch (_) {}
-    try {
-      cachedContestResearch = await fetchDataJson("contest_research.json");
-      return cachedContestResearch;
-    } catch (err) {
-      console.warn("Failed to load contest research json:", err);
       return null;
     }
   }
@@ -3126,7 +3038,7 @@
   }
 
   async function renderResearchView() {
-    const container = document.getElementById("research-container") || document.getElementById("contest-research-container");
+    const container = document.getElementById("research-container");
     if (!container) return;
     if (!cachedResearch) {
       container.innerHTML = '<p class="muted">深度研究資料載入中...</p>';
@@ -3137,10 +3049,6 @@
       }
     }
     container.innerHTML = renderResearchHtml(cachedResearch);
-  }
-
-  async function renderContestResearchView() {
-    return renderResearchView();
   }
 
   function renderDataExtras() {
@@ -3178,7 +3086,6 @@
     } else if (route === "results") {
       document.getElementById("view-results").classList.remove("hidden");
       document.querySelector('.nav-link[data-route="results"]')?.classList.add("active");
-      renderResultsTable();
       renderBacktestResults();
     } else if (route === "stats") {
       document.getElementById("view-stats").classList.remove("hidden");
@@ -3259,7 +3166,7 @@
         fetchDataJson("risk_status.json"),
         fetchDataJson("equity_curve.json"),
         fetchDataJson("events_calendar.json"),
-        fetchContestResearch(),
+        fetchResearch(),
         fetchTaData(),
       ]);
 
@@ -3280,11 +3187,7 @@
       cachedEvents = evRes.status === "fulfilled" ? evRes.value : null;
       cachedTa = taRes.status === "fulfilled" ? taRes.value : null;
       if (contestRes.status === "fulfilled" && contestRes.value) {
-        if (contestRes.value.articles) {
-          cachedResearch = contestRes.value;
-        } else {
-          cachedContestResearch = contestRes.value;
-        }
+        cachedResearch = contestRes.value;
       }
       const curHash = window.location.hash || "";
       if (curHash.includes("research") || curHash.includes("contest-research")) {
@@ -3309,7 +3212,7 @@
       cachedSignalById = sigMap;
 
       // 每個區塊各自防護：一個區塊出錯不會拖垮整個頁面
-      [renderSimpleSignals, renderInstruments, renderWallCards, renderResultsTable, renderBacktestResults,
+      [renderSimpleSignals, renderInstruments, renderWallCards, renderBacktestResults,
        renderPerformanceStats, renderSimulatedAccount,
        renderRiskCenter, renderDataExtras].forEach((fn) => {
         try { fn(); } catch (e) { console.error(`${fn.name} 失敗：`, e); }
@@ -3371,10 +3274,6 @@
     const el = document.getElementById(id);
     el.addEventListener("change", renderWallCards);
     el.addEventListener("input", renderWallCards);
-  });
-
-  ["res-filter-strategy", "res-filter-market", "res-filter-direction", "res-filter-reason"].forEach((id) => {
-    document.getElementById(id)?.addEventListener("change", renderResultsTable);
   });
 
   document.getElementById("watch-scope-tabs")?.addEventListener("click", (e) => {
@@ -3457,8 +3356,6 @@
     renderOpenPositionsHtml,
     renderSimulatedAccount,
     renderContestResearchHtml,
-    renderContestResearchView,
-    fetchContestResearch,
     renderExamSensitivityArticleHtml,
     renderResearchHtml,
     renderResearchView,

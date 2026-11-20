@@ -45,9 +45,11 @@ def test_run_scan_outputs_required_files(tmp_path: Path) -> None:
     # Use Saturday 12:00 UTC so crypto passes low-liquidity window and reaches derivatives check
     now = datetime(2026, 11, 14, 12, 0, tzinfo=timezone.utc)
 
-    # Plant obsolete legacy files to verify scan removes them cleanly
-    (tmp_path / "watch_today_b.json").write_text("{}", encoding="utf-8")
-    (tmp_path / "liquidity_heatmap.json").write_text("{}", encoding="utf-8")
+    # Plant obsolete data-branch files to verify scan removes them while preserving probe reports
+    (tmp_path / "orders.json").write_text("[]", encoding="utf-8")
+    (tmp_path / "trade_stages.json").write_text("[]", encoding="utf-8")
+    (tmp_path / "backtests").mkdir(parents=True, exist_ok=True)
+    (tmp_path / "backtests" / "latest.json").write_text("{}", encoding="utf-8")
 
     summary = run_scan(
         out_dir=tmp_path,
@@ -57,8 +59,10 @@ def test_run_scan_outputs_required_files(tmp_path: Path) -> None:
         now_utc=now,
     )
     assert summary["status_counts"]["ok"] > 0
-    assert not (tmp_path / "watch_today_b.json").exists()
-    assert not (tmp_path / "liquidity_heatmap.json").exists()
+    assert not (tmp_path / "orders.json").exists()
+    assert not (tmp_path / "trade_stages.json").exists()
+    assert not (tmp_path / "backtests" / "latest.json").exists()
+    assert (tmp_path / "data_probe_report.json").exists()
     assert "step_timings_sec" in summary
     assert "fetch_and_quality_sec" in summary["step_timings_sec"]
 
@@ -429,3 +433,36 @@ def test_scan_closes_active_trade_on_retired_strategy(tmp_path: Path) -> None:
     assert perf["by_strategy"]["S1"]["retired"] is True
     health = json.loads((tmp_path / "data_health.json").read_text(encoding="utf-8"))
     assert health["short_term_equity_usd"] == pytest.approx(20000.0 + expected_retired_pnl, abs=0.05)
+
+
+def test_cleanup_obsolete_data_files_preserves_probe_report(tmp_path: Path) -> None:
+    """Verify scan/daily/weekly shared cleanup removes retired files while preserving data_probe_report.json."""
+    from src.jobs.data_sync import cleanup_obsolete_data_files
+    from src.jobs.weekly import run_weekly_screening
+
+    for rel in ("orders.json", "trade_stages.json", "backtests/latest.json", "data_probe_report.json"):
+        p = tmp_path / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text("{}", encoding="utf-8")
+
+    removed = cleanup_obsolete_data_files(tmp_path)
+    assert set(removed) == {"orders.json", "trade_stages.json", "backtests/latest.json"}
+    assert not (tmp_path / "orders.json").exists()
+    assert not (tmp_path / "trade_stages.json").exists()
+    assert not (tmp_path / "backtests" / "latest.json").exists()
+    assert (tmp_path / "data_probe_report.json").exists()
+
+    # Re-plant and verify weekly job calls cleanup and does not re-create backtests/latest.json
+    (tmp_path / "orders.json").write_text("[]", encoding="utf-8")
+    (tmp_path / "trade_stages.json").write_text("[]", encoding="utf-8")
+    (tmp_path / "backtests" / "latest.json").write_text("{}", encoding="utf-8")
+    dummy = DummyAdapter()
+    fetcher = FallbackDataFetcher(
+        adapters={k: dummy for k in ("binance_vision", "okx", "bybit", "kraken", "coinbase", "yfinance", "stooq")}
+    )
+    run_weekly_screening(out_dir=tmp_path, fetcher=fetcher)
+    assert (tmp_path / "backtest_results.json").exists()
+    assert not (tmp_path / "backtests" / "latest.json").exists()
+    assert not (tmp_path / "orders.json").exists()
+    assert not (tmp_path / "trade_stages.json").exists()
+    assert (tmp_path / "data_probe_report.json").exists()

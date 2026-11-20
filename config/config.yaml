@@ -7,12 +7,10 @@ project:
   timezone_display: Asia/Taipei
 
 schedule:
-  scan_interval_minutes: 15
   max_candle_delay_minutes: 20
   max_4h_candle_delay_minutes: 260
   max_daily_candle_delay_minutes: 1500
   scan_cache_dir: .cache/scan_bars
-  ui_stale_warning_minutes: 45
   keep_run_logs: 100
 
 account:
@@ -24,7 +22,6 @@ account:
       capital_usd: 80000.0
 
 risk:
-  maintenance_margin_ratio: 0.50
   default_slippage_bps: 1.0
 
 analytics:
@@ -32,13 +29,9 @@ analytics:
   min_cagr_days: 30
   risk_free_rate_annual: 0.0
 
-signals:
-  timezone_display: Asia/Taipei
-
 backtest:
   min_history_years: 5.0
   in_sample_ratio: 0.7
-  out_sample_ratio: 0.3
   min_oos_trades: 30
   max_oos_drawdown_pct: 25.0
   min_oos_profit_factor: 1.3
