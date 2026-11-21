@@ -1,8 +1,12 @@
 {
   "version": 1,
   "latest_issue": "2026-11-21-PM",
-  "updated_at_utc": "2026-11-21T07:07:20Z",
-  "updated_at_taipei": "2026-11-21 15:07",
+  "is_current_issue_updating": true,
+  "updated_at_utc": "2026-11-21T15:40:05Z",
+  "updated_at_taipei": "2026-11-21 23:40",
+  "last_updated_utc": "2026-11-21T15:40:05Z",
+  "last_updated_taipei": "2026-11-21 23:40",
+  "next_update_hint": "約台北時間 23:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -22,15 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 16.93,
+    "total_elapsed_sec": 18.054,
     "sources_ok": 23,
     "sources_failed": 3,
+    "new_items_added": 56,
+    "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.083,
+        "elapsed_sec": 0.079,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -39,43 +45,43 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.449,
+        "elapsed_sec": 0.177,
         "raw_count": 30,
-        "items_kept": 10,
+        "items_kept": 9,
         "error": null
       },
       "cnbc_economy": {
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.072,
+        "elapsed_sec": 0.193,
         "raw_count": 30,
-        "items_kept": 3,
+        "items_kept": 2,
         "error": null
       },
       "marketwatch_top": {
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.149,
+        "elapsed_sec": 0.075,
         "raw_count": 10,
-        "items_kept": 8,
+        "items_kept": 2,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.505,
+        "elapsed_sec": 0.358,
         "raw_count": 19,
-        "items_kept": 17,
+        "items_kept": 19,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.229,
+        "elapsed_sec": 0.179,
         "raw_count": 25,
         "items_kept": 21,
         "error": null
@@ -84,25 +90,25 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.092,
+        "elapsed_sec": 0.138,
         "raw_count": 30,
-        "items_kept": 21,
+        "items_kept": 20,
         "error": null
       },
       "theblock": {
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.104,
+        "elapsed_sec": 0.115,
         "raw_count": 20,
-        "items_kept": 17,
+        "items_kept": 16,
         "error": null
       },
       "decrypt": {
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.118,
+        "elapsed_sec": 0.117,
         "raw_count": 37,
         "items_kept": 19,
         "error": null
@@ -111,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 2.663,
+        "elapsed_sec": 0.545,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -120,34 +126,34 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.532,
+        "elapsed_sec": 0.577,
         "raw_count": 20,
-        "items_kept": 15,
+        "items_kept": 13,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.533,
+        "elapsed_sec": 0.501,
         "raw_count": 20,
-        "items_kept": 7,
+        "items_kept": 8,
         "error": null
       },
       "cnyes_crypto": {
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.648,
+        "elapsed_sec": 0.838,
         "raw_count": 15,
-        "items_kept": 6,
+        "items_kept": 7,
         "error": null
       },
       "udn_money_stock": {
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.605,
+        "elapsed_sec": 0.449,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -156,16 +162,16 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.497,
+        "elapsed_sec": 0.383,
         "raw_count": 50,
-        "items_kept": 23,
+        "items_kept": 24,
         "error": null
       },
       "defillama_stablecoins": {
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.106,
+        "elapsed_sec": 0.083,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -174,16 +180,16 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.957,
+        "elapsed_sec": 1.281,
         "raw_count": 6,
-        "items_kept": 5,
+        "items_kept": 0,
         "error": null
       },
       "defillama_hacks": {
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.06,
+        "elapsed_sec": 0.535,
         "raw_count": 1371,
         "items_kept": 1,
         "error": null
@@ -192,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.758,
+        "elapsed_sec": 1.531,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -201,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.48,
+        "elapsed_sec": 0.513,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -210,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.388,
+        "elapsed_sec": 1.294,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -219,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.541,
+        "elapsed_sec": 0.465,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -228,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.605,
+        "elapsed_sec": 0.741,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -237,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.215,
+        "elapsed_sec": 0.185,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -246,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.579,
+        "elapsed_sec": 0.502,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -255,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.401,
+        "elapsed_sec": 0.346,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -264,58 +270,386 @@
   },
   "data_metrics_snapshot": {
     "stablecoins": {
-      "total_usd_b": 284.32,
-      "change_1d_usd_m": -872.0,
-      "change_1d_pct": -0.31
+      "total_usd_b": 284.34,
+      "change_1d_usd_m": -845.0,
+      "change_1d_pct": -0.3,
+      "alert_key": "stablecoins_supply:down"
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 33.59,
-        "change_1d_pct": -7.46
-      },
-      "Solana": {
-        "tvl_b": 4.46,
-        "change_1d_pct": -5.41
+        "tvl_b": 35.72,
+        "change_1d_pct": -1.61
       },
       "Base": {
-        "tvl_b": 4.41,
-        "change_1d_pct": -9.83
+        "tvl_b": 4.65,
+        "change_1d_pct": -4.84
+      },
+      "Solana": {
+        "tvl_b": 4.56,
+        "change_1d_pct": -3.13
       },
       "Tron": {
-        "tvl_b": 4.29,
-        "change_1d_pct": -4.22
+        "tvl_b": 4.39,
+        "change_1d_pct": -1.81
       },
       "BSC": {
-        "tvl_b": 4.07,
-        "change_1d_pct": -8.36
+        "tvl_b": 4.28,
+        "change_1d_pct": -3.65
       },
       "Bitcoin": {
-        "tvl_b": 2.83,
-        "change_1d_pct": -9.43
+        "tvl_b": 3.03,
+        "change_1d_pct": -3.06
       }
     },
     "btc_spot_etf": {
       "date": "Nov 19, 2026",
-      "net_flow_usd_m": -16.4
+      "net_flow_usd_m": -16.9,
+      "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": -0.0036,
-        "oi_usd_b": 1.91
+        "funding_rate_pct": 0.0002,
+        "oi_usd_b": 1.92
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0082,
-        "oi_usd_b": 1.08
+        "funding_rate_pct": -0.0008,
+        "oi_usd_b": 1.11
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.4,
-      "tx_count": 57759
+      "mempool_vsize_mb": 30.2,
+      "tx_count": 69814,
+      "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261121-1447ef03b0",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:17:17Z",
+      "published_at_taipei": "2026-11-21 23:17",
+      "published_at_taipei_iso": "2026-11-21T23:17:17+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "This Stock Market Selloff Could Block the Fed’s Rate Hikes",
+      "url": "https://247wallst.com/investing/2026/11/21/this-stock-market-selloff-could-block-the-feds-rate-hikes/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/21/this-stock-market-selloff-could-block-the-feds-rate-hikes?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（rate hike）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：rate hikes；命中：selloff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-66a870dcea",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:15:00Z",
+      "published_at_taipei": "2026-11-21 22:15",
+      "published_at_taipei_iso": "2026-11-21T22:15:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股跌到股民心慌！國安基金假日罕見發聲 喊話投資人保持信心",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E8%B7%8C%E5%88%B0%E8%82%A1%E6%B0%91%E5%BF%83%E6%85%8C-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E5%81%87%E6%97%A5%E7%BD%95%E8%A6%8B%E7%99%BC%E8%81%B2-%E5%96%8A%E8%A9%B1%E6%8A%95%E8%B3%87%E4%BA%BA%E4%BF%9D%E6%8C%81%E4%BF%A1%E5%BF%83-141500289.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E8%B7%8C%E5%88%B0%E8%82%A1%E6%B0%91%E5%BF%83%E6%85%8C-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E5%81%87%E6%97%A5%E7%BD%95%E8%A6%8B%E7%99%BC%E8%81%B2-%E5%96%8A%E8%A9%B1%E6%8A%95%E8%B3%87%E4%BA%BA%E4%BF%9D%E6%8C%81%E4%BF%A1%E5%BF%83-141500289.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（國安基金）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-44ddb4de89",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T12:21:57Z",
+      "published_at_taipei": "2026-11-21 20:21",
+      "published_at_taipei_iso": "2026-11-21T20:21:57+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "一個月暴跌1.4萬點！台股重挫28% 外資公股同買這16檔",
+      "url": "https://tw.news.yahoo.com/%E5%80%8B%E6%9C%88%E6%9A%B4%E8%B7%8C1-4%E8%90%AC%E9%BB%9E-%E5%8F%B0%E8%82%A1%E9%87%8D%E6%8C%AB28-%E5%A4%96%E8%B3%87%E5%85%AC%E8%82%A1%E5%90%8C%E8%B2%B7%E9%80%9916%E6%AA%94-122157969.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%80%8B%E6%9C%88%E6%9A%B4%E8%B7%8C1-4%E8%90%AC%E9%BB%9E-%E5%8F%B0%E8%82%A1%E9%87%8D%E6%8C%AB28-%E5%A4%96%E8%B3%87%E5%85%AC%E8%82%A1%E5%90%8C%E8%B2%B7%E9%80%9916%E6%AA%94-122157969.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（暴跌）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：暴跌；命中：重挫",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-f299bf5500",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T12:12:00Z",
+      "published_at_taipei": "2026-11-21 20:12",
+      "published_at_taipei_iso": "2026-11-21T20:12:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股暴跌面臨3萬6保衛戰！金管會祭出5大救市新制 下周一全面禁止平盤以下放空",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C%E9%9D%A2%E8%87%A83%E8%90%AC6%E4%BF%9D%E8%A1%9B%E6%88%B0-%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD%E5%87%BA5%E5%A4%A7%E6%95%91%E5%B8%82%E6%96%B0%E5%88%B6-%E4%B8%8B%E5%91%A8-%E5%85%A8%E9%9D%A2%E7%A6%81%E6%AD%A2%E5%B9%B3%E7%9B%A4%E4%BB%A5%E4%B8%8B%E6%94%BE%E7%A9%BA-121200927.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C%E9%9D%A2%E8%87%A83%E8%90%AC6%E4%BF%9D%E8%A1%9B%E6%88%B0-%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD%E5%87%BA5%E5%A4%A7%E6%95%91%E5%B8%82%E6%96%B0%E5%88%B6-%E4%B8%8B%E5%91%A8-%E5%85%A8%E9%9D%A2%E7%A6%81%E6%AD%A2%E5%B9%B3%E7%9B%A4%E4%BB%A5%E4%B8%8B%E6%94%BE%E7%A9%BA-121200927.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（暴跌）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：暴跌",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-778b0066fc",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:27:38Z",
+      "published_at_taipei": "2026-11-21 18:27",
+      "published_at_taipei_iso": "2026-11-21T18:27:38+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股周一穩了？金管會5大狠招穩市「全面限空」 國安基金罕見證實已進場",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8-%E7%A9%A9%E4%BA%86-%E9%87%91%E7%AE%A1%E6%9C%835%E5%A4%A7%E7%8B%A0%E6%8B%9B%E7%A9%A9%E5%B8%82-%E5%85%A8%E9%9D%A2%E9%99%90%E7%A9%BA-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E7%BD%95%E8%A6%8B%E8%AD%89%E5%AF%A6%E5%B7%B2%E9%80%B2%E5%A0%B4-102738219.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8-%E7%A9%A9%E4%BA%86-%E9%87%91%E7%AE%A1%E6%9C%835%E5%A4%A7%E7%8B%A0%E6%8B%9B%E7%A9%A9%E5%B8%82-%E5%85%A8%E9%9D%A2%E9%99%90%E7%A9%BA-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E7%BD%95%E8%A6%8B%E8%AD%89%E5%AF%A6%E5%B7%B2%E9%80%B2%E5%A0%B4-102738219.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（國安基金）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-bf163ae06e",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:13:37Z",
+      "published_at_taipei": "2026-11-21 18:13",
+      "published_at_taipei_iso": "2026-11-21T18:13:37+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "聯準會政策衝擊要來了？庫克指利率未抑制AI建設，等太久恐需更大幅升息",
+      "url": "https://news.cnyes.com/news/id/6669775",
+      "canonical_url": "https://news.cnyes.com/news/id/6669775",
+      "source": "鉅亨網（總經）",
+      "source_id": "cnyes_macro",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（聯準會）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：升息",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-7552ed416f",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T08:52:26Z",
+      "published_at_taipei": "2026-11-21 16:52",
+      "published_at_taipei_iso": "2026-11-21T16:52:26+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股暴跌！國安基金罕見喊話了：跨部會維護股市穩定 請投資人保持信心",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E7%BD%95%E8%A6%8B%E5%96%8A%E8%A9%B1%E4%BA%86-%E8%B7%A8%E9%83%A8%E6%9C%83%E7%B6%AD%E8%AD%B7%E8%82%A1%E5%B8%82%E7%A9%A9%E5%AE%9A-%E8%AB%8B%E6%8A%95%E8%B3%87%E4%BA%BA%E4%BF%9D%E6%8C%81%E4%BF%A1%E5%BF%83-085226122.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E7%BD%95%E8%A6%8B%E5%96%8A%E8%A9%B1%E4%BA%86-%E8%B7%A8%E9%83%A8%E6%9C%83%E7%B6%AD%E8%AD%B7%E8%82%A1%E5%B8%82%E7%A9%A9%E5%AE%9A-%E8%AB%8B%E6%8A%95%E8%B3%87%E4%BA%BA%E4%BF%9D%E6%8C%81%E4%BF%A1%E5%BF%83-085226122.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（國安基金）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：暴跌；命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-274fd88dd0",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T08:48:00Z",
+      "published_at_taipei": "2026-11-21 16:48",
+      "published_at_taipei_iso": "2026-11-21T16:48:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股暴跌忍痛停損！他砍光持股認賠928萬 網曝慘況：今年獲利全吐還倒賠",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C%E5%BF%8D%E7%97%9B%E5%81%9C%E6%90%8D-%E4%BB%96%E7%A0%8D%E5%85%89%E6%8C%81%E8%82%A1%E8%AA%8D%E8%B3%A0928%E8%90%AC-%E7%B6%B2%E6%9B%9D%E6%85%98%E6%B3%81-%E4%BB%8A%E5%B9%B4%E7%8D%B2%E5%88%A9%E5%85%A8%E5%90%90%E9%82%84%E5%80%92%E8%B3%A0-084800149.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C%E5%BF%8D%E7%97%9B%E5%81%9C%E6%90%8D-%E4%BB%96%E7%A0%8D%E5%85%89%E6%8C%81%E8%82%A1%E8%AA%8D%E8%B3%A0928%E8%90%AC-%E7%B6%B2%E6%9B%9D%E6%85%98%E6%B3%81-%E4%BB%8A%E5%B9%B4%E7%8D%B2%E5%88%A9%E5%85%A8%E5%90%90%E9%82%84%E5%80%92%E8%B3%A0-084800149.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（暴跌）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：暴跌；命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-6374a4ed36",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T07:58:46Z",
+      "published_at_taipei": "2026-11-21 15:58",
+      "published_at_taipei_iso": "2026-11-21T15:58:46+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股血崩7641點下周守住35000！國安基金急派「定心丸」喊話4大撐盤亮點",
+      "url": "https://news.cnyes.com/news/id/6669743",
+      "canonical_url": "https://news.cnyes.com/news/id/6669743",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（國安基金）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：外資賣超",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261121-42cc566e9a",
       "issue": "2026-11-21-PM",
@@ -672,6 +1006,1322 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
+    },
+    {
+      "id": "news-20261121-28a3672a0f",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:32:31Z",
+      "published_at_taipei": "2026-11-21 23:32",
+      "published_at_taipei_iso": "2026-11-21T23:32:31+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Anthropic Is Now Worth More Than Bitcoin: Could Bitcoin Pass It by 2030?",
+      "url": "https://247wallst.com/investing/cryptocurrency/2026/11/21/anthropic-is-now-worth-more-than-bitcoin-could-bitcoin-pass-it-by-2030/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/cryptocurrency/2026/11/21/anthropic-is-now-worth-more-than-bitcoin-could-bitcoin-pass-it-by-2030?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "鏈上資金",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：outflows",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-c63470010f",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:28:29Z",
+      "published_at_taipei": "2026-11-21 23:28",
+      "published_at_taipei_iso": "2026-11-21T23:28:29+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Wall Street’s Fear Index Just Hit 9.7. History Says the S&P 500 Could Rally 10.5% in 3 Weeks",
+      "url": "https://247wallst.com/investing/2026/11/21/wall-streets-fear-index-just-hit-9-7-history-says-the-sp-500-could-rally-10-5-in-3-weeks/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/21/wall-streets-fear-index-just-hit-9-7-history-says-the-sp-500-could-rally-10-5-in-3-weeks?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：selloff；命中：rally）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-8319816455",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:20:02Z",
+      "published_at_taipei": "2026-11-21 23:20",
+      "published_at_taipei_iso": "2026-11-21T23:20:02+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "After the Midterm Elections, VanEck's Matthew Sigel Is Still Bullish on Bitcoin. Here's Why He's Right.",
+      "url": "https://www.fool.com/investing/2026/11/21/after-the-midterm-elections-vanecks-matthew-sigel-is-still-bullish-on-bitcoin-heres-why-hes-rightwrong/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/21/after-the-midterm-elections-vanecks-matthew-sigel-is-still-bullish-on-bitcoin-heres-why-hes-rightwrong?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：bullish",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-a52f801e71",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:05:02Z",
+      "published_at_taipei": "2026-11-21 23:05",
+      "published_at_taipei_iso": "2026-11-21T23:05:02+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "The Nasdaq Just Triggered a Correction. 1 Move I'm Making Right Now -- and 1 I'm Avoiding",
+      "url": "https://www.fool.com/investing/2026/11/21/the-nasdaq-just-triggered-a-correction-1-move-im-making-right-now-and-1-im-avoiding/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/21/the-nasdaq-just-triggered-a-correction-1-move-im-making-right-now-and-1-im-avoiding?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-abd607df94",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:04:14Z",
+      "published_at_taipei": "2026-11-21 23:04",
+      "published_at_taipei_iso": "2026-11-21T23:04:14+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Warning for SpaceX Investors: You Buy the Stock “Entirely on the Basis” of Anthropic’s Compute Bill, Says Top VC",
+      "url": "https://www.tikr.com/blog/warning-for-spacex-investors-you-buy-the-stock-entirely-on-the-basis-of-anthropics-compute-bill-says-top-vc?ref=yahoofinance&tlnk=yf-261121-jxqjjrpp&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/warning-for-spacex-investors-you-buy-the-stock-entirely-on-the-basis-of-anthropics-compute-bill-says-top-vc?tlnk=yf-261121-jxqjjrpp&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-5d7a8f065a",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:01:53Z",
+      "published_at_taipei": "2026-11-21 23:01",
+      "published_at_taipei_iso": "2026-11-21T23:01:53+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Bitcoin Crashes Below $56,000 as $2.7 Billion Crypto Liquidation Wipes Out Traders",
+      "url": "https://247wallst.com/investing/2026/11/21/bitcoin-crashes-below-56000-as-2-7-billion-crypto-liquidation-wipes-out-traders/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/21/bitcoin-crashes-below-56000-as-2-7-billion-crypto-liquidation-wipes-out-traders?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "衍生品",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（liquidation）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：liquidation；命中：plunge",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-b87bb92097",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:01:50Z",
+      "published_at_taipei": "2026-11-21 23:01",
+      "published_at_taipei_iso": "2026-11-21T23:01:50+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Does ImmunityBio, Inc. (IBRX) Have More Upside on Major ANKTIVA Milestones",
+      "url": "https://finance.yahoo.com/healthcare/articles/does-immunitybio-inc-ibrx-more-150150878.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/healthcare/articles/does-immunitybio-inc-ibrx-more-150150878.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-e5641ac4e8",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:01:49Z",
+      "published_at_taipei": "2026-11-21 23:01",
+      "published_at_taipei_iso": "2026-11-21T23:01:49+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Trump Calls Huang’s Exit “Such a Tragedy” as His Filing Shows Up to $380,000 of Nvidia Buys",
+      "url": "https://www.tikr.com/blog/trump-calls-huangs-exit-such-a-tragedy-as-his-filing-shows-up-to-380000-of-nvidia-buys?ref=yahoofinance&tlnk=yf-261121-64rjxj6w&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/trump-calls-huangs-exit-such-a-tragedy-as-his-filing-shows-up-to-380000-of-nvidia-buys?tlnk=yf-261121-64rjxj6w&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-70ffa1ccff",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:01:37Z",
+      "published_at_taipei": "2026-11-21 23:01",
+      "published_at_taipei_iso": "2026-11-21T23:01:37+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "LifeStance Health Group, Inc. (LFST): A Mental Healthcare Growth Stock With Improving Profitability",
+      "url": "https://finance.yahoo.com/healthcare/articles/lifestance-health-group-inc-lfst-150137080.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/healthcare/articles/lifestance-health-group-inc-lfst-150137080.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-d382e90428",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:01:03Z",
+      "published_at_taipei": "2026-11-21 23:01",
+      "published_at_taipei_iso": "2026-11-21T23:01:03+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Is AvePoint, Inc. (NASDAQ:AVPT) an Emerging AI Infrastructure Play Under $25?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/avepoint-inc-nasdaq-avpt-emerging-150103481.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/avepoint-inc-nasdaq-avpt-emerging-150103481.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-515196c222",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:00:37Z",
+      "published_at_taipei": "2026-11-21 23:00",
+      "published_at_taipei_iso": "2026-11-21T23:00:37+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "First Advantage Corporation (FA) Rallying as Revenue Growth and Profitability Accelerate",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/first-advantage-corporation-fa-rallying-150037318.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/first-advantage-corporation-fa-rallying-150037318.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-482f0c1ba8",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:59:16Z",
+      "published_at_taipei": "2026-11-21 22:59",
+      "published_at_taipei_iso": "2026-11-21T22:59:16+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "5 Best US Stocks to Buy Under $25",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/5-best-us-stocks-buy-145916576.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/5-best-us-stocks-buy-145916576.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-bbec99ff91",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:22:43Z",
+      "published_at_taipei": "2026-11-21 22:22",
+      "published_at_taipei_iso": "2026-11-21T22:22:43+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Goldman Sachs Just Dropped 14% in a Week. Is It Time to Sell, or Load Up?",
+      "url": "https://www.tikr.com/blog/goldman-sachs-just-dropped-14-in-a-week-is-it-time-to-sell-or-load-up?ref=yahoofinance&tlnk=yf-261121-gw7cj5qm&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/goldman-sachs-just-dropped-14-in-a-week-is-it-time-to-sell-or-load-up?tlnk=yf-261121-gw7cj5qm&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-18f464e8c3",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:01:06Z",
+      "published_at_taipei": "2026-11-21 22:01",
+      "published_at_taipei_iso": "2026-11-21T22:01:06+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Is the AI Bubble Finally Popping? Nvidia Crashes 48% as Wall Street Experts Sound the Alarm",
+      "url": "https://decrypt.co/383754/ai-bubble-finally-popping-nvidia-crashes-48-wall-street-alarm",
+      "canonical_url": "https://decrypt.co/383754/ai-bubble-finally-popping-nvidia-crashes-48-wall-street-alarm",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "加密貨幣",
+        "總經"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-7714f153ee",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T13:38:33Z",
+      "published_at_taipei": "2026-11-21 21:38",
+      "published_at_taipei_iso": "2026-11-21T21:38:33+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股連番重挫 卓榮泰4點裁示",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%80%A3%E7%95%AA%E9%87%8D%E6%8C%AB-%E5%8D%93%E6%A6%AE%E6%B3%B04%E9%BB%9E%E8%A3%81%E7%A4%BA-133833024.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%80%A3%E7%95%AA%E9%87%8D%E6%8C%AB-%E5%8D%93%E6%A6%AE%E6%B3%B04%E9%BB%9E%E8%A3%81%E7%A4%BA-133833024.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-5e9b02fb27",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T13:10:44Z",
+      "published_at_taipei": "2026-11-21 21:10",
+      "published_at_taipei_iso": "2026-11-21T21:10:44+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "金管會出手禁平盤下放空能救台股嗎？ 法人兩極「樂觀反彈vs.沒救了」",
+      "url": "https://tw.news.yahoo.com/%E9%87%91%E7%AE%A1%E6%9C%83%E5%87%BA%E6%89%8B%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%B8%8B%E6%94%BE%E7%A9%BA%E8%83%BD%E6%95%91%E5%8F%B0%E8%82%A1%E5%97%8E-%E6%B3%95%E4%BA%BA%E5%85%A9%E6%A5%B5-%E6%A8%82%E8%A7%80%E5%8F%8D%E5%BD%88vs-%E6%B2%92%E6%95%91%E4%BA%86-131044816.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%87%91%E7%AE%A1%E6%9C%83%E5%87%BA%E6%89%8B%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%B8%8B%E6%94%BE%E7%A9%BA%E8%83%BD%E6%95%91%E5%8F%B0%E8%82%A1%E5%97%8E-%E6%B3%95%E4%BA%BA%E5%85%A9%E6%A5%B5-%E6%A8%82%E8%A7%80%E5%8F%8D%E5%BD%88vs-%E6%B2%92%E6%95%91%E4%BA%86-131044816.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：反彈；命中：重挫）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-d90cdb8fbf",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T12:46:00Z",
+      "published_at_taipei": "2026-11-21 20:46",
+      "published_at_taipei_iso": "2026-11-21T20:46:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股史詩級崩跌！火鍋店推「持股跌50%」免費吃",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8F%B2%E8%A9%A9%E7%B4%9A%E5%B4%A9%E8%B7%8C-%E7%81%AB%E9%8D%8B%E5%BA%97%E6%8E%A8-%E6%8C%81%E8%82%A1%E8%B7%8C50-%E5%85%8D%E8%B2%BB%E5%90%83-124600889.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8F%B2%E8%A9%A9%E7%B4%9A%E5%B4%A9%E8%B7%8C-%E7%81%AB%E9%8D%8B%E5%BA%97%E6%8E%A8-%E6%8C%81%E8%82%A1%E8%B7%8C50-%E5%85%8D%E8%B2%BB%E5%90%83-124600889.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-53d3e41adf",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T12:30:00Z",
+      "published_at_taipei": "2026-11-21 20:30",
+      "published_at_taipei_iso": "2026-11-21T20:30:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Ether treasury firm BTCS warns SEC its $54 million Aave loan could be liquidated",
+      "url": "https://www.coindesk.com/markets/2026/11/21/ether-treasury-firm-btcs-warns-sec-its-usd54-million-aave-loan-could-be-liquidated",
+      "canonical_url": "https://coindesk.com/markets/2026/11/21/ether-treasury-firm-btcs-warns-sec-its-usd54-million-aave-loan-could-be-liquidated",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "ETHUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（treasury）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：liquidated",
+      "sentiment_targets": [
+        "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-76af445151",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T11:55:00Z",
+      "published_at_taipei": "2026-11-21 19:55",
+      "published_at_taipei_iso": "2026-11-21T19:55:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "費半狂殺10.73%、輝達血崩14%！台股週一剉咧等 金管會緊急再開大絕全面鎖空",
+      "url": "https://tw.news.yahoo.com/%E8%B2%BB%E5%8D%8A%E7%8B%82%E6%AE%BA10-73-%E8%BC%9D%E9%81%94%E8%A1%80%E5%B4%A914-%E5%8F%B0%E8%82%A1%E9%80%B1-%E5%89%89%E5%92%A7%E7%AD%89-115500654.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E8%B2%BB%E5%8D%8A%E7%8B%82%E6%AE%BA10-73-%E8%BC%9D%E9%81%94%E8%A1%80%E5%B4%A914-%E5%8F%B0%E8%82%A1%E9%80%B1-%E5%89%89%E5%92%A7%E7%AD%89-115500654.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-6dbdf6ab9d",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T11:45:20Z",
+      "published_at_taipei": "2026-11-21 19:45",
+      "published_at_taipei_iso": "2026-11-21T19:45:20+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "黃仁勳去職推倒台股？ 經濟部：AI趨勢不因「個別公司」影響",
+      "url": "https://tw.stock.yahoo.com/news/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%8E%BB%E8%81%B7%E6%8E%A8%E5%80%92%E5%8F%B0%E8%82%A1-%E7%B6%93%E6%BF%9F%E9%83%A8-ai%E8%B6%A8%E5%8B%A2%E4%B8%8D%E5%9B%A0-%E5%80%8B%E5%88%A5%E5%85%AC%E5%8F%B8-%E5%BD%B1%E9%9F%BF-114520086.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%8E%BB%E8%81%B7%E6%8E%A8%E5%80%92%E5%8F%B0%E8%82%A1-%E7%B6%93%E6%BF%9F%E9%83%A8-ai%E8%B6%A8%E5%8B%A2%E4%B8%8D%E5%9B%A0-%E5%80%8B%E5%88%A5%E5%85%AC%E5%8F%B8-%E5%BD%B1%E9%9F%BF-114520086.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-641a2c2d9b",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T11:29:25Z",
+      "published_at_taipei": "2026-11-21 19:29",
+      "published_at_taipei_iso": "2026-11-21T19:29:25+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "S&P 500 correction: Five forces behind the market sell-off",
+      "url": "https://www.cnbc.com/2026/11/20/sp-500-correction-market-sell-off.html",
+      "canonical_url": "https://cnbc.com/2026/11/20/sp-500-correction-market-sell-off.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-2dafaf4e5b",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:50:00Z",
+      "published_at_taipei": "2026-11-21 18:50",
+      "published_at_taipei_iso": "2026-11-21T18:50:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "聯發科跌停背後有隱憂？美外資點出「2關鍵因素」 估今年EPS達73元、最新目標價曝光",
+      "url": "https://tw.stock.yahoo.com/news/%E8%81%AF%E7%99%BC%E7%A7%91%E8%B7%8C%E5%81%9C%E8%83%8C%E5%BE%8C%E6%9C%89%E9%9A%B1%E6%86%82-%E7%BE%8E%E5%A4%96%E8%B3%87%E9%BB%9E%E5%87%BA-2%E9%97%9C%E9%8D%B5%E5%9B%A0%E7%B4%A0-%E4%BC%B0%E4%BB%8A%E5%B9%B4eps%E9%81%9473%E5%85%83-%E6%9C%80%E6%96%B0%E7%9B%AE%E6%A8%99%E5%83%B9%E6%9B%9D%E5%85%89-105000557.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E8%81%AF%E7%99%BC%E7%A7%91%E8%B7%8C%E5%81%9C%E8%83%8C%E5%BE%8C%E6%9C%89%E9%9A%B1%E6%86%82-%E7%BE%8E%E5%A4%96%E8%B3%87%E9%BB%9E%E5%87%BA-2%E9%97%9C%E9%8D%B5%E5%9B%A0%E7%B4%A0-%E4%BC%B0%E4%BB%8A%E5%B9%B4eps%E9%81%9473%E5%85%83-%E6%9C%80%E6%96%B0%E7%9B%AE%E6%A8%99%E5%83%B9%E6%9B%9D%E5%85%89-105000557.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2454"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（外資）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII",
+        "2454"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-80f7a62a51",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:48:51Z",
+      "published_at_taipei": "2026-11-21 18:48",
+      "published_at_taipei_iso": "2026-11-21T18:48:51+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股周跌逾7600點引恐慌！詹惟中急喊「3不原則」 曝2027年盤勢",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8%E8%B7%8C%E9%80%BE7600%E9%BB%9E%E5%BC%95%E6%81%90%E6%85%8C-%E8%A9%B9%E6%83%9F%E4%B8%AD%E6%80%A5%E5%96%8A-3%E4%B8%8D%E5%8E%9F%E5%89%87-%E6%9B%9D2027%E5%B9%B4%E7%9B%A4%E5%8B%A2-104851236.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8%E8%B7%8C%E9%80%BE7600%E9%BB%9E%E5%BC%95%E6%81%90%E6%85%8C-%E8%A9%B9%E6%83%9F%E4%B8%AD%E6%80%A5%E5%96%8A-3%E4%B8%8D%E5%8E%9F%E5%89%87-%E6%9B%9D2027%E5%B9%B4%E7%9B%A4%E5%8B%A2-104851236.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-5a9e25bebd",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:30:00Z",
+      "published_at_taipei": "2026-11-21 18:30",
+      "published_at_taipei_iso": "2026-11-21T18:30:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股本週潰堤7641點閃現35K！外資放血0050狂捲335億 再砍「瑤池金母師兄弟」66.5萬張",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9C%AC%E9%80%B1%E6%BD%B0%E5%A0%A47641%E9%BB%9E%E9%96%83%E7%8F%BE35k-%E5%A4%96%E8%B3%87%E6%94%BE%E8%A1%800050%E7%8B%82%E6%8D%B2335%E5%84%84-%E5%86%8D%E7%A0%8D-%E7%91%A4%E6%B1%A0%E9%87%91%E6%AF%8D%E5%B8%AB%E5%85%84%E5%BC%9F-66-103000533.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9C%AC%E9%80%B1%E6%BD%B0%E5%A0%A47641%E9%BB%9E%E9%96%83%E7%8F%BE35k-%E5%A4%96%E8%B3%87%E6%94%BE%E8%A1%800050%E7%8B%82%E6%8D%B2335%E5%84%84-%E5%86%8D%E7%A0%8D-%E7%91%A4%E6%B1%A0%E9%87%91%E6%AF%8D%E5%B8%AB%E5%85%84%E5%BC%9F-66-103000533.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（外資）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：暴跌；命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-4e72744ce1",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:21:25Z",
+      "published_at_taipei": "2026-11-21 18:21",
+      "published_at_taipei_iso": "2026-11-21T18:21:25+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "經部：台灣經濟動能強勁未受台股短期波動影響 籲對產業發展有信心",
+      "url": "https://tw.news.yahoo.com/%E7%B6%93%E9%83%A8-%E5%8F%B0%E7%81%A3%E7%B6%93%E6%BF%9F%E5%8B%95%E8%83%BD%E5%BC%B7%E5%8B%81%E6%9C%AA%E5%8F%97%E5%8F%B0%E8%82%A1%E7%9F%AD%E6%9C%9F%E6%B3%A2%E5%8B%95%E5%BD%B1%E9%9F%BF-%E7%B1%B2%E5%B0%8D%E7%94%A2%E6%A5%AD%E7%99%BC%E5%B1%95%E6%9C%89%E4%BF%A1%E5%BF%83-102125787.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E7%B6%93%E9%83%A8-%E5%8F%B0%E7%81%A3%E7%B6%93%E6%BF%9F%E5%8B%95%E8%83%BD%E5%BC%B7%E5%8B%81%E6%9C%AA%E5%8F%97%E5%8F%B0%E8%82%A1%E7%9F%AD%E6%9C%9F%E6%B3%A2%E5%8B%95%E5%BD%B1%E9%9F%BF-%E7%B1%B2%E5%B0%8D%E7%94%A2%E6%A5%AD%E7%99%BC%E5%B1%95%E6%9C%89%E4%BF%A1%E5%BF%83-102125787.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-701ee1a1ba",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:15:09Z",
+      "published_at_taipei": "2026-11-21 18:15",
+      "published_at_taipei_iso": "2026-11-21T18:15:09+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股震盪加劇 11/23起金管會祭五大穩定措施 禁平盤以下放空",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%8A%A0%E5%8A%87-11-23%E8%B5%B7%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD%E4%BA%94%E5%A4%A7%E7%A9%A9%E5%AE%9A%E6%8E%AA%E6%96%BD-%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%BB%A5%E4%B8%8B%E6%94%BE%E7%A9%BA-101509843.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%8A%A0%E5%8A%87-11-23%E8%B5%B7%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD%E4%BA%94%E5%A4%A7%E7%A9%A9%E5%AE%9A%E6%8E%AA%E6%96%BD-%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%BB%A5%E4%B8%8B%E6%94%BE%E7%A9%BA-101509843.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：庫藏股",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-18f84ad9c5",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:14:47Z",
+      "published_at_taipei": "2026-11-21 18:14",
+      "published_at_taipei_iso": "2026-11-21T18:14:47+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "《久留美》開播以來台股慘摔近萬點連官方都知道了！特別中文發推提醒「追繳保證金」引熱議",
+      "url": "https://tw.news.yahoo.com/%E3%80%8A%E4%B9%85%E7%95%99%E7%BE%8E%E3%80%8B%E9%96%8B%E6%92%AD%E4%BB%A5%E4%BE%86%E5%8F%B0%E8%82%A1%E6%85%98%E6%91%94%E8%BF%91%E8%90%AC%E9%BB%9E%E9%80%A3%E5%AE%98%E6%96%B9%E9%83%BD%E7%9F%A5%E9%81%93%E4%BA%86%EF%BC%81%E7%89%B9%E5%88%A5%E4%B8%AD%E6%96%87%E7%99%BC%E6%8E%A8%E6%8F%90%E9%86%92%E3%80%8C%E8%BF%BD%E7%B9%B3%E4%BF%9D%E8%AD%89%E9%87%91%E3%80%8D%E5%BC%95%E7%86%B1%E8%AD%B0-101447792.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E3%80%8A%E4%B9%85%E7%95%99%E7%BE%8E%E3%80%8B%E9%96%8B%E6%92%AD%E4%BB%A5%E4%BE%86%E5%8F%B0%E8%82%A1%E6%85%98%E6%91%94%E8%BF%91%E8%90%AC%E9%BB%9E%E9%80%A3%E5%AE%98%E6%96%B9%E9%83%BD%E7%9F%A5%E9%81%93%E4%BA%86%EF%BC%81%E7%89%B9%E5%88%A5%E4%B8%AD%E6%96%87%E7%99%BC%E6%8E%A8%E6%8F%90%E9%86%92%E3%80%8C%E8%BF%BD%E7%B9%B3%E4%BF%9D%E8%AD%89%E9%87%91%E3%80%8D%E5%BC%95%E7%86%B1%E8%AD%B0-101447792.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-60834bced7",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:13:37Z",
+      "published_at_taipei": "2026-11-21 18:13",
+      "published_at_taipei_iso": "2026-11-21T18:13:37+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "太陽能供應鏈｜特斯拉擬在德州生產多晶矽，美國進口與本土模組價差已縮小",
+      "url": "https://news.cnyes.com/news/id/6669776",
+      "canonical_url": "https://news.cnyes.com/news/id/6669776",
+      "source": "鉅亨網（總經）",
+      "source_id": "cnyes_macro",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-f78751980a",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:13:35Z",
+      "published_at_taipei": "2026-11-21 18:13",
+      "published_at_taipei_iso": "2026-11-21T18:13:35+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股震盪加劇！金管會祭5大穩市措施 11／23起全面禁平盤下放空",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%8A%A0%E5%8A%87-%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD5%E5%A4%A7%E7%A9%A9%E5%B8%82%E6%8E%AA%E6%96%BD-11-23%E8%B5%B7%E5%85%A8%E9%9D%A2%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%B8%8B%E6%94%BE%E7%A9%BA-101335726.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%8A%A0%E5%8A%87-%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD5%E5%A4%A7%E7%A9%A9%E5%B8%82%E6%8E%AA%E6%96%BD-11-23%E8%B5%B7%E5%85%A8%E9%9D%A2%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%B8%8B%E6%94%BE%E7%A9%BA-101335726.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-5c81186915",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:12:26Z",
+      "published_at_taipei": "2026-11-21 18:12",
+      "published_at_taipei_iso": "2026-11-21T18:12:26+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台積電周線重挫15.8%！台股創36年最慘單周紀錄、美收緊AI晶片出口管制添壓",
+      "url": "https://news.cnyes.com/news/id/6669709",
+      "canonical_url": "https://news.cnyes.com/news/id/6669709",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-651f384d85",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:00:24Z",
+      "published_at_taipei": "2026-11-21 18:00",
+      "published_at_taipei_iso": "2026-11-21T18:00:24+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "費半重挫逾10%金管會強化禁空令 法人：台股靜待打底",
+      "url": "https://tw.stock.yahoo.com/news/%E8%B2%BB%E5%8D%8A%E9%87%8D%E6%8C%AB%E9%80%BE10-%E9%87%91%E7%AE%A1%E6%9C%83%E5%BC%B7%E5%8C%96%E7%A6%81%E7%A9%BA%E4%BB%A4-%E6%B3%95%E4%BA%BA-%E5%8F%B0%E8%82%A1%E9%9D%9C%E5%BE%85%E6%89%93%E5%BA%95-100024573.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E8%B2%BB%E5%8D%8A%E9%87%8D%E6%8C%AB%E9%80%BE10-%E9%87%91%E7%AE%A1%E6%9C%83%E5%BC%B7%E5%8C%96%E7%A6%81%E7%A9%BA%E4%BB%A4-%E6%B3%95%E4%BA%BA-%E5%8F%B0%E8%82%A1%E9%9D%9C%E5%BE%85%E6%89%93%E5%BA%95-100024573.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-6f945ca6da",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T09:44:00Z",
+      "published_at_taipei": "2026-11-21 17:44",
+      "published_at_taipei_iso": "2026-11-21T17:44:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "金馬63／台股慘綠！《少林足球》田啟文一句話神開示 自爆獲楊貴媚押寶",
+      "url": "https://tw.news.yahoo.com/%E9%87%91%E9%A6%AC63-%E5%8F%B0%E8%82%A1%E6%85%98%E7%B6%A0-%E5%B0%91%E6%9E%97%E8%B6%B3%E7%90%83-%E7%94%B0%E5%95%9F%E6%96%87-%E5%8F%A5%E8%A9%B1%E7%A5%9E%E9%96%8B%E7%A4%BA-094400554.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%87%91%E9%A6%AC63-%E5%8F%B0%E8%82%A1%E6%85%98%E7%B6%A0-%E5%B0%91%E6%9E%97%E8%B6%B3%E7%90%83-%E7%94%B0%E5%95%9F%E6%96%87-%E5%8F%A5%E8%A9%B1%E7%A5%9E%E9%96%8B%E7%A4%BA-094400554.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-b6480d8452",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T09:07:53Z",
+      "published_at_taipei": "2026-11-21 17:07",
+      "published_at_taipei_iso": "2026-11-21T17:07:53+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股跌不停！金管會再出手 11月第3次禁空「平盤下不能放空」",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E8%B7%8C%E4%B8%8D%E5%81%9C-%E9%87%91%E7%AE%A1%E6%9C%83%E5%86%8D%E5%87%BA%E6%89%8B-11%E6%9C%88%E7%AC%AC3%E6%AC%A1%E7%A6%81%E7%A9%BA-%E5%B9%B3%E7%9B%A4%E4%B8%8B%E4%B8%8D%E8%83%BD%E6%94%BE%E7%A9%BA-090753061.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E8%B7%8C%E4%B8%8D%E5%81%9C-%E9%87%91%E7%AE%A1%E6%9C%83%E5%86%8D%E5%87%BA%E6%89%8B-11%E6%9C%88%E7%AC%AC3%E6%AC%A1%E7%A6%81%E7%A9%BA-%E5%B9%B3%E7%9B%A4%E4%B8%8B%E4%B8%8D%E8%83%BD%E6%94%BE%E7%A9%BA-090753061.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-0a514e0e64",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T09:03:00Z",
+      "published_at_taipei": "2026-11-21 17:03",
+      "published_at_taipei_iso": "2026-11-21T17:03:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股恐慌性拋售！專家點「止跌2關鍵」：未來4個月仍難熬",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%81%90%E6%85%8C%E6%80%A7%E6%8B%8B%E5%94%AE-%E5%B0%88%E5%AE%B6%E9%BB%9E-%E6%AD%A2%E8%B7%8C2%E9%97%9C%E9%8D%B5-%E6%9C%AA%E4%BE%864%E5%80%8B%E6%9C%88%E4%BB%8D%E9%9B%A3%E7%86%AC-090300972.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%81%90%E6%85%8C%E6%80%A7%E6%8B%8B%E5%94%AE-%E5%B0%88%E5%AE%B6%E9%BB%9E-%E6%AD%A2%E8%B7%8C2%E9%97%9C%E9%8D%B5-%E6%9C%AA%E4%BE%864%E5%80%8B%E6%9C%88%E4%BB%8D%E9%9B%A3%E7%86%AC-090300972.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-ad5c18b2fb",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T08:46:30Z",
+      "published_at_taipei": "2026-11-21 16:46",
+      "published_at_taipei_iso": "2026-11-21T16:46:30+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股震盪！三師兄田啟文「一秒鐘幾十秒上下」開示 黃冠智AK追星狂模仿",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA-%E4%B8%89%E5%B8%AB%E5%85%84%E7%94%B0%E5%95%9F%E6%96%87-%E7%A7%92%E9%90%98%E5%B9%BE%E5%8D%81%E7%A7%92%E4%B8%8A%E4%B8%8B-%E9%96%8B%E7%A4%BA-%E9%BB%83%E5%86%A0%E6%99%BAak%E8%BF%BD%E6%98%9F%E7%8B%82%E6%A8%A1%E4%BB%BF-084630049.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA-%E4%B8%89%E5%B8%AB%E5%85%84%E7%94%B0%E5%95%9F%E6%96%87-%E7%A7%92%E9%90%98%E5%B9%BE%E5%8D%81%E7%A7%92%E4%B8%8A%E4%B8%8B-%E9%96%8B%E7%A4%BA-%E9%BB%83%E5%86%A0%E6%99%BAak%E8%BF%BD%E6%98%9F%E7%8B%82%E6%A8%A1%E4%BB%BF-084630049.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-5f32d23698",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T08:10:03Z",
+      "published_at_taipei": "2026-11-21 16:10",
+      "published_at_taipei_iso": "2026-11-21T16:10:03+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "超29萬人爆倉！比特幣跌破5.9萬美元、以太坊重挫8% 「數位黃金」失靈？",
+      "url": "https://news.cnyes.com/news/id/6669708",
+      "canonical_url": "https://news.cnyes.com/news/id/6669708",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "衍生品",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "ETHUSDT",
+        "XRPUSDT",
+        "XAUUSD"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（爆倉）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：淨流出；命中：爆倉；命中：重挫",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "ETHUSDT",
+        "XRPUSDT",
+        "XAUUSD"
+      ],
+      "sentiment_method": "rule"
     },
     {
       "id": "news-20261121-474d8469b3",
@@ -3649,6 +5299,380 @@
       "followup_of": null
     },
     {
+      "id": "news-20261121-8a754d7382",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:05:00Z",
+      "published_at_taipei": "2026-11-21 23:05",
+      "published_at_taipei_iso": "2026-11-21T23:05:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Renforth Resources boosts Parbec gold resource – ICYMI",
+      "url": "https://www.proactiveinvestors.com/companies/news/1102214/renforth-resources-boosts-parbec-gold-resource-icymi-1102214.html?.tsrc=rss",
+      "canonical_url": "https://proactiveinvestors.com/companies/news/1102214/renforth-resources-boosts-parbec-gold-resource-icymi-1102214.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-26e53e535d",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:40:02Z",
+      "published_at_taipei": "2026-11-21 22:40",
+      "published_at_taipei_iso": "2026-11-21T22:40:02+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "CME vs. Robinhood Markets: Which Financial Stock Is a Better Buy for 2027?",
+      "url": "https://www.fool.com/coverage/better-buy/2026/11/21/cme-vs-robinhood-markets-which-financial-stock-is-a-better-buy-for-2027/?.tsrc=rss",
+      "canonical_url": "https://fool.com/coverage/better-buy/2026/11/21/cme-vs-robinhood-markets-which-financial-stock-is-a-better-buy-for-2027?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-26a61a7ec5",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:34:41Z",
+      "published_at_taipei": "2026-11-21 22:34",
+      "published_at_taipei_iso": "2026-11-21T22:34:41+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Stock Market Week Ahead: A Matter Of Pressure And Time",
+      "url": "https://finance.yahoo.com/m/3210b989-7b62-31ad-8d9e-864ea02df6c9/stock-market-week-ahead%3A-a.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/3210b989-7b62-31ad-8d9e-864ea02df6c9/stock-market-week-ahead%3A-a.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-dedeedc841",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:27:15Z",
+      "published_at_taipei": "2026-11-21 22:27",
+      "published_at_taipei_iso": "2026-11-21T22:27:15+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "3 AI Infrastructure Stocks to Watch Before Broadcom Reports on Dec. 9",
+      "url": "https://247wallst.com/investing/2026/11/21/3-ai-infrastructure-stocks-to-watch-before-broadcom-reports-on-dec-9/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/21/3-ai-infrastructure-stocks-to-watch-before-broadcom-reports-on-dec-9?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-d012a50043",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:26:02Z",
+      "published_at_taipei": "2026-11-21 22:26",
+      "published_at_taipei_iso": "2026-11-21T22:26:02+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "We May Be Witnessing Wall Street's Biggest Bubble Burst in Real Time (and I'm Not Talking About Artificial Intelligence)",
+      "url": "https://www.fool.com/investing/2026/11/21/we-may-be-witnessing-wall-street-biggest-bubble-burst-in-real-time-not-artificial-intelligence/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/21/we-may-be-witnessing-wall-street-biggest-bubble-burst-in-real-time-not-artificial-intelligence?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-9e6b3d1ab0",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:10:02Z",
+      "published_at_taipei": "2026-11-21 22:10",
+      "published_at_taipei_iso": "2026-11-21T22:10:02+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "CTA陷「愈跌愈賣」惡性循環！高盛：未來一周美股將出現另一波大規模拋售",
+      "url": "https://news.cnyes.com/news/id/6669718",
+      "canonical_url": "https://news.cnyes.com/news/id/6669718",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-9291285af2",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:07:53Z",
+      "published_at_taipei": "2026-11-21 22:07",
+      "published_at_taipei_iso": "2026-11-21T22:07:53+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Why Anthropic's blockbuster IPO couldn't escape the stock market correction",
+      "url": "https://www.cnbc.com/2026/11/20/anthropic-ipo-ai-stock-market-selloff.html",
+      "canonical_url": "https://cnbc.com/2026/11/20/anthropic-ipo-ai-stock-market-selloff.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-1cc197703a",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:05:40Z",
+      "published_at_taipei": "2026-11-21 22:05",
+      "published_at_taipei_iso": "2026-11-21T22:05:40+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "An ‘illusion of glitz and glamour’: Inside California’s modern-day gold rush, where miners can bring in millions",
+      "url": "https://www.cnbc.com/make-it/2026/11/21/california-mining-modern-gold-rush.html",
+      "canonical_url": "https://cnbc.com/make-it/2026/11/21/california-mining-modern-gold-rush.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-a8f64b8160",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T13:30:00Z",
+      "published_at_taipei": "2026-11-21 21:30",
+      "published_at_taipei_iso": "2026-11-21T21:30:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Nvidia’s nonstop drama is keeping buyers away from a historically cheap stock",
+      "url": "https://www.marketwatch.com/story/nvidias-nonstop-drama-is-keeping-buyers-away-from-a-historically-cheap-stock-604022da?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/nvidias-nonstop-drama-is-keeping-buyers-away-from-a-historically-cheap-stock-604022da?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-8b7f42d9a4",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T13:12:41Z",
+      "published_at_taipei": "2026-11-21 21:12",
+      "published_at_taipei_iso": "2026-11-21T21:12:41+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "State and federal battle over prediction markets regulation heats up after midterms",
+      "url": "https://www.cnbc.com/2026/11/21/prediction-market-regulation-kalshi-cftc.html",
+      "canonical_url": "https://cnbc.com/2026/11/21/prediction-market-regulation-kalshi-cftc.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-64d421dc2a",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T07:10:09Z",
+      "published_at_taipei": "2026-11-21 15:10",
+      "published_at_taipei_iso": "2026-11-21T15:10:09+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "黃仁勳可能轉投英特爾？華爾街憂帶走輝達核心人才",
+      "url": "https://news.cnyes.com/news/id/6669741",
+      "canonical_url": "https://news.cnyes.com/news/id/6669741",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261121-bfe2dc9da8",
       "issue": "2026-11-21-PM",
       "published_at_utc": "2026-11-21T06:32:47Z",
@@ -4826,6 +6850,2021 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261121-28a3672a0f",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:32:31Z",
+      "published_at_taipei": "2026-11-21 23:32",
+      "published_at_taipei_iso": "2026-11-21T23:32:31+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Anthropic Is Now Worth More Than Bitcoin: Could Bitcoin Pass It by 2030?",
+      "url": "https://247wallst.com/investing/cryptocurrency/2026/11/21/anthropic-is-now-worth-more-than-bitcoin-could-bitcoin-pass-it-by-2030/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/cryptocurrency/2026/11/21/anthropic-is-now-worth-more-than-bitcoin-could-bitcoin-pass-it-by-2030?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "鏈上資金",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：outflows",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-c63470010f",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:28:29Z",
+      "published_at_taipei": "2026-11-21 23:28",
+      "published_at_taipei_iso": "2026-11-21T23:28:29+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Wall Street’s Fear Index Just Hit 9.7. History Says the S&P 500 Could Rally 10.5% in 3 Weeks",
+      "url": "https://247wallst.com/investing/2026/11/21/wall-streets-fear-index-just-hit-9-7-history-says-the-sp-500-could-rally-10-5-in-3-weeks/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/21/wall-streets-fear-index-just-hit-9-7-history-says-the-sp-500-could-rally-10-5-in-3-weeks?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：selloff；命中：rally）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-8319816455",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:20:02Z",
+      "published_at_taipei": "2026-11-21 23:20",
+      "published_at_taipei_iso": "2026-11-21T23:20:02+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "After the Midterm Elections, VanEck's Matthew Sigel Is Still Bullish on Bitcoin. Here's Why He's Right.",
+      "url": "https://www.fool.com/investing/2026/11/21/after-the-midterm-elections-vanecks-matthew-sigel-is-still-bullish-on-bitcoin-heres-why-hes-rightwrong/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/21/after-the-midterm-elections-vanecks-matthew-sigel-is-still-bullish-on-bitcoin-heres-why-hes-rightwrong?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：bullish",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-1447ef03b0",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:17:17Z",
+      "published_at_taipei": "2026-11-21 23:17",
+      "published_at_taipei_iso": "2026-11-21T23:17:17+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "This Stock Market Selloff Could Block the Fed’s Rate Hikes",
+      "url": "https://247wallst.com/investing/2026/11/21/this-stock-market-selloff-could-block-the-feds-rate-hikes/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/21/this-stock-market-selloff-could-block-the-feds-rate-hikes?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（rate hike）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：rate hikes；命中：selloff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-a52f801e71",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:05:02Z",
+      "published_at_taipei": "2026-11-21 23:05",
+      "published_at_taipei_iso": "2026-11-21T23:05:02+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "The Nasdaq Just Triggered a Correction. 1 Move I'm Making Right Now -- and 1 I'm Avoiding",
+      "url": "https://www.fool.com/investing/2026/11/21/the-nasdaq-just-triggered-a-correction-1-move-im-making-right-now-and-1-im-avoiding/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/21/the-nasdaq-just-triggered-a-correction-1-move-im-making-right-now-and-1-im-avoiding?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-8a754d7382",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:05:00Z",
+      "published_at_taipei": "2026-11-21 23:05",
+      "published_at_taipei_iso": "2026-11-21T23:05:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Renforth Resources boosts Parbec gold resource – ICYMI",
+      "url": "https://www.proactiveinvestors.com/companies/news/1102214/renforth-resources-boosts-parbec-gold-resource-icymi-1102214.html?.tsrc=rss",
+      "canonical_url": "https://proactiveinvestors.com/companies/news/1102214/renforth-resources-boosts-parbec-gold-resource-icymi-1102214.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-abd607df94",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:04:14Z",
+      "published_at_taipei": "2026-11-21 23:04",
+      "published_at_taipei_iso": "2026-11-21T23:04:14+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Warning for SpaceX Investors: You Buy the Stock “Entirely on the Basis” of Anthropic’s Compute Bill, Says Top VC",
+      "url": "https://www.tikr.com/blog/warning-for-spacex-investors-you-buy-the-stock-entirely-on-the-basis-of-anthropics-compute-bill-says-top-vc?ref=yahoofinance&tlnk=yf-261121-jxqjjrpp&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/warning-for-spacex-investors-you-buy-the-stock-entirely-on-the-basis-of-anthropics-compute-bill-says-top-vc?tlnk=yf-261121-jxqjjrpp&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-5d7a8f065a",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:01:53Z",
+      "published_at_taipei": "2026-11-21 23:01",
+      "published_at_taipei_iso": "2026-11-21T23:01:53+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Bitcoin Crashes Below $56,000 as $2.7 Billion Crypto Liquidation Wipes Out Traders",
+      "url": "https://247wallst.com/investing/2026/11/21/bitcoin-crashes-below-56000-as-2-7-billion-crypto-liquidation-wipes-out-traders/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/21/bitcoin-crashes-below-56000-as-2-7-billion-crypto-liquidation-wipes-out-traders?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "衍生品",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（liquidation）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：liquidation；命中：plunge",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-b87bb92097",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:01:50Z",
+      "published_at_taipei": "2026-11-21 23:01",
+      "published_at_taipei_iso": "2026-11-21T23:01:50+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Does ImmunityBio, Inc. (IBRX) Have More Upside on Major ANKTIVA Milestones",
+      "url": "https://finance.yahoo.com/healthcare/articles/does-immunitybio-inc-ibrx-more-150150878.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/healthcare/articles/does-immunitybio-inc-ibrx-more-150150878.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-e5641ac4e8",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:01:49Z",
+      "published_at_taipei": "2026-11-21 23:01",
+      "published_at_taipei_iso": "2026-11-21T23:01:49+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Trump Calls Huang’s Exit “Such a Tragedy” as His Filing Shows Up to $380,000 of Nvidia Buys",
+      "url": "https://www.tikr.com/blog/trump-calls-huangs-exit-such-a-tragedy-as-his-filing-shows-up-to-380000-of-nvidia-buys?ref=yahoofinance&tlnk=yf-261121-64rjxj6w&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/trump-calls-huangs-exit-such-a-tragedy-as-his-filing-shows-up-to-380000-of-nvidia-buys?tlnk=yf-261121-64rjxj6w&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-70ffa1ccff",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:01:37Z",
+      "published_at_taipei": "2026-11-21 23:01",
+      "published_at_taipei_iso": "2026-11-21T23:01:37+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "LifeStance Health Group, Inc. (LFST): A Mental Healthcare Growth Stock With Improving Profitability",
+      "url": "https://finance.yahoo.com/healthcare/articles/lifestance-health-group-inc-lfst-150137080.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/healthcare/articles/lifestance-health-group-inc-lfst-150137080.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-d382e90428",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:01:03Z",
+      "published_at_taipei": "2026-11-21 23:01",
+      "published_at_taipei_iso": "2026-11-21T23:01:03+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Is AvePoint, Inc. (NASDAQ:AVPT) an Emerging AI Infrastructure Play Under $25?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/avepoint-inc-nasdaq-avpt-emerging-150103481.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/avepoint-inc-nasdaq-avpt-emerging-150103481.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-515196c222",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T15:00:37Z",
+      "published_at_taipei": "2026-11-21 23:00",
+      "published_at_taipei_iso": "2026-11-21T23:00:37+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "First Advantage Corporation (FA) Rallying as Revenue Growth and Profitability Accelerate",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/first-advantage-corporation-fa-rallying-150037318.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/first-advantage-corporation-fa-rallying-150037318.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-482f0c1ba8",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:59:16Z",
+      "published_at_taipei": "2026-11-21 22:59",
+      "published_at_taipei_iso": "2026-11-21T22:59:16+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "5 Best US Stocks to Buy Under $25",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/5-best-us-stocks-buy-145916576.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/5-best-us-stocks-buy-145916576.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-26e53e535d",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:40:02Z",
+      "published_at_taipei": "2026-11-21 22:40",
+      "published_at_taipei_iso": "2026-11-21T22:40:02+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "CME vs. Robinhood Markets: Which Financial Stock Is a Better Buy for 2027?",
+      "url": "https://www.fool.com/coverage/better-buy/2026/11/21/cme-vs-robinhood-markets-which-financial-stock-is-a-better-buy-for-2027/?.tsrc=rss",
+      "canonical_url": "https://fool.com/coverage/better-buy/2026/11/21/cme-vs-robinhood-markets-which-financial-stock-is-a-better-buy-for-2027?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-26a61a7ec5",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:34:41Z",
+      "published_at_taipei": "2026-11-21 22:34",
+      "published_at_taipei_iso": "2026-11-21T22:34:41+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Stock Market Week Ahead: A Matter Of Pressure And Time",
+      "url": "https://finance.yahoo.com/m/3210b989-7b62-31ad-8d9e-864ea02df6c9/stock-market-week-ahead%3A-a.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/3210b989-7b62-31ad-8d9e-864ea02df6c9/stock-market-week-ahead%3A-a.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-dedeedc841",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:27:15Z",
+      "published_at_taipei": "2026-11-21 22:27",
+      "published_at_taipei_iso": "2026-11-21T22:27:15+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "3 AI Infrastructure Stocks to Watch Before Broadcom Reports on Dec. 9",
+      "url": "https://247wallst.com/investing/2026/11/21/3-ai-infrastructure-stocks-to-watch-before-broadcom-reports-on-dec-9/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/21/3-ai-infrastructure-stocks-to-watch-before-broadcom-reports-on-dec-9?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-d012a50043",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:26:02Z",
+      "published_at_taipei": "2026-11-21 22:26",
+      "published_at_taipei_iso": "2026-11-21T22:26:02+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "We May Be Witnessing Wall Street's Biggest Bubble Burst in Real Time (and I'm Not Talking About Artificial Intelligence)",
+      "url": "https://www.fool.com/investing/2026/11/21/we-may-be-witnessing-wall-street-biggest-bubble-burst-in-real-time-not-artificial-intelligence/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/21/we-may-be-witnessing-wall-street-biggest-bubble-burst-in-real-time-not-artificial-intelligence?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-bbec99ff91",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:22:43Z",
+      "published_at_taipei": "2026-11-21 22:22",
+      "published_at_taipei_iso": "2026-11-21T22:22:43+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Goldman Sachs Just Dropped 14% in a Week. Is It Time to Sell, or Load Up?",
+      "url": "https://www.tikr.com/blog/goldman-sachs-just-dropped-14-in-a-week-is-it-time-to-sell-or-load-up?ref=yahoofinance&tlnk=yf-261121-gw7cj5qm&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/goldman-sachs-just-dropped-14-in-a-week-is-it-time-to-sell-or-load-up?tlnk=yf-261121-gw7cj5qm&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-66a870dcea",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:15:00Z",
+      "published_at_taipei": "2026-11-21 22:15",
+      "published_at_taipei_iso": "2026-11-21T22:15:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股跌到股民心慌！國安基金假日罕見發聲 喊話投資人保持信心",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E8%B7%8C%E5%88%B0%E8%82%A1%E6%B0%91%E5%BF%83%E6%85%8C-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E5%81%87%E6%97%A5%E7%BD%95%E8%A6%8B%E7%99%BC%E8%81%B2-%E5%96%8A%E8%A9%B1%E6%8A%95%E8%B3%87%E4%BA%BA%E4%BF%9D%E6%8C%81%E4%BF%A1%E5%BF%83-141500289.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E8%B7%8C%E5%88%B0%E8%82%A1%E6%B0%91%E5%BF%83%E6%85%8C-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E5%81%87%E6%97%A5%E7%BD%95%E8%A6%8B%E7%99%BC%E8%81%B2-%E5%96%8A%E8%A9%B1%E6%8A%95%E8%B3%87%E4%BA%BA%E4%BF%9D%E6%8C%81%E4%BF%A1%E5%BF%83-141500289.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（國安基金）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-9e6b3d1ab0",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:10:02Z",
+      "published_at_taipei": "2026-11-21 22:10",
+      "published_at_taipei_iso": "2026-11-21T22:10:02+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "CTA陷「愈跌愈賣」惡性循環！高盛：未來一周美股將出現另一波大規模拋售",
+      "url": "https://news.cnyes.com/news/id/6669718",
+      "canonical_url": "https://news.cnyes.com/news/id/6669718",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-9291285af2",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:07:53Z",
+      "published_at_taipei": "2026-11-21 22:07",
+      "published_at_taipei_iso": "2026-11-21T22:07:53+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Why Anthropic's blockbuster IPO couldn't escape the stock market correction",
+      "url": "https://www.cnbc.com/2026/11/20/anthropic-ipo-ai-stock-market-selloff.html",
+      "canonical_url": "https://cnbc.com/2026/11/20/anthropic-ipo-ai-stock-market-selloff.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-1cc197703a",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:05:40Z",
+      "published_at_taipei": "2026-11-21 22:05",
+      "published_at_taipei_iso": "2026-11-21T22:05:40+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "An ‘illusion of glitz and glamour’: Inside California’s modern-day gold rush, where miners can bring in millions",
+      "url": "https://www.cnbc.com/make-it/2026/11/21/california-mining-modern-gold-rush.html",
+      "canonical_url": "https://cnbc.com/make-it/2026/11/21/california-mining-modern-gold-rush.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-18f464e8c3",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T14:01:06Z",
+      "published_at_taipei": "2026-11-21 22:01",
+      "published_at_taipei_iso": "2026-11-21T22:01:06+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Is the AI Bubble Finally Popping? Nvidia Crashes 48% as Wall Street Experts Sound the Alarm",
+      "url": "https://decrypt.co/383754/ai-bubble-finally-popping-nvidia-crashes-48-wall-street-alarm",
+      "canonical_url": "https://decrypt.co/383754/ai-bubble-finally-popping-nvidia-crashes-48-wall-street-alarm",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "加密貨幣",
+        "總經"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-7714f153ee",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T13:38:33Z",
+      "published_at_taipei": "2026-11-21 21:38",
+      "published_at_taipei_iso": "2026-11-21T21:38:33+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股連番重挫 卓榮泰4點裁示",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%80%A3%E7%95%AA%E9%87%8D%E6%8C%AB-%E5%8D%93%E6%A6%AE%E6%B3%B04%E9%BB%9E%E8%A3%81%E7%A4%BA-133833024.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%80%A3%E7%95%AA%E9%87%8D%E6%8C%AB-%E5%8D%93%E6%A6%AE%E6%B3%B04%E9%BB%9E%E8%A3%81%E7%A4%BA-133833024.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-a8f64b8160",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T13:30:00Z",
+      "published_at_taipei": "2026-11-21 21:30",
+      "published_at_taipei_iso": "2026-11-21T21:30:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Nvidia’s nonstop drama is keeping buyers away from a historically cheap stock",
+      "url": "https://www.marketwatch.com/story/nvidias-nonstop-drama-is-keeping-buyers-away-from-a-historically-cheap-stock-604022da?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/nvidias-nonstop-drama-is-keeping-buyers-away-from-a-historically-cheap-stock-604022da?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-8b7f42d9a4",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T13:12:41Z",
+      "published_at_taipei": "2026-11-21 21:12",
+      "published_at_taipei_iso": "2026-11-21T21:12:41+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "State and federal battle over prediction markets regulation heats up after midterms",
+      "url": "https://www.cnbc.com/2026/11/21/prediction-market-regulation-kalshi-cftc.html",
+      "canonical_url": "https://cnbc.com/2026/11/21/prediction-market-regulation-kalshi-cftc.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-5e9b02fb27",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T13:10:44Z",
+      "published_at_taipei": "2026-11-21 21:10",
+      "published_at_taipei_iso": "2026-11-21T21:10:44+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "金管會出手禁平盤下放空能救台股嗎？ 法人兩極「樂觀反彈vs.沒救了」",
+      "url": "https://tw.news.yahoo.com/%E9%87%91%E7%AE%A1%E6%9C%83%E5%87%BA%E6%89%8B%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%B8%8B%E6%94%BE%E7%A9%BA%E8%83%BD%E6%95%91%E5%8F%B0%E8%82%A1%E5%97%8E-%E6%B3%95%E4%BA%BA%E5%85%A9%E6%A5%B5-%E6%A8%82%E8%A7%80%E5%8F%8D%E5%BD%88vs-%E6%B2%92%E6%95%91%E4%BA%86-131044816.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%87%91%E7%AE%A1%E6%9C%83%E5%87%BA%E6%89%8B%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%B8%8B%E6%94%BE%E7%A9%BA%E8%83%BD%E6%95%91%E5%8F%B0%E8%82%A1%E5%97%8E-%E6%B3%95%E4%BA%BA%E5%85%A9%E6%A5%B5-%E6%A8%82%E8%A7%80%E5%8F%8D%E5%BD%88vs-%E6%B2%92%E6%95%91%E4%BA%86-131044816.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：反彈；命中：重挫）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-d90cdb8fbf",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T12:46:00Z",
+      "published_at_taipei": "2026-11-21 20:46",
+      "published_at_taipei_iso": "2026-11-21T20:46:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股史詩級崩跌！火鍋店推「持股跌50%」免費吃",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8F%B2%E8%A9%A9%E7%B4%9A%E5%B4%A9%E8%B7%8C-%E7%81%AB%E9%8D%8B%E5%BA%97%E6%8E%A8-%E6%8C%81%E8%82%A1%E8%B7%8C50-%E5%85%8D%E8%B2%BB%E5%90%83-124600889.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8F%B2%E8%A9%A9%E7%B4%9A%E5%B4%A9%E8%B7%8C-%E7%81%AB%E9%8D%8B%E5%BA%97%E6%8E%A8-%E6%8C%81%E8%82%A1%E8%B7%8C50-%E5%85%8D%E8%B2%BB%E5%90%83-124600889.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-53d3e41adf",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T12:30:00Z",
+      "published_at_taipei": "2026-11-21 20:30",
+      "published_at_taipei_iso": "2026-11-21T20:30:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "Ether treasury firm BTCS warns SEC its $54 million Aave loan could be liquidated",
+      "url": "https://www.coindesk.com/markets/2026/11/21/ether-treasury-firm-btcs-warns-sec-its-usd54-million-aave-loan-could-be-liquidated",
+      "canonical_url": "https://coindesk.com/markets/2026/11/21/ether-treasury-firm-btcs-warns-sec-its-usd54-million-aave-loan-could-be-liquidated",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "ETHUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（treasury）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：liquidated",
+      "sentiment_targets": [
+        "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-44ddb4de89",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T12:21:57Z",
+      "published_at_taipei": "2026-11-21 20:21",
+      "published_at_taipei_iso": "2026-11-21T20:21:57+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "一個月暴跌1.4萬點！台股重挫28% 外資公股同買這16檔",
+      "url": "https://tw.news.yahoo.com/%E5%80%8B%E6%9C%88%E6%9A%B4%E8%B7%8C1-4%E8%90%AC%E9%BB%9E-%E5%8F%B0%E8%82%A1%E9%87%8D%E6%8C%AB28-%E5%A4%96%E8%B3%87%E5%85%AC%E8%82%A1%E5%90%8C%E8%B2%B7%E9%80%9916%E6%AA%94-122157969.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%80%8B%E6%9C%88%E6%9A%B4%E8%B7%8C1-4%E8%90%AC%E9%BB%9E-%E5%8F%B0%E8%82%A1%E9%87%8D%E6%8C%AB28-%E5%A4%96%E8%B3%87%E5%85%AC%E8%82%A1%E5%90%8C%E8%B2%B7%E9%80%9916%E6%AA%94-122157969.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（暴跌）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：暴跌；命中：重挫",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-f299bf5500",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T12:12:00Z",
+      "published_at_taipei": "2026-11-21 20:12",
+      "published_at_taipei_iso": "2026-11-21T20:12:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股暴跌面臨3萬6保衛戰！金管會祭出5大救市新制 下周一全面禁止平盤以下放空",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C%E9%9D%A2%E8%87%A83%E8%90%AC6%E4%BF%9D%E8%A1%9B%E6%88%B0-%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD%E5%87%BA5%E5%A4%A7%E6%95%91%E5%B8%82%E6%96%B0%E5%88%B6-%E4%B8%8B%E5%91%A8-%E5%85%A8%E9%9D%A2%E7%A6%81%E6%AD%A2%E5%B9%B3%E7%9B%A4%E4%BB%A5%E4%B8%8B%E6%94%BE%E7%A9%BA-121200927.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C%E9%9D%A2%E8%87%A83%E8%90%AC6%E4%BF%9D%E8%A1%9B%E6%88%B0-%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD%E5%87%BA5%E5%A4%A7%E6%95%91%E5%B8%82%E6%96%B0%E5%88%B6-%E4%B8%8B%E5%91%A8-%E5%85%A8%E9%9D%A2%E7%A6%81%E6%AD%A2%E5%B9%B3%E7%9B%A4%E4%BB%A5%E4%B8%8B%E6%94%BE%E7%A9%BA-121200927.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（暴跌）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：暴跌",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-76af445151",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T11:55:00Z",
+      "published_at_taipei": "2026-11-21 19:55",
+      "published_at_taipei_iso": "2026-11-21T19:55:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "費半狂殺10.73%、輝達血崩14%！台股週一剉咧等 金管會緊急再開大絕全面鎖空",
+      "url": "https://tw.news.yahoo.com/%E8%B2%BB%E5%8D%8A%E7%8B%82%E6%AE%BA10-73-%E8%BC%9D%E9%81%94%E8%A1%80%E5%B4%A914-%E5%8F%B0%E8%82%A1%E9%80%B1-%E5%89%89%E5%92%A7%E7%AD%89-115500654.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E8%B2%BB%E5%8D%8A%E7%8B%82%E6%AE%BA10-73-%E8%BC%9D%E9%81%94%E8%A1%80%E5%B4%A914-%E5%8F%B0%E8%82%A1%E9%80%B1-%E5%89%89%E5%92%A7%E7%AD%89-115500654.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-6dbdf6ab9d",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T11:45:20Z",
+      "published_at_taipei": "2026-11-21 19:45",
+      "published_at_taipei_iso": "2026-11-21T19:45:20+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "黃仁勳去職推倒台股？ 經濟部：AI趨勢不因「個別公司」影響",
+      "url": "https://tw.stock.yahoo.com/news/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%8E%BB%E8%81%B7%E6%8E%A8%E5%80%92%E5%8F%B0%E8%82%A1-%E7%B6%93%E6%BF%9F%E9%83%A8-ai%E8%B6%A8%E5%8B%A2%E4%B8%8D%E5%9B%A0-%E5%80%8B%E5%88%A5%E5%85%AC%E5%8F%B8-%E5%BD%B1%E9%9F%BF-114520086.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%8E%BB%E8%81%B7%E6%8E%A8%E5%80%92%E5%8F%B0%E8%82%A1-%E7%B6%93%E6%BF%9F%E9%83%A8-ai%E8%B6%A8%E5%8B%A2%E4%B8%8D%E5%9B%A0-%E5%80%8B%E5%88%A5%E5%85%AC%E5%8F%B8-%E5%BD%B1%E9%9F%BF-114520086.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-641a2c2d9b",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T11:29:25Z",
+      "published_at_taipei": "2026-11-21 19:29",
+      "published_at_taipei_iso": "2026-11-21T19:29:25+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "S&P 500 correction: Five forces behind the market sell-off",
+      "url": "https://www.cnbc.com/2026/11/20/sp-500-correction-market-sell-off.html",
+      "canonical_url": "https://cnbc.com/2026/11/20/sp-500-correction-market-sell-off.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-2dafaf4e5b",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:50:00Z",
+      "published_at_taipei": "2026-11-21 18:50",
+      "published_at_taipei_iso": "2026-11-21T18:50:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "聯發科跌停背後有隱憂？美外資點出「2關鍵因素」 估今年EPS達73元、最新目標價曝光",
+      "url": "https://tw.stock.yahoo.com/news/%E8%81%AF%E7%99%BC%E7%A7%91%E8%B7%8C%E5%81%9C%E8%83%8C%E5%BE%8C%E6%9C%89%E9%9A%B1%E6%86%82-%E7%BE%8E%E5%A4%96%E8%B3%87%E9%BB%9E%E5%87%BA-2%E9%97%9C%E9%8D%B5%E5%9B%A0%E7%B4%A0-%E4%BC%B0%E4%BB%8A%E5%B9%B4eps%E9%81%9473%E5%85%83-%E6%9C%80%E6%96%B0%E7%9B%AE%E6%A8%99%E5%83%B9%E6%9B%9D%E5%85%89-105000557.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E8%81%AF%E7%99%BC%E7%A7%91%E8%B7%8C%E5%81%9C%E8%83%8C%E5%BE%8C%E6%9C%89%E9%9A%B1%E6%86%82-%E7%BE%8E%E5%A4%96%E8%B3%87%E9%BB%9E%E5%87%BA-2%E9%97%9C%E9%8D%B5%E5%9B%A0%E7%B4%A0-%E4%BC%B0%E4%BB%8A%E5%B9%B4eps%E9%81%9473%E5%85%83-%E6%9C%80%E6%96%B0%E7%9B%AE%E6%A8%99%E5%83%B9%E6%9B%9D%E5%85%89-105000557.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2454"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（外資）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII",
+        "2454"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-80f7a62a51",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:48:51Z",
+      "published_at_taipei": "2026-11-21 18:48",
+      "published_at_taipei_iso": "2026-11-21T18:48:51+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股周跌逾7600點引恐慌！詹惟中急喊「3不原則」 曝2027年盤勢",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8%E8%B7%8C%E9%80%BE7600%E9%BB%9E%E5%BC%95%E6%81%90%E6%85%8C-%E8%A9%B9%E6%83%9F%E4%B8%AD%E6%80%A5%E5%96%8A-3%E4%B8%8D%E5%8E%9F%E5%89%87-%E6%9B%9D2027%E5%B9%B4%E7%9B%A4%E5%8B%A2-104851236.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8%E8%B7%8C%E9%80%BE7600%E9%BB%9E%E5%BC%95%E6%81%90%E6%85%8C-%E8%A9%B9%E6%83%9F%E4%B8%AD%E6%80%A5%E5%96%8A-3%E4%B8%8D%E5%8E%9F%E5%89%87-%E6%9B%9D2027%E5%B9%B4%E7%9B%A4%E5%8B%A2-104851236.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-5a9e25bebd",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:30:00Z",
+      "published_at_taipei": "2026-11-21 18:30",
+      "published_at_taipei_iso": "2026-11-21T18:30:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股本週潰堤7641點閃現35K！外資放血0050狂捲335億 再砍「瑤池金母師兄弟」66.5萬張",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9C%AC%E9%80%B1%E6%BD%B0%E5%A0%A47641%E9%BB%9E%E9%96%83%E7%8F%BE35k-%E5%A4%96%E8%B3%87%E6%94%BE%E8%A1%800050%E7%8B%82%E6%8D%B2335%E5%84%84-%E5%86%8D%E7%A0%8D-%E7%91%A4%E6%B1%A0%E9%87%91%E6%AF%8D%E5%B8%AB%E5%85%84%E5%BC%9F-66-103000533.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9C%AC%E9%80%B1%E6%BD%B0%E5%A0%A47641%E9%BB%9E%E9%96%83%E7%8F%BE35k-%E5%A4%96%E8%B3%87%E6%94%BE%E8%A1%800050%E7%8B%82%E6%8D%B2335%E5%84%84-%E5%86%8D%E7%A0%8D-%E7%91%A4%E6%B1%A0%E9%87%91%E6%AF%8D%E5%B8%AB%E5%85%84%E5%BC%9F-66-103000533.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（外資）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：暴跌；命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-778b0066fc",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:27:38Z",
+      "published_at_taipei": "2026-11-21 18:27",
+      "published_at_taipei_iso": "2026-11-21T18:27:38+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股周一穩了？金管會5大狠招穩市「全面限空」 國安基金罕見證實已進場",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8-%E7%A9%A9%E4%BA%86-%E9%87%91%E7%AE%A1%E6%9C%835%E5%A4%A7%E7%8B%A0%E6%8B%9B%E7%A9%A9%E5%B8%82-%E5%85%A8%E9%9D%A2%E9%99%90%E7%A9%BA-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E7%BD%95%E8%A6%8B%E8%AD%89%E5%AF%A6%E5%B7%B2%E9%80%B2%E5%A0%B4-102738219.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8-%E7%A9%A9%E4%BA%86-%E9%87%91%E7%AE%A1%E6%9C%835%E5%A4%A7%E7%8B%A0%E6%8B%9B%E7%A9%A9%E5%B8%82-%E5%85%A8%E9%9D%A2%E9%99%90%E7%A9%BA-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E7%BD%95%E8%A6%8B%E8%AD%89%E5%AF%A6%E5%B7%B2%E9%80%B2%E5%A0%B4-102738219.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（國安基金）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-4e72744ce1",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:21:25Z",
+      "published_at_taipei": "2026-11-21 18:21",
+      "published_at_taipei_iso": "2026-11-21T18:21:25+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "經部：台灣經濟動能強勁未受台股短期波動影響 籲對產業發展有信心",
+      "url": "https://tw.news.yahoo.com/%E7%B6%93%E9%83%A8-%E5%8F%B0%E7%81%A3%E7%B6%93%E6%BF%9F%E5%8B%95%E8%83%BD%E5%BC%B7%E5%8B%81%E6%9C%AA%E5%8F%97%E5%8F%B0%E8%82%A1%E7%9F%AD%E6%9C%9F%E6%B3%A2%E5%8B%95%E5%BD%B1%E9%9F%BF-%E7%B1%B2%E5%B0%8D%E7%94%A2%E6%A5%AD%E7%99%BC%E5%B1%95%E6%9C%89%E4%BF%A1%E5%BF%83-102125787.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E7%B6%93%E9%83%A8-%E5%8F%B0%E7%81%A3%E7%B6%93%E6%BF%9F%E5%8B%95%E8%83%BD%E5%BC%B7%E5%8B%81%E6%9C%AA%E5%8F%97%E5%8F%B0%E8%82%A1%E7%9F%AD%E6%9C%9F%E6%B3%A2%E5%8B%95%E5%BD%B1%E9%9F%BF-%E7%B1%B2%E5%B0%8D%E7%94%A2%E6%A5%AD%E7%99%BC%E5%B1%95%E6%9C%89%E4%BF%A1%E5%BF%83-102125787.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-701ee1a1ba",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:15:09Z",
+      "published_at_taipei": "2026-11-21 18:15",
+      "published_at_taipei_iso": "2026-11-21T18:15:09+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股震盪加劇 11/23起金管會祭五大穩定措施 禁平盤以下放空",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%8A%A0%E5%8A%87-11-23%E8%B5%B7%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD%E4%BA%94%E5%A4%A7%E7%A9%A9%E5%AE%9A%E6%8E%AA%E6%96%BD-%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%BB%A5%E4%B8%8B%E6%94%BE%E7%A9%BA-101509843.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%8A%A0%E5%8A%87-11-23%E8%B5%B7%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD%E4%BA%94%E5%A4%A7%E7%A9%A9%E5%AE%9A%E6%8E%AA%E6%96%BD-%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%BB%A5%E4%B8%8B%E6%94%BE%E7%A9%BA-101509843.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：庫藏股",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-18f84ad9c5",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:14:47Z",
+      "published_at_taipei": "2026-11-21 18:14",
+      "published_at_taipei_iso": "2026-11-21T18:14:47+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "《久留美》開播以來台股慘摔近萬點連官方都知道了！特別中文發推提醒「追繳保證金」引熱議",
+      "url": "https://tw.news.yahoo.com/%E3%80%8A%E4%B9%85%E7%95%99%E7%BE%8E%E3%80%8B%E9%96%8B%E6%92%AD%E4%BB%A5%E4%BE%86%E5%8F%B0%E8%82%A1%E6%85%98%E6%91%94%E8%BF%91%E8%90%AC%E9%BB%9E%E9%80%A3%E5%AE%98%E6%96%B9%E9%83%BD%E7%9F%A5%E9%81%93%E4%BA%86%EF%BC%81%E7%89%B9%E5%88%A5%E4%B8%AD%E6%96%87%E7%99%BC%E6%8E%A8%E6%8F%90%E9%86%92%E3%80%8C%E8%BF%BD%E7%B9%B3%E4%BF%9D%E8%AD%89%E9%87%91%E3%80%8D%E5%BC%95%E7%86%B1%E8%AD%B0-101447792.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E3%80%8A%E4%B9%85%E7%95%99%E7%BE%8E%E3%80%8B%E9%96%8B%E6%92%AD%E4%BB%A5%E4%BE%86%E5%8F%B0%E8%82%A1%E6%85%98%E6%91%94%E8%BF%91%E8%90%AC%E9%BB%9E%E9%80%A3%E5%AE%98%E6%96%B9%E9%83%BD%E7%9F%A5%E9%81%93%E4%BA%86%EF%BC%81%E7%89%B9%E5%88%A5%E4%B8%AD%E6%96%87%E7%99%BC%E6%8E%A8%E6%8F%90%E9%86%92%E3%80%8C%E8%BF%BD%E7%B9%B3%E4%BF%9D%E8%AD%89%E9%87%91%E3%80%8D%E5%BC%95%E7%86%B1%E8%AD%B0-101447792.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-bf163ae06e",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:13:37Z",
+      "published_at_taipei": "2026-11-21 18:13",
+      "published_at_taipei_iso": "2026-11-21T18:13:37+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "聯準會政策衝擊要來了？庫克指利率未抑制AI建設，等太久恐需更大幅升息",
+      "url": "https://news.cnyes.com/news/id/6669775",
+      "canonical_url": "https://news.cnyes.com/news/id/6669775",
+      "source": "鉅亨網（總經）",
+      "source_id": "cnyes_macro",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（聯準會）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：升息",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-60834bced7",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:13:37Z",
+      "published_at_taipei": "2026-11-21 18:13",
+      "published_at_taipei_iso": "2026-11-21T18:13:37+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "太陽能供應鏈｜特斯拉擬在德州生產多晶矽，美國進口與本土模組價差已縮小",
+      "url": "https://news.cnyes.com/news/id/6669776",
+      "canonical_url": "https://news.cnyes.com/news/id/6669776",
+      "source": "鉅亨網（總經）",
+      "source_id": "cnyes_macro",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-f78751980a",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:13:35Z",
+      "published_at_taipei": "2026-11-21 18:13",
+      "published_at_taipei_iso": "2026-11-21T18:13:35+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股震盪加劇！金管會祭5大穩市措施 11／23起全面禁平盤下放空",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%8A%A0%E5%8A%87-%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD5%E5%A4%A7%E7%A9%A9%E5%B8%82%E6%8E%AA%E6%96%BD-11-23%E8%B5%B7%E5%85%A8%E9%9D%A2%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%B8%8B%E6%94%BE%E7%A9%BA-101335726.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%8A%A0%E5%8A%87-%E9%87%91%E7%AE%A1%E6%9C%83%E7%A5%AD5%E5%A4%A7%E7%A9%A9%E5%B8%82%E6%8E%AA%E6%96%BD-11-23%E8%B5%B7%E5%85%A8%E9%9D%A2%E7%A6%81%E5%B9%B3%E7%9B%A4%E4%B8%8B%E6%94%BE%E7%A9%BA-101335726.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-5c81186915",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:12:26Z",
+      "published_at_taipei": "2026-11-21 18:12",
+      "published_at_taipei_iso": "2026-11-21T18:12:26+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台積電周線重挫15.8%！台股創36年最慘單周紀錄、美收緊AI晶片出口管制添壓",
+      "url": "https://news.cnyes.com/news/id/6669709",
+      "canonical_url": "https://news.cnyes.com/news/id/6669709",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-651f384d85",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T10:00:24Z",
+      "published_at_taipei": "2026-11-21 18:00",
+      "published_at_taipei_iso": "2026-11-21T18:00:24+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "費半重挫逾10%金管會強化禁空令 法人：台股靜待打底",
+      "url": "https://tw.stock.yahoo.com/news/%E8%B2%BB%E5%8D%8A%E9%87%8D%E6%8C%AB%E9%80%BE10-%E9%87%91%E7%AE%A1%E6%9C%83%E5%BC%B7%E5%8C%96%E7%A6%81%E7%A9%BA%E4%BB%A4-%E6%B3%95%E4%BA%BA-%E5%8F%B0%E8%82%A1%E9%9D%9C%E5%BE%85%E6%89%93%E5%BA%95-100024573.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E8%B2%BB%E5%8D%8A%E9%87%8D%E6%8C%AB%E9%80%BE10-%E9%87%91%E7%AE%A1%E6%9C%83%E5%BC%B7%E5%8C%96%E7%A6%81%E7%A9%BA%E4%BB%A4-%E6%B3%95%E4%BA%BA-%E5%8F%B0%E8%82%A1%E9%9D%9C%E5%BE%85%E6%89%93%E5%BA%95-100024573.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-6f945ca6da",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T09:44:00Z",
+      "published_at_taipei": "2026-11-21 17:44",
+      "published_at_taipei_iso": "2026-11-21T17:44:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "金馬63／台股慘綠！《少林足球》田啟文一句話神開示 自爆獲楊貴媚押寶",
+      "url": "https://tw.news.yahoo.com/%E9%87%91%E9%A6%AC63-%E5%8F%B0%E8%82%A1%E6%85%98%E7%B6%A0-%E5%B0%91%E6%9E%97%E8%B6%B3%E7%90%83-%E7%94%B0%E5%95%9F%E6%96%87-%E5%8F%A5%E8%A9%B1%E7%A5%9E%E9%96%8B%E7%A4%BA-094400554.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%87%91%E9%A6%AC63-%E5%8F%B0%E8%82%A1%E6%85%98%E7%B6%A0-%E5%B0%91%E6%9E%97%E8%B6%B3%E7%90%83-%E7%94%B0%E5%95%9F%E6%96%87-%E5%8F%A5%E8%A9%B1%E7%A5%9E%E9%96%8B%E7%A4%BA-094400554.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-b6480d8452",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T09:07:53Z",
+      "published_at_taipei": "2026-11-21 17:07",
+      "published_at_taipei_iso": "2026-11-21T17:07:53+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股跌不停！金管會再出手 11月第3次禁空「平盤下不能放空」",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E8%B7%8C%E4%B8%8D%E5%81%9C-%E9%87%91%E7%AE%A1%E6%9C%83%E5%86%8D%E5%87%BA%E6%89%8B-11%E6%9C%88%E7%AC%AC3%E6%AC%A1%E7%A6%81%E7%A9%BA-%E5%B9%B3%E7%9B%A4%E4%B8%8B%E4%B8%8D%E8%83%BD%E6%94%BE%E7%A9%BA-090753061.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E8%B7%8C%E4%B8%8D%E5%81%9C-%E9%87%91%E7%AE%A1%E6%9C%83%E5%86%8D%E5%87%BA%E6%89%8B-11%E6%9C%88%E7%AC%AC3%E6%AC%A1%E7%A6%81%E7%A9%BA-%E5%B9%B3%E7%9B%A4%E4%B8%8B%E4%B8%8D%E8%83%BD%E6%94%BE%E7%A9%BA-090753061.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-0a514e0e64",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T09:03:00Z",
+      "published_at_taipei": "2026-11-21 17:03",
+      "published_at_taipei_iso": "2026-11-21T17:03:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股恐慌性拋售！專家點「止跌2關鍵」：未來4個月仍難熬",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%81%90%E6%85%8C%E6%80%A7%E6%8B%8B%E5%94%AE-%E5%B0%88%E5%AE%B6%E9%BB%9E-%E6%AD%A2%E8%B7%8C2%E9%97%9C%E9%8D%B5-%E6%9C%AA%E4%BE%864%E5%80%8B%E6%9C%88%E4%BB%8D%E9%9B%A3%E7%86%AC-090300972.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%81%90%E6%85%8C%E6%80%A7%E6%8B%8B%E5%94%AE-%E5%B0%88%E5%AE%B6%E9%BB%9E-%E6%AD%A2%E8%B7%8C2%E9%97%9C%E9%8D%B5-%E6%9C%AA%E4%BE%864%E5%80%8B%E6%9C%88%E4%BB%8D%E9%9B%A3%E7%86%AC-090300972.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-7552ed416f",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T08:52:26Z",
+      "published_at_taipei": "2026-11-21 16:52",
+      "published_at_taipei_iso": "2026-11-21T16:52:26+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股暴跌！國安基金罕見喊話了：跨部會維護股市穩定 請投資人保持信心",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E7%BD%95%E8%A6%8B%E5%96%8A%E8%A9%B1%E4%BA%86-%E8%B7%A8%E9%83%A8%E6%9C%83%E7%B6%AD%E8%AD%B7%E8%82%A1%E5%B8%82%E7%A9%A9%E5%AE%9A-%E8%AB%8B%E6%8A%95%E8%B3%87%E4%BA%BA%E4%BF%9D%E6%8C%81%E4%BF%A1%E5%BF%83-085226122.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C-%E5%9C%8B%E5%AE%89%E5%9F%BA%E9%87%91%E7%BD%95%E8%A6%8B%E5%96%8A%E8%A9%B1%E4%BA%86-%E8%B7%A8%E9%83%A8%E6%9C%83%E7%B6%AD%E8%AD%B7%E8%82%A1%E5%B8%82%E7%A9%A9%E5%AE%9A-%E8%AB%8B%E6%8A%95%E8%B3%87%E4%BA%BA%E4%BF%9D%E6%8C%81%E4%BF%A1%E5%BF%83-085226122.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（國安基金）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：暴跌；命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-274fd88dd0",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T08:48:00Z",
+      "published_at_taipei": "2026-11-21 16:48",
+      "published_at_taipei_iso": "2026-11-21T16:48:00+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股暴跌忍痛停損！他砍光持股認賠928萬 網曝慘況：今年獲利全吐還倒賠",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C%E5%BF%8D%E7%97%9B%E5%81%9C%E6%90%8D-%E4%BB%96%E7%A0%8D%E5%85%89%E6%8C%81%E8%82%A1%E8%AA%8D%E8%B3%A0928%E8%90%AC-%E7%B6%B2%E6%9B%9D%E6%85%98%E6%B3%81-%E4%BB%8A%E5%B9%B4%E7%8D%B2%E5%88%A9%E5%85%A8%E5%90%90%E9%82%84%E5%80%92%E8%B3%A0-084800149.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C%E5%BF%8D%E7%97%9B%E5%81%9C%E6%90%8D-%E4%BB%96%E7%A0%8D%E5%85%89%E6%8C%81%E8%82%A1%E8%AA%8D%E8%B3%A0928%E8%90%AC-%E7%B6%B2%E6%9B%9D%E6%85%98%E6%B3%81-%E4%BB%8A%E5%B9%B4%E7%8D%B2%E5%88%A9%E5%85%A8%E5%90%90%E9%82%84%E5%80%92%E8%B3%A0-084800149.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（暴跌）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：暴跌；命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-ad5c18b2fb",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T08:46:30Z",
+      "published_at_taipei": "2026-11-21 16:46",
+      "published_at_taipei_iso": "2026-11-21T16:46:30+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股震盪！三師兄田啟文「一秒鐘幾十秒上下」開示 黃冠智AK追星狂模仿",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA-%E4%B8%89%E5%B8%AB%E5%85%84%E7%94%B0%E5%95%9F%E6%96%87-%E7%A7%92%E9%90%98%E5%B9%BE%E5%8D%81%E7%A7%92%E4%B8%8A%E4%B8%8B-%E9%96%8B%E7%A4%BA-%E9%BB%83%E5%86%A0%E6%99%BAak%E8%BF%BD%E6%98%9F%E7%8B%82%E6%A8%A1%E4%BB%BF-084630049.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA-%E4%B8%89%E5%B8%AB%E5%85%84%E7%94%B0%E5%95%9F%E6%96%87-%E7%A7%92%E9%90%98%E5%B9%BE%E5%8D%81%E7%A7%92%E4%B8%8A%E4%B8%8B-%E9%96%8B%E7%A4%BA-%E9%BB%83%E5%86%A0%E6%99%BAak%E8%BF%BD%E6%98%9F%E7%8B%82%E6%A8%A1%E4%BB%BF-084630049.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-5f32d23698",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T08:10:03Z",
+      "published_at_taipei": "2026-11-21 16:10",
+      "published_at_taipei_iso": "2026-11-21T16:10:03+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "超29萬人爆倉！比特幣跌破5.9萬美元、以太坊重挫8% 「數位黃金」失靈？",
+      "url": "https://news.cnyes.com/news/id/6669708",
+      "canonical_url": "https://news.cnyes.com/news/id/6669708",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "衍生品",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "ETHUSDT",
+        "XRPUSDT",
+        "XAUUSD"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（爆倉）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：淨流出；命中：爆倉；命中：重挫",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "ETHUSDT",
+        "XRPUSDT",
+        "XAUUSD"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-6374a4ed36",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T07:58:46Z",
+      "published_at_taipei": "2026-11-21 15:58",
+      "published_at_taipei_iso": "2026-11-21T15:58:46+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "台股血崩7641點下周守住35000！國安基金急派「定心丸」喊話4大撐盤亮點",
+      "url": "https://news.cnyes.com/news/id/6669743",
+      "canonical_url": "https://news.cnyes.com/news/id/6669743",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（國安基金）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：外資賣超",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261121-64d421dc2a",
+      "issue": "2026-11-21-PM",
+      "published_at_utc": "2026-11-21T07:10:09Z",
+      "published_at_taipei": "2026-11-21 15:10",
+      "published_at_taipei_iso": "2026-11-21T15:10:09+08:00",
+      "first_seen_at_utc": "2026-11-21T15:40:05Z",
+      "first_seen_at_taipei": "2026-11-21 23:40",
+      "month": "2026-11",
+      "title": "黃仁勳可能轉投英特爾？華爾街憂帶走輝達核心人才",
+      "url": "https://news.cnyes.com/news/id/6669741",
+      "canonical_url": "https://news.cnyes.com/news/id/6669741",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261121-474d8469b3",
       "issue": "2026-11-21-PM",
@@ -9341,9 +13380,9 @@
       "month": "2026-11",
       "date": "2026-11-21",
       "half": "PM",
-      "updated_at_taipei": "2026-11-21 15:07",
-      "count": 201,
-      "star3_count": 16,
+      "updated_at_taipei": "2026-11-21 23:40",
+      "count": 257,
+      "star3_count": 25,
       "failed_sources": [
         {
           "id": "binance_derivatives",
