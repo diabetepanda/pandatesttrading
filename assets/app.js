@@ -35,6 +35,7 @@
   let openNowCopyById = {};
   let openNowCopiedAt = {};
   let openNowAllCopyText = "";
+  const expandedWallSignalIds = new Set();
 
   const SITE_URL = "https://diabetepanda.github.io/pandatesttrading/";
   const OPEN_NOW_STRATEGIES = new Set(["S2", "S3", "L1", "L2", "L3", "L4"]);
@@ -986,36 +987,6 @@
       .join("");
   }
 
-  function renderSimpleSignals() {
-    renderOpenNowSignals();
-    const grid = document.getElementById("simple-signals-grid");
-    if (!grid) return;
-    const cards = buildSimpleSignalCardsData(
-      cachedTrades,
-      cachedSignalById,
-      cachedBacktest,
-      (sym) => getDisplayPrice(sym).price,
-      cachedInstruments
-    );
-    if (cards.length === 0) {
-      grid.innerHTML = '<div class="empty-state">目前沒有持倉</div>';
-      return;
-    }
-    grid.innerHTML = cards
-      .map((c) => `
-        <article class="simple-card">
-          <div class="simple-card-title">${c.dot} ${escapeHtml(c.displayName)} ${c.dirZh}</div>
-          <div class="simple-card-line">理由：${escapeHtml(c.reasonLine)}</div>
-          <div class="simple-card-line">進場價：${escapeHtml(c.entryStr)}</div>
-          <div class="simple-card-line">停損價：${escapeHtml(c.slStr)}</div>
-          <div class="simple-card-line">出場點位：${escapeHtml(c.exitStr)}</div>
-          <div class="simple-card-line">倉位：${escapeHtml(c.posText)}</div>
-          <div class="simple-card-line">目前損益：<span class="${c.pnlInfo.cls}">${escapeHtml(c.pnlInfo.text)}</span></div>
-        </article>
-      `)
-      .join("");
-  }
-
   function renderWallSummary() {
     const todayStr = new Date().toISOString().slice(0, 10);
     const todayCount = cachedSignals.filter((s) => (s.published_at_utc || "").startsWith(todayStr)).length;
@@ -1047,11 +1018,17 @@
   function renderWallCards() {
     renderWallSummary();
     const container = document.getElementById("wall-cards");
+    if (!container) return;
     const fStrat = document.getElementById("wall-filter-strategy").value;
     const fMkt = document.getElementById("wall-filter-market").value;
     const fDir = document.getElementById("wall-filter-direction").value;
     const fSym = document.getElementById("wall-filter-symbol").value.trim().toUpperCase();
     const cutoff30 = Date.now() - 30 * 86400 * 1000;
+
+    const tradeById = {};
+    for (const t of (Array.isArray(cachedTrades) ? cachedTrades : [])) {
+      if (t && t.signal_id) tradeById[t.signal_id] = t;
+    }
 
     const filtered = cachedSignals.filter((s) => {
       if (currentWallTab === "active" && s.lifecycle_state !== "active") return false;
@@ -1072,34 +1049,103 @@
       return;
     }
 
-    container.innerHTML = filtered
-      .map((s) => {
-        const dirBadge = s.direction === "long" ? '<span class="pill pill-ok">做多</span>' : '<span class="pill pill-fail">做空</span>';
+    const enriched = filtered.map((s) => {
+      const tradeObj = tradeById[s.signal_id] || null;
+      const fullSig = cachedSignalById[s.signal_id] || s;
+      const merged = {
+        ...s,
+        ...(tradeObj || {}),
+        reasons: fullSig?.reasons || s.reasons,
+        verification_status: fullSig?.verification_status || s.verification_status,
+        trailing_exit_price: tradeObj?.trailing_exit_price ?? fullSig?.trailing_exit_price ?? s.trailing_exit_price,
+        current_stop_loss: tradeObj?.current_stop_loss ?? fullSig?.current_stop_loss ?? s.current_stop_loss ?? s.stop_loss,
+        remaining_qty: tradeObj?.remaining_qty ?? fullSig?.remaining_qty ?? s.remaining_qty,
+        planned_notional_usd: tradeObj?.planned_notional_usd ?? s.planned_notional_usd ?? s.effective_notional_usd ?? s.notional_usd,
+        avg_entry_price: Number(tradeObj?.avg_entry_price || fullSig?.avg_entry_price || s.avg_entry_price || s.entry_price || s.entry_low || 0),
+        realized_pnl_usd: tradeObj?.realized_pnl_usd ?? s.realized_pnl_usd ?? 0,
+      };
+      const verified = isStrategyVerified(s.strategy, merged, cachedBacktest);
+      const entryPx = Number(merged.avg_entry_price || 0);
+      const est = computeCardEstimates(merged);
+      const notionalRaw = Number(merged.planned_notional_usd || est.notional || (Number(merged.remaining_qty || 0) * entryPx) || 0);
+      const enteredAtMs = Date.parse(s.entered_at_utc || s.published_at_utc || "") || 0;
+      const closedAtMs = Date.parse(s.closed_at_utc || s.published_at_utc || "") || 0;
+      return { s, merged, verified, est, notionalRaw, enteredAtMs, closedAtMs };
+    });
+
+    if (currentWallTab === "active") {
+      enriched.sort((a, b) => (Number(b.verified) - Number(a.verified)) || (b.notionalRaw - a.notionalRaw) || (b.enteredAtMs - a.enteredAtMs));
+    } else {
+      enriched.sort((a, b) => b.closedAtMs - a.closedAtMs);
+    }
+
+    container.innerHTML = enriched
+      .map(({ s, merged, verified, est, notionalRaw }) => {
+        const isLong = s.direction === "long";
+        const dot = isLong ? "🟢" : "🔴";
+        const dirZh = isLong ? "做多" : "做空";
+        const dirBadge = isLong ? '<span class="pill pill-ok">做多</span>' : '<span class="pill pill-fail">做空</span>';
+        const displayName = formatSimpleSymbolName(s.symbol, s.market, cachedInstruments);
+        const poolKind = getStrategyPoolKind(s.strategy);
         const pxInfo = getDisplayPrice(s.symbol);
         const liveStr = pxInfo.price !== null ? formatNumber(pxInfo.price) : "--";
-        const floatPnl = computeFloatingPnl(s, pxInfo.price);
-        const curSl = s.current_stop_loss ?? s.stop_loss;
-        const entryPx = Number(s.avg_entry_price || s.entry_price || s.entry_low || 0);
-        const entryStr = formatNumber(entryPx) || String(entryPx);
+        const floatPnl = computeFloatingPnl(merged, pxInfo.price);
+        const curSl = merged.current_stop_loss ?? s.stop_loss;
+        const entryPx = Number(merged.avg_entry_price || 0);
+        const entryStr = entryPx > 0 ? (formatNumber(entryPx) || String(entryPx)) : "—";
+        const slStr = curSl > 0 ? (formatNumber(curSl) || String(curSl)) : "—";
         const enteredTp = formatTaipeiTime(s.entered_at_utc || s.published_at_utc);
-        const ruleTxt = getStrategyExitRuleText(s);
+        const ruleTxt = getStrategyExitRuleText(merged);
+        const reasonLine = `${extractSimpleReasonText(merged)}（${s.strategy} ${poolKind}，${verified ? "已驗證" : "觀察中"}）`;
+        const marginUsd = Math.round(notionalRaw / 5);
+        const notionalUsd = Math.round(notionalRaw);
+        const posText = notionalUsd > 0
+          ? `本金 $${marginUsd.toLocaleString("en-US")} × 5 倍 = $${notionalUsd.toLocaleString("en-US")}`
+          : "—";
 
+        const isClosed = s.lifecycle_state === "closed" || s.lifecycle_state === "cancelled";
+        const exitInfo = computeSimpleExitPoint(merged);
+        const exitStr = exitInfo.price > 0
+          ? `${formatNumber(exitInfo.price) ?? "—"}${exitInfo.suffix}`
+          : `—${exitInfo.suffix}`;
+
+        let compactExitLabel = "停利 / 出場";
+        let compactExitVal = exitStr;
+        let compactPnlLabel = "目前損益";
+        let compactPnlVal = "—";
+        let compactPnlCls = "muted";
         let liveHtml = "";
-        if (s.lifecycle_state === "closed" || s.lifecycle_state === "cancelled") {
+
+        if (isClosed) {
           const rVal = Number(s.r_multiple || 0);
           const rCls = rVal > 0 ? "chg-up" : rVal < 0 ? "chg-down" : "muted";
           const exitLbl = s.exit_reason_label || exitReasonLabel(s.exit_reason);
+          compactExitLabel = "出場結果";
+          compactExitVal = exitLbl;
+          compactPnlLabel = "已實現損益";
+          compactPnlVal = `${rVal.toFixed(2)}R / ${formatUsd(s.realized_pnl_usd)}`;
+          compactPnlCls = rCls;
           liveHtml = `
             <div class="live-box">
               <div><strong>實際損益（fills 加總）：</strong><span class="${rCls}">${rVal.toFixed(2)}R / ${formatUsd(s.realized_pnl_usd)}</span></div>
               <div class="muted">出場原因：${escapeHtml(exitLbl)}｜結束時間：台北 ${formatTaipeiTime(s.closed_at_utc || s.published_at_utc)}</div>
             </div>`;
         } else {
+          const pnlInfo = Number(merged.remaining_qty || 0) > 0 && entryPx > 0
+            ? computeSimpleTradePnl(merged, pxInfo.price)
+            : (floatPnl
+                ? {
+                    text: `${floatPnl.usd >= 0 ? "+" : "-"}$${Math.abs(Math.round(floatPnl.usd)).toLocaleString("en-US")}`,
+                    cls: floatPnl.usd > 0 ? "chg-up" : floatPnl.usd < 0 ? "chg-down" : "muted",
+                  }
+                : { text: "—", cls: "muted" });
+          compactPnlVal = pnlInfo.text;
+          compactPnlCls = pnlInfo.cls;
           const floatTxt = floatPnl
             ? `<div><strong>即時浮動損益：</strong><span class="${floatPnl.usd >= 0 ? "chg-up" : "chg-down"}">${floatPnl.r >= 0 ? "+" : ""}${floatPnl.r.toFixed(2)}R (${formatUsd(floatPnl.usd)})</span></div>`
             : "";
-          const trailLine = s.trailing_exit_price
-            ? `<div>目前移動出場線：${formatNumber(s.trailing_exit_price)}</div>`
+          const trailLine = merged.trailing_exit_price
+            ? `<div>目前移動出場線：${formatNumber(merged.trailing_exit_price)}</div>`
             : "";
           liveHtml = `
             <div class="live-box">
@@ -1111,43 +1157,58 @@
             </div>`;
         }
 
-        const est = computeCardEstimates(s);
-        const verLabel = s.verification_status || "觀察中（未通過驗證）";
+        const verLabel = s.verification_status || (verified ? "已驗證" : "觀察中（未通過驗證）");
         const verCls = verLabel === "已驗證" ? "pill-ok" : "pill-warn";
+        const isExpanded = expandedWallSignalIds.has(s.signal_id);
 
         return `
-          <article class="signal-card" data-sid="${s.signal_id}">
-            <div class="signal-card-head">
-              <div>
-                <div class="signal-card-title">${escapeHtml(formatInstrumentTitle(s.symbol))} ${dirBadge}</div>
-                <div class="muted">${s.signal_id}｜${STRATEGY_NAMES[s.strategy] || `策略 ${s.strategy}`}｜台北 ${enteredTp}</div>
+          <article class="signal-card${isExpanded ? " expanded" : ""}" data-sid="${escapeHtml(s.signal_id)}">
+            <div class="signal-card-compact" role="button" tabindex="0" aria-expanded="${isExpanded ? "true" : "false"}">
+              <div class="signal-compact-head">
+                <div class="signal-compact-title">
+                  <span>${dot} ${escapeHtml(displayName)}</span>
+                  ${dirBadge}
+                  <span class="pill pill-neutral">${escapeHtml(s.strategy)} ${escapeHtml(poolKind)}</span>
+                </div>
+                <div class="signal-compact-badges">
+                  <span class="pill ${verCls}">${escapeHtml(verLabel)}</span>
+                  <span class="pill pill-live">${lifecycleLabel(s.lifecycle_state)}</span>
+                  <button class="btn btn-xs wall-expand-btn" type="button" aria-expanded="${isExpanded ? "true" : "false"}">${isExpanded ? "收合 ▴" : "展開 ▾"}</button>
+                </div>
               </div>
-              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
-                <span class="pill ${verCls}">${escapeHtml(verLabel)}</span>
-                <span class="pill pill-live">${lifecycleLabel(s.lifecycle_state)}</span>
+              <div class="signal-compact-reason muted">理由：${escapeHtml(reasonLine)}</div>
+              <div class="signal-compact-kv">
+                <div><span class="muted">進場價：</span><strong>${escapeHtml(entryStr)}</strong></div>
+                <div><span class="muted">停損價：</span><strong>${escapeHtml(slStr)}</strong></div>
+                <div><span class="muted">${compactExitLabel}：</span><strong>${escapeHtml(compactExitVal)}</strong></div>
+                <div><span class="muted">${compactPnlLabel}：</span><strong class="${compactPnlCls}">${escapeHtml(compactPnlVal)}</strong></div>
+                <div class="signal-compact-kv-wide"><span class="muted">倉位：</span>${escapeHtml(posText)}</div>
               </div>
             </div>
-            <div class="badge badge-warn" style="align-self:flex-start;">模擬驗證中，非投資建議</div>
-            <div class="signal-kv">
-              <div><span class="muted">進場：</span>市價 ${entryStr}（台北 ${enteredTp} 成交）</div>
-              <div><span class="muted">倉位名目：</span>$${fmtCompactUsd(est.notional)}（佔 ${s.strategy} 資金 ${est.notionalPct.toFixed(1)}%）</div>
-              <div><span class="muted">止損：</span>${formatNumber(curSl) || curSl}</div>
-              <div><span class="muted">預估 SL 虧損：</span><span class="chg-down">-$${fmtCompactUsd(est.slUsd)}（佔 ${s.strategy} 資金 ${est.slPct.toFixed(1)}%）</span></div>
-              <div style="grid-column:1 / -1;"><span class="muted">出場規則：</span>${escapeHtml(ruleTxt)}</div>
-            </div>
-            ${liveHtml}
-            <div class="card-actions">
-              <button class="btn copy-sig-btn" data-sid="${s.signal_id}" type="button">一鍵複製報單文字</button>
-              <a class="btn btn-primary" href="#/signal/${encodeURIComponent(s.signal_id)}">查看詳情</a>
+            <div class="signal-card-details">
+              <div class="signal-card-head">
+                <div>
+                  <div class="signal-card-title">${escapeHtml(formatInstrumentTitle(s.symbol))} ${dirBadge}</div>
+                  <div class="muted">${escapeHtml(s.signal_id)}｜${STRATEGY_NAMES[s.strategy] || `策略 ${s.strategy}`}｜台北 ${enteredTp}</div>
+                </div>
+              </div>
+              <div class="badge badge-warn" style="align-self:flex-start;">模擬驗證中，非投資建議</div>
+              <div class="signal-kv">
+                <div><span class="muted">進場：</span>市價 ${escapeHtml(entryStr)}（台北 ${enteredTp} 成交）</div>
+                <div><span class="muted">倉位名目：</span>$${fmtCompactUsd(est.notional)}（佔 ${escapeHtml(s.strategy)} 資金 ${est.notionalPct.toFixed(1)}%）</div>
+                <div><span class="muted">止損：</span>${escapeHtml(slStr)}</div>
+                <div><span class="muted">預估 SL 虧損：</span><span class="chg-down">-$${fmtCompactUsd(est.slUsd)}（佔 ${escapeHtml(s.strategy)} 資金 ${est.slPct.toFixed(1)}%）</span></div>
+                <div style="grid-column:1 / -1;"><span class="muted">出場規則：</span>${escapeHtml(ruleTxt)}</div>
+              </div>
+              ${liveHtml}
+              <div class="card-actions">
+                <button class="btn copy-sig-btn" data-sid="${escapeHtml(s.signal_id)}" type="button">一鍵複製報單文字</button>
+                <a class="btn btn-primary" href="#/signal/${encodeURIComponent(s.signal_id)}">查看詳情</a>
+              </div>
             </div>
           </article>`;
       })
       .join("");
-
-    container.querySelectorAll(".copy-sig-btn").forEach((btn) => {
-      const sig = cachedSignals.find((x) => x.signal_id === btn.dataset.sid);
-      if (sig) bindCopyButton(btn, formatSignalCopyText(sig), "一鍵複製報單文字");
-    });
   }
 
   async function renderSignalDetail(signalId) {
@@ -1159,7 +1220,7 @@
       try {
         sig = await fetchDataJson(`signals/${encodeURIComponent(signalId)}.json`);
       } catch (err) {
-        root.innerHTML = `<div class="card"><p class="error-box">找不到報單 ${signalId}（${err.message}）</p><a class="btn" href="#/wall">返回報單牆</a></div>`;
+        root.innerHTML = `<div class="card"><p class="error-box">找不到報單 ${signalId}（${err.message}）</p><a class="btn" href="#/wall">返回訊號與報單</a></div>`;
         return;
       }
     }
@@ -1215,7 +1276,7 @@
             <p class="subtitle">${STRATEGY_NAMES[sig.strategy] || `策略 ${sig.strategy}`}｜<span class="pill ${verDetailCls}">${escapeHtml(verDetailLabel)}</span>｜狀態：<strong>${lifecycleLabel(sig.lifecycle_state)}</strong>｜進場時間：台北 ${enteredTp}</p>
           </div>
           <div class="card-actions">
-            <a class="btn" href="#/wall">返回報單牆</a>
+            <a class="btn" href="#/wall">返回訊號與報單</a>
             <button id="detail-copy-url" class="btn" type="button">複製固定網址</button>
             <button id="detail-copy-text" class="btn btn-primary" type="button">一鍵複製報單文字</button>
           </div>
@@ -2234,13 +2295,17 @@
     const chartNote = document.getElementById("equity-chart-note");
     if (chartBox && chartNote) {
       if (activeEquityChart) {
-        activeEquityChart.remove();
+        try { activeEquityChart.remove(); } catch (_) {}
         activeEquityChart = null;
       }
       const pts = cachedEquity?.points || [];
+      const isHiddenBox = chartBox.clientWidth === 0;
       if (pts.length === 0 || !window.LightweightCharts) {
         chartBox.innerHTML = "";
         chartNote.textContent = pts.length === 0 ? "目前尚無淨值快照資料（等待排程產生 equity_curve.json）。" : "圖表函式庫載入失敗。";
+      } else if (isHiddenBox) {
+        chartBox.innerHTML = "";
+        chartNote.textContent = `共有 ${pts.length} 筆淨值快照。`;
       } else {
         chartBox.innerHTML = "";
         activeEquityChart = window.LightweightCharts.createChart(chartBox, {
@@ -3080,52 +3145,72 @@
     }
   }
 
+  const LEGACY_ROUTE_REDIRECTS = {
+    simple: "#/wall",
+    stats: "#/account/stats",
+    results: "#/account/results",
+    risk: "#/account/risk",
+    "contest-research": "#/research",
+    "research-short": "#/research",
+  };
+  const ACCOUNT_SUBTABS = new Set(["overview", "stats", "results", "risk"]);
+
   function applyRoute() {
     const rawHash = window.location.hash || "#/wall";
     const cleaned = rawHash.replace(/^#\/?/, "");
-    const parts = cleaned.split("/");
+    const parts = cleaned.split("/").filter(Boolean);
     const route = parts[0] || "wall";
+
+    if (LEGACY_ROUTE_REDIRECTS[route]) {
+      window.location.hash = LEGACY_ROUTE_REDIRECTS[route];
+      return;
+    }
 
     document.querySelectorAll(".route-view").forEach((el) => el.classList.add("hidden"));
     document.querySelectorAll(".nav-link").forEach((el) => el.classList.remove("active"));
 
     if (route === "signal" && parts[1]) {
-      document.getElementById("view-signal").classList.remove("hidden");
+      document.getElementById("view-signal")?.classList.remove("hidden");
       renderSignalDetail(decodeURIComponent(parts[1]));
-    } else if (route === "simple") {
-      document.getElementById("view-simple")?.classList.remove("hidden");
-      document.querySelector('.nav-link[data-route="simple"]')?.classList.add("active");
-      renderSimpleSignals();
-    } else if (route === "results") {
-      document.getElementById("view-results").classList.remove("hidden");
-      document.querySelector('.nav-link[data-route="results"]')?.classList.add("active");
-      renderBacktestResults();
-    } else if (route === "stats") {
-      document.getElementById("view-stats").classList.remove("hidden");
-      document.querySelector('.nav-link[data-route="stats"]')?.classList.add("active");
-      renderPerformanceStats();
     } else if (route === "account") {
-      document.getElementById("view-account").classList.remove("hidden");
+      const rawSub = parts[1] || "overview";
+      const sub = ACCOUNT_SUBTABS.has(rawSub) ? rawSub : "overview";
+      document.getElementById("view-account")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="account"]')?.classList.add("active");
-      renderSimulatedAccount();
-    } else if (route === "risk") {
-      document.getElementById("view-risk").classList.remove("hidden");
-      document.querySelector('.nav-link[data-route="risk"]')?.classList.add("active");
-      renderRiskCenter();
+
+      document.querySelectorAll("#account-subtabs .tab").forEach((el) => {
+        const isActive = el.dataset?.accountTab === sub;
+        el.classList.toggle("active", isActive);
+        if (typeof el.setAttribute === "function") {
+          el.setAttribute("aria-selected", isActive ? "true" : "false");
+        }
+      });
+      document.querySelectorAll(".account-subpanel").forEach((panel) => {
+        panel.classList.add("hidden");
+      });
+      document.getElementById(`account-panel-${sub}`)?.classList.remove("hidden");
+
+      if (sub === "stats") {
+        renderPerformanceStats();
+      } else if (sub === "results") {
+        renderBacktestResults();
+      } else if (sub === "risk") {
+        renderRiskCenter();
+      } else {
+        renderSimulatedAccount();
+      }
     } else if (route === "data") {
-      document.getElementById("view-data").classList.remove("hidden");
+      document.getElementById("view-data")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="data"]')?.classList.add("active");
       renderDataExtras();
-    } else if (route === "contest-research" || route === "research-short") {
-      window.location.hash = "#/research";
-      return;
     } else if (route === "research") {
       document.getElementById("view-research")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="research"]')?.classList.add("active");
       renderResearchView();
     } else {
-      document.getElementById("view-wall").classList.remove("hidden");
+      document.getElementById("view-wall")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="wall"]')?.classList.add("active");
+      renderOpenNowSignals();
       renderWallCards();
     }
   }
@@ -3153,9 +3238,14 @@
     }
     if (cachedInstruments.length > 0) renderInstruments();
     const curHash = window.location.hash || "#/wall";
-    if (curHash.startsWith("#/simple")) renderSimpleSignals();
-    if (curHash.startsWith("#/wall") || !window.location.hash) renderWallCards();
-    if (curHash.startsWith("#/account")) renderSimulatedAccount();
+    const curParts = curHash.replace(/^#\/?/, "").split("/").filter(Boolean);
+    const curRoute = curParts[0] || "wall";
+    if (curRoute === "wall" || !window.location.hash) {
+      renderOpenNowSignals();
+      renderWallCards();
+    } else if (curRoute === "account" && (!curParts[1] || curParts[1] === "overview")) {
+      renderSimulatedAccount();
+    }
   }
 
   async function refreshAll() {
@@ -3225,7 +3315,7 @@
       cachedSignalById = sigMap;
 
       // 每個區塊各自防護：一個區塊出錯不會拖垮整個頁面
-      [renderSimpleSignals, renderInstruments, renderWallCards, renderBacktestResults,
+      [renderOpenNowSignals, renderInstruments, renderWallCards, renderBacktestResults,
        renderPerformanceStats, renderSimulatedAccount,
        renderRiskCenter, renderDataExtras].forEach((fn) => {
         try { fn(); } catch (e) { console.error(`${fn.name} 失敗：`, e); }
@@ -3281,6 +3371,54 @@
     btn.classList.add("active");
     currentWallTab = btn.dataset.tab || "active";
     renderWallCards();
+  });
+
+  function toggleWallCardExpansion(cardEl) {
+    if (!cardEl || !cardEl.dataset?.sid) return;
+    const sid = cardEl.dataset.sid;
+    const isNowExpanded = !expandedWallSignalIds.has(sid);
+    if (isNowExpanded) {
+      expandedWallSignalIds.add(sid);
+    } else {
+      expandedWallSignalIds.delete(sid);
+    }
+    cardEl.classList.toggle("expanded", isNowExpanded);
+    const compactEl = cardEl.querySelector(".signal-card-compact");
+    if (compactEl) compactEl.setAttribute("aria-expanded", isNowExpanded ? "true" : "false");
+    const toggleBtn = cardEl.querySelector(".wall-expand-btn");
+    if (toggleBtn) {
+      toggleBtn.setAttribute("aria-expanded", isNowExpanded ? "true" : "false");
+      toggleBtn.textContent = isNowExpanded ? "收合 ▴" : "展開 ▾";
+    }
+  }
+
+  document.getElementById("wall-cards")?.addEventListener("click", async (e) => {
+    const copyBtn = e.target.closest(".copy-sig-btn");
+    if (copyBtn) {
+      const sig = cachedSignals.find((x) => x.signal_id === copyBtn.dataset.sid);
+      if (sig) {
+        const ok = await copyTextToClipboard(formatSignalCopyText(sig));
+        if (ok) {
+          flashCopySuccess(copyBtn, "一鍵複製報單文字");
+        } else {
+          copyBtn.textContent = "請手動複製";
+        }
+      }
+      return;
+    }
+    if (e.target.closest("a, button") && !e.target.closest(".wall-expand-btn")) return;
+    const compactEl = e.target.closest(".signal-card-compact");
+    if (!compactEl) return;
+    toggleWallCardExpansion(compactEl.closest(".signal-card"));
+  });
+
+  document.getElementById("wall-cards")?.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    if (e.target.closest("a, button")) return;
+    const compactEl = e.target.closest(".signal-card-compact");
+    if (!compactEl) return;
+    e.preventDefault();
+    toggleWallCardExpansion(compactEl.closest(".signal-card"));
   });
 
   ["wall-filter-strategy", "wall-filter-market", "wall-filter-direction", "wall-filter-symbol"].forEach((id) => {
@@ -3396,6 +3534,20 @@
   };
 
   window.addEventListener("hashchange", applyRoute);
+  window.addEventListener("resize", () => {
+    if (activeEquityChart) {
+      const box = document.getElementById("equity-chart-box");
+      if (box && box.clientWidth > 0) {
+        activeEquityChart.applyOptions({ width: box.clientWidth, height: box.clientHeight || 340 });
+      }
+    }
+    if (activeChart) {
+      const box = document.getElementById("signal-chart-box");
+      if (box && box.clientWidth > 0) {
+        activeChart.applyOptions({ width: box.clientWidth, height: box.clientHeight || 340 });
+      }
+    }
+  });
 
   applyRoute();
   refreshAll();

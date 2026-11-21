@@ -118,10 +118,14 @@ def test_frontend_assets_and_relative_paths() -> None:
     assert "TONUSDT" in config_js
 
     # Stage 4, 5 & 6 hash routes, disclaimer, backtest results, and fixed CDN check
-    for route in ("#/simple", "#/wall", "#/results", "#/stats", "#/account", "#/risk", "#/data", "#/research"):
-        assert route in index_html
     nav_block = index_html.split('<nav class="main-nav"', 1)[1].split("</nav>", 1)[0]
-    assert nav_block.index("#/simple") < nav_block.index("#/wall")
+    for route in ("#/wall", "#/account", "#/data", "#/research", "./macro.html"):
+        assert route in nav_block
+    for old_nav_route in ('"#/simple"', '"#/results"', '"#/stats"', '"#/risk"'):
+        assert old_nav_route not in nav_block
+    assert nav_block.index("#/wall") < nav_block.index("#/account") < nav_block.index("#/data") < nav_block.index("#/research") < nav_block.index("./macro.html")
+    for subroute in ("#/account/stats", "#/account/results", "#/account/risk"):
+        assert subroute in index_html
     assert "#/scaling" not in index_html
     assert "lightweight-charts@4.2.1" in index_html
     assert "backtest-section" in index_html
@@ -153,12 +157,16 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261121c" in index_html
+    assert "?v=20261121d" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
     assert "怎麼止盈？" in index_html
-    assert "simple-signals-grid" in index_html
+    assert "simple-signals-grid" not in index_html
+    assert 'id="view-simple"' not in index_html
+    assert 'id="view-results"' not in index_html
+    assert 'id="view-stats"' not in index_html
+    assert 'id="view-risk"' not in index_html
     assert ".simple-grid" in style_css
     assert "trades.json" in app_js
     assert "watch-scope-tabs" in index_html
@@ -966,6 +974,180 @@ def test_in_depth_research_json_and_rendering() -> None:
         assert proc.returncode == 0, f"JS render and route check failed: {proc.stderr or proc.stdout}"
     finally:
         Path(tmp_js).unlink(missing_ok=True)
+
+
+def test_navigation_restructure_routes_and_subtabs() -> None:
+    """Verify 5-item nav in index.html & macro.html, legacy redirects, and #/account 4 subtabs."""
+    import re
+    import shutil
+    import subprocess
+    import tempfile
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    index_html = (root / "index.html").read_text(encoding="utf-8")
+    macro_html = (root / "macro.html").read_text(encoding="utf-8")
+    app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
+
+    # 1. Exactly 5 nav links in both index.html and macro.html
+    idx_nav = index_html.split('<nav class="main-nav"', 1)[1].split("</nav>", 1)[0]
+    macro_nav = macro_html.split('<nav class="main-nav"', 1)[1].split("</nav>", 1)[0]
+    idx_links = re.findall(r'<a\s[^>]*class="nav-link[^"]*"[^>]*>(.*?)</a>', idx_nav)
+    macro_links = re.findall(r'<a\s[^>]*class="nav-link[^"]*"[^>]*>(.*?)</a>', macro_nav)
+    expected_labels = ["訊號與報單", "模擬帳戶", "市場與資料", "深度研究", "宏觀數據"]
+    assert idx_links == expected_labels, f"Unexpected index.html nav items: {idx_links}"
+    assert macro_links == expected_labels, f"Unexpected macro.html nav items: {macro_links}"
+    for target in ("./index.html#/wall", "./index.html#/account", "./index.html#/data", "./index.html#/research", "./macro.html"):
+        assert target in macro_nav
+
+    # 2. Merged #view-wall and #view-account 4 subpanels
+    wall_block = index_html.split('id="view-wall"', 1)[1].split('id="view-signal"', 1)[0]
+    assert 'id="simple-open-now-card"' in wall_block
+    assert 'id="simple-tp-explainer"' in wall_block
+    assert 'id="wall-cards"' in wall_block
+    assert 'id="watch-table"' in wall_block
+    assert wall_block.index('id="simple-open-now-card"') < wall_block.index('id="wall-cards"') < wall_block.index('id="watch-table"')
+
+    acc_block = index_html.split('id="view-account"', 1)[1].split('id="view-data"', 1)[0]
+    for sub_id in ("account-subtabs", "account-panel-overview", "account-panel-stats", "account-panel-results", "account-panel-risk"):
+        assert f'id="{sub_id}"' in acc_block
+
+    # 3. Runtime JS verification for legacy redirects & account 4 subtabs
+    js_bin = shutil.which("node")
+    if not js_bin:
+        jsc_path = Path("/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc")
+        if jsc_path.exists():
+            js_bin = str(jsc_path)
+    assert js_bin is not None
+
+    script = f"""
+        function makeEl(id, extra = {{}}) {{
+          const cls = new Set(extra.classes || []);
+          const attrs = {{}};
+          return {{
+            id,
+            dataset: extra.dataset || {{}},
+            style: {{}},
+            innerHTML: '',
+            textContent: '',
+            value: 'all',
+            disabled: false,
+            clientWidth: 800,
+            clientHeight: 340,
+            classList: {{
+              add: (c) => cls.add(c),
+              remove: (c) => cls.delete(c),
+              contains: (c) => cls.has(c),
+              toggle: (c, force) => {{
+                if (force === true) {{ cls.add(c); return true; }}
+                if (force === false) {{ cls.delete(c); return false; }}
+                if (cls.has(c)) {{ cls.delete(c); return false; }}
+                cls.add(c); return true;
+              }},
+            }},
+            setAttribute: (k, v) => {{ attrs[k] = String(v); }},
+            getAttribute: (k) => attrs[k] ?? null,
+            addEventListener: () => {{}},
+            querySelectorAll: () => [],
+            querySelector: () => null,
+          }};
+        }}
+
+        const routeViews = ['view-wall', 'view-signal', 'view-account', 'view-data', 'view-research'].map((id) => makeEl(id, {{ classes: ['route-view'] }}));
+        const navLinks = ['wall', 'account', 'data', 'research'].map((r) => makeEl('nav-' + r, {{ classes: ['nav-link'], dataset: {{ route: r }} }}));
+        const subtabs = ['overview', 'stats', 'results', 'risk'].map((t) => makeEl('tab-' + t, {{ classes: ['tab'], dataset: {{ accountTab: t }} }}));
+        const subpanels = ['overview', 'stats', 'results', 'risk'].map((t) => makeEl('account-panel-' + t, {{ classes: ['account-subpanel'] }}));
+        const byId = {{}};
+        [...routeViews, ...subpanels].forEach((el) => {{ byId[el.id] = el; }});
+
+        var navigator = {{}};
+        var window = {{
+          location: {{ hash: '#/wall' }},
+          addEventListener: () => {{}},
+          SIGNAL_DESK_CONFIG: {{}},
+        }};
+        var document = {{
+          getElementById: (id) => byId[id] || (byId[id] = makeEl(id)),
+          querySelectorAll: (sel) => {{
+            if (sel === '.route-view') return routeViews;
+            if (sel === '.nav-link') return navLinks;
+            if (sel === '#account-subtabs .tab') return subtabs;
+            if (sel === '.account-subpanel') return subpanels;
+            return [];
+          }},
+          querySelector: (sel) => {{
+            const m = sel.match(/^\\.nav-link\\[data-route="([^"]+)"\\]$/);
+            if (m) return navLinks.find((n) => n.dataset.route === m[1]) || null;
+            return null;
+          }},
+          body: {{ appendChild: () => {{}}, removeChild: () => {{}} }},
+          createElement: () => makeEl('tmp'),
+          execCommand: () => true,
+        }};
+        function setInterval() {{}}
+        function setTimeout() {{ return 1; }}
+        function clearTimeout() {{}}
+        async function fetch() {{ return {{ ok: false }}; }}
+
+        {app_js}
+
+        const u = window.__SIGNAL_DESK_UTILS__;
+
+        // Legacy redirects
+        const redirects = [
+          ['#/simple', '#/wall'],
+          ['#/stats', '#/account/stats'],
+          ['#/results', '#/account/results'],
+          ['#/risk', '#/account/risk'],
+          ['#/contest-research', '#/research'],
+          ['#/research-short', '#/research'],
+        ];
+        for (const [oldH, expectedH] of redirects) {{
+          window.location.hash = oldH;
+          u.applyRoute();
+          if (window.location.hash !== expectedH) {{
+            throw new Error(`Legacy redirect failed for ${{oldH}}: got ${{window.location.hash}}`);
+          }}
+        }}
+
+        // Account 4 subtab routes
+        const accountCases = [
+          ['#/account', 'overview'],
+          ['#/account/overview', 'overview'],
+          ['#/account/stats', 'stats'],
+          ['#/account/results', 'results'],
+          ['#/account/risk', 'risk'],
+        ];
+        for (const [hash, expectedSub] of accountCases) {{
+          window.location.hash = hash;
+          u.applyRoute();
+          if (byId['view-account'].classList.contains('hidden')) {{
+            throw new Error(`view-account remained hidden for ${{hash}}`);
+          }}
+          if (!navLinks.find((n) => n.dataset.route === 'account').classList.contains('active')) {{
+            throw new Error(`account nav link not active for ${{hash}}`);
+          }}
+          for (const sub of ['overview', 'stats', 'results', 'risk']) {{
+            const panelHidden = byId['account-panel-' + sub].classList.contains('hidden');
+            const tabActive = subtabs.find((t) => t.dataset.accountTab === sub).classList.contains('active');
+            if (sub === expectedSub && (panelHidden || !tabActive)) {{
+              throw new Error(`Expected subtab ${{sub}} active/visible for ${{hash}}`);
+            }}
+            if (sub !== expectedSub && (!panelHidden || tabActive)) {{
+              throw new Error(`Expected subtab ${{sub}} inactive/hidden for ${{hash}}`);
+            }}
+          }}
+        }}
+    """
+    with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as tf:
+        tf.write(script)
+        tmp_js = tf.name
+    try:
+        proc = subprocess.run([js_bin, tmp_js], capture_output=True, text=True)
+        assert proc.returncode == 0, f"Navigation restructure JS check failed: {proc.stderr or proc.stdout}"
+    finally:
+        Path(tmp_js).unlink(missing_ok=True)
+
 
 
 

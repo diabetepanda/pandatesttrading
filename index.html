@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261121c" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261121d" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -44,12 +44,8 @@
       </div>
     </div>
     <nav class="main-nav" aria-label="主導覽">
-      <a href="#/simple" class="nav-link" data-route="simple">簡易訊號</a>
-      <a href="#/wall" class="nav-link" data-route="wall">報單牆</a>
-      <a href="#/results" class="nav-link" data-route="results">成績總表</a>
-      <a href="#/stats" class="nav-link" data-route="stats">績效統計</a>
+      <a href="#/wall" class="nav-link" data-route="wall">訊號與報單</a>
       <a href="#/account" class="nav-link" data-route="account">模擬帳戶</a>
-      <a href="#/risk" class="nav-link" data-route="risk">風控中心</a>
       <a href="#/data" class="nav-link" data-route="data">市場與資料</a>
       <a href="#/research" class="nav-link" data-route="research">深度研究</a>
       <a href="./macro.html" class="nav-link">宏觀數據</a>
@@ -64,8 +60,8 @@
   <main class="container">
     <section id="fetch-error-box" class="error-box hidden"></section>
 
-    <!-- 簡易訊號 -->
-    <section id="view-simple" class="route-view hidden">
+    <!-- 頁面 1：訊號與報單（首頁） -->
+    <section id="view-wall" class="route-view">
       <section class="card" id="simple-open-now-card">
         <div class="section-header">
           <div>
@@ -80,7 +76,7 @@
         <p class="muted simple-open-disclaimer">依過去回測統計，不代表這一單的結果</p>
       </section>
 
-      <details class="card simple-tp-explainer" id="simple-tp-explainer" open>
+      <details class="card simple-tp-explainer" id="simple-tp-explainer">
         <summary class="simple-tp-summary">怎麼止盈？</summary>
         <div class="simple-tp-body">
           <p>我們不設固定止盈價，而是用移動停利線：</p>
@@ -94,21 +90,6 @@
         </div>
       </details>
 
-      <section class="card">
-        <div class="section-header">
-          <div>
-            <h2>簡易訊號</h2>
-            <p class="subtitle">進行中持倉重點一覽（已驗證策略優先，依倉位由大到小排序）；僅供模擬驗證參考。</p>
-          </div>
-        </div>
-        <div id="simple-signals-grid" class="simple-grid">
-          <div class="empty-state">目前沒有持倉</div>
-        </div>
-      </section>
-    </section>
-
-    <!-- 頁面 1：報單牆（首頁） -->
-    <section id="view-wall" class="route-view">
       <div class="summary-grid" id="wall-summary">
         <div class="summary-card">
           <span class="metric-label">今日報單數</span>
@@ -131,8 +112,8 @@
       <section class="card">
         <div class="section-header">
           <div>
-            <h1>報單牆</h1>
-            <p class="subtitle">報單狀態與成績以 GitHub Actions 引擎已收盤 K 線為準；現價距離與浮動損益由瀏覽器即時價格估算，僅供顯示。</p>
+            <h2>訊號與報單</h2>
+            <p class="subtitle">預設呈現精簡重點（已驗證策略優先，依倉位由大到小排序），點擊任一張卡片可展開完整報單內容；報單狀態與成績以 GitHub Actions 引擎已收盤 K 線為準，現價距離與浮動損益由瀏覽器即時價格估算。</p>
           </div>
         </div>
 
@@ -206,47 +187,179 @@
       </section>
     </section>
 
-    <!-- 頁面 2：單張報單頁 -->
+    <!-- 單張報單頁 -->
     <section id="view-signal" class="route-view hidden">
       <div id="signal-detail-root"></div>
     </section>
 
-    <!-- 頁面 3：成績總表（六個策略回測比較） -->
-    <section id="view-results" class="route-view hidden">
-      <section class="card" id="backtest-section">
-        <div class="section-header">
-          <div>
-            <h1>成績總表（六個策略回測比較）</h1>
-            <p class="subtitle">依同一套規則與手續費／點差／滑價／隔夜成本進行 70% 樣本內選參數與 30% 樣本外（Out-of-Sample）組合驗證；門檻不放寬。</p>
+    <!-- 頁面 2：模擬帳戶（含帳戶總覽 / 績效統計 / 成績總表 / 風控中心子分頁） -->
+    <section id="view-account" class="route-view hidden">
+      <div class="tabs account-subtabs" id="account-subtabs" role="tablist" aria-label="模擬帳戶子分頁">
+        <a href="#/account" class="tab active" role="tab" data-account-tab="overview" aria-selected="true">帳戶總覽</a>
+        <a href="#/account/stats" class="tab" role="tab" data-account-tab="stats" aria-selected="false">績效統計</a>
+        <a href="#/account/results" class="tab" role="tab" data-account-tab="results" aria-selected="false">成績總表</a>
+        <a href="#/account/risk" class="tab" role="tab" data-account-tab="risk" aria-selected="false">風控中心</a>
+      </div>
+
+      <!-- 子分頁 1：帳戶總覽 -->
+      <div id="account-panel-overview" class="account-subpanel">
+        <section class="card">
+          <div class="section-header">
+            <div>
+              <h1>模擬帳戶與資金曲線</h1>
+              <p class="subtitle">虛擬總資金 100,000 USD（6 個獨立策略子帳戶：S2～S3 各 $10,000，L1～L4 各 $20,000）；現價浮動損益由瀏覽器即時價格估算。</p>
+            </div>
+            <span class="badge badge-warn">模擬驗證中，非投資建議</span>
           </div>
-          <div class="badge badge-warn">歷史不代表未來</div>
-        </div>
-        <p id="bt-summary-meta" class="muted">目前尚無策略回測結果（等待執行 Weekly Backtest）。</p>
-        <div class="table-wrap">
-          <table class="data-table mobile-cards" id="backtest-table">
-            <thead>
-              <tr>
-                <th>策略</th>
-                <th>通過狀態</th>
-                <th>樣本外交易數</th>
-                <th>期望值</th>
-                <th>獲利因子 (PF)</th>
-                <th>最大回撤</th>
-                <th>適用標的數（可用年數）</th>
-                <th>未通過原因／參數詳細</th>
-              </tr>
-            </thead>
-            <tbody id="backtest-tbody">
-              <tr>
-                <td colspan="8" class="muted center">目前尚無策略回測結果。</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+          <div class="summary-grid" id="account-summary-grid">
+            <div class="summary-card"><span class="metric-label">總淨值</span><span id="acc-total-eq" class="summary-val">--</span></div>
+            <div class="summary-card"><span class="metric-label">短線池淨值</span><span id="acc-short-eq" class="summary-val">--</span></div>
+            <div class="summary-card"><span class="metric-label">長線池淨值</span><span id="acc-long-eq" class="summary-val">--</span></div>
+            <div class="summary-card"><span class="metric-label">進行中持倉 / 總名目</span><span id="acc-open-margin" class="summary-val">--</span></div>
+          </div>
+          <h2 style="margin-top:14px;">帳戶資金曲線</h2>
+          <div id="equity-chart-box" class="chart-container"></div>
+          <p id="equity-chart-note" class="muted" style="margin-top:6px;">尚無淨值快照資料。</p>
+        </section>
+
+        <section class="card">
+          <h2>目前持倉明細</h2>
+          <div class="table-wrap">
+            <table class="data-table mobile-cards">
+              <thead>
+                <tr>
+                  <th>報單 / 標的</th>
+                  <th>進場時間 (台北) / 成本 / 數量</th>
+                  <th>倉位名目 / 佔策略資金</th>
+                  <th>即時現價 / 未實現損益</th>
+                  <th>止損 / 預估 SL 虧損</th>
+                  <th>出場規則</th>
+                </tr>
+              </thead>
+              <tbody id="account-positions-tbody">
+                <tr><td colspan="6" class="muted center">目前尚無模擬持倉資料。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- 子分頁 2：績效統計 -->
+      <div id="account-panel-stats" class="account-subpanel hidden">
+        <section class="card">
+          <div class="section-header">
+            <div>
+              <h1>績效統計</h1>
+              <p class="subtitle">依策略、市場與多空方向分組統計；樣本數未達門檻一律顯示「尚未驗證」，不顯示容易誤導的勝率或報酬率數字。</p>
+            </div>
+            <span class="badge badge-warn">模擬驗證中，非投資建議</span>
+          </div>
+          <div id="stats-notice" class="alert-banner hidden"></div>
+          <p id="stats-meta" class="muted">目前尚無績效統計資料。</p>
+          <div class="table-wrap">
+            <table class="data-table mobile-cards">
+              <thead>
+                <tr>
+                  <th>分組</th>
+                  <th>狀態</th>
+                  <th>已結束筆數</th>
+                  <th>勝率</th>
+                  <th>平均 R / 期望值</th>
+                  <th>獲利因子</th>
+                  <th>最大回撤</th>
+                  <th>夏普 / 恢復因子</th>
+                  <th>最大連虧</th>
+                  <th>資金使用效率</th>
+                </tr>
+              </thead>
+              <tbody id="stats-tbody">
+                <tr><td colspan="10" class="muted center">目前尚無績效統計資料。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- 子分頁 3：成績總表 -->
+      <div id="account-panel-results" class="account-subpanel hidden">
+        <section class="card" id="backtest-section">
+          <div class="section-header">
+            <div>
+              <h1>成績總表（六個策略回測比較）</h1>
+              <p class="subtitle">依同一套規則與手續費／點差／滑價／隔夜成本進行 70% 樣本內選參數與 30% 樣本外（Out-of-Sample）組合驗證；門檻不放寬。</p>
+            </div>
+            <div class="badge badge-warn">歷史不代表未來</div>
+          </div>
+          <p id="bt-summary-meta" class="muted">目前尚無策略回測結果（等待執行 Weekly Backtest）。</p>
+          <div class="table-wrap">
+            <table class="data-table mobile-cards" id="backtest-table">
+              <thead>
+                <tr>
+                  <th>策略</th>
+                  <th>通過狀態</th>
+                  <th>樣本外交易數</th>
+                  <th>期望值</th>
+                  <th>獲利因子 (PF)</th>
+                  <th>最大回撤</th>
+                  <th>適用標的數（可用年數）</th>
+                  <th>未通過原因／參數詳細</th>
+                </tr>
+              </thead>
+              <tbody id="backtest-tbody">
+                <tr>
+                  <td colspan="8" class="muted center">目前尚無策略回測結果。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- 子分頁 4：風控中心 -->
+      <div id="account-panel-risk" class="account-subpanel hidden">
+        <section class="card">
+          <div class="section-header">
+            <div>
+              <h1>風控中心（策略子帳戶狀態）</h1>
+              <p class="subtitle">實盤與 5 年回測共用同一套部位計算：每策略各自獨立子帳戶、每單風險 1.0%、總開放風險上限 10%、總名目上限 5 倍、最多同時 10 檔；暫停報單可透過 repo 內 <code>control/control.json</code> 手動切換。</p>
+            </div>
+            <span class="badge badge-warn">模擬驗證中，非投資建議</span>
+          </div>
+          <p id="risk-meta" class="muted">目前尚無風控狀態資料。</p>
+          <div id="risk-meters-grid" class="meter-grid">
+            <div class="empty-state">目前尚無策略子帳戶狀態資料。</div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>各策略子帳戶即時狀態</h2>
+          <div class="table-wrap">
+            <table class="data-table mobile-cards" id="risk-subaccounts-table">
+              <thead>
+                <tr>
+                  <th>策略子帳戶</th>
+                  <th>資金池 / 週期</th>
+                  <th>目前淨值（已實現 / 未實現）</th>
+                  <th>持倉數 / 上限 (10)</th>
+                  <th>開放停損風險 / 上限 (10%)</th>
+                  <th>總名目倉位 / 上限 (5x)</th>
+                </tr>
+              </thead>
+              <tbody id="risk-subaccounts-tbody">
+                <tr><td colspan="6" class="muted center">目前尚無策略子帳戶狀態資料。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>近期風控事件紀錄</h2>
+          <div id="risk-events-box" class="muted">目前尚無風控事件。</div>
+        </section>
+      </div>
     </section>
 
-    <!-- 頁面 4：市場與資料（階段 1-3 健康監控） -->
+    <!-- 頁面 3：市場與資料（階段 1-3 健康監控） -->
     <section id="view-data" class="route-view hidden">
       <section class="card">
         <div class="section-header">
@@ -341,129 +454,7 @@
       </section>
     </section>
 
-    <!-- 頁面 5：績效統計 -->
-    <section id="view-stats" class="route-view hidden">
-      <section class="card">
-        <div class="section-header">
-          <div>
-            <h1>績效統計</h1>
-            <p class="subtitle">依策略、市場與多空方向分組統計；樣本數未達門檻一律顯示「尚未驗證」，不顯示容易誤導的勝率或報酬率數字。</p>
-          </div>
-          <span class="badge badge-warn">模擬驗證中，非投資建議</span>
-        </div>
-        <div id="stats-notice" class="alert-banner hidden"></div>
-        <p id="stats-meta" class="muted">目前尚無績效統計資料。</p>
-        <div class="table-wrap">
-          <table class="data-table mobile-cards">
-            <thead>
-              <tr>
-                <th>分組</th>
-                <th>狀態</th>
-                <th>已結束筆數</th>
-                <th>勝率</th>
-                <th>平均 R / 期望值</th>
-                <th>獲利因子</th>
-                <th>最大回撤</th>
-                <th>夏普 / 恢復因子</th>
-                <th>最大連虧</th>
-                <th>資金使用效率</th>
-              </tr>
-            </thead>
-            <tbody id="stats-tbody">
-              <tr><td colspan="10" class="muted center">目前尚無績效統計資料。</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </section>
-
-    <!-- 頁面 6：模擬帳戶 -->
-    <section id="view-account" class="route-view hidden">
-      <section class="card">
-        <div class="section-header">
-          <div>
-            <h1>模擬帳戶與資金曲線</h1>
-            <p class="subtitle">虛擬總資金 100,000 USD（6 個獨立策略子帳戶：S2～S3 各 $10,000，L1～L4 各 $20,000）；現價浮動損益由瀏覽器即時價格估算。</p>
-          </div>
-          <span class="badge badge-warn">模擬驗證中，非投資建議</span>
-        </div>
-        <div class="summary-grid" id="account-summary-grid">
-          <div class="summary-card"><span class="metric-label">總淨值</span><span id="acc-total-eq" class="summary-val">--</span></div>
-          <div class="summary-card"><span class="metric-label">短線池淨值</span><span id="acc-short-eq" class="summary-val">--</span></div>
-          <div class="summary-card"><span class="metric-label">長線池淨值</span><span id="acc-long-eq" class="summary-val">--</span></div>
-          <div class="summary-card"><span class="metric-label">進行中持倉 / 總名目</span><span id="acc-open-margin" class="summary-val">--</span></div>
-        </div>
-        <h2 style="margin-top:14px;">帳戶資金曲線</h2>
-        <div id="equity-chart-box" class="chart-container"></div>
-        <p id="equity-chart-note" class="muted" style="margin-top:6px;">尚無淨值快照資料。</p>
-      </section>
-
-      <section class="card">
-        <h2>目前持倉明細</h2>
-        <div class="table-wrap">
-          <table class="data-table mobile-cards">
-            <thead>
-              <tr>
-                <th>報單 / 標的</th>
-                <th>進場時間 (台北) / 成本 / 數量</th>
-                <th>倉位名目 / 佔策略資金</th>
-                <th>即時現價 / 未實現損益</th>
-                <th>止損 / 預估 SL 虧損</th>
-                <th>出場規則</th>
-              </tr>
-            </thead>
-            <tbody id="account-positions-tbody">
-              <tr><td colspan="6" class="muted center">目前尚無模擬持倉資料。</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </section>
-
-    <!-- 頁面 7：風控中心 -->
-    <section id="view-risk" class="route-view hidden">
-      <section class="card">
-        <div class="section-header">
-          <div>
-            <h1>風控中心（策略子帳戶狀態）</h1>
-            <p class="subtitle">實盤與 5 年回測共用同一套部位計算：每策略各自獨立子帳戶、每單風險 1.0%、總開放風險上限 10%、總名目上限 5 倍、最多同時 10 檔；暫停報單可透過 repo 內 <code>control/control.json</code> 手動切換。</p>
-          </div>
-          <span class="badge badge-warn">模擬驗證中，非投資建議</span>
-        </div>
-        <p id="risk-meta" class="muted">目前尚無風控狀態資料。</p>
-        <div id="risk-meters-grid" class="meter-grid">
-          <div class="empty-state">目前尚無策略子帳戶狀態資料。</div>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>各策略子帳戶即時狀態</h2>
-        <div class="table-wrap">
-          <table class="data-table mobile-cards" id="risk-subaccounts-table">
-            <thead>
-              <tr>
-                <th>策略子帳戶</th>
-                <th>資金池 / 週期</th>
-                <th>目前淨值（已實現 / 未實現）</th>
-                <th>持倉數 / 上限 (10)</th>
-                <th>開放停損風險 / 上限 (10%)</th>
-                <th>總名目倉位 / 上限 (5x)</th>
-              </tr>
-            </thead>
-            <tbody id="risk-subaccounts-tbody">
-              <tr><td colspan="6" class="muted center">目前尚無策略子帳戶狀態資料。</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>近期風控事件紀錄</h2>
-        <div id="risk-events-box" class="muted">目前尚無風控事件。</div>
-      </section>
-    </section>
-
-    <!-- 頁面 8：深度研究 -->
+    <!-- 頁面 4：深度研究 -->
     <section id="view-research" class="route-view hidden">
       <div id="research-container">
         <p class="muted">深度研究資料載入中...</p>
@@ -475,7 +466,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261121c"></script>
-  <script src="./assets/app.js?v=20261121c"></script>
+  <script src="./assets/config.js?v=20261121d"></script>
+  <script src="./assets/app.js?v=20261121d"></script>
 </body>
 </html>
