@@ -1,0 +1,415 @@
+"""Tests for macro economic data generator, market reaction conventions, and macro.html frontend."""
+
+from __future__ import annotations
+
+import json
+import shutil
+import subprocess
+from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
+from typing import Any
+
+import pytest
+
+from src.data.models import OHLCVBar
+from src.jobs.ta import _save_history_1d_store
+from src.macro import (
+    compute_market_reactions,
+    generate_macro_file,
+    load_macro_calendar,
+)
+
+ROOT_DIR = Path(__file__).resolve().parent.parent
+
+
+class _FakeResponse:
+    def __init__(self, status_code: int, text: str) -> None:
+        self.status_code = status_code
+        self.text = text
+
+
+def _build_synthetic_fred_csv(series_id: str) -> str:
+    if series_id == "DFEDTARU":
+        lines = ["observation_date,DFEDTARU"]
+        d = date(2024, 1, 1)
+        while d <= date(2026, 11, 20):
+            val = 5.50 if d < date(2024, 9, 18) else (4.00 if d >= date(2026, 9, 16) else 3.75)
+            lines.append(f"{d.isoformat()},{val:.2f}")
+            d += timedelta(days=1)
+        return "\n".join(lines) + "\n"
+    if series_id == "DFEDTARL":
+        lines = ["observation_date,DFEDTARL"]
+        d = date(2024, 1, 1)
+        while d <= date(2026, 11, 20):
+            val = 5.25 if d < date(2024, 9, 18) else (3.75 if d >= date(2026, 9, 16) else 3.50)
+            lines.append(f"{d.isoformat()},{val:.2f}")
+            d += timedelta(days=1)
+        return "\n".join(lines) + "\n"
+    if series_id in ("DGS2", "DGS10"):
+        lines = [f"observation_date,{series_id}"]
+        base = 4.60 if series_id == "DGS2" else 4.85
+        d = date(2024, 1, 2)
+        i = 0
+        while d <= date(2026, 11, 19):
+            if d.weekday() < 5:
+                v = base + ((i % 7) - 3) * 0.04
+                lines.append(f"{d.isoformat()},{v:.2f}")
+                i += 1
+            d += timedelta(days=1)
+        return "\n".join(lines) + "\n"
+    if series_id == "ICSA":
+        lines = ["observation_date,ICSA"]
+        d = date(2025, 11, 1)
+        i = 0
+        while d <= date(2026, 11, 14):
+            lines.append(f"{d.isoformat()},{195000 + (i % 5) * 2000}")
+            d += timedelta(days=7)
+            i += 1
+        return "\n".join(lines) + "\n"
+    if series_id == "A191RL1Q225SBEA":
+        lines = ["observation_date,A191RL1Q225SBEA"]
+        for yr in range(2020, 2027):
+            for mo in (1, 4, 7, 10):
+                if yr == 2026 and mo > 7:
+                    continue
+                lines.append(f"{yr:04d}-{mo:02d}-01,{2.0 + (mo % 3) * 0.6:.1f}")
+        return "\n".join(lines) + "\n"
+
+    # Monthly series from 2023-01 to 2026-10
+    lines = [f"observation_date,{series_id}"]
+    idx = 100.0
+    for yr in range(2023, 2027):
+        for mo in range(1, 13):
+            if yr == 2026 and mo > 10:
+                continue
+            if series_id == "PAYEMS":
+                idx += 120.0 + ((mo % 4) - 1) * 35.0
+                lines.append(f"{yr:04d}-{mo:02d}-01,{idx:.0f}")
+            elif series_id == "UNRATE":
+                val = 4.0 + (mo % 3) * 0.1
+                lines.append(f"{yr:04d}-{mo:02d}-01,{val:.1f}")
+            elif series_id in ("CPIAUCSL",) and yr == 2025 and mo == 10:
+                lines.append(f"{yr:04d}-{mo:02d}-01,")
+            else:
+                idx *= 1.003 if mo % 2 == 0 else 1.002
+                lines.append(f"{yr:04d}-{mo:02d}-01,{idx:.3f}")
+    return "\n".join(lines) + "\n"
+
+
+def _build_synthetic_te_html(indicator_id: str) -> str:
+    if indicator_id == "ISM_MFG":
+        return (
+            '<html><body><div id="historical-desc">The ISM Manufacturing PMI rose to 55.5 in October 2026 '
+            'compared to 54.5 in September and forecasts of 54.6.</div></body></html>'
+        )
+    return (
+        '<html><body><div id="historical-desc">The ISM Services PMI decreased to 54.5 in October 2026 '
+        'compared to 54.9 in September and forecasts of 54.8.</div></body></html>'
+    )
+
+
+def _write_synthetic_history_1d(out_dir: Path, start_year: int = 2020) -> None:
+    store: dict[str, dict[str, Any]] = {}
+    d0 = date(start_year, 1, 1)
+    d1 = date(2026, 11, 20)
+    for sym, base in (("NAS100", 18000.0), ("SP500", 5000.0), ("TWII", 22000.0), ("BTCUSDT", 60000.0)):
+        bars: list[OHLCVBar] = []
+        d = d0
+        px = base
+        step = 0
+        while d <= d1:
+            is_trading = (sym == "BTCUSDT") or (d.weekday() < 5)
+            if is_trading:
+                px = round(px * (1.002 if step % 3 != 0 else 0.997), 2)
+                bars.append(
+                    OHLCVBar(
+                        ts_utc=f"{d.isoformat()}T00:00:00Z",
+                        open=px,
+                        high=px * 1.01,
+                        low=px * 0.99,
+                        close=px,
+                        volume=1000.0,
+                    )
+                )
+                step += 1
+            d += timedelta(days=1)
+        store[sym] = {"short_listing": False, "full_fetch_at_utc": "2026-11-20T00:00:00Z", "bars": bars}
+    _save_history_1d_store(out_dir, store, "2026-11-20T00:00:00Z")
+
+
+def test_market_reaction_calculation_exact_conventions() -> None:
+    # Build controlled daily bars for 2026-10-26 .. 2026-11-12
+    # US: Oct 27=100, Oct 28=103 (+3%), Nov 9=200, Nov 10=196 (-2%)
+    # TW: Oct 28=1000, Oct 29=980 (-2%), Nov 10=2000, Nov 11=2060 (+3%)
+    # BTC: Oct 27=50000, Oct 28=52500 (+5%), Nov 9=70000, Nov 10=68600 (-2%)
+    def mk(rows: list[tuple[str, float]]) -> list[tuple[date, OHLCVBar]]:
+        return [
+            (
+                date.fromisoformat(d),
+                OHLCVBar(ts_utc=f"{d}T00:00:00Z", open=c, high=c, low=c, close=c, volume=1.0),
+            )
+            for d, c in rows
+        ]
+
+    bars_map = {
+        "NAS100": mk([("2026-10-27", 100.0), ("2026-10-28", 103.0), ("2026-10-29", 104.0), ("2026-11-09", 200.0), ("2026-11-10", 196.0), ("2026-11-11", 198.0)]),
+        "SP500": mk([("2026-10-27", 100.0), ("2026-10-28", 101.5), ("2026-10-29", 102.0), ("2026-11-09", 200.0), ("2026-11-10", 198.0), ("2026-11-11", 199.0)]),
+        "TWII": mk([("2026-10-28", 1000.0), ("2026-10-29", 980.0), ("2026-11-10", 2000.0), ("2026-11-11", 2060.0)]),
+        "BTCUSDT": mk([("2026-10-27", 50000.0), ("2026-10-28", 52500.0), ("2026-10-29", 53000.0), ("2026-11-09", 70000.0), ("2026-11-10", 68600.0), ("2026-11-11", 69000.0)]),
+    }
+
+    # Case 1: CPI at 2026-11-10 08:30 EST (= 2026-11-10 21:30 Taipei = 13:30 UTC)
+    cpi_dt = datetime(2026, 11, 10, 13, 30, tzinfo=timezone.utc)
+    rx_cpi = compute_market_reactions(cpi_dt, bars_map)
+    assert rx_cpi["NAS100"] == -2.0   # Nov 10 vs Nov 9
+    assert rx_cpi["SP500"] == -1.0    # Nov 10 vs Nov 9
+    assert rx_cpi["TWII"] == 3.0      # Nov 11 (next TW day after 21:30 TPE) vs Nov 10
+    assert rx_cpi["BTCUSDT"] == -2.0  # Nov 10 bar (closes Nov 11 00:00Z) vs Nov 9 bar (closed Nov 10 00:00Z)
+
+    # Case 2: FOMC at 2026-10-28 14:00 EDT (= 2026-10-29 02:00 Taipei = 18:00 UTC)
+    fomc_dt = datetime(2026, 10, 28, 18, 0, tzinfo=timezone.utc)
+    rx_fomc = compute_market_reactions(fomc_dt, bars_map)
+    assert rx_fomc["NAS100"] == 3.0   # Oct 28 US close vs Oct 27
+    assert rx_fomc["SP500"] == 1.5    # Oct 28 US close vs Oct 27
+    assert rx_fomc["TWII"] == -2.0    # Oct 29 TW close (02:00 TPE < 13:30 TW close) vs Oct 28
+    assert rx_fomc["BTCUSDT"] == 5.0  # Oct 28 bar (closes Oct 29 00:00Z) vs Oct 27 bar (closed Oct 28 00:00Z)
+
+
+def test_macro_json_generation_and_failure_preservation(tmp_path: Path) -> None:
+    _write_synthetic_history_1d(tmp_path)
+
+    def _mock_get(url: str, **kwargs: Any) -> _FakeResponse:
+        if "fredgraph.csv?id=" in url:
+            sid = url.split("id=")[-1]
+            return _FakeResponse(200, _build_synthetic_fred_csv(sid))
+        if "business-confidence" in url:
+            return _FakeResponse(200, _build_synthetic_te_html("ISM_MFG"))
+        if "non-manufacturing-pmi" in url:
+            return _FakeResponse(200, _build_synthetic_te_html("ISM_SVC"))
+        return _FakeResponse(404, "not found")
+
+    now = datetime(2026, 11, 21, 1, 30, tzinfo=timezone.utc)
+    doc = generate_macro_file(
+        out_dir=tmp_path,
+        http_get=_mock_get,
+        now_utc=now,
+        use_local_cache=False,
+    )
+    assert (tmp_path / "macro.json").exists()
+    assert doc["status"] == "ok"
+    assert doc["updating_indicators"] == []
+    assert len(doc["indicators"]) == 16
+
+    by_id = {c["id"]: c for c in doc["indicators"]}
+    assert set(by_id.keys()) == {
+        "FED_RATE", "DGS2", "DGS10",
+        "CPI", "CORE_CPI", "PCE", "CORE_PCE", "PPI",
+        "NFP", "UNRATE", "AVG_HOURLY_EARNINGS", "ICSA",
+        "GDP", "ISM_MFG", "ISM_SVC", "RETAIL_SALES",
+    }
+    for cid, card in by_id.items():
+        assert card["value_str"], f"{cid} missing value_str"
+        assert card["prev_str"], f"{cid} missing prev_str"
+        assert card["change_str"], f"{cid} missing change_str"
+        assert card["release_date_taipei"], f"{cid} missing release_date_taipei"
+        assert len(card["history_rows"]) == 24, f"{cid} expected 24 rows"
+        assert card["data_status"] == "ok"
+        assert card["updating"] is False
+
+    # DGS2 & CORE_CPI lack sufficient consensus -> fallback to prev grouping
+    assert by_id["DGS2"]["history_stats"]["primary_grouping"] == "prev"
+    assert by_id["DGS2"]["consensus_str"] is None
+    assert by_id["CORE_CPI"]["history_stats"]["primary_grouping"] == "prev"
+    assert by_id["CPI"]["history_stats"]["primary_grouping"] == "consensus"
+
+    # Now simulate CPI and ISM_MFG failing on next run -> old data preserved and flagged 資料更新中
+    prev_cpi_val = by_id["CPI"]["value_str"]
+
+    def _failing_get(url: str, **kwargs: Any) -> _FakeResponse:
+        if "id=CPIAUCSL" in url:
+            return _FakeResponse(503, "Service Unavailable")
+        if "business-confidence" in url:
+            raise ConnectionError("network timeout")
+        return _mock_get(url, **kwargs)
+
+    doc2 = generate_macro_file(
+        out_dir=tmp_path,
+        http_get=_failing_get,
+        now_utc=now + timedelta(days=1),
+        use_local_cache=False,
+    )
+    assert doc2["status"] == "partial"
+    assert set(doc2["updating_indicators"]) == {"CPI", "ISM_MFG"}
+    by_id2 = {c["id"]: c for c in doc2["indicators"]}
+    assert by_id2["CPI"]["data_status"] == "資料更新中"
+    assert by_id2["CPI"]["updating"] is True
+    assert by_id2["CPI"]["value_str"] == prev_cpi_val
+    assert len(by_id2["CPI"]["history_rows"]) == 24
+    assert by_id2["ISM_MFG"]["data_status"] == "資料更新中"
+    assert by_id2["ISM_MFG"]["updating"] is True
+    assert by_id2["NFP"]["data_status"] == "ok"
+    assert by_id2["NFP"]["updating"] is False
+
+
+def test_frontend_macro_html_nav_versions_and_calendar_defaults() -> None:
+    index_html = (ROOT_DIR / "index.html").read_text(encoding="utf-8")
+    macro_html = (ROOT_DIR / "macro.html").read_text(encoding="utf-8")
+    style_css = (ROOT_DIR / "assets" / "style.css").read_text(encoding="utf-8")
+    macro_js = (ROOT_DIR / "assets" / "macro.js").read_text(encoding="utf-8")
+    daily_yml = (ROOT_DIR / ".github" / "workflows" / "daily.yml").read_text(encoding="utf-8")
+    scan_yml = (ROOT_DIR / ".github" / "workflows" / "scan.yml").read_text(encoding="utf-8")
+
+    # Nav & cache-busting checks
+    assert "./macro.html" in index_html
+    assert "宏觀數據" in index_html
+    assert "?v=20261121b" in index_html
+    assert "?v=20261121b" in macro_html
+    assert "./assets/style.css?v=20261121b" in macro_html
+    assert "./assets/config.js?v=20261121b" in macro_html
+    assert "./assets/macro.js?v=20261121b" in macro_html
+    assert "./index.html#/wall" in macro_html
+    assert 'href="/' not in macro_html
+    assert 'src="/' not in macro_html
+    assert ".macro-ind-card" in style_css
+    assert ".macro-cal-past-summary" in style_css
+    assert "src.macro" in daily_yml
+    assert "src.macro" not in scan_yml
+
+    js_bin = shutil.which("node")
+    if not js_bin:
+        jsc_path = Path("/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc")
+        if jsc_path.exists():
+            js_bin = str(jsc_path)
+    assert js_bin is not None
+
+    script = f"""
+        const elements = {{}};
+        const stubEl = (id) => {{
+          if (!elements[id]) {{
+            elements[id] = {{
+              id: id,
+              classList: {{
+                _set: new Set(),
+                add(c) {{ this._set.add(c); }},
+                remove(c) {{ this._set.delete(c); }},
+                toggle(c, force) {{
+                  if (force === undefined) {{ if (this._set.has(c)) this._set.delete(c); else this._set.add(c); }}
+                  else if (force) this._set.add(c); else this._set.delete(c);
+                }},
+                contains(c) {{ return this._set.has(c); }},
+              }},
+              addEventListener: () => {{}},
+              setAttribute: () => {{}},
+              getAttribute: () => null,
+              focus: () => {{}},
+              innerHTML: '',
+              textContent: '',
+              value: '',
+              options: [],
+              style: {{}},
+            }};
+          }}
+          return elements[id];
+        }};
+        var window = {{ location: {{ hash: '' }}, addEventListener: () => {{}}, SIGNAL_DESK_CONFIG: {{}} }};
+        var document = {{
+          getElementById: stubEl,
+          querySelectorAll: () => [],
+          querySelector: () => stubEl('_q'),
+          addEventListener: () => {{}},
+          body: {{ appendChild: () => {{}}, removeChild: () => {{}}, style: {{}} }},
+          createElement: () => ({{ style: {{}}, setAttribute: () => {{}}, click: () => {{}} }}),
+        }};
+        var history = {{ replaceState: () => {{}} }};
+        function setInterval() {{}}
+        function setTimeout() {{ return 1; }}
+        function clearTimeout() {{}}
+        async function fetch() {{ return {{ ok: false }}; }}
+        {macro_js}
+
+        const u = window.__MACRO_DESK_UTILS__;
+        const defs = u.getCalendarDefaults();
+        if (defs.calRange !== 'week2' || defs.calStars !== '3' || defs.calPastMonth !== 'recent7') {{
+          throw new Error('Unexpected calendar defaults: ' + JSON.stringify(defs));
+        }}
+
+        // Fixed reference: Saturday 2026-11-21 10:00 Taipei = 2026-11-21T02:00:00Z
+        const nowMs = Date.parse('2026-11-21T02:00:00Z');
+        const upcoming = [
+          {{ id: 'u-nextwk-3', title: 'PCE', indicator_id: 'PCE', stars: 3, time_utc: '2026-11-25T13:30:00Z', time_taipei_iso: '2026-11-25T21:30:00+08:00' }},
+          {{ id: 'u-nextwk-2', title: 'Claims', indicator_id: 'ICSA', stars: 2, time_utc: '2026-11-25T13:30:00Z', time_taipei_iso: '2026-11-25T21:30:00+08:00' }},
+          {{ id: 'u-later-3', title: 'FOMC Dec', indicator_id: 'FED_RATE', stars: 3, time_utc: '2026-12-09T19:00:00Z', time_taipei_iso: '2026-12-10T03:00:00+08:00' }},
+          {{ id: 'u-far-3', title: 'CPI Jan', indicator_id: 'CPI', stars: 3, time_utc: '2027-01-13T13:30:00Z', time_taipei_iso: '2027-01-13T21:30:00+08:00' }},
+        ];
+        // Default week2 + stars=3: only u-nextwk-3 (excludes u-nextwk-2, u-later-3, u-far-3)
+        const defUp = u.filterUpcomingEvents(upcoming, {{ nowMs }});
+        if (defUp.length !== 1 || defUp[0].id !== 'u-nextwk-3') {{
+          throw new Error('Default week2+3star failed: ' + JSON.stringify(defUp));
+        }}
+        // Switching to 60d + all stars shows all 4
+        const all60 = u.filterUpcomingEvents(upcoming, {{ nowMs, range: '60d', stars: 'all' }});
+        if (all60.length !== 4) {{
+          throw new Error('60d+all failed: ' + all60.length);
+        }}
+
+        const past = [
+          {{ id: 'p-3d', title: 'Retail', indicator_id: 'RETAIL_SALES', stars: 3, time_utc: '2026-11-17T13:30:00Z', time_taipei: '2026-11-17 21:30' }},
+          {{ id: 'p-2d-2star', title: 'Claims', indicator_id: 'ICSA', stars: 2, time_utc: '2026-11-19T13:30:00Z', time_taipei: '2026-11-19 21:30' }},
+          {{ id: 'p-20d', title: 'FOMC Oct', indicator_id: 'FED_RATE', stars: 3, time_utc: '2026-10-28T18:00:00Z', time_taipei: '2026-10-29 02:00' }},
+        ];
+        // Default recent7 + stars=3 -> only p-3d
+        const defPast = u.filterPastEvents(past, {{ nowMs }});
+        if (defPast.length !== 1 || defPast[0].id !== 'p-3d') {{
+          throw new Error('Default recent7+3star failed: ' + JSON.stringify(defPast));
+        }}
+        // Month selector 2026-10 -> shows p-20d
+        const octPast = u.filterPastEvents(past, {{ nowMs, pastMonth: '2026-10', stars: '3' }});
+        if (octPast.length !== 1 || octPast[0].id !== 'p-20d') {{
+          throw new Error('Month selector 2026-10 failed: ' + JSON.stringify(octPast));
+        }}
+
+        // Verify card HTML & modal HTML with missing consensus + updating flag
+        const testCard = {{
+          id: 'DGS2', name: '2 年期美債殖利率', code: 'DGS2', period: '2026-11-19',
+          value_str: '4.76%', prev_str: '4.80%', change_str: '-0.04 個百分點', change_dir: 'down',
+          release_date_taipei: '2026-11-20 04:30', sub_info: '每日美債',
+          consensus_str: null, surprise: '低於前值', surprise_basis: 'prev',
+          verdict: 'bear', verdict_text: '🔴 偏高承壓', chart_values: [4.5, 4.76], chart_label: '近24月',
+          why: '說明', source: 'FRED', updating: true, updating_notice: '來源失敗',
+          history_rows: [{{
+            period: '2026-11-19', period_zh: '2026-11-19', release_taipei: '2026-11-20 04:30',
+            actual_str: '4.76%', prev_str: '4.80%', consensus_str: null, surprise: '低於前值',
+            reactions: {{ NAS100: -0.5, SP500: -0.3, TWII: 0.4, BTCUSDT: 1.2 }},
+          }}],
+          history_stats: {{
+            primary_grouping: 'prev', consensus_rows_count: 0, total_rows_count: 1,
+            by_prev: [{{ group: '低於前值', n_rows: 1, assets: {{ NAS100: {{ label: '那指 100', n: 1, avg_pct: -0.5, up_prob_pct: 0 }} }} }}],
+          }},
+        }};
+        const cHtml = u.renderIndicatorCardHtml(testCard);
+        if (!cHtml.includes('📊 過去公布後市場怎麼走') || !cHtml.includes('資料更新中') || !cHtml.includes('無可靠預期值')) {{
+          throw new Error('Card HTML missing expected markers: ' + cHtml);
+        }}
+        const mHtml = u.buildHistModalBodyHtml(testCard, {{}});
+        if (!mHtml.includes('無可靠預期值') || !mHtml.includes('高於／低於前值') || !mHtml.includes('-0.50%')) {{
+          throw new Error('Modal HTML missing expected markers: ' + mHtml);
+        }}
+    """
+    proc = subprocess.run([js_bin, "-e", script], capture_output=True, text=True, check=False)
+    assert proc.returncode == 0, f"Macro JS check failed:\nSTDOUT:\n{proc.stdout}\nSTDERR:\n{proc.stderr}"
+
+
+def test_real_data_macro_json_and_calendar_yaml() -> None:
+    cal = load_macro_calendar()
+    assert len((cal.get("fomc") or {}).get("past_decisions") or []) == 24
+    assert len((cal.get("fomc") or {}).get("upcoming") or []) >= 8
+
+    macro_path = ROOT_DIR / "data" / "macro.json"
+    assert macro_path.exists(), "Expected committed data/macro.json"
+    doc = json.loads(macro_path.read_text(encoding="utf-8"))
+    assert len(doc["indicators"]) == 16
+    assert len(doc["calendar"]["upcoming"]) >= 20
+    assert len(doc["calendar"]["past"]) >= 50
+    for c in doc["indicators"]:
+        assert c["value_str"] and c["prev_str"] and c["change_str"] and c["release_date_taipei"]
+        assert 12 <= len(c["history_rows"]) <= 24

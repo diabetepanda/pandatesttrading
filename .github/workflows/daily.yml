@@ -49,6 +49,10 @@ jobs:
         working-directory: main_repo
         run: python -m src.jobs.daily --out-dir ../data_repo
 
+      - name: Generate macro data
+        working-directory: main_repo
+        run: python -m src.macro --out-dir ../data_repo
+
       - name: Commit and push to data branch
         working-directory: data_repo
         run: |

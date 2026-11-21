@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>宏觀數據｜Signal Desk 報單網站</title>
+  <link rel="stylesheet" href="./assets/style.css?v=20261121b" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-row">
+      <div class="brand">
+        <a href="./index.html#/wall" class="brand-title">Signal Desk</a>
+        <span class="badge badge-warn">模擬驗證中，非投資建議</span>
+      </div>
+      <div class="status-lights">
+        <span id="macro-data-light" class="light light-neutral">宏觀資料：讀取中</span>
+        <span class="light light-neutral">時區：台北時間 (UTC+8)</span>
+      </div>
+    </div>
+    <div class="topbar-metrics">
+      <div class="metric">
+        <span class="metric-label">宏觀資料更新時間（台北時間）</span>
+        <span id="macro-updated-at" class="metric-value">--</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">總體環境判讀</span>
+        <span id="macro-top-stance" class="metric-value">--</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">下一個重要公布倒數</span>
+        <span id="macro-top-next" class="metric-value">--</span>
+      </div>
+    </div>
+    <nav class="main-nav" aria-label="主導覽">
+      <a href="./index.html#/simple" class="nav-link">簡易訊號</a>
+      <a href="./index.html#/wall" class="nav-link">報單牆</a>
+      <a href="./index.html#/results" class="nav-link">成績總表</a>
+      <a href="./index.html#/stats" class="nav-link">績效統計</a>
+      <a href="./index.html#/account" class="nav-link">模擬帳戶</a>
+      <a href="./index.html#/risk" class="nav-link">風控中心</a>
+      <a href="./index.html#/data" class="nav-link">市場與資料</a>
+      <a href="./index.html#/research" class="nav-link">深度研究</a>
+      <a href="./macro.html" class="nav-link active">宏觀數據</a>
+      <button id="macro-refresh-btn" class="btn btn-sm" type="button">重新整理</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="macro-error-box" class="error-box hidden"></section>
+    <section id="macro-updating-banner" class="alert-banner hidden"></section>
+
+    <div class="macro-subtabs" id="macro-subtabs" role="tablist" aria-label="宏觀數據分頁">
+      <button class="macro-subtab active" role="tab" data-macro-tab="overview" aria-selected="true" type="button">總覽</button>
+      <button class="macro-subtab" role="tab" data-macro-tab="data" aria-selected="false" type="button">關鍵指標</button>
+      <button class="macro-subtab" role="tab" data-macro-tab="calendar" aria-selected="false" type="button">日曆</button>
+    </div>
+
+    <!-- ================= 分頁 1：總覽 ================= -->
+    <section id="macro-view-overview" class="macro-tab-view">
+      <section class="card">
+        <div class="macro-hero-stance">
+          <div>
+            <h1>美國宏觀數據總覽</h1>
+            <p class="subtitle">追蹤影響美股、台股與加密貨幣的 16 項核心美國宏觀指標、官方公布時程與歷史公布後市場反應。所有時間均已換算為<strong>台北時間</strong>。</p>
+          </div>
+          <span id="macro-stance-badge" class="macro-pill-tag macro-stance-xl neut">讀取中</span>
+        </div>
+        <p id="macro-stance-desc" class="muted" style="margin:0;">正在載入最新宏觀數據...</p>
+      </section>
+
+      <section class="card">
+        <div class="section-header">
+          <div>
+            <h2>接下來最重要的大事</h2>
+            <p class="subtitle">依公布時程自動追蹤，即時倒數（台北時間）；可下載 <code>.ics</code> 加入個人行事曆。</p>
+          </div>
+          <button type="button" class="btn" id="macro-goto-calendar">查看完整日曆 →</button>
+        </div>
+        <div id="macro-overview-next-grid" class="macro-next-grid">
+          <div class="empty-state">載入中...</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-header">
+          <div>
+            <h2>核心指標速覽</h2>
+            <p class="subtitle">涵蓋利率、通膨、就業與長天期殖利率；點擊下方「關鍵指標」查看全部 16 張指標卡與歷史市場反應。</p>
+          </div>
+          <button type="button" class="btn" id="macro-goto-data">查看全部 16 項指標 →</button>
+        </div>
+        <div id="macro-overview-stats" class="summary-grid"></div>
+      </section>
+
+      <section class="card">
+        <details class="macro-fold" open>
+          <summary>對各資產的影響判讀</summary>
+          <div id="macro-asset-impacts" class="macro-asset-list"></div>
+        </details>
+      </section>
+
+      <section class="card">
+        <details class="macro-fold">
+          <summary>判讀邏輯與資料來源說明</summary>
+          <div style="margin-top:10px; font-size:0.86rem; color:#c9d1d9; line-height:1.65;">
+            <p style="margin:0 0 8px;">本頁紅／綠顏色邏輯與 <code>pandatracing</code> 一致：對風險資產（美股、台股、加密貨幣）而言，<strong>🔴 代表偏熱／偏鷹（升息或高利率壓力，偏利空）</strong>、<strong>🟢 代表溫和降溫／偏鴿（偏利多）</strong>、🟡 代表中性；市場漲跌幅統計表則維持 <strong>綠漲、紅跌</strong>。</p>
+            <p style="margin:0 0 8px;">實際值由 GitHub Actions 每日更新（<code>daily.yml</code>），取自免 API Key 公開來源：FRED（聖路易斯聯儲 CSV）與 TradingEconomics 公開頁面（ISM PMI）；歷史市場反應使用本站 <code>data</code> 分支 <code>history_1d.json.gz</code> 約 10 年日線計算，不另抓外部行情。</p>
+            <p style="margin:0;">預期值僅於具有可靠公開出處（TradingEconomics、Investing.com、WSJ、路透／道瓊調查、CME FedWatch）時顯示；無可靠來源者一律標示「無可靠預期值」，並改用「高於／低於前值」進行比較與統計。</p>
+          </div>
+        </details>
+      </section>
+    </section>
+
+    <!-- ================= 分頁 2：關鍵指標 ================= -->
+    <section id="macro-view-data" class="macro-tab-view hidden">
+      <nav class="macro-jump-nav" aria-label="指標分類快速跳轉">
+        <a href="#macro-sec-rates">利率（3）</a>
+        <a href="#macro-sec-inflation">通膨（5）</a>
+        <a href="#macro-sec-jobs">就業（4）</a>
+        <a href="#macro-sec-growth">成長（4）</a>
+      </nav>
+
+      <section class="card" id="macro-sec-rates">
+        <h2>利率（3 項）</h2>
+        <p class="subtitle">聯邦基金利率目標區間與 2 年期／10 年期美債殖利率，決定全市場無風險資金成本與估值折現率。</p>
+        <div id="macro-grid-rates" class="macro-card-grid"></div>
+      </section>
+
+      <section class="card" id="macro-sec-inflation">
+        <h2>通膨（5 項）</h2>
+        <p class="subtitle">CPI、核心 CPI、PCE、核心 PCE 與 PPI；走勢圖顯示近 24 個月環比 %，數字越接近 0 代表漲勢越收斂。</p>
+        <div id="macro-grid-inflation" class="macro-card-grid"></div>
+      </section>
+
+      <section class="card" id="macro-sec-jobs">
+        <h2>就業（4 項）</h2>
+        <p class="subtitle">非農就業新增、失業率、平均時薪與每週初領失業金人數；高利率環境關注就業是否「有序降溫」。</p>
+        <div id="macro-grid-jobs" class="macro-card-grid"></div>
+      </section>
+
+      <section class="card" id="macro-sec-growth">
+        <h2>成長（4 項）</h2>
+        <p class="subtitle">GDP 年化季增率、ISM 製造業／服務業 PMI 與零售銷售，衡量美國內需動能與景氣溫度。</p>
+        <div id="macro-grid-growth" class="macro-card-grid"></div>
+      </section>
+    </section>
+
+    <!-- ================= 分頁 3：日曆 ================= -->
+    <section id="macro-view-calendar" class="macro-tab-view hidden">
+      <div id="macro-cal-hero" class="macro-cal-hero">
+        <div>
+          <div class="macro-cal-hero-k">下一個重要公布事件（台北時間）</div>
+          <div class="macro-cal-hero-title">載入中...</div>
+          <div class="muted">載入中...</div>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="macro-cal-controls">
+          <div class="macro-seg" id="macro-cal-range-tabs" role="group" aria-label="未來公布區間">
+            <button type="button" class="macro-seg-btn active" data-range="week2">本週與下週</button>
+            <button type="button" class="macro-seg-btn" data-range="this_week">本週</button>
+            <button type="button" class="macro-seg-btn" data-range="next_week">下週</button>
+            <button type="button" class="macro-seg-btn" data-range="60d">未來 60 天</button>
+          </div>
+          <div class="macro-cal-selects">
+            <select id="macro-cal-stars" aria-label="重要程度篩選">
+              <option value="3" selected>僅顯示 ★★★（預設）</option>
+              <option value="all">全部重要程度</option>
+            </select>
+            <select id="macro-cal-indicator" aria-label="指標篩選">
+              <option value="all" selected>全部指標</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-header">
+          <div>
+            <h2>即將公布（<span id="macro-cal-up-label">本週與下週</span>）</h2>
+            <p class="subtitle">預設只顯示「本週」與「下週」的 ★★★ 重要事件，避免一次展開 60 天造成資訊過載；可用上方分段按鈕切換。</p>
+          </div>
+          <span id="macro-cal-up-count" class="badge badge-warn">0 筆</span>
+        </div>
+        <div id="macro-cal-upcoming-list" class="macro-cal-list"></div>
+      </section>
+
+      <section class="card">
+        <div class="section-header">
+          <div>
+            <h2>已公布紀錄（<span id="macro-cal-past-label">最近 7 天</span>）</h2>
+            <p class="subtitle">預設只列最近 7 天，每筆精簡顯示實際 vs 預期／前值與那指／台股／BTC 反應色塊；點一下可展開細節，或用右側選單往前翻最多一年。</p>
+          </div>
+          <div class="macro-cal-selects">
+            <select id="macro-cal-past-month" aria-label="過去月份篩選">
+              <option value="recent7" selected>最近 7 天（預設）</option>
+            </select>
+          </div>
+        </div>
+        <div id="macro-cal-past-list" class="macro-cal-list"></div>
+      </section>
+
+      <section class="card">
+        <div class="note-box" style="margin-top:0;">
+          <strong>台北時間與美國冬令／夏令時換算說明：</strong>
+          <ul style="margin:6px 0 0; padding-left:18px;">
+            <li><strong>美國夏令時（EDT，3 月第 2 個週日～11 月第 1 個週日）：</strong>美東 08:30 ＝ 台北 <strong>20:30</strong>；美東 10:00 ＝ 台北 <strong>22:00</strong>；FOMC 美東 14:00 ＝ 台北次日 <strong>02:00</strong>。</li>
+            <li><strong>美國冬令時（EST，11 月第 1 個週日～次年 3 月第 2 個週日）：</strong>美東 08:30 ＝ 台北 <strong>21:30</strong>；美東 10:00 ＝ 台北 <strong>23:00</strong>；FOMC 美東 14:00 ＝ 台北次日 <strong>03:00</strong>。</li>
+            <li>本頁時程由 <code>config/macro_calendar.yaml</code> 依 BLS、BEA、聯準會 FOMC、普查局、勞工部與 ISM 官方時程自動轉換，完整處理冬令／夏令切換。</li>
+          </ul>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- ================= 彈窗：過去最多 24 次公布後市場怎麼走 ================= -->
+  <div id="macro-hist-modal-backdrop" class="macro-modal-backdrop hidden" role="presentation">
+    <div class="macro-modal" role="dialog" aria-modal="true" aria-labelledby="macro-hist-modal-title">
+      <div class="macro-modal-head">
+        <div id="macro-hist-modal-title" class="macro-modal-title">過去公布後市場怎麼走</div>
+        <button id="macro-hist-modal-close" class="macro-modal-close" type="button" aria-label="關閉">✕</button>
+      </div>
+      <div id="macro-hist-modal-body" class="macro-modal-body"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    本站為個人模擬驗證，非投資建議｜宏觀數據來自 FRED、ISM、BLS、BEA 等公開官方來源，歷史反應以本站 <code>history_1d.json.gz</code> 計算
+  </footer>
+
+  <script src="./assets/config.js?v=20261121b"></script>
+  <script src="./assets/macro.js?v=20261121b"></script>
+</body>
+</html>
