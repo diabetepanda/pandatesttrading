@@ -1,24 +1,197 @@
 {
   "version": 1,
-  "updated_at_utc": "2026-11-21T02:16:13Z",
-  "updated_at_taipei": "2026-11-21 10:16",
-  "status": "partial",
-  "updating_indicators": [
-    "FED_RATE",
-    "DGS2",
-    "DGS10",
-    "CPI",
-    "CORE_CPI",
-    "PCE",
-    "CORE_PCE",
-    "PPI",
-    "NFP",
-    "UNRATE",
-    "AVG_HOURLY_EARNINGS",
-    "ICSA",
-    "GDP",
-    "RETAIL_SALES"
-  ],
+  "updated_at_utc": "2026-11-21T06:05:02Z",
+  "updated_at_taipei": "2026-11-21 14:05",
+  "status": "ok",
+  "updating_indicators": [],
+  "fetch_report": {
+    "total_elapsed_sec": 27.049,
+    "fred_aborted": true,
+    "fred_abort_reason": "HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=8)",
+    "sources": {
+      "FRED": {
+        "status": "failed",
+        "elapsed_sec": 16.114,
+        "attempts": 1,
+        "aborted": true,
+        "series_ok": [],
+        "series_failed": [
+          "DFEDTARU"
+        ],
+        "series_skipped": [
+          "DFEDTARL",
+          "DGS2",
+          "DGS10",
+          "CPIAUCSL",
+          "CPILFESL",
+          "PCEPI",
+          "PCEPILFE",
+          "PPIFIS",
+          "PAYEMS",
+          "UNRATE",
+          "CES0500000003",
+          "ICSA",
+          "A191RL1Q225SBEA",
+          "RSAFS"
+        ],
+        "error": "HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=8)"
+      },
+      "FOMC_YAML": {
+        "status": "ok",
+        "elapsed_sec": 0.0,
+        "series_ok": [
+          "FED_RATE"
+        ],
+        "series_failed": [],
+        "error": null
+      },
+      "US_TREASURY": {
+        "status": "ok",
+        "elapsed_sec": 5.35,
+        "series_ok": [
+          "DGS2",
+          "DGS10"
+        ],
+        "series_failed": [],
+        "error": null
+      },
+      "BLS_API_V1": {
+        "status": "ok",
+        "elapsed_sec": 0.359,
+        "series_ok": [
+          "CPI",
+          "CORE_CPI",
+          "PPI",
+          "NFP",
+          "UNRATE",
+          "AVG_HOURLY_EARNINGS"
+        ],
+        "series_failed": [],
+        "error": null
+      },
+      "DBNOMICS_BEA": {
+        "status": "ok",
+        "elapsed_sec": 2.985,
+        "series_ok": [
+          "PCE",
+          "CORE_PCE",
+          "GDP"
+        ],
+        "series_failed": [],
+        "error": null
+      },
+      "CENSUS_MRTS": {
+        "status": "ok",
+        "elapsed_sec": 0.131,
+        "series_ok": [
+          "RETAIL_SALES"
+        ],
+        "series_failed": [],
+        "error": null
+      },
+      "DOL_TE_ICSA": {
+        "status": "ok",
+        "elapsed_sec": 0.624,
+        "series_ok": [
+          "ICSA"
+        ],
+        "series_failed": [],
+        "error": null
+      },
+      "TE_ISM": {
+        "status": "ok",
+        "elapsed_sec": 0.811,
+        "series_ok": [
+          "ISM_MFG",
+          "ISM_SVC"
+        ],
+        "series_failed": [],
+        "error": null
+      }
+    },
+    "indicators": {
+      "FED_RATE": {
+        "source_used": "FOMC 決議紀錄（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "DGS2": {
+        "source_used": "美國財政部（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "DGS10": {
+        "source_used": "美國財政部（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "CPI": {
+        "source_used": "BLS（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "CORE_CPI": {
+        "source_used": "BLS（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "PCE": {
+        "source_used": "DBnomics BEA（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "CORE_PCE": {
+        "source_used": "DBnomics BEA（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "PPI": {
+        "source_used": "BLS（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "NFP": {
+        "source_used": "BLS（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "UNRATE": {
+        "source_used": "BLS（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "AVG_HOURLY_EARNINGS": {
+        "source_used": "BLS（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "ICSA": {
+        "source_used": "DOL / TradingEconomics（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "GDP": {
+        "source_used": "DBnomics BEA（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      },
+      "ISM_MFG": {
+        "source_used": "TradingEconomics ＋ ISM",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "ISM_SVC": {
+        "source_used": "TradingEconomics ＋ ISM",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "RETAIL_SALES": {
+        "source_used": "美國普查局 Census（備用）",
+        "fallback_used": true,
+        "status": "ok"
+      }
+    }
+  },
   "timezone_notes": {
     "dst_rule": "美國夏令時（EDT，3月第2個週日～11月第1個週日）比台北慢12小時；冬令時（EST，11月第1個週日～次年3月第2個週日）比台北慢13小時。",
     "examples": [
@@ -36,14 +209,14 @@
   "overview": {
     "stance": "偏鷹 · 利率高檔承壓",
     "stance_cls": "bear",
-    "stance_desc": "目前聯邦基金利率位於 3.75%–4.00%，CPI（2026年10月）+0.35%（指數 337.476），10 年期美債殖利率 5.04%。在通膨未明顯回落前，緊縮預期對高估值科技股與加密貨幣偏逆風。",
+    "stance_desc": "目前聯邦基金利率位於 3.75%–4.00%，CPI（2026年10月）+0.35%（指數 337.476），10 年期美債殖利率 4.92%。在通膨未明顯回落前，緊縮預期對高估值科技股與加密貨幣偏逆風。",
     "asset_impacts": [
       {
         "asset": "美股",
         "sub": "標普 500 · 那斯達克 100",
         "cls": "bear",
         "tag": "偏利空",
-        "note": "10 年期殖利率處於 5.04% 高檔，估值倍數承壓；利率敏感度高的科技成長股波動較大。"
+        "note": "10 年期殖利率處於 4.92% 高檔，估值倍數承壓；利率敏感度高的科技成長股波動較大。"
       },
       {
         "asset": "台股",
@@ -64,7 +237,7 @@
         "sub": "2Y / 10Y 殖利率 · 黃金",
         "cls": "neut",
         "tag": "拉鋸觀察",
-        "note": "名目殖利率高檔（2Y 4.76% / 10Y 5.04%）壓抑無息資產，但避險需求與央行買盤提供下檔支撐。"
+        "note": "名目殖利率高檔（2Y 4.63% / 10Y 4.92%）壓抑無息資產，但避險需求與央行買盤提供下檔支撐。"
       }
     ]
   },
@@ -82,7 +255,7 @@
       "change_str": "0 bp（維持不變）",
       "change_dir": "flat",
       "release_date_taipei": "2026-10-29 02:00",
-      "sub_info": "FRED 最新目標區間截至 2026-11-20｜維持 3.75%–4.00%（10–2，兩人主張升息）",
+      "sub_info": "FOMC 決議目標區間（截至 2026-11-21）｜維持 3.75%–4.00%（10–2，兩人主張升息）",
       "consensus_str": "不變約 93%",
       "consensus_source": "CME FedWatch",
       "surprise": "符合預期",
@@ -152,9 +325,10 @@
         "consensus_source": null
       },
       "why": "聯準會基準利率決定全市場資金成本。升息或維持鷹派立場通常壓抑科技股與加密貨幣估值；降息週期則有助於風險偏好回溫。",
-      "source": "FRED（DFEDTARU / DFEDTARL，截至 2026-11-20）＋ Federal Reserve FOMC",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "Federal Reserve FOMC 決議紀錄（config/macro_calendar.yaml，備用）",
+      "source_used": "FOMC 決議紀錄（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "FOMC 利率決議",
       "modal_foot_extra": "會前預期為決議前 CME FedWatch 最高機率結果（僅最近 12 次有可靠記錄，較早期標示無可靠預期值）。",
       "history_rows": [
@@ -845,22 +1019,21 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "DGS2",
       "category": "rates",
       "name": "2 年期美債殖利率",
       "code": "DGS2",
-      "period": "2026-11-19",
-      "value_str": "4.76%",
-      "value_num": 4.76,
+      "period": "2026-11-20",
+      "value_str": "4.63%",
+      "value_num": 4.63,
       "unit": "",
-      "prev_str": "4.80%（2026-11-18）",
-      "change_str": "-0.04 個百分點",
+      "prev_str": "4.76%（2026-11-19）",
+      "change_str": "-0.13 個百分點",
       "change_dir": "down",
-      "release_date_taipei": "2026-11-20 04:30",
+      "release_date_taipei": "2026-11-21 04:30",
       "sub_info": "每日美債市場殖利率（H.15 日收盤，美東 15:30 定盤）",
       "consensus_str": null,
       "consensus_source": null,
@@ -892,17 +1065,40 @@
         4.34,
         4.88,
         4.56,
-        4.76
+        4.63
       ],
       "chart_label": "近 24 個月月末殖利率（%）",
       "next_release": null,
-      "why": "反映市場對未來兩年聯準會政策利率路徑的定價，對 FOMC 與通膨數據最為敏感。",
-      "source": "FRED（DGS2，截至 2026-11-19）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "why": "反映市場對未來兩年聯準會利率路徑的定價，對 FOMC 與通膨數據最為敏感。",
+      "source": "U.S. Treasury Daily Par Yield Curve（備用）",
+      "source_used": "美國財政部（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "2 年期美債殖利率（近 24 個交易日）",
       "modal_foot_extra": "美債殖利率為交易日日頻利率，無固定公布預期值；本表統計最近 24 個交易日殖利率上升／下降當日與隔日市場表現。",
       "history_rows": [
+        {
+          "period": "2026-11-20",
+          "period_zh": "2026-11-20",
+          "release_taipei": "2026-11-21 04:30",
+          "release_utc": "2026-11-20T20:30:00Z",
+          "actual_str": "4.63%",
+          "actual_num": 4.63,
+          "prev_str": "4.76%",
+          "prev_num": 4.76,
+          "consensus_str": null,
+          "consensus_source": null,
+          "surprise": "低於前值",
+          "surprise_basis": "prev",
+          "prev_cmp": "低於前值",
+          "reactions": {
+            "NAS100": -5.61,
+            "SP500": -3.7,
+            "TWII": null,
+            "BTCUSDT": -4.9
+          },
+          "note": ""
+        },
         {
           "period": "2026-11-19",
           "period_zh": "2026-11-19",
@@ -920,7 +1116,7 @@
           "reactions": {
             "NAS100": -2.21,
             "SP500": -2.02,
-            "TWII": null,
+            "TWII": -6.23,
             "BTCUSDT": -1.71
           },
           "note": ""
@@ -1408,28 +1604,6 @@
             "BTCUSDT": -0.22
           },
           "note": ""
-        },
-        {
-          "period": "2026-10-16",
-          "period_zh": "2026-10-16",
-          "release_taipei": "2026-10-17 03:30",
-          "release_utc": "2026-10-16T19:30:00Z",
-          "actual_str": "4.74%",
-          "actual_num": 4.74,
-          "prev_str": "4.77%",
-          "prev_num": 4.77,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "低於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -2.5,
-            "SP500": -1.09,
-            "TWII": -0.61,
-            "BTCUSDT": -0.77
-          },
-          "note": ""
         }
       ],
       "history_stats": {
@@ -1475,46 +1649,45 @@
               "NAS100": {
                 "label": "那指 100",
                 "n": 11,
-                "avg_pct": -1.79,
+                "avg_pct": -2.07,
                 "up_prob_pct": 27.0
               },
               "SP500": {
                 "label": "標普 500",
                 "n": 11,
-                "avg_pct": -1.02,
+                "avg_pct": -1.25,
                 "up_prob_pct": 27.0
               },
               "TWII": {
                 "label": "台股加權",
                 "n": 10,
-                "avg_pct": -1.47,
+                "avg_pct": -2.03,
                 "up_prob_pct": 30.0
               },
               "BTCUSDT": {
                 "label": "BTC",
                 "n": 11,
-                "avg_pct": -1.11,
+                "avg_pct": -1.49,
                 "up_prob_pct": 27.0
               }
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "DGS10",
       "category": "rates",
       "name": "10 年期美債殖利率",
       "code": "DGS10",
-      "period": "2026-11-19",
-      "value_str": "5.04%",
-      "value_num": 5.04,
+      "period": "2026-11-20",
+      "value_str": "4.92%",
+      "value_num": 4.92,
       "unit": "",
-      "prev_str": "5.07%（2026-11-18）",
-      "change_str": "-0.03 個百分點",
+      "prev_str": "5.04%（2026-11-19）",
+      "change_str": "-0.12 個百分點",
       "change_dir": "down",
-      "release_date_taipei": "2026-11-20 04:30",
+      "release_date_taipei": "2026-11-21 04:30",
       "sub_info": "每日美債市場殖利率（H.15 日收盤，美東 15:30 定盤）",
       "consensus_str": null,
       "consensus_source": null,
@@ -1546,17 +1719,40 @@
         4.75,
         5.29,
         4.94,
-        5.04
+        4.92
       ],
       "chart_label": "近 24 個月月末殖利率（%）",
       "next_release": null,
       "why": "全球風險資產的定價錨，影響企業融資成本、房貸利率與科技股折現估值。",
-      "source": "FRED（DGS10，截至 2026-11-19）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "U.S. Treasury Daily Par Yield Curve（備用）",
+      "source_used": "美國財政部（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "10 年期美債殖利率（近 24 個交易日）",
       "modal_foot_extra": "美債殖利率為交易日日頻利率，無固定公布預期值；本表統計最近 24 個交易日殖利率上升／下降當日與隔日市場表現。",
       "history_rows": [
+        {
+          "period": "2026-11-20",
+          "period_zh": "2026-11-20",
+          "release_taipei": "2026-11-21 04:30",
+          "release_utc": "2026-11-20T20:30:00Z",
+          "actual_str": "4.92%",
+          "actual_num": 4.92,
+          "prev_str": "5.04%",
+          "prev_num": 5.04,
+          "consensus_str": null,
+          "consensus_source": null,
+          "surprise": "低於前值",
+          "surprise_basis": "prev",
+          "prev_cmp": "低於前值",
+          "reactions": {
+            "NAS100": -5.61,
+            "SP500": -3.7,
+            "TWII": null,
+            "BTCUSDT": -4.9
+          },
+          "note": ""
+        },
         {
           "period": "2026-11-19",
           "period_zh": "2026-11-19",
@@ -1574,7 +1770,7 @@
           "reactions": {
             "NAS100": -2.21,
             "SP500": -2.02,
-            "TWII": null,
+            "TWII": -6.23,
             "BTCUSDT": -1.71
           },
           "note": ""
@@ -2062,28 +2258,6 @@
             "BTCUSDT": -0.22
           },
           "note": ""
-        },
-        {
-          "period": "2026-10-16",
-          "period_zh": "2026-10-16",
-          "release_taipei": "2026-10-17 03:30",
-          "release_utc": "2026-10-16T19:30:00Z",
-          "actual_str": "5.09%",
-          "actual_num": 5.09,
-          "prev_str": "5.10%",
-          "prev_num": 5.1,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "低於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -2.5,
-            "SP500": -1.09,
-            "TWII": -0.61,
-            "BTCUSDT": -0.77
-          },
-          "note": ""
         }
       ],
       "history_stats": {
@@ -2129,32 +2303,31 @@
               "NAS100": {
                 "label": "那指 100",
                 "n": 13,
-                "avg_pct": -1.62,
+                "avg_pct": -1.86,
                 "up_prob_pct": 23.0
               },
               "SP500": {
                 "label": "標普 500",
                 "n": 13,
-                "avg_pct": -0.93,
+                "avg_pct": -1.13,
                 "up_prob_pct": 23.0
               },
               "TWII": {
                 "label": "台股加權",
                 "n": 12,
-                "avg_pct": -1.5,
+                "avg_pct": -1.97,
                 "up_prob_pct": 33.0
               },
               "BTCUSDT": {
                 "label": "BTC",
                 "n": 13,
-                "avg_pct": -1.18,
+                "avg_pct": -1.5,
                 "up_prob_pct": 31.0
               }
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "CPI",
@@ -2213,11 +2386,12 @@
         "consensus_source": null
       },
       "why": "一般家庭消費籃子的物價漲幅。通膨高於預期代表物價黏著、聯準會升息壓力上升；溫和降溫則有利美股與加密貨幣。",
-      "source": "FRED（CPIAUCSL）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "BLS Public API v1（CUSR0000SA0，備用）",
+      "source_used": "BLS（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "CPI 消費者物價",
-      "modal_foot_extra": "歷史實際值以 FRED 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
+      "modal_foot_extra": "歷史實際值以 BLS（備用） 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
       "history_rows": [
         {
           "period": "2026-10",
@@ -2906,8 +3080,7 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "CORE_CPI",
@@ -2966,11 +3139,12 @@
         "consensus_source": null
       },
       "why": "剔除波動較大的食品與能源價格，最能反映服務與居住等核心通膨黏性，是聯準會緊盯的重點。",
-      "source": "FRED（CPILFESL）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "BLS Public API v1（CUSR0000SA0L1E，備用）",
+      "source_used": "BLS（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "核心 CPI",
-      "modal_foot_extra": "歷史實際值以 FRED 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
+      "modal_foot_extra": "歷史實際值以 BLS（備用） 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
       "history_rows": [
         {
           "period": "2026-10",
@@ -3659,8 +3833,7 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "PCE",
@@ -3719,11 +3892,12 @@
         "consensus_source": "WSJ 調查 (2026-11-20)"
       },
       "why": "聯準會官方設定 2% 長期目標的基準通膨指標，涵蓋更廣泛消費替代效應，直接牽動 FOMC 利率路徑。",
-      "source": "FRED（PCEPI）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "DBnomics（BEA/NIPA-T20804/DPCERG-M，備用）",
+      "source_used": "DBnomics BEA（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "PCE 物價指數",
-      "modal_foot_extra": "歷史實際值以 FRED 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
+      "modal_foot_extra": "歷史實際值以 DBnomics BEA（備用） 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
       "history_rows": [
         {
           "period": "2026-09",
@@ -4412,8 +4586,7 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "CORE_PCE",
@@ -4472,11 +4645,12 @@
         "consensus_source": "WSJ 調查 (2026-11-20)"
       },
       "why": "聯準會決策時最核心的通膨尺標；若環比長期高於 +0.2%（年率逾 2.4%），政策利率難以放鬆。",
-      "source": "FRED（PCEPILFE）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "DBnomics（BEA/NIPA-T20804/DPCCRG-M，備用）",
+      "source_used": "DBnomics BEA（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "核心 PCE",
-      "modal_foot_extra": "歷史實際值以 FRED 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
+      "modal_foot_extra": "歷史實際值以 DBnomics BEA（備用） 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
       "history_rows": [
         {
           "period": "2026-09",
@@ -5165,8 +5339,7 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "PPI",
@@ -5225,11 +5398,12 @@
         "consensus_source": null
       },
       "why": "衡量企業批發與生產端成本變化，常作為 CPI 的上游領先訊號；上游成本攀升容易轉嫁至終端物價。",
-      "source": "FRED（PPIFIS）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "BLS Public API v1（WPSFD4，備用）",
+      "source_used": "BLS（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "PPI 生產者物價",
-      "modal_foot_extra": "歷史實際值以 FRED 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
+      "modal_foot_extra": "歷史實際值以 BLS（備用） 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
       "history_rows": [
         {
           "period": "2026-10",
@@ -5918,8 +6092,7 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "NFP",
@@ -5978,11 +6151,12 @@
         "consensus_source": null
       },
       "why": "每月新增非農就業人數。在高利率環境中，就業過熱增加緊縮理由；有序放緩最理想，驟降至負值則引發衰退擔憂。",
-      "source": "FRED（PAYEMS）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "BLS Public API v1（CES0000000001，備用）",
+      "source_used": "BLS（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "非農就業新增",
-      "modal_foot_extra": "歷史實際值以 FRED 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
+      "modal_foot_extra": "歷史實際值以 BLS（備用） 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
       "history_rows": [
         {
           "period": "2026-10",
@@ -6671,8 +6845,7 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "UNRATE",
@@ -6731,11 +6904,12 @@
         "consensus_source": null
       },
       "why": "勞動市場鬆緊溫度計。失業率低表示勞動市場緊俏、薪資不易降溫；溫和緩升有助通膨回落，急升則為衰退警訊。",
-      "source": "FRED（UNRATE）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "BLS Public API v1（LNS14000000，備用）",
+      "source_used": "BLS（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "失業率",
-      "modal_foot_extra": "BLS 就業報告固定與非農就業同日公布。歷史實際值取自 FRED 最新官方序列。",
+      "modal_foot_extra": "BLS 就業報告固定與非農就業同日公布。歷史實際值取自 BLS（備用） 最新官方序列。",
       "history_rows": [
         {
           "period": "2026-10",
@@ -7424,8 +7598,7 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "AVG_HOURLY_EARNINGS",
@@ -7484,11 +7657,12 @@
         "consensus_source": null
       },
       "why": "反映薪資成長動能。薪資漲幅過快容易形成「薪資—物價螺旋」，推升核心服務通膨。",
-      "source": "FRED（CES0500000003）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "BLS Public API v1（CES0500000003，備用）",
+      "source_used": "BLS（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "平均時薪",
-      "modal_foot_extra": "BLS 就業報告固定與非農就業同日公布。歷史實際值取自 FRED 最新官方序列。",
+      "modal_foot_extra": "BLS 就業報告固定與非農就業同日公布。歷史實際值取自 BLS（備用） 最新官方序列。",
       "history_rows": [
         {
           "period": "2026-10",
@@ -8177,8 +8351,7 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "ICSA",
@@ -8237,11 +8410,12 @@
         "consensus_source": null
       },
       "why": "每週公布的高頻就業指標。人數溫和上升顯示裁員增加與就業降溫，高利率期反而舒緩緊縮壓力；暴增則反映衰退風險。",
-      "source": "FRED（ICSA）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "DOL OUI r539cy XML ＋ TradingEconomics（備用）",
+      "source_used": "DOL / TradingEconomics（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "初領失業金人數",
-      "modal_foot_extra": "歷史實際值以 FRED 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
+      "modal_foot_extra": "歷史實際值以 DOL / TradingEconomics（備用） 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
       "history_rows": [
         {
           "period": "2026-11-14",
@@ -8260,7 +8434,7 @@
           "reactions": {
             "NAS100": -2.21,
             "SP500": -2.02,
-            "TWII": null,
+            "TWII": -6.23,
             "BTCUSDT": -1.71
           },
           "note": ""
@@ -8825,9 +8999,9 @@
               },
               "TWII": {
                 "label": "台股加權",
-                "n": 10,
-                "avg_pct": -0.59,
-                "up_prob_pct": 50.0
+                "n": 11,
+                "avg_pct": -1.1,
+                "up_prob_pct": 45.0
               },
               "BTCUSDT": {
                 "label": "BTC",
@@ -8887,9 +9061,9 @@
               },
               "TWII": {
                 "label": "台股加權",
-                "n": 8,
-                "avg_pct": 1.59,
-                "up_prob_pct": 75.0
+                "n": 9,
+                "avg_pct": 0.72,
+                "up_prob_pct": 67.0
               },
               "BTCUSDT": {
                 "label": "BTC",
@@ -8930,8 +9104,7 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "GDP",
@@ -8978,11 +9151,12 @@
         "consensus_source": null
       },
       "why": "美國整體經濟成長速度。強勁成長支撐企業獲利，但也讓聯準會更有底氣維持高利率；轉負則引發衰退避險。",
-      "source": "FRED（A191RL1Q225SBEA）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "DBnomics（BEA/NIPA-T10101/A191RL-Q，備用）",
+      "source_used": "DBnomics BEA（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "GDP 成長率",
-      "modal_foot_extra": "歷史實際值以 FRED 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
+      "modal_foot_extra": "歷史實際值以 DBnomics BEA（備用） 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
       "history_rows": [
         {
           "period": "2026-Q3",
@@ -9671,8 +9845,7 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     },
     {
       "id": "ISM_MFG",
@@ -9732,6 +9905,7 @@
       },
       "why": "以 50 為榮枯線的美國製造業景氣指標。讀數與物價分項偏高代表景氣擴張且成本壓力仍在。",
       "source": "TradingEconomics 公開頁面 ＋ ISM 報告",
+      "source_used": "TradingEconomics ＋ ISM",
       "data_status": "ok",
       "updating": false,
       "modal_title": "ISM 製造業 PMI",
@@ -10484,6 +10658,7 @@
       },
       "why": "服務業占美國經濟產出大宗，50 以上為擴張；若服務業與物價分項維持高檔，核心通膨較難快速降溫。",
       "source": "TradingEconomics 公開頁面 ＋ ISM 報告",
+      "source_used": "TradingEconomics ＋ ISM",
       "data_status": "ok",
       "updating": false,
       "modal_title": "ISM 服務業 PMI",
@@ -11235,11 +11410,12 @@
         "consensus_source": null
       },
       "why": "美國民間消費動能指標（消費約占 GDP 七成）。穩健成長支撐景氣，過熱則強化高利率延續預期。",
-      "source": "FRED（RSAFS）",
-      "data_status": "資料更新中",
-      "updating": true,
+      "source": "U.S. Census Bureau MRTS adv44X72（備用）",
+      "source_used": "美國普查局 Census（備用）",
+      "data_status": "ok",
+      "updating": false,
       "modal_title": "零售銷售",
-      "modal_foot_extra": "歷史實際值以 FRED 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
+      "modal_foot_extra": "歷史實際值以 美國普查局 Census（備用） 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
       "history_rows": [
         {
           "period": "2026-10",
@@ -11928,8 +12104,7 @@
             }
           }
         ]
-      },
-      "updating_notice": "資料更新中（來源暫時無法取得：HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=12)，暫保留前次資料）"
+      }
     }
   ],
   "calendar": {
@@ -11967,6 +12142,22 @@
         "note": "第三季 GDP 第二次估計（初值為 +3.4%）"
       },
       {
+        "id": "icsa-2026-11-21",
+        "title": "初領失業金人數（11/21當週）",
+        "indicator_id": "ICSA",
+        "period": "2026-11-21",
+        "period_zh": "11/21當週",
+        "stars": 2,
+        "time_utc": "2026-11-25T13:30:00Z",
+        "time_taipei": "2026-11-25 21:30",
+        "time_taipei_iso": "2026-11-25T21:30:00+08:00",
+        "date_taipei": "2026-11-25",
+        "short_taipei": "11/25（三）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "遇美國假日調整公布日"
+      },
+      {
         "id": "beige-2026-11",
         "title": "聯準會褐皮書（Beige Book）",
         "indicator_id": "FED_RATE",
@@ -11997,6 +12188,22 @@
         "consensus_str": null,
         "consensus_source": null,
         "note": ""
+      },
+      {
+        "id": "icsa-2026-11-28",
+        "title": "初領失業金人數（11/28當週）",
+        "indicator_id": "ICSA",
+        "period": "2026-11-28",
+        "period_zh": "11/28當週",
+        "stars": 2,
+        "time_utc": "2026-12-03T13:30:00Z",
+        "time_taipei": "2026-12-03 21:30",
+        "time_taipei_iso": "2026-12-03T21:30:00+08:00",
+        "date_taipei": "2026-12-03",
+        "short_taipei": "12/03（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
       },
       {
         "id": "ism_svc-2026-11",
@@ -12079,6 +12286,22 @@
         "note": "於 12 月 FOMC 決議後同日台北 21:30 公布"
       },
       {
+        "id": "icsa-2026-12-05",
+        "title": "初領失業金人數（12/5當週）",
+        "indicator_id": "ICSA",
+        "period": "2026-12-05",
+        "period_zh": "12/5當週",
+        "stars": 2,
+        "time_utc": "2026-12-10T13:30:00Z",
+        "time_taipei": "2026-12-10 21:30",
+        "time_taipei_iso": "2026-12-10T21:30:00+08:00",
+        "date_taipei": "2026-12-10",
+        "short_taipei": "12/10（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
+      },
+      {
         "id": "ppi-2026-11",
         "title": "PPI 生產者物價（2026年11月）",
         "indicator_id": "PPI",
@@ -12109,6 +12332,22 @@
         "consensus_str": null,
         "consensus_source": null,
         "note": ""
+      },
+      {
+        "id": "icsa-2026-12-12",
+        "title": "初領失業金人數（12/12當週）",
+        "indicator_id": "ICSA",
+        "period": "2026-12-12",
+        "period_zh": "12/12當週",
+        "stars": 2,
+        "time_utc": "2026-12-17T13:30:00Z",
+        "time_taipei": "2026-12-17 21:30",
+        "time_taipei_iso": "2026-12-17T21:30:00+08:00",
+        "date_taipei": "2026-12-17",
+        "short_taipei": "12/17（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
       },
       {
         "id": "pce-2026-11",
@@ -12143,6 +12382,22 @@
         "note": "第三季 GDP 第三次估計"
       },
       {
+        "id": "icsa-2026-12-19",
+        "title": "初領失業金人數（12/19當週）",
+        "indicator_id": "ICSA",
+        "period": "2026-12-19",
+        "period_zh": "12/19當週",
+        "stars": 2,
+        "time_utc": "2026-12-24T13:30:00Z",
+        "time_taipei": "2026-12-24 21:30",
+        "time_taipei_iso": "2026-12-24T21:30:00+08:00",
+        "date_taipei": "2026-12-24",
+        "short_taipei": "12/24（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
+      },
+      {
         "id": "fomc-min-2026-12",
         "title": "FOMC 會議紀要（12 月會議）",
         "indicator_id": "FED_RATE",
@@ -12157,6 +12412,22 @@
         "consensus_str": null,
         "consensus_source": null,
         "note": "預計會後三週公布（以聯準會官網為準，台北 12/31 03:00）"
+      },
+      {
+        "id": "icsa-2026-12-26",
+        "title": "初領失業金人數（12/26當週）",
+        "indicator_id": "ICSA",
+        "period": "2026-12-26",
+        "period_zh": "12/26當週",
+        "stars": 2,
+        "time_utc": "2026-12-31T13:30:00Z",
+        "time_taipei": "2026-12-31 21:30",
+        "time_taipei_iso": "2026-12-31T21:30:00+08:00",
+        "date_taipei": "2026-12-31",
+        "short_taipei": "12/31（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
       },
       {
         "id": "ism_mfg-2026-12",
@@ -12189,6 +12460,22 @@
         "consensus_str": null,
         "consensus_source": null,
         "note": ""
+      },
+      {
+        "id": "icsa-2027-01-02",
+        "title": "初領失業金人數（1/2當週）",
+        "indicator_id": "ICSA",
+        "period": "2027-01-02",
+        "period_zh": "1/2當週",
+        "stars": 2,
+        "time_utc": "2027-01-07T13:30:00Z",
+        "time_taipei": "2027-01-07 21:30",
+        "time_taipei_iso": "2027-01-07T21:30:00+08:00",
+        "date_taipei": "2027-01-07",
+        "short_taipei": "01/07（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
       },
       {
         "id": "nfp-2026-12",
@@ -12255,6 +12542,22 @@
         "note": ""
       },
       {
+        "id": "icsa-2027-01-09",
+        "title": "初領失業金人數（1/9當週）",
+        "indicator_id": "ICSA",
+        "period": "2027-01-09",
+        "period_zh": "1/9當週",
+        "stars": 2,
+        "time_utc": "2027-01-14T13:30:00Z",
+        "time_taipei": "2027-01-14 21:30",
+        "time_taipei_iso": "2027-01-14T21:30:00+08:00",
+        "date_taipei": "2027-01-14",
+        "short_taipei": "01/14（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
+      },
+      {
         "id": "retail_sales-2026-12",
         "title": "零售銷售（2026年12月）",
         "indicator_id": "RETAIL_SALES",
@@ -12269,6 +12572,22 @@
         "consensus_str": null,
         "consensus_source": null,
         "note": ""
+      },
+      {
+        "id": "icsa-2027-01-16",
+        "title": "初領失業金人數（1/16當週）",
+        "indicator_id": "ICSA",
+        "period": "2027-01-16",
+        "period_zh": "1/16當週",
+        "stars": 2,
+        "time_utc": "2027-01-21T13:30:00Z",
+        "time_taipei": "2027-01-21 21:30",
+        "time_taipei_iso": "2027-01-21T21:30:00+08:00",
+        "date_taipei": "2027-01-21",
+        "short_taipei": "01/21（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
       },
       {
         "id": "fomc-2027-01",
@@ -12303,6 +12622,22 @@
         "note": ""
       },
       {
+        "id": "icsa-2027-01-23",
+        "title": "初領失業金人數（1/23當週）",
+        "indicator_id": "ICSA",
+        "period": "2027-01-23",
+        "period_zh": "1/23當週",
+        "stars": 2,
+        "time_utc": "2027-01-28T13:30:00Z",
+        "time_taipei": "2027-01-28 21:30",
+        "time_taipei_iso": "2027-01-28T21:30:00+08:00",
+        "date_taipei": "2027-01-28",
+        "short_taipei": "01/28（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
+      },
+      {
         "id": "ism_mfg-2027-01",
         "title": "ISM 製造業 PMI（2027年1月）",
         "indicator_id": "ISM_MFG",
@@ -12333,6 +12668,22 @@
         "consensus_str": null,
         "consensus_source": null,
         "note": ""
+      },
+      {
+        "id": "icsa-2027-01-30",
+        "title": "初領失業金人數（1/30當週）",
+        "indicator_id": "ICSA",
+        "period": "2027-01-30",
+        "period_zh": "1/30當週",
+        "stars": 2,
+        "time_utc": "2027-02-04T13:30:00Z",
+        "time_taipei": "2027-02-04 21:30",
+        "time_taipei_iso": "2027-02-04T21:30:00+08:00",
+        "date_taipei": "2027-02-04",
+        "short_taipei": "02/04（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
       },
       {
         "id": "nfp-2027-01",
@@ -12367,6 +12718,22 @@
         "note": "含年度季節調整因子更新"
       },
       {
+        "id": "icsa-2027-02-06",
+        "title": "初領失業金人數（2/6當週）",
+        "indicator_id": "ICSA",
+        "period": "2027-02-06",
+        "period_zh": "2/6當週",
+        "stars": 2,
+        "time_utc": "2027-02-11T13:30:00Z",
+        "time_taipei": "2027-02-11 21:30",
+        "time_taipei_iso": "2027-02-11T21:30:00+08:00",
+        "date_taipei": "2027-02-11",
+        "short_taipei": "02/11（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
+      },
+      {
         "id": "ppi-2027-01",
         "title": "PPI 生產者物價（2027年1月）",
         "indicator_id": "PPI",
@@ -12397,6 +12764,22 @@
         "consensus_str": null,
         "consensus_source": null,
         "note": ""
+      },
+      {
+        "id": "icsa-2027-02-13",
+        "title": "初領失業金人數（2/13當週）",
+        "indicator_id": "ICSA",
+        "period": "2027-02-13",
+        "period_zh": "2/13當週",
+        "stars": 2,
+        "time_utc": "2027-02-18T13:30:00Z",
+        "time_taipei": "2027-02-18 21:30",
+        "time_taipei_iso": "2027-02-18T21:30:00+08:00",
+        "date_taipei": "2027-02-18",
+        "short_taipei": "02/18（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
       },
       {
         "id": "pce-2027-01",
@@ -13827,7 +14210,7 @@
         "reactions": {
           "NAS100": -2.21,
           "SP500": -2.02,
-          "TWII": null,
+          "TWII": -6.23,
           "BTCUSDT": -1.71
         },
         "note": ""
@@ -14119,6 +14502,30 @@
           "BTCUSDT": -4.12
         },
         "note": "同日另有核心 PCE、初領失業金公布"
+      },
+      {
+        "id": "fomc-2026-10",
+        "title": "FOMC 利率決議（2026年10月）",
+        "indicator_id": "FED_RATE",
+        "period": "2026-10",
+        "stars": 3,
+        "time_utc": "2026-10-28T18:00:00Z",
+        "time_taipei": "2026-10-29 02:00",
+        "time_taipei_iso": "2026-10-29T02:00:00+08:00",
+        "short_taipei": "10/29（四）02:00",
+        "actual_str": "維持 3.75%–4.00%（10–2，兩人主張升息）",
+        "prev_str": "3.75%–4.00%",
+        "consensus_str": "不變約 93%",
+        "consensus_source": "CME FedWatch",
+        "surprise": "符合預期",
+        "surprise_basis": "consensus",
+        "reactions": {
+          "NAS100": 0.55,
+          "SP500": 0.28,
+          "TWII": -1.42,
+          "BTCUSDT": 0.54
+        },
+        "note": ""
       },
       {
         "id": "icsa-2026-10-17",
@@ -14431,6 +14838,30 @@
           "BTCUSDT": 0.28
         },
         "note": "FRED 修正後最新值 19.8 萬人"
+      },
+      {
+        "id": "fomc-2026-09",
+        "title": "FOMC 利率決議（2026年9月）",
+        "indicator_id": "FED_RATE",
+        "period": "2026-09",
+        "stars": 3,
+        "time_utc": "2026-09-16T18:00:00Z",
+        "time_taipei": "2026-09-17 02:00",
+        "time_taipei_iso": "2026-09-17T02:00:00+08:00",
+        "short_taipei": "09/17（四）02:00",
+        "actual_str": "升息 1 碼至 3.75%–4.00%",
+        "prev_str": "3.50%–3.75%",
+        "consensus_str": "升息 1 碼 93.6%",
+        "consensus_source": "CME FedWatch",
+        "surprise": "符合預期",
+        "surprise_basis": "consensus",
+        "reactions": {
+          "NAS100": 0.02,
+          "SP500": -0.45,
+          "TWII": 0.96,
+          "BTCUSDT": 0.74
+        },
+        "note": ""
       },
       {
         "id": "retail_sales-2026-08",
@@ -14961,6 +15392,30 @@
         "note": "同日另有核心 PCE 公布；FRED 修正後最新值 +2.2%"
       },
       {
+        "id": "fomc-2026-07",
+        "title": "FOMC 利率決議（2026年7月）",
+        "indicator_id": "FED_RATE",
+        "period": "2026-07",
+        "stars": 3,
+        "time_utc": "2026-07-29T18:00:00Z",
+        "time_taipei": "2026-07-30 02:00",
+        "time_taipei_iso": "2026-07-30T02:00:00+08:00",
+        "short_taipei": "07/30（四）02:00",
+        "actual_str": "維持 3.50%–3.75%",
+        "prev_str": "3.50%–3.75%",
+        "consensus_str": "不變約 66%",
+        "consensus_source": "CME FedWatch",
+        "surprise": "符合預期",
+        "surprise_basis": "consensus",
+        "reactions": {
+          "NAS100": -2.06,
+          "SP500": -1.52,
+          "TWII": -0.26,
+          "BTCUSDT": 0.11
+        },
+        "note": ""
+      },
+      {
         "id": "icsa-2026-07-18",
         "title": "初領失業金人數（7/18當週）",
         "indicator_id": "ICSA",
@@ -15269,6 +15724,30 @@
           "SP500": 1.08,
           "TWII": 2.75,
           "BTCUSDT": -2.4
+        },
+        "note": ""
+      },
+      {
+        "id": "fomc-2026-06",
+        "title": "FOMC 利率決議（2026年6月）",
+        "indicator_id": "FED_RATE",
+        "period": "2026-06",
+        "stars": 3,
+        "time_utc": "2026-06-17T18:00:00Z",
+        "time_taipei": "2026-06-18 02:00",
+        "time_taipei_iso": "2026-06-18T02:00:00+08:00",
+        "short_taipei": "06/18（四）02:00",
+        "actual_str": "維持 3.50%–3.75%",
+        "prev_str": "3.50%–3.75%",
+        "consensus_str": "不變約 99%",
+        "consensus_source": "CME FedWatch",
+        "surprise": "符合預期",
+        "surprise_basis": "consensus",
+        "reactions": {
+          "NAS100": -0.99,
+          "SP500": -1.21,
+          "TWII": 1.28,
+          "BTCUSDT": -1.77
         },
         "note": ""
       },
@@ -15657,6 +16136,30 @@
         "note": "同日另有核心 PCE 公布；FRED 修正後最新值 +2.5%"
       },
       {
+        "id": "fomc-2026-04",
+        "title": "FOMC 利率決議（2026年4月）",
+        "indicator_id": "FED_RATE",
+        "period": "2026-04",
+        "stars": 3,
+        "time_utc": "2026-04-29T18:00:00Z",
+        "time_taipei": "2026-04-30 02:00",
+        "time_taipei_iso": "2026-04-30T02:00:00+08:00",
+        "short_taipei": "04/30（四）02:00",
+        "actual_str": "維持 3.50%–3.75%",
+        "prev_str": "3.50%–3.75%",
+        "consensus_str": "不變約 94%",
+        "consensus_source": "CME FedWatch",
+        "surprise": "符合預期",
+        "surprise_basis": "consensus",
+        "reactions": {
+          "NAS100": 0.58,
+          "SP500": -0.04,
+          "TWII": -0.96,
+          "BTCUSDT": -0.74
+        },
+        "note": ""
+      },
+      {
         "id": "retail_sales-2026-03",
         "title": "零售銷售（2026年3月）",
         "indicator_id": "RETAIL_SALES",
@@ -15845,6 +16348,30 @@
           "SP500": 0.72,
           "TWII": -1.82,
           "BTCUSDT": -0.25
+        },
+        "note": ""
+      },
+      {
+        "id": "fomc-2026-03",
+        "title": "FOMC 利率決議（2026年3月）",
+        "indicator_id": "FED_RATE",
+        "period": "2026-03",
+        "stars": 3,
+        "time_utc": "2026-03-18T18:00:00Z",
+        "time_taipei": "2026-03-19 02:00",
+        "time_taipei_iso": "2026-03-19T02:00:00+08:00",
+        "short_taipei": "03/19（四）02:00",
+        "actual_str": "維持 3.50%–3.75%",
+        "prev_str": "3.50%–3.75%",
+        "consensus_str": "不變逾 95%",
+        "consensus_source": "CME FedWatch",
+        "surprise": "符合預期",
+        "surprise_basis": "consensus",
+        "reactions": {
+          "NAS100": -1.43,
+          "SP500": -1.36,
+          "TWII": -1.92,
+          "BTCUSDT": -3.6
         },
         "note": ""
       },
@@ -16209,6 +16736,30 @@
         "note": "FRED 修正後最新值 +0.36%"
       },
       {
+        "id": "fomc-2026-01",
+        "title": "FOMC 利率決議（2026年1月）",
+        "indicator_id": "FED_RATE",
+        "period": "2026-01",
+        "stars": 3,
+        "time_utc": "2026-01-28T19:00:00Z",
+        "time_taipei": "2026-01-29 03:00",
+        "time_taipei_iso": "2026-01-29T03:00:00+08:00",
+        "short_taipei": "01/29（四）03:00",
+        "actual_str": "維持 3.50%–3.75%",
+        "prev_str": "3.50%–3.75%",
+        "consensus_str": "不變 97.2%",
+        "consensus_source": "CME FedWatch",
+        "surprise": "符合預期",
+        "surprise_basis": "consensus",
+        "reactions": {
+          "NAS100": 0.32,
+          "SP500": -0.01,
+          "TWII": -0.82,
+          "BTCUSDT": 0.06
+        },
+        "note": ""
+      },
+      {
         "id": "pce-2025-11",
         "title": "PCE 物價指數（2025年11月）",
         "indicator_id": "PCE",
@@ -16473,6 +17024,30 @@
         "note": ""
       },
       {
+        "id": "fomc-2025-12",
+        "title": "FOMC 利率決議（2025年12月）",
+        "indicator_id": "FED_RATE",
+        "period": "2025-12",
+        "stars": 3,
+        "time_utc": "2025-12-10T19:00:00Z",
+        "time_taipei": "2025-12-11 03:00",
+        "time_taipei_iso": "2025-12-11T03:00:00+08:00",
+        "short_taipei": "12/11（四）03:00",
+        "actual_str": "降息 1 碼至 3.50%–3.75%",
+        "prev_str": "3.75%–4.00%",
+        "consensus_str": "降息 1 碼約 87%",
+        "consensus_source": "CME FedWatch",
+        "surprise": "符合預期",
+        "surprise_basis": "consensus",
+        "reactions": {
+          "NAS100": 0.42,
+          "SP500": 0.67,
+          "TWII": -1.32,
+          "BTCUSDT": -0.72
+        },
+        "note": ""
+      },
+      {
         "id": "pce-2025-09",
         "title": "PCE 物價指數（2025年9月）",
         "indicator_id": "PCE",
@@ -16661,6 +17236,30 @@
           "SP500": 0.17,
           "TWII": -0.77,
           "BTCUSDT": -3.58
+        },
+        "note": ""
+      },
+      {
+        "id": "fomc-2025-10",
+        "title": "FOMC 利率決議（2025年10月）",
+        "indicator_id": "FED_RATE",
+        "period": "2025-10",
+        "stars": 3,
+        "time_utc": "2025-10-29T18:00:00Z",
+        "time_taipei": "2025-10-30 02:00",
+        "time_taipei_iso": "2025-10-30T02:00:00+08:00",
+        "short_taipei": "10/30（四）02:00",
+        "actual_str": "降息 1 碼至 3.75%–4.00%",
+        "prev_str": "4.00%–4.25%",
+        "consensus_str": "降息 1 碼 99.5%",
+        "consensus_source": "CME FedWatch",
+        "surprise": "符合預期",
+        "surprise_basis": "consensus",
+        "reactions": {
+          "NAS100": 0.41,
+          "SP500": -0.0,
+          "TWII": -0.03,
+          "BTCUSDT": -2.55
         },
         "note": ""
       },
