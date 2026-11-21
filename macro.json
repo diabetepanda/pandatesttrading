@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "updated_at_utc": "2026-11-21T06:05:02Z",
-  "updated_at_taipei": "2026-11-21 14:05",
+  "updated_at_utc": "2026-11-21T07:00:24Z",
+  "updated_at_taipei": "2026-11-21 15:00",
   "status": "ok",
   "updating_indicators": [],
   "fetch_report": {
-    "total_elapsed_sec": 27.049,
+    "total_elapsed_sec": 25.525,
     "fred_aborted": true,
     "fred_abort_reason": "HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=8)",
     "sources": {
       "FRED": {
         "status": "failed",
-        "elapsed_sec": 16.114,
+        "elapsed_sec": 16.147,
         "attempts": 1,
         "aborted": true,
         "series_ok": [],
@@ -47,7 +47,7 @@
       },
       "US_TREASURY": {
         "status": "ok",
-        "elapsed_sec": 5.35,
+        "elapsed_sec": 3.076,
         "series_ok": [
           "DGS2",
           "DGS10"
@@ -57,7 +57,7 @@
       },
       "BLS_API_V1": {
         "status": "ok",
-        "elapsed_sec": 0.359,
+        "elapsed_sec": 0.339,
         "series_ok": [
           "CPI",
           "CORE_CPI",
@@ -71,7 +71,7 @@
       },
       "DBNOMICS_BEA": {
         "status": "ok",
-        "elapsed_sec": 2.985,
+        "elapsed_sec": 4.237,
         "series_ok": [
           "PCE",
           "CORE_PCE",
@@ -82,7 +82,7 @@
       },
       "CENSUS_MRTS": {
         "status": "ok",
-        "elapsed_sec": 0.131,
+        "elapsed_sec": 0.089,
         "series_ok": [
           "RETAIL_SALES"
         ],
@@ -91,7 +91,7 @@
       },
       "DOL_TE_ICSA": {
         "status": "ok",
-        "elapsed_sec": 0.624,
+        "elapsed_sec": 0.297,
         "series_ok": [
           "ICSA"
         ],
@@ -100,7 +100,7 @@
       },
       "TE_ISM": {
         "status": "ok",
-        "elapsed_sec": 0.811,
+        "elapsed_sec": 0.685,
         "series_ok": [
           "ISM_MFG",
           "ISM_SVC"
