@@ -1,9 +1,134 @@
 {
   "version": 1,
-  "updated_at_utc": "2026-11-21T02:02:43Z",
-  "updated_at_taipei": "2026-11-21 10:02",
+  "updated_at_utc": "2026-11-21T05:59:49Z",
+  "updated_at_taipei": "2026-11-21 13:59",
   "status": "ok",
   "updating_indicators": [],
+  "fetch_report": {
+    "total_elapsed_sec": 5.932,
+    "fred_aborted": false,
+    "fred_abort_reason": null,
+    "sources": {
+      "FRED": {
+        "status": "ok",
+        "elapsed_sec": 4.528,
+        "attempts": 15,
+        "aborted": false,
+        "series_ok": [
+          "DFEDTARU",
+          "DFEDTARL",
+          "DGS2",
+          "DGS10",
+          "CPIAUCSL",
+          "CPILFESL",
+          "PCEPI",
+          "PCEPILFE",
+          "PPIFIS",
+          "PAYEMS",
+          "UNRATE",
+          "CES0500000003",
+          "ICSA",
+          "A191RL1Q225SBEA",
+          "RSAFS"
+        ],
+        "series_failed": [],
+        "series_skipped": [],
+        "error": null
+      },
+      "TE_ISM": {
+        "status": "ok",
+        "elapsed_sec": 0.936,
+        "series_ok": [
+          "ISM_MFG",
+          "ISM_SVC"
+        ],
+        "series_failed": [],
+        "error": null
+      }
+    },
+    "indicators": {
+      "FED_RATE": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "DGS2": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "DGS10": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "CPI": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "CORE_CPI": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "PCE": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "CORE_PCE": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "PPI": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "NFP": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "UNRATE": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "AVG_HOURLY_EARNINGS": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "ICSA": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "GDP": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "ISM_MFG": {
+        "source_used": "TradingEconomics ＋ ISM",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "ISM_SVC": {
+        "source_used": "TradingEconomics ＋ ISM",
+        "fallback_used": false,
+        "status": "ok"
+      },
+      "RETAIL_SALES": {
+        "source_used": "FRED",
+        "fallback_used": false,
+        "status": "ok"
+      }
+    }
+  },
   "timezone_notes": {
     "dst_rule": "美國夏令時（EDT，3月第2個週日～11月第1個週日）比台北慢12小時；冬令時（EST，11月第1個週日～次年3月第2個週日）比台北慢13小時。",
     "examples": [
@@ -138,6 +263,7 @@
       },
       "why": "聯準會基準利率決定全市場資金成本。升息或維持鷹派立場通常壓抑科技股與加密貨幣估值；降息週期則有助於風險偏好回溫。",
       "source": "FRED（DFEDTARU / DFEDTARL，截至 2026-11-20）＋ Federal Reserve FOMC",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "FOMC 利率決議",
@@ -880,8 +1006,9 @@
       ],
       "chart_label": "近 24 個月月末殖利率（%）",
       "next_release": null,
-      "why": "反映市場對未來兩年聯準會政策利率路徑的定價，對 FOMC 與通膨數據最為敏感。",
+      "why": "反映市場對未來兩年聯準會利率路徑的定價，對 FOMC 與通膨數據最為敏感。",
       "source": "FRED（DGS2，截至 2026-11-19）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "2 年期美債殖利率（近 24 個交易日）",
@@ -1535,6 +1662,7 @@
       "next_release": null,
       "why": "全球風險資產的定價錨，影響企業融資成本、房貸利率與科技股折現估值。",
       "source": "FRED（DGS10，截至 2026-11-19）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "10 年期美債殖利率（近 24 個交易日）",
@@ -2196,6 +2324,7 @@
       },
       "why": "一般家庭消費籃子的物價漲幅。通膨高於預期代表物價黏著、聯準會升息壓力上升；溫和降溫則有利美股與加密貨幣。",
       "source": "FRED（CPIAUCSL）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "CPI 消費者物價",
@@ -2948,6 +3077,7 @@
       },
       "why": "剔除波動較大的食品與能源價格，最能反映服務與居住等核心通膨黏性，是聯準會緊盯的重點。",
       "source": "FRED（CPILFESL）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "核心 CPI",
@@ -3700,6 +3830,7 @@
       },
       "why": "聯準會官方設定 2% 長期目標的基準通膨指標，涵蓋更廣泛消費替代效應，直接牽動 FOMC 利率路徑。",
       "source": "FRED（PCEPI）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "PCE 物價指數",
@@ -4452,6 +4583,7 @@
       },
       "why": "聯準會決策時最核心的通膨尺標；若環比長期高於 +0.2%（年率逾 2.4%），政策利率難以放鬆。",
       "source": "FRED（PCEPILFE）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "核心 PCE",
@@ -5204,6 +5336,7 @@
       },
       "why": "衡量企業批發與生產端成本變化，常作為 CPI 的上游領先訊號；上游成本攀升容易轉嫁至終端物價。",
       "source": "FRED（PPIFIS）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "PPI 生產者物價",
@@ -5956,6 +6089,7 @@
       },
       "why": "每月新增非農就業人數。在高利率環境中，就業過熱增加緊縮理由；有序放緩最理想，驟降至負值則引發衰退擔憂。",
       "source": "FRED（PAYEMS）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "非農就業新增",
@@ -6708,6 +6842,7 @@
       },
       "why": "勞動市場鬆緊溫度計。失業率低表示勞動市場緊俏、薪資不易降溫；溫和緩升有助通膨回落，急升則為衰退警訊。",
       "source": "FRED（UNRATE）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "失業率",
@@ -7460,6 +7595,7 @@
       },
       "why": "反映薪資成長動能。薪資漲幅過快容易形成「薪資—物價螺旋」，推升核心服務通膨。",
       "source": "FRED（CES0500000003）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "平均時薪",
@@ -8212,6 +8348,7 @@
       },
       "why": "每週公布的高頻就業指標。人數溫和上升顯示裁員增加與就業降溫，高利率期反而舒緩緊縮壓力；暴增則反映衰退風險。",
       "source": "FRED（ICSA）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "初領失業金人數",
@@ -8952,6 +9089,7 @@
       },
       "why": "美國整體經濟成長速度。強勁成長支撐企業獲利，但也讓聯準會更有底氣維持高利率；轉負則引發衰退避險。",
       "source": "FRED（A191RL1Q225SBEA）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "GDP 成長率",
@@ -9704,6 +9842,7 @@
       },
       "why": "以 50 為榮枯線的美國製造業景氣指標。讀數與物價分項偏高代表景氣擴張且成本壓力仍在。",
       "source": "TradingEconomics 公開頁面 ＋ ISM 報告",
+      "source_used": "TradingEconomics ＋ ISM",
       "data_status": "ok",
       "updating": false,
       "modal_title": "ISM 製造業 PMI",
@@ -10456,6 +10595,7 @@
       },
       "why": "服務業占美國經濟產出大宗，50 以上為擴張；若服務業與物價分項維持高檔，核心通膨較難快速降溫。",
       "source": "TradingEconomics 公開頁面 ＋ ISM 報告",
+      "source_used": "TradingEconomics ＋ ISM",
       "data_status": "ok",
       "updating": false,
       "modal_title": "ISM 服務業 PMI",
@@ -11208,6 +11348,7 @@
       },
       "why": "美國民間消費動能指標（消費約占 GDP 七成）。穩健成長支撐景氣，過熱則強化高利率延續預期。",
       "source": "FRED（RSAFS）",
+      "source_used": "FRED",
       "data_status": "ok",
       "updating": false,
       "modal_title": "零售銷售",

@@ -265,7 +265,7 @@
           <span>📊 過去公布後市場怎麼走</span>
           <span aria-hidden="true">›</span>
         </button>
-        <div class="macro-ind-src">來源：${escHtml(c.source || "")}</div>
+        <div class="macro-ind-src" title="${escAttr(c.source || "")}">來源：${escHtml(c.source_used || c.source || "")}</div>
       </article>
     `;
   }

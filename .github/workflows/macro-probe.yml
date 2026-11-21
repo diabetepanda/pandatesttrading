@@ -1,0 +1,46 @@
+name: Macro Probe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run src.macro into temp dir
+        run: python -m src.macro --out-dir /tmp/macro_probe --no-local-cache
+
+      - name: Print fetch_report and indicator summary
+        if: always()
+        run: |
+          python - <<'EOF'
+          import json
+          from pathlib import Path
+
+          p = Path("/tmp/macro_probe/macro.json")
+          if not p.exists():
+              print("ERROR: /tmp/macro_probe/macro.json not generated")
+              raise SystemExit(1)
+
+          doc = json.loads(p.read_text(encoding="utf-8"))
+          print(f"status={doc.get('status')} updating_indicators={doc.get('updating_indicators')}")
+          print("\n=== fetch_report ===")
+          print(json.dumps(doc.get("fetch_report"), ensure_ascii=False, indent=2))
+          print("\n=== indicators ===")
+          for ind in doc.get("indicators", []):
+              print(
+                  f"{ind.get('id'):20s} | {ind.get('value_str'):16s} | "
+                  f"source_used={ind.get('source_used')} | status={ind.get('data_status')}"
+              )
+          EOF

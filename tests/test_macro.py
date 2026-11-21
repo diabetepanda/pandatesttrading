@@ -27,6 +27,9 @@ class _FakeResponse:
         self.status_code = status_code
         self.text = text
 
+    def json(self) -> Any:
+        return json.loads(self.text)
+
 
 def _build_synthetic_fred_csv(series_id: str) -> str:
     if series_id == "DFEDTARU":
@@ -262,11 +265,11 @@ def test_frontend_macro_html_nav_versions_and_calendar_defaults() -> None:
     # Nav & cache-busting checks
     assert "./macro.html" in index_html
     assert "宏觀數據" in index_html
-    assert "?v=20261121b" in index_html
-    assert "?v=20261121b" in macro_html
-    assert "./assets/style.css?v=20261121b" in macro_html
-    assert "./assets/config.js?v=20261121b" in macro_html
-    assert "./assets/macro.js?v=20261121b" in macro_html
+    assert "?v=20261121c" in index_html
+    assert "?v=20261121c" in macro_html
+    assert "./assets/style.css?v=20261121c" in macro_html
+    assert "./assets/config.js?v=20261121c" in macro_html
+    assert "./assets/macro.js?v=20261121c" in macro_html
     assert "./index.html#/wall" in macro_html
     assert 'href="/' not in macro_html
     assert 'src="/' not in macro_html
@@ -274,6 +277,11 @@ def test_frontend_macro_html_nav_versions_and_calendar_defaults() -> None:
     assert ".macro-cal-past-summary" in style_css
     assert "src.macro" in daily_yml
     assert "src.macro" not in scan_yml
+    probe_yml = (ROOT_DIR / ".github" / "workflows" / "macro-probe.yml").read_text(encoding="utf-8")
+    assert "workflow_dispatch" in probe_yml
+    assert "src.macro" in probe_yml
+    assert "git push" not in probe_yml
+    assert "git commit" not in probe_yml
 
     js_bin = shutil.which("node")
     if not js_bin:
@@ -375,7 +383,8 @@ def test_frontend_macro_html_nav_versions_and_calendar_defaults() -> None:
           release_date_taipei: '2026-11-20 04:30', sub_info: '每日美債',
           consensus_str: null, surprise: '低於前值', surprise_basis: 'prev',
           verdict: 'bear', verdict_text: '🔴 偏高承壓', chart_values: [4.5, 4.76], chart_label: '近24月',
-          why: '說明', source: 'FRED', updating: true, updating_notice: '來源失敗',
+          why: '說明', source: 'U.S. Treasury Daily Par Yield Curve（備用）', source_used: '美國財政部（備用）',
+          updating: true, updating_notice: '來源失敗',
           history_rows: [{{
             period: '2026-11-19', period_zh: '2026-11-19', release_taipei: '2026-11-20 04:30',
             actual_str: '4.76%', prev_str: '4.80%', consensus_str: null, surprise: '低於前值',
@@ -387,7 +396,7 @@ def test_frontend_macro_html_nav_versions_and_calendar_defaults() -> None:
           }},
         }};
         const cHtml = u.renderIndicatorCardHtml(testCard);
-        if (!cHtml.includes('📊 過去公布後市場怎麼走') || !cHtml.includes('資料更新中') || !cHtml.includes('無可靠預期值')) {{
+        if (!cHtml.includes('📊 過去公布後市場怎麼走') || !cHtml.includes('資料更新中') || !cHtml.includes('無可靠預期值') || !cHtml.includes('來源：美國財政部（備用）')) {{
           throw new Error('Card HTML missing expected markers: ' + cHtml);
         }}
         const mHtml = u.buildHistModalBodyHtml(testCard, {{}});
@@ -413,3 +422,289 @@ def test_real_data_macro_json_and_calendar_yaml() -> None:
     for c in doc["indicators"]:
         assert c["value_str"] and c["prev_str"] and c["change_str"] and c["release_date_taipei"]
         assert 12 <= len(c["history_rows"]) <= 24
+
+
+def _build_synthetic_bls_json() -> str:
+    months: list[tuple[int, int]] = []
+    y, m = 2023, 1
+    while (y, m) <= (2026, 10):
+        months.append((y, m))
+        m += 1
+        if m > 12:
+            y, m = y + 1, 1
+
+    series_defs = {
+        "CUSR0000SA0": lambda i: f"{300.0 + i * 0.85:.3f}",
+        "CUSR0000SA0L1E": lambda i: f"{305.0 + i * 0.78:.3f}",
+        "WPSFD4": lambda i: f"{140.0 + i * 0.45:.3f}",
+        "CES0000000001": lambda i: f"{154000 + i * 120}",
+        "LNS14000000": lambda i: f"{3.9 if i % 2 == 0 else 4.1:.1f}",
+        "CES0500000003": lambda i: f"{34.00 + i * 0.09:.2f}",
+    }
+    series_list = []
+    for sid, fn in series_defs.items():
+        data_rows = []
+        for idx, (yr, mo) in enumerate(months):
+            data_rows.append({"year": str(yr), "period": f"M{mo:02d}", "value": fn(idx)})
+        series_list.append({"seriesID": sid, "data": list(reversed(data_rows))})
+    return json.dumps({"status": "REQUEST_SUCCEEDED", "Results": {"series": series_list}})
+
+
+def _build_synthetic_treasury_csv() -> str:
+    lines = ['Date,"1 Mo","2 Yr","10 Yr"']
+    d = date(2026, 9, 1)
+    idx = 0
+    while d <= date(2026, 11, 20):
+        if d.weekday() < 5:
+            y2 = 4.50 + idx * 0.01
+            y10 = 4.70 + idx * 0.01
+            lines.append(f"{d.month:02d}/{d.day:02d}/{d.year},4.20,{y2:.2f},{y10:.2f}")
+            idx += 1
+        d += timedelta(days=1)
+    return "\n".join(lines)
+
+
+def _build_synthetic_census_retail() -> str:
+    lines = [
+        "RETAIL & FOOD SERVICES",
+        "",
+        "YEAR      JAN       FEB       MAR       APR       MAY       JUN       JUL       AUG       SEP       OCT       NOV       DEC",
+    ]
+    base = 650000
+    for yr in range(2024, 2027):
+        cols = []
+        max_m = 10 if yr == 2026 else 12
+        for mo in range(1, max_m + 1):
+            base += 1800
+            cols.append(str(base))
+        lines.append(f"{yr}   " + "   ".join(cols))
+    lines.append("")
+    lines.append("SEASONAL FACTORS")
+    lines.append("2026   0.910   0.879   1.010   1.000   1.044   1.009   1.028   1.016   0.977   1.019   0.998   1.109")
+    return "\n".join(lines)
+
+
+def _build_synthetic_dol_xml() -> str:
+    parts = ['<r539cyNational rundate="11/20/2026">']
+    d = date(2024, 1, 6)
+    idx = 0
+    while d <= date(2026, 10, 24):
+        sa = 195000 + (idx % 5) * 2000
+        parts.append(
+            f"<week><weekEnded>{d.strftime('%m/%d/%Y')}</weekEnded>"
+            f"<InitialClaims><SA>{sa:,}</SA></InitialClaims></week>"
+        )
+        d += timedelta(days=7)
+        idx += 1
+    parts.append(
+        "<week><weekEnded>11/14/2026</weekEnded>"
+        "<InitialClaims><SA>&#160;</SA></InitialClaims></week>"
+    )
+    parts.append("</r539cyNational>")
+    return "\n".join(parts)
+
+
+def _build_synthetic_te_icsa_html() -> str:
+    return """
+    <html><head>
+      <meta name="description" content="Initial Jobless Claims in the United States increased to 203 thousand in the week ending November 14 of 2026 from 202 thousand in the previous week." />
+    </head><body>
+      <table>
+        <tr><th>Calendar</th><th>GMT</th><th>Name</th><th>Reference</th><th>Actual</th><th>Previous</th><th>Consensus</th></tr>
+        <tr><td>2026-11-12</td><td>01:30 PM</td><td>Initial Jobless Claims</td><td>Nov/07</td><td>200K</td><td>191K</td><td>195K</td></tr>
+        <tr><td>2026-11-19</td><td>01:30 PM</td><td>Initial Jobless Claims</td><td>Nov/14</td><td>203K</td><td>202K</td><td>197K</td></tr>
+      </table>
+    </body></html>
+    """
+
+
+def test_fred_timeout_triggers_fallback_without_retrying_remaining_fred(tmp_path: Path) -> None:
+    _write_synthetic_history_1d(tmp_path)
+    fred_calls: list[str] = []
+    seen_timeouts: list[int] = []
+
+    def _timeout_fred_handler(url: str, **kwargs: Any) -> _FakeResponse:
+        if "timeout" in kwargs:
+            seen_timeouts.append(int(kwargs["timeout"]))
+        if "fredgraph.csv" in url:
+            sid = url.split("id=")[-1]
+            fred_calls.append(sid)
+            raise TimeoutError("HTTPSConnectionPool: Read timed out. (read timeout=8)")
+        if "api.bls.gov/publicAPI/v1/timeseries/data" in url:
+            return _FakeResponse(200, _build_synthetic_bls_json())
+        if "home.treasury.gov" in url:
+            return _FakeResponse(200, _build_synthetic_treasury_csv())
+        if "api.db.nomics.world/v22/series/BEA/NIPA-T20804/DPCERG-M" in url:
+            periods = [f"{yr:04d}-{mo:02d}" for yr in range(2023, 2027) for mo in range(1, 13) if (yr, mo) <= (2026, 9)]
+            vals = [round(120.0 + i * 0.28, 3) for i in range(len(periods))]
+            return _FakeResponse(200, json.dumps({"series": {"docs": [{"period": periods, "value": vals}]}}))
+        if "api.db.nomics.world/v22/series/BEA/NIPA-T20804/DPCCRG-M" in url:
+            periods = [f"{yr:04d}-{mo:02d}" for yr in range(2023, 2027) for mo in range(1, 13) if (yr, mo) <= (2026, 9)]
+            vals = [round(118.0 + i * 0.25, 3) for i in range(len(periods))]
+            return _FakeResponse(200, json.dumps({"series": {"docs": [{"period": periods, "value": vals}]}}))
+        if "api.db.nomics.world/v22/series/BEA/NIPA-T10101/A191RL-Q" in url:
+            periods = [f"{yr:04d}-Q{q}" for yr in range(2020, 2027) for q in range(1, 5) if (yr, q) <= (2026, 3)]
+            vals = [2.2 if i % 2 == 0 else 3.4 for i in range(len(periods))]
+            return _FakeResponse(200, json.dumps({"series": {"docs": [{"period": periods, "value": vals}]}}))
+        if "api.db.nomics.world/v22/series/FED/H15/" in url:
+            return _FakeResponse(404, "optional backfill unavailable")
+        if "adv44X72.txt" in url:
+            return _FakeResponse(200, _build_synthetic_census_retail())
+        if "wkclaims/report.asp" in url:
+            return _FakeResponse(200, _build_synthetic_dol_xml())
+        if "jobless-claims" in url:
+            return _FakeResponse(200, _build_synthetic_te_icsa_html())
+        if "business-confidence" in url:
+            return _FakeResponse(200, _build_synthetic_te_html("ISM_MFG"))
+        if "non-manufacturing-pmi" in url:
+            return _FakeResponse(200, _build_synthetic_te_html("ISM_SVC"))
+        return _FakeResponse(404, "not found")
+
+    now = datetime(2026, 11, 21, 1, 30, tzinfo=timezone.utc)
+    doc = generate_macro_file(
+        out_dir=tmp_path,
+        http_get=_timeout_fred_handler,
+        now_utc=now,
+        use_local_cache=False,
+    )
+
+    # First FRED series timed out (retried at most once = 2 attempts), zero calls to remaining 14 FRED series
+    assert fred_calls == ["DFEDTARU", "DFEDTARU"]
+    assert all(t <= 10 for t in seen_timeouts)
+    assert doc["status"] == "ok"
+    assert doc["updating_indicators"] == []
+    assert len(doc["indicators"]) == 16
+    assert doc["fetch_report"]["fred_aborted"] is True
+    assert doc["fetch_report"]["sources"]["FRED"]["status"] == "failed"
+    assert doc["fetch_report"]["sources"]["FRED"]["attempts"] == 1
+    assert len(doc["fetch_report"]["sources"]["FRED"]["series_skipped"]) == 14
+
+    by_id = {c["id"]: c for c in doc["indicators"]}
+    assert by_id["FED_RATE"]["source_used"] == "FOMC 決議紀錄（備用）"
+    assert by_id["DGS2"]["source_used"] == "美國財政部（備用）"
+    assert by_id["DGS10"]["source_used"] == "美國財政部（備用）"
+    assert by_id["CPI"]["source_used"] == "BLS（備用）"
+    assert by_id["NFP"]["source_used"] == "BLS（備用）"
+    assert by_id["PCE"]["source_used"] == "DBnomics BEA（備用）"
+    assert by_id["GDP"]["source_used"] == "DBnomics BEA（備用）"
+    assert by_id["RETAIL_SALES"]["source_used"] == "美國普查局 Census（備用）"
+    assert by_id["ICSA"]["source_used"] == "DOL / TradingEconomics（備用）"
+    assert by_id["ICSA"]["value_str"] == "20.3 萬人"
+    assert by_id["ICSA"]["prev_str"] == "20.2 萬人"
+    assert by_id["ISM_MFG"]["source_used"] == "TradingEconomics ＋ ISM"
+
+
+def test_fallback_conversion_matches_fred_conventions(tmp_path: Path) -> None:
+    """Fallback index/level/CSV conversions must produce identical indicator formatting to FRED CSV."""
+    _write_synthetic_history_1d(tmp_path)
+
+    # Run A: FRED primary using synthetic CSV
+    def _fred_only(url: str, **kwargs: Any) -> _FakeResponse:
+        if "fredgraph.csv?id=" in url:
+            sid = url.split("id=")[-1]
+            return _FakeResponse(200, _build_synthetic_fred_csv(sid))
+        if "business-confidence" in url:
+            return _FakeResponse(200, _build_synthetic_te_html("ISM_MFG"))
+        if "non-manufacturing-pmi" in url:
+            return _FakeResponse(200, _build_synthetic_te_html("ISM_SVC"))
+        return _FakeResponse(404, "not found")
+
+    dir_a = tmp_path / "run_fred"
+    _write_synthetic_history_1d(dir_a)
+    now = datetime(2026, 11, 21, 1, 30, tzinfo=timezone.utc)
+    doc_a = generate_macro_file(out_dir=dir_a, http_get=_fred_only, now_utc=now, use_local_cache=False)
+
+    # Extract exact FRED observations from synthetic CSVs to mirror them inside fallback payloads
+    def _csv_to_ym_vals(sid: str) -> list[tuple[str, float]]:
+        rows = []
+        for ln in _build_synthetic_fred_csv(sid).splitlines()[1:]:
+            if "," not in ln:
+                continue
+            d_s, v_s = ln.split(",", 1)
+            d_s, v_s = d_s.strip(), v_s.strip()
+            if not d_s or not v_s or v_s == ".":
+                continue
+            rows.append((d_s, float(v_s)))
+        return rows
+
+    bls_payload = {"status": "REQUEST_SUCCEEDED", "Results": {"series": []}}
+    for ind_id, fred_sid, bls_sid in (
+        ("CPI", "CPIAUCSL", "CUSR0000SA0"),
+        ("CORE_CPI", "CPILFESL", "CUSR0000SA0L1E"),
+        ("PPI", "PPIFIS", "WPSFD4"),
+        ("NFP", "PAYEMS", "CES0000000001"),
+        ("UNRATE", "UNRATE", "LNS14000000"),
+        ("AVG_HOURLY_EARNINGS", "CES0500000003", "CES0500000003"),
+    ):
+        data_rows = []
+        for d_s, val in _csv_to_ym_vals(fred_sid):
+            yr, mo = d_s[:4], d_s[5:7]
+            data_rows.append({"year": yr, "period": f"M{mo}", "value": str(val)})
+        bls_payload["Results"]["series"].append({"seriesID": bls_sid, "data": list(reversed(data_rows))})
+
+    dgs2_map = dict(_csv_to_ym_vals("DGS2"))
+    dgs10_map = dict(_csv_to_ym_vals("DGS10"))
+    tr_lines = ['Date,"2 Yr","10 Yr"']
+    for d_s in sorted(dgs2_map.keys()):
+        yr, mo, dy = d_s.split("-")
+        tr_lines.append(f"{mo}/{dy}/{yr},{dgs2_map[d_s]:.2f},{dgs10_map[d_s]:.2f}")
+    tr_csv = "\n".join(tr_lines)
+
+    pce_rows = _csv_to_ym_vals("PCEPI")
+    cpce_rows = _csv_to_ym_vals("PCEPILFE")
+    gdp_rows = _csv_to_ym_vals("A191RL1Q225SBEA")
+    rs_rows = _csv_to_ym_vals("RSAFS")
+
+    rs_by_yr: dict[int, list[str]] = {}
+    for d_s, v in rs_rows:
+        rs_by_yr.setdefault(int(d_s[:4]), []).append(f"{v:.4f}")
+    rs_txt = "\n".join(
+        ["RETAIL & FOOD SERVICES", "YEAR JAN FEB"] + [f"{yr} " + " ".join(vals) for yr, vals in sorted(rs_by_yr.items())]
+    )
+
+    icsa_rows = _csv_to_ym_vals("ICSA")
+    xml_parts = ['<r539cyNational rundate="11/20/2026">']
+    for d_s, v in icsa_rows:
+        yr, mo, dy = d_s.split("-")
+        xml_parts.append(f"<week><weekEnded>{mo}/{dy}/{yr}</weekEnded><InitialClaims><SA>{v:.0f}</SA></InitialClaims></week>")
+    xml_parts.append("</r539cyNational>")
+
+    def _fallback_identical(url: str, **kwargs: Any) -> _FakeResponse:
+        if "fredgraph.csv" in url:
+            raise ConnectionError("FRED blocked")
+        if "api.bls.gov" in url:
+            return _FakeResponse(200, json.dumps(bls_payload))
+        if "home.treasury.gov" in url:
+            return _FakeResponse(200, tr_csv)
+        if "FED/H15/" in url:
+            return _FakeResponse(404, "none")
+        if "DPCERG-M" in url:
+            return _FakeResponse(200, json.dumps({"series": {"docs": [{"period": [d[:7] for d, _ in pce_rows], "value": [v for _, v in pce_rows]}]}}))
+        if "DPCCRG-M" in url:
+            return _FakeResponse(200, json.dumps({"series": {"docs": [{"period": [d[:7] for d, _ in cpce_rows], "value": [v for _, v in cpce_rows]}]}}))
+        if "A191RL-Q" in url:
+            q_p = [f"{d[:4]}-Q{(int(d[5:7]) - 1) // 3 + 1}" for d, _ in gdp_rows]
+            return _FakeResponse(200, json.dumps({"series": {"docs": [{"period": q_p, "value": [v for _, v in gdp_rows]}]}}))
+        if "adv44X72.txt" in url:
+            return _FakeResponse(200, rs_txt)
+        if "wkclaims/report.asp" in url:
+            return _FakeResponse(200, "\n".join(xml_parts))
+        if "jobless-claims" in url:
+            return _FakeResponse(404, "skip te")
+        if "business-confidence" in url:
+            return _FakeResponse(200, _build_synthetic_te_html("ISM_MFG"))
+        if "non-manufacturing-pmi" in url:
+            return _FakeResponse(200, _build_synthetic_te_html("ISM_SVC"))
+        return _FakeResponse(404, "not found")
+
+    dir_b = tmp_path / "run_fb"
+    _write_synthetic_history_1d(dir_b)
+    doc_b = generate_macro_file(out_dir=dir_b, http_get=_fallback_identical, now_utc=now, use_local_cache=False)
+    assert doc_b["status"] == "ok"
+
+    by_a = {c["id"]: c for c in doc_a["indicators"]}
+    by_b = {c["id"]: c for c in doc_b["indicators"]}
+    for ind_id in ("DGS2", "DGS10", "CPI", "CORE_CPI", "PCE", "CORE_PCE", "PPI", "NFP", "UNRATE", "AVG_HOURLY_EARNINGS", "ICSA", "GDP", "RETAIL_SALES"):
+        assert by_b[ind_id]["value_str"] == by_a[ind_id]["value_str"], f"{ind_id} value mismatch"
+        assert by_b[ind_id]["prev_str"] == by_a[ind_id]["prev_str"], f"{ind_id} prev mismatch"
+        assert by_b[ind_id]["change_str"] == by_a[ind_id]["change_str"], f"{ind_id} change mismatch"

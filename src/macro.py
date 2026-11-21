@@ -4,10 +4,13 @@ from __future__ import annotations
 
 import argparse
 import csv
+import html
 import io
 import json
 import math
 import re
+import time as time_mod
+import xml.etree.ElementTree as ET
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -41,6 +44,38 @@ REACTION_LABELS = {
 }
 
 FRED_CSV_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
+BLS_API_V1_URL = "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+TREASURY_YIELD_MONTHLY_CSV_URL = (
+    "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/"
+    "daily-treasury-rates.csv/{year}/{yyyymm}"
+    "?type=daily_treasury_yield_curve&field_tdr_date_value_month={yyyymm}&page&_format=csv"
+)
+DBNOMICS_SERIES_URL = "https://api.db.nomics.world/v22/series/{dataset_path}?observations=1"
+CENSUS_RETAIL_ADV_URL = "https://www.census.gov/retail/marts/www/adv44X72.txt"
+DOL_OUI_WKCLAIMS_URL = "https://oui.doleta.gov/unemploy/wkclaims/report.asp"
+TE_ICSA_URL = "https://tradingeconomics.com/united-states/jobless-claims"
+
+REQUEST_TIMEOUT_SEC = 8
+MAX_HTTP_ATTEMPTS = 2
+
+BLS_FALLBACK_SERIES: dict[str, str] = {
+    "CPI": "CUSR0000SA0",
+    "CORE_CPI": "CUSR0000SA0L1E",
+    "PPI": "WPSFD4",
+    "NFP": "CES0000000001",
+    "UNRATE": "LNS14000000",
+    "AVG_HOURLY_EARNINGS": "CES0500000003",
+}
+DBNOMICS_BEA_SERIES: dict[str, str] = {
+    "PCE": "BEA/NIPA-T20804/DPCERG-M",
+    "CORE_PCE": "BEA/NIPA-T20804/DPCCRG-M",
+    "GDP": "BEA/NIPA-T10101/A191RL-Q",
+}
+DBNOMICS_H15_YIELDS: dict[str, str] = {
+    "DGS2": "FED/H15/RIFLGFCY02_N.B",
+    "DGS10": "FED/H15/RIFLGFCY10_N.B",
+}
+
 TE_ISM_URLS = {
     "ISM_MFG": "https://tradingeconomics.com/united-states/business-confidence",
     "ISM_SVC": "https://tradingeconomics.com/united-states/non-manufacturing-pmi",
@@ -222,18 +257,71 @@ def compute_market_reactions(
     }
 
 
+class FredTransportError(RuntimeError):
+    """Raised when FRED times out, fails network connect, or returns block/rate-limit codes."""
+
+
+def _is_transport_or_block_exc(exc: Exception) -> bool:
+    if isinstance(exc, (TimeoutError, ConnectionError, OSError)):
+        return True
+    req_exc = getattr(requests, "exceptions", None)
+    if req_exc is not None and isinstance(exc, (req_exc.Timeout, req_exc.ConnectionError)):
+        return True
+    msg = str(exc).lower()
+    return any(tok in msg for tok in ("timed out", "timeout", "connection", "max retries", "name resolution"))
+
+
+def _http_call(
+    method: str,
+    url: str,
+    http_get: Any = None,
+    http_post: Any = None,
+    timeout_sec: int = REQUEST_TIMEOUT_SEC,
+    max_attempts: int = MAX_HTTP_ATTEMPTS,
+    **kwargs: Any,
+) -> Any:
+    """Execute HTTP GET/POST with strict <=10s timeout and at most 1 retry."""
+    eff_timeout = max(1, min(int(timeout_sec), 10))
+    eff_attempts = max(1, min(int(max_attempts), 2))
+    if method.upper() == "POST":
+        caller = http_post or http_get or requests.post
+    else:
+        caller = http_get or requests.get
+
+    last_exc: Exception | None = None
+    for attempt in range(eff_attempts):
+        try:
+            resp = caller(url, timeout=eff_timeout, **kwargs)
+            if resp.status_code in (429, 500, 502, 503, 504) and attempt + 1 < eff_attempts:
+                last_exc = RuntimeError(f"HTTP {resp.status_code} for {url}")
+                continue
+            return resp
+        except Exception as exc:
+            last_exc = exc
+            if attempt + 1 >= eff_attempts:
+                raise
+    raise RuntimeError(str(last_exc or f"HTTP failed for {url}"))
+
+
 def fetch_fred_series(
     series_id: str,
     http_get: Any = None,
-    timeout_sec: int = 12,
+    timeout_sec: int = REQUEST_TIMEOUT_SEC,
+    fred_url_template: str | None = None,
 ) -> list[tuple[str, float | None]]:
     """Fetch public FRED CSV (no API key) and parse `(YYYY-MM-DD, float|None)` rows."""
-    getter = http_get or requests.get
-    url = FRED_CSV_URL.format(series_id=series_id)
+    tpl = fred_url_template or FRED_CSV_URL
+    url = tpl.format(series_id=series_id) if "{series_id}" in tpl else f"{tpl}{series_id}"
+    eff_timeout = max(1, min(int(timeout_sec), 10))
     last_err: Exception | None = None
-    for _attempt in range(2):
+    saw_transport = False
+    for attempt in range(MAX_HTTP_ATTEMPTS):
         try:
-            resp = getter(url, timeout=timeout_sec, headers={"User-Agent": "SignalDesk-Macro/1.0"})
+            caller = http_get or requests.get
+            resp = caller(url, timeout=eff_timeout, headers={"User-Agent": "SignalDesk-Macro/1.0"})
+            if resp.status_code in (403, 429):
+                saw_transport = True
+                raise FredTransportError(f"FRED HTTP {resp.status_code} (blocked/limited) for {series_id}")
             if resp.status_code != 200:
                 raise RuntimeError(f"FRED HTTP {resp.status_code} for {series_id}")
             text = resp.text.strip()
@@ -262,7 +350,14 @@ def fetch_fred_series(
             return rows
         except Exception as exc:
             last_err = exc
-    raise RuntimeError(str(last_err or f"Failed fetching FRED {series_id}"))
+            if isinstance(exc, FredTransportError) or _is_transport_or_block_exc(exc):
+                saw_transport = True
+            if attempt + 1 >= MAX_HTTP_ATTEMPTS:
+                break
+    msg = str(last_err or f"Failed fetching FRED {series_id}")
+    if saw_transport:
+        raise FredTransportError(msg)
+    raise RuntimeError(msg)
 
 
 _MONTH_MAP = {
@@ -284,14 +379,15 @@ _MONTH_MAP = {
 def fetch_ism_te(
     indicator_id: str,
     http_get: Any = None,
-    timeout_sec: int = 12,
+    timeout_sec: int = REQUEST_TIMEOUT_SEC,
 ) -> dict[str, Any]:
     """Fetch latest ISM Manufacturing / Services PMI reading from TradingEconomics public page."""
     url = TE_ISM_URLS[indicator_id]
-    getter = http_get or requests.get
-    resp = getter(
+    resp = _http_call(
+        "GET",
         url,
-        timeout=timeout_sec,
+        http_get=http_get,
+        timeout_sec=timeout_sec,
         headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"},
     )
     if resp.status_code != 200:
@@ -357,6 +453,416 @@ def fetch_ism_te(
             return parsed
 
     raise RuntimeError(f"Could not parse ISM data from TradingEconomics for {indicator_id}")
+
+
+def fetch_bls_batch_v1(
+    series_ids: list[str],
+    start_year: int,
+    end_year: int,
+    http_get: Any = None,
+    http_post: Any = None,
+    timeout_sec: int = REQUEST_TIMEOUT_SEC,
+) -> dict[str, list[tuple[str, float | None]]]:
+    """Fetch multiple BLS series via Public Data API v1 (no API key required)."""
+    if not series_ids:
+        return {}
+    payload = {
+        "seriesid": list(series_ids),
+        "startyear": str(start_year),
+        "endyear": str(end_year),
+    }
+    resp = _http_call(
+        "POST",
+        BLS_API_V1_URL,
+        http_get=http_get,
+        http_post=http_post,
+        timeout_sec=timeout_sec,
+        json=payload,
+        headers={
+            "User-Agent": "SignalDesk-Macro/1.0",
+            "Content-Type": "application/json",
+        },
+    )
+    if resp.status_code != 200:
+        raise RuntimeError(f"BLS API v1 HTTP {resp.status_code}")
+    data = resp.json()
+    if data.get("status") != "REQUEST_SUCCEEDED":
+        msg = "; ".join(str(m) for m in (data.get("message") or []))
+        raise RuntimeError(f"BLS API v1 status={data.get('status')} {msg}".strip())
+
+    out: dict[str, list[tuple[str, float | None]]] = {}
+    for s_obj in (data.get("Results") or {}).get("series") or []:
+        sid = str(s_obj.get("seriesID") or "").strip()
+        if not sid:
+            continue
+        by_date: dict[str, float | None] = {}
+        for item in s_obj.get("data") or []:
+            yr_s = str(item.get("year") or "").strip()
+            p_s = str(item.get("period") or "").strip()
+            if not re.fullmatch(r"\d{4}", yr_s) or not re.fullmatch(r"M(0[1-9]|1[0-2])", p_s):
+                continue
+            d_s = f"{yr_s}-{p_s[1:]}-01"
+            v_raw = str(item.get("value") or "").strip().replace(",", "")
+            if not v_raw or v_raw in ("-", "."):
+                continue
+            try:
+                by_date[d_s] = float(v_raw)
+            except ValueError:
+                continue
+        if by_date:
+            out[sid] = sorted(by_date.items(), key=lambda x: x[0])
+    return out
+
+
+def fetch_dbnomics_series(
+    dataset_path: str,
+    http_get: Any = None,
+    timeout_sec: int = REQUEST_TIMEOUT_SEC,
+) -> list[tuple[str, float | None]]:
+    """Fetch public economic series from DBnomics v22 API (no key required)."""
+    url = DBNOMICS_SERIES_URL.format(dataset_path=dataset_path)
+    resp = _http_call(
+        "GET",
+        url,
+        http_get=http_get,
+        timeout_sec=timeout_sec,
+        headers={"User-Agent": "SignalDesk-Macro/1.0"},
+    )
+    if resp.status_code != 200:
+        raise RuntimeError(f"DBnomics HTTP {resp.status_code} for {dataset_path}")
+    j = resp.json()
+    docs = (j.get("series") or {}).get("docs") or []
+    if not docs:
+        raise RuntimeError(f"DBnomics empty docs for {dataset_path}")
+    doc = docs[0]
+    periods = doc.get("period") or []
+    values = doc.get("value") or []
+    by_date: dict[str, float | None] = {}
+    q_to_mo = {"Q1": "01", "Q2": "04", "Q3": "07", "Q4": "10"}
+    for p_raw, v_raw in zip(periods, values):
+        p_s = str(p_raw or "").strip()
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", p_s):
+            d_s = p_s
+        elif re.fullmatch(r"\d{4}-\d{2}", p_s):
+            d_s = f"{p_s}-01"
+        else:
+            m_q = re.fullmatch(r"(\d{4})-(Q[1-4])", p_s)
+            if not m_q:
+                continue
+            d_s = f"{m_q.group(1)}-{q_to_mo[m_q.group(2)]}-01"
+        if v_raw is None or str(v_raw).strip().upper() in ("", "NA", "NONE", "."):
+            continue
+        try:
+            by_date[d_s] = float(v_raw)
+        except (TypeError, ValueError):
+            continue
+    if not by_date:
+        raise RuntimeError(f"DBnomics no valid observations for {dataset_path}")
+    return sorted(by_date.items(), key=lambda x: x[0])
+
+
+def fetch_treasury_yield_curve(
+    now_utc: datetime,
+    http_get: Any = None,
+    timeout_sec: int = REQUEST_TIMEOUT_SEC,
+) -> dict[str, list[tuple[str, float | None]]]:
+    """Fetch Daily Treasury Par Yield Curve CSV (2 Yr & 10 Yr) plus optional FED/H15 sparkline backfill."""
+    ny_d = now_utc.astimezone(NY_TZ).date()
+    ym_targets: list[tuple[int, int]] = []
+    cur_y, cur_m = ny_d.year, ny_d.month
+    for offset in range(3):
+        m = cur_m - offset
+        y = cur_y
+        while m <= 0:
+            m += 12
+            y -= 1
+        ym_targets.append((y, m))
+    ym_targets.reverse()
+
+    merged: dict[str, dict[str, float | None]] = {"DGS2": {}, "DGS10": {}}
+
+    # Best-effort historical sparkline backfill via DBnomics FED/H15 (optional, non-fatal if slow/unavailable)
+    for yid, db_path in DBNOMICS_H15_YIELDS.items():
+        try:
+            hist_rows = fetch_dbnomics_series(db_path, http_get=http_get, timeout_sec=min(timeout_sec, 6))
+            for d_s, val in hist_rows:
+                if val is not None:
+                    merged[yid][d_s] = val
+        except Exception:
+            pass
+
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; SignalDesk-Macro/1.0)"}
+    treasury_rows_parsed = 0
+    last_err: Exception | None = None
+    for yr, mo in ym_targets:
+        yyyymm = f"{yr:04d}{mo:02d}"
+        url = TREASURY_YIELD_MONTHLY_CSV_URL.format(year=yr, yyyymm=yyyymm)
+        try:
+            resp = _http_call("GET", url, http_get=http_get, timeout_sec=timeout_sec, headers=headers)
+            if resp.status_code != 200:
+                last_err = RuntimeError(f"Treasury HTTP {resp.status_code} for {yyyymm}")
+                continue
+            text = resp.text.strip()
+            if not text or text.lstrip().startswith("<"):
+                continue
+            reader = csv.DictReader(io.StringIO(text))
+            for row in reader:
+                raw_d = str(row.get("Date") or "").strip()
+                m_d = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", raw_d)
+                if not m_d:
+                    continue
+                d_iso = f"{int(m_d.group(3)):04d}-{int(m_d.group(1)):02d}-{int(m_d.group(2)):02d}"
+                for col, yid in (("2 Yr", "DGS2"), ("10 Yr", "DGS10")):
+                    v_s = str(row.get(col) or "").strip()
+                    if v_s and v_s.upper() not in ("N/A", "NA", "."):
+                        try:
+                            merged[yid][d_iso] = float(v_s)
+                            treasury_rows_parsed += 1
+                        except ValueError:
+                            pass
+        except Exception as exc:
+            last_err = exc
+
+    if treasury_rows_parsed == 0 and (not merged["DGS2"] or not merged["DGS10"]):
+        raise RuntimeError(str(last_err or "Treasury yield curve CSV returned no valid rows"))
+
+    out: dict[str, list[tuple[str, float | None]]] = {}
+    for yid in ("DGS2", "DGS10"):
+        if not merged[yid]:
+            raise RuntimeError(f"Treasury yield fallback empty for {yid}")
+        out[yid] = sorted(merged[yid].items(), key=lambda x: x[0])
+    return out
+
+
+def fetch_census_retail_sales(
+    http_get: Any = None,
+    timeout_sec: int = REQUEST_TIMEOUT_SEC,
+) -> list[tuple[str, float | None]]:
+    """Fetch Census MRTS seasonally adjusted Retail & Food Services (`adv44X72.txt`, millions USD)."""
+    resp = _http_call(
+        "GET",
+        CENSUS_RETAIL_ADV_URL,
+        http_get=http_get,
+        timeout_sec=timeout_sec,
+        headers={"User-Agent": "Mozilla/5.0 (compatible; SignalDesk-Macro/1.0)"},
+    )
+    if resp.status_code != 200:
+        raise RuntimeError(f"Census MRTS HTTP {resp.status_code}")
+
+    by_date: dict[str, float | None] = {}
+    for raw_ln in resp.text.splitlines():
+        up = raw_ln.strip().upper()
+        if "SEASONAL FACTORS" in up:
+            break
+        m_yr = re.match(r"^\s*((?:19|20)\d{2})\s+(.*)$", raw_ln)
+        if not m_yr:
+            continue
+        yr = int(m_yr.group(1))
+        tokens = m_yr.group(2).split()
+        for idx, tok in enumerate(tokens[:12]):
+            clean_tok = tok.replace(",", "").strip()
+            if not clean_tok or clean_tok.upper() in ("NA", "N/A", "."):
+                continue
+            try:
+                val = float(clean_tok)
+            except ValueError:
+                continue
+            by_date[f"{yr:04d}-{idx + 1:02d}-01"] = val
+
+    if not by_date:
+        raise RuntimeError("Census adv44X72.txt parsed no monthly observations")
+    return sorted(by_date.items(), key=lambda x: x[0])
+
+
+def _parse_te_k_number(raw: str) -> float | None:
+    s = str(raw or "").strip().replace(",", "")
+    if not s:
+        return None
+    mult = 1.0
+    if s.upper().endswith("K"):
+        mult = 1000.0
+        s = s[:-1].strip()
+    elif s.upper().endswith("M"):
+        mult = 1_000_000.0
+        s = s[:-1].strip()
+    try:
+        return float(s) * mult
+    except ValueError:
+        return None
+
+
+def fetch_icsa_fallback(
+    now_utc: datetime,
+    http_get: Any = None,
+    http_post: Any = None,
+    timeout_sec: int = REQUEST_TIMEOUT_SEC,
+) -> tuple[list[tuple[str, float | None]], str, str]:
+    """Fetch Initial Jobless Claims (SA weekly headcount) from DOL OUI XML + TradingEconomics."""
+    merged: dict[str, float] = {}
+    used_sources: list[str] = []
+    errors: list[str] = []
+
+    ny_y = now_utc.astimezone(NY_TZ).year
+    try:
+        resp_dol = _http_call(
+            "POST",
+            DOL_OUI_WKCLAIMS_URL,
+            http_get=http_get,
+            http_post=http_post,
+            timeout_sec=timeout_sec,
+            data={
+                "level": "us",
+                "strtdate": str(ny_y - 2),
+                "enddate": str(ny_y + 1),
+                "filetype": "xml",
+                "submit": "Submit",
+            },
+            headers={"User-Agent": "Mozilla/5.0 (compatible; SignalDesk-Macro/1.0)"},
+        )
+        if resp_dol.status_code != 200:
+            raise RuntimeError(f"DOL OUI HTTP {resp_dol.status_code}")
+        clean_xml = html.unescape(resp_dol.text).replace("\xa0", "").strip()
+        root = ET.fromstring(clean_xml)
+        dol_count = 0
+        for wk in root.findall("week"):
+            d_raw = (wk.findtext("weekEnded") or "").strip()
+            sa_raw = (wk.findtext("InitialClaims/SA") or "").strip().replace(",", "")
+            m_d = re.fullmatch(r"(\d{2})/(\d{2})/(\d{4})", d_raw)
+            if not m_d or not re.fullmatch(r"\d+(?:\.\d+)?", sa_raw):
+                continue
+            d_iso = f"{m_d.group(3)}-{m_d.group(1)}-{m_d.group(2)}"
+            merged[d_iso] = float(sa_raw)
+            dol_count += 1
+        if dol_count > 0:
+            used_sources.append("DOL OUI")
+        else:
+            errors.append("DOL OUI empty XML")
+    except Exception as exc:
+        errors.append(f"DOL OUI: {exc}")
+
+    try:
+        resp_te = _http_call(
+            "GET",
+            TE_ICSA_URL,
+            http_get=http_get,
+            timeout_sec=timeout_sec,
+            headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"},
+        )
+        if resp_te.status_code != 200:
+            raise RuntimeError(f"TE HTTP {resp_te.status_code}")
+        te_html = resp_te.text
+        te_count = 0
+
+        # Parse calendar table rows on TradingEconomics jobless-claims page
+        for tb in re.findall(r"<table[^>]*>.*?</table>", te_html, re.S):
+            if "Initial Jobless Claims" not in tb:
+                continue
+            for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", tb, re.S):
+                cells = [
+                    re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", c)).strip()
+                    for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", tr, re.S)
+                ]
+                if len(cells) >= 6 and re.fullmatch(r"\d{4}-\d{2}-\d{2}", cells[0]) and "Initial Jobless Claims" in cells[2]:
+                    rel_d = date.fromisoformat(cells[0])
+                    m_ref = re.fullmatch(r"([A-Za-z]+)/(\d{1,2})", cells[3])
+                    act_raw = _parse_te_k_number(cells[4])
+                    prev_raw = _parse_te_k_number(cells[5])
+                    if not m_ref or act_raw is None:
+                        continue
+                    mo_n = _MONTH_MAP.get(m_ref.group(1).lower())
+                    if not mo_n:
+                        continue
+                    yr_n = rel_d.year
+                    if mo_n == 12 and rel_d.month == 1:
+                        yr_n -= 1
+                    wk_end = date(yr_n, mo_n, int(m_ref.group(2)))
+                    if prev_raw is not None:
+                        merged[(wk_end - timedelta(days=7)).isoformat()] = prev_raw
+                    merged[wk_end.isoformat()] = act_raw
+                    te_count += 1
+
+        # Parse summary description sentence as extra check / fallback
+        desc_m = re.search(r'id="historical-desc"[^>]*>(.*?)</', te_html, re.S | re.I)
+        meta_m = re.search(r'<meta[^>]+name="description"[^>]+content="([^"]+)"', te_html, re.I)
+        combo = " ".join([
+            re.sub(r"<[^>]+>", " ", desc_m.group(1)) if desc_m else "",
+            meta_m.group(1) if meta_m else "",
+        ])
+        m_txt = re.search(
+            r"to\s+([\d.]+)\s+thousand\s+in\s+the\s+week\s+ending\s+([A-Za-z]+)\s+(\d{1,2})\s+of\s+(\d{4})\s+from\s+([\d.]+)\s+thousand",
+            re.sub(r"\s+", " ", combo),
+            re.I,
+        )
+        if m_txt:
+            mo_n = _MONTH_MAP.get(m_txt.group(2).lower())
+            if mo_n:
+                wk_end = date(int(m_txt.group(4)), mo_n, int(m_txt.group(3)))
+                act_v = float(m_txt.group(1)) * 1000.0
+                prev_v = float(m_txt.group(5)) * 1000.0
+                merged[(wk_end - timedelta(days=7)).isoformat()] = prev_v
+                merged[wk_end.isoformat()] = act_v
+                te_count += 1
+
+        if te_count > 0:
+            used_sources.append("TradingEconomics")
+        else:
+            errors.append("TradingEconomics ICSA no parsed rows")
+    except Exception as exc:
+        errors.append(f"TradingEconomics ICSA: {exc}")
+
+    if len(merged) < 2:
+        raise RuntimeError("ICSA fallback failed: " + " | ".join(errors or ["no rows"]))
+
+    if used_sources == ["DOL OUI", "TradingEconomics"]:
+        src_used = "DOL / TradingEconomics（備用）"
+        src_detail = "DOL OUI r539cy XML ＋ TradingEconomics（備用）"
+    elif "DOL OUI" in used_sources:
+        src_used = "DOL OUI（備用）"
+        src_detail = "DOL OUI r539cy XML（備用）"
+    else:
+        src_used = "TradingEconomics（備用）"
+        src_detail = "TradingEconomics 公開頁面（備用）"
+    return sorted(merged.items(), key=lambda x: x[0]), src_used, src_detail
+
+
+def build_fomc_fallback_series(
+    cal_cfg: dict[str, Any],
+    now_utc: datetime,
+) -> tuple[list[tuple[str, float | None]], list[tuple[str, float | None]]]:
+    """Derive daily/monthly Fed Funds target range series from config/macro_calendar.yaml FOMC decisions."""
+    past_decs = list((cal_cfg.get("fomc") or {}).get("past_decisions") or [])
+    if not past_decs:
+        raise RuntimeError("No fomc.past_decisions in macro_calendar.yaml")
+
+    parsed_decs: list[tuple[date, float, float]] = []
+    for dec in past_decs:
+        rel_dt = _parse_et_iso(dec["release_et"])
+        parsed_decs.append((rel_dt.date(), float(dec["rate_high"]), float(dec["rate_low"])))
+    parsed_decs.sort(key=lambda x: x[0])
+
+    end_d = now_utc.astimezone(NY_TZ).date()
+    start_d = parsed_decs[0][0].replace(day=1)
+    upper_rows: list[tuple[str, float | None]] = []
+    lower_rows: list[tuple[str, float | None]] = []
+
+    cursor = start_d
+    idx = 0
+    while cursor <= end_d:
+        # Active target at end of month `cursor`
+        if cursor.month == 12:
+            month_end = date(cursor.year, 12, 31)
+        else:
+            month_end = date(cursor.year, cursor.month + 1, 1) - timedelta(days=1)
+        eff_end = min(month_end, end_d)
+        while idx + 1 < len(parsed_decs) and parsed_decs[idx + 1][0] <= eff_end:
+            idx += 1
+        _, hi, lo = parsed_decs[idx]
+        d_s = eff_end.isoformat()
+        upper_rows.append((d_s, hi))
+        lower_rows.append((d_s, lo))
+        cursor = date(cursor.year + 1, 1, 1) if cursor.month == 12 else date(cursor.year, cursor.month + 1, 1)
+
+    return upper_rows, lower_rows
 
 
 def _classify_surprise(
@@ -605,6 +1111,8 @@ def _build_fomc_card(
     cal_cfg: dict[str, Any],
     indexed_bars: dict[str, list[tuple[date, OHLCVBar]]],
     now_utc: datetime,
+    source_used: str = "FRED",
+    source_detail: str | None = None,
 ) -> dict[str, Any]:
     u_clean = [(d, v) for d, v in fred_upper if v is not None]
     l_clean = [(d, v) for d, v in fred_lower if v is not None]
@@ -702,6 +1210,17 @@ def _build_fomc_card(
     last_rel_tpe = _fmt_tpe(_parse_et_iso(last_dec["release_et"]))["time_taipei"] if last_dec.get("release_et") else latest_d
     next_up = _find_next_upcoming(list(fomc_cfg.get("upcoming") or []), now_utc)
 
+    sub_info_str = (
+        f"FRED 最新目標區間截至 {latest_d}｜{last_dec.get('action', '')}"
+        if source_used == "FRED"
+        else f"FOMC 決議目標區間（截至 {latest_d}）｜{last_dec.get('action', '')}"
+    )
+    src_str = source_detail or (
+        f"FRED（DFEDTARU / DFEDTARL，截至 {latest_d}）＋ Federal Reserve FOMC"
+        if source_used == "FRED"
+        else f"Federal Reserve FOMC 決議紀錄（截至 {latest_d}，備用）"
+    )
+
     return {
         "id": "FED_RATE",
         "category": "rates",
@@ -715,7 +1234,7 @@ def _build_fomc_card(
         "change_str": chg_str,
         "change_dir": chg_dir,
         "release_date_taipei": last_rel_tpe,
-        "sub_info": f"FRED 最新目標區間截至 {latest_d}｜{last_dec.get('action', '')}",
+        "sub_info": sub_info_str,
         "consensus_str": last_dec.get("consensus"),
         "consensus_source": last_dec.get("consensus_source"),
         "surprise": rows[-1]["surprise"] if rows else "—",
@@ -727,7 +1246,8 @@ def _build_fomc_card(
         "chart_label": "近 24 個月目標區間上／下限（%）",
         "next_release": next_up,
         "why": "聯準會基準利率決定全市場資金成本。升息或維持鷹派立場通常壓抑科技股與加密貨幣估值；降息週期則有助於風險偏好回溫。",
-        "source": f"FRED（DFEDTARU / DFEDTARL，截至 {latest_d}）＋ Federal Reserve FOMC",
+        "source": src_str,
+        "source_used": source_used,
         "data_status": "ok",
         "updating": False,
         "modal_title": "FOMC 利率決議",
@@ -744,8 +1264,12 @@ def _build_daily_yield_card(
     why_text: str,
     fred_rows: list[tuple[str, float | None]],
     indexed_bars: dict[str, list[tuple[date, OHLCVBar]]],
+    source_used: str = "FRED",
+    source_detail: str | None = None,
 ) -> dict[str, Any]:
     clean = [(d, v) for d, v in fred_rows if v is not None]
+    if len(clean) < 2:
+        raise ValueError(f"Insufficient yield observations for {indicator_id}")
     latest_d, latest_v = clean[-1]
     prev_d, prev_v = clean[-2]
     chg_str, chg_dir = _fmt_change(indicator_id, latest_v, prev_v)
@@ -814,7 +1338,8 @@ def _build_daily_yield_card(
         "chart_label": "近 24 個月月末殖利率（%）",
         "next_release": None,
         "why": why_text,
-        "source": f"FRED（{fred_id}，截至 {latest_d}）",
+        "source": source_detail or (f"FRED（{fred_id}，截至 {latest_d}）" if source_used == "FRED" else f"{source_used}（截至 {latest_d}）"),
+        "source_used": source_used,
         "data_status": "ok",
         "updating": False,
         "modal_title": f"{name}（近 24 個交易日）",
@@ -1078,6 +1603,8 @@ def _build_standard_indicator_card(
     te_latest: dict[str, Any] | None,
     indexed_bars: dict[str, list[tuple[date, OHLCVBar]]],
     now_utc: datetime,
+    source_used: str | None = None,
+    source_detail: str | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Build card + calendar past events for one standard (monthly/quarterly/weekly) indicator."""
     spec = INDICATOR_SPECS[indicator_id]
@@ -1257,17 +1784,20 @@ def _build_standard_indicator_card(
     if indicator_id in ("UNRATE", "AVG_HOURLY_EARNINGS"):
         next_up = _find_next_upcoming(list((cal_cfg.get("indicators", {}).get("NFP") or {}).get("upcoming_releases") or []), now_utc)
 
-    source_str = (
+    eff_source_used = source_used or (
+        "TradingEconomics ＋ ISM" if indicator_id in ("ISM_MFG", "ISM_SVC") else "FRED"
+    )
+    source_str = source_detail or (
         "TradingEconomics 公開頁面 ＋ ISM 報告"
         if indicator_id in ("ISM_MFG", "ISM_SVC")
-        else f"FRED（{spec['code']}）"
+        else (f"FRED（{spec['code']}）" if eff_source_used == "FRED" else f"{eff_source_used}（{spec['code']}）")
     )
     if indicator_id in ("UNRATE", "AVG_HOURLY_EARNINGS"):
-        modal_foot_extra = "BLS 就業報告固定與非農就業同日公布。歷史實際值取自 FRED 最新官方序列。"
+        modal_foot_extra = f"BLS 就業報告固定與非農就業同日公布。歷史實際值取自 {eff_source_used} 最新官方序列。"
     elif indicator_id in ("ISM_MFG", "ISM_SVC"):
         modal_foot_extra = "ISM 製造業／服務業 PMI 來自 ISM 官方報告與 TradingEconomics 公開存檔。"
     else:
-        modal_foot_extra = "歷史實際值以 FRED 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。"
+        modal_foot_extra = f"歷史實際值以 {eff_source_used} 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。"
 
     card = {
         "id": indicator_id,
@@ -1294,6 +1824,7 @@ def _build_standard_indicator_card(
         "next_release": next_up,
         "why": spec["why"],
         "source": source_str,
+        "source_used": eff_source_used,
         "data_status": "ok",
         "updating": False,
         "modal_title": spec["name"],
@@ -1492,6 +2023,7 @@ def _mark_preserved_updating(prev_card: dict[str, Any], err_msg: str) -> dict[st
     preserved = dict(prev_card)
     preserved["data_status"] = "資料更新中"
     preserved["updating"] = True
+    preserved["source_used"] = prev_card.get("source_used") or prev_card.get("source") or "前次資料（資料更新中）"
     preserved["updating_notice"] = f"資料更新中（來源暫時無法取得：{err_msg}，暫保留前次資料）"
     return preserved
 
@@ -1500,10 +2032,15 @@ def generate_macro_file(
     out_dir: Path,
     calendar_path: Path | None = None,
     http_get: Any = None,
+    http_post: Any = None,
     now_utc: datetime | None = None,
     use_local_cache: bool = True,
+    fred_base_url: str | None = None,
+    timeout_sec: int = REQUEST_TIMEOUT_SEC,
 ) -> dict[str, Any]:
-    """Fetch public macro data, compute market reactions from history_1d.json.gz, and write `out_dir/macro.json`."""
+    """Fetch public macro data (FRED primary + no-key fallbacks), compute market reactions, and write `out_dir/macro.json`."""
+    run_t0 = time_mod.monotonic()
+    eff_timeout = max(1, min(int(timeout_sec), 10))
     now = (now_utc or datetime.now(timezone.utc)).astimezone(timezone.utc)
     now_tpe = now.astimezone(TPE_TZ)
     cal_cfg = load_macro_calendar(calendar_path)
@@ -1518,7 +2055,7 @@ def generate_macro_file(
     raw_bars = _load_market_bars(out_dir, use_local_cache=use_local_cache)
     indexed_bars = {sym: _index_bars_with_dates(bars) for sym, bars in raw_bars.items()}
 
-    # Fetch FRED series cache (deduplicated)
+    # 1) Primary source: FRED (circuit-breaker fast-fail on 1st failure or any transport/limit error)
     fred_cache: dict[str, list[tuple[str, float | None]]] = {}
     fred_errors: dict[str, str] = {}
     needed_fred = [
@@ -1527,24 +2064,291 @@ def generate_macro_file(
         "PAYEMS", "UNRATE", "CES0500000003", "ICSA",
         "A191RL1Q225SBEA", "RSAFS",
     ]
+    fred_t0 = time_mod.monotonic()
+    fred_attempts = 0
+    fred_aborted = False
+    fred_abort_reason: str | None = None
+    fred_ok: list[str] = []
+    fred_failed: list[str] = []
+    fred_skipped: list[str] = []
+
     for sid in needed_fred:
+        if fred_aborted:
+            fred_skipped.append(sid)
+            fred_errors[sid] = f"FRED skipped after fast-fail ({fred_abort_reason})"
+            continue
+        fred_attempts += 1
         try:
-            fred_cache[sid] = fetch_fred_series(sid, http_get=http_get)
+            fred_cache[sid] = fetch_fred_series(
+                sid,
+                http_get=http_get,
+                timeout_sec=eff_timeout,
+                fred_url_template=fred_base_url,
+            )
+            fred_ok.append(sid)
         except Exception as exc:
             fred_errors[sid] = str(exc)
+            fred_failed.append(sid)
+            if fred_attempts == 1 or isinstance(exc, FredTransportError):
+                fred_aborted = True
+                fred_abort_reason = str(exc)
+
+    fred_elapsed = round(time_mod.monotonic() - fred_t0, 3)
+    sources_report: dict[str, Any] = {
+        "FRED": {
+            "status": "ok" if not fred_failed and not fred_skipped else ("partial" if fred_ok else "failed"),
+            "elapsed_sec": fred_elapsed,
+            "attempts": fred_attempts,
+            "aborted": fred_aborted,
+            "series_ok": fred_ok,
+            "series_failed": fred_failed,
+            "series_skipped": fred_skipped,
+            "error": fred_abort_reason or ("; ".join(f"{k}: {v}" for k, v in fred_errors.items()) if fred_errors else None),
+        }
+    }
+    indicators_report: dict[str, Any] = {}
+
+    # 2) Fallback sources ONLY for series not obtained from FRED
+    fallback_series: dict[str, dict[str, Any]] = {}
+    fallback_errors: dict[str, str] = {}
+
+    # 2a. FED_RATE fallback from FOMC YAML history
+    if "DFEDTARU" not in fred_cache or "DFEDTARL" not in fred_cache:
+        t0 = time_mod.monotonic()
+        try:
+            u_rows, l_rows = build_fomc_fallback_series(cal_cfg, now)
+            fallback_series["FED_RATE"] = {
+                "upper": u_rows,
+                "lower": l_rows,
+                "source_used": "FOMC 決議紀錄（備用）",
+                "source_detail": "Federal Reserve FOMC 決議紀錄（config/macro_calendar.yaml，備用）",
+            }
+            sources_report["FOMC_YAML"] = {
+                "status": "ok",
+                "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                "series_ok": ["FED_RATE"],
+                "series_failed": [],
+                "error": None,
+            }
+        except Exception as exc:
+            fallback_errors["FED_RATE"] = str(exc)
+            sources_report["FOMC_YAML"] = {
+                "status": "failed",
+                "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                "series_ok": [],
+                "series_failed": ["FED_RATE"],
+                "error": str(exc),
+            }
+
+    # 2b. US Treasury daily yield curve fallback (DGS2, DGS10)
+    needed_yields = [yid for yid in ("DGS2", "DGS10") if yid not in fred_cache]
+    if needed_yields:
+        t0 = time_mod.monotonic()
+        try:
+            tr_data = fetch_treasury_yield_curve(now, http_get=http_get, timeout_sec=eff_timeout)
+            ok_y: list[str] = []
+            for yid in needed_yields:
+                if tr_data.get(yid):
+                    fallback_series[yid] = {
+                        "rows": tr_data[yid],
+                        "source_used": "美國財政部（備用）",
+                        "source_detail": "U.S. Treasury Daily Par Yield Curve（備用）",
+                    }
+                    ok_y.append(yid)
+            sources_report["US_TREASURY"] = {
+                "status": "ok" if len(ok_y) == len(needed_yields) else "partial",
+                "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                "series_ok": ok_y,
+                "series_failed": [y for y in needed_yields if y not in ok_y],
+                "error": None,
+            }
+        except Exception as exc:
+            for yid in needed_yields:
+                fallback_errors[yid] = str(exc)
+            sources_report["US_TREASURY"] = {
+                "status": "failed",
+                "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                "series_ok": [],
+                "series_failed": needed_yields,
+                "error": str(exc),
+            }
+
+    # 2c. BLS Public API v1 batch fallback
+    needed_bls = [
+        ind_id for ind_id in ("CPI", "CORE_CPI", "PPI", "NFP", "UNRATE", "AVG_HOURLY_EARNINGS")
+        if INDICATOR_SPECS[ind_id]["code"] not in fred_cache
+    ]
+    if needed_bls:
+        t0 = time_mod.monotonic()
+        bls_sids = [BLS_FALLBACK_SERIES[ind_id] for ind_id in needed_bls]
+        try:
+            bls_map = fetch_bls_batch_v1(
+                bls_sids,
+                start_year=now.year - 3,
+                end_year=now.year,
+                http_get=http_get,
+                http_post=http_post,
+                timeout_sec=eff_timeout,
+            )
+            ok_b: list[str] = []
+            fail_b: list[str] = []
+            for ind_id in needed_bls:
+                bsid = BLS_FALLBACK_SERIES[ind_id]
+                if bls_map.get(bsid):
+                    fallback_series[ind_id] = {
+                        "rows": bls_map[bsid],
+                        "source_used": "BLS（備用）",
+                        "source_detail": f"BLS Public API v1（{bsid}，備用）",
+                    }
+                    ok_b.append(ind_id)
+                else:
+                    fail_b.append(ind_id)
+                    fallback_errors[ind_id] = f"BLS series {bsid} empty"
+            sources_report["BLS_API_V1"] = {
+                "status": "ok" if not fail_b else ("partial" if ok_b else "failed"),
+                "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                "series_ok": ok_b,
+                "series_failed": fail_b,
+                "error": None if not fail_b else f"Missing BLS series: {fail_b}",
+            }
+        except Exception as exc:
+            for ind_id in needed_bls:
+                fallback_errors[ind_id] = str(exc)
+            sources_report["BLS_API_V1"] = {
+                "status": "failed",
+                "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                "series_ok": [],
+                "series_failed": needed_bls,
+                "error": str(exc),
+            }
+
+    # 2d. DBnomics BEA fallback (PCE, CORE_PCE, GDP)
+    needed_bea = [
+        ind_id for ind_id in ("PCE", "CORE_PCE", "GDP")
+        if INDICATOR_SPECS[ind_id]["code"] not in fred_cache
+    ]
+    if needed_bea:
+        t0 = time_mod.monotonic()
+        ok_bea: list[str] = []
+        fail_bea: list[str] = []
+        err_bea: list[str] = []
+        for ind_id in needed_bea:
+            db_path = DBNOMICS_BEA_SERIES[ind_id]
+            try:
+                rows = fetch_dbnomics_series(db_path, http_get=http_get, timeout_sec=eff_timeout)
+                fallback_series[ind_id] = {
+                    "rows": rows,
+                    "source_used": "DBnomics BEA（備用）",
+                    "source_detail": f"DBnomics（{db_path}，備用）",
+                }
+                ok_bea.append(ind_id)
+            except Exception as exc:
+                fail_bea.append(ind_id)
+                fallback_errors[ind_id] = str(exc)
+                err_bea.append(f"{ind_id}: {exc}")
+        sources_report["DBNOMICS_BEA"] = {
+            "status": "ok" if not fail_bea else ("partial" if ok_bea else "failed"),
+            "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+            "series_ok": ok_bea,
+            "series_failed": fail_bea,
+            "error": "; ".join(err_bea) if err_bea else None,
+        }
+
+    # 2e. US Census MRTS fallback (RETAIL_SALES)
+    if INDICATOR_SPECS["RETAIL_SALES"]["code"] not in fred_cache:
+        t0 = time_mod.monotonic()
+        try:
+            rs_rows = fetch_census_retail_sales(http_get=http_get, timeout_sec=eff_timeout)
+            fallback_series["RETAIL_SALES"] = {
+                "rows": rs_rows,
+                "source_used": "美國普查局 Census（備用）",
+                "source_detail": "U.S. Census Bureau MRTS adv44X72（備用）",
+            }
+            sources_report["CENSUS_MRTS"] = {
+                "status": "ok",
+                "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                "series_ok": ["RETAIL_SALES"],
+                "series_failed": [],
+                "error": None,
+            }
+        except Exception as exc:
+            fallback_errors["RETAIL_SALES"] = str(exc)
+            sources_report["CENSUS_MRTS"] = {
+                "status": "failed",
+                "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                "series_ok": [],
+                "series_failed": ["RETAIL_SALES"],
+                "error": str(exc),
+            }
+
+    # 2f. DOL OUI XML + TradingEconomics fallback (ICSA)
+    if INDICATOR_SPECS["ICSA"]["code"] not in fred_cache:
+        t0 = time_mod.monotonic()
+        try:
+            icsa_rows, icsa_src_used, icsa_src_detail = fetch_icsa_fallback(
+                now,
+                http_get=http_get,
+                http_post=http_post,
+                timeout_sec=eff_timeout,
+            )
+            fallback_series["ICSA"] = {
+                "rows": icsa_rows,
+                "source_used": icsa_src_used,
+                "source_detail": icsa_src_detail,
+            }
+            sources_report["DOL_TE_ICSA"] = {
+                "status": "ok",
+                "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                "series_ok": ["ICSA"],
+                "series_failed": [],
+                "error": None,
+            }
+        except Exception as exc:
+            fallback_errors["ICSA"] = str(exc)
+            sources_report["DOL_TE_ICSA"] = {
+                "status": "failed",
+                "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                "series_ok": [],
+                "series_failed": ["ICSA"],
+                "error": str(exc),
+            }
 
     cards_out: list[dict[str, Any]] = []
     cal_past_all: list[dict[str, Any]] = []
     updating_ids: list[str] = []
     icsa_upcoming: list[dict[str, Any]] = []
 
-    # 1. FED_RATE
+    # 3) Assemble indicator cards
+    # 3a. FED_RATE
     if "DFEDTARU" in fred_cache and "DFEDTARL" in fred_cache:
-        cards_out.append(
-            _build_fomc_card(fred_cache["DFEDTARU"], fred_cache["DFEDTARL"], cal_cfg, indexed_bars, now)
+        fomc_card = _build_fomc_card(
+            fred_cache["DFEDTARU"], fred_cache["DFEDTARL"], cal_cfg, indexed_bars, now,
+            source_used="FRED",
         )
-        # Also populate FOMC past decisions into calendar past
-        fomc_card = cards_out[-1]
+        cards_out.append(fomc_card)
+        indicators_report["FED_RATE"] = {"source_used": "FRED", "fallback_used": False, "status": "ok"}
+    elif "FED_RATE" in fallback_series:
+        fb = fallback_series["FED_RATE"]
+        fomc_card = _build_fomc_card(
+            fb["upper"], fb["lower"], cal_cfg, indexed_bars, now,
+            source_used=fb["source_used"],
+            source_detail=fb["source_detail"],
+        )
+        cards_out.append(fomc_card)
+        indicators_report["FED_RATE"] = {"source_used": fb["source_used"], "fallback_used": True, "status": "ok"}
+    elif "FED_RATE" in prev_cards_by_id:
+        err = f"FRED: {fred_errors.get('DFEDTARU') or fred_errors.get('DFEDTARL')}; 備用: {fallback_errors.get('FED_RATE', '失敗')}"
+        preserved = _mark_preserved_updating(prev_cards_by_id["FED_RATE"], err)
+        cards_out.append(preserved)
+        updating_ids.append("FED_RATE")
+        indicators_report["FED_RATE"] = {"source_used": preserved["source_used"], "fallback_used": True, "status": "failed", "error": err}
+        fomc_card = None
+    else:
+        updating_ids.append("FED_RATE")
+        indicators_report["FED_RATE"] = {"source_used": None, "fallback_used": True, "status": "failed"}
+        fomc_card = None
+
+    if fomc_card is not None:
         for r in fomc_card["history_rows"]:
             cal_past_all.append({
                 "id": f"fomc-{r['period']}",
@@ -1565,20 +2369,14 @@ def generate_macro_file(
                 "reactions": r["reactions"],
                 "note": r.get("note", ""),
             })
-    elif "FED_RATE" in prev_cards_by_id:
-        err = fred_errors.get("DFEDTARU") or fred_errors.get("DFEDTARL") or "FRED 連線失敗"
-        cards_out.append(_mark_preserved_updating(prev_cards_by_id["FED_RATE"], err))
-        updating_ids.append("FED_RATE")
-    else:
-        updating_ids.append("FED_RATE")
 
-    # 2. DGS2 & DGS10
+    # 3b. DGS2 & DGS10
     for yid, yname, fid, ywhy in (
         (
             "DGS2",
             "2 年期美債殖利率",
             "DGS2",
-            "反映市場對未來兩年聯準會政策利率路徑的定價，對 FOMC 與通膨數據最為敏感。",
+            "反映市場對未來兩年聯準會利率路徑的定價，對 FOMC 與通膨數據最為敏感。",
         ),
         (
             "DGS10",
@@ -1588,56 +2386,122 @@ def generate_macro_file(
         ),
     ):
         if fid in fred_cache:
-            cards_out.append(_build_daily_yield_card(yid, yname, fid, ywhy, fred_cache[fid], indexed_bars))
+            cards_out.append(_build_daily_yield_card(yid, yname, fid, ywhy, fred_cache[fid], indexed_bars, source_used="FRED"))
+            indicators_report[yid] = {"source_used": "FRED", "fallback_used": False, "status": "ok"}
+        elif yid in fallback_series:
+            fb = fallback_series[yid]
+            cards_out.append(_build_daily_yield_card(
+                yid, yname, fid, ywhy, fb["rows"], indexed_bars,
+                source_used=fb["source_used"], source_detail=fb["source_detail"],
+            ))
+            indicators_report[yid] = {"source_used": fb["source_used"], "fallback_used": True, "status": "ok"}
         elif yid in prev_cards_by_id:
-            cards_out.append(_mark_preserved_updating(prev_cards_by_id[yid], fred_errors.get(fid, "FRED 連線失敗")))
+            err = f"FRED: {fred_errors.get(fid, '失敗')}; 備用: {fallback_errors.get(yid, '失敗')}"
+            preserved = _mark_preserved_updating(prev_cards_by_id[yid], err)
+            cards_out.append(preserved)
             updating_ids.append(yid)
+            indicators_report[yid] = {"source_used": preserved["source_used"], "fallback_used": True, "status": "failed", "error": err}
         else:
             updating_ids.append(yid)
+            indicators_report[yid] = {"source_used": None, "fallback_used": True, "status": "failed"}
 
-    # 3. Remaining 13 standard indicators
+    # 3c. Remaining 13 standard indicators
     std_order = [
         "CPI", "CORE_CPI", "PCE", "CORE_PCE", "PPI",
         "NFP", "UNRATE", "AVG_HOURLY_EARNINGS", "ICSA",
         "GDP", "ISM_MFG", "ISM_SVC", "RETAIL_SALES",
     ]
+    ism_t0 = time_mod.monotonic()
+    ism_ok: list[str] = []
+    ism_fail: list[str] = []
+    ism_errs: list[str] = []
+
     for ind_id in std_order:
         spec = INDICATOR_SPECS[ind_id]
         if ind_id in ("ISM_MFG", "ISM_SVC"):
             try:
-                te_latest = fetch_ism_te(ind_id, http_get=http_get)
+                te_latest = fetch_ism_te(ind_id, http_get=http_get, timeout_sec=eff_timeout)
                 card, cal_items = _build_standard_indicator_card(
-                    ind_id, cal_cfg, None, te_latest, indexed_bars, now
+                    ind_id, cal_cfg, None, te_latest, indexed_bars, now,
+                    source_used="TradingEconomics ＋ ISM",
                 )
                 cards_out.append(card)
                 cal_past_all.extend(cal_items)
+                ism_ok.append(ind_id)
+                indicators_report[ind_id] = {"source_used": "TradingEconomics ＋ ISM", "fallback_used": False, "status": "ok"}
             except Exception as exc:
+                ism_fail.append(ind_id)
+                ism_errs.append(f"{ind_id}: {exc}")
                 if ind_id in prev_cards_by_id:
-                    cards_out.append(_mark_preserved_updating(prev_cards_by_id[ind_id], str(exc)))
+                    preserved = _mark_preserved_updating(prev_cards_by_id[ind_id], str(exc))
+                    cards_out.append(preserved)
+                    indicators_report[ind_id] = {"source_used": preserved["source_used"], "fallback_used": False, "status": "failed", "error": str(exc)}
                 else:
-                    # Fallback to verified YAML snapshot while clearly flagging updating
                     card, cal_items = _build_standard_indicator_card(
-                        ind_id, cal_cfg, None, None, indexed_bars, now
+                        ind_id, cal_cfg, None, None, indexed_bars, now,
+                        source_used="TradingEconomics ＋ ISM",
                     )
-                    cards_out.append(_mark_preserved_updating(card, str(exc)))
+                    preserved = _mark_preserved_updating(card, str(exc))
+                    cards_out.append(preserved)
                     cal_past_all.extend(cal_items)
+                    indicators_report[ind_id] = {"source_used": preserved["source_used"], "fallback_used": False, "status": "failed", "error": str(exc)}
                 updating_ids.append(ind_id)
         else:
             fid = spec["code"]
             if fid in fred_cache:
                 card, cal_items = _build_standard_indicator_card(
-                    ind_id, cal_cfg, fred_cache[fid], None, indexed_bars, now
+                    ind_id, cal_cfg, fred_cache[fid], None, indexed_bars, now,
+                    source_used="FRED",
                 )
                 cards_out.append(card)
                 cal_past_all.extend(cal_items)
                 if ind_id == "ICSA":
                     _, icsa_upcoming = _build_icsa_schedule_map(fred_cache[fid], cal_cfg, now)
+                indicators_report[ind_id] = {"source_used": "FRED", "fallback_used": False, "status": "ok"}
+            elif ind_id in fallback_series:
+                fb = fallback_series[ind_id]
+                try:
+                    card, cal_items = _build_standard_indicator_card(
+                        ind_id, cal_cfg, fb["rows"], None, indexed_bars, now,
+                        source_used=fb["source_used"],
+                        source_detail=fb["source_detail"],
+                    )
+                    cards_out.append(card)
+                    cal_past_all.extend(cal_items)
+                    if ind_id == "ICSA":
+                        _, icsa_upcoming = _build_icsa_schedule_map(fb["rows"], cal_cfg, now)
+                    indicators_report[ind_id] = {"source_used": fb["source_used"], "fallback_used": True, "status": "ok"}
+                except Exception as exc:
+                    err = f"備用換算失敗: {exc}"
+                    if ind_id in prev_cards_by_id:
+                        preserved = _mark_preserved_updating(prev_cards_by_id[ind_id], err)
+                        cards_out.append(preserved)
+                        cal_past_all.extend([e for e in prev_cal_past if e.get("indicator_id") == ind_id])
+                    updating_ids.append(ind_id)
+                    indicators_report[ind_id] = {"source_used": None, "fallback_used": True, "status": "failed", "error": err}
             elif ind_id in prev_cards_by_id:
-                cards_out.append(_mark_preserved_updating(prev_cards_by_id[ind_id], fred_errors.get(fid, "FRED 連線失敗")))
+                err = f"FRED: {fred_errors.get(fid, '失敗')}; 備用: {fallback_errors.get(ind_id, '失敗')}"
+                preserved = _mark_preserved_updating(prev_cards_by_id[ind_id], err)
+                cards_out.append(preserved)
                 updating_ids.append(ind_id)
                 cal_past_all.extend([e for e in prev_cal_past if e.get("indicator_id") == ind_id])
+                indicators_report[ind_id] = {"source_used": preserved["source_used"], "fallback_used": True, "status": "failed", "error": err}
             else:
                 updating_ids.append(ind_id)
+                indicators_report[ind_id] = {
+                    "source_used": None,
+                    "fallback_used": True,
+                    "status": "failed",
+                    "error": f"FRED: {fred_errors.get(fid, '失敗')}; 備用: {fallback_errors.get(ind_id, '失敗')}",
+                }
+
+    sources_report["TE_ISM"] = {
+        "status": "ok" if not ism_fail else ("partial" if ism_ok else "failed"),
+        "elapsed_sec": round(time_mod.monotonic() - ism_t0, 3),
+        "series_ok": ism_ok,
+        "series_failed": ism_fail,
+        "error": "; ".join(ism_errs) if ism_errs else None,
+    }
 
     # Extra past calendar events (e.g., FOMC minutes)
     for ex in ((cal_cfg.get("extra_events") or {}).get("past") or []):
@@ -1687,6 +2551,13 @@ def generate_macro_file(
         "updated_at_taipei": now_tpe.strftime("%Y-%m-%d %H:%M"),
         "status": "partial" if updating_ids else "ok",
         "updating_indicators": updating_ids,
+        "fetch_report": {
+            "total_elapsed_sec": round(time_mod.monotonic() - run_t0, 3),
+            "fred_aborted": fred_aborted,
+            "fred_abort_reason": fred_abort_reason,
+            "sources": sources_report,
+            "indicators": indicators_report,
+        },
         "timezone_notes": cal_cfg.get("timezone_notes") or {},
         "reaction_methodology": {
             "source": "本站 data 分支 history_1d.json.gz（約 10 年日線）",
@@ -1713,19 +2584,24 @@ def main() -> None:
     parser.add_argument("--out-dir", type=Path, default=Path("data"))
     parser.add_argument("--calendar", type=Path, default=None)
     parser.add_argument("--no-local-cache", action="store_true", help="Disable .cache fallback when history_1d.json.gz missing")
+    parser.add_argument("--fred-base-url", type=str, default=None, help="Optional FRED URL template override (e.g. for fallback testing)")
+    parser.add_argument("--timeout", type=int, default=REQUEST_TIMEOUT_SEC, help="Per-request HTTP timeout in seconds (capped at 10)")
     args = parser.parse_args()
 
     res = generate_macro_file(
         out_dir=args.out_dir,
         calendar_path=args.calendar,
         use_local_cache=not args.no_local_cache,
+        fred_base_url=args.fred_base_url,
+        timeout_sec=args.timeout,
     )
     print(
         f"Generated {args.out_dir / 'macro.json'}: "
         f"{len(res['indicators'])} indicators, "
         f"{len(res['calendar']['upcoming'])} upcoming, "
         f"{len(res['calendar']['past'])} past events, "
-        f"status={res['status']}."
+        f"status={res['status']}, "
+        f"elapsed={res['fetch_report']['total_elapsed_sec']}s."
     )
 
 
