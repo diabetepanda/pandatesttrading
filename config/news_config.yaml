@@ -1,0 +1,602 @@
+# 消息面產生器設定檔（完全免 API Key）
+version: 1
+
+http:
+  request_timeout_sec: 8   # 單次請求上限 <= 10 秒，確保 Actions 3 分鐘內完成
+  max_retries: 1           # 失敗最多重試 1 次
+  user_agent: "Mozilla/5.0 (compatible; SignalDeskNewsBot/1.0; +https://github.com/diabetepanda/pandatesttrading)"
+
+schedule:
+  taipei_hours: [8, 20]    # 每天台北 08:00 (UTC 00:00) 與 20:00 (UTC 12:00)
+  recent_days_window: 7    # news_latest.json 保留最近 7 天索引
+  signal_news_days: 3      # 訊號卡片顯示最近 3 天相關消息
+  max_items_per_feed: 25   # 單一新聞來源最多取前 N 則
+  max_item_age_hours: 72   # 僅收錄發布時間在 72 小時內的新聞
+
+dedup:
+  title_similarity_threshold: 0.78   # 同標題高度相似視為同一則新聞，只收一次
+  followup_similarity_min: 0.46      # 後續期別出現同事件延伸報導（相似度介於 0.46~0.78）標記「同事件後續」
+  followup_lookback_days: 7          # 往回比對 7 天內歷史事件
+
+# 數據類消息觸發門檻（僅在變化明顯時產生，避免日常雜訊）
+data_thresholds:
+  funding_rate_high_pct:
+    value: 0.05
+    unit: "% / 8h"
+    rationale: "永續合約正常多頭基準資金費率約 +0.01%/8h；達 +0.05%（年化約 55%）代表多頭槓桿過度擁擠，具長倉擠壓回調風險。"
+  funding_rate_low_pct:
+    value: -0.03
+    unit: "% / 8h"
+    rationale: "因永續合約基準費率為正值，跌破 -0.03%/8h（年化約 -33%）已顯著偏離基準，代表空頭情緒極端或出現軋空條件。"
+  open_interest_24h_change_pct:
+    value: 10.0
+    unit: "%"
+    rationale: "主要幣種 24 小時未平倉量（OI）變動超過 ±10% 代表槓桿資金快速集中進場或出現大規模強制平倉去槓桿。"
+  stablecoin_1d_change_pct:
+    value: 0.5
+    unit: "%"
+    rationale: "全球穩定幣總市值約 2,800 億美元，單日變動達 ±0.5% 約當十多億美元淨鑄造或贖回，反映鏈上買盤流動性顯著變化。"
+  stablecoin_1d_change_usd_m:
+    value: 500.0
+    unit: "百萬美元"
+    rationale: "單日穩定幣總供給絕對變動達 5 億美元以上，代表大額法幣進出場或機構資金調度。"
+  chain_tvl_1d_change_pct:
+    value: 5.0
+    unit: "%"
+    min_tvl_usd_m: 1000.0
+    rationale: "僅追蹤 TVL >= 10 億美元之主要公鏈，單日變動超過 ±5% 通常對應重大資金跨鏈遷移、幣價劇烈波動或協議事件。"
+  hack_min_amount_usd:
+    value: 1000000
+    unit: "美元"
+    lookback_hours: 72
+    rationale: "過濾長尾小額漏洞，僅收錄單筆損失達 100 萬美元以上且發生於 72 小時內之安全事件，因具市場外溢風險。"
+  btc_etf_net_flow_abs_usd_m:
+    value: 150.0
+    unit: "百萬美元"
+    rationale: "美國比特幣現貨 ETF 單日合計淨流入或淨流出超過 1.5 億美元，代表機構現貨籌碼出現明顯方向性買盤或賣壓。"
+  mempool_fastest_fee_sat_vb:
+    value: 50
+    unit: "sat/vB"
+    rationale: "比特幣網路最速確認手續費達 50 sat/vB 以上代表鏈上區塊空間出現明顯搶單擁擠。"
+  mempool_vsize_mb:
+    value: 80.0
+    unit: "vMB"
+    rationale: "Mempool 待確認交易體積超過 80 vMB（約 80 個滿載區塊以上）代表鏈上擁擠度顯著升高，可能延遲交易所充提。"
+
+categories:
+  - 總經
+  - 聯準會
+  - 美股
+  - 台股
+  - 加密貨幣
+  - 鏈上資金
+  - 衍生品
+  - 交易所公告
+  - 安全事件
+
+sources:
+  # --- (a) 新聞 RSS / 公開 API ---
+  - id: fed_press
+    name: Federal Reserve
+    kind: rss
+    url: "https://www.federalreserve.gov/feeds/press_all.xml"
+    default_category: 聯準會
+    tier: official
+    filter_trading: false
+    enabled: true
+
+  - id: cnbc_top
+    name: CNBC
+    kind: rss
+    url: "https://www.cnbc.com/id/100003114/device/rss/rss.html"
+    default_category: 美股
+    tier: major
+    filter_trading: true
+    enabled: true
+
+  - id: cnbc_economy
+    name: CNBC Economy
+    kind: rss
+    url: "https://www.cnbc.com/id/20910258/device/rss/rss.html"
+    default_category: 總經
+    tier: major
+    filter_trading: true
+    enabled: true
+
+  - id: marketwatch_top
+    name: MarketWatch
+    kind: rss
+    url: "https://feeds.content.dowjones.io/public/rss/mw_topstories"
+    default_category: 美股
+    tier: major
+    filter_trading: true
+    enabled: true
+
+  - id: yahoo_finance_us
+    name: Yahoo Finance
+    kind: rss
+    url: "https://feeds.finance.yahoo.com/rss/2.0/headline?s=%5EGSPC,%5ENDX,AAPL,TSLA,GOOGL,GC=F,CL=F,BTC-USD,ETH-USD&region=US&lang=en-US"
+    default_category: 美股
+    tier: major
+    filter_trading: true
+    enabled: true
+
+  - id: coindesk
+    name: CoinDesk
+    kind: rss
+    url: "https://www.coindesk.com/arc/outboundfeeds/rss/"
+    default_category: 加密貨幣
+    tier: major
+    filter_trading: true
+    enabled: true
+
+  - id: cointelegraph
+    name: Cointelegraph
+    kind: rss
+    url: "https://cointelegraph.com/rss"
+    default_category: 加密貨幣
+    tier: media
+    filter_trading: true
+    enabled: true
+
+  - id: theblock
+    name: The Block
+    kind: rss
+    url: "https://www.theblock.co/rss.xml"
+    default_category: 加密貨幣
+    tier: major
+    filter_trading: true
+    enabled: true
+
+  - id: decrypt
+    name: Decrypt
+    kind: rss
+    url: "https://decrypt.co/feed"
+    default_category: 加密貨幣
+    tier: media
+    filter_trading: true
+    enabled: true
+
+  - id: cnyes_tw_stock
+    name: 鉅亨網（台股）
+    kind: cnyes
+    url: "https://api.cnyes.com/media/api/v1/newslist/category/tw_stock?limit=20"
+    default_category: 台股
+    tier: major
+    filter_trading: true
+    enabled: true
+
+  - id: cnyes_us_stock
+    name: 鉅亨網（美股）
+    kind: cnyes
+    url: "https://api.cnyes.com/media/api/v1/newslist/category/us_stock?limit=20"
+    default_category: 美股
+    tier: major
+    filter_trading: true
+    enabled: true
+
+  - id: cnyes_macro
+    name: 鉅亨網（總經）
+    kind: cnyes
+    url: "https://api.cnyes.com/media/api/v1/newslist/category/wd_macro?limit=20"
+    default_category: 總經
+    tier: major
+    filter_trading: true
+    enabled: true
+
+  - id: cnyes_crypto
+    name: 鉅亨網（加密）
+    kind: cnyes
+    url: "https://api.cnyes.com/media/api/v1/newslist/category/bc?limit=15"
+    default_category: 加密貨幣
+    tier: media
+    filter_trading: true
+    enabled: true
+
+  - id: udn_money_stock
+    name: 經濟日報
+    kind: rss
+    url: "https://money.udn.com/rssfeed/news/1001/5590/5710?ch=money"
+    default_category: 台股
+    tier: major
+    filter_trading: true
+    enabled: true
+
+  - id: yahoo_tw_stock
+    name: Yahoo奇摩股市
+    kind: rss
+    url: "https://tw.stock.yahoo.com/rss?category=tw-market"
+    default_category: 台股
+    tier: media
+    filter_trading: true
+    enabled: true
+
+  # --- (b) 鏈上、ETF、衍生品與交易所公告 ---
+  - id: defillama_stablecoins
+    name: DefiLlama 穩定幣
+    kind: defillama_stablecoins
+    url: "https://stablecoins.llama.fi/stablecoincharts/all"
+    default_category: 鏈上資金
+    tier: onchain
+    enabled: true
+
+  - id: defillama_chains
+    name: DefiLlama 公鏈 TVL
+    kind: defillama_chains
+    url: "https://api.llama.fi/v2/chains"
+    history_url_template: "https://api.llama.fi/v2/historicalChainTvl/{chain}"
+    default_category: 鏈上資金
+    tier: onchain
+    enabled: true
+
+  - id: defillama_hacks
+    name: DefiLlama 安全事件
+    kind: defillama_hacks
+    url: "https://api.llama.fi/hacks"
+    default_category: 安全事件
+    tier: onchain
+    enabled: true
+
+  - id: bitbo_btc_etf
+    name: Bitbo BTC 現貨 ETF
+    kind: bitbo_btc_etf
+    url: "https://bitbo.io/treasuries/etf-flows/"
+    default_category: 鏈上資金
+    tier: onchain
+    enabled: true
+
+  - id: binance_derivatives
+    name: Binance 永續合約
+    kind: binance_derivatives
+    funding_url: "https://fapi.binance.com/fapi/v1/premiumIndex"
+    oi_hist_url: "https://fapi.binance.com/futures/data/openInterestHist"
+    default_category: 衍生品
+    tier: exchange
+    enabled: true
+
+  - id: okx_derivatives
+    name: OKX 永續合約
+    kind: okx_derivatives
+    tickers_url: "https://www.okx.com/api/v5/market/tickers?instType=SWAP"
+    funding_url: "https://www.okx.com/api/v5/public/funding-rate"
+    oi_url: "https://www.okx.com/api/v5/public/open-interest?instType=SWAP"
+    default_category: 衍生品
+    tier: exchange
+    enabled: true
+
+  - id: bybit_derivatives
+    name: Bybit 永續合約
+    kind: bybit_derivatives
+    tickers_url: "https://api.bybit.com/v5/market/tickers?category=linear"
+    oi_url: "https://api.bybit.com/v5/market/open-interest"
+    default_category: 衍生品
+    tier: exchange
+    enabled: true
+
+  - id: mempool_space
+    name: mempool.space
+    kind: mempool
+    fees_url: "https://mempool.space/api/v1/fees/recommended"
+    mempool_url: "https://mempool.space/api/mempool"
+    default_category: 鏈上資金
+    tier: onchain
+    enabled: true
+
+  - id: binance_announcements
+    name: Binance 公告
+    kind: binance_announcements
+    listing_url: "https://www.binance.com/bapi/composite/v1/public/cms/article/list/query?type=1&catalogId=48&pageNo=1&pageSize=10"
+    delisting_url: "https://www.binance.com/bapi/composite/v1/public/cms/article/list/query?type=1&catalogId=161&pageNo=1&pageSize=10"
+    default_category: 交易所公告
+    tier: exchange
+    enabled: true
+
+  - id: okx_announcements
+    name: OKX 公告
+    kind: okx_announcements
+    listing_url: "https://www.okx.com/api/v5/support/announcements?annType=announcements-new-listings"
+    delisting_url: "https://www.okx.com/api/v5/support/announcements?annType=announcements-delistings"
+    default_category: 交易所公告
+    tier: exchange
+    enabled: true
+
+  - id: bybit_announcements
+    name: Bybit 公告
+    kind: bybit_announcements
+    listing_url: "https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
+    delisting_url: "https://api.bybit.com/v5/announcements/index?locale=en-US&type=delistings&limit=10"
+    default_category: 交易所公告
+    tier: exchange
+    enabled: true
+
+# 只收與交易有關的消息：白名單關鍵字 + 非交易雜訊排除
+trading_filter:
+  include_keywords:
+    - fed
+    - fomc
+    - powell
+    - rate cut
+    - rate hike
+    - interest rate
+    - inflation
+    - cpi
+    - ppi
+    - pce
+    - gdp
+    - payroll
+    - unemployment
+    - treasury
+    - yield
+    - bond
+    - tariff
+    - recession
+    - stock
+    - equities
+    - nasdaq
+    - s&p
+    - dow
+    - earnings
+    - guidance
+    - semiconductor
+    - chip
+    - oil
+    - crude
+    - gold
+    - silver
+    - copper
+    - natural gas
+    - opec
+    - bitcoin
+    - ethereum
+    - crypto
+    - stablecoin
+    - etf
+    - sec
+    - cftc
+    - listing
+    - delist
+    - futures
+    - perpetual
+    - funding rate
+    - open interest
+    - liquidation
+    - hack
+    - exploit
+    - defi
+    - tvl
+    - 聯準會
+    - 降息
+    - 升息
+    - 利率
+    - 通膨
+    - 美債
+    - 殖利率
+    - 非農
+    - 關稅
+    - 央行
+    - 美股
+    - 台股
+    - 加權
+    - 台積電
+    - 外資
+    - 投信
+    - 融資
+    - 國安基金
+    - 法說
+    - 財報
+    - 營收
+    - 半導體
+    - 記憶體
+    - 原油
+    - 黃金
+    - 白銀
+    - 天然氣
+    - 比特幣
+    - 以太坊
+    - 加密
+    - 穩定幣
+    - 爆倉
+    - 清算
+    - 資金費率
+    - 未平倉
+    - 上幣
+    - 下幣
+    - 下架
+    - 駭客
+    - 漏洞
+  exclude_keywords:
+    - horoscope
+    - celebrity
+    - movie review
+    - recipe
+    - travel guide
+    - best credit card
+    - mortgage calculator
+    - best savings account
+    - lottery
+    - podcast
+    - sponsored
+    - 星座
+    - 運勢
+    - 美食
+    - 旅遊
+    - 彩券
+    - 樂透
+    - 娛樂
+    - 電影
+    - 穿搭
+    - 減肥
+    - 親子
+    - 寵物
+    - 女星
+    - 男星
+    - 藝人
+    - 前主播
+    - college fed challenge
+
+# 重要程度判斷規則（★～★★★）
+importance_rules:
+  star3_keywords:
+    - fomc
+    - jerome powell
+    - rate cut
+    - rate hike
+    - emergency rate
+    - nonfarm
+    - cpi
+    - core pce
+    - ppi
+    - gdp
+    - tariff
+    - sanction
+    - war
+    - circuit breaker
+    - bank failure
+    - bailout
+    - bankruptcy
+    - sec approves
+    - sec sues
+    - spot etf
+    - delist
+    - delisting
+    - hack
+    - exploit
+    - stolen
+    - drain
+    - halt trading
+    - flash crash
+    - all-time high
+    - record high
+    - 聯準會
+    - 利率決議
+    - 降息
+    - 升息
+    - 鮑爾
+    - 鮑威爾
+    - 非農
+    - 美國cpi
+    - pce
+    - 關稅
+    - 國安基金
+    - 熔斷
+    - 破產
+    - 駭客
+    - 遭駭
+    - 被盜
+    - 下架
+    - 下幣
+    - 歷史新高
+    - 閃崩
+    - 暴跌
+  star2_keywords:
+    - treasury
+    - yield
+    - inflation
+    - unemployment
+    - jobless
+    - pmi
+    - retail sales
+    - earnings
+    - guidance
+    - forecast
+    - opec
+    - etf
+    - inflow
+    - outflow
+    - whale
+    - liquidation
+    - listing
+    - new listing
+    - perpetual
+    - upgrade
+    - mainnet
+    - 外資
+    - 財報
+    - 營收
+    - 法說會
+    - 殖利率
+    - 通膨
+    - 就業
+    - 失業率
+    - 淨流入
+    - 淨流出
+    - 爆倉
+    - 清算
+    - 上幣
+    - 上線
+    - 永續合約
+  star3_sources:
+    - fed_press
+    - defillama_hacks
+  star3_categories:
+    - 安全事件
+  star3_major_symbols:
+    - BTCUSDT
+    - ETHUSDT
+    - NAS100
+    - SP500
+    - TWII
+    - "2330"
+    - XAUUSD
+
+# 額外別名對照（會與 config/config.yaml 裡的 instruments 自動合併）
+symbol_aliases:
+  BTCUSDT: ["bitcoin", "btc", "比特幣"]
+  ETHUSDT: ["ethereum", "ether", "eth", "以太坊", "以太幣"]
+  SOLUSDT: ["solana", "sol", "索拉納"]
+  BNBUSDT: ["bnb", "binance coin"]
+  XRPUSDT: ["xrp", "ripple", "瑞波幣"]
+  DOGEUSDT: ["dogecoin", "doge", "狗狗幣"]
+  ADAUSDT: ["cardano", "ada"]
+  AVAXUSDT: ["avalanche", "avax"]
+  LINKUSDT: ["chainlink", "link"]
+  DOTUSDT: ["polkadot", "dot"]
+  LTCUSDT: ["litecoin", "ltc", "萊特幣"]
+  TRXUSDT: ["tron", "trx"]
+  BCHUSDT: ["bitcoin cash", "bch"]
+  NEARUSDT: ["near protocol"]
+  SUIUSDT: ["sui network", "sui token"]
+  TONUSDT: ["toncoin", "the open network"]
+  APTUSDT: ["aptos", "apt"]
+  UNIUSDT: ["uniswap", "uni"]
+  ATOMUSDT: ["cosmos", "atom"]
+  ETCUSDT: ["ethereum classic", "etc"]
+  FILUSDT: ["filecoin", "fil"]
+  ARBUSDT: ["arbitrum", "arb"]
+  OPUSDT: ["optimism"]
+  INJUSDT: ["injective", "inj"]
+  AAVEUSDT: ["aave"]
+  XLMUSDT: ["stellar", "xlm"]
+  HBARUSDT: ["hedera", "hbar"]
+  ICPUSDT: ["internet computer", "icp"]
+  SEIUSDT: ["sei network", "sei token"]
+  TIAUSDT: ["celestia", "tia"]
+  PEPEUSDT: ["pepe"]
+  WLDUSDT: ["worldcoin", "wld"]
+  RENDERUSDT: ["render", "rndr"]
+  XAUUSD: ["gold price", "spot gold", "xau", "gold futures", "黃金", "金價"]
+  XAGUSD: ["silver price", "spot silver", "xag", "silver futures", "白銀", "銀價"]
+  WTI: ["wti", "crude oil", "oil price", "brent", "opec", "原油", "油價"]
+  NATGAS: ["natural gas", "天然氣"]
+  COPPER: ["copper", "期銅", "銅價"]
+  NAS100: ["nasdaq 100", "nasdaq-100", "nasdaq", "ndx", "那斯達克", "那指"]
+  SP500: ["s&p 500", "s&p500", "spx", "標普 500", "標普500", "標普"]
+  JP225: ["nikkei 225", "nikkei", "日經 225", "日經"]
+  TWII: ["taiex", "台股", "加權指數", "大盤"]
+  "2330": ["2330", "tsmc", "taiwan semiconductor", "台積電"]
+  "2454": ["2454", "mediatek", "聯發科"]
+  "3711": ["3711", "ase technology", "日月光", "日月光投控"]
+  "2317": ["2317", "foxconn", "hon hai", "鴻海"]
+  "2382": ["2382", "quanta computer", "廣達"]
+  "2308": ["2308", "delta electronics", "台達電"]
+  "2881": ["2881", "fubon", "富邦金"]
+  "2882": ["2882", "cathay financial", "國泰金"]
+  "2891": ["2891", "ctbc", "中信金"]
+  "2603": ["2603", "evergreen marine", "長榮海運", "長榮"]
+  "1301": ["1301", "formosa plastics", "台塑"]
+  "2412": ["2412", "chunghwa telecom", "中華電", "中華電信"]
+  TSLA: ["tsla", "tesla", "特斯拉"]
+  GOOGL: ["googl", "goog", "google", "alphabet", "谷歌"]
+  AAPL: ["aapl", "apple", "蘋果"]
+  SNDK: ["sndk", "sandisk", "閃迪"]
+  SPCX: ["spcx", "spacex"]

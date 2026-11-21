@@ -20,7 +20,7 @@ WORKFLOW_DIR = Path(__file__).resolve().parent.parent / ".github" / "workflows"
 
 
 def test_data_writer_workflows_have_distinct_concurrency_groups() -> None:
-    targets = ["scan.yml", "daily.yml", "weekly.yml"]
+    targets = ["scan.yml", "daily.yml", "weekly.yml", "news.yml"]
     groups: list[str] = []
     for name in targets:
         wf = yaml.safe_load((WORKFLOW_DIR / name).read_text(encoding="utf-8"))

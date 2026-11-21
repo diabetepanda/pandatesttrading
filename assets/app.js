@@ -28,6 +28,11 @@
   let cachedEquity = null;
   let cachedEvents = null;
   let cachedTa = null;
+  let cachedNewsLatest = null;
+  let cachedNewsIndex = null;
+  const newsMonthCache = {};
+  let newsSelectedIssue = "";
+  let newsLoadingMonth = false;
   let expandedTaSymbol = null;
   let livePrices = {};
   let activeChart = null;
@@ -274,6 +279,45 @@
       // fallback to local data/ta.json when data branch does not yet have ta.json
     }
     return fetchWithTimeout(`data/ta.json?t=${Date.now()}`, false);
+  }
+
+  async function fetchNewsLatest() {
+    try {
+      const data = await fetchDataJson("news_latest.json");
+      if (data && data.latest_issue) return data;
+    } catch (_err) {
+      // fallback to local data/news_latest.json
+    }
+    return fetchWithTimeout(`data/news_latest.json?t=${Date.now()}`, false);
+  }
+
+  async function fetchNewsIndex() {
+    try {
+      const data = await fetchDataJson("news_index.json");
+      if (data && Array.isArray(data.issues)) return data;
+    } catch (_err) {
+      // fallback to local data/news_index.json
+    }
+    return fetchWithTimeout(`data/news_index.json?t=${Date.now()}`, false);
+  }
+
+  async function fetchNewsMonthJsonl(month) {
+    if (!month) return [];
+    if (Array.isArray(newsMonthCache[month])) return newsMonthCache[month];
+    let text = "";
+    try {
+      text = await fetchDataText(`news/${encodeURIComponent(month)}.jsonl`);
+    } catch (_err) {
+      text = await fetchWithTimeout(`data/news/${encodeURIComponent(month)}.jsonl?t=${Date.now()}`, true);
+    }
+    const rows = String(text || "")
+      .split("\n")
+      .map((l) => l.trim())
+      .filter(Boolean)
+      .map((l) => { try { return JSON.parse(l); } catch (_) { return null; } })
+      .filter((x) => x && x.id);
+    newsMonthCache[month] = rows;
+    return rows;
   }
 
   function isLiveCapable(symbol) {
@@ -1201,6 +1245,7 @@
                 <div style="grid-column:1 / -1;"><span class="muted">出場規則：</span>${escapeHtml(ruleTxt)}</div>
               </div>
               ${liveHtml}
+              ${renderSignalRelatedNewsHtml(s.symbol)}
               <div class="card-actions">
                 <button class="btn copy-sig-btn" data-sid="${escapeHtml(s.signal_id)}" type="button">一鍵複製報單文字</button>
                 <a class="btn btn-primary" href="#/signal/${encodeURIComponent(s.signal_id)}">查看詳情</a>
@@ -1322,6 +1367,7 @@
         <ul>${reasonsHtml}</ul>
         ${snapHtml}
       </section>
+      ${renderSignalRelatedNewsHtml(sig.symbol)}
     `;
 
     bindCopyButton(document.getElementById("detail-copy-url"), window.location.href, "複製固定網址");
@@ -3129,6 +3175,229 @@
     container.innerHTML = renderResearchHtml(cachedResearch);
   }
 
+  function getRelatedNewsForSymbol(symbol, days = 3, limit = 5, nowMsOverride) {
+    if (!symbol || !cachedNewsLatest) return [];
+    const pool = []
+      .concat(Array.isArray(cachedNewsLatest.latest_items) ? cachedNewsLatest.latest_items : [])
+      .concat(Array.isArray(cachedNewsLatest.recent_7d_items) ? cachedNewsLatest.recent_7d_items : []);
+    if (pool.length === 0) return [];
+    const refMs = Number.isFinite(nowMsOverride)
+      ? nowMsOverride
+      : Math.max(Date.now(), Date.parse(cachedNewsLatest.updated_at_utc || "") || 0);
+    const cutoffMs = refMs - days * 86400 * 1000;
+    const seen = new Set();
+    const matched = [];
+    for (const item of pool) {
+      if (!item || !item.id || seen.has(item.id)) continue;
+      seen.add(item.id);
+      const syms = Array.isArray(item.symbols) ? item.symbols : [];
+      if (!syms.includes(symbol)) continue;
+      const pubMs = Date.parse(item.published_at_utc || "");
+      if (Number.isFinite(pubMs) && pubMs < cutoffMs) continue;
+      matched.push(item);
+    }
+    matched.sort((a, b) => (Date.parse(b.published_at_utc || "") || 0) - (Date.parse(a.published_at_utc || "") || 0));
+    return matched.slice(0, limit);
+  }
+
+  function renderSignalRelatedNewsHtml(symbol) {
+    const items = getRelatedNewsForSymbol(symbol, 3, 5);
+    if (!items || items.length === 0) return "";
+    const rowsHtml = items.map((it) => {
+      const stars = it.importance_stars || "★".repeat(Number(it.importance || 1));
+      const starCls = `news-stars news-stars-${Math.min(3, Math.max(1, Number(it.importance || 1)))}`;
+      const timeStr = formatTaipeiTime(it.published_at_utc);
+      const safeUrl = escapeHtml(it.url || "#");
+      return `
+        <li class="signal-news-item">
+          <span class="news-time">${escapeHtml(timeStr)}</span>
+          <span class="${starCls}">${escapeHtml(stars)}</span>
+          <span class="news-cat-pill news-cat-${escapeHtml(it.category || "")}">${escapeHtml(it.category || "")}</span>
+          <a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(it.title || "")}</a>
+        </li>`;
+    }).join("");
+    return `
+      <div class="signal-news-box">
+        <div class="signal-news-title">相關消息（最近 3 天）</div>
+        <ul class="signal-news-list">${rowsHtml}</ul>
+      </div>`;
+  }
+
+  function renderNewsRowHtml(item) {
+    const imp = Math.min(3, Math.max(1, Number(item.importance || 1)));
+    const stars = item.importance_stars || "★".repeat(imp);
+    const timeStr = formatTaipeiTime(item.published_at_utc);
+    const cat = item.category || "總經";
+    const syms = Array.isArray(item.symbols) ? item.symbols : [];
+    const symPills = syms.map((sym) => `<span class="news-sym-pill">${escapeHtml(sym)}</span>`).join("");
+    const followup = item.followup_of && item.followup_of.title
+      ? `<a class="news-followup-link" href="${escapeHtml(item.followup_of.url || "#")}" target="_blank" rel="noopener noreferrer" title="前情（${escapeHtml(item.followup_of.issue || "")}）：${escapeHtml(item.followup_of.title)}">同事件後續</a>`
+      : "";
+    const dataCls = item.is_data_alert ? " news-row-data" : "";
+    return `
+      <div class="news-row${dataCls}">
+        <span class="news-time">${escapeHtml(timeStr)}</span>
+        <span class="news-stars news-stars-${imp}">${escapeHtml(stars)}</span>
+        <span class="news-cat-pill news-cat-${escapeHtml(cat)}">${escapeHtml(cat)}</span>
+        <a class="news-title-link" href="${escapeHtml(item.url || "#")}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title || "")}</a>
+        ${followup}
+        ${symPills ? `<span class="news-symbols">${symPills}</span>` : ""}
+        <span class="news-source">${escapeHtml(item.source || "")}</span>
+      </div>`;
+  }
+
+  function _getIssueMetaFromIndex(issueId) {
+    const issues = (cachedNewsIndex && Array.isArray(cachedNewsIndex.issues))
+      ? cachedNewsIndex.issues
+      : ((cachedNewsLatest && Array.isArray(cachedNewsLatest.recent_issues)) ? cachedNewsLatest.recent_issues : []);
+    return issues.find((x) => x && x.issue === issueId) || null;
+  }
+
+  async function renderNewsView() {
+    const issueBadge = document.getElementById("news-issue-badge");
+    const updatedEl = document.getElementById("news-updated-at");
+    const countBadge = document.getElementById("news-count-badge");
+    const failedBanner = document.getElementById("news-failed-banner");
+    const highlightsEl = document.getElementById("news-highlights-list");
+    const listEl = document.getElementById("news-list");
+    const issueSelect = document.getElementById("news-issue-select");
+    const catSelect = document.getElementById("news-filter-category");
+    const symSelect = document.getElementById("news-filter-symbol");
+    const impSelect = document.getElementById("news-filter-importance");
+    if (!listEl) return;
+
+    if (!cachedNewsLatest) {
+      if (issueBadge) issueBadge.textContent = "期號：尚無資料";
+      if (updatedEl) updatedEl.textContent = "更新時間：--";
+      if (highlightsEl) highlightsEl.innerHTML = '<div class="empty-state">尚未載入消息面資料。</div>';
+      listEl.innerHTML = '<div class="empty-state">目前尚無消息面資料（請確認已執行消息面排程或檢查網路連線）。</div>';
+      return;
+    }
+
+    const latestIssue = cachedNewsLatest.latest_issue || "";
+    if (!newsSelectedIssue) newsSelectedIssue = latestIssue;
+
+    // Populate issue dropdown from news_index.json (or recent_issues fallback)
+    const allIssues = (cachedNewsIndex && Array.isArray(cachedNewsIndex.issues) && cachedNewsIndex.issues.length > 0)
+      ? cachedNewsIndex.issues
+      : (Array.isArray(cachedNewsLatest.recent_issues) ? cachedNewsLatest.recent_issues : []);
+
+    if (issueSelect) {
+      const prevVal = newsSelectedIssue || latestIssue;
+      const optsHtml = allIssues.length > 0
+        ? allIssues.map((iss) => {
+            const label = iss.issue === latestIssue
+              ? `${iss.issue}（最新一期 · ${iss.count ?? 0} 則）`
+              : `${iss.issue}（${iss.count ?? 0} 則）`;
+            return `<option value="${escapeHtml(iss.issue)}">${escapeHtml(label)}</option>`;
+          }).join("")
+        : `<option value="${escapeHtml(latestIssue)}">${escapeHtml(latestIssue)}（最新一期）</option>`;
+      issueSelect.innerHTML = optsHtml;
+      issueSelect.value = allIssues.some((x) => x.issue === prevVal) ? prevVal : latestIssue;
+      newsSelectedIssue = issueSelect.value || latestIssue;
+    }
+
+    const targetIssue = newsSelectedIssue || latestIssue;
+    const issueMeta = _getIssueMetaFromIndex(targetIssue);
+    let issueItems = [];
+
+    if (targetIssue === latestIssue) {
+      issueItems = Array.isArray(cachedNewsLatest.latest_items) ? cachedNewsLatest.latest_items.slice() : [];
+    } else {
+      const recentPool = Array.isArray(cachedNewsLatest.recent_7d_items) ? cachedNewsLatest.recent_7d_items : [];
+      const fromRecent = recentPool.filter((it) => it && it.issue === targetIssue);
+      const expectedCount = issueMeta && typeof issueMeta.count === "number" ? issueMeta.count : null;
+      if (fromRecent.length > 0 && (expectedCount === null || fromRecent.length >= expectedCount)) {
+        issueItems = fromRecent;
+      } else {
+        const targetMonth = (issueMeta && issueMeta.month) || targetIssue.slice(0, 7);
+        if (Array.isArray(newsMonthCache[targetMonth])) {
+          issueItems = newsMonthCache[targetMonth].filter((it) => it && it.issue === targetIssue);
+        } else if (!newsLoadingMonth) {
+          newsLoadingMonth = true;
+          listEl.innerHTML = `<div class="empty-state">正在載入 ${escapeHtml(targetMonth)} 月份歷史資料...</div>`;
+          try {
+            const monthRows = await fetchNewsMonthJsonl(targetMonth);
+            issueItems = monthRows.filter((it) => it && it.issue === targetIssue);
+          } catch (err) {
+            listEl.innerHTML = `<div class="empty-state">無法載入 ${escapeHtml(targetMonth)}.jsonl（${escapeHtml(err.message)}）</div>`;
+            newsLoadingMonth = false;
+            return;
+          }
+          newsLoadingMonth = false;
+        }
+      }
+    }
+
+    // Header metadata
+    const updDisplay = targetIssue === latestIssue
+      ? (cachedNewsLatest.updated_at_taipei || "--")
+      : ((issueMeta && issueMeta.updated_at_taipei) || targetIssue);
+    if (issueBadge) issueBadge.textContent = `期號：${targetIssue || "--"}`;
+    if (updatedEl) updatedEl.textContent = `更新時間：${updDisplay} 台北時間`;
+
+    const failedList = targetIssue === latestIssue
+      ? (Array.isArray(cachedNewsLatest.failed_sources) ? cachedNewsLatest.failed_sources : [])
+      : (issueMeta && Array.isArray(issueMeta.failed_sources) ? issueMeta.failed_sources : []);
+    if (failedBanner) {
+      if (failedList.length > 0) {
+        const names = failedList.map((f) => escapeHtml(f.name || f.id || "")).join("、");
+        failedBanner.innerHTML = `⚠️ 本期部分來源暫時無法連線（已保留其他正常來源）：<strong>${names}</strong>`;
+        failedBanner.classList.remove("hidden");
+      } else {
+        failedBanner.classList.add("hidden");
+        failedBanner.innerHTML = "";
+      }
+    }
+
+    // Populate symbol filter options from current issue items + tracked instruments
+    if (symSelect) {
+      const curSymVal = symSelect.value || "all";
+      const symSet = new Set();
+      issueItems.forEach((it) => (it.symbols || []).forEach((s) => symSet.add(s)));
+      const sortedSyms = Array.from(symSet).sort();
+      symSelect.innerHTML = '<option value="all">全部相關標的</option>' +
+        sortedSyms.map((s) => `<option value="${escapeHtml(s)}">${escapeHtml(formatInstrumentTitle(s))}</option>`).join("");
+      symSelect.value = sortedSyms.includes(curSymVal) ? curSymVal : "all";
+    }
+
+    // Highlights section: ★★★ items of the selected issue
+    const star3Items = issueItems
+      .filter((it) => Number(it.importance || 1) >= 3)
+      .sort((a, b) => (Date.parse(b.published_at_utc || "") || 0) - (Date.parse(a.published_at_utc || "") || 0));
+    if (highlightsEl) {
+      highlightsEl.innerHTML = star3Items.length > 0
+        ? star3Items.map(renderNewsRowHtml).join("")
+        : '<div class="empty-state">本期無 ★★★ 重點消息。</div>';
+    }
+
+    // Filtered list
+    const fCat = catSelect ? catSelect.value : "all";
+    const fSym = symSelect ? symSelect.value : "all";
+    const fImp = impSelect ? impSelect.value : "all";
+
+    const filtered = issueItems
+      .filter((it) => {
+        if (fCat !== "all" && it.category !== fCat) return false;
+        if (fSym !== "all" && !(Array.isArray(it.symbols) && it.symbols.includes(fSym))) return false;
+        if (fImp === "3" && Number(it.importance || 1) < 3) return false;
+        if (fImp === "2" && Number(it.importance || 1) < 2) return false;
+        if (fImp === "1" && Number(it.importance || 1) !== 1) return false;
+        return true;
+      })
+      .sort((a, b) => (Number(b.importance || 1) - Number(a.importance || 1)) || ((Date.parse(b.published_at_utc || "") || 0) - (Date.parse(a.published_at_utc || "") || 0)));
+
+    if (countBadge) {
+      countBadge.textContent = filtered.length === issueItems.length
+        ? `${issueItems.length} 則`
+        : `${filtered.length} / ${issueItems.length} 則`;
+    }
+
+    listEl.innerHTML = filtered.length > 0
+      ? filtered.map(renderNewsRowHtml).join("")
+      : '<div class="empty-state">此篩選條件下沒有消息。</div>';
+  }
+
   function renderDataExtras() {
     const evTbody = document.getElementById("events-tbody");
     if (evTbody) {
@@ -3207,6 +3476,10 @@
       document.getElementById("view-research")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="research"]')?.classList.add("active");
       renderResearchView();
+    } else if (route === "news") {
+      document.getElementById("view-news")?.classList.remove("hidden");
+      document.querySelector('.nav-link[data-route="news"]')?.classList.add("active");
+      renderNewsView();
     } else {
       document.getElementById("view-wall")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="wall"]')?.classList.add("active");
@@ -3253,7 +3526,7 @@
     try {
       const [
         instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, tradesRes, watchRes, watchDailyRes, btRes,
-        perfRes, riskRes, eqRes, evRes, contestRes, taRes,
+        perfRes, riskRes, eqRes, evRes, contestRes, taRes, newsLatestRes, newsIndexRes,
       ] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
         fetchDataJson("data_health.json"),
@@ -3271,7 +3544,16 @@
         fetchDataJson("events_calendar.json"),
         fetchResearch(),
         fetchTaData(),
+        fetchNewsLatest(),
+        fetchNewsIndex(),
       ]);
+
+      // Apply news even if instruments.json or other feeds are temporarily unavailable
+      cachedNewsLatest = newsLatestRes.status === "fulfilled" ? newsLatestRes.value : cachedNewsLatest;
+      cachedNewsIndex = newsIndexRes.status === "fulfilled" ? newsIndexRes.value : cachedNewsIndex;
+      if ((window.location.hash || "").includes("news")) {
+        try { renderNewsView(); } catch (e) { console.error("renderNewsView 失敗：", e); }
+      }
 
       if (instRes.status === "rejected") {
         throw new Error(`無法讀取 data 分支資料（${instRes.reason.message}）。請確認已於 GitHub Actions 執行過 Market Scan。`);
@@ -3317,7 +3599,7 @@
       // 每個區塊各自防護：一個區塊出錯不會拖垮整個頁面
       [renderOpenNowSignals, renderInstruments, renderWallCards, renderBacktestResults,
        renderPerformanceStats, renderSimulatedAccount,
-       renderRiskCenter, renderDataExtras].forEach((fn) => {
+       renderRiskCenter, renderDataExtras, renderNewsView].forEach((fn) => {
         try { fn(); } catch (e) { console.error(`${fn.name} 失敗：`, e); }
       });
 
@@ -3427,6 +3709,16 @@
     el.addEventListener("input", renderWallCards);
   });
 
+  document.getElementById("news-issue-select")?.addEventListener("change", (e) => {
+    newsSelectedIssue = e.target.value || "";
+    renderNewsView();
+  });
+  ["news-filter-category", "news-filter-symbol", "news-filter-importance"].forEach((id) => {
+    document.getElementById(id)?.addEventListener("change", () => {
+      renderNewsView();
+    });
+  });
+
   document.getElementById("watch-scope-tabs")?.addEventListener("click", (e) => {
     const btn = e.target.closest(".tab");
     if (!btn) return;
@@ -3530,6 +3822,22 @@
     },
     getExpandedTaSymbol() {
       return expandedTaSymbol;
+    },
+    getRelatedNewsForSymbol,
+    renderSignalRelatedNewsHtml,
+    renderNewsView,
+    setNewsDataForTest(latestDoc, indexDoc, monthCacheOverride) {
+      cachedNewsLatest = latestDoc || null;
+      cachedNewsIndex = indexDoc || null;
+      newsSelectedIssue = (latestDoc && latestDoc.latest_issue) || "";
+      if (monthCacheOverride && typeof monthCacheOverride === "object") {
+        Object.keys(monthCacheOverride).forEach((m) => {
+          newsMonthCache[m] = monthCacheOverride[m];
+        });
+      }
+    },
+    getNewsSelectedIssue() {
+      return newsSelectedIssue;
     },
   };
 

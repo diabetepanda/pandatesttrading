@@ -73,7 +73,13 @@ def merge_jsonl_lines(remote_text: str, local_text: str) -> str:
         try:
             obj = json.loads(line)
             if isinstance(obj, dict):
-                ts_key = str(obj.get("ts_utc") or obj.get("event_ts_utc") or obj.get("run_at_utc") or "")
+                ts_key = str(
+                    obj.get("ts_utc")
+                    or obj.get("event_ts_utc")
+                    or obj.get("run_at_utc")
+                    or obj.get("published_at_utc")
+                    or ""
+                )
         except Exception:
             pass
         rows.append((ts_key, line))
@@ -204,6 +210,28 @@ def merge_conflicted_content(rel_path: str, remote_text: str, local_text: str) -
             )
             merged_pts.sort(key=lambda x: str(x.get("ts_utc", "")) if isinstance(x, dict) else "")
             return json.dumps({**remote_obj, **local_obj, "points": merged_pts[-2000:]}, ensure_ascii=False, indent=2) + "\n"
+
+        if norm == "news_index.json" and isinstance(remote_obj, dict) and isinstance(local_obj, dict):
+            merged_issues = _merge_list_by_id(
+                remote_obj.get("issues") or [],
+                local_obj.get("issues") or [],
+                ("issue",),
+            )
+            merged_issues.sort(
+                key=lambda x: (str(x.get("date", "")), 1 if x.get("half") == "PM" else 0) if isinstance(x, dict) else ("", 0),
+                reverse=True,
+            )
+            merged_months = _merge_list_by_id(
+                remote_obj.get("months") or [],
+                local_obj.get("months") or [],
+                ("month",),
+            )
+            merged_months.sort(key=lambda x: str(x.get("month", "")) if isinstance(x, dict) else "", reverse=True)
+            return json.dumps(
+                {**remote_obj, **local_obj, "months": merged_months, "issues": merged_issues},
+                ensure_ascii=False,
+                indent=2,
+            ) + "\n"
 
         if isinstance(remote_obj, dict) and isinstance(local_obj, dict):
             merged_dict = {**remote_obj, **local_obj}

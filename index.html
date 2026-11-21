@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261121d" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261121e" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -48,6 +48,7 @@
       <a href="#/account" class="nav-link" data-route="account">模擬帳戶</a>
       <a href="#/data" class="nav-link" data-route="data">市場與資料</a>
       <a href="#/research" class="nav-link" data-route="research">深度研究</a>
+      <a href="#/news" class="nav-link" data-route="news">消息面</a>
       <a href="./macro.html" class="nav-link">宏觀數據</a>
       <button id="refresh-btn" class="btn btn-sm" type="button">重新整理</button>
     </nav>
@@ -460,13 +461,81 @@
         <p class="muted">深度研究資料載入中...</p>
       </div>
     </section>
+
+    <!-- 頁面 5：消息面 -->
+    <section id="view-news" class="route-view hidden">
+      <section class="card" id="news-header-card">
+        <div class="section-header">
+          <div>
+            <h1>交易消息面</h1>
+            <p class="subtitle">只收錄與交易相關之國際財經、聯準會、台股、加密貨幣與鏈上／衍生品異常數據（免 API Key，每日台北 08:00 與 20:00 更新）。</p>
+          </div>
+          <div class="news-meta-badges">
+            <span class="pill pill-live" id="news-issue-badge">期號：--</span>
+            <span class="muted" id="news-updated-at">更新時間：--</span>
+            <span class="pill pill-neutral" id="news-count-badge">0 則</span>
+          </div>
+        </div>
+        <div id="news-failed-banner" class="alert-banner hidden"></div>
+      </section>
+
+      <section class="card" id="news-highlights-card">
+        <div class="section-header">
+          <div>
+            <h2>★★★ 重點</h2>
+            <p class="subtitle">本期最高重要程度消息（依聯準會、重大總經、安全事件與極端數據規則篩選）。</p>
+          </div>
+        </div>
+        <div id="news-highlights-list" class="news-list">
+          <div class="empty-state">本期尚無 ★★★ 重點消息。</div>
+        </div>
+      </section>
+
+      <section class="card" id="news-list-card">
+        <div class="section-header">
+          <div>
+            <h2>本期消息清單</h2>
+            <p class="subtitle">預設僅顯示最新一期；可用期號／日期選單往回查閱歷史月份（每次僅載入單月檔案）。</p>
+          </div>
+        </div>
+        <div class="filter-controls news-controls">
+          <select id="news-issue-select" aria-label="期號與日期選擇">
+            <option value="">最新一期</option>
+          </select>
+          <select id="news-filter-category" aria-label="分類篩選">
+            <option value="all">全部分類</option>
+            <option value="總經">總經</option>
+            <option value="聯準會">聯準會</option>
+            <option value="美股">美股</option>
+            <option value="台股">台股</option>
+            <option value="加密貨幣">加密貨幣</option>
+            <option value="鏈上資金">鏈上資金</option>
+            <option value="衍生品">衍生品</option>
+            <option value="交易所公告">交易所公告</option>
+            <option value="安全事件">安全事件</option>
+          </select>
+          <select id="news-filter-symbol" aria-label="相關標的篩選">
+            <option value="all">全部相關標的</option>
+          </select>
+          <select id="news-filter-importance" aria-label="重要程度篩選">
+            <option value="all">全部重要程度</option>
+            <option value="3">★★★ 重點</option>
+            <option value="2">★★ 以上</option>
+            <option value="1">★ 一般</option>
+          </select>
+        </div>
+        <div id="news-list" class="news-list">
+          <div class="empty-state">消息面資料載入中...</div>
+        </div>
+      </section>
+    </section>
   </main>
 
   <footer class="footer">
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261121d"></script>
-  <script src="./assets/app.js?v=20261121d"></script>
+  <script src="./assets/config.js?v=20261121e"></script>
+  <script src="./assets/app.js?v=20261121e"></script>
 </body>
 </html>

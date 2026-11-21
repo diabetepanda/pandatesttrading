@@ -119,11 +119,11 @@ def test_frontend_assets_and_relative_paths() -> None:
 
     # Stage 4, 5 & 6 hash routes, disclaimer, backtest results, and fixed CDN check
     nav_block = index_html.split('<nav class="main-nav"', 1)[1].split("</nav>", 1)[0]
-    for route in ("#/wall", "#/account", "#/data", "#/research", "./macro.html"):
+    for route in ("#/wall", "#/account", "#/data", "#/research", "#/news", "./macro.html"):
         assert route in nav_block
     for old_nav_route in ('"#/simple"', '"#/results"', '"#/stats"', '"#/risk"'):
         assert old_nav_route not in nav_block
-    assert nav_block.index("#/wall") < nav_block.index("#/account") < nav_block.index("#/data") < nav_block.index("#/research") < nav_block.index("./macro.html")
+    assert nav_block.index("#/wall") < nav_block.index("#/account") < nav_block.index("#/data") < nav_block.index("#/research") < nav_block.index("#/news") < nav_block.index("./macro.html")
     for subroute in ("#/account/stats", "#/account/results", "#/account/risk"):
         assert subroute in index_html
     assert "#/scaling" not in index_html
@@ -157,7 +157,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261121d" in index_html
+    assert "?v=20261121e" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -977,7 +977,7 @@ def test_in_depth_research_json_and_rendering() -> None:
 
 
 def test_navigation_restructure_routes_and_subtabs() -> None:
-    """Verify 5-item nav in index.html & macro.html, legacy redirects, and #/account 4 subtabs."""
+    """Verify 6-item nav in index.html & macro.html, legacy redirects, and #/account 4 subtabs."""
     import re
     import shutil
     import subprocess
@@ -989,15 +989,15 @@ def test_navigation_restructure_routes_and_subtabs() -> None:
     macro_html = (root / "macro.html").read_text(encoding="utf-8")
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
-    # 1. Exactly 5 nav links in both index.html and macro.html
+    # 1. Exactly 6 nav links in both index.html and macro.html
     idx_nav = index_html.split('<nav class="main-nav"', 1)[1].split("</nav>", 1)[0]
     macro_nav = macro_html.split('<nav class="main-nav"', 1)[1].split("</nav>", 1)[0]
     idx_links = re.findall(r'<a\s[^>]*class="nav-link[^"]*"[^>]*>(.*?)</a>', idx_nav)
     macro_links = re.findall(r'<a\s[^>]*class="nav-link[^"]*"[^>]*>(.*?)</a>', macro_nav)
-    expected_labels = ["訊號與報單", "模擬帳戶", "市場與資料", "深度研究", "宏觀數據"]
+    expected_labels = ["訊號與報單", "模擬帳戶", "市場與資料", "深度研究", "消息面", "宏觀數據"]
     assert idx_links == expected_labels, f"Unexpected index.html nav items: {idx_links}"
     assert macro_links == expected_labels, f"Unexpected macro.html nav items: {macro_links}"
-    for target in ("./index.html#/wall", "./index.html#/account", "./index.html#/data", "./index.html#/research", "./macro.html"):
+    for target in ("./index.html#/wall", "./index.html#/account", "./index.html#/data", "./index.html#/research", "./index.html#/news", "./macro.html"):
         assert target in macro_nav
 
     # 2. Merged #view-wall and #view-account 4 subpanels
@@ -1053,8 +1053,8 @@ def test_navigation_restructure_routes_and_subtabs() -> None:
           }};
         }}
 
-        const routeViews = ['view-wall', 'view-signal', 'view-account', 'view-data', 'view-research'].map((id) => makeEl(id, {{ classes: ['route-view'] }}));
-        const navLinks = ['wall', 'account', 'data', 'research'].map((r) => makeEl('nav-' + r, {{ classes: ['nav-link'], dataset: {{ route: r }} }}));
+        const routeViews = ['view-wall', 'view-signal', 'view-account', 'view-data', 'view-research', 'view-news'].map((id) => makeEl(id, {{ classes: ['route-view'] }}));
+        const navLinks = ['wall', 'account', 'data', 'research', 'news'].map((r) => makeEl('nav-' + r, {{ classes: ['nav-link'], dataset: {{ route: r }} }}));
         const subtabs = ['overview', 'stats', 'results', 'risk'].map((t) => makeEl('tab-' + t, {{ classes: ['tab'], dataset: {{ accountTab: t }} }}));
         const subpanels = ['overview', 'stats', 'results', 'risk'].map((t) => makeEl('account-panel-' + t, {{ classes: ['account-subpanel'] }}));
         const byId = {{}};

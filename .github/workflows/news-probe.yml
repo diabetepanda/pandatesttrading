@@ -1,0 +1,57 @@
+name: News Probe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run src.news into temp dir
+        run: python -m src.news --out-dir /tmp/news_probe
+
+      - name: Print fetch_report and category summary
+        if: always()
+        run: |
+          python - <<'EOF'
+          import json
+          from collections import Counter
+          from pathlib import Path
+
+          p = Path("/tmp/news_probe/news_latest.json")
+          if not p.exists():
+              print("ERROR: /tmp/news_probe/news_latest.json not generated")
+              raise SystemExit(1)
+
+          doc = json.loads(p.read_text(encoding="utf-8"))
+          fr = doc.get("fetch_report") or {}
+          print(
+              f"issue={doc.get('latest_issue')} status={doc.get('status')} "
+              f"elapsed={fr.get('total_elapsed_sec')}s "
+              f"ok={fr.get('sources_ok')} failed={fr.get('sources_failed')}"
+          )
+          print("\n=== Sources ===")
+          for sid, info in (fr.get("sources") or {}).items():
+              print(
+                  f"{sid:24s} | {info.get('status'):6s} | "
+                  f"{str(info.get('elapsed_sec')):>6s}s | "
+                  f"raw={str(info.get('raw_count')):>3s} | "
+                  f"kept={str(info.get('items_kept')):>3s} | "
+                  f"err={info.get('error') or ''}"
+              )
+          cats = Counter(it.get("category") for it in (doc.get("latest_items") or []))
+          print("\n=== Category Counts ===", dict(cats))
+          print("\n=== Data Metrics Snapshot ===")
+          print(json.dumps(doc.get("data_metrics_snapshot"), ensure_ascii=False, indent=2))
+          EOF
