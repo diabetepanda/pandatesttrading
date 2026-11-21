@@ -1,9 +1,8 @@
-name: News Digest (08:00 / 20:00 TPE)
+name: News Digest (15m)
 
 on:
   schedule:
-    - cron: "0 0 * * *"
-    - cron: "0 12 * * *"
+    - cron: "2,17,32,47 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -54,7 +53,7 @@ jobs:
       - name: Commit and push news files to data branch
         working-directory: data_repo
         run: |
-          git add news news_latest.json news_index.json news_state.json 2>/dev/null || true
+          git add news news_latest.json news_index.json news_state.json news_reactions.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No news changes to commit."
           else

@@ -30,9 +30,20 @@
   let cachedTa = null;
   let cachedNewsLatest = null;
   let cachedNewsIndex = null;
+  let cachedNewsReactions = null;
   const newsMonthCache = {};
   let newsSelectedIssue = "";
+  let newsSelectedMarket = "all";
+  let newsSelectedSentiment = "all";
   let newsLoadingMonth = false;
+  let pendingNewsLatest = null;
+  let pendingNewsIndex = null;
+  let pendingNewsReactions = null;
+  let newsPrevVisitMs = 0;
+  let newsVisitRecorded = false;
+  const expandedNewsReasonIds = new Set();
+  const NEWS_LAST_VISIT_KEY = "signal_desk_news_last_visit";
+  const NEWS_POLL_MS = 5 * 60 * 1000;
   let expandedTaSymbol = null;
   let livePrices = {};
   let activeChart = null;
@@ -299,6 +310,20 @@
       // fallback to local data/news_index.json
     }
     return fetchWithTimeout(`data/news_index.json?t=${Date.now()}`, false);
+  }
+
+  async function fetchNewsReactions() {
+    try {
+      const data = await fetchDataJson("news_reactions.json");
+      if (data && typeof data === "object") return data;
+    } catch (_err) {
+      // fallback to local data/news_reactions.json
+    }
+    try {
+      return await fetchWithTimeout(`data/news_reactions.json?t=${Date.now()}`, false);
+    } catch (_err2) {
+      return null;
+    }
   }
 
   async function fetchNewsMonthJsonl(month) {
@@ -3175,6 +3200,178 @@
     container.innerHTML = renderResearchHtml(cachedResearch);
   }
 
+  const NEWS_VALID_MARKETS = ["台股", "美股", "加密貨幣", "總經"];
+  const NEWS_CATEGORY_TO_MARKETS = {
+    "台股": ["台股"],
+    "美股": ["美股"],
+    "加密貨幣": ["加密貨幣"],
+    "鏈上資金": ["加密貨幣"],
+    "衍生品": ["加密貨幣"],
+    "交易所公告": ["加密貨幣"],
+    "安全事件": ["加密貨幣"],
+    "總經": ["總經"],
+    "聯準會": ["總經"],
+  };
+  const NEWS_TW_SYMBOLS = new Set(["TWII", "2330", "2454", "3711", "2317", "2382", "2308", "2881", "2882", "2891", "2603", "1301", "2412"]);
+  const NEWS_US_SYMBOLS = new Set(["NAS100", "SP500", "TSLA", "GOOGL", "AAPL", "SNDK", "SPCX"]);
+  const NEWS_MARKET_ALIASES = {
+    all: "all",
+    tw: "台股",
+    us: "美股",
+    crypto: "加密貨幣",
+    macro: "總經",
+    "台股": "台股",
+    "美股": "美股",
+    "加密貨幣": "加密貨幣",
+    "總經": "總經",
+  };
+
+  function deriveNewsMarkets(item) {
+    if (!item || typeof item !== "object") return ["總經"];
+    if (Array.isArray(item.markets) && item.markets.length > 0) {
+      const valid = item.markets.filter((m) => NEWS_VALID_MARKETS.includes(m));
+      if (valid.length > 0) return valid;
+    }
+    const found = new Set(NEWS_CATEGORY_TO_MARKETS[item.category] || []);
+    const syms = Array.isArray(item.symbols) ? item.symbols : [];
+    for (const s of syms) {
+      if (NEWS_TW_SYMBOLS.has(s)) found.add("台股");
+      else if (NEWS_US_SYMBOLS.has(s)) found.add("美股");
+      else if (String(s).endsWith("USDT")) found.add("加密貨幣");
+    }
+    const textLower = String(item.title || "").toLowerCase();
+    const kwMap = {
+      "台股": ["台股", "加權指數", "台積電", "台灣股市", "taiex", "taiwan stock", "tsmc"],
+      "美股": ["美股", "那斯達克", "標普", "道瓊", "華爾街", "wall street", "us stocks", "u.s. stocks", "nasdaq", "s&p 500", "dow jones"],
+      "加密貨幣": ["比特幣", "以太坊", "加密貨幣", "幣圈", "穩定幣", "bitcoin", "btc", "ethereum", "eth", "crypto"],
+    };
+    Object.entries(kwMap).forEach(([mkt, kws]) => {
+      for (const kw of kws) {
+        if (/^[a-z0-9.\- ]+$/.test(kw) && kw.length <= 5) {
+          const re = new RegExp(`(^|[^a-z0-9])${kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-z0-9]|$)`);
+          if (re.test(textLower)) {
+            found.add(mkt);
+            break;
+          }
+        } else if (textLower.includes(kw)) {
+          found.add(mkt);
+          break;
+        }
+      }
+    });
+    const ordered = NEWS_VALID_MARKETS.filter((m) => found.has(m));
+    return ordered.length > 0 ? ordered : ["總經"];
+  }
+
+  function parseNewsMarketFromHash(rawHash) {
+    const cleaned = String(rawHash || "").replace(/^#\/?/, "");
+    const qIdx = cleaned.indexOf("?");
+    const pathPart = qIdx >= 0 ? cleaned.slice(0, qIdx) : cleaned;
+    const queryPart = qIdx >= 0 ? cleaned.slice(qIdx + 1) : "";
+    const parts = pathPart.split("/").filter(Boolean);
+    if (parts[0] !== "news") return "all";
+    if (queryPart) {
+      for (const kv of queryPart.split("&")) {
+        const eq = kv.indexOf("=");
+        if (eq < 0) continue;
+        const k = kv.slice(0, eq);
+        const v = kv.slice(eq + 1);
+        if (k === "m") {
+          try {
+            return NEWS_MARKET_ALIASES[decodeURIComponent(v)] || "all";
+          } catch (_) {
+            return NEWS_MARKET_ALIASES[v] || "all";
+          }
+        }
+      }
+    }
+    if (parts[1]) {
+      try {
+        return NEWS_MARKET_ALIASES[decodeURIComponent(parts[1])] || "all";
+      } catch (_) {
+        return NEWS_MARKET_ALIASES[parts[1]] || "all";
+      }
+    }
+    return "all";
+  }
+
+  function markNewsVisited() {
+    if (newsVisitRecorded) return;
+    newsVisitRecorded = true;
+    try {
+      if (typeof localStorage !== "undefined") {
+        const prevRaw = localStorage.getItem(NEWS_LAST_VISIT_KEY);
+        const prevNum = Number(prevRaw);
+        if (Number.isFinite(prevNum) && prevNum > 0) {
+          newsPrevVisitMs = prevNum;
+        }
+        localStorage.setItem(NEWS_LAST_VISIT_KEY, String(Date.now()));
+      }
+    } catch (_) {}
+  }
+
+  function getNewsReaction(itemId) {
+    if (!itemId || !cachedNewsReactions) return null;
+    const map = cachedNewsReactions.reactions || cachedNewsReactions;
+    return map && typeof map === "object" ? (map[itemId] || null) : null;
+  }
+
+  function formatReactionShortTarget(target) {
+    const t = String(target || "");
+    if (!t) return "";
+    if (t.endsWith("USDT") && t.length > 4) return t.slice(0, -4);
+    if (t === "NAS100") return "那指";
+    if (t === "SP500") return "標普";
+    if (t === "TWII") return "加權";
+    return t;
+  }
+
+  function renderSentimentBadgeHtml(item, clickable) {
+    if (!item || !item.sentiment || !item.sentiment_label) {
+      return '<span class="news-sent-btn news-sent-none" title="舊資料無規則初判">—</span>';
+    }
+    const sent = item.sentiment;
+    const cls = sent === "bullish" ? "news-sent-bullish" : (sent === "bearish" ? "news-sent-bearish" : "news-sent-neutral");
+    const reason = item.sentiment_reason || item.sentiment_label;
+    if (clickable) {
+      return `<button type="button" class="news-sent-btn ${cls}" data-news-id="${escapeHtml(item.id || "")}" title="${escapeHtml(reason)}">${escapeHtml(item.sentiment_label)}</button>`;
+    }
+    return `<span class="news-sent-btn ${cls}" title="${escapeHtml(reason)}">${escapeHtml(item.sentiment_label)}</span>`;
+  }
+
+  function renderReactionBadgeHtml(item, refNowMs) {
+    const r = getNewsReaction(item && item.id);
+    if (r && r.reaction_status === "ok") {
+      const shortLabel = r.reaction_label === "市場解讀偏多" ? "偏多" : (r.reaction_label === "市場解讀偏空" ? "偏空" : "不明顯");
+      const cls = r.reaction_direction ? `news-react-${r.reaction_direction}` : "news-react-neutral";
+      const ret60 = Number(r.ret_60m_pct);
+      const pctStr = Number.isFinite(ret60) ? `${ret60 >= 0 ? "+" : ""}${ret60.toFixed(1)}%` : "--";
+      const tgtShort = formatReactionShortTarget(r.target || "");
+      const closedNote = r.market_closed_at_event ? "（休市順延至開盤）" : "";
+      const r15Note = (r.ret_15m_pct !== null && r.ret_15m_pct !== undefined && !Number.isNaN(Number(r.ret_15m_pct)))
+        ? `｜15分 ${Number(r.ret_15m_pct) >= 0 ? "+" : ""}${Number(r.ret_15m_pct).toFixed(2)}%`
+        : "";
+      const tip = `基準：${r.base_time_taipei || "--"} 台北${closedNote}${r15Note}`;
+      const mainPill = `<span class="news-react-pill ${cls}" title="${escapeHtml(tip)}">市場：${escapeHtml(shortLabel)} ${escapeHtml(tgtShort)} ${escapeHtml(pctStr)} / 60分</span>`;
+      const divergePill = r.agree_with_rule === false
+        ? '<span class="news-diverge-pill" title="市場 60 分鐘實際走勢與規則初判方向相反">判讀分歧</span>'
+        : "";
+      return mainPill + divergePill;
+    }
+    if (!r || r.reaction_status !== "unavailable") {
+      const seenMs = Date.parse((item && (item.first_seen_at_utc || item.published_at_utc)) || "");
+      if (Number.isFinite(seenMs) && (refNowMs - seenMs) < 3600 * 1000 && (refNowMs - seenMs) >= -300 * 1000) {
+        return '<span class="news-react-pending">市場反應計算中</span>';
+      }
+    }
+    return "";
+  }
+
+  function getNewsRefNowMs() {
+    const updMs = Date.parse((cachedNewsLatest && (cachedNewsLatest.last_updated_utc || cachedNewsLatest.updated_at_utc)) || "") || 0;
+    return Math.max(Date.now(), updMs);
+  }
+
   function getRelatedNewsForSymbol(symbol, days = 3, limit = 5, nowMsOverride) {
     if (!symbol || !cachedNewsLatest) return [];
     const pool = []
@@ -3203,17 +3400,22 @@
   function renderSignalRelatedNewsHtml(symbol) {
     const items = getRelatedNewsForSymbol(symbol, 3, 5);
     if (!items || items.length === 0) return "";
+    const refNowMs = getNewsRefNowMs();
     const rowsHtml = items.map((it) => {
       const stars = it.importance_stars || "★".repeat(Number(it.importance || 1));
       const starCls = `news-stars news-stars-${Math.min(3, Math.max(1, Number(it.importance || 1)))}`;
       const timeStr = formatTaipeiTime(it.published_at_utc);
       const safeUrl = escapeHtml(it.url || "#");
+      const sentHtml = renderSentimentBadgeHtml(it, false);
+      const reactHtml = renderReactionBadgeHtml(it, refNowMs);
       return `
         <li class="signal-news-item">
           <span class="news-time">${escapeHtml(timeStr)}</span>
           <span class="${starCls}">${escapeHtml(stars)}</span>
           <span class="news-cat-pill news-cat-${escapeHtml(it.category || "")}">${escapeHtml(it.category || "")}</span>
+          ${sentHtml}
           <a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(it.title || "")}</a>
+          ${reactHtml}
         </li>`;
     }).join("");
     return `
@@ -3234,15 +3436,28 @@
       ? `<a class="news-followup-link" href="${escapeHtml(item.followup_of.url || "#")}" target="_blank" rel="noopener noreferrer" title="前情（${escapeHtml(item.followup_of.issue || "")}）：${escapeHtml(item.followup_of.title)}">同事件後續</a>`
       : "";
     const dataCls = item.is_data_alert ? " news-row-data" : "";
+    const sentHtml = renderSentimentBadgeHtml(item, true);
+    const reactHtml = renderReactionBadgeHtml(item, getNewsRefNowMs());
+    const seenMs = Date.parse(item.first_seen_at_utc || item.published_at_utc || "");
+    const isNew = newsPrevVisitMs > 0 && Number.isFinite(seenMs) && seenMs > newsPrevVisitMs;
+    const newPill = isNew ? '<span class="news-new-pill">新</span>' : "";
+    const reasonExpanded = item.id && expandedNewsReasonIds.has(item.id);
+    const reasonHtml = (item.sentiment_reason && reasonExpanded)
+      ? `<div class="news-sent-reason">規則初判：${escapeHtml(item.sentiment_reason)}</div>`
+      : "";
     return `
-      <div class="news-row${dataCls}">
+      <div class="news-row${dataCls}" data-news-id="${escapeHtml(item.id || "")}">
         <span class="news-time">${escapeHtml(timeStr)}</span>
         <span class="news-stars news-stars-${imp}">${escapeHtml(stars)}</span>
         <span class="news-cat-pill news-cat-${escapeHtml(cat)}">${escapeHtml(cat)}</span>
+        ${sentHtml}
+        ${newPill}
         <a class="news-title-link" href="${escapeHtml(item.url || "#")}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title || "")}</a>
+        ${reactHtml}
         ${followup}
         ${symPills ? `<span class="news-symbols">${symPills}</span>` : ""}
         <span class="news-source">${escapeHtml(item.source || "")}</span>
+        ${reasonHtml}
       </div>`;
   }
 
@@ -3253,8 +3468,20 @@
     return issues.find((x) => x && x.issue === issueId) || null;
   }
 
+  function formatNewsUpdatedText(latestDoc, isCurrent, issueMeta, targetIssue) {
+    if (isCurrent && latestDoc) {
+      const tpeStr = latestDoc.last_updated_taipei || latestDoc.updated_at_taipei || "--";
+      const hhmm = tpeStr.length >= 16 ? tpeStr.slice(11, 16) : tpeStr;
+      const hint = latestDoc.next_update_hint ? `（${latestDoc.next_update_hint}）` : "";
+      return `最後更新：台北時間 ${hhmm}，約每 15 分鐘更新${hint}`;
+    }
+    const updDisplay = (issueMeta && issueMeta.updated_at_taipei) || targetIssue || "--";
+    return `最後更新：台北時間 ${updDisplay}`;
+  }
+
   async function renderNewsView() {
     const issueBadge = document.getElementById("news-issue-badge");
+    const updatingPill = document.getElementById("news-updating-pill");
     const updatedEl = document.getElementById("news-updated-at");
     const countBadge = document.getElementById("news-count-badge");
     const failedBanner = document.getElementById("news-failed-banner");
@@ -3264,11 +3491,14 @@
     const catSelect = document.getElementById("news-filter-category");
     const symSelect = document.getElementById("news-filter-symbol");
     const impSelect = document.getElementById("news-filter-importance");
+    const marketTabsEl = document.getElementById("news-market-tabs");
+    const sentimentTabsEl = document.getElementById("news-sentiment-tabs");
     if (!listEl) return;
 
     if (!cachedNewsLatest) {
       if (issueBadge) issueBadge.textContent = "期號：尚無資料";
-      if (updatedEl) updatedEl.textContent = "更新時間：--";
+      if (updatingPill) updatingPill.classList.add("hidden");
+      if (updatedEl) updatedEl.textContent = "最後更新：--";
       if (highlightsEl) highlightsEl.innerHTML = '<div class="empty-state">尚未載入消息面資料。</div>';
       listEl.innerHTML = '<div class="empty-state">目前尚無消息面資料（請確認已執行消息面排程或檢查網路連線）。</div>';
       return;
@@ -3287,21 +3517,22 @@
       const optsHtml = allIssues.length > 0
         ? allIssues.map((iss) => {
             const label = iss.issue === latestIssue
-              ? `${iss.issue}（最新一期 · ${iss.count ?? 0} 則）`
+              ? `${iss.issue}（當期更新中 · ${iss.count ?? 0} 則）`
               : `${iss.issue}（${iss.count ?? 0} 則）`;
             return `<option value="${escapeHtml(iss.issue)}">${escapeHtml(label)}</option>`;
           }).join("")
-        : `<option value="${escapeHtml(latestIssue)}">${escapeHtml(latestIssue)}（最新一期）</option>`;
+        : `<option value="${escapeHtml(latestIssue)}">${escapeHtml(latestIssue)}（當期更新中）</option>`;
       issueSelect.innerHTML = optsHtml;
       issueSelect.value = allIssues.some((x) => x.issue === prevVal) ? prevVal : latestIssue;
       newsSelectedIssue = issueSelect.value || latestIssue;
     }
 
     const targetIssue = newsSelectedIssue || latestIssue;
+    const isCurrentIssue = targetIssue === latestIssue;
     const issueMeta = _getIssueMetaFromIndex(targetIssue);
     let issueItems = [];
 
-    if (targetIssue === latestIssue) {
+    if (isCurrentIssue) {
       issueItems = Array.isArray(cachedNewsLatest.latest_items) ? cachedNewsLatest.latest_items.slice() : [];
     } else {
       const recentPool = Array.isArray(cachedNewsLatest.recent_7d_items) ? cachedNewsLatest.recent_7d_items : [];
@@ -3330,13 +3561,18 @@
     }
 
     // Header metadata
-    const updDisplay = targetIssue === latestIssue
-      ? (cachedNewsLatest.updated_at_taipei || "--")
-      : ((issueMeta && issueMeta.updated_at_taipei) || targetIssue);
-    if (issueBadge) issueBadge.textContent = `期號：${targetIssue || "--"}`;
-    if (updatedEl) updatedEl.textContent = `更新時間：${updDisplay} 台北時間`;
+    const isUpdating = isCurrentIssue && cachedNewsLatest.is_current_issue_updating !== false;
+    if (issueBadge) {
+      issueBadge.textContent = isUpdating ? `期號：${targetIssue || "--"}（更新中）` : `期號：${targetIssue || "--"}`;
+    }
+    if (updatingPill) {
+      updatingPill.classList.toggle("hidden", !isUpdating);
+    }
+    if (updatedEl) {
+      updatedEl.textContent = formatNewsUpdatedText(cachedNewsLatest, isCurrentIssue, issueMeta, targetIssue);
+    }
 
-    const failedList = targetIssue === latestIssue
+    const failedList = isCurrentIssue
       ? (Array.isArray(cachedNewsLatest.failed_sources) ? cachedNewsLatest.failed_sources : [])
       : (issueMeta && Array.isArray(issueMeta.failed_sources) ? issueMeta.failed_sources : []);
     if (failedBanner) {
@@ -3350,7 +3586,37 @@
       }
     }
 
-    // Populate symbol filter options from current issue items + tracked instruments
+    // Derive markets once per item & compute counts for top market tabs
+    const itemsWithMarkets = issueItems.map((it) => ({
+      item: it,
+      markets: deriveNewsMarkets(it),
+    }));
+    const marketCounts = { all: itemsWithMarkets.length, "台股": 0, "美股": 0, "加密貨幣": 0, "總經": 0 };
+    itemsWithMarkets.forEach(({ markets }) => {
+      markets.forEach((m) => {
+        if (marketCounts[m] !== undefined) marketCounts[m] += 1;
+      });
+    });
+
+    if (marketTabsEl && typeof marketTabsEl.querySelectorAll === "function") {
+      marketTabsEl.querySelectorAll(".tab").forEach((btn) => {
+        const m = btn.dataset?.market || "all";
+        btn.classList.toggle("active", m === newsSelectedMarket);
+        const cntEl = btn.querySelector ? btn.querySelector(".news-tab-count") : null;
+        if (cntEl && marketCounts[m] !== undefined) {
+          cntEl.textContent = String(marketCounts[m]);
+        }
+      });
+    }
+
+    if (sentimentTabsEl && typeof sentimentTabsEl.querySelectorAll === "function") {
+      sentimentTabsEl.querySelectorAll(".tab").forEach((btn) => {
+        const s = btn.dataset?.sentiment || "all";
+        btn.classList.toggle("active", s === newsSelectedSentiment);
+      });
+    }
+
+    // Populate symbol filter options from current issue items
     if (symSelect) {
       const curSymVal = symSelect.value || "all";
       const symSet = new Set();
@@ -3361,28 +3627,37 @@
       symSelect.value = sortedSyms.includes(curSymVal) ? curSymVal : "all";
     }
 
-    // Highlights section: ★★★ items of the selected issue
-    const star3Items = issueItems
+    // Filter by market & sentiment first for highlights, then full filters for list
+    const marketFiltered = itemsWithMarkets.filter(({ markets }) => (
+      newsSelectedMarket === "all" || markets.includes(newsSelectedMarket)
+    ));
+
+    // Highlights section: ★★★ items matching selected market & sentiment
+    const star3Items = marketFiltered
+      .map((x) => x.item)
       .filter((it) => Number(it.importance || 1) >= 3)
+      .filter((it) => newsSelectedSentiment === "all" || it.sentiment === newsSelectedSentiment)
       .sort((a, b) => (Date.parse(b.published_at_utc || "") || 0) - (Date.parse(a.published_at_utc || "") || 0));
     if (highlightsEl) {
       highlightsEl.innerHTML = star3Items.length > 0
         ? star3Items.map(renderNewsRowHtml).join("")
-        : '<div class="empty-state">本期無 ★★★ 重點消息。</div>';
+        : '<div class="empty-state">目前篩選下無 ★★★ 重點消息。</div>';
     }
 
-    // Filtered list
+    // Filtered list (market + 9-category + symbol + importance + sentiment)
     const fCat = catSelect ? catSelect.value : "all";
     const fSym = symSelect ? symSelect.value : "all";
     const fImp = impSelect ? impSelect.value : "all";
 
-    const filtered = issueItems
+    const filtered = marketFiltered
+      .map((x) => x.item)
       .filter((it) => {
         if (fCat !== "all" && it.category !== fCat) return false;
         if (fSym !== "all" && !(Array.isArray(it.symbols) && it.symbols.includes(fSym))) return false;
         if (fImp === "3" && Number(it.importance || 1) < 3) return false;
         if (fImp === "2" && Number(it.importance || 1) < 2) return false;
         if (fImp === "1" && Number(it.importance || 1) !== 1) return false;
+        if (newsSelectedSentiment !== "all" && it.sentiment !== newsSelectedSentiment) return false;
         return true;
       })
       .sort((a, b) => (Number(b.importance || 1) - Number(a.importance || 1)) || ((Date.parse(b.published_at_utc || "") || 0) - (Date.parse(a.published_at_utc || "") || 0)));
@@ -3427,7 +3702,9 @@
   function applyRoute() {
     const rawHash = window.location.hash || "#/wall";
     const cleaned = rawHash.replace(/^#\/?/, "");
-    const parts = cleaned.split("/").filter(Boolean);
+    const qIdx = cleaned.indexOf("?");
+    const pathOnly = qIdx >= 0 ? cleaned.slice(0, qIdx) : cleaned;
+    const parts = pathOnly.split("/").filter(Boolean);
     const route = parts[0] || "wall";
 
     if (LEGACY_ROUTE_REDIRECTS[route]) {
@@ -3477,6 +3754,8 @@
       document.querySelector('.nav-link[data-route="research"]')?.classList.add("active");
       renderResearchView();
     } else if (route === "news") {
+      newsSelectedMarket = parseNewsMarketFromHash(rawHash);
+      markNewsVisited();
       document.getElementById("view-news")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="news"]')?.classList.add("active");
       renderNewsView();
@@ -3521,12 +3800,81 @@
     }
   }
 
+  function getNewsKnownIds(latestDoc) {
+    const ids = new Set();
+    if (!latestDoc || typeof latestDoc !== "object") return ids;
+    (latestDoc.latest_items || []).forEach((it) => { if (it && it.id) ids.add(it.id); });
+    (latestDoc.recent_7d_items || []).forEach((it) => { if (it && it.id) ids.add(it.id); });
+    return ids;
+  }
+
+  function applyPendingNewsUpdate() {
+    if (!pendingNewsLatest) return;
+    cachedNewsLatest = pendingNewsLatest;
+    if (pendingNewsIndex) cachedNewsIndex = pendingNewsIndex;
+    if (pendingNewsReactions) cachedNewsReactions = pendingNewsReactions;
+    pendingNewsLatest = null;
+    pendingNewsIndex = null;
+    pendingNewsReactions = null;
+    const banner = document.getElementById("news-new-banner");
+    if (banner) {
+      banner.classList.add("hidden");
+      banner.textContent = "";
+    }
+    renderNewsView();
+  }
+
+  async function pollNewsUpdates() {
+    if (!(window.location.hash || "").includes("news")) return;
+    const [latestRes, indexRes, reactRes] = await Promise.allSettled([
+      fetchNewsLatest(),
+      fetchNewsIndex(),
+      fetchNewsReactions(),
+    ]);
+    const newLatest = latestRes.status === "fulfilled" ? latestRes.value : null;
+    const newIndex = indexRes.status === "fulfilled" ? indexRes.value : null;
+    const newReact = reactRes.status === "fulfilled" ? reactRes.value : null;
+    if (!newLatest) return;
+
+    if (!cachedNewsLatest) {
+      cachedNewsLatest = newLatest;
+      if (newIndex) cachedNewsIndex = newIndex;
+      if (newReact) cachedNewsReactions = newReact;
+      renderNewsView();
+      return;
+    }
+
+    const oldIds = getNewsKnownIds(cachedNewsLatest);
+    const newItemsCount = (newLatest.latest_items || []).filter((it) => it && it.id && !oldIds.has(it.id)).length;
+    if (newItemsCount > 0) {
+      pendingNewsLatest = newLatest;
+      pendingNewsIndex = newIndex;
+      pendingNewsReactions = newReact;
+      const banner = document.getElementById("news-new-banner");
+      if (banner) {
+        banner.textContent = `有 ${newItemsCount} 則新消息，點此載入`;
+        banner.classList.remove("hidden");
+      }
+      return;
+    }
+
+    // No new items: update reactions & header timestamp without jumping the list
+    if (newReact) cachedNewsReactions = newReact;
+    cachedNewsLatest.last_updated_utc = newLatest.last_updated_utc || newLatest.updated_at_utc;
+    cachedNewsLatest.last_updated_taipei = newLatest.last_updated_taipei || newLatest.updated_at_taipei;
+    cachedNewsLatest.next_update_hint = newLatest.next_update_hint || cachedNewsLatest.next_update_hint;
+    const updatedEl = document.getElementById("news-updated-at");
+    if (updatedEl && (!newsSelectedIssue || newsSelectedIssue === cachedNewsLatest.latest_issue)) {
+      updatedEl.textContent = formatNewsUpdatedText(cachedNewsLatest, true, null, cachedNewsLatest.latest_issue);
+    }
+  }
+
   async function refreshAll() {
     const errBox = document.getElementById("fetch-error-box");
     try {
       const [
         instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, tradesRes, watchRes, watchDailyRes, btRes,
-        perfRes, riskRes, eqRes, evRes, contestRes, taRes, newsLatestRes, newsIndexRes,
+        perfRes, riskRes, eqRes, evRes, contestRes, taRes, newsLatestRes, newsIndexRes, newsReactRes,
       ] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
         fetchDataJson("data_health.json"),
@@ -3546,13 +3894,18 @@
         fetchTaData(),
         fetchNewsLatest(),
         fetchNewsIndex(),
+        fetchNewsReactions(),
       ]);
 
-      // Apply news even if instruments.json or other feeds are temporarily unavailable
-      cachedNewsLatest = newsLatestRes.status === "fulfilled" ? newsLatestRes.value : cachedNewsLatest;
-      cachedNewsIndex = newsIndexRes.status === "fulfilled" ? newsIndexRes.value : cachedNewsIndex;
-      if ((window.location.hash || "").includes("news")) {
-        try { renderNewsView(); } catch (e) { console.error("renderNewsView 失敗：", e); }
+      // Apply news on initial load or when user is NOT actively browsing #/news (avoid layout jump on #/news)
+      const onNewsView = (window.location.hash || "").includes("news");
+      if (!onNewsView || !cachedNewsLatest) {
+        cachedNewsLatest = newsLatestRes.status === "fulfilled" ? newsLatestRes.value : cachedNewsLatest;
+        cachedNewsIndex = newsIndexRes.status === "fulfilled" ? newsIndexRes.value : cachedNewsIndex;
+        cachedNewsReactions = newsReactRes.status === "fulfilled" ? newsReactRes.value : cachedNewsReactions;
+        if (onNewsView) {
+          try { renderNewsView(); } catch (e) { console.error("renderNewsView 失敗：", e); }
+        }
       }
 
       if (instRes.status === "rejected") {
@@ -3597,9 +3950,12 @@
       cachedSignalById = sigMap;
 
       // 每個區塊各自防護：一個區塊出錯不會拖垮整個頁面
-      [renderOpenNowSignals, renderInstruments, renderWallCards, renderBacktestResults,
-       renderPerformanceStats, renderSimulatedAccount,
-       renderRiskCenter, renderDataExtras, renderNewsView].forEach((fn) => {
+      const renderTasks = [
+        renderOpenNowSignals, renderInstruments, renderWallCards, renderBacktestResults,
+        renderPerformanceStats, renderSimulatedAccount, renderRiskCenter, renderDataExtras,
+      ];
+      if (!onNewsView) renderTasks.push(renderNewsView);
+      renderTasks.forEach((fn) => {
         try { fn(); } catch (e) { console.error(`${fn.name} 失敗：`, e); }
       });
 
@@ -3719,6 +4075,41 @@
     });
   });
 
+  document.getElementById("news-market-tabs")?.addEventListener("click", (e) => {
+    const btn = e.target && e.target.closest ? e.target.closest(".tab") : null;
+    if (!btn) return;
+    const mkt = btn.dataset?.market || "all";
+    newsSelectedMarket = mkt;
+    const targetHash = mkt === "all" ? "#/news" : `#/news?m=${encodeURIComponent(mkt)}`;
+    if (window.location.hash !== targetHash) {
+      window.location.hash = targetHash;
+    }
+    renderNewsView();
+  });
+
+  document.getElementById("news-sentiment-tabs")?.addEventListener("click", (e) => {
+    const btn = e.target && e.target.closest ? e.target.closest(".tab") : null;
+    if (!btn) return;
+    newsSelectedSentiment = btn.dataset?.sentiment || "all";
+    renderNewsView();
+  });
+
+  document.getElementById("news-new-banner")?.addEventListener("click", () => {
+    applyPendingNewsUpdate();
+  });
+
+  const handleNewsReasonToggle = (e) => {
+    const btn = e.target && e.target.closest ? e.target.closest(".news-sent-btn[data-news-id]") : null;
+    if (!btn) return;
+    const nid = btn.dataset?.newsId;
+    if (!nid) return;
+    if (expandedNewsReasonIds.has(nid)) expandedNewsReasonIds.delete(nid);
+    else expandedNewsReasonIds.add(nid);
+    renderNewsView();
+  };
+  document.getElementById("news-list")?.addEventListener("click", handleNewsReasonToggle);
+  document.getElementById("news-highlights-list")?.addEventListener("click", handleNewsReasonToggle);
+
   document.getElementById("watch-scope-tabs")?.addEventListener("click", (e) => {
     const btn = e.target.closest(".tab");
     if (!btn) return;
@@ -3764,6 +4155,19 @@
   });
 
   document.getElementById("refresh-btn").addEventListener("click", () => {
+    if ((window.location.hash || "").includes("news")) {
+      Promise.allSettled([fetchNewsLatest(), fetchNewsIndex(), fetchNewsReactions()]).then(([l, i, r]) => {
+        if (l.status === "fulfilled" && l.value) cachedNewsLatest = l.value;
+        if (i.status === "fulfilled" && i.value) cachedNewsIndex = i.value;
+        if (r.status === "fulfilled" && r.value) cachedNewsReactions = r.value;
+        pendingNewsLatest = null;
+        pendingNewsIndex = null;
+        pendingNewsReactions = null;
+        const banner = document.getElementById("news-new-banner");
+        if (banner) banner.classList.add("hidden");
+        renderNewsView();
+      });
+    }
     refreshAll();
     refreshLivePrices();
   });
@@ -3826,9 +4230,15 @@
     getRelatedNewsForSymbol,
     renderSignalRelatedNewsHtml,
     renderNewsView,
-    setNewsDataForTest(latestDoc, indexDoc, monthCacheOverride) {
+    deriveNewsMarkets,
+    parseNewsMarketFromHash,
+    pollNewsUpdates,
+    applyPendingNewsUpdate,
+    setNewsDataForTest(latestDoc, indexDoc, monthCacheOverride, reactionsDoc, prevVisitMsOverride) {
       cachedNewsLatest = latestDoc || null;
       cachedNewsIndex = indexDoc || null;
+      if (reactionsDoc !== undefined) cachedNewsReactions = reactionsDoc || null;
+      if (Number.isFinite(prevVisitMsOverride)) newsPrevVisitMs = prevVisitMsOverride;
       newsSelectedIssue = (latestDoc && latestDoc.latest_issue) || "";
       if (monthCacheOverride && typeof monthCacheOverride === "object") {
         Object.keys(monthCacheOverride).forEach((m) => {
@@ -3836,8 +4246,15 @@
         });
       }
     },
+    setNewsFiltersForTest({ market, sentiment } = {}) {
+      if (market !== undefined) newsSelectedMarket = market;
+      if (sentiment !== undefined) newsSelectedSentiment = sentiment;
+    },
     getNewsSelectedIssue() {
       return newsSelectedIssue;
+    },
+    getNewsSelectedMarket() {
+      return newsSelectedMarket;
     },
   };
 
@@ -3862,4 +4279,5 @@
   refreshLivePrices();
   setInterval(refreshAll, DATA_REFRESH_MS);
   setInterval(refreshLivePrices, LIVE_REFRESH_MS);
+  setInterval(pollNewsUpdates, NEWS_POLL_MS);
 })();

@@ -19,7 +19,12 @@ from src.news import (
     canonicalize_url,
     classify_category,
     compute_issue_id,
+    compute_news_reactions,
+    compute_next_update_hint,
+    compute_single_news_reaction,
     deduplicate_and_link_items,
+    derive_markets,
+    evaluate_sentiment,
     generate_news_files,
     is_trading_relevant,
     load_news_config,
@@ -246,11 +251,13 @@ def test_news_workflows_and_data_sync_merge() -> None:
     news_yml = yaml.safe_load(news_yml_raw)
     on_cfg = news_yml.get("on") or news_yml.get(True)
     crons = [c["cron"] for c in (on_cfg.get("schedule") or [])]
-    assert "0 0 * * *" in crons
-    assert "0 12 * * *" in crons
+    assert "2,17,32,47 * * * *" in crons
+    assert "0 0 * * *" not in crons
+    assert "0 12 * * *" not in crons
     assert "workflow_dispatch" in on_cfg
     assert news_yml["concurrency"]["group"] == "data-writer-news"
     assert news_yml["concurrency"]["cancel-in-progress"] is False
+    assert "news_reactions.json" in news_yml_raw
     assert "data_sync.py" in news_yml_raw
     assert "--max-retries 3" in news_yml_raw
 
@@ -262,11 +269,274 @@ def test_news_workflows_and_data_sync_merge() -> None:
     assert "git push" not in probe_raw
     assert "git commit" not in probe_raw
 
-    # Check data_sync.py merges news_index.json and news/*.jsonl safely
+    # Check data_sync.py merges news_index.json and news_reactions.json safely
     idx_a = json.dumps({"latest_issue": "2026-11-21-AM", "months": [{"month": "2026-11", "count": 5}], "issues": [{"issue": "2026-11-21-AM", "date": "2026-11-21", "half": "AM", "count": 5}]})
     idx_b = json.dumps({"latest_issue": "2026-11-21-PM", "months": [{"month": "2026-11", "count": 8}], "issues": [{"issue": "2026-11-21-PM", "date": "2026-11-21", "half": "PM", "count": 3}]})
     merged_idx = json.loads(merge_conflicted_content("news_index.json", idx_a, idx_b))
     assert [x["issue"] for x in merged_idx["issues"]] == ["2026-11-21-PM", "2026-11-21-AM"]
+
+    rx_a = json.dumps({"version": 1, "reactions": {"n1": {"reaction_status": "ok"}}})
+    rx_b = json.dumps({"version": 1, "reactions": {"n2": {"reaction_status": "ok"}}})
+    merged_rx = json.loads(merge_conflicted_content("news_reactions.json", rx_a, rx_b))
+    assert set(merged_rx["reactions"].keys()) == {"n1", "n2"}
+    assert merged_rx["count"] == 2
+
+
+def test_issue_id_taipei_schedule_and_next_update_hint() -> None:
+    tpe_tz = timezone(timedelta(hours=8))
+    assert compute_issue_id(datetime(2026, 11, 22, 7, 59, tzinfo=tpe_tz).astimezone(timezone.utc)) == "2026-11-21-PM"
+    assert compute_issue_id(datetime(2026, 11, 22, 8, 0, tzinfo=tpe_tz).astimezone(timezone.utc)) == "2026-11-22-AM"
+    assert compute_issue_id(datetime(2026, 11, 22, 19, 59, tzinfo=tpe_tz).astimezone(timezone.utc)) == "2026-11-22-AM"
+    assert compute_issue_id(datetime(2026, 11, 22, 20, 0, tzinfo=tpe_tz).astimezone(timezone.utc)) == "2026-11-22-PM"
+    assert compute_issue_id(datetime(2026, 11, 22, 3, 0, tzinfo=tpe_tz).astimezone(timezone.utc)) == "2026-11-21-PM"
+
+    hint = compute_next_update_hint(datetime(2026, 11, 21, 23, 17, tzinfo=tpe_tz).astimezone(timezone.utc))
+    assert "約" in hint and "23:32" in hint
+    hint_wrap = compute_next_update_hint(datetime(2026, 11, 21, 23, 50, tzinfo=tpe_tz).astimezone(timezone.utc))
+    assert "約" in hint_wrap and "00:02" in hint_wrap
+
+
+def test_consecutive_15m_runs_dedup_and_data_alert_same_issue(tmp_path: Path) -> None:
+    tpe_tz = timezone(timedelta(hours=8))
+    run1_utc = datetime(2026, 11, 21, 20, 2, tzinfo=tpe_tz).astimezone(timezone.utc)
+    run2_utc = datetime(2026, 11, 21, 20, 17, tzinfo=tpe_tz).astimezone(timezone.utc)
+    run3_utc = datetime(2026, 11, 22, 8, 2, tzinfo=tpe_tz).astimezone(timezone.utc)
+
+    rss_xml = """<?xml version="1.0" encoding="UTF-8"?>
+    <rss version="2.0"><channel><title>Test</title>
+      <item>
+        <title>Federal Reserve cuts rates by 25 bps as inflation cools</title>
+        <link>https://www.cnbc.com/2026/11/21/fed-cut.html</link>
+        <pubDate>Sat, 21 Nov 2026 11:30:00 GMT</pubDate>
+      </item>
+    </channel></rss>"""
+
+    state = {"fee": 72, "fr": "0.00065"}
+
+    def http_mock(url: str, headers: Any = None, timeout: int = 8) -> _FakeResponse:
+        if "cnbc" in url:
+            return _FakeResponse(200, text=rss_xml)
+        if "api.bybit.com/v5/market/tickers" in url:
+            return _FakeResponse(200, json_data={
+                "retCode": 0,
+                "result": {"list": [{"symbol": "BTCUSDT", "fundingRate": state["fr"], "openInterestValue": "5200000000"}]},
+            })
+        if "mempool.space/api/v1/fees/recommended" in url:
+            return _FakeResponse(200, json_data={"fastestFee": state["fee"], "halfHourFee": 55})
+        if "mempool.space/api/mempool" in url:
+            return _FakeResponse(200, json_data={"vsize": 95_000_000, "count": 120000})
+        raise requests.ConnectionError("Simulated offline")
+
+    res1 = generate_news_files(tmp_path, now_utc=run1_utc, http_get=http_mock, candle_fetcher=lambda *_: [])
+    assert res1["latest_issue"] == "2026-11-21-PM"
+    assert res1["last_updated_utc"] == run1_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+    assert res1["last_updated_taipei"] == "2026-11-21 20:02"
+    assert "約" in res1["next_update_hint"]
+    assert len(res1["latest_items"]) == 3  # 1 RSS + 1 funding + 1 mempool
+    for it in res1["latest_items"]:
+        assert it["first_seen_at_utc"] == run1_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+        assert it["first_seen_at_taipei"] == "2026-11-21 20:02"
+        assert it["markets"]
+        assert it["sentiment"] in ("bullish", "bearish", "neutral")
+
+    month_file = tmp_path / "news" / "2026-11.jsonl"
+    lines_after_run1 = month_file.read_text(encoding="utf-8").splitlines()
+    assert len(lines_after_run1) == 3
+
+    # Run 2 (15m later, SAME issue): metrics fluctuate slightly -> still MUST NOT trigger duplicate alerts or RSS
+    state["fee"] = 75
+    state["fr"] = "0.00068"
+    res2 = generate_news_files(tmp_path, now_utc=run2_utc, http_get=http_mock, candle_fetcher=lambda *_: [])
+    assert res2["fetch_report"]["new_items_added"] == 0
+    assert len(res2["latest_items"]) == 3
+    lines_after_run2 = month_file.read_text(encoding="utf-8").splitlines()
+    assert lines_after_run2 == lines_after_run1
+
+    # Run 3 (next issue 2026-11-22-AM): data alerts ARE allowed again, while RSS stays deduplicated & old lines intact
+    state["fee"] = 78
+    state["fr"] = "0.00070"
+    res3 = generate_news_files(tmp_path, now_utc=run3_utc, http_get=http_mock, candle_fetcher=lambda *_: [])
+    assert res3["latest_issue"] == "2026-11-22-AM"
+    assert res3["fetch_report"]["new_items_added"] == 2
+    lines_after_run3 = month_file.read_text(encoding="utf-8").splitlines()
+    assert len(lines_after_run3) == 5
+    assert lines_after_run3[:3] == lines_after_run1
+
+
+def test_sentiment_rules_negation_inversion_and_markets() -> None:
+    news_cfg = load_news_config()
+
+    # English cases (>= 5, incl. negation & inflation inversion)
+    en_cases = [
+        ("Federal Reserve announces 25 bps rate cut", "聯準會", ["NAS100"], "bullish"),
+        ("Fed signals it will not cut rates this year", "聯準會", ["NAS100"], "bearish"),
+        ("US CPI inflation comes in lower than expected at 2.4%", "總經", ["NAS100"], "bullish"),
+        ("Core PCE inflation hotter than expected, Fed hawkish", "聯準會", ["NAS100"], "bearish"),
+        ("TSMC beats estimates and raises guidance on AI demand", "美股", ["2330"], "bullish"),
+        ("Retailer misses estimates and files for bankruptcy", "美股", [], "bearish"),
+        ("Fed rules out rate hike amid cooling inflation", "聯準會", ["NAS100"], "bullish"),
+        ("European bond market sees steady session", "總經", [], "neutral"),
+    ]
+    for title, cat, syms, expected in en_cases:
+        mkts = derive_markets(title, "", cat, syms, news_cfg)
+        res = evaluate_sentiment(title, "", cat, mkts, syms, "cnbc_top", news_cfg)
+        assert res["sentiment"] == expected, f"EN sentiment mismatch for {title!r}: got {res}"
+        assert -3 <= res["sentiment_score"] <= 3
+        assert res["sentiment_method"] == "rule"
+        assert res["sentiment_targets"]
+
+    # Traditional Chinese cases (>= 5, incl. negation & inflation inversion & 未平倉 guard)
+    zh_cases = [
+        ("美國 CPI 通膨低於預期，市場押注降息", "總經", [], "bullish"),
+        ("美國通膨高於預期，聯準會立場維持鷹派", "聯準會", [], "bearish"),
+        ("台積電財報優於預期並上調財測，外資買超", "台股", ["2330"], "bullish"),
+        ("某電子廠財報不如預期並下修財測，外資賣超", "台股", [], "bearish"),
+        ("聯準會官員表態今年不降息，暫緩寬鬆", "聯準會", [], "bearish"),
+        ("BTC 未平倉量觀察，市場等待方向", "衍生品", ["BTCUSDT"], "neutral"),
+        ("美國宣布解除制裁並撤銷相關訴訟", "總經", [], "bullish"),
+        ("某協議遭駭客漏洞攻擊被盜 2000 萬美元", "安全事件", ["ETHUSDT"], "bearish"),
+        ("台北股市今日量縮整理，關注法說會", "台股", ["TWII"], "neutral"),
+    ]
+    for title, cat, syms, expected in zh_cases:
+        mkts = derive_markets(title, "", cat, syms, news_cfg)
+        res = evaluate_sentiment(title, "", cat, mkts, syms, "cnyes_tw_stock", news_cfg)
+        assert res["sentiment"] == expected, f"ZH sentiment mismatch for {title!r}: got {res}"
+
+    # Data alert sentiment checks
+    etf_in = evaluate_sentiment("BTC ETF", "", "鏈上資金", ["加密貨幣"], ["BTCUSDT"], "bitbo_btc_etf", news_cfg, is_data_alert=True, metrics={"net_flow_usd_m": 250.0})
+    assert etf_in["sentiment"] == "bullish"
+    etf_out = evaluate_sentiment("BTC ETF", "", "鏈上資金", ["加密貨幣"], ["BTCUSDT"], "bitbo_btc_etf", news_cfg, is_data_alert=True, metrics={"net_flow_usd_m": -250.0})
+    assert etf_out["sentiment"] == "bearish"
+    fr_hi = evaluate_sentiment("Funding high", "", "衍生品", ["加密貨幣"], ["BTCUSDT"], "okx_derivatives", news_cfg, is_data_alert=True, metrics={"funding_rate_pct": 0.08})
+    assert fr_hi["sentiment"] == "bearish" and "多頭擁擠" in fr_hi["sentiment_reason"]
+
+    # Markets derivation checks
+    assert derive_markets("台積電法說會", "", "台股", ["2330"], news_cfg) == ["台股"]
+    assert derive_markets("Tesla deliveries", "", "美股", ["TSLA"], news_cfg) == ["美股"]
+    assert derive_markets("OKX 上幣公告", "", "交易所公告", ["SOLUSDT"], news_cfg) == ["加密貨幣"]
+    fed_multi = derive_markets("FOMC 利率決議牽動美股與比特幣走勢", "", "聯準會", [], news_cfg)
+    assert set(fed_multi) == {"美股", "加密貨幣", "總經"}
+
+
+def test_market_reactions_and_40_cap(tmp_path: Path) -> None:
+    news_cfg = load_news_config()
+    instruments = load_tracked_instruments()
+    t0 = datetime(2026, 11, 20, 14, 0, tzinfo=timezone.utc)
+    now = t0 + timedelta(hours=2)
+
+    def _mk_bars(start_dt: datetime, closes: list[float]) -> list[dict[str, Any]]:
+        return [{"ts_utc": start_dt + timedelta(minutes=15 * i), "open": c, "close": c} for i, c in enumerate(closes)]
+
+    # 1. Bullish reaction (+0.8% > 0.5% crypto threshold) agreeing with bullish rule
+    it_bull = {
+        "id": "r-bull",
+        "published_at_utc": t0.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "first_seen_at_utc": t0.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "sentiment": "bullish",
+        "importance": 3,
+        "sentiment_targets": ["BTCUSDT"],
+    }
+    res_bull = compute_single_news_reaction(
+        it_bull, _mk_bars(t0, [100.0, 100.3, 100.5, 100.7, 100.8]),
+        target="BTCUSDT", now_utc=now, instruments=instruments, news_cfg=news_cfg,
+    )
+    assert res_bull["reaction_status"] == "ok"
+    assert res_bull["reaction_label"] == "市場解讀偏多"
+    assert res_bull["ret_15m_pct"] == 0.3
+    assert res_bull["ret_60m_pct"] == 0.8
+    assert res_bull["agree_with_rule"] is True
+    assert res_bull["market_closed_at_event"] is False
+
+    # 2. Bearish reaction (-0.9%) disagreeing with bullish rule -> agree_with_rule is False
+    res_div = compute_single_news_reaction(
+        it_bull, _mk_bars(t0, [100.0, 99.7, 99.4, 99.2, 99.1]),
+        target="BTCUSDT", now_utc=now, instruments=instruments, news_cfg=news_cfg,
+    )
+    assert res_div["reaction_label"] == "市場解讀偏空"
+    assert res_div["agree_with_rule"] is False
+
+    # 3. Insignificant reaction (+0.1% within ±0.3% us_index threshold) -> agree_with_rule is None
+    it_flat = {
+        "id": "r-flat",
+        "published_at_utc": t0.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "first_seen_at_utc": t0.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "sentiment": "bullish",
+        "importance": 2,
+        "sentiment_targets": ["NAS100"],
+    }
+    res_flat = compute_single_news_reaction(
+        it_flat, _mk_bars(t0, [1000.0, 1000.5, 1000.8, 1000.9, 1001.0]),
+        target="NAS100", now_utc=now, instruments=instruments, news_cfg=news_cfg,
+    )
+    assert res_flat["reaction_label"] == "市場反應不明顯"
+    assert res_flat["agree_with_rule"] is None
+
+    # 4. Market closed at event (event at Sat 10:00 TPE, next open Mon 09:00 TPE)
+    tpe_tz = timezone(timedelta(hours=8))
+    sat_event = datetime(2026, 11, 21, 10, 0, tzinfo=tpe_tz).astimezone(timezone.utc)
+    mon_open = datetime(2026, 11, 23, 9, 0, tzinfo=tpe_tz).astimezone(timezone.utc)
+    it_closed = {
+        "id": "r-closed",
+        "published_at_utc": sat_event.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "first_seen_at_utc": sat_event.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "sentiment": "bullish",
+        "importance": 3,
+        "sentiment_targets": ["2330"],
+    }
+    res_closed = compute_single_news_reaction(
+        it_closed, _mk_bars(mon_open, [1000.0, 1005.0, 1010.0, 1012.0, 1015.0]),
+        target="2330", now_utc=mon_open + timedelta(hours=2), instruments=instruments, news_cfg=news_cfg,
+    )
+    assert res_closed["reaction_status"] == "ok"
+    assert res_closed["market_closed_at_event"] is True
+    assert res_closed["base_time_taipei"] == "2026-11-23 09:00"
+    assert res_closed["reaction_label"] == "市場解讀偏多"
+
+    # 5. Price unavailable
+    res_unavail = compute_single_news_reaction(
+        it_bull, [], target="BTCUSDT", now_utc=now, instruments=instruments, news_cfg=news_cfg,
+    )
+    assert res_unavail["reaction_status"] == "unavailable"
+
+    # 6. Cap at 40 per run, prioritizing importance=3, skipping <60m and >=48h
+    items_pool: list[dict[str, Any]] = [
+        {
+            "id": "too-young",
+            "first_seen_at_utc": (now - timedelta(minutes=30)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "importance": 3,
+            "sentiment": "bullish",
+            "sentiment_targets": ["BTCUSDT"],
+        },
+        {
+            "id": "too-old",
+            "first_seen_at_utc": (now - timedelta(hours=49)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "importance": 3,
+            "sentiment": "bullish",
+            "sentiment_targets": ["BTCUSDT"],
+        },
+    ]
+    for i in range(45):
+        items_pool.append({
+            "id": f"elig-{i:02d}",
+            "first_seen_at_utc": t0.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "importance": 3 if i < 5 else 1,
+            "sentiment": "bullish",
+            "sentiment_targets": ["BTCUSDT"],
+        })
+    rx_map, count = compute_news_reactions(
+        items_pool,
+        {},
+        now_utc=now,
+        instruments=instruments,
+        news_cfg=news_cfg,
+        candle_fetcher=lambda _sym, _now: _mk_bars(t0, [100.0, 100.2, 100.4, 100.6, 100.8]),
+    )
+    assert count == 40
+    assert len(rx_map) == 40
+    assert "too-young" not in rx_map
+    assert "too-old" not in rx_map
+    for i in range(5):
+        assert f"elig-{i:02d}" in rx_map
 
 
 def test_frontend_news_defaults_filters_and_signal_related_news() -> None:
@@ -276,6 +546,10 @@ def test_frontend_news_defaults_filters_and_signal_related_news() -> None:
 
     assert "#/news" in index_html
     assert 'id="view-news"' in index_html
+    assert 'id="news-market-tabs"' in index_html
+    assert 'id="news-sentiment-tabs"' in index_html
+    assert 'id="news-new-banner"' in index_html
+    assert 'id="news-updating-pill"' in index_html
     assert 'id="news-issue-select"' in index_html
     assert 'id="news-filter-category"' in index_html
     assert 'id="news-filter-symbol"' in index_html
@@ -283,6 +557,7 @@ def test_frontend_news_defaults_filters_and_signal_related_news() -> None:
     assert "相關消息（最近 3 天）" in app_js
     assert ".news-row" in style_css
     assert ".signal-news-box" in style_css
+    assert ".news-market-tabs" in style_css
 
     js_bin = shutil.which("node")
     if not js_bin:
@@ -291,34 +566,48 @@ def test_frontend_news_defaults_filters_and_signal_related_news() -> None:
             js_bin = str(jsc_path)
     assert js_bin is not None
 
-    now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    old_4d_iso = (datetime.now(timezone.utc) - timedelta(days=4)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    now_dt = datetime.now(timezone.utc)
+    now_iso = now_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    old_2h_iso = (now_dt - timedelta(hours=2)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    old_4d_iso = (now_dt - timedelta(days=4)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    prev_visit_ms = int((now_dt - timedelta(minutes=30)).timestamp() * 1000)
 
     latest_mock = {
         "version": 1,
         "latest_issue": "2026-11-21-PM",
+        "is_current_issue_updating": True,
         "updated_at_utc": now_iso,
         "updated_at_taipei": "2026-11-21 20:05",
+        "last_updated_utc": now_iso,
+        "last_updated_taipei": "2026-11-21 20:05",
+        "next_update_hint": "約台北時間 20:17（每 15 分鐘更新）",
         "status": "partial",
         "failed_sources": [{"id": "binance_derivatives", "name": "Binance 永續合約", "error": "451"}],
         "latest_items": [
             {
                 "id": "n-pm-1",
                 "issue": "2026-11-21-PM",
-                "published_at_utc": now_iso,
+                "published_at_utc": old_2h_iso,
+                "first_seen_at_utc": old_2h_iso,
                 "published_at_taipei": "2026-11-21 19:50",
                 "title": "FOMC minutes show rate cut path",
                 "url": "https://example.com/pm-1",
                 "source": "CNBC",
                 "category": "聯準會",
+                "markets": ["總經"],
                 "symbols": ["NAS100"],
                 "importance": 3,
                 "importance_stars": "★★★",
+                "sentiment": "bullish",
+                "sentiment_label": "利多",
+                "sentiment_score": 2,
+                "sentiment_reason": "命中：rate cut",
             },
             {
                 "id": "n-pm-2",
                 "issue": "2026-11-21-PM",
                 "published_at_utc": now_iso,
+                "first_seen_at_utc": now_iso,
                 "published_at_taipei": "2026-11-21 19:40",
                 "title": "Bitcoin ETF net inflow hits $210M",
                 "url": "https://example.com/pm-2",
@@ -334,18 +623,22 @@ def test_frontend_news_defaults_filters_and_signal_related_news() -> None:
             {
                 "id": "n-pm-1",
                 "issue": "2026-11-21-PM",
-                "published_at_utc": now_iso,
+                "published_at_utc": old_2h_iso,
+                "first_seen_at_utc": old_2h_iso,
                 "title": "FOMC minutes show rate cut path",
                 "url": "https://example.com/pm-1",
                 "source": "CNBC",
                 "category": "聯準會",
                 "symbols": ["NAS100"],
                 "importance": 3,
+                "sentiment": "bullish",
+                "sentiment_label": "利多",
             },
             {
                 "id": "n-pm-2",
                 "issue": "2026-11-21-PM",
                 "published_at_utc": now_iso,
+                "first_seen_at_utc": now_iso,
                 "title": "Bitcoin ETF net inflow hits $210M",
                 "url": "https://example.com/pm-2",
                 "source": "CoinDesk",
@@ -388,6 +681,22 @@ def test_frontend_news_defaults_filters_and_signal_related_news() -> None:
             {"issue": "2026-11-21-PM", "month": "2026-11", "count": 2, "updated_at_taipei": "2026-11-21 20:05"},
             {"issue": "2026-11-21-AM", "month": "2026-11", "count": 1, "updated_at_taipei": "2026-11-21 08:05"},
         ],
+    }
+    reactions_mock = {
+        "version": 1,
+        "reactions": {
+            "n-pm-1": {
+                "reaction_status": "ok",
+                "reaction_label": "市場解讀偏空",
+                "reaction_direction": "bearish",
+                "ret_15m_pct": -0.2,
+                "ret_60m_pct": -0.6,
+                "target": "NAS100",
+                "base_time_taipei": "2026-11-21 19:50",
+                "market_closed_at_event": False,
+                "agree_with_rule": False,
+            },
+        },
     }
 
     script = f"""
@@ -447,7 +756,7 @@ def test_frontend_news_defaults_filters_and_signal_related_news() -> None:
         {app_js}
 
         const u = window.__SIGNAL_DESK_UTILS__;
-        u.setNewsDataForTest({json.dumps(latest_mock)}, {json.dumps(index_mock)});
+        u.setNewsDataForTest({json.dumps(latest_mock)}, {json.dumps(index_mock)}, null, {json.dumps(reactions_mock)}, {prev_visit_ms});
         u.applyRoute();
 
         // 1. Default view renders ONLY latest issue (2026-11-21-PM), NOT AM issue
@@ -461,18 +770,57 @@ def test_frontend_news_defaults_filters_and_signal_related_news() -> None:
         if (!listHtml.includes('同事件後續')) {{
           throw new Error('Followup badge missing');
         }}
+        if (!listHtml.includes('利多') || !listHtml.includes('—')) {{
+          throw new Error('Sentiment badges (new + legacy dash) missing');
+        }}
+        if (!listHtml.includes('市場：偏空') || !listHtml.includes('判讀分歧')) {{
+          throw new Error('Market reaction or divergence badge missing');
+        }}
+        if (!listHtml.includes('市場反應計算中')) {{
+          throw new Error('Pending reaction (<60m) badge missing');
+        }}
+        if (!listHtml.includes('news-new-pill')) {{
+          throw new Error('New-since-last-visit badge missing');
+        }}
+        if (!byId['news-issue-badge'].textContent.includes('更新中')) {{
+          throw new Error('Current issue updating indicator missing');
+        }}
+        if (!byId['news-updated-at'].textContent.includes('約每 15 分鐘更新')) {{
+          throw new Error('Last updated header missing 15m text');
+        }}
 
-        // 2. Highlights card shows ★★★ item
+        // 2. Legacy market derivation + hash URL market selection (#/news?m=加密貨幣)
+        const derivedCrypto = u.deriveNewsMarkets({{ category: '鏈上資金', symbols: [], title: 'BTC inflow' }});
+        if (!derivedCrypto.includes('加密貨幣')) {{
+          throw new Error('JS deriveNewsMarkets failed');
+        }}
+        window.location.hash = '#/news?m=' + encodeURIComponent('加密貨幣');
+        u.applyRoute();
+        if (u.getNewsSelectedMarket() !== '加密貨幣') {{
+          throw new Error('Hash market parsing failed');
+        }}
+        const cryptoOnlyHtml = byId['news-list'].innerHTML;
+        if (!cryptoOnlyHtml.includes('Bitcoin ETF net inflow') || cryptoOnlyHtml.includes('FOMC minutes show rate cut path')) {{
+          throw new Error('Market filter failed to filter out non-crypto news');
+        }}
+        window.location.hash = '#/news';
+        u.applyRoute();
+
+        // 3. Highlights card shows ★★★ item
         if (!byId['news-highlights-list'].innerHTML.includes('FOMC minutes show rate cut path')) {{
           throw new Error('Highlights missing ★★★ item');
         }}
 
-        // 3. Failed sources banner visible and non-breaking
+        // 4. Failed sources banner visible and non-breaking
         if (byId['news-failed-banner'].classList.contains('hidden') || !byId['news-failed-banner'].innerHTML.includes('Binance 永續合約')) {{
           throw new Error('Failed sources banner not shown properly');
         }}
 
-        // 4. Signal card related news (3 days): BTCUSDT has 1 recent item (excludes 4d old), SP500 has 1, 2330 has none -> empty
+        // 5. Signal card related news (3 days): includes sentiment/reaction & excludes 4d old
+        const nasHtml = u.renderSignalRelatedNewsHtml('NAS100');
+        if (!nasHtml.includes('利多') || !nasHtml.includes('判讀分歧')) {{
+          throw new Error('Signal related news missing sentiment or reaction');
+        }}
         const btcHtml = u.renderSignalRelatedNewsHtml('BTCUSDT');
         if (!btcHtml.includes('相關消息（最近 3 天）') || !btcHtml.includes('Bitcoin ETF net inflow')) {{
           throw new Error('BTCUSDT related news missing');

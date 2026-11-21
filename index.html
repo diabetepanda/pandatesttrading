@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261121e" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261121f" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -467,37 +467,26 @@
       <section class="card" id="news-header-card">
         <div class="section-header">
           <div>
-            <h1>交易消息面</h1>
-            <p class="subtitle">只收錄與交易相關之國際財經、聯準會、台股、加密貨幣與鏈上／衍生品異常數據（免 API Key，每日台北 08:00 與 20:00 更新）。</p>
+            <h1>交易消息面 <span class="pill pill-live hidden" id="news-updating-pill">更新中</span></h1>
+            <p class="subtitle">只收錄與交易相關之國際財經、聯準會、台股、加密貨幣與鏈上／衍生品異常數據（免 API Key，約每 15 分鐘更新）。</p>
           </div>
           <div class="news-meta-badges">
             <span class="pill pill-live" id="news-issue-badge">期號：--</span>
-            <span class="muted" id="news-updated-at">更新時間：--</span>
+            <span class="muted" id="news-updated-at">最後更新：--</span>
             <span class="pill pill-neutral" id="news-count-badge">0 則</span>
           </div>
         </div>
+        <button id="news-new-banner" class="alert-banner news-new-banner hidden" type="button"></button>
         <div id="news-failed-banner" class="alert-banner hidden"></div>
-      </section>
 
-      <section class="card" id="news-highlights-card">
-        <div class="section-header">
-          <div>
-            <h2>★★★ 重點</h2>
-            <p class="subtitle">本期最高重要程度消息（依聯準會、重大總經、安全事件與極端數據規則篩選）。</p>
-          </div>
+        <div class="news-market-tabs" id="news-market-tabs" role="group" aria-label="市場大分類篩選">
+          <button class="tab active" data-market="all" type="button">全部 <span class="news-tab-count">0</span></button>
+          <button class="tab" data-market="台股" type="button">台股 <span class="news-tab-count">0</span></button>
+          <button class="tab" data-market="美股" type="button">美股 <span class="news-tab-count">0</span></button>
+          <button class="tab" data-market="加密貨幣" type="button">加密貨幣 <span class="news-tab-count">0</span></button>
+          <button class="tab" data-market="總經" type="button">總經 <span class="news-tab-count">0</span></button>
         </div>
-        <div id="news-highlights-list" class="news-list">
-          <div class="empty-state">本期尚無 ★★★ 重點消息。</div>
-        </div>
-      </section>
 
-      <section class="card" id="news-list-card">
-        <div class="section-header">
-          <div>
-            <h2>本期消息清單</h2>
-            <p class="subtitle">預設僅顯示最新一期；可用期號／日期選單往回查閱歷史月份（每次僅載入單月檔案）。</p>
-          </div>
-        </div>
         <div class="filter-controls news-controls">
           <select id="news-issue-select" aria-label="期號與日期選擇">
             <option value="">最新一期</option>
@@ -524,6 +513,34 @@
             <option value="1">★ 一般</option>
           </select>
         </div>
+
+        <div class="news-sentiment-tabs" id="news-sentiment-tabs" role="group" aria-label="情緒篩選">
+          <button class="tab active" data-sentiment="all" type="button">全部情緒</button>
+          <button class="tab" data-sentiment="bullish" type="button">利多</button>
+          <button class="tab" data-sentiment="bearish" type="button">利空</button>
+          <button class="tab" data-sentiment="neutral" type="button">中性</button>
+        </div>
+      </section>
+
+      <section class="card" id="news-highlights-card">
+        <div class="section-header">
+          <div>
+            <h2>★★★ 重點</h2>
+            <p class="subtitle">本期最高重要程度消息（依聯準會、重大總經、安全事件與極端數據規則篩選）。</p>
+          </div>
+        </div>
+        <div id="news-highlights-list" class="news-list">
+          <div class="empty-state">本期尚無 ★★★ 重點消息。</div>
+        </div>
+      </section>
+
+      <section class="card" id="news-list-card">
+        <div class="section-header">
+          <div>
+            <h2>本期消息清單</h2>
+            <p class="subtitle">預設僅顯示最新一期；可用期號／日期選單往回查閱歷史月份（每次僅載入單月檔案）。</p>
+          </div>
+        </div>
         <div id="news-list" class="news-list">
           <div class="empty-state">消息面資料載入中...</div>
         </div>
@@ -535,7 +552,7 @@
     本站為個人模擬驗證，非投資建議｜控制開關請編輯 repo 內的 <code>control/control.json</code>
   </footer>
 
-  <script src="./assets/config.js?v=20261121e"></script>
-  <script src="./assets/app.js?v=20261121e"></script>
+  <script src="./assets/config.js?v=20261121f"></script>
+  <script src="./assets/app.js?v=20261121f"></script>
 </body>
 </html>

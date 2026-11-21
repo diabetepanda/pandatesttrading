@@ -7,7 +7,9 @@ http:
   user_agent: "Mozilla/5.0 (compatible; SignalDeskNewsBot/1.0; +https://github.com/diabetepanda/pandatesttrading)"
 
 schedule:
-  taipei_hours: [8, 20]    # 每天台北 08:00 (UTC 00:00) 與 20:00 (UTC 12:00)
+  cron: "2,17,32,47 * * * *"  # 每 15 分鐘執行一次（錯開 scan.yml 的 7,22,37,52 分）
+  issue_am_start_hour_taipei: 8   # 台北 08:00–19:59 歸屬當日 AM 期別
+  issue_pm_start_hour_taipei: 20  # 台北 20:00–隔天 07:59 歸屬 20:00 那天的 PM 期別
   recent_days_window: 7    # news_latest.json 保留最近 7 天索引
   signal_news_days: 3      # 訊號卡片顯示最近 3 天相關消息
   max_items_per_feed: 25   # 單一新聞來源最多取前 N 則
@@ -600,3 +602,415 @@ symbol_aliases:
   AAPL: ["aapl", "apple", "蘋果"]
   SNDK: ["sndk", "sandisk", "閃迪"]
   SPCX: ["spcx", "spacex"]
+
+# 市場大分類推導規則（台股 / 美股 / 加密貨幣 / 總經，可多選）
+market_mapping:
+  valid_markets:
+    - 台股
+    - 美股
+    - 加密貨幣
+    - 總經
+  category_to_markets:
+    台股: ["台股"]
+    美股: ["美股"]
+    加密貨幣: ["加密貨幣"]
+    鏈上資金: ["加密貨幣"]
+    衍生品: ["加密貨幣"]
+    交易所公告: ["加密貨幣"]
+    安全事件: ["加密貨幣"]
+    總經: ["總經"]
+    聯準會: ["總經"]
+  symbol_market_rules:
+    tw_symbols: ["TWII", "2330", "2454", "3711", "2317", "2382", "2308", "2881", "2882", "2891", "2603", "1301", "2412"]
+    us_symbols: ["NAS100", "SP500", "TSLA", "GOOGL", "AAPL", "SNDK", "SPCX"]
+    crypto_suffix: "USDT"
+  keyword_to_market:
+    台股: ["台股", "加權指數", "台積電", "台灣股市", "taiex", "taiwan stock", "tsmc"]
+    美股: ["美股", "那斯達克", "標普", "道瓊", "華爾街", "wall street", "us stocks", "u.s. stocks", "nasdaq", "s&p 500", "dow jones", "equities"]
+    加密貨幣: ["比特幣", "以太坊", "加密貨幣", "幣圈", "穩定幣", "bitcoin", "btc", "ethereum", "eth", "crypto"]
+
+# 利多 / 利空規則初判（全部免金鑰、純規則）
+sentiment_rules:
+  default_targets_by_market:
+    加密貨幣: ["BTCUSDT"]
+    美股: ["NAS100"]
+    台股: ["TWII"]
+    總經: ["NAS100"]
+  default_targets_by_category:
+    聯準會: ["NAS100"]
+    總經: ["NAS100"]
+    美股: ["NAS100"]
+    台股: ["TWII"]
+    加密貨幣: ["BTCUSDT"]
+    鏈上資金: ["BTCUSDT"]
+    衍生品: ["BTCUSDT"]
+    交易所公告: ["BTCUSDT"]
+    安全事件: ["BTCUSDT"]
+  negation_prefixes_zh:
+    - "沒有"
+    - "並未"
+    - "尚未"
+    - "不會"
+    - "不再"
+    - "無法"
+    - "免於"
+    - "排除"
+    - "避免"
+    - "否決"
+    - "暫緩"
+    - "放棄"
+    - "停止"
+    - "取消"
+    - "撤銷"
+    - "撤回"
+    - "駁回"
+    - "終止"
+    - "豁免"
+    - "不"
+    - "沒"
+    - "未"
+    - "無"
+    - "非"
+  negation_false_words_zh:
+    - "未平倉"
+    - "不如預期"
+    - "不斷"
+    - "不僅"
+    - "不可"
+    - "不小"
+    - "無風險"
+    - "無上限"
+  negation_words_en:
+    - "not"
+    - "no"
+    - "never"
+    - "without"
+    - "neither"
+    - "nor"
+    - "fails"
+    - "failed"
+    - "unlikely"
+    - "rules out"
+    - "ruled out"
+    - "avoids"
+    - "avoided"
+    - "halts"
+    - "halted"
+    - "denies"
+    - "denied"
+    - "delays"
+    - "delayed"
+    - "won't"
+    - "doesn't"
+    - "didn't"
+    - "isn't"
+    - "aren't"
+    - "no longer"
+    - "drops"
+    - "dropped"
+    - "dismisses"
+    - "dismissed"
+    - "lifts"
+    - "lifted"
+  # 通膨 / 失業率反轉主題：數據低於預期 / 降溫 → 偏鴿利多；高於預期 / 升溫 → 偏鷹利空
+  macro_inversion_topics_zh:
+    - "通膨"
+    - "通膨率"
+    - "物價"
+    - "cpi"
+    - "pce"
+    - "ppi"
+    - "失業率"
+    - "初領失業金"
+  macro_inversion_topics_en:
+    - "inflation"
+    - "cpi"
+    - "core cpi"
+    - "pce"
+    - "core pce"
+    - "ppi"
+    - "unemployment"
+    - "jobless claims"
+    - "price index"
+  cooling_words_zh:
+    - "低於市場預期"
+    - "低於預期"
+    - "低於前值"
+    - "降溫"
+    - "放緩"
+    - "回落"
+    - "趨緩"
+  cooling_words_en:
+    - "below expectations"
+    - "lower than expected"
+    - "cooler than expected"
+    - "cools"
+    - "cooling"
+    - "slows"
+    - "slowing"
+    - "eases"
+    - "easing"
+    - "disinflation"
+  heating_words_zh:
+    - "高於市場預期"
+    - "高於預期"
+    - "超預期"
+    - "升溫"
+    - "反彈"
+    - "粘性"
+    - "頑固"
+  heating_words_en:
+    - "above expectations"
+    - "higher than expected"
+    - "hotter than expected"
+    - "hotter"
+    - "accelerates"
+    - "sticky"
+    - "tops estimates"
+  bullish:
+    en:
+      - "rate cut"
+      - "cut rates"
+      - "cuts rates"
+      - "rate cuts"
+      - "easing"
+      - "dovish"
+      - "etf approval"
+      - "sec approves"
+      - "approved"
+      - "approval"
+      - "net inflow"
+      - "inflow"
+      - "inflows"
+      - "beats estimates"
+      - "beat estimates"
+      - "beat expectations"
+      - "beats expectations"
+      - "tops expectations"
+      - "above expectations"
+      - "better than expected"
+      - "raises guidance"
+      - "raises forecast"
+      - "hikes guidance"
+      - "upgrades"
+      - "upgrade"
+      - "buyback"
+      - "share repurchase"
+      - "new listing"
+      - "will list"
+      - "listing"
+      - "partnership"
+      - "acquisition"
+      - "merger premium"
+      - "lifts sanctions"
+      - "sanctions lifted"
+      - "dismisses lawsuit"
+      - "settlement"
+      - "record high"
+      - "all-time high"
+      - "stimulus"
+      - "rally"
+      - "rallies"
+      - "surge"
+      - "surges"
+      - "bullish"
+      - "outperforms"
+      - "dividend hike"
+    zh:
+      - "降息"
+      - "寬鬆"
+      - "鴿派"
+      - "降準"
+      - "刺激政策"
+      - "減稅"
+      - "通過"
+      - "核准"
+      - "獲批"
+      - "淨流入"
+      - "資金湧入"
+      - "上幣"
+      - "上線"
+      - "回購"
+      - "庫藏股"
+      - "財報優於預期"
+      - "優於預期"
+      - "高於預期"
+      - "超越預期"
+      - "上調財測"
+      - "上修財測"
+      - "調升評等"
+      - "調升目標價"
+      - "外資買超"
+      - "買超"
+      - "投信買超"
+      - "合作"
+      - "結盟"
+      - "併購"
+      - "溢價"
+      - "解除制裁"
+      - "撤銷訴訟"
+      - "和解"
+      - "創新高"
+      - "歷史新高"
+      - "大漲"
+      - "反彈"
+      - "擴產"
+      - "利多"
+      - "樂觀展望"
+  bearish:
+    en:
+      - "rate hike"
+      - "hike rates"
+      - "hikes rates"
+      - "rate hikes"
+      - "hawkish"
+      - "tightening"
+      - "hack"
+      - "hacked"
+      - "exploit"
+      - "exploited"
+      - "drained"
+      - "stolen"
+      - "security breach"
+      - "vulnerability"
+      - "delist"
+      - "delisting"
+      - "lawsuit"
+      - "sued"
+      - "sues"
+      - "charged"
+      - "indicted"
+      - "fine"
+      - "fined"
+      - "penalty"
+      - "sec probe"
+      - "investigation"
+      - "misses estimates"
+      - "missed estimates"
+      - "miss estimates"
+      - "below expectations"
+      - "worse than expected"
+      - "cuts guidance"
+      - "lowers guidance"
+      - "slashes forecast"
+      - "downgrade"
+      - "downgrades"
+      - "net outflow"
+      - "outflow"
+      - "outflows"
+      - "layoff"
+      - "layoffs"
+      - "job cuts"
+      - "bankruptcy"
+      - "bankrupt"
+      - "debt default"
+      - "payment default"
+      - "loan default"
+      - "insolvent"
+      - "tariff"
+      - "tariffs"
+      - "sanction"
+      - "sanctions"
+      - "liquidation"
+      - "liquidations"
+      - "liquidated"
+      - "crash"
+      - "plunge"
+      - "plunges"
+      - "selloff"
+      - "recession"
+      - "stagflation"
+      - "halt trading"
+      - "trading halt"
+      - "bearish"
+    zh:
+      - "升息"
+      - "鷹派"
+      - "緊縮"
+      - "縮表"
+      - "駭客"
+      - "遭駭"
+      - "被盜"
+      - "漏洞"
+      - "竊取"
+      - "下架"
+      - "下幣"
+      - "移除交易對"
+      - "訴訟"
+      - "起訴"
+      - "罰款"
+      - "重罰"
+      - "遭調查"
+      - "立案調查"
+      - "監管調查"
+      - "展開調查"
+      - "反壟斷調查"
+      - "違規"
+      - "裁罰"
+      - "財報不如預期"
+      - "不如預期"
+      - "低於預期"
+      - "遜於預期"
+      - "下修財測"
+      - "下調財測"
+      - "調降評等"
+      - "調降目標價"
+      - "外資賣超"
+      - "賣超"
+      - "裁員"
+      - "破產"
+      - "違約"
+      - "倒閉"
+      - "聲請破產"
+      - "加徵關稅"
+      - "關稅"
+      - "制裁"
+      - "禁令"
+      - "淨流出"
+      - "爆倉"
+      - "清算"
+      - "強制平倉"
+      - "崩盤"
+      - "暴跌"
+      - "閃崩"
+      - "重挫"
+      - "停牌"
+      - "暫停交易"
+      - "衰退"
+      - "停滯性通膨"
+      - "利空"
+  by_category:
+    安全事件:
+      force_sentiment: "bearish"
+      score: -3
+      reason: "安全事件一律偏空（駭客／漏洞風險）"
+  by_market:
+    台股:
+      bullish: ["國安基金護盤", "外資大買", "庫藏股"]
+      bearish: ["外資大賣", "處置股"]
+    加密貨幣:
+      bullish: ["mainnet", "halving", "主網上線", "減半"]
+      bearish: ["rug pull", "depeg", "脫鉤"]
+
+# 事後市場反應判讀門檻（60 分鐘報酬率）
+reaction_thresholds:
+  crypto:
+    threshold_60m_pct: 0.5
+    unit: "%"
+    rationale: "加密貨幣 24 小時交易且波動度較高，事件後 60 分鐘漲跌幅超過 ±0.5% 才視為具統計意義的方向反應。"
+  us_index:
+    threshold_60m_pct: 0.3
+    unit: "%"
+    rationale: "美股主要指數（NAS100、SP500）流動性深、日內波動較溫和，60 分鐘超過 ±0.3% 即屬明確方向反應。"
+  tw_index:
+    threshold_60m_pct: 0.3
+    unit: "%"
+    rationale: "台股加權指數（TWII）受權值股與外資籌碼影響，60 分鐘漲跌幅達 ±0.3% 以上即顯示明確多空解讀。"
+  stock:
+    threshold_60m_pct: 1.0
+    unit: "%"
+    rationale: "美股與台股個股受單一消息影響振幅較大，以 60 分鐘 ±1.0% 作為顯著市場反應門檻。"
+  commodity:
+    threshold_60m_pct: 0.4
+    unit: "%"
+    rationale: "黃金、原油等大宗商品受宏觀與避險資金驅動，60 分鐘 ±0.4% 足以區分實質定價與日常波動。"

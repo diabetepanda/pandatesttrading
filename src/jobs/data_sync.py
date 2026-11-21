@@ -233,6 +233,16 @@ def merge_conflicted_content(rel_path: str, remote_text: str, local_text: str) -
                 indent=2,
             ) + "\n"
 
+        if norm == "news_reactions.json" and isinstance(remote_obj, dict) and isinstance(local_obj, dict):
+            r_react = remote_obj.get("reactions") if isinstance(remote_obj.get("reactions"), dict) else {}
+            l_react = local_obj.get("reactions") if isinstance(local_obj.get("reactions"), dict) else {}
+            merged_react = {**r_react, **l_react}
+            return json.dumps(
+                {**remote_obj, **local_obj, "count": len(merged_react), "reactions": merged_react},
+                ensure_ascii=False,
+                indent=2,
+            ) + "\n"
+
         if isinstance(remote_obj, dict) and isinstance(local_obj, dict):
             merged_dict = {**remote_obj, **local_obj}
             return json.dumps(merged_dict, ensure_ascii=False, indent=2) + "\n"

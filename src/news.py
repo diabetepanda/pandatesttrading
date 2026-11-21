@@ -48,6 +48,16 @@ VALID_CATEGORIES = (
     "安全事件",
 )
 
+VALID_MARKETS = (
+    "台股",
+    "美股",
+    "加密貨幣",
+    "總經",
+)
+
+CRON_MINUTES = (2, 17, 32, 47)
+MAX_REACTIONS_PER_RUN = 40
+
 _TRACKING_QUERY_PARAMS = {
     "utm_source",
     "utm_medium",
@@ -100,10 +110,26 @@ def load_tracked_instruments(path: Path | None = None) -> list[dict[str, Any]]:
 
 
 def compute_issue_id(dt_utc: datetime) -> str:
-    """Compute issue ID like `2026-11-21-AM` or `2026-11-21-PM` in Asia/Taipei."""
+    """Compute issue ID in Asia/Taipei: 08:00-19:59 -> same day AM; 20:00-07:59 -> 20:00 day PM."""
     tpe = dt_utc.astimezone(TPE_TZ)
-    half = "AM" if tpe.hour < 12 else "PM"
-    return f"{tpe.strftime('%Y-%m-%d')}-{half}"
+    if 8 <= tpe.hour < 20:
+        return f"{tpe.strftime('%Y-%m-%d')}-AM"
+    if tpe.hour >= 20:
+        return f"{tpe.strftime('%Y-%m-%d')}-PM"
+    prev_day = (tpe - timedelta(days=1)).strftime("%Y-%m-%d")
+    return f"{prev_day}-PM"
+
+
+def compute_next_update_hint(dt_utc: datetime, cron_minutes: tuple[int, ...] = CRON_MINUTES) -> str:
+    """Compute next approximate Taipei update time string based on 15m cron slots."""
+    tpe = dt_utc.astimezone(TPE_TZ)
+    next_min = next((m for m in sorted(cron_minutes) if m > tpe.minute), None)
+    if next_min is not None:
+        next_tpe = tpe.replace(minute=next_min, second=0, microsecond=0)
+    else:
+        next_hour = tpe.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
+        next_tpe = next_hour.replace(minute=min(cron_minutes))
+    return f"約台北時間 {next_tpe.strftime('%H:%M')}（每 15 分鐘更新）"
 
 
 def _fmt_timestamps(dt_utc: datetime) -> dict[str, str]:
@@ -445,6 +471,361 @@ def score_importance(
     return 1, "★", "一般交易消息"
 
 
+def derive_markets(
+    title: str,
+    summary: str,
+    category: str,
+    symbols: list[str],
+    news_cfg: dict[str, Any] | None = None,
+) -> list[str]:
+    """Derive market super-categories from `台股 | 美股 | 加密貨幣 | 總經` (multi-select)."""
+    cfg = (news_cfg or {}).get("market_mapping") or {}
+    cat_map = cfg.get("category_to_markets") or {
+        "台股": ["台股"],
+        "美股": ["美股"],
+        "加密貨幣": ["加密貨幣"],
+        "鏈上資金": ["加密貨幣"],
+        "衍生品": ["加密貨幣"],
+        "交易所公告": ["加密貨幣"],
+        "安全事件": ["加密貨幣"],
+        "總經": ["總經"],
+        "聯準會": ["總經"],
+    }
+    sym_rules = cfg.get("symbol_market_rules") or {}
+    tw_syms = set(sym_rules.get("tw_symbols") or [
+        "TWII", "2330", "2454", "3711", "2317", "2382", "2308", "2881", "2882", "2891", "2603", "1301", "2412",
+    ])
+    us_syms = set(sym_rules.get("us_symbols") or ["NAS100", "SP500", "TSLA", "GOOGL", "AAPL", "SNDK", "SPCX"])
+    crypto_suffix = str(sym_rules.get("crypto_suffix") or "USDT")
+
+    found: set[str] = set()
+    for m in cat_map.get(category, []):
+        if m in VALID_MARKETS:
+            found.add(m)
+
+    for sym in symbols or []:
+        s = str(sym).strip()
+        if not s:
+            continue
+        if s in tw_syms:
+            found.add("台股")
+        elif s in us_syms:
+            found.add("美股")
+        elif crypto_suffix and s.endswith(crypto_suffix):
+            found.add("加密貨幣")
+
+    kw_map = cfg.get("keyword_to_market") or {
+        "台股": ["台股", "加權指數", "台積電", "台灣股市", "taiex", "taiwan stock", "tsmc"],
+        "美股": ["美股", "那斯達克", "標普", "道瓊", "華爾街", "wall street", "us stocks", "u.s. stocks", "nasdaq", "s&p 500", "dow jones"],
+        "加密貨幣": ["比特幣", "以太坊", "加密貨幣", "幣圈", "穩定幣", "bitcoin", "btc", "ethereum", "eth", "crypto"],
+    }
+    text_lower = f"{title or ''} {summary or ''}".lower()
+    # Macro / Fed news (or cross-market news) also picks up clearly affected markets
+    for mkt, kws in kw_map.items():
+        if mkt not in VALID_MARKETS:
+            continue
+        for kw in kws or []:
+            k = str(kw).lower().strip()
+            if not k:
+                continue
+            if re.fullmatch(r"[a-z0-9.\- ]+", k) and len(k) <= 5:
+                if re.search(rf"(?<![a-z0-9]){re.escape(k)}(?![a-z0-9])", text_lower):
+                    found.add(mkt)
+                    break
+            elif k in text_lower:
+                found.add(mkt)
+                break
+
+    ordered = [m for m in VALID_MARKETS if m in found]
+    return ordered or ["總經"]
+
+
+def derive_sentiment_targets(
+    symbols: list[str],
+    markets: list[str],
+    category: str,
+    news_cfg: dict[str, Any] | None = None,
+) -> list[str]:
+    """Resolve affected target symbols, falling back to representative market tickers."""
+    cleaned = list(dict.fromkeys(str(s).strip() for s in (symbols or []) if str(s).strip()))
+    if cleaned:
+        return cleaned
+
+    rules = (news_cfg or {}).get("sentiment_rules") or {}
+    by_mkt = rules.get("default_targets_by_market") or {
+        "加密貨幣": ["BTCUSDT"],
+        "台股": ["TWII"],
+        "美股": ["NAS100"],
+        "總經": ["NAS100"],
+    }
+    by_cat = rules.get("default_targets_by_category") or {}
+    for m in markets or []:
+        t = by_mkt.get(m)
+        if t:
+            return list(t)
+    if category in by_cat and by_cat[category]:
+        return list(by_cat[category])
+    return ["NAS100"]
+
+
+def _keyword_matches_in_text(text_lower: str, kw_lower: str) -> list[tuple[int, int]]:
+    if not kw_lower:
+        return []
+    if re.fullmatch(r"[a-z0-9' \-]+", kw_lower):
+        pattern = rf"(?<![a-z0-9]){re.escape(kw_lower)}(?![a-z0-9])"
+        return [(m.start(), m.end()) for m in re.finditer(pattern, text_lower)]
+    spans: list[tuple[int, int]] = []
+    start = 0
+    while True:
+        idx = text_lower.find(kw_lower, start)
+        if idx < 0:
+            break
+        spans.append((idx, idx + len(kw_lower)))
+        start = idx + len(kw_lower)
+    return spans
+
+
+def _is_span_negated(
+    text_lower: str,
+    start: int,
+    kw_lower: str,
+    neg_en: list[str],
+    neg_zh: list[str],
+    false_zh_spans: list[tuple[int, int]],
+) -> bool:
+    is_ascii = bool(re.fullmatch(r"[a-z0-9' \-]+", kw_lower))
+    if is_ascii:
+        window = text_lower[max(0, start - 36) : start]
+        # Only look within the current clause
+        clause = re.split(r"[,.;:!?—\-]|(?:\band\b|\bbut\b|\bamid\b)", window)[-1]
+        for nw in neg_en:
+            nwl = nw.lower().strip()
+            if nwl and re.search(rf"(?<![a-z0-9]){re.escape(nwl)}(?![a-z0-9])", clause):
+                return True
+        return False
+
+    # CJK / mixed phrase: check up to 6 chars before start inside same clause
+    win_start = max(0, start - 6)
+    window = text_lower[win_start:start]
+    clause = re.split(r"[，。；：、！？（）「」\[\]]", window)[-1]
+    clause_offset = start - len(clause)
+    for np in neg_zh:
+        npl = np.lower().strip()
+        if not npl:
+            continue
+        pos = clause.rfind(npl)
+        if pos < 0:
+            continue
+        abs_pos = clause_offset + pos
+        abs_end = abs_pos + len(npl)
+        # Skip if negation token sits inside a false-negation compound like 未平倉 / 不如預期
+        if any(fs <= abs_pos < fe for fs, fe in false_zh_spans):
+            continue
+        # Only trigger if close enough to the matched keyword (gap <= 3 chars)
+        if start - abs_end <= 3:
+            return True
+    return False
+
+
+def evaluate_sentiment(
+    title: str,
+    summary: str,
+    category: str,
+    markets: list[str],
+    symbols: list[str],
+    source_id: str,
+    news_cfg: dict[str, Any] | None = None,
+    *,
+    is_data_alert: bool = False,
+    metrics: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Rule-based bullish/bearish/neutral sentiment classifier (no API keys)."""
+    cfg = news_cfg or {}
+    rules = cfg.get("sentiment_rules") or {}
+    targets = derive_sentiment_targets(symbols, markets, category, cfg)
+
+    def _pack(sent: str, score: int, reason: str) -> dict[str, Any]:
+        lbl_map = {"bullish": "利多", "bearish": "利空", "neutral": "中性"}
+        return {
+            "sentiment": sent,
+            "sentiment_label": lbl_map[sent],
+            "sentiment_score": int(score),
+            "sentiment_reason": reason,
+            "sentiment_targets": targets,
+            "sentiment_method": "rule",
+        }
+
+    # 1. Forced category rules (e.g. 安全事件一律利空)
+    by_cat = rules.get("by_category") or {}
+    if category in by_cat or source_id == "defillama_hacks":
+        cat_rule = by_cat.get(category) or {}
+        forced = str(cat_rule.get("force_sentiment") or "bearish")
+        sc = int(cat_rule.get("score", -3))
+        rsn = str(cat_rule.get("reason") or "安全事件一律偏空（駭客／漏洞風險）")
+        return _pack(forced, sc, rsn)
+
+    # 2. Exchange announcements
+    title_str = str(title or "")
+    if source_id.endswith("_announcements"):
+        if "[下架]" in title_str or "delist" in title_str.lower():
+            return _pack("bearish", -3, "命中：交易所下架公告")
+        if "[上幣]" in title_str or "list" in title_str.lower():
+            return _pack("bullish", 2, "命中：交易所上幣公告")
+
+    # 3. Deterministic data alerts based on numeric direction
+    if is_data_alert and isinstance(metrics, dict):
+        if source_id == "bitbo_btc_etf" and "net_flow_usd_m" in metrics:
+            flow = float(metrics.get("net_flow_usd_m") or 0.0)
+            th = float(((cfg.get("data_thresholds") or {}).get("btc_etf_net_flow_abs_usd_m") or {}).get("value", 150.0))
+            sev = 3 if abs(flow) >= th * 2.5 else 2
+            if flow > 0:
+                return _pack("bullish", sev, "數據：BTC 現貨 ETF 淨流入")
+            if flow < 0:
+                return _pack("bearish", -sev, "數據：BTC 現貨 ETF 淨流出")
+        if source_id == "defillama_stablecoins" and "change_1d_usd_m" in metrics:
+            chg_m = float(metrics.get("change_1d_usd_m") or 0.0)
+            if chg_m > 0:
+                return _pack("bullish", 2, "數據：穩定幣供給大增（流動性增加）")
+            if chg_m < 0:
+                return _pack("bearish", -2, "數據：穩定幣供給大減（流動性流出）")
+        if source_id == "defillama_chains" and "change_1d_pct" in metrics:
+            pct = float(metrics.get("change_1d_pct") or 0.0)
+            if pct > 0:
+                return _pack("bullish", 2, "數據：公鏈 TVL 資金淨流入")
+            if pct < 0:
+                return _pack("bearish", -2, "數據：公鏈 TVL 資金淨流出")
+        if source_id.endswith("_derivatives"):
+            if "funding_rate_pct" in metrics and metrics["funding_rate_pct"] is not None:
+                fr = float(metrics["funding_rate_pct"])
+                fr_high = float(((cfg.get("data_thresholds") or {}).get("funding_rate_high_pct") or {}).get("value", 0.05))
+                if fr >= fr_high:
+                    return _pack("bearish", -2, "數據：偏空（多頭擁擠，資金費率過高）")
+                return _pack("bullish", 2, "數據：偏多（空頭極端，具軋空條件）")
+            if "oi_24h_pct" in metrics:
+                return _pack("neutral", 0, "數據：未平倉量劇烈變動（方向中性）")
+        if source_id == "mempool_space":
+            return _pack("neutral", 0, "數據：鏈上擁擠度升高（方向中性）")
+
+    # 4. General rule-based keyword & inversion/negation matching
+    text_lower = f"{title or ''} {summary or ''}".lower()
+    if not text_lower.strip():
+        return _pack("neutral", 0, "未命中明確多空關鍵字（中性）")
+
+    consumed: list[tuple[int, int]] = []
+
+    def _overlaps(s: int, e: int) -> bool:
+        return any(not (e <= cs or s >= ce) for cs, ce in consumed)
+
+    false_zh_spans: list[tuple[int, int]] = []
+    for fw in rules.get("negation_false_words_zh") or ["未平倉", "不如預期", "不斷", "不僅"]:
+        false_zh_spans.extend(_keyword_matches_in_text(text_lower, str(fw).lower()))
+
+    score = 0
+    reasons: list[str] = []
+
+    # 4a. Macro / inflation inversion (e.g. 通膨低於預期 -> bullish; 通膨高於預期 -> bearish)
+    macro_topics = [
+        str(t).lower().strip()
+        for t in (rules.get("macro_inversion_topics_zh") or []) + (rules.get("macro_inversion_topics_en") or [])
+        if str(t).strip()
+    ]
+    has_macro_topic = any(_keyword_matches_in_text(text_lower, t) for t in macro_topics)
+    if has_macro_topic:
+        cooling_kws = sorted(
+            [str(k).lower().strip() for k in (rules.get("cooling_words_zh") or []) + (rules.get("cooling_words_en") or []) if str(k).strip()],
+            key=len,
+            reverse=True,
+        )
+        heating_kws = sorted(
+            [str(k).lower().strip() for k in (rules.get("heating_words_zh") or []) + (rules.get("heating_words_en") or []) if str(k).strip()],
+            key=len,
+            reverse=True,
+        )
+        cool_hit = None
+        for ck in cooling_kws:
+            spans = _keyword_matches_in_text(text_lower, ck)
+            if spans:
+                for s, e in spans:
+                    if not _overlaps(s, e):
+                        consumed.append((s, e))
+                cool_hit = ck
+                break
+        heat_hit = None
+        if cool_hit is None:
+            for hk in heating_kws:
+                spans = _keyword_matches_in_text(text_lower, hk)
+                if spans:
+                    for s, e in spans:
+                        if not _overlaps(s, e):
+                            consumed.append((s, e))
+                    heat_hit = hk
+                    break
+        if cool_hit:
+            score += 2
+            reasons.append(f"反轉：通膨／就業降溫（{cool_hit}）")
+        elif heat_hit:
+            score -= 2
+            reasons.append(f"反轉：通膨／就業升溫（{heat_hit}）")
+
+    # 4b. Collect bullish & bearish keyword lists (plus market-specific overrides)
+    bull_cfg = rules.get("bullish") or {}
+    bear_cfg = rules.get("bearish") or {}
+    by_mkt_rules = rules.get("by_market") or {}
+
+    bull_kws: list[str] = list(bull_cfg.get("en") or []) + list(bull_cfg.get("zh") or [])
+    bear_kws: list[str] = list(bear_cfg.get("en") or []) + list(bear_cfg.get("zh") or [])
+    for m in markets or []:
+        m_rule = by_mkt_rules.get(m) or {}
+        bull_kws.extend(m_rule.get("bullish") or [])
+        bear_kws.extend(m_rule.get("bearish") or [])
+
+    neg_en = [str(x) for x in (rules.get("negation_words_en") or [])]
+    neg_zh = [str(x) for x in (rules.get("negation_prefixes_zh") or [])]
+
+    tagged_kws: list[tuple[str, str]] = []
+    seen_kw_pairs: set[tuple[str, str]] = set()
+    for pol, kws in (("bullish", bull_kws), ("bearish", bear_kws)):
+        for raw_kw in kws:
+            kl = str(raw_kw).strip().lower()
+            if kl and (pol, kl) not in seen_kw_pairs:
+                seen_kw_pairs.add((pol, kl))
+                tagged_kws.append((pol, str(raw_kw).strip()))
+    # Longest phrases first so specific phrases consume before shorter substrings
+    tagged_kws.sort(key=lambda pair: len(pair[1]), reverse=True)
+
+    for pol, orig_kw in tagged_kws:
+        kl = orig_kw.lower()
+        for s, e in _keyword_matches_in_text(text_lower, kl):
+            if _overlaps(s, e):
+                continue
+            consumed.append((s, e))
+            negated = _is_span_negated(text_lower, s, kl, neg_en, neg_zh, false_zh_spans)
+            if pol == "bullish":
+                if negated:
+                    score -= 1
+                    reasons.append(f"反轉：否定「{orig_kw}」")
+                else:
+                    score += 1
+                    reasons.append(f"命中：{orig_kw}")
+            else:
+                if negated:
+                    score += 1
+                    reasons.append(f"反轉：否定「{orig_kw}」")
+                else:
+                    score -= 1
+                    reasons.append(f"命中：{orig_kw}")
+
+    # Deduplicate reason labels while preserving order
+    uniq_reasons = list(dict.fromkeys(reasons))
+    if score > 0:
+        return _pack("bullish", min(3, score), "；".join(uniq_reasons[:3]))
+    if score < 0:
+        return _pack("bearish", max(-3, score), "；".join(uniq_reasons[:3]))
+    if uniq_reasons:
+        return _pack("neutral", 0, f"多空訊號抵銷（{'；'.join(uniq_reasons[:2])}）")
+    return _pack("neutral", 0, "未命中明確多空關鍵字（中性）")
+
+
 def _http_get_with_retry(
     url: str,
     *,
@@ -484,18 +865,37 @@ def _make_item(
     importance_reason: str,
     is_data_alert: bool = False,
     metrics: dict[str, Any] | None = None,
+    now_utc: datetime | None = None,
+    summary: str = "",
+    news_cfg: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     ts = _fmt_timestamps(dt_utc)
+    seen_dt = (now_utc or dt_utc).astimezone(UTC_TZ)
+    seen_tpe = seen_dt.astimezone(TPE_TZ)
     canon = canonicalize_url(url)
     hash_key = f"{issue}|{canon}|{title}" if is_data_alert else f"{canon}|{title}"
     digest = hashlib.sha1(hash_key.encode("utf-8")).hexdigest()[:10]
     item_id = f"news-{dt_utc.astimezone(TPE_TZ).strftime('%Y%m%d')}-{digest}"
+    markets = derive_markets(title, summary, category, symbols, news_cfg)
+    sent = evaluate_sentiment(
+        title,
+        summary,
+        category,
+        markets,
+        symbols,
+        source_id,
+        news_cfg,
+        is_data_alert=is_data_alert,
+        metrics=metrics,
+    )
     return {
         "id": item_id,
         "issue": issue,
         "published_at_utc": ts["published_at_utc"],
         "published_at_taipei": ts["published_at_taipei"],
         "published_at_taipei_iso": ts["published_at_taipei_iso"],
+        "first_seen_at_utc": seen_dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "first_seen_at_taipei": seen_tpe.strftime("%Y-%m-%d %H:%M"),
         "month": ts["month"],
         "title": title.strip(),
         "url": url.strip(),
@@ -503,6 +903,7 @@ def _make_item(
         "source": source,
         "source_id": source_id,
         "category": category,
+        "markets": markets,
         "symbols": symbols,
         "importance": int(importance),
         "importance_stars": "★" * int(importance),
@@ -510,6 +911,7 @@ def _make_item(
         "is_data_alert": bool(is_data_alert),
         "metrics": metrics,
         "followup_of": None,
+        **sent,
     }
 
 
@@ -618,6 +1020,9 @@ def _fetch_rss_source(
                 symbols=syms,
                 importance=imp,
                 importance_reason=reason,
+                now_utc=now_utc,
+                summary=summary,
+                news_cfg=news_cfg,
             )
         )
     return kept, len(raw_entries)
@@ -678,6 +1083,9 @@ def _fetch_cnyes_source(
                 symbols=syms,
                 importance=imp,
                 importance_reason=reason,
+                now_utc=now_utc,
+                summary=summary,
+                news_cfg=news_cfg,
             )
         )
     return kept, len(rows)
@@ -728,6 +1136,7 @@ def _fetch_defillama_stablecoins(
         "total_usd_b": round(curr_usd / 1e9, 2),
         "change_1d_usd_m": round(diff_m, 1),
         "change_1d_pct": round(pct, 2),
+        "alert_key": f"stablecoins_supply:{'up' if diff_m >= 0 else 'down'}",
     }
 
     items: list[dict[str, Any]] = []
@@ -759,6 +1168,8 @@ def _fetch_defillama_stablecoins(
                 importance_reason=reason,
                 is_data_alert=True,
                 metrics=metrics,
+                now_utc=now_utc,
+                news_cfg=news_cfg,
             )
         )
     return items, metrics
@@ -856,7 +1267,14 @@ def _fetch_defillama_chains(
                         importance=imp,
                         importance_reason=reason,
                         is_data_alert=True,
-                        metrics={"chain": cname, "tvl_b": round(curr_tvl / 1e9, 2), "change_1d_pct": round(pct, 2)},
+                        metrics={
+                            "chain": cname,
+                            "tvl_b": round(curr_tvl / 1e9, 2),
+                            "change_1d_pct": round(pct, 2),
+                            "alert_key": f"chain_tvl:{cname}:{'up' if pct >= 0 else 'down'}",
+                        },
+                        now_utc=now_utc,
+                        news_cfg=news_cfg,
                     )
                 )
         except Exception:
@@ -926,6 +1344,8 @@ def _fetch_defillama_hacks(
                 importance_reason=reason,
                 is_data_alert=True,
                 metrics={"amount_usd": amt, "chains": h.get("chain") or []},
+                now_utc=now_utc,
+                news_cfg=news_cfg,
             )
         )
     return items, len(hacks)
@@ -987,7 +1407,11 @@ def _fetch_bitbo_btc_etf(
     th = (news_cfg.get("data_thresholds") or {}).get("btc_etf_net_flow_abs_usd_m") or {}
     abs_th = float(th.get("value", 150.0))
 
-    metrics = {"date": date_str, "net_flow_usd_m": round(total_m, 1)}
+    metrics = {
+        "date": date_str,
+        "net_flow_usd_m": round(total_m, 1),
+        "alert_key": f"btc_spot_etf:{'inflow' if total_m >= 0 else 'outflow'}",
+    }
     items: list[dict[str, Any]] = []
     # Only alert if recent (within 5 days) and exceeds threshold
     if abs(total_m) >= abs_th and (now_utc - dt).total_seconds() <= 5 * 86400:
@@ -1013,6 +1437,8 @@ def _fetch_bitbo_btc_etf(
                 importance_reason=reason,
                 is_data_alert=True,
                 metrics=metrics,
+                now_utc=now_utc,
+                news_cfg=news_cfg,
             )
         )
     return items, metrics
@@ -1060,6 +1486,7 @@ def _fetch_mempool_space(
         "half_hour_fee_sat_vb": half_hour,
         "mempool_vsize_mb": round(vsize_mb, 1),
         "tx_count": tx_count,
+        "alert_key": "btc_mempool:congested",
     }
     items: list[dict[str, Any]] = []
     if fastest >= fee_th or vsize_mb >= vsize_th:
@@ -1086,6 +1513,8 @@ def _fetch_mempool_space(
                 importance_reason=reason,
                 is_data_alert=True,
                 metrics=metrics,
+                now_utc=now_utc,
+                news_cfg=news_cfg,
             )
         )
     return items, metrics
@@ -1149,7 +1578,14 @@ def _evaluate_derivative_alerts(
                     importance=imp,
                     importance_reason=reason,
                     is_data_alert=True,
-                    metrics={"symbol": sym, "exchange": exchange_name, "funding_rate_pct": round(fr_pct, 4)},
+                    metrics={
+                        "symbol": sym,
+                        "exchange": exchange_name,
+                        "funding_rate_pct": round(fr_pct, 4),
+                        "alert_key": f"funding_rate:{sym}:{'high' if fr_pct >= fr_high else 'low'}",
+                    },
+                    now_utc=now_utc,
+                    news_cfg=news_cfg,
                 )
             )
 
@@ -1181,7 +1617,10 @@ def _evaluate_derivative_alerts(
                         "exchange": exchange_name,
                         "oi_24h_pct": round(oi_pct, 2),
                         "oi_usd": round(oi_usd, 0) if oi_usd is not None else None,
+                        "alert_key": f"open_interest:{sym}:{'up' if oi_pct >= 0 else 'down'}",
                     },
+                    now_utc=now_utc,
+                    news_cfg=news_cfg,
                 )
             )
     return items
@@ -1376,11 +1815,43 @@ def _fetch_okx_derivatives(
         oi_pct = None
         if oi_usd is not None:
             prev_rec = prev_oi_state.get(inst_id)
-            if isinstance(prev_rec, dict) and float(prev_rec.get("oi_usd") or 0.0) > 0:
-                prev_dt = _parse_datetime(prev_rec.get("ts_utc"))
-                if prev_dt and (now_utc - prev_dt).total_seconds() >= 6 * 3600:
-                    oi_pct = (oi_usd / float(prev_rec["oi_usd"]) - 1.0) * 100.0
-            new_oi_state[inst_id] = {"oi_usd": oi_usd, "ts_utc": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ")}
+            hist_entries: list[dict[str, Any]] = []
+            if isinstance(prev_rec, dict):
+                raw_hist = prev_rec.get("history")
+                if isinstance(raw_hist, list):
+                    for h in raw_hist:
+                        if isinstance(h, dict) and float(h.get("oi_usd") or 0.0) > 0:
+                            hist_entries.append({"oi_usd": float(h["oi_usd"]), "ts_utc": str(h.get("ts_utc") or "")})
+                elif float(prev_rec.get("oi_usd") or 0.0) > 0 and prev_rec.get("ts_utc"):
+                    hist_entries.append({"oi_usd": float(prev_rec["oi_usd"]), "ts_utc": str(prev_rec["ts_utc"])})
+
+            # Pick reference snapshot >= 6h old (closest to 24h) for 15-minute run compatibility
+            eligible_refs: list[tuple[float, float]] = []
+            kept_hist: list[dict[str, Any]] = []
+            for h in hist_entries:
+                h_dt = _parse_datetime(h.get("ts_utc"))
+                if h_dt is None:
+                    continue
+                age_sec = (now_utc - h_dt).total_seconds()
+                if age_sec <= 36 * 3600:
+                    kept_hist.append(h)
+                if 6 * 3600 <= age_sec <= 36 * 3600:
+                    eligible_refs.append((abs(age_sec - 24 * 3600), float(h["oi_usd"])))
+
+            if eligible_refs:
+                _, ref_oi = min(eligible_refs, key=lambda pair: pair[0])
+                if ref_oi > 0:
+                    oi_pct = (oi_usd / ref_oi - 1.0) * 100.0
+
+            now_iso_str = now_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+            last_dt = _parse_datetime(kept_hist[-1]["ts_utc"]) if kept_hist else None
+            if last_dt is None or (now_utc - last_dt).total_seconds() >= 600:
+                kept_hist.append({"oi_usd": oi_usd, "ts_utc": now_iso_str})
+            new_oi_state[inst_id] = {
+                "oi_usd": oi_usd,
+                "ts_utc": now_iso_str,
+                "history": kept_hist[-160:],
+            }
 
         records.append({"symbol": sym, "funding_rate_pct": fr_pct, "oi_24h_pct": oi_pct, "oi_usd": oi_usd})
         if sym in ("BTCUSDT", "ETHUSDT"):
@@ -1505,6 +1976,8 @@ def _fetch_exchange_announcements(
                 symbols=syms,
                 importance=imp,
                 importance_reason=reason,
+                now_utc=now_utc,
+                news_cfg=news_cfg,
             )
         )
     return kept, len(raw_items)
@@ -1529,6 +2002,30 @@ def _load_existing_archive(news_dir: Path) -> list[dict[str, Any]]:
     return items
 
 
+def _get_data_alert_key(item: dict[str, Any]) -> str | None:
+    """Return canonical `(indicator, direction)` key for data alerts to prevent same-issue repeats."""
+    metrics = item.get("metrics")
+    if isinstance(metrics, dict) and metrics.get("alert_key"):
+        return str(metrics["alert_key"])
+    sid = str(item.get("source_id") or "")
+    title = str(item.get("title") or "")
+    if sid == "defillama_stablecoins":
+        return f"stablecoins_supply:{'up' if '大增' in title else 'down'}"
+    if sid == "defillama_chains":
+        chain = str(metrics.get("chain")) if isinstance(metrics, dict) and metrics.get("chain") else title.split(" ")[0]
+        return f"chain_tvl:{chain}:{'up' if '大增' in title else 'down'}"
+    if sid == "bitbo_btc_etf":
+        return f"btc_spot_etf:{'inflow' if '淨流入' in title else 'outflow'}"
+    if sid == "mempool_space":
+        return "btc_mempool:congested"
+    if item.get("category") == "衍生品":
+        sym = str(metrics.get("symbol")) if isinstance(metrics, dict) and metrics.get("symbol") else (item.get("symbols") or [""])[0]
+        if "資金費率" in title:
+            return f"funding_rate:{sym}:{'high' if '多頭' in title else 'low'}"
+        return f"open_interest:{sym}:{'up' if '暴增' in title else 'down'}"
+    return None
+
+
 def deduplicate_and_link_items(
     candidates: list[dict[str, Any]],
     existing_items: list[dict[str, Any]],
@@ -1537,27 +2034,42 @@ def deduplicate_and_link_items(
     now_utc: datetime,
     news_cfg: dict[str, Any],
 ) -> list[dict[str, Any]]:
-    """Deduplicate by URL/title similarity and link follow-up developments across issues."""
+    """Deduplicate by URL/title similarity (current issue + recent 7d) and link follow-up developments."""
     dedup_cfg = news_cfg.get("dedup") or {}
     dup_th = float(dedup_cfg.get("title_similarity_threshold", 0.78))
     followup_min = float(dedup_cfg.get("followup_similarity_min", 0.46))
     lookback_days = int(dedup_cfg.get("followup_lookback_days", 7))
+    sim_lookback_days = max(7, lookback_days)
     lookback_cutoff = now_utc - timedelta(days=lookback_days)
+    sim_cutoff = now_utc - timedelta(days=sim_lookback_days)
 
     seen_urls: set[str] = set()
     seen_ids: set[str] = set()
+    seen_alert_keys_in_issue: set[str] = set()
     history_pool: list[dict[str, Any]] = []
+    data_alert_titles: set[str] = set()
 
     for ex in existing_items:
         if ex.get("id"):
             seen_ids.add(str(ex["id"]))
-        # Data-threshold alerts use shared dashboard URLs (e.g. defillama.com/stablecoins),
-        # so do not block future issues/chains by URL alone; deduplicate them by id/title.
-        if not ex.get("is_data_alert"):
-            cu = canonicalize_url(str(ex.get("canonical_url") or ex.get("url") or ""))
-            if cu:
-                seen_urls.add(cu)
-        history_pool.append(ex)
+        if ex.get("is_data_alert"):
+            ex_title = str(ex.get("title") or "").strip()
+            if ex_title:
+                data_alert_titles.add(ex_title)
+            if ex.get("issue") == current_issue and ex.get("source_id") != "defillama_hacks":
+                ak = _get_data_alert_key(ex)
+                if ak:
+                    seen_alert_keys_in_issue.add(ak)
+            continue
+
+        # Regular news: block duplicate URLs across all archive
+        cu = canonicalize_url(str(ex.get("canonical_url") or ex.get("url") or ""))
+        if cu:
+            seen_urls.add(cu)
+
+        ex_dt = _parse_datetime(ex.get("first_seen_at_utc") or ex.get("published_at_utc"))
+        if ex.get("issue") == current_issue or ex_dt is None or ex_dt >= sim_cutoff:
+            history_pool.append(ex)
 
     # Sort candidates: higher importance & newer first
     ordered_cands = sorted(
@@ -1574,8 +2086,16 @@ def deduplicate_and_link_items(
 
         if cand.get("is_data_alert"):
             cand_title = str(cand.get("title") or "").strip()
-            if any(str(p.get("title") or "").strip() == cand_title for p in history_pool + accepted):
+            if cand_title in data_alert_titles:
                 continue
+            if cand.get("source_id") != "defillama_hacks":
+                ak = _get_data_alert_key(cand)
+                if ak and ak in seen_alert_keys_in_issue:
+                    continue
+                if ak:
+                    seen_alert_keys_in_issue.add(ak)
+            if cand_title:
+                data_alert_titles.add(cand_title)
             if cid:
                 seen_ids.add(cid)
             accepted.append(dict(cand))
@@ -1585,7 +2105,7 @@ def deduplicate_and_link_items(
         if cu and cu in seen_urls:
             continue
 
-        # Check title similarity against all existing + already accepted in this run
+        # Check title similarity against current issue + recent 7d archive + already accepted
         is_dup = False
         best_followup: tuple[float, dict[str, Any]] | None = None
         cand_title = str(cand.get("title") or "")
@@ -1632,6 +2152,420 @@ def deduplicate_and_link_items(
     return accepted
 
 
+def _resolve_reaction_threshold(
+    target: str,
+    instruments: list[dict[str, Any]],
+    news_cfg: dict[str, Any],
+) -> float:
+    """Resolve 60-minute significance threshold (%) for a given target symbol."""
+    rt = news_cfg.get("reaction_thresholds") or {}
+    inst_map = {str(i.get("symbol")): i for i in instruments if isinstance(i, dict) and i.get("symbol")}
+    inst = inst_map.get(target) or {}
+    market = str(inst.get("market") or "")
+
+    if target == "TWII":
+        key = "tw_index"
+    elif target in ("NAS100", "SP500", "JP225") or market == "index":
+        key = "us_index"
+    elif target.endswith("USDT") or market == "crypto":
+        key = "crypto"
+    elif target in ("XAUUSD", "XAGUSD", "WTI", "NATGAS", "COPPER") or market == "commodity":
+        key = "commodity"
+    else:
+        key = "stock"
+
+    defaults = {"crypto": 0.5, "us_index": 0.3, "tw_index": 0.3, "stock": 1.0, "commodity": 0.4}
+    return float((rt.get(key) or {}).get("threshold_60m_pct", defaults[key]))
+
+
+def _resolve_okx_inst_id(symbol: str, instruments: list[dict[str, Any]]) -> str | None:
+    for inst in instruments:
+        if inst.get("symbol") == symbol:
+            okx_code = (inst.get("sources") or {}).get("okx")
+            if okx_code:
+                return str(okx_code)
+    if symbol.endswith("USDT") and len(symbol) > 4:
+        return f"{symbol[:-4]}-USDT"
+    return None
+
+
+def _resolve_yfinance_ticker(symbol: str, instruments: list[dict[str, Any]]) -> str | None:
+    for inst in instruments:
+        if inst.get("symbol") == symbol:
+            yf_code = (inst.get("sources") or {}).get("yfinance")
+            if yf_code:
+                return str(yf_code)
+    builtin = {
+        "NAS100": "^NDX",
+        "SP500": "^GSPC",
+        "JP225": "^N225",
+        "TWII": "^TWII",
+        "XAUUSD": "GC=F",
+        "XAGUSD": "SI=F",
+        "WTI": "CL=F",
+        "NATGAS": "NG=F",
+        "COPPER": "HG=F",
+    }
+    if symbol in builtin:
+        return builtin[symbol]
+    if re.fullmatch(r"\d{4}", symbol):
+        return f"{symbol}.TW"
+    if re.fullmatch(r"[A-Z]{1,6}", symbol) and not symbol.endswith("USDT"):
+        return symbol
+    return None
+
+
+def _fetch_okx_15m_candles(
+    inst_id: str,
+    *,
+    now_utc: datetime,
+    http_get: Callable[..., requests.Response] | None = None,
+    timeout_sec: int = 8,
+    max_retries: int = 1,
+    headers: dict[str, str] | None = None,
+) -> list[dict[str, Any]]:
+    """Fetch closed 15m candles from OKX public history-candles API (up to ~50h)."""
+    base_url = "https://www.okx.com/api/v5/market/history-candles"
+    cutoff_ms = int((now_utc - timedelta(hours=50)).timestamp() * 1000)
+    now_sec = now_utc.timestamp()
+    by_ts: dict[datetime, dict[str, Any]] = {}
+    after_ms: int | None = None
+
+    for _ in range(3):
+        url = f"{base_url}?instId={urllib.parse.quote(inst_id)}&bar=15m&limit=100"
+        if after_ms is not None:
+            url += f"&after={after_ms}"
+        resp = _http_get_with_retry(
+            url,
+            http_get=http_get,
+            timeout_sec=timeout_sec,
+            max_retries=max_retries,
+            headers=headers,
+        )
+        payload = resp.json()
+        if str(payload.get("code")) != "0":
+            break
+        rows = payload.get("data") or []
+        if not rows:
+            break
+        min_ms: int | None = None
+        for row in rows:
+            open_ms = int(row[0])
+            if min_ms is None or open_ms < min_ms:
+                min_ms = open_ms
+            confirm = str(row[8]) if len(row) > 8 else "1"
+            if confirm != "1" and (open_ms / 1000.0 + 900.0) > now_sec:
+                continue
+            dt = datetime.fromtimestamp(open_ms / 1000.0, tz=UTC_TZ)
+            by_ts[dt] = {
+                "ts_utc": dt,
+                "open": float(row[1]),
+                "close": float(row[4]),
+            }
+        if min_ms is None or min_ms <= cutoff_ms or len(rows) < 100:
+            break
+        after_ms = min_ms
+
+    return [by_ts[k] for k in sorted(by_ts.keys())]
+
+
+def _fetch_yfinance_15m_candles(
+    yf_ticker: str,
+    *,
+    now_utc: datetime,
+    timeout_sec: int = 8,
+) -> list[dict[str, Any]]:
+    """Fetch closed 15m candles from yfinance (no API key)."""
+    import pandas as pd
+    import yfinance as yf
+
+    df = yf.download(
+        tickers=yf_ticker,
+        period="5d",
+        interval="15m",
+        progress=False,
+        auto_adjust=False,
+        threads=False,
+        timeout=min(max(1, int(timeout_sec)), MAX_TIMEOUT_CAP_SEC),
+    )
+    if df is None or df.empty:
+        return []
+    if isinstance(df.columns, pd.MultiIndex):
+        df = df.copy()
+        df.columns = df.columns.get_level_values(0)
+
+    idx = pd.to_datetime(df.index)
+    if idx.tz is None:
+        idx = idx.tz_localize("UTC")
+    else:
+        idx = idx.tz_convert("UTC")
+    df = df.copy()
+    df.index = idx
+
+    now_sec = now_utc.timestamp()
+    bars: list[dict[str, Any]] = []
+    for ts, row in df.iterrows():
+        open_dt = ts.to_pydatetime().astimezone(UTC_TZ)
+        if open_dt.timestamp() + 900.0 > now_sec:
+            continue
+        o_val = row.get("Open")
+        c_val = row.get("Close")
+        if pd.isna(c_val):
+            continue
+        open_f = float(c_val) if pd.isna(o_val) else float(o_val)
+        bars.append({"ts_utc": open_dt, "open": open_f, "close": float(c_val)})
+    bars.sort(key=lambda b: b["ts_utc"])
+    return bars
+
+
+def fetch_15m_candles_for_symbol(
+    symbol: str,
+    *,
+    now_utc: datetime,
+    instruments: list[dict[str, Any]],
+    http_get: Callable[..., requests.Response] | None = None,
+    timeout_sec: int = 8,
+    max_retries: int = 1,
+    headers: dict[str, str] | None = None,
+) -> list[dict[str, Any]]:
+    """Fetch 15m OHLC candles for a tracked symbol via OKX (crypto) or yfinance (TradFi)."""
+    inst_id = _resolve_okx_inst_id(symbol, instruments)
+    is_crypto = symbol.endswith("USDT") or any(
+        i.get("symbol") == symbol and i.get("market") == "crypto" for i in instruments
+    )
+    try:
+        if is_crypto and inst_id:
+            return _fetch_okx_15m_candles(
+                inst_id,
+                now_utc=now_utc,
+                http_get=http_get,
+                timeout_sec=timeout_sec,
+                max_retries=max_retries,
+                headers=headers,
+            )
+        yf_ticker = _resolve_yfinance_ticker(symbol, instruments)
+        if yf_ticker:
+            return _fetch_yfinance_15m_candles(yf_ticker, now_utc=now_utc, timeout_sec=timeout_sec)
+    except Exception:
+        return []
+    return []
+
+
+def compute_single_news_reaction(
+    item: dict[str, Any],
+    bars: list[dict[str, Any]],
+    *,
+    target: str,
+    now_utc: datetime,
+    instruments: list[dict[str, Any]],
+    news_cfg: dict[str, Any],
+) -> dict[str, Any]:
+    """Compute +15m / +60m market price reaction for a single news item."""
+    now_iso = now_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    def _unavailable(closed_flag: bool | None = None) -> dict[str, Any]:
+        return {
+            "reaction_status": "unavailable",
+            "reaction_label": None,
+            "reaction_direction": None,
+            "ret_15m_pct": None,
+            "ret_60m_pct": None,
+            "target": target,
+            "base_time_taipei": None,
+            "market_closed_at_event": closed_flag,
+            "agree_with_rule": None,
+            "computed_at_utc": now_iso,
+        }
+
+    if not bars:
+        return _unavailable(None)
+
+    norm_bars: list[dict[str, Any]] = []
+    for b in bars:
+        bt = b.get("ts_utc")
+        dt = bt.astimezone(UTC_TZ) if isinstance(bt, datetime) else _parse_datetime(bt)
+        if dt is None:
+            continue
+        close_px = float(b.get("close") or 0.0)
+        if close_px <= 0:
+            continue
+        norm_bars.append({"ts_utc": dt, "close": close_px})
+    norm_bars.sort(key=lambda x: x["ts_utc"])
+    if not norm_bars:
+        return _unavailable(None)
+
+    t_pub = _parse_datetime(item.get("published_at_utc"))
+    t_seen = _parse_datetime(item.get("first_seen_at_utc"))
+    if t_pub and t_seen:
+        t_event = max(t_pub, t_seen)
+    else:
+        t_event = t_seen or t_pub
+    if t_event is None:
+        return _unavailable(None)
+
+    bar_dur = timedelta(minutes=15)
+    base_bar: dict[str, Any] | None = None
+    market_closed = False
+
+    # First check if an active 15m bar contains t_event
+    for b in norm_bars:
+        if b["ts_utc"] <= t_event < b["ts_utc"] + bar_dur:
+            base_bar = b
+            market_closed = False
+            break
+
+    if base_bar is None:
+        next_bar = next((b for b in norm_bars if b["ts_utc"] >= t_event), None)
+        if next_bar is None:
+            return _unavailable(None)
+        base_bar = next_bar
+        market_closed = (next_bar["ts_utc"] - t_event) > timedelta(minutes=30)
+
+    base_ts = base_bar["ts_utc"]
+    base_px = base_bar["close"]
+
+    b_15 = next(
+        (b for b in norm_bars if base_ts + timedelta(minutes=15) <= b["ts_utc"] <= base_ts + timedelta(hours=24)),
+        None,
+    )
+    b_60 = next(
+        (b for b in norm_bars if base_ts + timedelta(minutes=60) <= b["ts_utc"] <= base_ts + timedelta(hours=24)),
+        None,
+    )
+    if b_60 is None:
+        return _unavailable(market_closed)
+
+    ret_15m = round((b_15["close"] / base_px - 1.0) * 100.0, 2) if b_15 is not None else None
+    ret_60m = round((b_60["close"] / base_px - 1.0) * 100.0, 2)
+
+    th = _resolve_reaction_threshold(target, instruments, news_cfg)
+    if ret_60m > th:
+        r_label = "市場解讀偏多"
+        r_dir = "bullish"
+    elif ret_60m < -th:
+        r_label = "市場解讀偏空"
+        r_dir = "bearish"
+    else:
+        r_label = "市場反應不明顯"
+        r_dir = "neutral"
+
+    rule_sent = item.get("sentiment")
+    if rule_sent in ("bullish", "bearish") and r_dir in ("bullish", "bearish"):
+        agree: bool | None = (rule_sent == r_dir)
+    else:
+        agree = None
+
+    return {
+        "reaction_status": "ok",
+        "reaction_label": r_label,
+        "reaction_direction": r_dir,
+        "ret_15m_pct": ret_15m,
+        "ret_60m_pct": ret_60m,
+        "target": target,
+        "base_time_taipei": base_ts.astimezone(TPE_TZ).strftime("%Y-%m-%d %H:%M"),
+        "market_closed_at_event": market_closed,
+        "agree_with_rule": agree,
+        "computed_at_utc": now_iso,
+    }
+
+
+def compute_news_reactions(
+    all_items: list[dict[str, Any]],
+    prev_reactions: dict[str, Any],
+    *,
+    now_utc: datetime,
+    instruments: list[dict[str, Any]],
+    news_cfg: dict[str, Any],
+    http_get: Callable[..., requests.Response] | None = None,
+    candle_fetcher: Callable[[str, datetime], list[dict[str, Any]]] | None = None,
+    timeout_sec: int = 8,
+    max_retries: int = 1,
+    headers: dict[str, str] | None = None,
+    max_items_per_run: int = MAX_REACTIONS_PER_RUN,
+) -> tuple[dict[str, Any], int]:
+    """Backfill market reactions for items aged 60m..48h (up to 40 per run, importance-first)."""
+    reactions = dict(prev_reactions)
+    eligible: list[tuple[int, int, str, dict[str, Any]]] = []
+
+    for it in all_items:
+        iid = str(it.get("id") or "")
+        if not iid:
+            continue
+        existing = reactions.get(iid)
+        if isinstance(existing, dict) and existing.get("reaction_status") == "ok":
+            continue
+
+        ref_dt = _parse_datetime(it.get("first_seen_at_utc") or it.get("published_at_utc"))
+        if ref_dt is None:
+            continue
+        age_sec = (now_utc - ref_dt).total_seconds()
+        if age_sec < 3600 or age_sec >= 48 * 3600:
+            continue
+
+        # Prioritize items never computed yet over previously unavailable retries
+        is_uncomputed = 1 if existing is None else 0
+        if isinstance(existing, dict) and existing.get("reaction_status") == "unavailable":
+            prev_comp = _parse_datetime(existing.get("computed_at_utc"))
+            if prev_comp is not None and (now_utc - prev_comp).total_seconds() < 3600:
+                continue
+
+        imp = int(it.get("importance", 1))
+        eligible.append((is_uncomputed, imp, ref_dt.strftime("%Y-%m-%dT%H:%M:%SZ"), it))
+
+    eligible.sort(key=lambda tup: (tup[0], tup[1], tup[2]), reverse=True)
+    batch = [tup[3] for tup in eligible[:max_items_per_run]]
+
+    candle_cache: dict[str, list[dict[str, Any]]] = {}
+    updated_count = 0
+
+    for it in batch:
+        iid = str(it["id"])
+        targets = list(it.get("sentiment_targets") or [])
+        if not targets:
+            mkts = it.get("markets") or derive_markets(
+                str(it.get("title") or ""), "", str(it.get("category") or "總經"), list(it.get("symbols") or []), news_cfg
+            )
+            targets = derive_sentiment_targets(list(it.get("symbols") or []), mkts, str(it.get("category") or "總經"), news_cfg)
+
+        chosen_result: dict[str, Any] | None = None
+        for tgt in targets:
+            if tgt not in candle_cache:
+                if candle_fetcher is not None:
+                    try:
+                        candle_cache[tgt] = candle_fetcher(tgt, now_utc) or []
+                    except Exception:
+                        candle_cache[tgt] = []
+                else:
+                    candle_cache[tgt] = fetch_15m_candles_for_symbol(
+                        tgt,
+                        now_utc=now_utc,
+                        instruments=instruments,
+                        http_get=http_get,
+                        timeout_sec=timeout_sec,
+                        max_retries=max_retries,
+                        headers=headers,
+                    )
+            res = compute_single_news_reaction(
+                it,
+                candle_cache[tgt],
+                target=tgt,
+                now_utc=now_utc,
+                instruments=instruments,
+                news_cfg=news_cfg,
+            )
+            if chosen_result is None:
+                chosen_result = res
+            if res["reaction_status"] == "ok":
+                chosen_result = res
+                break
+
+        if chosen_result is not None:
+            reactions[iid] = chosen_result
+            updated_count += 1
+
+    return reactions, updated_count
+
+
 def generate_news_files(
     out_dir: Path,
     *,
@@ -1641,6 +2575,7 @@ def generate_news_files(
     now_utc: datetime | None = None,
     timeout_sec: int | None = None,
     http_get: Callable[..., requests.Response] | None = None,
+    candle_fetcher: Callable[[str, datetime], list[dict[str, Any]]] | None = None,
     probe_only: bool = False,
 ) -> dict[str, Any]:
     """Fetch all enabled news/data sources, deduplicate, append monthly JSONL, and emit index files."""
@@ -1897,20 +2832,50 @@ def generate_news_files(
         for mk, cnt in sorted(month_counts.items(), reverse=True)
     ]
 
+    reactions_path = out_dir / "news_reactions.json"
+    prev_reactions: dict[str, Any] = {}
+    if reactions_path.exists():
+        try:
+            prev_react_doc = json.loads(reactions_path.read_text(encoding="utf-8"))
+            if isinstance(prev_react_doc, dict) and isinstance(prev_react_doc.get("reactions"), dict):
+                prev_reactions = prev_react_doc["reactions"]
+        except Exception:
+            prev_reactions = {}
+
+    reactions_map, reactions_computed = compute_news_reactions(
+        all_items,
+        prev_reactions,
+        now_utc=now,
+        instruments=instruments,
+        news_cfg=news_cfg,
+        http_get=http_get,
+        candle_fetcher=candle_fetcher,
+        timeout_sec=eff_timeout,
+        max_retries=max_retries,
+        headers=headers,
+    )
+
     ok_sources = sum(1 for r in sources_report.values() if r["status"] == "ok")
     status = "ok" if not failed_sources else ("partial" if ok_sources > 0 else "failed")
+    next_hint = compute_next_update_hint(now)
 
     latest_payload = {
         "version": 1,
         "latest_issue": issue,
+        "is_current_issue_updating": True,
         "updated_at_utc": now_iso,
         "updated_at_taipei": now_tpe_str,
+        "last_updated_utc": now_iso,
+        "last_updated_taipei": now_tpe_str,
+        "next_update_hint": next_hint,
         "status": status,
         "failed_sources": failed_sources,
         "fetch_report": {
             "total_elapsed_sec": round(time_mod.monotonic() - run_t0, 3),
             "sources_ok": ok_sources,
             "sources_failed": len(failed_sources),
+            "new_items_added": len(accepted_items),
+            "reactions_computed": reactions_computed,
             "sources": sources_report,
         },
         "data_metrics_snapshot": metrics_snapshot,
@@ -1928,6 +2893,14 @@ def generate_news_files(
         "issues": issues_list,
     }
 
+    reactions_payload = {
+        "version": 1,
+        "updated_at_utc": now_iso,
+        "updated_at_taipei": now_tpe_str,
+        "count": len(reactions_map),
+        "reactions": reactions_map,
+    }
+
     if not probe_only:
         out_dir.mkdir(parents=True, exist_ok=True)
         (out_dir / "news_latest.json").write_text(
@@ -1936,6 +2909,10 @@ def generate_news_files(
         )
         index_path.write_text(
             json.dumps(index_payload, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        reactions_path.write_text(
+            json.dumps(reactions_payload, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
         state_path.write_text(
