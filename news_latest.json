@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-22-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-22T09:13:04Z",
-  "updated_at_taipei": "2026-11-22 17:13",
-  "last_updated_utc": "2026-11-22T09:13:04Z",
-  "last_updated_taipei": "2026-11-22 17:13",
-  "next_update_hint": "約台北時間 17:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-22T09:28:02Z",
+  "updated_at_taipei": "2026-11-22 17:28",
+  "last_updated_utc": "2026-11-22T09:28:02Z",
+  "last_updated_taipei": "2026-11-22 17:28",
+  "next_update_hint": "約台北時間 17:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 18.652,
+    "total_elapsed_sec": 15.132,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 2,
+    "new_items_added": 1,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.152,
+        "elapsed_sec": 0.064,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.191,
+        "elapsed_sec": 0.386,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.143,
+        "elapsed_sec": 2.007,
         "raw_count": 30,
         "items_kept": 2,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.147,
+        "elapsed_sec": 0.063,
         "raw_count": 10,
         "items_kept": 0,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.326,
+        "elapsed_sec": 0.287,
         "raw_count": 10,
-        "items_kept": 8,
+        "items_kept": 9,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.28,
+        "elapsed_sec": 0.235,
         "raw_count": 25,
         "items_kept": 20,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.201,
+        "elapsed_sec": 0.094,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.161,
+        "elapsed_sec": 0.09,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.182,
+        "elapsed_sec": 0.095,
         "raw_count": 37,
         "items_kept": 19,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.472,
+        "elapsed_sec": 0.57,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.676,
+        "elapsed_sec": 0.44,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.565,
+        "elapsed_sec": 0.419,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.633,
+        "elapsed_sec": 0.707,
         "raw_count": 15,
         "items_kept": 8,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.415,
+        "elapsed_sec": 0.352,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.415,
+        "elapsed_sec": 0.152,
         "raw_count": 50,
         "items_kept": 23,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.207,
+        "elapsed_sec": 0.159,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 2.554,
+        "elapsed_sec": 0.306,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.128,
+        "elapsed_sec": 0.059,
         "raw_count": 1373,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.806,
+        "elapsed_sec": 1.763,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.561,
+        "elapsed_sec": 0.375,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.517,
+        "elapsed_sec": 1.466,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.454,
+        "elapsed_sec": 0.38,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.56,
+        "elapsed_sec": 0.843,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.372,
+        "elapsed_sec": 0.167,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.625,
+        "elapsed_sec": 0.56,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.426,
+        "elapsed_sec": 0.429,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -282,11 +282,11 @@
       },
       "Base": {
         "tvl_b": 5.01,
-        "change_1d_pct": 9.71
+        "change_1d_pct": 9.72
       },
       "Solana": {
-        "tvl_b": 4.55,
-        "change_1d_pct": 0.08
+        "tvl_b": 4.56,
+        "change_1d_pct": 0.21
       },
       "Tron": {
         "tvl_b": 4.38,
@@ -294,7 +294,7 @@
       },
       "BSC": {
         "tvl_b": 4.22,
-        "change_1d_pct": -0.24
+        "change_1d_pct": -0.26
       },
       "Bitcoin": {
         "tvl_b": 2.97,
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 19, 2026",
-      "net_flow_usd_m": -16.9,
+      "net_flow_usd_m": -17.0,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0039,
-        "oi_usd_b": 1.89
+        "funding_rate_pct": 0.0038,
+        "oi_usd_b": 1.91
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0026,
+        "funding_rate_pct": -0.0027,
         "oi_usd_b": 1.11
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 2,
       "half_hour_fee_sat_vb": 1,
       "mempool_vsize_mb": 30.2,
-      "tx_count": 64849,
+      "tx_count": 64394,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -3272,6 +3272,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261122-0def3c5561",
+      "issue": "2026-11-22-AM",
+      "published_at_utc": "2026-11-22T08:51:16Z",
+      "published_at_taipei": "2026-11-22 16:51",
+      "published_at_taipei_iso": "2026-11-22T16:51:16+08:00",
+      "first_seen_at_utc": "2026-11-22T09:28:02Z",
+      "first_seen_at_taipei": "2026-11-22 17:28",
+      "month": "2026-11",
+      "title": "Russia's seaborne crude exports hit four-month high as drones idle refineries",
+      "url": "http://www.intellinews.com/russia-s-seaborne-crude-exports-hit-four-month-high-as-drones-idle-refineries-487273/?.tsrc=rss",
+      "canonical_url": "https://intellinews.com/russia-s-seaborne-crude-exports-hit-four-month-high-as-drones-idle-refineries-487273?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261122-824eb13380",
       "issue": "2026-11-22-AM",
       "published_at_utc": "2026-11-22T07:27:01Z",
@@ -3450,6 +3484,40 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261122-0def3c5561",
+      "issue": "2026-11-22-AM",
+      "published_at_utc": "2026-11-22T08:51:16Z",
+      "published_at_taipei": "2026-11-22 16:51",
+      "published_at_taipei_iso": "2026-11-22T16:51:16+08:00",
+      "first_seen_at_utc": "2026-11-22T09:28:02Z",
+      "first_seen_at_taipei": "2026-11-22 17:28",
+      "month": "2026-11",
+      "title": "Russia's seaborne crude exports hit four-month high as drones idle refineries",
+      "url": "http://www.intellinews.com/russia-s-seaborne-crude-exports-hit-four-month-high-as-drones-idle-refineries-487273/?.tsrc=rss",
+      "canonical_url": "https://intellinews.com/russia-s-seaborne-crude-exports-hit-four-month-high-as-drones-idle-refineries-487273?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261122-53cf77c62d",
       "issue": "2026-11-22-AM",
@@ -13998,8 +14066,8 @@
       "month": "2026-11",
       "date": "2026-11-22",
       "half": "AM",
-      "updated_at_taipei": "2026-11-22 17:13",
-      "count": 84,
+      "updated_at_taipei": "2026-11-22 17:28",
+      "count": 85,
       "star3_count": 11,
       "failed_sources": [
         {
