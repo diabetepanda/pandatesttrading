@@ -6,6 +6,7 @@
   const REQUEST_TIMEOUT_MS = CFG.REQUEST_TIMEOUT_MS || 8000;
 
   let cachedMacro = null;
+  let cachedFlowTw = null;
   let activeTab = "overview";
   let calRange = "week2"; // 預設：本週與下週
   let calStars = "3"; // 預設：僅顯示 ★★★
@@ -1024,9 +1025,17 @@
   function scanMacroGlossary() {
     const g = window.SIGNAL_DESK_GLOSSARY;
     if (!g || typeof g.scanContainers !== "function" || !g.isEnabled()) return;
-    g.scanContainers(document.getElementById("macro-view-overview"), ".macro-overview-hero-card, #macro-fed-section, #macro-logic-fold");
+    g.scanContainers(document.getElementById("macro-view-overview"), ".macro-overview-hero-card, #macro-fed-section, #macro-logic-fold, .flow-tw-card");
     g.scanContainers(document.getElementById("macro-view-data"), ".macro-ind-card");
     g.scanContainers(document.getElementById("macro-view-calendar"), ".macro-cal-row, .macro-cal-past-item");
+  }
+
+  function renderMacroFlowTwCard() {
+    if (window.SIGNAL_DESK_FLOW_TW && typeof window.SIGNAL_DESK_FLOW_TW.mountFlowTwCard === "function") {
+      window.SIGNAL_DESK_FLOW_TW.mountFlowTwCard("macro-flow-tw-slot", cachedFlowTw, {
+        researchHref: "./index.html#/research/flow_signals",
+      });
+    }
   }
 
   function openGlossaryModal() {
@@ -1135,11 +1144,18 @@
 
   async function refreshMacro() {
     const errBox = document.getElementById("macro-error-box");
+    const flowPromise = (window.SIGNAL_DESK_FLOW_TW && typeof window.SIGNAL_DESK_FLOW_TW.fetchFlowTwJson === "function")
+      ? window.SIGNAL_DESK_FLOW_TW.fetchFlowTwJson(DATA_BASE, REQUEST_TIMEOUT_MS).then((d) => {
+          cachedFlowTw = d;
+          renderMacroFlowTwCard();
+        }).catch(() => {})
+      : Promise.resolve();
     try {
-      const doc = await fetchMacroData();
+      const [doc] = await Promise.all([fetchMacroData(), flowPromise]);
       cachedMacro = doc;
       if (errBox) errBox.classList.add("hidden");
       renderAll();
+      renderMacroFlowTwCard();
     } catch (err) {
       if (errBox) {
         errBox.textContent = `宏觀資料載入失敗：${err.message}（若先前已載入資料則暫保留顯示）`;

@@ -312,13 +312,15 @@ def test_frontend_macro_html_nav_versions_and_calendar_defaults() -> None:
     # Nav & cache-busting checks
     assert "./macro.html" in index_html
     assert "宏觀數據" in index_html
-    assert "?v=20261122c" in index_html
-    assert "?v=20261122c" in macro_html
-    assert "./assets/style.css?v=20261122c" in macro_html
-    assert "./assets/config.js?v=20261122c" in macro_html
-    assert "./assets/glossary.js?v=20261122c" in macro_html
-    assert "./assets/macro.js?v=20261122c" in macro_html
-    assert "./assets/glossary.js?v=20261122c" in index_html
+    assert "?v=20261122d" in index_html
+    assert "?v=20261122d" in macro_html
+    assert "./assets/style.css?v=20261122d" in macro_html
+    assert "./assets/config.js?v=20261122d" in macro_html
+    assert "./assets/glossary.js?v=20261122d" in macro_html
+    assert "./assets/flow_tw.js?v=20261122d" in macro_html
+    assert "./assets/macro.js?v=20261122d" in macro_html
+    assert "./assets/glossary.js?v=20261122d" in index_html
+    assert "./assets/flow_tw.js?v=20261122d" in index_html
     assert "./index.html#/wall" in macro_html
     assert 'href="/' not in macro_html
     assert 'src="/' not in macro_html

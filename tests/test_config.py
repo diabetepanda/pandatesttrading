@@ -158,7 +158,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261122c" in index_html
+    assert "?v=20261122d" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -714,9 +714,9 @@ def test_in_depth_research_json_and_rendering() -> None:
     root = Path(__file__).resolve().parent.parent
     data = build_research_dict()
 
-    # 1. Articles structure validation (Chronological order: short_term -> combo -> exam_sensitivity)
-    assert len(data["articles"]) == 3
-    art1, art2, art3 = data["articles"][0], data["articles"][1], data["articles"][2]
+    # 1. Articles structure validation (Chronological order: short_term -> combo -> exam_sensitivity -> flow_signals)
+    assert len(data["articles"]) == 4
+    art1, art2, art3, art4 = data["articles"][0], data["articles"][1], data["articles"][2], data["articles"][3]
 
     # Article 1: Contest short-term (Earliest research)
     assert art1["id"] == "short_term"
@@ -790,6 +790,13 @@ def test_in_depth_research_json_and_rendering() -> None:
     assert len(art3["tables"]["best_combos"]) == 4
     assert len(art3["tables"]["single_slot_matrix"]) == 6
     assert len(art3["tables"]["multi_slot_matrix"]) == 6
+
+    # Article 4: Institutional / Large-Trader Flow Signals (2026-11)
+    assert art4["id"] == "flow_signals"
+    assert art4["title"] == "大戶／法人資金流回測（2026-11）"
+    assert "57" in art4["takeaway"]
+    assert "嚴格統計標準下不顯著，只當隔天風險提示，不當進出場訊號" in art4["takeaway"]
+    assert len(art4["tables"]["effective_indicators"]) == 2
 
     # Files existence (single canonical data/research.json; legacy copies removed)
     data_json_path = root / "data" / "research.json"
@@ -879,24 +886,31 @@ def test_in_depth_research_json_and_rendering() -> None:
         if (!html.includes('research-toc')) {{
           throw new Error('renderResearchHtml missing research-toc');
         }}
-        if (!html.includes('第 1 篇') || !html.includes('第 2 篇') || !html.includes('第 3 篇')) {{
+        if (!html.includes('第 1 篇') || !html.includes('第 2 篇') || !html.includes('第 3 篇') || !html.includes('第 4 篇')) {{
           throw new Error('renderResearchHtml missing TOC article markers');
         }}
 
-        // Verify TOC order: short_term (1) -> combo (2) -> exam_sensitivity (3)
+        // Verify TOC order: short_term (1) -> combo (2) -> exam_sensitivity (3) -> flow_signals (4)
         const tocShort = html.indexOf("scrollToResearchArticle('short_term')");
         const tocCombo = html.indexOf("scrollToResearchArticle('combo')");
         const tocExam = html.indexOf("scrollToResearchArticle('exam_sensitivity')");
-        if (tocShort === -1 || tocCombo === -1 || tocExam === -1 || tocShort >= tocCombo || tocCombo >= tocExam) {{
-          throw new Error('TOC cards not in chronological order (short_term -> combo -> exam_sensitivity)');
+        const tocFlow = html.indexOf("scrollToResearchArticle('flow_signals')");
+        if (tocShort === -1 || tocCombo === -1 || tocExam === -1 || tocFlow === -1 || tocShort >= tocCombo || tocCombo >= tocExam || tocExam >= tocFlow) {{
+          throw new Error('TOC cards not in chronological order (short_term -> combo -> exam_sensitivity -> flow_signals)');
         }}
 
         // Verify article headers order and numbering
         const idx1 = html.indexOf('第 1 篇：短線策略能拿去比賽嗎？');
         const idx2 = html.indexOf('第 2 篇：截長補短，能不能把策略組合得更好？');
         const idx3 = html.indexOf('第 3 篇：考試回撤規則放寬，結果會不一樣嗎？');
-        if (idx1 === -1 || idx2 === -1 || idx3 === -1 || idx1 >= idx2 || idx2 >= idx3) {{
-          throw new Error('Article sections not rendered in chronological order (1 -> 2 -> 3)');
+        const idx4 = html.indexOf('第 4 篇：大戶／法人資金流回測（2026-11）');
+        if (idx1 === -1 || idx2 === -1 || idx3 === -1 || idx4 === -1 || idx1 >= idx2 || idx2 >= idx3 || idx3 >= idx4) {{
+          throw new Error('Article sections not rendered in chronological order (1 -> 2 -> 3 -> 4)');
+        }}
+
+        // Verify Article 4 content (Flow Signals)
+        if (!html.includes('72.88%') || !html.includes('67.57%') || !html.includes('嚴格統計標準下不顯著，只當隔天風險提示')) {{
+          throw new Error('renderResearchHtml missing Article 4 flow signals content');
         }}
 
         // Verify default expansion: Article 1 expanded, Article 2 & 3 collapsed

@@ -582,12 +582,126 @@ def build_research_dict() -> dict:
         },
     }
 
+    # -------------------------------------------------------------
+    # Article 4: 大戶／法人資金流回測（2026-11） (Flow Signals)
+    # -------------------------------------------------------------
+    article_flow = {
+        "id": "flow_signals",
+        "slug": "flow-signals",
+        "title": "大戶／法人資金流回測（2026-11）",
+        "subtitle": "台股三大法人／台指期／融資、美國 CFTC COT、OKX 合約與美國現貨 BTC ETF 共 57 項籌碼指標實證檢驗",
+        "takeaway": "共測 57 項指標（913 項檢定），僅 2 項台股外資指標在「隔天（1 日）」有效，5 日以上全部失效；全域 BH 校正 q 約 0.42 與 0.20，嚴格統計標準下不顯著，只當隔天風險提示，不當進出場訊號。",
+        "badge": "僅 2 項隔天提示",
+        "updated_at": "2026-11",
+        "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/flow_signals/report.md",
+        "github_code": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/flow_signals",
+        "sections": {
+            "what_we_tested": {
+                "title": "一、測了什麼？（三大市場 57 項籌碼指標與五道防自欺關卡）",
+                "content": [
+                    "很多市場說法喜歡看「法人買賣超」「美國 COT 大戶持倉」「交易所多空比與資金費率」來猜漲跌。我們把台股、美股期貨與加密貨幣共 57 項公開資金流指標放進同一套量化檢驗框架（合計 913 項統計檢定），確認到底有沒有真的預測力：",
+                    "• 台股（^TWII 加權指數、2330.TW 台積電）：外資／投信／自營商現貨買賣超（單日、5 日、20 日、連買賣天數、60 日 z-score）、外資台指期淨未平倉（水位、單日變化、5 日變化、60 日區間位置）、大盤融資餘額變化與融資背離、台積電外資買賣超。",
+                    "• 美國期貨 CFTC COT 持倉週報：S&P 500、那斯達克 100、黃金、WTI 原油與 CME 比特幣期貨的大戶淨部位佔未平倉比（Net % OI）及 156 週 COT Index。",
+                    "• 加密貨幣（BTC / ETH）：OKX 大戶帳戶／持倉多空比（日線與 4 小時線）、主動買賣量比（Taker Buy/Sell）、永續合約資金費率（8h 結算）、未平倉量（OI）變化率，以及 Farside 美國現貨比特幣 ETF 每日淨流入。",
+                    "• 防自欺機制：嚴格對齊公布時間（台股盤後公布只算隔天起算報酬、美國 COT 週五公布延至下週一開盤進場、BTC ETF 延至 D+1 起算，絕不偷看當日漲跌）；前 70% 樣本內／後 30% 樣本外切分；Newey-West 重疊報酬標準誤修正；全域 Benjamini-Hochberg (BH) 多重比較校正；以及剔除 2020-03 與 2022 極端行情測試。",
+                ],
+            },
+            "data_periods": {
+                "title": "二、資料期間與限制（樣本深度差異很大）",
+                "content": [
+                    "不同市場的公開免金鑰歷史長度差異很大，解讀結果時必須把樣本限制算進去：",
+                    "• 台股現貨三大法人／融資／台積電（證交所 BFI82U / MI_MARGN / T86）：2015-01 至 2026-11（約 2,884 個交易日，接近 12 年完整多空循環）。",
+                    "• 台股外資台指期淨未平倉（期交所 TAIFEX / FinMind）：公開免金鑰歷史從 2018-06 起（至 2026-11 約 2,056 個交易日，約 8.4 年）。",
+                    "• 美國 CFTC COT 週報：S&P 500／NDX／黃金／原油自 2010-01 起（880 週）；CME 比特幣期貨自 2018-04 起（449 週）。",
+                    "• 加密貨幣（OKX 公開端點歷史偏短）：日線資料約 2.7 年（最多約 998～999 日，2024-02 起）、4H 線約 5.5 個月（2026-06 起）、主動買賣量比日線僅約 99 日（2026-08 起）、永續合約資金費率（8h 結算）約 3 個月（2026-08 起，284 筆）；美國現貨 BTC ETF 自 2024-01 上市至今約 2.9 年（720 日），尚未經歷完整熊市。",
+                ],
+            },
+            "effective_two": {
+                "title": "三、唯二有效的台股隔天指標（5 日以上全面失效）",
+                "content": [
+                    "全部 57 項指標當中，只有 2 個台股外資指標在「隔天（1 日）」通過樣本內外同向、獨立事件數 ≥ 30 且單一事件勝率顯著優於同期基準的檢驗；一旦拉長到 5 日或 20 日以上，預測力立刻歸零失效：",
+                ],
+            },
+            "useless_summary": {
+                "title": "四、哪些指標沒用？（共 48 項淘汰）",
+                "items": [
+                    {
+                        "group": "美國 CFTC COT（10 項測試，9 項沒用）",
+                        "detail": "S&P 500、NDX、WTI 原油、CME 比特幣期貨的 Net % OI 與 156 週 COT Index，以及黃金 Net % OI，在樣本外多數方向反轉或無法通過多重比較校正。",
+                    },
+                    {
+                        "group": "加密貨幣 OKX 與 ETF 單日流量（22 項測試，17 項沒用）",
+                        "detail": "OKX 大戶帳戶／持倉多空比（1D 與 4H）、主動買賣量比（1D 與 4H）、永續合約資金費率（8h）、ETH OI 變化率與 BTC 4H OI 變化率、以及 BTC 現貨 ETF 單日淨流入，全數無穩定預測力（且 OKX 歷史偏短）。",
+                    },
+                    {
+                        "group": "台股投信／自營商／個股／靜態水位（20 項沒用）",
+                        "detail": "台股投信買賣超（單日／5日／20日／連買賣／z-score）、自營商買賣超（全部 5 種變形）、外資原始絕對金額與連買賣天數、外資台指期靜態淨未平倉水位與 60 日高低點突破、大盤融資餘額 5 日／20 日變化率、台積電（2330）外資買賣超，實測皆無穩定優勢。",
+                    },
+                ],
+            },
+            "reference_only": {
+                "title": "五、哪些指標「僅供參考」？（共 7 項：樣本太短或多重校正未過）",
+                "items": [
+                    "A2 外資台指期淨未平倉 5 日變化（^TWII）：20 日預測期樣本內外方向一致且單一檢定 p=0.0091，但全域 BH 校正 q=0.561 未過門檻。",
+                    "A3 台股融資增減與指數背離指標（^TWII）：1 日預測期單一檢定 p=0.0343，但 BH 校正 q=0.782 未過門檻。",
+                    "B3 黃金期貨 COT Index（156 週百分位）：20 日預測期單一檢定 p=0.0494，但 BH 校正 q=0.943 未過門檻。",
+                    "C3 BTC OKX 未平倉量變化率（OI Change %, 1D）：1 日呈現正相關（p=0.0198），但日線歷史僅約 2.7 年且 BH q=0.598，樣本太短。",
+                    "C4 美國現貨 BTC ETF 5 日累計淨流入、20 日累計淨流入與淨流入 60 日 z-score：上市未滿 3 年且未經歷完整熊市（BH q=0.56～0.79），僅能當背景資金觀察，待累積更長週期再重評。",
+                ],
+            },
+            "strict_caution": {
+                "title": "六、重要提醒：嚴格統計標準下不顯著，只當隔天風險提示",
+                "content": [
+                    "這 2 個台股指標雖然在事件勝率標準上過關，但放在 913 項全域 Benjamini-Hochberg 多重比較校正下，q 值分別約為 0.42（A1）與 0.20（A2），以嚴格的 q < 0.05 統計標準來看並不顯著，整體證據偏弱。",
+                    "因此，本站嚴格遵守「嚴格統計標準下不顯著，只當隔天風險提示，不當進出場訊號」的原則：只於台股（^TWII）及宏觀頁提供獨立的隔天風險提示小卡，絕不接進現有的 L2／L3 訊號評分或模擬帳戶自動交易邏輯。",
+                ],
+            },
+        },
+        "tables": {
+            "effective_indicators": [
+                {
+                    "id": "A1_foreign_z60",
+                    "name": "A1 外資現貨買賣超 60 日 z-score",
+                    "market": "台股加權 (^TWII)",
+                    "horizon": "僅隔天（1 日），5 日以上失效",
+                    "trigger": "z > +1.5（異常大買）",
+                    "oos_stat": "樣本外隔天上漲機率 72.88%（基準 56.58%，+16.3pp，N=59）",
+                    "p_and_q": "p = 0.0023（全樣本）／ 樣本外 p = 0.0056；全域 BH q ≈ 0.42",
+                    "note": "嚴格 q<0.05 不顯著，證據偏弱；只當隔天偏多提示",
+                },
+                {
+                    "id": "A2_txf_1d_chg",
+                    "name": "A2 外資台指期淨未平倉「單日變化」60 日 z-score",
+                    "market": "台股加權 (^TWII)",
+                    "horizon": "僅隔天（1 日），5 日以上失效",
+                    "trigger": "z < -1.5，且排除結算日（每月第三個星期三）",
+                    "oos_stat": "樣本外隔天平均 -0.74%，下跌機率 67.57%（基準 +23.0pp，N=37）",
+                    "p_and_q": "全樣本 p = 0.00044（樣本外 p = 0.0033）；全域 BH q ≈ 0.20",
+                    "note": "嚴格 q<0.05 不顯著，證據偏弱；只當隔天避險風險提示",
+                },
+            ],
+        },
+        "disclaimer": {
+            "text": "嚴格統計標準（BH q<0.05）下不顯著，證據偏弱；只看隔天、僅作風險提示參考，不構成買賣訊號或投資建議。",
+            "github_links": [
+                {
+                    "title": "完整資金流回測報告 (report.md)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/flow_signals/report.md",
+                },
+                {
+                    "title": "回測程式碼與資料規格 (research/flow_signals)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/flow_signals",
+                },
+            ],
+        },
+    }
+
     full_payload = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "title": "深度研究 (In-Depth Research)",
         "subtitle": "Signal Desk 策略量化實證、多週期盲測與組合實驗報告",
         "disclaimer": "研究結果僅供參考，過去表現不代表未來，不構成投資建議。",
-        "articles": [article_short, article_combo, article_exam],
+        "articles": [article_short, article_combo, article_exam, article_flow],
     }
     return full_payload
 

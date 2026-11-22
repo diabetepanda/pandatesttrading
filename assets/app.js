@@ -28,6 +28,10 @@
   let cachedEquity = null;
   let cachedEvents = null;
   let cachedTa = null;
+  let cachedFlowTw = null;
+  let pendingResearchArticleId = null;
+  const expandedResearchIds = new Set(["short_term"]);
+  let lastRenderedResearchStamp = null;
   let cachedNewsLatest = null;
   let cachedNewsIndex = null;
   let cachedNewsReactions = null;
@@ -290,6 +294,19 @@
       // fallback to local data/ta.json when data branch does not yet have ta.json
     }
     return fetchWithTimeout(`data/ta.json?t=${Date.now()}`, false);
+  }
+
+  async function fetchFlowTwData() {
+    if (window.SIGNAL_DESK_FLOW_TW && typeof window.SIGNAL_DESK_FLOW_TW.fetchFlowTwJson === "function") {
+      return window.SIGNAL_DESK_FLOW_TW.fetchFlowTwJson(DATA_BASE, REQUEST_TIMEOUT_MS);
+    }
+    try {
+      const data = await fetchDataJson("flow_tw.json");
+      if (data && (data.a1 || data.a2)) return data;
+    } catch (_err) {
+      // fallback to local data/flow_tw.json
+    }
+    return fetchWithTimeout(`data/flow_tw.json?t=${Date.now()}`, false);
   }
 
   async function fetchNewsLatest() {
@@ -1822,6 +1839,7 @@
         </div>
 
         <div class="ta-bt-bar">${escapeHtml(btSummaryText)}</div>
+        ${symbol === "TWII" && cachedFlowTw && window.SIGNAL_DESK_FLOW_TW ? `<div class="ta-flow-tw-wrap">${window.SIGNAL_DESK_FLOW_TW.renderFlowTwCardHtml(cachedFlowTw, { compact: true, researchHref: "#/research/flow_signals" })}</div>` : ""}
         <div class="ta-disclaimer">${escapeHtml(disclaimerText)}</div>
       </div>`;
   }
@@ -2558,6 +2576,7 @@
   }
 
   function scrollToResearchArticle(id) {
+    expandedResearchIds.add(id);
     const body = document.getElementById(`body-${id}`);
     const btn = document.getElementById(`toggle-btn-${id}`);
     if (body && body.classList.contains("collapsed")) {
@@ -2576,6 +2595,8 @@
     const btn = document.getElementById(`toggle-btn-${id}`);
     if (!body) return;
     const isCollapsed = body.classList.toggle("collapsed");
+    if (isCollapsed) expandedResearchIds.delete(id);
+    else expandedResearchIds.add(id);
     if (btn) btn.textContent = isCollapsed ? "展開閱讀" : "收折";
   }
   window.toggleResearchArticle = toggleResearchArticle;
@@ -2948,6 +2969,118 @@
     `;
   }
 
+  function renderFlowSignalsArticleHtml(art) {
+    if (!art) return "";
+    const takeaway = escapeHtml(art.takeaway || "");
+    const sec = art.sections || {};
+    const tested = sec.what_we_tested || {};
+    const periods = sec.data_periods || {};
+    const eff = sec.effective_two || {};
+    const useless = sec.useless_summary || {};
+    const uselessItems = Array.isArray(useless.items) ? useless.items : [];
+    const refOnly = sec.reference_only || {};
+    const refItems = Array.isArray(refOnly.items) ? refOnly.items : [];
+    const caution = sec.strict_caution || {};
+    const effRows = (art.tables && art.tables.effective_indicators) || [];
+    const disc = art.disclaimer || {};
+    const ghLinks = Array.isArray(disc.github_links) ? disc.github_links : [];
+
+    const effTableRows = effRows.length
+      ? effRows
+          .map(
+            (r) => `
+          <tr class="highlight-row">
+            <td data-label="指標"><strong>${escapeHtml(r.name)}</strong><br><span class="muted">${escapeHtml(r.market || "")}</span></td>
+            <td data-label="有效天期">${escapeHtml(r.horizon || "")}</td>
+            <td data-label="觸發條件"><code>${escapeHtml(r.trigger || "")}</code></td>
+            <td data-label="樣本外實證數字"><strong>${escapeHtml(r.oos_stat || "")}</strong></td>
+            <td data-label="p / BH q 值">${escapeHtml(r.p_and_q || "")}</td>
+            <td data-label="定位備註" class="muted">${escapeHtml(r.note || "")}</td>
+          </tr>`
+          )
+          .join("")
+      : '<tr><td colspan="6" class="muted center">尚無有效指標資料</td></tr>';
+
+    return `
+      <section class="card research-article" id="article-flow_signals">
+        <div class="section-header article-header" onclick="toggleResearchArticle('flow_signals')">
+          <div>
+            <h2>第 4 篇：${escapeHtml(art.title || "大戶／法人資金流回測（2026-11）")}</h2>
+            <p class="subtitle">${escapeHtml(art.subtitle || "")}</p>
+          </div>
+          <div class="article-header-actions" onclick="event.stopPropagation()">
+            <span class="badge badge-warn">${escapeHtml(art.badge || "僅 2 項隔天提示")}</span>
+            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-flow_signals" onclick="toggleResearchArticle('flow_signals')">展開閱讀</button>
+          </div>
+        </div>
+
+        <div class="article-body collapsed" id="body-flow_signals">
+          <div class="callout callout-takeaway">
+            <p>💡 <strong>核心結論：</strong>${takeaway}</p>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(tested.title || "一、測了什麼？")}</h2>
+            ${(tested.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(periods.title || "二、資料期間與限制")}</h2>
+            ${(periods.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(eff.title || "三、唯二有效的台股隔天指標（5 日以上全面失效）")}</h2>
+            ${(eff.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+            <div class="table-wrap table-responsive" style="margin-top: 12px;">
+              <table class="data-table mobile-cards flow-eff-table">
+                <thead>
+                  <tr>
+                    <th>指標 / 市場</th>
+                    <th>有效天期</th>
+                    <th>觸發條件</th>
+                    <th>樣本外實證數字</th>
+                    <th>統計檢定與 BH q 值</th>
+                    <th>實戰定位</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${effTableRows}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(useless.title || "四、哪些指標沒用？（48 項）")}</h2>
+            <ul class="research-strat-list">
+              ${uselessItems.map((it) => `<li><strong>${escapeHtml(it.group)}</strong>：${escapeHtml(it.detail)}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(refOnly.title || "五、哪些指標「僅供參考」？（7 項）")}</h2>
+            <ul>
+              ${refItems.map((pt) => `<li>${escapeHtml(pt)}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(caution.title || "六、重要提醒：嚴格統計標準下不顯著，只當隔天風險提示")}</h2>
+            ${(caution.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section disclaimer-box">
+            <p>⚠️ <strong>免責聲明</strong>：${escapeHtml(disc.text || "嚴格統計標準下不顯著，只當隔天風險提示，不當進出場訊號。")}</p>
+            <div class="github-links">
+              ${ghLinks.map((g) => `<a href="${escapeHtml(g.url)}" target="_blank" rel="noopener noreferrer" class="ext-link">🔗 ${escapeHtml(g.title)}</a>`).join("")}
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
   function renderResearchHtml(data) {
     if (!data) return '<p class="muted">深度研究資料為空。</p>';
     if (!data.articles && data.strategies_intro) {
@@ -2957,6 +3090,7 @@
     const shortArt = articles.find((a) => a.id === "short_term") || articles[0];
     const comboArt = articles.find((a) => a.id === "combo") || articles[1];
     const examArt = articles.find((a) => a.id === "exam_sensitivity") || articles[2];
+    const flowArt = articles.find((a) => a.id === "flow_signals") || articles[3];
 
     return `
       <section class="card">
@@ -2997,6 +3131,18 @@
             <p class="toc-takeaway">${escapeHtml(examArt?.takeaway || "")}</p>
             <div class="toc-action">點擊展開閱讀 ➔</div>
           </div>
+
+          ${flowArt ? `
+          <div class="research-toc-card" onclick="scrollToResearchArticle('flow_signals')">
+            <div class="toc-card-header">
+              <span class="badge badge-warn">${escapeHtml(flowArt.badge || "僅 2 項隔天提示")}</span>
+              <span class="toc-num">第 4 篇</span>
+            </div>
+            <h3 class="toc-title">${escapeHtml(flowArt.title || "大戶／法人資金流回測（2026-11）")}</h3>
+            <p class="toc-takeaway">${escapeHtml(flowArt.takeaway || "")}</p>
+            <div class="toc-action">點擊展開閱讀 ➔</div>
+          </div>
+          ` : ""}
         </div>
       </section>
 
@@ -3018,6 +3164,7 @@
 
       ${renderComboArticleHtml(comboArt)}
       ${renderExamSensitivityArticleHtml(examArt)}
+      ${renderFlowSignalsArticleHtml(flowArt)}
     `;
   }
 
@@ -3198,7 +3345,26 @@
         return;
       }
     }
-    container.innerHTML = renderResearchHtml(cachedResearch);
+    const stamp = String(cachedResearch.generated_at_utc || "") + ":" + (cachedResearch.articles ? cachedResearch.articles.length : 0);
+    const alreadyRendered = Boolean(container.querySelector && container.querySelector(".research-article"));
+    if (!alreadyRendered || lastRenderedResearchStamp !== stamp) {
+      container.innerHTML = renderResearchHtml(cachedResearch);
+      lastRenderedResearchStamp = stamp;
+    }
+    if (pendingResearchArticleId) {
+      const targetId = pendingResearchArticleId;
+      pendingResearchArticleId = null;
+      scrollToResearchArticle(targetId);
+    } else {
+      expandedResearchIds.forEach((eid) => {
+        const body = document.getElementById(`body-${eid}`);
+        const btn = document.getElementById(`toggle-btn-${eid}`);
+        if (body && body.classList.contains("collapsed")) {
+          body.classList.remove("collapsed");
+          if (btn) btn.textContent = "收折";
+        }
+      });
+    }
   }
 
   const NEWS_VALID_MARKETS = ["台股", "美股", "加密貨幣", "總經"];
@@ -3736,7 +3902,26 @@
     g.scanContainers(document.getElementById("news-list"), ".news-row");
   }
 
+  function renderFlowTwSlot() {
+    if (window.SIGNAL_DESK_FLOW_TW && typeof window.SIGNAL_DESK_FLOW_TW.mountFlowTwCard === "function") {
+      window.SIGNAL_DESK_FLOW_TW.mountFlowTwCard("flow-tw-card-slot", cachedFlowTw, {
+        researchHref: "#/research/flow_signals",
+      });
+    }
+  }
+
   function renderDataExtras() {
+    renderFlowTwSlot();
+    if (!cachedFlowTw) {
+      fetchFlowTwData()
+        .then((doc) => {
+          if (doc) {
+            cachedFlowTw = doc;
+            renderFlowTwSlot();
+          }
+        })
+        .catch(() => {});
+    }
     const evTbody = document.getElementById("events-tbody");
     if (evTbody) {
       const evs = cachedEvents?.events || [];
@@ -3813,6 +3998,7 @@
       document.querySelector('.nav-link[data-route="data"]')?.classList.add("active");
       renderDataExtras();
     } else if (route === "research") {
+      pendingResearchArticleId = parts[1] ? decodeURIComponent(parts[1]) : null;
       document.getElementById("view-research")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="research"]')?.classList.add("active");
       renderResearchView();
@@ -3937,7 +4123,7 @@
     try {
       const [
         instRes, healthRes, controlRes, runLogRes, probeRes, signalsRes, tradesRes, watchRes, watchDailyRes, btRes,
-        perfRes, riskRes, eqRes, evRes, contestRes, taRes, newsLatestRes, newsIndexRes, newsReactRes,
+        perfRes, riskRes, eqRes, evRes, contestRes, taRes, flowTwRes, newsLatestRes, newsIndexRes, newsReactRes,
       ] = await Promise.allSettled([
         fetchDataJson("instruments.json"),
         fetchDataJson("data_health.json"),
@@ -3955,10 +4141,16 @@
         fetchDataJson("events_calendar.json"),
         fetchResearch(),
         fetchTaData(),
+        fetchFlowTwData(),
         fetchNewsLatest(),
         fetchNewsIndex(),
         fetchNewsReactions(),
       ]);
+
+      if (flowTwRes.status === "fulfilled" && flowTwRes.value) {
+        cachedFlowTw = flowTwRes.value;
+        renderFlowTwSlot();
+      }
 
       // Apply news on initial load or when user is NOT actively browsing #/news (avoid layout jump on #/news)
       const onNewsView = (window.location.hash || "").includes("news");
@@ -4284,6 +4476,7 @@
     renderSimulatedAccount,
     renderContestResearchHtml,
     renderExamSensitivityArticleHtml,
+    renderFlowSignalsArticleHtml,
     renderResearchHtml,
     renderResearchView,
     fetchResearch,
@@ -4365,6 +4558,7 @@
       if (hi) hi._lastRenderedHtml = null;
       if (li) li._lastRenderedHtml = null;
       renderNewsView();
+      renderFlowTwSlot();
     });
   }
 

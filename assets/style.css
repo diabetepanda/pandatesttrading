@@ -995,9 +995,15 @@ h1, h2 {
 
 .research-toc {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: 1fr;
   gap: 16px;
   margin: 16px 0 24px;
+}
+
+@media (min-width: 720px) {
+  .research-toc {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .research-toc-card {
@@ -3448,6 +3454,199 @@ tr.ta-detail-row > td.ta-detail-cell {
   .news-highlights-column.collapsed {
     padding-bottom: 12px;
   }
+}
+/* 台股隔天風險提示小卡 (^TWII A1/A2) */
+.flow-tw-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.flow-tw-card.is-compact {
+  background: rgba(22, 27, 34, 0.72);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 10px;
+}
+
+.flow-tw-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.flow-tw-title {
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.flow-tw-sub {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+}
+
+.flow-tw-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.flow-tw-stale-note {
+  background: rgba(248, 81, 73, 0.12);
+  border: 1px solid rgba(248, 81, 73, 0.4);
+  color: #ff7b72;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.84rem;
+}
+
+.flow-tw-alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flow-tw-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 0.92rem;
+}
+
+.flow-tw-alert.is-bull {
+  background: rgba(46, 160, 67, 0.12);
+  border-color: rgba(46, 160, 67, 0.45);
+}
+
+.flow-tw-alert.is-bear {
+  background: rgba(248, 81, 73, 0.12);
+  border-color: rgba(248, 81, 73, 0.45);
+}
+
+.flow-tw-alert-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(139, 148, 158, 0.2);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.flow-tw-alert.is-bull .flow-tw-alert-badge {
+  background: rgba(46, 160, 67, 0.25);
+  color: #56d364;
+}
+
+.flow-tw-alert.is-bear .flow-tw-alert-badge {
+  background: rgba(248, 81, 73, 0.25);
+  color: #ff7b72;
+}
+
+.flow-tw-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 720px) {
+  .flow-tw-metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.flow-tw-metric-box {
+  background: rgba(13, 17, 23, 0.65);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.flow-tw-metric-box.is-triggered-bull {
+  border-color: rgba(46, 160, 67, 0.55);
+}
+
+.flow-tw-metric-box.is-triggered-bear {
+  border-color: rgba(248, 81, 73, 0.55);
+}
+
+.flow-tw-metric-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.flow-tw-metric-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.flow-tw-metric-th {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.flow-tw-metric-vals {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.flow-tw-z {
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.flow-tw-raw {
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.flow-tw-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+  border-top: 1px solid rgba(48, 54, 61, 0.6);
+  font-size: 0.82rem;
+}
+
+.flow-tw-disclaimer {
+  color: var(--muted);
+}
+
+.flow-tw-research-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.flow-tw-research-link:hover {
+  text-decoration: underline;
+}
+
+.flow-eff-table th,
+.flow-eff-table td {
+  white-space: normal;
+  vertical-align: top;
+  line-height: 1.45;
 }
 
 /* 桌機（≥ 1100px）：左欄約 68%，右欄約 32%，右欄 position: sticky 且欄內捲動 */
