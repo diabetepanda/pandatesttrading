@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-22-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-22T19:00:33Z",
-  "updated_at_taipei": "2026-11-23 03:00",
-  "last_updated_utc": "2026-11-22T19:00:33Z",
-  "last_updated_taipei": "2026-11-23 03:00",
-  "next_update_hint": "約台北時間 03:02（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-22T19:15:39Z",
+  "updated_at_taipei": "2026-11-23 03:15",
+  "last_updated_utc": "2026-11-22T19:15:39Z",
+  "last_updated_taipei": "2026-11-23 03:15",
+  "next_update_hint": "約台北時間 03:17（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 19.671,
+    "total_elapsed_sec": 12.412,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 1,
+    "new_items_added": 4,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.21,
+        "elapsed_sec": 0.064,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.192,
+        "elapsed_sec": 0.127,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.107,
+        "elapsed_sec": 0.045,
         "raw_count": 30,
         "items_kept": 2,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.083,
+        "elapsed_sec": 0.043,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.277,
+        "elapsed_sec": 0.198,
         "raw_count": 18,
-        "items_kept": 15,
+        "items_kept": 16,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.214,
+        "elapsed_sec": 0.233,
         "raw_count": 25,
         "items_kept": 19,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.156,
+        "elapsed_sec": 0.127,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.129,
+        "elapsed_sec": 0.081,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,16 +108,16 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.127,
+        "elapsed_sec": 0.081,
         "raw_count": 37,
-        "items_kept": 17,
+        "items_kept": 16,
         "error": null
       },
       "cnyes_tw_stock": {
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.556,
+        "elapsed_sec": 0.501,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.555,
+        "elapsed_sec": 0.335,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.351,
+        "elapsed_sec": 0.366,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.818,
+        "elapsed_sec": 0.57,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.527,
+        "elapsed_sec": 0.313,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.458,
+        "elapsed_sec": 0.557,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.142,
+        "elapsed_sec": 0.269,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 4.715,
+        "elapsed_sec": 0.751,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.687,
+        "elapsed_sec": 0.038,
         "raw_count": 1373,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.496,
+        "elapsed_sec": 1.213,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.591,
+        "elapsed_sec": 0.52,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.65,
+        "elapsed_sec": 1.532,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.478,
+        "elapsed_sec": 0.463,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.673,
+        "elapsed_sec": 0.661,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.195,
+        "elapsed_sec": 0.263,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.531,
+        "elapsed_sec": 0.533,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.382,
+        "elapsed_sec": 0.294,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -270,9 +270,9 @@
   },
   "data_metrics_snapshot": {
     "stablecoins": {
-      "total_usd_b": 284.34,
-      "change_1d_usd_m": 71.7,
-      "change_1d_pct": 0.03,
+      "total_usd_b": 284.31,
+      "change_1d_usd_m": 40.4,
+      "change_1d_pct": 0.01,
       "alert_key": "stablecoins_supply:up"
     },
     "chains_tvl": {
@@ -308,19 +308,19 @@
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0011,
-        "oi_usd_b": 1.93
+        "funding_rate_pct": 0.0009,
+        "oi_usd_b": 1.92
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0026,
+        "funding_rate_pct": -0.0027,
         "oi_usd_b": 1.15
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 2,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 26.0,
-      "tx_count": 65319,
+      "mempool_vsize_mb": 32.0,
+      "tx_count": 77257,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -629,6 +629,78 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261123-a363bc5c51",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T18:47:00Z",
+      "published_at_taipei": "2026-11-23 02:47",
+      "published_at_taipei_iso": "2026-11-23T02:47:00+08:00",
+      "first_seen_at_utc": "2026-11-22T19:15:39Z",
+      "first_seen_at_taipei": "2026-11-23 03:15",
+      "month": "2026-11",
+      "title": "Top bank resets Tesla stock target, yet standalone value is alarming",
+      "url": "https://www.thestreet.com/investing/stocks/top-bank-resets-tesla-stock-target-yet-standalone-value-is-alarming?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/investing/stocks/top-bank-resets-tesla-stock-target-yet-standalone-value-is-alarming?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：upgrade",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-0ef428eb32",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T18:43:15Z",
+      "published_at_taipei": "2026-11-23 02:43",
+      "published_at_taipei_iso": "2026-11-23T02:43:15+08:00",
+      "first_seen_at_utc": "2026-11-22T19:15:39Z",
+      "first_seen_at_taipei": "2026-11-23 03:15",
+      "month": "2026-11",
+      "title": "Billionaire Ray Dalio’s Bridgewater Keeps 16% of Its $23 Billion Stock Portfolio in S&P 500 Index Funds, Even After Cutting Them",
+      "url": "https://247wallst.com/investing/2026/11/22/billionaire-ray-dalios-bridgewater-keeps-16-of-its-23-billion-stock-portfolio-in-sp-500-index-funds-even-after-cutting-them/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/22/billionaire-ray-dalios-bridgewater-keeps-16-of-its-23-billion-stock-portfolio-in-sp-500-index-funds-even-after-cutting-them?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-a93a5af448",
       "issue": "2026-11-22-PM",
       "published_at_utc": "2026-11-22T18:35:00Z",
@@ -700,6 +772,79 @@
       "sentiment_targets": [
         "XAUUSD",
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-90a09bf978",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T18:08:07Z",
+      "published_at_taipei": "2026-11-23 02:08",
+      "published_at_taipei_iso": "2026-11-23T02:08:07+08:00",
+      "first_seen_at_utc": "2026-11-22T19:15:39Z",
+      "first_seen_at_taipei": "2026-11-23 03:15",
+      "month": "2026-11",
+      "title": "What Warren Buffett Has Said About Bitcoin and Whether He Was Right",
+      "url": "https://247wallst.com/investing/cryptocurrency/2026/11/22/what-warren-buffett-has-said-about-bitcoin-and-whether-he-was-right/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/cryptocurrency/2026/11/22/what-warren-buffett-has-said-about-bitcoin-and-whether-he-was-right?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：all-time high",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-230a0bff56",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T18:00:00Z",
+      "published_at_taipei": "2026-11-23 02:00",
+      "published_at_taipei_iso": "2026-11-23T02:00:00+08:00",
+      "first_seen_at_utc": "2026-11-22T19:15:39Z",
+      "first_seen_at_taipei": "2026-11-23 03:15",
+      "month": "2026-11",
+      "title": "Google Backs Superhot Geothermal in 50 MW Oregon Power Deal",
+      "url": "https://finance.yahoo.com/energy/articles/google-backs-superhot-geothermal-50-180000366.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/google-backs-superhot-geothermal-50-180000366.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
       ],
       "sentiment_method": "rule"
     },
@@ -2509,6 +2654,78 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261123-a363bc5c51",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T18:47:00Z",
+      "published_at_taipei": "2026-11-23 02:47",
+      "published_at_taipei_iso": "2026-11-23T02:47:00+08:00",
+      "first_seen_at_utc": "2026-11-22T19:15:39Z",
+      "first_seen_at_taipei": "2026-11-23 03:15",
+      "month": "2026-11",
+      "title": "Top bank resets Tesla stock target, yet standalone value is alarming",
+      "url": "https://www.thestreet.com/investing/stocks/top-bank-resets-tesla-stock-target-yet-standalone-value-is-alarming?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/investing/stocks/top-bank-resets-tesla-stock-target-yet-standalone-value-is-alarming?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：upgrade",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-0ef428eb32",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T18:43:15Z",
+      "published_at_taipei": "2026-11-23 02:43",
+      "published_at_taipei_iso": "2026-11-23T02:43:15+08:00",
+      "first_seen_at_utc": "2026-11-22T19:15:39Z",
+      "first_seen_at_taipei": "2026-11-23 03:15",
+      "month": "2026-11",
+      "title": "Billionaire Ray Dalio’s Bridgewater Keeps 16% of Its $23 Billion Stock Portfolio in S&P 500 Index Funds, Even After Cutting Them",
+      "url": "https://247wallst.com/investing/2026/11/22/billionaire-ray-dalios-bridgewater-keeps-16-of-its-23-billion-stock-portfolio-in-sp-500-index-funds-even-after-cutting-them/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/22/billionaire-ray-dalios-bridgewater-keeps-16-of-its-23-billion-stock-portfolio-in-sp-500-index-funds-even-after-cutting-them?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-a93a5af448",
       "issue": "2026-11-22-PM",
       "published_at_utc": "2026-11-22T18:35:00Z",
@@ -2618,6 +2835,43 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261123-90a09bf978",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T18:08:07Z",
+      "published_at_taipei": "2026-11-23 02:08",
+      "published_at_taipei_iso": "2026-11-23T02:08:07+08:00",
+      "first_seen_at_utc": "2026-11-22T19:15:39Z",
+      "first_seen_at_taipei": "2026-11-23 03:15",
+      "month": "2026-11",
+      "title": "What Warren Buffett Has Said About Bitcoin and Whether He Was Right",
+      "url": "https://247wallst.com/investing/cryptocurrency/2026/11/22/what-warren-buffett-has-said-about-bitcoin-and-whether-he-was-right/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/cryptocurrency/2026/11/22/what-warren-buffett-has-said-about-bitcoin-and-whether-he-was-right?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：all-time high",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-1a63f9da73",
       "issue": "2026-11-22-PM",
       "published_at_utc": "2026-11-22T18:05:01Z",
@@ -2654,6 +2908,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-230a0bff56",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T18:00:00Z",
+      "published_at_taipei": "2026-11-23 02:00",
+      "published_at_taipei_iso": "2026-11-23T02:00:00+08:00",
+      "first_seen_at_utc": "2026-11-22T19:15:39Z",
+      "first_seen_at_taipei": "2026-11-23 03:15",
+      "month": "2026-11",
+      "title": "Google Backs Superhot Geothermal in 50 MW Oregon Power Deal",
+      "url": "https://finance.yahoo.com/energy/articles/google-backs-superhot-geothermal-50-180000366.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/google-backs-superhot-geothermal-50-180000366.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
       ],
       "sentiment_method": "rule"
     },
@@ -15988,8 +16278,8 @@
       "month": "2026-11",
       "date": "2026-11-22",
       "half": "PM",
-      "updated_at_taipei": "2026-11-23 03:00",
-      "count": 57,
+      "updated_at_taipei": "2026-11-23 03:15",
+      "count": 61,
       "star3_count": 8,
       "failed_sources": [
         {
