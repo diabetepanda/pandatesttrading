@@ -203,6 +203,7 @@ def _make_fake_yf_fetcher(fail_all: bool = False) -> Any:
         base_map = {
             "DX-Y.NYB": (101.0, 103.5),
             "TWD=X": (32.2, 32.9),
+            "^HSI": (21500.0, 22450.0),
             "GC=F": (3350.0, 3520.0),
             "CL=F": (82.0, 84.0),
             "^TNX": (4.55, 4.92),
@@ -254,7 +255,7 @@ def test_macro_json_generation_and_failure_preservation(tmp_path: Path) -> None:
     }
     assert len(doc["overview"]["asset_impacts"]) == 7
     assert len(doc["fedwatch"]["meetings"]) == 2
-    assert len(doc["market_snapshot"]["items"]) == 5
+    assert len(doc["market_snapshot"]["items"]) == 6
     for cid, card in by_id.items():
         assert card["value_str"], f"{cid} missing value_str"
         assert card["prev_str"], f"{cid} missing prev_str"
@@ -311,13 +312,13 @@ def test_frontend_macro_html_nav_versions_and_calendar_defaults() -> None:
     # Nav & cache-busting checks
     assert "./macro.html" in index_html
     assert "宏觀數據" in index_html
-    assert "?v=20261122a" in index_html
-    assert "?v=20261122a" in macro_html
-    assert "./assets/style.css?v=20261122a" in macro_html
-    assert "./assets/config.js?v=20261122a" in macro_html
-    assert "./assets/glossary.js?v=20261122a" in macro_html
-    assert "./assets/macro.js?v=20261122a" in macro_html
-    assert "./assets/glossary.js?v=20261122a" in index_html
+    assert "?v=20261122b" in index_html
+    assert "?v=20261122b" in macro_html
+    assert "./assets/style.css?v=20261122b" in macro_html
+    assert "./assets/config.js?v=20261122b" in macro_html
+    assert "./assets/glossary.js?v=20261122b" in macro_html
+    assert "./assets/macro.js?v=20261122b" in macro_html
+    assert "./assets/glossary.js?v=20261122b" in index_html
     assert "./index.html#/wall" in macro_html
     assert 'href="/' not in macro_html
     assert 'src="/' not in macro_html
@@ -857,6 +858,9 @@ def test_market_snapshot_metrics_verdicts_and_preservation() -> None:
             elif symbol == "TWD=X":
                 # -1.8% in last 20d -> bull (TWD appreciates)
                 val = 33.0 if i < 231 else 33.0 - (i - 230) * 0.03
+            elif symbol == "^HSI":
+                # +4.2% in last 20d -> bull (亞股轉強)
+                val = 22000.0 if i < 231 else 22000.0 + (i - 230) * 44.0
             elif symbol == "GC=F":
                 val = 3200.0 + i * 1.2
             elif symbol == "CL=F":
@@ -868,26 +872,54 @@ def test_market_snapshot_metrics_verdicts_and_preservation() -> None:
 
     snap, rep = build_market_snapshot(cal, None, None, now, {}, yf_fetcher=_mock_yf)
     assert rep["status"] == "ok"
+    assert [it["id"] for it in snap["items"]] == ["DXY", "USDTWD", "HSI", "GOLD", "WTI", "US10Y"]
     by_id = {it["id"]: it for it in snap["items"]}
-    assert set(by_id.keys()) == {"DXY", "USDTWD", "GOLD", "WTI", "US10Y"}
     assert by_id["DXY"]["verdict"] == "bear"
     assert by_id["USDTWD"]["verdict"] == "bull"
+    assert by_id["HSI"]["verdict"] == "bull"
+    assert "亞股轉強" in by_id["HSI"]["verdict_tag"]
     assert by_id["US10Y"]["verdict"] == "bear"
     assert len(by_id["DXY"]["closes_90d"]) == 90
     assert by_id["DXY"]["range_1y_pos_pct"] == 100.0
 
-    # Simulate partial failure -> DXY fails on next run, preserved with 資料更新中
-    def _fail_dxy(symbol: str, period: str = "1y") -> list[tuple[str, float]]:
-        if symbol == "DX-Y.NYB":
+    # Verify HSI bear (< -3%) and neutral (within ±3%) thresholds
+    def _mock_hsi_bear(symbol: str, period: str = "1y") -> list[tuple[str, float]]:
+        if symbol == "^HSI":
+            d0 = date(2025, 11, 20)
+            return [((d0 + timedelta(days=int(i * 1.44))).isoformat(), 22000.0 if i < 231 else 22000.0 - (i - 230) * 44.0) for i in range(252)]
+        return _mock_yf(symbol, period)
+
+    snap_bear, _ = build_market_snapshot(cal, None, None, now, {}, yf_fetcher=_mock_hsi_bear)
+    hsi_bear = next(it for it in snap_bear["items"] if it["id"] == "HSI")
+    assert hsi_bear["verdict"] == "bear"
+    assert "亞股轉弱" in hsi_bear["verdict_tag"]
+
+    def _mock_hsi_neut(symbol: str, period: str = "1y") -> list[tuple[str, float]]:
+        if symbol == "^HSI":
+            d0 = date(2025, 11, 20)
+            return [((d0 + timedelta(days=int(i * 1.44))).isoformat(), 22000.0 if i < 231 else 22000.0 + (i - 230) * 10.0) for i in range(252)]
+        return _mock_yf(symbol, period)
+
+    snap_neut, _ = build_market_snapshot(cal, None, None, now, {}, yf_fetcher=_mock_hsi_neut)
+    hsi_neut = next(it for it in snap_neut["items"] if it["id"] == "HSI")
+    assert hsi_neut["verdict"] == "neut"
+    assert "中性" in hsi_neut["verdict_tag"]
+
+    # Simulate partial failure -> DXY and HSI fail on next run, preserved with 資料更新中
+    def _fail_dxy_and_hsi(symbol: str, period: str = "1y") -> list[tuple[str, float]]:
+        if symbol in ("DX-Y.NYB", "^HSI"):
             raise TimeoutError("yahoo timeout")
         return _mock_yf(symbol, period)
 
-    snap2, rep2 = build_market_snapshot(cal, None, None, now + timedelta(days=1), {"market_snapshot": snap}, yf_fetcher=_fail_dxy)
+    snap2, rep2 = build_market_snapshot(cal, None, None, now + timedelta(days=1), {"market_snapshot": snap}, yf_fetcher=_fail_dxy_and_hsi)
     assert rep2["status"] == "partial"
     by_id2 = {it["id"]: it for it in snap2["items"]}
     assert by_id2["DXY"]["data_status"] == "資料更新中"
     assert by_id2["DXY"]["updating"] is True
     assert by_id2["DXY"]["last"] == by_id["DXY"]["last"]
+    assert by_id2["HSI"]["data_status"] == "資料更新中"
+    assert by_id2["HSI"]["updating"] is True
+    assert by_id2["HSI"]["last"] == by_id["HSI"]["last"]
     assert by_id2["USDTWD"]["updating"] is False
 
 
@@ -949,8 +981,12 @@ def test_overview_7_assets_insufficient_data_and_legacy_json_frontend() -> None:
           'FedWatch', '聯邦基金利率', 'CPI', '核心 CPI', 'PCE', '核心 PCE', 'PPI', '非農就業', '失業率', '初領失業金',
           'JOLTS', 'ISM 製造業', 'ISM 服務業', '零售銷售', 'GDP', '殖利率', '殖利率曲線倒掛', '美元指數', '台幣升值／貶值',
           '外資買超／賣超', 'ETF 淨流入', '資金費率', '未平倉量（OI）', '爆倉', '穩定幣', 'TVL', '利多／利空',
-          '意外值（實際減預期）', '風險偏好（risk-on／risk-off）', '流動性'
+          '意外值（實際減預期）', '風險偏好（risk-on／risk-off）', '流動性', '恒生指數'
         ];
+        const hsiTerm = g.TERMS.find(t => t.term === '恒生指數');
+        if (!hsiTerm || hsiTerm.category !== '市場') {{
+          throw new Error('Missing or wrong category for 恒生指數 in glossary');
+        }}
         const termSet = new Set(g.TERMS.map(t => t.term));
         for (const r of required) {{
           if (!termSet.has(r)) throw new Error('Missing mandatory glossary term: ' + r);
@@ -979,6 +1015,25 @@ def test_overview_7_assets_insufficient_data_and_legacy_json_frontend() -> None:
         const fwText = elements['macro-fedwatch-summary'].textContent || elements['macro-fedwatch-summary'].innerHTML;
         if (!fwText.includes('資料更新中')) {{
           throw new Error('Legacy macro.json should show 資料更新中 for missing fedwatch');
+        }}
+        // Legacy 5-item market_snapshot without HSI should still render 6 cards with HSI showing 資料更新中
+        const legacySnapDoc = {{
+          ...legacyDoc,
+          market_snapshot: {{
+            hhmm_taipei: '15:00',
+            items: [
+              {{ id: 'DXY', name_zh: '美元指數', last: 106.5, last_str: '106.50', chg_1d_pct: 0.1, verdict: 'neut', verdict_tag: '🟡 中性' }},
+              {{ id: 'USDTWD', name_zh: '美元／台幣', last: 32.5, last_str: '32.50', chg_1d_pct: 0.0, verdict: 'neut', verdict_tag: '🟡 中性' }},
+              {{ id: 'GOLD', name_zh: '黃金', last: 2700.0, last_str: '2,700.0', chg_1d_pct: 0.2, verdict: 'neut', verdict_tag: '🟡 中性' }},
+              {{ id: 'WTI', name_zh: '原油 (WTI)', last: 70.0, last_str: '70.00', chg_1d_pct: -0.3, verdict: 'neut', verdict_tag: '🟡 中性' }},
+              {{ id: 'US10Y', name_zh: '美國 10 年期殖利率', last: 4.4, last_str: '4.40%', chg_1d_pp: 0.01, verdict: 'neut', verdict_tag: '🟡 中性' }},
+            ],
+          }},
+        }};
+        window.__MACRO_DESK_UTILS__.setMacroDataForTest(legacySnapDoc);
+        const snapGridHtml = elements['macro-snapshot-grid'].innerHTML;
+        if (!snapGridHtml.includes('data-snap-id="HSI"') || !snapGridHtml.includes('資料更新中')) {{
+          throw new Error('Legacy 5-item snapshot should render HSI fallback with 資料更新中');
         }}
     """
     proc = subprocess.run([js_bin, "-e", js_script], capture_output=True, text=True, check=False)

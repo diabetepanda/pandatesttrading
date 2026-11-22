@@ -585,6 +585,7 @@ symbol_aliases:
   SP500: ["s&p 500", "s&p500", "spx", "標普 500", "標普500", "標普"]
   JP225: ["nikkei 225", "nikkei", "日經 225", "日經"]
   TWII: ["taiex", "台股", "加權指數", "大盤"]
+  HSI: ["hang seng", "hsi", "恒生指數", "恆生指數", "恒生", "恆生", "恒指", "恆指", "港股"]
   "2330": ["2330", "tsmc", "taiwan semiconductor", "台積電"]
   "2454": ["2454", "mediatek", "聯發科"]
   "3711": ["3711", "ase technology", "日月光", "日月光投控"]
@@ -623,11 +624,13 @@ market_mapping:
   symbol_market_rules:
     tw_symbols: ["TWII", "2330", "2454", "3711", "2317", "2382", "2308", "2881", "2882", "2891", "2603", "1301", "2412"]
     us_symbols: ["NAS100", "SP500", "TSLA", "GOOGL", "AAPL", "SNDK", "SPCX"]
+    macro_symbols: ["HSI", "JP225"]
     crypto_suffix: "USDT"
   keyword_to_market:
     台股: ["台股", "加權指數", "台積電", "台灣股市", "taiex", "taiwan stock", "tsmc"]
     美股: ["美股", "那斯達克", "標普", "道瓊", "華爾街", "wall street", "us stocks", "u.s. stocks", "nasdaq", "s&p 500", "dow jones", "equities"]
     加密貨幣: ["比特幣", "以太坊", "加密貨幣", "幣圈", "穩定幣", "bitcoin", "btc", "ethereum", "eth", "crypto"]
+    總經: ["恒生", "恆生", "恒指", "恆指", "港股", "hang seng"]
 
 # 利多 / 利空規則初判（全部免金鑰、純規則）
 sentiment_rules:

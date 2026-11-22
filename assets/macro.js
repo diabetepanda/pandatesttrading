@@ -545,12 +545,35 @@
 
   function buildSnapshotFallbackItems() {
     return [
-      { id: "DXY", name_zh: "美元指數", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
-      { id: "USDTWD", name_zh: "美元／台幣", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
-      { id: "GOLD", name_zh: "黃金", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
-      { id: "WTI", name_zh: "原油 (WTI)", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
-      { id: "US10Y", name_zh: "美國 10 年期殖利率", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
+      { id: "DXY", symbol: "DX-Y.NYB", name_zh: "美元指數", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
+      { id: "USDTWD", symbol: "TWD=X", name_zh: "美元／台幣", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
+      {
+        id: "HSI",
+        symbol: "^HSI",
+        name_zh: "恒生指數",
+        last_str: "資料更新中",
+        chg_1d_pct: null,
+        verdict: "na",
+        verdict_tag: "資料更新中",
+        updating: true,
+        what_is: "恒生指數是香港股市主要指數，成分股以大型陸資與香港企業為主，可以看出中國經濟與亞洲資金的情緒；恒生走強通常代表亞洲風險偏好回升，對台股偏正面。",
+      },
+      { id: "GOLD", symbol: "GC=F", name_zh: "黃金", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
+      { id: "WTI", symbol: "CL=F", name_zh: "原油 (WTI)", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
+      { id: "US10Y", symbol: "^TNX", name_zh: "美國 10 年期殖利率", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
     ];
+  }
+
+  function getSnapshotItems() {
+    const snap = cachedMacro && cachedMacro.market_snapshot;
+    const fallbacks = buildSnapshotFallbackItems();
+    if (!snap || !Array.isArray(snap.items) || !snap.items.length) return fallbacks;
+    const byId = new Map(snap.items.filter((x) => x && x.id).map((x) => [x.id, x]));
+    const ordered = fallbacks.map((fb) => byId.get(fb.id) || fb);
+    for (const it of snap.items) {
+      if (it && it.id && !fallbacks.some((fb) => fb.id === it.id)) ordered.push(it);
+    }
+    return ordered;
   }
 
   function renderMarketSnapshot() {
@@ -562,7 +585,7 @@
     const hhmm = (snap && snap.hhmm_taipei) || (cachedMacro && cachedMacro.updated_at_taipei ? String(cachedMacro.updated_at_taipei).slice(11, 16) : "--:--");
     if (timeEl) timeEl.textContent = `資料時間：台北 ${hhmm}`;
 
-    const items = snap && Array.isArray(snap.items) && snap.items.length ? snap.items : buildSnapshotFallbackItems();
+    const items = getSnapshotItems();
     gridEl.innerHTML = items
       .map((it) => {
         const hasVal = it.last != null && it.last_str !== "資料更新中";
@@ -597,8 +620,7 @@
   }
 
   function openSnapshotModal(snapId) {
-    const snap = cachedMacro && cachedMacro.market_snapshot;
-    const items = (snap && Array.isArray(snap.items) && snap.items) || buildSnapshotFallbackItems();
+    const items = getSnapshotItems();
     const it = items.find((x) => x.id === snapId);
     if (!it) return;
     const backdrop = document.getElementById("macro-hist-modal-backdrop");
@@ -644,7 +666,7 @@
       </div>
       <div class="macro-snap-modal-desc">
         <div><strong>是什麼：</strong>${escHtml(it.what_is || "—")}</div>
-        <div><strong>判定理由（對台股／加密貨幣視角）：</strong>${escHtml(it.verdict_reason || "—")}</div>
+        <div><strong>判定理由（${it.id === "HSI" ? "對台股／亞洲風險情緒視角" : "對台股／加密貨幣視角"}）：</strong>${escHtml(it.verdict_reason || "—")}</div>
         ${it.rule_rationale ? `<div class="muted" style="font-size:0.8rem;"><strong>門檻說明：</strong>${escHtml(it.rule_rationale)}</div>` : ""}
         <div class="muted" style="font-size:0.78rem;">來源：${escHtml(it.source_used || "資料更新中")}｜更新時間（台北）：${escHtml(it.as_of_taipei || "--")}</div>
       </div>

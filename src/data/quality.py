@@ -42,6 +42,12 @@ def is_market_open(market: str, dt: datetime, trading_hours: str | None = None) 
         minutes = dt.hour * 60 + dt.minute
         # KRX 09:00-15:30 KST / TSE 09:00-15:30 JST == 00:00-06:30 UTC
         return 0 <= minutes <= (6 * 60 + 30)
+    if trading_hours == "HK_INDEX":
+        if dt.weekday() >= 5:
+            return False
+        minutes = dt.hour * 60 + dt.minute
+        # HKEX 09:30-12:00, 13:00-16:00 HKT == 01:30-04:00, 05:00-08:00 UTC
+        return ((1 * 60 + 30) <= minutes <= (4 * 60)) or ((5 * 60) <= minutes <= (8 * 60))
     if market in ("forex", "commodity", "index"):
         return not is_weekend_closure(dt)
     if market == "stock":

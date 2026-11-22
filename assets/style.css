@@ -2455,7 +2455,7 @@ tr.ta-detail-row > td.ta-detail-cell {
   line-height: 1.5;
 }
 
-/* 市場快照：一排 5 張小卡 */
+/* 市場快照：一排 6 張小卡 */
 .macro-snapshot-card {
   padding: 12px 16px;
 }
@@ -2479,8 +2479,8 @@ tr.ta-detail-row > td.ta-detail-cell {
 
 .macro-snap-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .macro-snap-card {
@@ -2488,7 +2488,7 @@ tr.ta-detail-row > td.ta-detail-cell {
   flex-direction: column;
   align-items: flex-start;
   gap: 5px;
-  padding: 10px 11px;
+  padding: 10px 9px;
   background: #0f141b;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -2517,24 +2517,34 @@ tr.ta-detail-row > td.ta-detail-cell {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 6px;
+  gap: 4px;
   width: 100%;
+  min-width: 0;
 }
 
 .macro-snap-val {
   font-size: 1rem;
   font-weight: 800;
   color: var(--text);
+  white-space: nowrap;
 }
 
 .macro-snap-chg {
   font-size: 0.78rem;
   font-weight: 700;
+  white-space: nowrap;
+}
+
+.macro-snap-verdict {
+  max-width: 100%;
 }
 
 .macro-snap-verdict .macro-pill-tag {
   font-size: 0.72rem;
   padding: 2px 8px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .macro-snap-modal-top {

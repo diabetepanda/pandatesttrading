@@ -840,3 +840,31 @@ def test_frontend_news_defaults_filters_and_signal_related_news() -> None:
         assert proc.returncode == 0, f"Frontend news JS test failed: {proc.stderr or proc.stdout}"
     finally:
         Path(tmp_js).unlink(missing_ok=True)
+
+
+def test_hsi_news_matching_markets_and_reaction_config() -> None:
+    from src.news import (
+        _resolve_reaction_threshold,
+        _resolve_yfinance_ticker,
+        build_symbol_alias_map,
+        classify_category,
+        load_news_config,
+        load_tracked_instruments,
+        match_symbols,
+    )
+
+    news_cfg = load_news_config()
+    instruments = load_tracked_instruments()
+    aliases = build_symbol_alias_map(instruments, news_cfg)
+    assert "HSI" in aliases
+
+    for headline in ("恒生指數高開逾 2%，科技股領漲", "恒生今早反彈", "Hang Seng climbs on stimulus hopes"):
+        syms = match_symbols(headline, "", aliases)
+        assert "HSI" in syms, f"Expected HSI matched for {headline!r}, got {syms}"
+        cat = classify_category(headline, "", "美股", "yahoo_finance_us", syms)
+        mkts = derive_markets(headline, "", cat, syms, news_cfg)
+        assert "總經" in mkts
+
+    assert _resolve_yfinance_ticker("HSI", instruments) == "^HSI"
+    assert _resolve_reaction_threshold("HSI", instruments, news_cfg) == 0.3
+

@@ -40,14 +40,14 @@ def test_config_has_required_sections() -> None:
     assert "scan_interval_minutes" not in cfg["schedule"]
     assert "ui_stale_warning_minutes" not in cfg["schedule"]
     enabled = [inst for inst in cfg["instruments"] if inst.get("enabled", True)]
-    assert len(enabled) == 59
+    assert len(enabled) == 60
     assert sum(1 for inst in enabled if inst["market"] == "crypto") == 33
     assert sum(1 for inst in enabled if inst["market"] == "commodity") == 5
     assert sum(1 for inst in enabled if inst["market"] == "forex") == 0
-    assert sum(1 for inst in enabled if inst["market"] == "index") == 4
+    assert sum(1 for inst in enabled if inst["market"] == "index") == 5
     assert sum(1 for inst in enabled if inst["market"] == "stock") == 17
     index_syms = {inst["symbol"] for inst in enabled if inst["market"] == "index"}
-    assert index_syms == {"NAS100", "SP500", "JP225", "TWII"}
+    assert index_syms == {"NAS100", "SP500", "JP225", "TWII", "HSI"}
     assert all(inst.get("daily_only") is True for inst in enabled if inst["market"] in ("index", "stock"))
 
 
@@ -106,6 +106,7 @@ def test_frontend_assets_and_relative_paths() -> None:
         "SP:SPX",
         "TVC:NI225",
         "TWSE:IX0001",
+        "HSI:HSI",
     ):
         assert code in config_js
     assert "FX:" not in config_js
@@ -157,7 +158,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261122a" in index_html
+    assert "?v=20261122b" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -1147,6 +1148,44 @@ def test_navigation_restructure_routes_and_subtabs() -> None:
         assert proc.returncode == 0, f"Navigation restructure JS check failed: {proc.stderr or proc.stdout}"
     finally:
         Path(tmp_js).unlink(missing_ok=True)
+
+
+def test_hsi_strategy_wiring_and_existing_params_preserved() -> None:
+    from src.jobs.live_strategy import is_instrument_eligible_for_strategy
+
+    cfg = load_config()
+    by_sym = {inst["symbol"]: inst for inst in cfg["instruments"]}
+    hsi = by_sym["HSI"]
+    assert hsi["market"] == "index"
+    assert hsi["correlation_group"] == "index_equities"
+    assert hsi["enabled"] is True
+    assert hsi["daily_only"] is True
+    assert hsi["trading_hours"] == "HK_INDEX"
+    assert hsi["sources"]["yfinance"] == "^HSI"
+
+    strats = cfg["strategies"]
+    assert "HSI" in strats["L2"]["symbols"]
+    assert is_instrument_eligible_for_strategy(hsi, strats["L2"]) is True
+    assert is_instrument_eligible_for_strategy(hsi, strats["L3"]) is True
+    assert "HSI" not in strats["L4"]["symbols"]
+    assert is_instrument_eligible_for_strategy(hsi, strats["L4"]) is False
+
+    # Existing L2 candidates and existing index parameters must remain unchanged
+    assert strats["L2"]["candidates"] == {
+        "entry_periods": [20, 55],
+        "exit_periods": [10, 20],
+        "sl_atr_mults": [2.5, 3.0],
+        "vol_target_pcts": [0.015],
+    }
+    assert by_sym["SP500"]["sources"]["yfinance"] == "^GSPC"
+    assert by_sym["SP500"]["assumed_spread_bps"] == 1.5
+    assert by_sym["NAS100"]["sources"]["yfinance"] == "^NDX"
+    assert by_sym["NAS100"]["assumed_spread_bps"] == 2.0
+    assert by_sym["JP225"]["sources"]["yfinance"] == "^N225"
+    assert by_sym["JP225"]["trading_hours"] == "JP_INDEX"
+    assert by_sym["TWII"]["sources"]["yfinance"] == "^TWII"
+    assert by_sym["TWII"]["trading_hours"] == "TW_INDEX"
+
 
 
 

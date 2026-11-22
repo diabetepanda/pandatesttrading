@@ -106,6 +106,16 @@ DEFAULT_MARKET_SNAPSHOT_RULES: dict[str, dict[str, Any]] = {
         "what_is": "台幣升值（數字變小）通常代表外資匯入，對台股偏多；台幣貶值代表外資匯出，偏空。",
         "rationale": "近 20 日變動超過 ±1.0%：台幣貶值逾 1% 標偏空（外資匯出壓力），升值逾 1% 標偏多（外資匯入）。",
     },
+    "HSI": {
+        "symbol": "^HSI",
+        "name_zh": "恒生指數",
+        "unit": "點",
+        "decimals": 1,
+        "chg_20d_bull_pct": 3.0,
+        "chg_20d_bear_pct": -3.0,
+        "what_is": "恒生指數是香港股市主要指數，成分股以大型陸資與香港企業為主，可以看出中國經濟與亞洲資金的情緒；恒生走強通常代表亞洲風險偏好回升，對台股偏正面。",
+        "rationale": "以對台股、亞洲風險情緒為視角：近 20 日恒生指數上漲超過 3.0% 標「偏多（亞股轉強）」，下跌超過 3.0% 標「偏空（亞股轉弱）」，其餘介於 ±3.0% 間標「中性」。",
+    },
     "GOLD": {
         "symbol": "GC=F",
         "name_zh": "黃金",
@@ -2457,6 +2467,18 @@ def _eval_snapshot_item(
         else:
             verdict, vtag = "neut", "🟡 中性"
             reason = f"美元／台幣近 20 日變動 {chg_20d_pct:+.2f}%，匯率維持於 ±{bear_th:.1f}% 區間整理。"
+    elif item_id == "HSI":
+        bull_th = float(rule.get("chg_20d_bull_pct", 3.0))
+        bear_th = float(rule.get("chg_20d_bear_pct", -3.0))
+        if chg_20d_pct > bull_th:
+            verdict, vtag = "bull", "🟢 偏多（亞股轉強）"
+            reason = f"恒生指數近 20 日上漲 {chg_20d_pct:+.2f}%（超過 +{bull_th:.1f}% 門檻），顯示亞洲風險偏好與中港資金情緒回溫，對台股偏正面。"
+        elif chg_20d_pct < bear_th:
+            verdict, vtag = "bear", "🔴 偏空（亞股轉弱）"
+            reason = f"恒生指數近 20 日下跌 {chg_20d_pct:+.2f}%（低於 {bear_th:.1f}% 門檻），反映亞洲風險情緒承壓，需留意對台股與亞股氣氛的拖累。"
+        else:
+            verdict, vtag = "neut", "🟡 中性"
+            reason = f"恒生指數近 20 日變動 {chg_20d_pct:+.2f}%，處於 ±{bull_th:.1f}% 中性區間。"
     elif item_id == "GOLD":
         bull_th = float(rule.get("chg_20d_bull_pct", 3.0))
         bear_th = float(rule.get("chg_20d_bear_pct", -3.0))
@@ -2530,7 +2552,7 @@ def build_market_snapshot(
     prev_doc: dict[str, Any],
     yf_fetcher: Callable[[str, str], list[tuple[str, float]]] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    """Build 5-item Market Snapshot (DXY, USDTWD, GOLD, WTI, US10Y) with prev-doc fallback."""
+    """Build 6-item Market Snapshot (DXY, USDTWD, HSI, GOLD, WTI, US10Y) with prev-doc fallback."""
     t0 = time_mod.monotonic()
     fetcher = yf_fetcher or fetch_yfinance_history
     as_of_tpe = now_utc.astimezone(TPE_TZ).strftime("%Y-%m-%d %H:%M")
@@ -2547,7 +2569,7 @@ def build_market_snapshot(
     fail_ids: list[str] = []
     errs: list[str] = []
 
-    for item_id in ("DXY", "USDTWD", "GOLD", "WTI", "US10Y"):
+    for item_id in ("DXY", "USDTWD", "HSI", "GOLD", "WTI", "US10Y"):
         rule = dict(DEFAULT_MARKET_SNAPSHOT_RULES[item_id])
         rule.update(cfg_rules.get(item_id) or {})
         sym = str(rule["symbol"])

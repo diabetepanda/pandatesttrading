@@ -53,7 +53,7 @@
       COPPER: "HG",
     },
 
-    // TradingView 公開報價端點代碼（能源 2 檔、指數 4 檔及金屬備援／漲跌幅來源）
+    // TradingView 公開報價端點代碼（能源 2 檔、指數 5 檔及金屬備援／漲跌幅來源）
     LIVE_TRADINGVIEW_SYMBOLS: {
       XAUUSD: "COMEX:GC1!",
       XAGUSD: "COMEX:SI1!",
@@ -64,6 +64,7 @@
       SP500: "SP:SPX",
       JP225: "TVC:NI225",
       TWII: "TWSE:IX0001",
+      HSI: "HSI:HSI",
     },
   };
 })(window);

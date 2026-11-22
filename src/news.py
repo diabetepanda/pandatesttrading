@@ -402,6 +402,10 @@ def classify_category(
         return "總經"
 
     us_syms = {"NAS100", "SP500", "TSLA", "GOOGL", "AAPL", "SNDK", "SPCX"}
+    if ("HSI" in symbols or any(kw in text for kw in ("hang seng", "恒生", "恆生", "恒指", "恆指", "港股"))) and not any(
+        s in us_syms for s in symbols
+    ):
+        return "總經"
     if source_id in ("cnyes_us_stock", "cnbc_top", "marketwatch_top", "yahoo_finance_us") and not any(
         s.endswith("USDT") for s in symbols
     ):
@@ -496,6 +500,7 @@ def derive_markets(
         "TWII", "2330", "2454", "3711", "2317", "2382", "2308", "2881", "2882", "2891", "2603", "1301", "2412",
     ])
     us_syms = set(sym_rules.get("us_symbols") or ["NAS100", "SP500", "TSLA", "GOOGL", "AAPL", "SNDK", "SPCX"])
+    macro_syms = set(sym_rules.get("macro_symbols") or ["HSI", "JP225"])
     crypto_suffix = str(sym_rules.get("crypto_suffix") or "USDT")
 
     found: set[str] = set()
@@ -511,6 +516,8 @@ def derive_markets(
             found.add("台股")
         elif s in us_syms:
             found.add("美股")
+        elif s in macro_syms:
+            found.add("總經")
         elif crypto_suffix and s.endswith(crypto_suffix):
             found.add("加密貨幣")
 
@@ -2163,7 +2170,7 @@ def _resolve_reaction_threshold(
     inst = inst_map.get(target) or {}
     market = str(inst.get("market") or "")
 
-    if target == "TWII":
+    if target in ("TWII", "HSI"):
         key = "tw_index"
     elif target in ("NAS100", "SP500", "JP225") or market == "index":
         key = "us_index"
@@ -2200,6 +2207,7 @@ def _resolve_yfinance_ticker(symbol: str, instruments: list[dict[str, Any]]) -> 
         "SP500": "^GSPC",
         "JP225": "^N225",
         "TWII": "^TWII",
+        "HSI": "^HSI",
         "XAUUSD": "GC=F",
         "XAGUSD": "SI=F",
         "WTI": "CL=F",

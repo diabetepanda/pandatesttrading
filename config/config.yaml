@@ -107,6 +107,7 @@ strategies:
       - SP500
       - JP225
       - TWII
+      - HSI
       - "2330"
       - "2454"
       - "3711"
@@ -1096,6 +1097,21 @@ instruments:
     overnight_cost_daily_bps: 1.5
     sources:
       yfinance: "^TWII"
+
+  - symbol: HSI
+    display_name: 恒生指數 (Hang Seng Index)
+    market: index
+    correlation_group: index_equities
+    enabled: true
+    daily_only: true
+    assumed_spread_bps: 3.0
+    fee_rate: 0.0002
+    tick_size: 1.0
+    trading_hours: "HK_INDEX"
+    max_leverage: 10.0
+    overnight_cost_daily_bps: 1.5
+    sources:
+      yfinance: "^HSI"
 
   # --- 台股（僅日線，09:00–13:30 台北時間；單邊手續費 0.1425%＋賣出證交稅 0.3% 平攤為雙邊各 0.2925%） ---
   - symbol: "2330"

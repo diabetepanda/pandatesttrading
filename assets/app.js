@@ -677,6 +677,7 @@
     SP500: "S&P 500（標普 500）",
     JP225: "Nikkei 225（日經 225）",
     TWII: "TAIEX（台股加權指數）",
+    HSI: "Hang Seng（恒生指數）",
   };
 
   function formatSimpleSymbolName(symbol, market, instrumentsList) {
@@ -3323,6 +3324,7 @@
     if (t === "NAS100") return "那指";
     if (t === "SP500") return "標普";
     if (t === "TWII") return "加權";
+    if (t === "HSI") return "恒指";
     return t;
   }
 

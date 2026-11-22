@@ -117,3 +117,18 @@ def test_forex_daily_friday_bar_not_stale_on_monday_morning() -> None:
     rep = check_continuity(res, market="forex", quality_config=QUALITY_CFG, now_utc=now_mon)
     assert rep.status == "ok"
     assert rep.delay_minutes < 500
+
+
+def test_hk_index_trading_hours() -> None:
+    # Wednesday 2026-11-18: morning 09:30-12:00 HKT (01:30-04:00 UTC), lunch 12:00-13:00 HKT, afternoon 13:00-16:00 HKT (05:00-08:00 UTC)
+    morning_open = datetime(2026, 11, 18, 2, 0, tzinfo=timezone.utc)    # 10:00 HKT
+    lunch_break = datetime(2026, 11, 18, 4, 30, tzinfo=timezone.utc)    # 12:30 HKT
+    afternoon_open = datetime(2026, 11, 18, 6, 0, tzinfo=timezone.utc)  # 14:00 HKT
+    after_close = datetime(2026, 11, 18, 8, 30, tzinfo=timezone.utc)    # 16:30 HKT
+    weekend_sat = datetime(2026, 11, 21, 2, 0, tzinfo=timezone.utc)     # Sat 10:00 HKT
+
+    assert is_market_open("index", morning_open, trading_hours="HK_INDEX") is True
+    assert is_market_open("index", lunch_break, trading_hours="HK_INDEX") is False
+    assert is_market_open("index", afternoon_open, trading_hours="HK_INDEX") is True
+    assert is_market_open("index", after_close, trading_hours="HK_INDEX") is False
+    assert is_market_open("index", weekend_sat, trading_hours="HK_INDEX") is False
