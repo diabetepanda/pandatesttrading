@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "updated_at_utc": "2026-11-22T03:58:41Z",
-  "updated_at_taipei": "2026-11-22 11:58",
+  "updated_at_utc": "2026-11-22T06:25:56Z",
+  "updated_at_taipei": "2026-11-22 14:25",
   "status": "ok",
   "updating_indicators": [],
   "fetch_report": {
-    "total_elapsed_sec": 23.042,
+    "total_elapsed_sec": 25.376,
     "fred_aborted": true,
     "fred_abort_reason": "HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=8)",
     "sources": {
       "FRED": {
         "status": "failed",
-        "elapsed_sec": 16.064,
+        "elapsed_sec": 16.262,
         "attempts": 1,
         "aborted": true,
         "series_ok": [],
@@ -48,7 +48,7 @@
       },
       "US_TREASURY": {
         "status": "ok",
-        "elapsed_sec": 3.086,
+        "elapsed_sec": 4.064,
         "series_ok": [
           "DGS2",
           "DGS10"
@@ -58,7 +58,7 @@
       },
       "BLS_API_V1": {
         "status": "ok",
-        "elapsed_sec": 0.16,
+        "elapsed_sec": 0.286,
         "series_ok": [
           "CPI",
           "CORE_CPI",
@@ -73,7 +73,7 @@
       },
       "DBNOMICS_BEA": {
         "status": "ok",
-        "elapsed_sec": 1.722,
+        "elapsed_sec": 1.841,
         "series_ok": [
           "PCE",
           "CORE_PCE",
@@ -84,7 +84,7 @@
       },
       "CENSUS_MRTS": {
         "status": "ok",
-        "elapsed_sec": 0.037,
+        "elapsed_sec": 0.044,
         "series_ok": [
           "RETAIL_SALES"
         ],
@@ -93,7 +93,7 @@
       },
       "DOL_TE_ICSA": {
         "status": "ok",
-        "elapsed_sec": 0.168,
+        "elapsed_sec": 0.392,
         "series_ok": [
           "ICSA"
         ],
@@ -102,7 +102,7 @@
       },
       "TE_ISM": {
         "status": "ok",
-        "elapsed_sec": 0.558,
+        "elapsed_sec": 0.92,
         "series_ok": [
           "ISM_MFG",
           "ISM_SVC"
@@ -113,7 +113,7 @@
       "YFINANCE_FEDWATCH": {
         "status": "ok",
         "source_used": "yfinance (CBOT ZQ)",
-        "elapsed_sec": 0.291,
+        "elapsed_sec": 0.283,
         "contracts": [
           "ZQG27.CBT",
           "ZQZ26.CBT"
@@ -122,10 +122,11 @@
       },
       "YFINANCE_SNAPSHOT": {
         "status": "ok",
-        "elapsed_sec": 0.336,
+        "elapsed_sec": 0.398,
         "series_ok": [
           "DXY",
           "USDTWD",
+          "HSI",
           "GOLD",
           "WTI",
           "US10Y"
@@ -224,7 +225,7 @@
     "fedwatch": {
       "status": "ok",
       "source_used": "yfinance (CBOT ZQ)",
-      "elapsed_sec": 0.291,
+      "elapsed_sec": 0.283,
       "contracts": [
         "ZQG27.CBT",
         "ZQZ26.CBT"
@@ -233,10 +234,11 @@
     },
     "market_snapshot": {
       "status": "ok",
-      "elapsed_sec": 0.336,
+      "elapsed_sec": 0.398,
       "series_ok": [
         "DXY",
         "USDTWD",
+        "HSI",
         "GOLD",
         "WTI",
         "US10Y"
@@ -304,7 +306,7 @@
         "sub": "WTI 西德州原油",
         "cls": "bear",
         "tag": "偏空",
-        "note": "WTI 原油現報 83.98 美元（近 20 日 -18.68%、一年區間 50%）、ISM 製造業 PMI 55.5；供給寬鬆或高利率壓抑能源需求預期。"
+        "note": "WTI 原油現報 83.41 美元（近 20 日 -19.23%、一年區間 49%）、ISM 製造業 PMI 55.5；供給寬鬆或高利率壓抑能源需求預期。"
       },
       {
         "asset": "美元／台幣",
@@ -337,7 +339,7 @@
         },
         "summary_text": "市場押注 12/10 會議：升 1 碼 93%｜維持 7%",
         "source_used": "yfinance (CBOT ZQ)",
-        "as_of_taipei": "2026-11-22 11:58"
+        "as_of_taipei": "2026-11-22 14:25"
       },
       {
         "period": "2027-01",
@@ -359,20 +361,20 @@
         },
         "summary_text": "市場押注 1/28 會議：升 1 碼 52%｜升 2 碼以上 48%",
         "source_used": "yfinance (CBOT ZQ)",
-        "as_of_taipei": "2026-11-22 11:58"
+        "as_of_taipei": "2026-11-22 14:25"
       }
     ],
     "current_range": "3.75%–4.00%",
     "current_mid": 3.875,
     "source_used": "yfinance (CBOT ZQ)",
-    "as_of_taipei": "2026-11-22 11:58",
+    "as_of_taipei": "2026-11-22 14:25",
     "data_status": "ok",
     "updating": false,
     "disclaimer": "機率由聯邦基金期貨價格推算，方法同 CME FedWatch；僅代表市場押注，不是預測。"
   },
   "market_snapshot": {
-    "as_of_taipei": "2026-11-22 11:58",
-    "hhmm_taipei": "11:58",
+    "as_of_taipei": "2026-11-22 14:25",
+    "hhmm_taipei": "14:25",
     "items": [
       {
         "id": "DXY",
@@ -486,7 +488,7 @@
         "what_is": "美元指數衡量美元對六大貨幣強弱；美元走強通常不利新興市場股市與台幣、對黃金與比特幣偏壓力；走弱相反。",
         "rule_rationale": "近 20 日美元指數上漲超過 1.5% 代表美元轉強，抽離新興市場與風險資產流動性，對台股與加密貨幣偏空；下跌超過 1.5% 代表美元轉弱，有利資金回流，標偏多。",
         "as_of_date": "2026-11-20",
-        "as_of_taipei": "2026-11-22 11:58",
+        "as_of_taipei": "2026-11-22 14:25",
         "source_used": "yfinance (DX-Y.NYB)",
         "data_status": "ok",
         "updating": false
@@ -603,8 +605,125 @@
         "what_is": "台幣升值（數字變小）通常代表外資匯入，對台股偏多；台幣貶值代表外資匯出，偏空。",
         "rule_rationale": "近 20 日美元／台幣下跌超過 1.0%（台幣升值）反映外資匯入動能，對台股偏多；上漲超過 1.0%（台幣貶值）反映外資匯出壓力，偏空。",
         "as_of_date": "2026-11-20",
-        "as_of_taipei": "2026-11-22 11:58",
+        "as_of_taipei": "2026-11-22 14:25",
         "source_used": "yfinance (TWD=X)",
+        "data_status": "ok",
+        "updating": false
+      },
+      {
+        "id": "HSI",
+        "symbol": "^HSI",
+        "name_zh": "恒生指數",
+        "unit": "點",
+        "last": 22410.8,
+        "last_str": "22,410.8",
+        "chg_1d_pct": -1.89,
+        "chg_20d_pct": -2.96,
+        "chg_1d_pp": null,
+        "chg_20d_pp": null,
+        "range_1y_pos_pct": 0.0,
+        "range_1y_low": 22410.8,
+        "range_1y_high": 27968.1,
+        "closes_90d": [
+          25008.6,
+          24562.2,
+          25143.1,
+          25132.3,
+          24892.7,
+          25210.8,
+          24963.2,
+          25207.2,
+          25310.8,
+          25807.9,
+          25858.9,
+          25884.4,
+          26009.4,
+          25852.9,
+          25915.8,
+          25530.3,
+          25668.0,
+          25937.5,
+          25652.8,
+          25440.2,
+          25396.5,
+          25116.8,
+          25453.2,
+          25471.2,
+          25495.1,
+          25698.5,
+          26009.5,
+          25517.3,
+          25511.1,
+          25653.0,
+          25565.7,
+          25584.8,
+          25567.0,
+          25329.7,
+          25311.2,
+          25213.3,
+          25650.9,
+          25413.1,
+          25317.2,
+          25275.0,
+          24954.5,
+          24805.6,
+          24917.6,
+          24667.2,
+          24713.8,
+          24604.3,
+          24750.8,
+          25042.7,
+          25087.8,
+          24834.1,
+          24761.1,
+          24510.1,
+          24642.5,
+          24523.6,
+          24613.3,
+          23972.3,
+          24040.3,
+          24280.6,
+          24130.5,
+          23785.8,
+          24211.3,
+          24271.2,
+          24345.2,
+          24314.2,
+          24062.7,
+          24186.8,
+          23867.7,
+          23651.9,
+          22934.7,
+          23093.4,
+          23211.8,
+          23041.3,
+          23094.8,
+          22958.7,
+          23294.4,
+          23393.3,
+          23526.0,
+          23919.5,
+          24797.0,
+          24481.9,
+          24448.9,
+          24557.0,
+          24315.9,
+          24008.6,
+          23637.6,
+          23753.8,
+          23508.2,
+          23294.8,
+          22841.6,
+          22410.8
+        ],
+        "verdict": "neut",
+        "verdict_tag": "🟡 中性",
+        "verdict_reason": "恒生指數近 20 日變動 -2.96%，處於 ±3.0% 中性區間。",
+        "what_is": "恒生指數是香港股市主要指數，成分股以大型陸資與香港企業為主，可以看出中國經濟與亞洲資金的情緒；恒生走強通常代表亞洲風險偏好回升，對台股偏正面。",
+        "rule_rationale": "以對台股、亞洲風險情緒為視角：近 20 日恒生指數上漲超過 3.0% 標「偏多（亞股轉強）」，下跌超過 3.0% 標「偏空（亞股轉弱）」，其餘介於 ±3.0% 間標「中性」。",
+        "as_of_date": "2026-11-20",
+        "as_of_taipei": "2026-11-22 14:25",
+        "source_used": "yfinance (^HSI)",
         "data_status": "ok",
         "updating": false
       },
@@ -720,7 +839,7 @@
         "what_is": "黃金為無息避險與抗通膨資產；美元走弱或實質利率下降時通常走強，急漲時亦反映市場避險需求升溫。",
         "rule_rationale": "近 20 日金價上漲超過 3.0% 反映實質利率下行預期或避險買盤（與無主權資產題材共振，對風險資產偏多但須留意避險升溫）；下跌超過 3.0% 通常伴隨強美元或高利率壓抑，偏空。",
         "as_of_date": "2026-11-20",
-        "as_of_taipei": "2026-11-22 11:58",
+        "as_of_taipei": "2026-11-22 14:25",
         "source_used": "yfinance (GC=F)",
         "data_status": "ok",
         "updating": false
@@ -730,13 +849,13 @@
         "symbol": "CL=F",
         "name_zh": "原油 (WTI)",
         "unit": "美元",
-        "last": 83.98,
-        "last_str": "83.98",
-        "chg_1d_pct": 0.93,
-        "chg_20d_pct": -18.68,
+        "last": 83.41,
+        "last_str": "83.41",
+        "chg_1d_pct": 0.24,
+        "chg_20d_pct": -19.23,
         "chg_1d_pp": null,
         "chg_20d_pp": null,
-        "range_1y_pos_pct": 49.8,
+        "range_1y_pos_pct": 48.8,
         "range_1y_low": 55.27,
         "range_1y_high": 112.95,
         "closes_90d": [
@@ -829,15 +948,15 @@
           86.01,
           83.26,
           83.21,
-          83.98
+          83.41
         ],
         "verdict": "bull",
         "verdict_tag": "🟢 偏多（通膨舒緩）",
-        "verdict_reason": "WTI 原油近 20 日下跌 -18.68%（低於 -5.0%），油價回落有助通膨降溫，舒緩緊縮預期。",
+        "verdict_reason": "WTI 原油近 20 日下跌 -19.23%（低於 -5.0%），油價回落有助通膨降溫，舒緩緊縮預期。",
         "what_is": "西德州原油期貨反映全球景氣需求與能源通膨壓力；油價急漲易推升通膨預期並壓抑聯準會降息空間。",
         "rule_rationale": "近 20 日油價上漲超過 5.0% 易引發能源通膨回溫與鷹派利率定價，對股市與加密貨幣偏空；下跌超過 5.0% 有助舒緩通膨壓力，偏多。",
         "as_of_date": "2026-11-20",
-        "as_of_taipei": "2026-11-22 11:58",
+        "as_of_taipei": "2026-11-22 14:25",
         "source_used": "yfinance (CL=F)",
         "data_status": "ok",
         "updating": false
@@ -954,7 +1073,7 @@
         "what_is": "10 年期美債殖利率是全球風險資產的定價錨；殖利率走高壓縮科技股估值並推升資金成本，回落則相反。",
         "rule_rationale": "10 年期殖利率近 20 日上升超過 0.25 個百分點代表無風險資金成本急升，對股市與加密貨幣偏空；下降超過 0.25 個百分點則舒緩估值壓力，偏多。",
         "as_of_date": "2026-11-20",
-        "as_of_taipei": "2026-11-22 11:58",
+        "as_of_taipei": "2026-11-22 14:25",
         "source_used": "沿用 DGS10（美國財政部（備用））",
         "data_status": "ok",
         "updating": false
@@ -975,7 +1094,7 @@
       "change_str": "0 bp（維持不變）",
       "change_dir": "flat",
       "release_date_taipei": "2026-10-29 02:00",
-      "sub_info": "FOMC 決議目標區間（截至 2026-11-21）｜維持 3.75%–4.00%（10–2，兩人主張升息）",
+      "sub_info": "FOMC 決議目標區間（截至 2026-11-22）｜維持 3.75%–4.00%（10–2，兩人主張升息）",
       "consensus_str": "不變約 93%",
       "consensus_source": "CME FedWatch",
       "surprise": "符合預期",
@@ -9100,11 +9219,11 @@
       ],
       "chart_label": "近 24 週初領人數（萬人）",
       "next_release": {
-        "period": "2026-11-21",
-        "period_zh": "11/21當週",
-        "release_taipei": "11/25（三）21:30",
-        "release_taipei_iso": "2026-11-25T21:30:00+08:00",
-        "note": "遇美國假日調整公布日",
+        "period": "2026-11-28",
+        "period_zh": "11/28當週",
+        "release_taipei": "12/03（四）21:30",
+        "release_taipei_iso": "2026-12-03T21:30:00+08:00",
+        "note": "每週例行",
         "consensus": null,
         "consensus_source": null
       },
@@ -13019,22 +13138,6 @@
         "note": "第三季 GDP 第二次估計（初值為 +3.4%）"
       },
       {
-        "id": "icsa-2026-11-21",
-        "title": "初領失業金人數（11/21當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-11-21",
-        "period_zh": "11/21當週",
-        "stars": 2,
-        "time_utc": "2026-11-25T13:30:00Z",
-        "time_taipei": "2026-11-25 21:30",
-        "time_taipei_iso": "2026-11-25T21:30:00+08:00",
-        "date_taipei": "2026-11-25",
-        "short_taipei": "11/25（三）21:30",
-        "consensus_str": null,
-        "consensus_source": null,
-        "note": "遇美國假日調整公布日"
-      },
-      {
         "id": "beige-2026-11",
         "title": "聯準會褐皮書（Beige Book）",
         "indicator_id": "FED_RATE",
@@ -13769,6 +13872,22 @@
         "consensus_str": null,
         "consensus_source": null,
         "note": ""
+      },
+      {
+        "id": "icsa-2027-02-20",
+        "title": "初領失業金人數（2/20當週）",
+        "indicator_id": "ICSA",
+        "period": "2027-02-20",
+        "period_zh": "2/20當週",
+        "stars": 2,
+        "time_utc": "2027-02-25T13:30:00Z",
+        "time_taipei": "2027-02-25 21:30",
+        "time_taipei_iso": "2027-02-25T21:30:00+08:00",
+        "date_taipei": "2027-02-25",
+        "short_taipei": "02/25（四）21:30",
+        "consensus_str": null,
+        "consensus_source": null,
+        "note": "每週例行"
       },
       {
         "id": "ism_mfg-2027-02",
