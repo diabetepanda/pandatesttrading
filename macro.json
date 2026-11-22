@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "updated_at_utc": "2026-11-22T06:25:56Z",
-  "updated_at_taipei": "2026-11-22 14:25",
+  "updated_at_utc": "2026-11-22T06:40:40Z",
+  "updated_at_taipei": "2026-11-22 14:40",
   "status": "ok",
   "updating_indicators": [],
   "fetch_report": {
-    "total_elapsed_sec": 25.376,
+    "total_elapsed_sec": 41.036,
     "fred_aborted": true,
     "fred_abort_reason": "HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=8)",
     "sources": {
       "FRED": {
         "status": "failed",
-        "elapsed_sec": 16.262,
+        "elapsed_sec": 16.157,
         "attempts": 1,
         "aborted": true,
         "series_ok": [],
@@ -48,7 +48,7 @@
       },
       "US_TREASURY": {
         "status": "ok",
-        "elapsed_sec": 4.064,
+        "elapsed_sec": 4.509,
         "series_ok": [
           "DGS2",
           "DGS10"
@@ -58,7 +58,7 @@
       },
       "BLS_API_V1": {
         "status": "ok",
-        "elapsed_sec": 0.286,
+        "elapsed_sec": 0.314,
         "series_ok": [
           "CPI",
           "CORE_CPI",
@@ -73,7 +73,7 @@
       },
       "DBNOMICS_BEA": {
         "status": "ok",
-        "elapsed_sec": 1.841,
+        "elapsed_sec": 17.324,
         "series_ok": [
           "PCE",
           "CORE_PCE",
@@ -84,7 +84,7 @@
       },
       "CENSUS_MRTS": {
         "status": "ok",
-        "elapsed_sec": 0.044,
+        "elapsed_sec": 0.207,
         "series_ok": [
           "RETAIL_SALES"
         ],
@@ -93,7 +93,7 @@
       },
       "DOL_TE_ICSA": {
         "status": "ok",
-        "elapsed_sec": 0.392,
+        "elapsed_sec": 0.493,
         "series_ok": [
           "ICSA"
         ],
@@ -102,7 +102,7 @@
       },
       "TE_ISM": {
         "status": "ok",
-        "elapsed_sec": 0.92,
+        "elapsed_sec": 0.807,
         "series_ok": [
           "ISM_MFG",
           "ISM_SVC"
@@ -113,7 +113,7 @@
       "YFINANCE_FEDWATCH": {
         "status": "ok",
         "source_used": "yfinance (CBOT ZQ)",
-        "elapsed_sec": 0.283,
+        "elapsed_sec": 0.245,
         "contracts": [
           "ZQG27.CBT",
           "ZQZ26.CBT"
@@ -122,7 +122,7 @@
       },
       "YFINANCE_SNAPSHOT": {
         "status": "ok",
-        "elapsed_sec": 0.398,
+        "elapsed_sec": 0.318,
         "series_ok": [
           "DXY",
           "USDTWD",
@@ -225,7 +225,7 @@
     "fedwatch": {
       "status": "ok",
       "source_used": "yfinance (CBOT ZQ)",
-      "elapsed_sec": 0.283,
+      "elapsed_sec": 0.245,
       "contracts": [
         "ZQG27.CBT",
         "ZQZ26.CBT"
@@ -234,7 +234,7 @@
     },
     "market_snapshot": {
       "status": "ok",
-      "elapsed_sec": 0.398,
+      "elapsed_sec": 0.318,
       "series_ok": [
         "DXY",
         "USDTWD",
@@ -339,7 +339,7 @@
         },
         "summary_text": "市場押注 12/10 會議：升 1 碼 93%｜維持 7%",
         "source_used": "yfinance (CBOT ZQ)",
-        "as_of_taipei": "2026-11-22 14:25"
+        "as_of_taipei": "2026-11-22 14:40"
       },
       {
         "period": "2027-01",
@@ -361,20 +361,20 @@
         },
         "summary_text": "市場押注 1/28 會議：升 1 碼 52%｜升 2 碼以上 48%",
         "source_used": "yfinance (CBOT ZQ)",
-        "as_of_taipei": "2026-11-22 14:25"
+        "as_of_taipei": "2026-11-22 14:40"
       }
     ],
     "current_range": "3.75%–4.00%",
     "current_mid": 3.875,
     "source_used": "yfinance (CBOT ZQ)",
-    "as_of_taipei": "2026-11-22 14:25",
+    "as_of_taipei": "2026-11-22 14:40",
     "data_status": "ok",
     "updating": false,
     "disclaimer": "機率由聯邦基金期貨價格推算，方法同 CME FedWatch；僅代表市場押注，不是預測。"
   },
   "market_snapshot": {
-    "as_of_taipei": "2026-11-22 14:25",
-    "hhmm_taipei": "14:25",
+    "as_of_taipei": "2026-11-22 14:40",
+    "hhmm_taipei": "14:40",
     "items": [
       {
         "id": "DXY",
@@ -488,7 +488,7 @@
         "what_is": "美元指數衡量美元對六大貨幣強弱；美元走強通常不利新興市場股市與台幣、對黃金與比特幣偏壓力；走弱相反。",
         "rule_rationale": "近 20 日美元指數上漲超過 1.5% 代表美元轉強，抽離新興市場與風險資產流動性，對台股與加密貨幣偏空；下跌超過 1.5% 代表美元轉弱，有利資金回流，標偏多。",
         "as_of_date": "2026-11-20",
-        "as_of_taipei": "2026-11-22 14:25",
+        "as_of_taipei": "2026-11-22 14:40",
         "source_used": "yfinance (DX-Y.NYB)",
         "data_status": "ok",
         "updating": false
@@ -605,7 +605,7 @@
         "what_is": "台幣升值（數字變小）通常代表外資匯入，對台股偏多；台幣貶值代表外資匯出，偏空。",
         "rule_rationale": "近 20 日美元／台幣下跌超過 1.0%（台幣升值）反映外資匯入動能，對台股偏多；上漲超過 1.0%（台幣貶值）反映外資匯出壓力，偏空。",
         "as_of_date": "2026-11-20",
-        "as_of_taipei": "2026-11-22 14:25",
+        "as_of_taipei": "2026-11-22 14:40",
         "source_used": "yfinance (TWD=X)",
         "data_status": "ok",
         "updating": false
@@ -722,7 +722,7 @@
         "what_is": "恒生指數是香港股市主要指數，成分股以大型陸資與香港企業為主，可以看出中國經濟與亞洲資金的情緒；恒生走強通常代表亞洲風險偏好回升，對台股偏正面。",
         "rule_rationale": "以對台股、亞洲風險情緒為視角：近 20 日恒生指數上漲超過 3.0% 標「偏多（亞股轉強）」，下跌超過 3.0% 標「偏空（亞股轉弱）」，其餘介於 ±3.0% 間標「中性」。",
         "as_of_date": "2026-11-20",
-        "as_of_taipei": "2026-11-22 14:25",
+        "as_of_taipei": "2026-11-22 14:40",
         "source_used": "yfinance (^HSI)",
         "data_status": "ok",
         "updating": false
@@ -839,7 +839,7 @@
         "what_is": "黃金為無息避險與抗通膨資產；美元走弱或實質利率下降時通常走強，急漲時亦反映市場避險需求升溫。",
         "rule_rationale": "近 20 日金價上漲超過 3.0% 反映實質利率下行預期或避險買盤（與無主權資產題材共振，對風險資產偏多但須留意避險升溫）；下跌超過 3.0% 通常伴隨強美元或高利率壓抑，偏空。",
         "as_of_date": "2026-11-20",
-        "as_of_taipei": "2026-11-22 14:25",
+        "as_of_taipei": "2026-11-22 14:40",
         "source_used": "yfinance (GC=F)",
         "data_status": "ok",
         "updating": false
@@ -956,7 +956,7 @@
         "what_is": "西德州原油期貨反映全球景氣需求與能源通膨壓力；油價急漲易推升通膨預期並壓抑聯準會降息空間。",
         "rule_rationale": "近 20 日油價上漲超過 5.0% 易引發能源通膨回溫與鷹派利率定價，對股市與加密貨幣偏空；下跌超過 5.0% 有助舒緩通膨壓力，偏多。",
         "as_of_date": "2026-11-20",
-        "as_of_taipei": "2026-11-22 14:25",
+        "as_of_taipei": "2026-11-22 14:40",
         "source_used": "yfinance (CL=F)",
         "data_status": "ok",
         "updating": false
@@ -1073,7 +1073,7 @@
         "what_is": "10 年期美債殖利率是全球風險資產的定價錨；殖利率走高壓縮科技股估值並推升資金成本，回落則相反。",
         "rule_rationale": "10 年期殖利率近 20 日上升超過 0.25 個百分點代表無風險資金成本急升，對股市與加密貨幣偏空；下降超過 0.25 個百分點則舒緩估值壓力，偏多。",
         "as_of_date": "2026-11-20",
-        "as_of_taipei": "2026-11-22 14:25",
+        "as_of_taipei": "2026-11-22 14:40",
         "source_used": "沿用 DGS10（美國財政部（備用））",
         "data_status": "ok",
         "updating": false
