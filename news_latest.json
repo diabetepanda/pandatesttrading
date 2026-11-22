@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-22-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-22T21:16:08Z",
-  "updated_at_taipei": "2026-11-23 05:16",
-  "last_updated_utc": "2026-11-22T21:16:08Z",
-  "last_updated_taipei": "2026-11-23 05:16",
-  "next_update_hint": "約台北時間 05:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-22T21:31:14Z",
+  "updated_at_taipei": "2026-11-23 05:31",
+  "last_updated_utc": "2026-11-22T21:31:14Z",
+  "last_updated_taipei": "2026-11-23 05:31",
+  "next_update_hint": "約台北時間 05:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 13.289,
+    "total_elapsed_sec": 17.616,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 2,
+    "new_items_added": 5,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.064,
+        "elapsed_sec": 0.102,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.104,
+        "elapsed_sec": 0.152,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.037,
+        "elapsed_sec": 0.182,
         "raw_count": 30,
         "items_kept": 2,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.148,
+        "elapsed_sec": 0.071,
         "raw_count": 10,
         "items_kept": 1,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.333,
+        "elapsed_sec": 0.41,
         "raw_count": 19,
         "items_kept": 18,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.315,
+        "elapsed_sec": 0.225,
         "raw_count": 25,
         "items_kept": 19,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.105,
+        "elapsed_sec": 0.142,
         "raw_count": 30,
         "items_kept": 18,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.079,
+        "elapsed_sec": 0.113,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.079,
+        "elapsed_sec": 0.112,
         "raw_count": 37,
         "items_kept": 15,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.443,
+        "elapsed_sec": 0.388,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.398,
+        "elapsed_sec": 0.511,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.493,
+        "elapsed_sec": 0.369,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.808,
+        "elapsed_sec": 0.706,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.396,
+        "elapsed_sec": 0.359,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.133,
+        "elapsed_sec": 0.469,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.083,
+        "elapsed_sec": 0.126,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.281,
+        "elapsed_sec": 3.831,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.039,
+        "elapsed_sec": 0.084,
         "raw_count": 1373,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.407,
+        "elapsed_sec": 1.246,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.419,
+        "elapsed_sec": 0.417,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.499,
+        "elapsed_sec": 1.124,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.393,
+        "elapsed_sec": 0.376,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.756,
+        "elapsed_sec": 0.472,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.252,
+        "elapsed_sec": 0.865,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.591,
+        "elapsed_sec": 0.455,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -277,16 +277,16 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.32,
-        "change_1d_pct": 4.89
+        "tvl_b": 36.34,
+        "change_1d_pct": 4.95
       },
       "Base": {
         "tvl_b": 5.12,
-        "change_1d_pct": 11.98
+        "change_1d_pct": 11.99
       },
       "Solana": {
-        "tvl_b": 4.61,
-        "change_1d_pct": 1.26
+        "tvl_b": 4.6,
+        "change_1d_pct": 1.12
       },
       "Tron": {
         "tvl_b": 4.43,
@@ -294,7 +294,7 @@
       },
       "BSC": {
         "tvl_b": 4.32,
-        "change_1d_pct": 2.16
+        "change_1d_pct": 2.15
       },
       "Bitcoin": {
         "tvl_b": 3.04,
@@ -308,19 +308,19 @@
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0033,
+        "funding_rate_pct": 0.0037,
         "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0034,
+        "funding_rate_pct": -0.0033,
         "oi_usd_b": 1.16
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 31.5,
-      "tx_count": 63233,
+      "mempool_vsize_mb": 31.9,
+      "tx_count": 62356,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -629,6 +629,117 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261123-cb97ea2753",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T21:17:03Z",
+      "published_at_taipei": "2026-11-23 05:17",
+      "published_at_taipei_iso": "2026-11-23T05:17:03+08:00",
+      "first_seen_at_utc": "2026-11-22T21:31:14Z",
+      "first_seen_at_taipei": "2026-11-23 05:31",
+      "month": "2026-11",
+      "title": "Her $420,000 in Employer Stock Inside Her 401(k) Lost 11% in a Day. Rolling It Into an IRA Would Turn Her Long-Term Gain Into Ordinary Income",
+      "url": "https://247wallst.com/personal-finance/2026/11/22/her-420000-in-employer-stock-inside-her-401k-lost-11-in-a-day-rolling-it-into-an-ira-would-turn-her-long-term-gain-into-ordinary-income/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/personal-finance/2026/11/22/her-420000-in-employer-stock-inside-her-401k-lost-11-in-a-day-rolling-it-into-an-ira-would-turn-her-long-term-gain-into-ordinary-income?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-c5a96eaeb8",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T21:17:00Z",
+      "published_at_taipei": "2026-11-23 05:17",
+      "published_at_taipei_iso": "2026-11-23T05:17:00+08:00",
+      "first_seen_at_utc": "2026-11-22T21:31:14Z",
+      "first_seen_at_taipei": "2026-11-23 05:31",
+      "month": "2026-11",
+      "title": "台股史上最慘一週還沒完 限空令3.0救得回？法人揭3萬3保衛戰",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8F%B2%E4%B8%8A%E6%9C%80%E6%85%98-%E9%80%B1%E9%82%84%E6%B2%92%E5%AE%8C-%E9%99%90%E7%A9%BA%E4%BB%A43-0%E6%95%91%E5%BE%97%E5%9B%9E-%E6%B3%95%E4%BA%BA%E6%8F%AD3%E8%90%AC3%E4%BF%9D%E8%A1%9B%E6%88%B0-211700550.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8F%B2%E4%B8%8A%E6%9C%80%E6%85%98-%E9%80%B1%E9%82%84%E6%B2%92%E5%AE%8C-%E9%99%90%E7%A9%BA%E4%BB%A43-0%E6%95%91%E5%BE%97%E5%9B%9E-%E6%B3%95%E4%BA%BA%E6%8F%AD3%E8%90%AC3%E4%BF%9D%E8%A1%9B%E6%88%B0-211700550.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：國安基金護盤；命中：重挫；命中：利空",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-65e8d98cf5",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T21:12:53Z",
+      "published_at_taipei": "2026-11-23 05:12",
+      "published_at_taipei_iso": "2026-11-23T05:12:53+08:00",
+      "first_seen_at_utc": "2026-11-22T21:31:14Z",
+      "first_seen_at_taipei": "2026-11-23 05:31",
+      "month": "2026-11",
+      "title": "How exposed is the S&P 500 to an AI trade bust?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/exposed-p-500-ai-trade-211253614.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/exposed-p-500-ai-trade-211253614.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-64a0b66f24",
       "issue": "2026-11-22-PM",
       "published_at_utc": "2026-11-22T21:10:16Z",
@@ -667,6 +778,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-5f4df83125",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T20:33:23Z",
+      "published_at_taipei": "2026-11-23 04:33",
+      "published_at_taipei_iso": "2026-11-23T04:33:23+08:00",
+      "first_seen_at_utc": "2026-11-22T21:31:14Z",
+      "first_seen_at_taipei": "2026-11-23 05:31",
+      "month": "2026-11",
+      "title": "China, Korea and Taiwan Rush Stock Rescues Before Monday: Can They Help the S&P 500?",
+      "url": "https://beincrypto.com/china-korea-taiwan-stock-rescues-monday/?.tsrc=rss",
+      "canonical_url": "https://beincrypto.com/china-korea-taiwan-stock-rescues-monday?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -2541,6 +2688,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261123-39acd4644f",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T21:07:58Z",
+      "published_at_taipei": "2026-11-23 05:07",
+      "published_at_taipei_iso": "2026-11-23T05:07:58+08:00",
+      "first_seen_at_utc": "2026-11-22T21:31:14Z",
+      "first_seen_at_taipei": "2026-11-23 05:31",
+      "month": "2026-11",
+      "title": "Top 3 Canadian Growth Stocks To Watch In November 2026",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/top-3-canadian-growth-stocks-210758926.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/top-3-canadian-growth-stocks-210758926.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-17cf38c37f",
+        "issue": "2026-11-22-AM",
+        "title": "3 Founder Led Stocks To Own In November 2026",
+        "published_at_taipei": "2026-11-22 06:11",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/3-founder-led-stocks-own-221107526.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-3f7fee32c0",
       "issue": "2026-11-22-PM",
       "published_at_utc": "2026-11-22T21:00:58Z",
@@ -3125,6 +3312,117 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261123-cb97ea2753",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T21:17:03Z",
+      "published_at_taipei": "2026-11-23 05:17",
+      "published_at_taipei_iso": "2026-11-23T05:17:03+08:00",
+      "first_seen_at_utc": "2026-11-22T21:31:14Z",
+      "first_seen_at_taipei": "2026-11-23 05:31",
+      "month": "2026-11",
+      "title": "Her $420,000 in Employer Stock Inside Her 401(k) Lost 11% in a Day. Rolling It Into an IRA Would Turn Her Long-Term Gain Into Ordinary Income",
+      "url": "https://247wallst.com/personal-finance/2026/11/22/her-420000-in-employer-stock-inside-her-401k-lost-11-in-a-day-rolling-it-into-an-ira-would-turn-her-long-term-gain-into-ordinary-income/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/personal-finance/2026/11/22/her-420000-in-employer-stock-inside-her-401k-lost-11-in-a-day-rolling-it-into-an-ira-would-turn-her-long-term-gain-into-ordinary-income?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-c5a96eaeb8",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T21:17:00Z",
+      "published_at_taipei": "2026-11-23 05:17",
+      "published_at_taipei_iso": "2026-11-23T05:17:00+08:00",
+      "first_seen_at_utc": "2026-11-22T21:31:14Z",
+      "first_seen_at_taipei": "2026-11-23 05:31",
+      "month": "2026-11",
+      "title": "台股史上最慘一週還沒完 限空令3.0救得回？法人揭3萬3保衛戰",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8F%B2%E4%B8%8A%E6%9C%80%E6%85%98-%E9%80%B1%E9%82%84%E6%B2%92%E5%AE%8C-%E9%99%90%E7%A9%BA%E4%BB%A43-0%E6%95%91%E5%BE%97%E5%9B%9E-%E6%B3%95%E4%BA%BA%E6%8F%AD3%E8%90%AC3%E4%BF%9D%E8%A1%9B%E6%88%B0-211700550.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8F%B2%E4%B8%8A%E6%9C%80%E6%85%98-%E9%80%B1%E9%82%84%E6%B2%92%E5%AE%8C-%E9%99%90%E7%A9%BA%E4%BB%A43-0%E6%95%91%E5%BE%97%E5%9B%9E-%E6%B3%95%E4%BA%BA%E6%8F%AD3%E8%90%AC3%E4%BF%9D%E8%A1%9B%E6%88%B0-211700550.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：國安基金護盤；命中：重挫；命中：利空",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-65e8d98cf5",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T21:12:53Z",
+      "published_at_taipei": "2026-11-23 05:12",
+      "published_at_taipei_iso": "2026-11-23T05:12:53+08:00",
+      "first_seen_at_utc": "2026-11-22T21:31:14Z",
+      "first_seen_at_taipei": "2026-11-23 05:31",
+      "month": "2026-11",
+      "title": "How exposed is the S&P 500 to an AI trade bust?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/exposed-p-500-ai-trade-211253614.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/exposed-p-500-ai-trade-211253614.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-64a0b66f24",
       "issue": "2026-11-22-PM",
       "published_at_utc": "2026-11-22T21:10:16Z",
@@ -3163,6 +3461,46 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-39acd4644f",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T21:07:58Z",
+      "published_at_taipei": "2026-11-23 05:07",
+      "published_at_taipei_iso": "2026-11-23T05:07:58+08:00",
+      "first_seen_at_utc": "2026-11-22T21:31:14Z",
+      "first_seen_at_taipei": "2026-11-23 05:31",
+      "month": "2026-11",
+      "title": "Top 3 Canadian Growth Stocks To Watch In November 2026",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/top-3-canadian-growth-stocks-210758926.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/top-3-canadian-growth-stocks-210758926.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-17cf38c37f",
+        "issue": "2026-11-22-AM",
+        "title": "3 Founder Led Stocks To Own In November 2026",
+        "published_at_taipei": "2026-11-22 06:11",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/3-founder-led-stocks-own-221107526.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -3232,6 +3570,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-5f4df83125",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T20:33:23Z",
+      "published_at_taipei": "2026-11-23 04:33",
+      "published_at_taipei_iso": "2026-11-23T04:33:23+08:00",
+      "first_seen_at_utc": "2026-11-22T21:31:14Z",
+      "first_seen_at_taipei": "2026-11-23 05:31",
+      "month": "2026-11",
+      "title": "China, Korea and Taiwan Rush Stock Rescues Before Monday: Can They Help the S&P 500?",
+      "url": "https://beincrypto.com/china-korea-taiwan-stock-rescues-monday/?.tsrc=rss",
+      "canonical_url": "https://beincrypto.com/china-korea-taiwan-stock-rescues-monday?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -17308,8 +17682,8 @@
       "month": "2026-11",
       "date": "2026-11-22",
       "half": "PM",
-      "updated_at_taipei": "2026-11-23 05:16",
-      "count": 75,
+      "updated_at_taipei": "2026-11-23 05:31",
+      "count": 80,
       "star3_count": 8,
       "failed_sources": [
         {
