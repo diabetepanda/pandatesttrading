@@ -1,7 +1,7 @@
 name: Scheduler Keeper
 
 # GitHub 的 schedule 在新 repo 可能長時間不觸發。
-# 這個流程每 15 分鐘用 workflow_dispatch 觸發 Market Scan，
+# 這個流程每 15 分鐘用 workflow_dispatch 觸發 Market Scan 與 News Digest，
 # 並在每日／每週時段觸發 Daily／Weekly；約 5.5 小時後自己接力啟動下一輪。
 # 公開 repo 的 Actions 免費；GITHUB_TOKEN 觸發 workflow_dispatch 是官方允許的例外。
 
@@ -31,6 +31,7 @@ jobs:
           end=$(( $(date +%s) + 330*60 ))
           while [ "$(date +%s)" -lt "$end" ]; do
             gh workflow run scan.yml -f probe_all=false || echo "scan dispatch failed"
+            gh workflow run news.yml || echo "news dispatch failed"
             hm=$(date -u +%H%M); dow=$(date -u +%u)
             if [ "$hm" -ge 0015 ] && [ "$hm" -lt 0030 ]; then
               gh workflow run daily.yml || echo "daily dispatch failed"

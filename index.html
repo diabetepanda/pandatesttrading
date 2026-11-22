@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Desk 報單網站｜模擬驗證中</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261122b" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261122c" />
   <script src="https://unpkg.com/lightweight-charts@4.2.1/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -522,29 +522,34 @@
         </div>
       </section>
 
-      <section class="card" id="news-highlights-card">
-        <div class="section-header">
-          <div>
-            <h2>★★★ 重點</h2>
-            <p class="subtitle">本期最高重要程度消息（依聯準會、重大總經、安全事件與極端數據規則篩選）。</p>
+      <div class="news-layout-grid">
+        <section class="card news-main-column" id="news-list-card">
+          <div class="section-header">
+            <div>
+              <h2>本期消息清單</h2>
+              <p class="subtitle">預設僅顯示最新一期；可用期號／日期選單往回查閱歷史月份（每次僅載入單月檔案）。</p>
+            </div>
           </div>
-        </div>
-        <div id="news-highlights-list" class="news-list">
-          <div class="empty-state">本期尚無 ★★★ 重點消息。</div>
-        </div>
-      </section>
+          <div id="news-list" class="news-list">
+            <div class="empty-state">消息面資料載入中...</div>
+          </div>
+        </section>
 
-      <section class="card" id="news-list-card">
-        <div class="section-header">
-          <div>
-            <h2>本期消息清單</h2>
-            <p class="subtitle">預設僅顯示最新一期；可用期號／日期選單往回查閱歷史月份（每次僅載入單月檔案）。</p>
+        <aside class="card news-highlights-column collapsed" id="news-highlights-card">
+          <div class="news-highlights-header" id="news-highlights-toggle" role="button" tabindex="0" aria-expanded="false" title="點擊展開／收合重點消息">
+            <div class="news-highlights-title-wrap">
+              <h2 id="news-highlights-title">重點（0 則）</h2>
+              <span class="news-highlights-arrow" aria-hidden="true">▾</span>
+            </div>
+            <p class="subtitle news-highlights-subtitle">本期 ★★★ 最高重要程度消息。</p>
           </div>
-        </div>
-        <div id="news-list" class="news-list">
-          <div class="empty-state">消息面資料載入中...</div>
-        </div>
-      </section>
+          <div id="news-highlights-body" class="news-highlights-body">
+            <div id="news-highlights-list" class="news-highlights-list news-list">
+              <div class="empty-state">目前沒有重點消息</div>
+            </div>
+          </div>
+        </aside>
+      </div>
     </section>
   </main>
 
@@ -555,8 +560,8 @@
     </span>
   </footer>
 
-  <script src="./assets/config.js?v=20261122b"></script>
-  <script src="./assets/glossary.js?v=20261122b"></script>
-  <script src="./assets/app.js?v=20261122b"></script>
+  <script src="./assets/config.js?v=20261122c"></script>
+  <script src="./assets/glossary.js?v=20261122c"></script>
+  <script src="./assets/app.js?v=20261122c"></script>
 </body>
 </html>

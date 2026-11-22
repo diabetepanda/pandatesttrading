@@ -868,3 +868,297 @@ def test_hsi_news_matching_markets_and_reaction_config() -> None:
     assert _resolve_yfinance_ticker("HSI", instruments) == "^HSI"
     assert _resolve_reaction_threshold("HSI", instruments, news_cfg) == 0.3
 
+
+def test_news_frontend_pure_time_sorting_and_highlights() -> None:
+    import json
+    import shutil
+    import subprocess
+    import tempfile
+    from pathlib import Path
+
+    js_bin = shutil.which("node")
+    if not js_bin:
+        jsc_path = Path("/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc")
+        if jsc_path.exists():
+            js_bin = str(jsc_path)
+    assert js_bin is not None
+
+    app_js = (ROOT_DIR / "assets" / "app.js").read_text(encoding="utf-8")
+    index_html = (ROOT_DIR / "index.html").read_text(encoding="utf-8")
+    style_css = (ROOT_DIR / "assets" / "style.css").read_text(encoding="utf-8")
+
+    # CSS and HTML structural assertions
+    assert "news-layout-grid" in index_html
+    assert "news-main-column" in index_html
+    assert "news-highlights-column" in index_html
+    assert "news-highlights-toggle" in index_html
+    assert "news-highlights-title" in index_html
+    assert ".news-layout-grid" in style_css
+    assert "68fr 32fr" in style_css
+    assert "position: sticky" in style_css
+    assert "max-width: 1099.98px" in style_css
+    assert "min-width: 1100px" in style_css
+
+    test_items = [
+        {
+            "id": "item-older-3",
+            "issue": "2026-11-22-AM",
+            "published_at_utc": "2026-11-22T08:00:00Z",
+            "first_seen_at_utc": "2026-11-22T08:00:00Z",
+            "title": "Older 3-Star News (08:00)",
+            "url": "https://example.com/item-older-3",
+            "source": "SourceA",
+            "category": "總經",
+            "symbols": ["SP500"],
+            "importance": 3,
+            "importance_stars": "★★★",
+            "sentiment": "neutral",
+        },
+        {
+            "id": "item-newer-2",
+            "issue": "2026-11-22-AM",
+            "published_at_utc": "2026-11-22T10:00:00Z",
+            "first_seen_at_utc": "2026-11-22T10:00:00Z",
+            "title": "Newer 2-Star News (10:00)",
+            "url": "https://example.com/item-newer-2",
+            "source": "SourceB",
+            "category": "美股",
+            "symbols": ["AAPL"],
+            "importance": 2,
+            "importance_stars": "★★",
+            "sentiment": "bullish",
+        },
+        {
+            "id": "item-newest-3",
+            "issue": "2026-11-22-AM",
+            "published_at_utc": "2026-11-22T11:00:00Z",
+            "first_seen_at_utc": "2026-11-22T11:00:00Z",
+            "title": "Newest 3-Star News (11:00)",
+            "url": "https://example.com/item-newest-3",
+            "source": "SourceC",
+            "category": "加密貨幣",
+            "symbols": ["BTCUSDT"],
+            "importance": 3,
+            "importance_stars": "★★★",
+            "sentiment": "bullish",
+        },
+        {
+            "id": "item-fallback-1",
+            "issue": "2026-11-22-AM",
+            "published_at_utc": None,
+            "first_seen_at_utc": "2026-11-22T09:00:00Z",
+            "title": "Fallback First Seen 1-Star News (09:00)",
+            "url": "https://example.com/item-fallback-1",
+            "source": "SourceD",
+            "category": "總經",
+            "symbols": ["TWII"],
+            "importance": 1,
+            "importance_stars": "★",
+            "sentiment": "neutral",
+        },
+        {
+            "id": "item-no-time",
+            "issue": "2026-11-22-AM",
+            "published_at_utc": None,
+            "first_seen_at_utc": None,
+            "title": "No Time News (Sort to End)",
+            "url": "https://example.com/item-no-time",
+            "source": "SourceE",
+            "category": "總經",
+            "symbols": [],
+            "importance": 3,
+            "importance_stars": "★★★",
+            "sentiment": "neutral",
+        },
+    ]
+
+    mock_doc = {
+        "version": 1,
+        "latest_issue": "2026-11-22-AM",
+        "is_current_issue_updating": True,
+        "updated_at_utc": "2026-11-22T11:05:00Z",
+        "updated_at_taipei": "2026-11-22 19:05",
+        "last_updated_utc": "2026-11-22T11:05:00Z",
+        "last_updated_taipei": "2026-11-22 19:05",
+        "status": "ok",
+        "failed_sources": [],
+        "latest_items": test_items,
+        "recent_7d_items": test_items,
+    }
+
+    mock_index = {
+        "version": 1,
+        "latest_issue": "2026-11-22-AM",
+        "issues": [
+            {"issue": "2026-11-22-AM", "month": "2026-11", "count": 5, "updated_at_taipei": "2026-11-22 19:05"}
+        ],
+    }
+
+    script = f"""
+        function makeEl(id, extra = {{}}) {{
+          const cls = new Set(extra.classes || []);
+          return {{
+            id,
+            dataset: extra.dataset || {{}},
+            style: {{}},
+            innerHTML: '',
+            textContent: '',
+            value: extra.value || 'all',
+            disabled: false,
+            clientWidth: 1200,
+            clientHeight: 700,
+            classList: {{
+              add: (c) => cls.add(c),
+              remove: (c) => cls.delete(c),
+              contains: (c) => cls.has(c),
+              toggle: (c, f) => f !== undefined ? (f ? cls.add(c) : cls.delete(c)) : (cls.has(c) ? (cls.delete(c), false) : (cls.add(c), true)),
+            }},
+            setAttribute: () => {{}},
+            addEventListener: () => {{}},
+            querySelectorAll: () => [],
+            querySelector: () => null,
+          }};
+        }}
+        const byId = {{
+          'news-filter-category': makeEl('news-filter-category', {{ value: 'all' }}),
+          'news-filter-symbol': makeEl('news-filter-symbol', {{ value: 'all' }}),
+          'news-filter-importance': makeEl('news-filter-importance', {{ value: 'all' }}),
+          'news-issue-select': makeEl('news-issue-select', {{ value: '2026-11-22-AM' }}),
+          'news-highlights-card': makeEl('news-highlights-card', {{ classes: ['collapsed'] }}),
+          'news-highlights-toggle': makeEl('news-highlights-toggle'),
+          'news-highlights-title': makeEl('news-highlights-title'),
+          'news-highlights-list': makeEl('news-highlights-list'),
+          'news-list': makeEl('news-list'),
+        }};
+        const routeViews = ['view-wall', 'view-signal', 'view-account', 'view-data', 'view-research', 'view-news'].map((id) => {{
+          const e = makeEl(id, {{ classes: ['route-view'] }});
+          byId[id] = e;
+          return e;
+        }});
+        const navLinks = ['wall', 'account', 'data', 'research', 'news'].map((r) => makeEl('nav-' + r, {{ classes: ['nav-link'], dataset: {{ route: r }} }}));
+        var navigator = {{}};
+        var window = {{ location: {{ hash: '#/news' }}, addEventListener: () => {{}}, SIGNAL_DESK_CONFIG: {{}} }};
+        var document = {{
+          getElementById: (id) => byId[id] || (byId[id] = makeEl(id)),
+          querySelectorAll: (sel) => sel === '.route-view' ? routeViews : (sel === '.nav-link' ? navLinks : []),
+          querySelector: (sel) => null,
+          body: {{ appendChild: () => {{}}, removeChild: () => {{}} }},
+          createElement: () => makeEl('tmp'),
+        }};
+        function setInterval() {{}}
+        function setTimeout() {{ return 1; }}
+        function clearTimeout() {{}}
+        async function fetch() {{ return {{ ok: false }}; }}
+
+        {app_js}
+
+        const u = window.__SIGNAL_DESK_UTILS__;
+
+        // 1. Test compareNewsItemsByTimeDesc unit comparisons
+        const itemNew = {{ published_at_utc: '2026-11-22T10:00:00Z', importance: 2 }};
+        const itemOld = {{ published_at_utc: '2026-11-22T08:00:00Z', importance: 3 }};
+        const itemSeen = {{ first_seen_at_utc: '2026-11-22T09:00:00Z', importance: 1 }};
+        const itemNone = {{ importance: 3 }};
+
+        if (u.compareNewsItemsByTimeDesc(itemNew, itemOld) >= 0) {{
+          throw new Error('Newer item (10:00) must sort before older item (08:00)');
+        }}
+        if (u.compareNewsItemsByTimeDesc(itemOld, itemNew) <= 0) {{
+          throw new Error('Older item (08:00) must sort after newer item (10:00)');
+        }}
+        if (u.compareNewsItemsByTimeDesc(itemNew, itemNone) >= 0) {{
+          throw new Error('Item with timestamp must sort before item missing timestamp');
+        }}
+        if (u.compareNewsItemsByTimeDesc(itemNone, itemNew) <= 0) {{
+          throw new Error('Item missing timestamp must sort after item with timestamp');
+        }}
+        if (u.compareNewsItemsByTimeDesc(itemNone, itemNone) !== 0) {{
+          throw new Error('Two items with missing timestamps should compare as 0');
+        }}
+        if (u.compareNewsItemsByTimeDesc(itemSeen, itemOld) >= 0) {{
+          throw new Error('Item with first_seen_at_utc 09:00 must sort before published_at_utc 08:00');
+        }}
+
+        // 2. Full render test
+        u.setNewsDataForTest({json.dumps(mock_doc)}, {json.dumps(mock_index)}, null, {{}}, 0);
+        u.applyRoute();
+
+        const mainListHtml = byId['news-list'].innerHTML;
+        const hlListHtml = byId['news-highlights-list'].innerHTML;
+
+        // Verify main list contains all 5 items
+        const idxNewest3 = mainListHtml.indexOf('Newest 3-Star News');
+        const idxNewer2 = mainListHtml.indexOf('Newer 2-Star News');
+        const idxFallback1 = mainListHtml.indexOf('Fallback First Seen');
+        const idxOlder3 = mainListHtml.indexOf('Older 3-Star News');
+        const idxNoTime = mainListHtml.indexOf('No Time News');
+
+        if (idxNewest3 === -1 || idxNewer2 === -1 || idxFallback1 === -1 || idxOlder3 === -1 || idxNoTime === -1) {{
+          throw new Error('Main news list is missing some items');
+        }}
+
+        // Pure time order check: 11:00 < 10:00 < 09:00 (first_seen) < 08:00 < no_time
+        if (!(idxNewest3 < idxNewer2 && idxNewer2 < idxFallback1 && idxFallback1 < idxOlder3 && idxOlder3 < idxNoTime)) {{
+          throw new Error('Main news list is NOT in pure time order: expected 11:00 < 10:00 < 09:00 < 08:00 < no_time');
+        }}
+
+        // Specifically verify: ★★★ old news does NOT rank ahead of newer ★★ news
+        if (idxOlder3 < idxNewer2) {{
+          throw new Error('Older 3-star news (08:00) was improperly ranked before newer 2-star news (10:00)!');
+        }}
+
+        // Verify missing timestamp item is at the very end
+        if (idxNoTime < idxOlder3) {{
+          throw new Error('Item without timestamp was not sorted to the end');
+        }}
+
+        // 3. Highlights column verification
+        // Must contain ★★★ items only
+        if (!hlListHtml.includes('Newest 3-Star News') || !hlListHtml.includes('Older 3-Star News') || !hlListHtml.includes('No Time News')) {{
+          throw new Error('Highlights list missing 3-star items');
+        }}
+        if (hlListHtml.includes('Newer 2-Star News') || hlListHtml.includes('Fallback First Seen')) {{
+          throw new Error('Highlights list leaked 1-star or 2-star news items!');
+        }}
+
+        // Highlights column time order check
+        const hlIdxNewest3 = hlListHtml.indexOf('Newest 3-Star News');
+        const hlIdxOlder3 = hlListHtml.indexOf('Older 3-Star News');
+        const hlIdxNoTime = hlListHtml.indexOf('No Time News');
+        if (!(hlIdxNewest3 < hlIdxOlder3 && hlIdxOlder3 < hlIdxNoTime)) {{
+          throw new Error('Highlights column is NOT in time order');
+        }}
+
+        // Highlights title reflects count (3 items)
+        if (byId['news-highlights-title'].textContent !== '重點（3 則）') {{
+          throw new Error('Highlights title count mismatch: ' + byId['news-highlights-title'].textContent);
+        }}
+
+        // 4. Test filtering applied to highlights column
+        // Set importance filter to '1' (★ 一般), so 0 items in highlights column
+        byId['news-filter-importance'].value = '1';
+        u.renderNewsView();
+        if (!byId['news-highlights-list'].innerHTML.includes('目前沒有重點消息')) {{
+          throw new Error('Expected "目前沒有重點消息" when no highlights match filters');
+        }}
+        if (byId['news-highlights-title'].textContent !== '重點（0 則）') {{
+          throw new Error('Highlights title should be 重點（0 則） when 0 items match');
+        }}
+
+        // Reset filter
+        byId['news-filter-importance'].value = 'all';
+        u.renderNewsView();
+        if (byId['news-highlights-title'].textContent !== '重點（3 則）') {{
+          throw new Error('Highlights title failed to reset count');
+        }}
+    """
+    with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as tf:
+        tf.write(script)
+        tmp_js = tf.name
+    try:
+        proc = subprocess.run([js_bin, tmp_js], capture_output=True, text=True)
+        assert proc.returncode == 0, f"Frontend time sorting test failed: {proc.stderr or proc.stdout}"
+    finally:
+        Path(tmp_js).unlink(missing_ok=True)
+
+

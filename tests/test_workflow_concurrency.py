@@ -133,3 +133,10 @@ def test_git_pull_rebase_resolves_run_log_conflict(tmp_path: Path) -> None:
     assert ("2026-11-16T07:00:00Z", "daily") in jobs
     assert ("2026-11-16T07:07:00Z", "scan") in jobs
     assert ("2026-11-16T06:00:00Z", "scan") in jobs
+
+
+def test_keeper_workflow_triggers_news() -> None:
+    keeper_text = (WORKFLOW_DIR / "keeper.yml").read_text(encoding="utf-8")
+    assert 'gh workflow run news.yml || echo "news dispatch failed"' in keeper_text
+    assert "News Digest" in keeper_text
+    assert "gh workflow run scan.yml -f probe_all=false || echo \"scan dispatch failed\"\n            gh workflow run news.yml || echo \"news dispatch failed\"" in keeper_text

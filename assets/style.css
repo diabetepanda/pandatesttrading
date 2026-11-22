@@ -3375,4 +3375,123 @@ tr.ta-detail-row > td.ta-detail-cell {
   }
 }
 
+/* 消息面兩欄佈局與獨立重點欄 */
+.news-layout-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.news-main-column {
+  min-width: 0;
+}
+
+.news-highlights-column {
+  min-width: 0;
+}
+
+.news-highlights-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.news-highlights-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.news-highlights-title-wrap h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.news-highlights-arrow {
+  font-size: 0.95rem;
+  color: var(--muted);
+  transition: transform 0.2s ease;
+}
+
+.news-highlights-subtitle {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.news-highlights-body {
+  margin-top: 10px;
+}
+
+.news-highlight-row {
+  padding: 6px 8px;
+  font-size: 0.82rem;
+}
+
+/* 窄螢幕（< 1100px）：重點欄在主清單上方，預設收合 */
+@media (max-width: 1099.98px) {
+  .news-highlights-column {
+    order: -1;
+  }
+  .news-highlights-header {
+    cursor: pointer;
+    user-select: none;
+  }
+  .news-highlights-column.collapsed .news-highlights-body,
+  .news-highlights-column.collapsed .news-highlights-subtitle {
+    display: none;
+  }
+  .news-highlights-column.collapsed .news-highlights-arrow {
+    transform: rotate(-90deg);
+  }
+  .news-highlights-column.collapsed {
+    padding-bottom: 12px;
+  }
+}
+
+/* 桌機（≥ 1100px）：左欄約 68%，右欄約 32%，右欄 position: sticky 且欄內捲動 */
+@media (min-width: 1100px) {
+  .news-layout-grid {
+    display: grid;
+    grid-template-columns: 68fr 32fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .news-main-column {
+    order: 1;
+  }
+  .news-highlights-column {
+    order: 2;
+    position: sticky;
+    top: 130px;
+    max-height: calc(100vh - 146px);
+    display: flex;
+    flex-direction: column;
+  }
+  .news-highlights-column.collapsed .news-highlights-body {
+    display: block !important;
+  }
+  .news-highlights-column.collapsed .news-highlights-subtitle {
+    display: block !important;
+  }
+  .news-highlights-header {
+    cursor: default;
+    user-select: auto;
+    flex-shrink: 0;
+  }
+  .news-highlights-arrow {
+    display: none;
+  }
+  .news-highlights-body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-top: 10px;
+    padding-right: 4px;
+  }
+}
+
+
 

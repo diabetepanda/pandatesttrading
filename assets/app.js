@@ -3430,7 +3430,7 @@
   function renderNewsRowHtml(item) {
     const imp = Math.min(3, Math.max(1, Number(item.importance || 1)));
     const stars = item.importance_stars || "★".repeat(imp);
-    const timeStr = formatTaipeiTime(item.published_at_utc);
+    const timeStr = formatTaipeiTime(item.published_at_utc || item.first_seen_at_utc);
     const cat = item.category || "總經";
     const syms = Array.isArray(item.symbols) ? item.symbols : [];
     const symPills = syms.map((sym) => `<span class="news-sym-pill">${escapeHtml(sym)}</span>`).join("");
@@ -3461,6 +3461,46 @@
         <span class="news-source">${escapeHtml(item.source || "")}</span>
         ${reasonHtml}
       </div>`;
+  }
+
+  function renderNewsHighlightRowHtml(item) {
+    const imp = Math.min(3, Math.max(1, Number(item.importance || 1)));
+    const stars = item.importance_stars || "★".repeat(imp);
+    const timeStr = formatTaipeiTime(item.published_at_utc || item.first_seen_at_utc);
+    const cat = item.category || "總經";
+    const dataCls = item.is_data_alert ? " news-row-data" : "";
+    return `
+      <div class="news-row news-highlight-row${dataCls}" data-news-id="${escapeHtml(item.id || "")}">
+        <span class="news-time">${escapeHtml(timeStr)}</span>
+        <span class="news-stars news-stars-${imp}">${escapeHtml(stars)}</span>
+        <span class="news-cat-pill news-cat-${escapeHtml(cat)}">${escapeHtml(cat)}</span>
+        <a class="news-title-link" href="${escapeHtml(item.url || "#")}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title || "")}</a>
+      </div>`;
+  }
+
+  function getNewsItemTimeMs(item) {
+    if (!item) return null;
+    if (item.published_at_utc) {
+      const ms = Date.parse(item.published_at_utc);
+      if (Number.isFinite(ms)) return ms;
+    }
+    if (item.first_seen_at_utc) {
+      const ms = Date.parse(item.first_seen_at_utc);
+      if (Number.isFinite(ms)) return ms;
+    }
+    return null;
+  }
+
+  function compareNewsItemsByTimeDesc(a, b) {
+    const tA = getNewsItemTimeMs(a);
+    const tB = getNewsItemTimeMs(b);
+    if (tA !== null && tB !== null) {
+      if (tB !== tA) return tB - tA;
+      return 0;
+    }
+    if (tA !== null && tB === null) return -1;
+    if (tA === null && tB !== null) return 1;
+    return 0;
   }
 
   function _getIssueMetaFromIndex(issueId) {
@@ -3503,6 +3543,8 @@
       if (updatedEl) updatedEl.textContent = "最後更新：--";
       if (highlightsEl) highlightsEl.innerHTML = '<div class="empty-state">尚未載入消息面資料。</div>';
       listEl.innerHTML = '<div class="empty-state">目前尚無消息面資料（請確認已執行消息面排程或檢查網路連線）。</div>';
+      const hiTitleEl = document.getElementById("news-highlights-title");
+      if (hiTitleEl) hiTitleEl.textContent = "重點（0 則）";
       return;
     }
 
@@ -3634,22 +3676,6 @@
       newsSelectedMarket === "all" || markets.includes(newsSelectedMarket)
     ));
 
-    // Highlights section: ★★★ items matching selected market & sentiment
-    const star3Items = marketFiltered
-      .map((x) => x.item)
-      .filter((it) => Number(it.importance || 1) >= 3)
-      .filter((it) => newsSelectedSentiment === "all" || it.sentiment === newsSelectedSentiment)
-      .sort((a, b) => (Date.parse(b.published_at_utc || "") || 0) - (Date.parse(a.published_at_utc || "") || 0));
-    if (highlightsEl) {
-      const nextHiHtml = star3Items.length > 0
-        ? star3Items.map(renderNewsRowHtml).join("")
-        : '<div class="empty-state">目前篩選下無 ★★★ 重點消息。</div>';
-      if (highlightsEl._lastRenderedHtml !== nextHiHtml) {
-        highlightsEl.innerHTML = nextHiHtml;
-        highlightsEl._lastRenderedHtml = nextHiHtml;
-      }
-    }
-
     // Filtered list (market + 9-category + symbol + importance + sentiment)
     const fCat = catSelect ? catSelect.value : "all";
     const fSym = symSelect ? symSelect.value : "all";
@@ -3666,7 +3692,25 @@
         if (newsSelectedSentiment !== "all" && it.sentiment !== newsSelectedSentiment) return false;
         return true;
       })
-      .sort((a, b) => (Number(b.importance || 1) - Number(a.importance || 1)) || ((Date.parse(b.published_at_utc || "") || 0) - (Date.parse(a.published_at_utc || "") || 0)));
+      .sort(compareNewsItemsByTimeDesc);
+
+    // Highlights column: ★★★ items matching the EXACT same filters, sorted by time desc
+    const star3Items = filtered.filter((it) => Number(it.importance || 1) >= 3);
+
+    const hiTitleEl = document.getElementById("news-highlights-title");
+    if (hiTitleEl) {
+      hiTitleEl.textContent = `重點（${star3Items.length} 則）`;
+    }
+
+    if (highlightsEl) {
+      const nextHiHtml = star3Items.length > 0
+        ? star3Items.map(renderNewsHighlightRowHtml).join("")
+        : '<div class="empty-state">目前沒有重點消息</div>';
+      if (highlightsEl._lastRenderedHtml !== nextHiHtml) {
+        highlightsEl.innerHTML = nextHiHtml;
+        highlightsEl._lastRenderedHtml = nextHiHtml;
+      }
+    }
 
     if (countBadge) {
       countBadge.textContent = filtered.length === issueItems.length
@@ -4129,6 +4173,23 @@
   document.getElementById("news-list")?.addEventListener("click", handleNewsReasonToggle);
   document.getElementById("news-highlights-list")?.addEventListener("click", handleNewsReasonToggle);
 
+  const hlCard = document.getElementById("news-highlights-card");
+  const hlToggle = document.getElementById("news-highlights-toggle");
+  if (hlToggle && hlCard) {
+    const handleHlToggle = () => {
+      hlCard.classList.toggle("collapsed");
+      const isCol = hlCard.classList.contains("collapsed");
+      hlToggle.setAttribute("aria-expanded", String(!isCol));
+    };
+    hlToggle.addEventListener("click", handleHlToggle);
+    hlToggle.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleHlToggle();
+      }
+    });
+  }
+
   document.getElementById("watch-scope-tabs")?.addEventListener("click", (e) => {
     const btn = e.target.closest(".tab");
     if (!btn) return;
@@ -4249,6 +4310,10 @@
     getRelatedNewsForSymbol,
     renderSignalRelatedNewsHtml,
     renderNewsView,
+    renderNewsRowHtml,
+    renderNewsHighlightRowHtml,
+    compareNewsItemsByTimeDesc,
+    getNewsItemTimeMs,
     deriveNewsMarkets,
     parseNewsMarketFromHash,
     pollNewsUpdates,
