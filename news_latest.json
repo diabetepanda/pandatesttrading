@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-22-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-22T23:16:36Z",
-  "updated_at_taipei": "2026-11-23 07:16",
-  "last_updated_utc": "2026-11-22T23:16:36Z",
-  "last_updated_taipei": "2026-11-23 07:16",
-  "next_update_hint": "約台北時間 07:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-22T23:31:41Z",
+  "updated_at_taipei": "2026-11-23 07:31",
+  "last_updated_utc": "2026-11-22T23:31:41Z",
+  "last_updated_taipei": "2026-11-23 07:31",
+  "next_update_hint": "約台北時間 07:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 18.321,
+    "total_elapsed_sec": 12.526,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 7,
+    "new_items_added": 2,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.12,
+        "elapsed_sec": 0.049,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,16 +45,16 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.242,
+        "elapsed_sec": 0.064,
         "raw_count": 30,
-        "items_kept": 9,
+        "items_kept": 8,
         "error": null
       },
       "cnbc_economy": {
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.204,
+        "elapsed_sec": 0.038,
         "raw_count": 30,
         "items_kept": 2,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.176,
+        "elapsed_sec": 0.029,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.494,
+        "elapsed_sec": 0.149,
         "raw_count": 19,
         "items_kept": 19,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.286,
+        "elapsed_sec": 0.09,
         "raw_count": 25,
         "items_kept": 19,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.165,
+        "elapsed_sec": 0.063,
         "raw_count": 30,
         "items_kept": 18,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.166,
+        "elapsed_sec": 0.06,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.147,
+        "elapsed_sec": 0.068,
         "raw_count": 37,
         "items_kept": 14,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.503,
+        "elapsed_sec": 0.373,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.9,
+        "elapsed_sec": 0.427,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.378,
+        "elapsed_sec": 0.516,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.707,
+        "elapsed_sec": 0.786,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.485,
+        "elapsed_sec": 0.412,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.837,
+        "elapsed_sec": 0.106,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.148,
+        "elapsed_sec": 0.052,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.143,
+        "elapsed_sec": 0.229,
         "raw_count": 6,
         "items_kept": 3,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.121,
+        "elapsed_sec": 0.054,
         "raw_count": 1373,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.415,
+        "elapsed_sec": 1.475,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.53,
+        "elapsed_sec": 0.282,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.438,
+        "elapsed_sec": 1.393,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.415,
+        "elapsed_sec": 0.28,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.583,
+        "elapsed_sec": 1.349,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.286,
+        "elapsed_sec": 0.032,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.544,
+        "elapsed_sec": 0.538,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.362,
+        "elapsed_sec": 0.274,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,20 +277,20 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.43,
-        "change_1d_pct": 5.21
+        "tvl_b": 36.37,
+        "change_1d_pct": 5.01
       },
       "Base": {
-        "tvl_b": 5.13,
-        "change_1d_pct": 12.2
+        "tvl_b": 5.12,
+        "change_1d_pct": 12.06
       },
       "BSC": {
-        "tvl_b": 4.69,
-        "change_1d_pct": 10.78
+        "tvl_b": 4.67,
+        "change_1d_pct": 10.34
       },
       "Solana": {
         "tvl_b": 4.6,
-        "change_1d_pct": 1.17
+        "change_1d_pct": 1.15
       },
       "Tron": {
         "tvl_b": 4.44,
@@ -298,33 +298,67 @@
       },
       "Bitcoin": {
         "tvl_b": 3.05,
-        "change_1d_pct": 2.6
+        "change_1d_pct": 2.58
       }
     },
     "btc_spot_etf": {
       "date": "Nov 19, 2026",
-      "net_flow_usd_m": -17.2,
+      "net_flow_usd_m": -17.3,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0023,
-        "oi_usd_b": 1.93
+        "funding_rate_pct": 0.0019,
+        "oi_usd_b": 1.94
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0037,
+        "funding_rate_pct": -0.004,
         "oi_usd_b": 1.16
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 2,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 33.2,
-      "tx_count": 73459,
+      "mempool_vsize_mb": 33.7,
+      "tx_count": 73598,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261123-ef7baf2c5d",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T23:17:08Z",
+      "published_at_taipei": "2026-11-23 07:17",
+      "published_at_taipei_iso": "2026-11-23T07:17:08+08:00",
+      "first_seen_at_utc": "2026-11-22T23:31:41Z",
+      "first_seen_at_taipei": "2026-11-23 07:31",
+      "month": "2026-11",
+      "title": "A $2 million exploit leads to a $3.7 million free-for-all as traders empty Fusionist’s ACE bridge",
+      "url": "https://www.theblock.co/news/defi/2026-11-22-a-2-million-exploit-leads-to-a-3-7-million-free-for-all-as-traders-empty-fusionists-ace-bridge-444838",
+      "canonical_url": "https://theblock.co/news/defi/2026-11-22-a-2-million-exploit-leads-to-a-3-7-million-free-for-all-as-traders-empty-fusionists-ace-bridge-444838",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261123-086d3dec96",
       "issue": "2026-11-22-PM",
@@ -739,6 +773,42 @@
       "sentiment_label": "中性",
       "sentiment_score": 0,
       "sentiment_reason": "多空訊號抵銷（命中：利多；命中：升息）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-41070ae4f1",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T23:08:00Z",
+      "published_at_taipei": "2026-11-23 07:08",
+      "published_at_taipei_iso": "2026-11-23T07:08:00+08:00",
+      "first_seen_at_utc": "2026-11-22T23:31:41Z",
+      "first_seen_at_taipei": "2026-11-23 07:31",
+      "month": "2026-11",
+      "title": "台股創35年最慘單週！分析師卻揭反彈訊號 2大負乖離數據曝光",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%89%B535%E5%B9%B4%E6%9C%80%E6%85%98%E5%96%AE%E9%80%B1-%E5%88%86%E6%9E%90%E5%B8%AB%E5%8D%BB%E6%8F%AD%E5%8F%8D%E5%BD%88%E8%A8%8A%E8%99%9F-2%E5%A4%A7%E8%B2%A0%E4%B9%96%E9%9B%A2%E6%95%B8%E6%93%9A%E6%9B%9D%E5%85%89-230800511.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%89%B535%E5%B9%B4%E6%9C%80%E6%85%98%E5%96%AE%E9%80%B1-%E5%88%86%E6%9E%90%E5%B8%AB%E5%8D%BB%E6%8F%AD%E5%8F%8D%E5%BD%88%E8%A8%8A%E8%99%9F-2%E5%A4%A7%E8%B2%A0%E4%B9%96%E9%9B%A2%E6%95%B8%E6%93%9A%E6%9B%9D%E5%85%89-230800511.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：反彈；命中：重挫）",
       "sentiment_targets": [
         "TWII"
       ],
@@ -4384,6 +4454,40 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261123-ef7baf2c5d",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T23:17:08Z",
+      "published_at_taipei": "2026-11-23 07:17",
+      "published_at_taipei_iso": "2026-11-23T07:17:08+08:00",
+      "first_seen_at_utc": "2026-11-22T23:31:41Z",
+      "first_seen_at_taipei": "2026-11-23 07:31",
+      "month": "2026-11",
+      "title": "A $2 million exploit leads to a $3.7 million free-for-all as traders empty Fusionist’s ACE bridge",
+      "url": "https://www.theblock.co/news/defi/2026-11-22-a-2-million-exploit-leads-to-a-3-7-million-free-for-all-as-traders-empty-fusionists-ace-bridge-444838",
+      "canonical_url": "https://theblock.co/news/defi/2026-11-22-a-2-million-exploit-leads-to-a-3-7-million-free-for-all-as-traders-empty-fusionists-ace-bridge-444838",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-6856e01039",
       "issue": "2026-11-22-PM",
       "published_at_utc": "2026-11-22T23:10:03Z",
@@ -4453,6 +4557,42 @@
       "sentiment_label": "中性",
       "sentiment_score": 0,
       "sentiment_reason": "多空訊號抵銷（命中：利多；命中：升息）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-41070ae4f1",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T23:08:00Z",
+      "published_at_taipei": "2026-11-23 07:08",
+      "published_at_taipei_iso": "2026-11-23T07:08:00+08:00",
+      "first_seen_at_utc": "2026-11-22T23:31:41Z",
+      "first_seen_at_taipei": "2026-11-23 07:31",
+      "month": "2026-11",
+      "title": "台股創35年最慘單週！分析師卻揭反彈訊號 2大負乖離數據曝光",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%89%B535%E5%B9%B4%E6%9C%80%E6%85%98%E5%96%AE%E9%80%B1-%E5%88%86%E6%9E%90%E5%B8%AB%E5%8D%BB%E6%8F%AD%E5%8F%8D%E5%BD%88%E8%A8%8A%E8%99%9F-2%E5%A4%A7%E8%B2%A0%E4%B9%96%E9%9B%A2%E6%95%B8%E6%93%9A%E6%9B%9D%E5%85%89-230800511.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%89%B535%E5%B9%B4%E6%9C%80%E6%85%98%E5%96%AE%E9%80%B1-%E5%88%86%E6%9E%90%E5%B8%AB%E5%8D%BB%E6%8F%AD%E5%8F%8D%E5%BD%88%E8%A8%8A%E8%99%9F-2%E5%A4%A7%E8%B2%A0%E4%B9%96%E9%9B%A2%E6%95%B8%E6%93%9A%E6%9B%9D%E5%85%89-230800511.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：反彈；命中：重挫）",
       "sentiment_targets": [
         "TWII"
       ],
@@ -19826,9 +19966,9 @@
       "month": "2026-11",
       "date": "2026-11-22",
       "half": "PM",
-      "updated_at_taipei": "2026-11-23 07:16",
-      "count": 109,
-      "star3_count": 9,
+      "updated_at_taipei": "2026-11-23 07:31",
+      "count": 111,
+      "star3_count": 10,
       "failed_sources": [
         {
           "id": "binance_derivatives",
