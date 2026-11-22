@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-22-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-22T18:45:29Z",
-  "updated_at_taipei": "2026-11-23 02:45",
-  "last_updated_utc": "2026-11-22T18:45:29Z",
-  "last_updated_taipei": "2026-11-23 02:45",
-  "next_update_hint": "約台北時間 02:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-22T19:00:33Z",
+  "updated_at_taipei": "2026-11-23 03:00",
+  "last_updated_utc": "2026-11-22T19:00:33Z",
+  "last_updated_taipei": "2026-11-23 03:00",
+  "next_update_hint": "約台北時間 03:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 10.934,
+    "total_elapsed_sec": 19.671,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 2,
+    "new_items_added": 1,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.056,
+        "elapsed_sec": 0.21,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,16 +45,16 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.088,
+        "elapsed_sec": 0.192,
         "raw_count": 30,
-        "items_kept": 10,
+        "items_kept": 9,
         "error": null
       },
       "cnbc_economy": {
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.056,
+        "elapsed_sec": 0.107,
         "raw_count": 30,
         "items_kept": 2,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.031,
+        "elapsed_sec": 0.083,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.261,
+        "elapsed_sec": 0.277,
         "raw_count": 18,
         "items_kept": 15,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.081,
+        "elapsed_sec": 0.214,
         "raw_count": 25,
         "items_kept": 19,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.072,
+        "elapsed_sec": 0.156,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.065,
+        "elapsed_sec": 0.129,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.064,
+        "elapsed_sec": 0.127,
         "raw_count": 37,
         "items_kept": 17,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.384,
+        "elapsed_sec": 0.556,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.47,
+        "elapsed_sec": 0.555,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.362,
+        "elapsed_sec": 0.351,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.471,
+        "elapsed_sec": 0.818,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.134,
+        "elapsed_sec": 0.527,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.355,
+        "elapsed_sec": 0.458,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.072,
+        "elapsed_sec": 0.142,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.337,
+        "elapsed_sec": 4.715,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.063,
+        "elapsed_sec": 0.687,
         "raw_count": 1373,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.284,
+        "elapsed_sec": 1.496,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.287,
+        "elapsed_sec": 0.591,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.413,
+        "elapsed_sec": 1.65,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.285,
+        "elapsed_sec": 0.478,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 1.355,
+        "elapsed_sec": 0.673,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.045,
+        "elapsed_sec": 0.195,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.554,
+        "elapsed_sec": 0.531,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.283,
+        "elapsed_sec": 0.382,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,28 +277,28 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.16,
-        "change_1d_pct": 4.44
+        "tvl_b": 36.19,
+        "change_1d_pct": 4.5
       },
       "Base": {
         "tvl_b": 5.13,
-        "change_1d_pct": 12.19
+        "change_1d_pct": 12.24
       },
       "Solana": {
         "tvl_b": 4.61,
-        "change_1d_pct": 1.43
+        "change_1d_pct": 1.37
       },
       "Tron": {
         "tvl_b": 4.44,
-        "change_1d_pct": 1.85
+        "change_1d_pct": 1.86
       },
       "BSC": {
         "tvl_b": 4.32,
-        "change_1d_pct": 2.17
+        "change_1d_pct": 2.14
       },
       "Bitcoin": {
         "tvl_b": 3.06,
-        "change_1d_pct": 3.17
+        "change_1d_pct": 3.16
       }
     },
     "btc_spot_etf": {
@@ -308,23 +308,67 @@
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0016,
-        "oi_usd_b": 1.92
+        "funding_rate_pct": 0.0011,
+        "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0024,
+        "funding_rate_pct": -0.0026,
         "oi_usd_b": 1.15
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 2,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 31.4,
-      "tx_count": 75135,
+      "mempool_vsize_mb": 26.0,
+      "tx_count": 65319,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261123-086d3dec96",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T18:58:57Z",
+      "published_at_taipei": "2026-11-23 02:58",
+      "published_at_taipei_iso": "2026-11-23T02:58:57+08:00",
+      "first_seen_at_utc": "2026-11-22T19:00:33Z",
+      "first_seen_at_taipei": "2026-11-23 03:00",
+      "month": "2026-11",
+      "title": "Chainflip’s losses climb to $12 million after protocol discloses 122.9 BTC theft, offers hacker bounty",
+      "url": "https://www.theblock.co/news/defi/2026-11-22-chainflips-losses-climb-to-12-million-after-protocol-discloses-122-9-btc-theft-offers-hacker-bounty-444829",
+      "canonical_url": "https://theblock.co/news/defi/2026-11-22-chainflips-losses-climb-to-12-million-after-protocol-discloses-122-9-btc-theft-offers-hacker-bounty-444829",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "ETHUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-feb6865bc8",
+        "issue": "2026-11-22-AM",
+        "title": "Chainflip confirms $12M hack, offers attacker 10% bounty",
+        "published_at_taipei": "2026-11-22 13:28",
+        "url": "https://cointelegraph.com/news/chainflip-12m-crypto-hack-10-percent-bounty?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261123-4b586aec8f",
       "issue": "2026-11-22-PM",
@@ -2420,6 +2464,50 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261123-086d3dec96",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T18:58:57Z",
+      "published_at_taipei": "2026-11-23 02:58",
+      "published_at_taipei_iso": "2026-11-23T02:58:57+08:00",
+      "first_seen_at_utc": "2026-11-22T19:00:33Z",
+      "first_seen_at_taipei": "2026-11-23 03:00",
+      "month": "2026-11",
+      "title": "Chainflip’s losses climb to $12 million after protocol discloses 122.9 BTC theft, offers hacker bounty",
+      "url": "https://www.theblock.co/news/defi/2026-11-22-chainflips-losses-climb-to-12-million-after-protocol-discloses-122-9-btc-theft-offers-hacker-bounty-444829",
+      "canonical_url": "https://theblock.co/news/defi/2026-11-22-chainflips-losses-climb-to-12-million-after-protocol-discloses-122-9-btc-theft-offers-hacker-bounty-444829",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "ETHUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-feb6865bc8",
+        "issue": "2026-11-22-AM",
+        "title": "Chainflip confirms $12M hack, offers attacker 10% bounty",
+        "published_at_taipei": "2026-11-22 13:28",
+        "url": "https://cointelegraph.com/news/chainflip-12m-crypto-hack-10-percent-bounty?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261123-a93a5af448",
       "issue": "2026-11-22-PM",
@@ -15900,9 +15988,9 @@
       "month": "2026-11",
       "date": "2026-11-22",
       "half": "PM",
-      "updated_at_taipei": "2026-11-23 02:45",
-      "count": 56,
-      "star3_count": 7,
+      "updated_at_taipei": "2026-11-23 03:00",
+      "count": 57,
+      "star3_count": 8,
       "failed_sources": [
         {
           "id": "binance_derivatives",
