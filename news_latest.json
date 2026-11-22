@@ -2,41 +2,25 @@
   "version": 1,
   "latest_issue": "2026-11-22-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-22T14:14:20Z",
-  "updated_at_taipei": "2026-11-22 22:14",
-  "last_updated_utc": "2026-11-22T14:14:20Z",
-  "last_updated_taipei": "2026-11-22 22:14",
-  "next_update_hint": "約台北時間 22:17（每 15 分鐘更新）",
-  "status": "partial",
-  "failed_sources": [
-    {
-      "id": "binance_derivatives",
-      "name": "Binance 永續合約",
-      "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
-    },
-    {
-      "id": "bybit_derivatives",
-      "name": "Bybit 永續合約",
-      "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
-    },
-    {
-      "id": "bybit_announcements",
-      "name": "Bybit 公告",
-      "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
-    }
-  ],
+  "updated_at_utc": "2026-11-22T14:29:31Z",
+  "updated_at_taipei": "2026-11-22 22:29",
+  "last_updated_utc": "2026-11-22T14:29:31Z",
+  "last_updated_taipei": "2026-11-22 22:29",
+  "next_update_hint": "約台北時間 22:32（每 15 分鐘更新）",
+  "status": "ok",
+  "failed_sources": [],
   "fetch_report": {
-    "total_elapsed_sec": 15.411,
-    "sources_ok": 23,
-    "sources_failed": 3,
-    "new_items_added": 5,
+    "total_elapsed_sec": 38.191,
+    "sources_ok": 26,
+    "sources_failed": 0,
+    "new_items_added": 6,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.097,
+        "elapsed_sec": 0.204,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +29,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.144,
+        "elapsed_sec": 0.461,
         "raw_count": 30,
         "items_kept": 11,
         "error": null
@@ -54,7 +38,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.057,
+        "elapsed_sec": 0.217,
         "raw_count": 30,
         "items_kept": 2,
         "error": null
@@ -63,7 +47,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.083,
+        "elapsed_sec": 2.17,
         "raw_count": 10,
         "items_kept": 0,
         "error": null
@@ -72,7 +56,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.428,
+        "elapsed_sec": 1.503,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -81,7 +65,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.188,
+        "elapsed_sec": 0.466,
         "raw_count": 25,
         "items_kept": 20,
         "error": null
@@ -90,7 +74,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.142,
+        "elapsed_sec": 0.18,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +83,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.117,
+        "elapsed_sec": 0.08,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +92,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.121,
+        "elapsed_sec": 0.087,
         "raw_count": 37,
         "items_kept": 19,
         "error": null
@@ -117,7 +101,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.466,
+        "elapsed_sec": 0.815,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -126,7 +110,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.437,
+        "elapsed_sec": 0.559,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -135,7 +119,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.329,
+        "elapsed_sec": 0.472,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -144,7 +128,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.78,
+        "elapsed_sec": 0.854,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +137,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.425,
+        "elapsed_sec": 1.199,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -162,7 +146,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.48,
+        "elapsed_sec": 1.284,
         "raw_count": 50,
         "items_kept": 22,
         "error": null
@@ -171,7 +155,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.159,
+        "elapsed_sec": 0.429,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +164,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 2.533,
+        "elapsed_sec": 1.49,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +173,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.072,
+        "elapsed_sec": 0.314,
         "raw_count": 1373,
         "items_kept": 2,
         "error": null
@@ -198,7 +182,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.204,
+        "elapsed_sec": 2.251,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -206,17 +190,17 @@
       "binance_derivatives": {
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
-        "status": "failed",
-        "elapsed_sec": 0.363,
-        "raw_count": 0,
+        "status": "ok",
+        "elapsed_sec": 2.426,
+        "raw_count": 6,
         "items_kept": 0,
-        "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
+        "error": null
       },
       "okx_derivatives": {
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.145,
+        "elapsed_sec": 1.998,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -224,17 +208,17 @@
       "bybit_derivatives": {
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
-        "status": "failed",
-        "elapsed_sec": 0.331,
-        "raw_count": 0,
+        "status": "ok",
+        "elapsed_sec": 3.666,
+        "raw_count": 6,
         "items_kept": 0,
-        "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
+        "error": null
       },
       "mempool_space": {
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.465,
+        "elapsed_sec": 1.679,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +227,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.809,
+        "elapsed_sec": 0.37,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,19 +236,19 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.455,
-        "raw_count": 38,
+        "elapsed_sec": 0.623,
+        "raw_count": 40,
         "items_kept": 0,
         "error": null
       },
       "bybit_announcements": {
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
-        "status": "failed",
-        "elapsed_sec": 0.319,
-        "raw_count": 0,
-        "items_kept": 0,
-        "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
+        "status": "ok",
+        "elapsed_sec": 1.32,
+        "raw_count": 20,
+        "items_kept": 5,
+        "error": null
       }
     }
   },
@@ -277,8 +261,8 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.14,
-        "change_1d_pct": 4.37
+        "tvl_b": 36.13,
+        "change_1d_pct": 4.33
       },
       "Base": {
         "tvl_b": 5.12,
@@ -290,7 +274,7 @@
       },
       "Tron": {
         "tvl_b": 4.42,
-        "change_1d_pct": 1.42
+        "change_1d_pct": 1.39
       },
       "BSC": {
         "tvl_b": 4.3,
@@ -306,9 +290,19 @@
       "net_flow_usd_m": -17.2,
       "alert_key": "btc_spot_etf:outflow"
     },
+    "binance_derivatives": {
+      "BTCUSDT": {
+        "funding_rate_pct": 0.0021,
+        "oi_24h_pct": -2.4
+      },
+      "ETHUSDT": {
+        "funding_rate_pct": -0.0,
+        "oi_24h_pct": 2.03
+      }
+    },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0025,
+        "funding_rate_pct": 0.0023,
         "oi_usd_b": 1.93
       },
       "ETHUSDT": {
@@ -316,15 +310,61 @@
         "oi_usd_b": 1.13
       }
     },
+    "bybit_derivatives": {
+      "BTCUSDT": {
+        "funding_rate_pct": -0.0001,
+        "oi_24h_pct": -1.66
+      },
+      "ETHUSDT": {
+        "funding_rate_pct": 0.003,
+        "oi_24h_pct": 0.45
+      }
+    },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 2,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.8,
-      "tx_count": 69868,
+      "mempool_vsize_mb": 31.7,
+      "tx_count": 73100,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261122-846e8ba039",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T14:20:03Z",
+      "published_at_taipei": "2026-11-22 22:20",
+      "published_at_taipei_iso": "2026-11-22T22:20:03+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "加密貨幣失寵 昔日支持者加速認賠出場",
+      "url": "https://news.cnyes.com/news/id/6669842",
+      "canonical_url": "https://news.cnyes.com/news/id/6669842",
+      "source": "鉅亨網（加密）",
+      "source_id": "cnyes_crypto",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261122-c80de72720",
       "issue": "2026-11-22-PM",
@@ -401,6 +441,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261120-a02b55d412",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-20T05:49:52Z",
+      "published_at_taipei": "2026-11-20 13:49",
+      "published_at_taipei_iso": "2026-11-20T13:49:52+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "[下架] Bybit to Delist 5 Token(s) on Nov 27, 2026",
+      "url": "https://announcements.bybit.com/en-US/article/bybit-to-delist-5-token-s-on-nov-27-2026--artf4aaa6a1db57/",
+      "canonical_url": "https://announcements.bybit.com/en-US/article/bybit-to-delist-5-token-s-on-nov-27-2026--artf4aaa6a1db57",
+      "source": "Bybit 公告",
+      "source_id": "bybit_announcements",
+      "category": "交易所公告",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "數據門檻規則",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：交易所下架公告",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261122-2e00df16cf",
       "issue": "2026-11-22-PM",
       "published_at_utc": "2026-11-22T14:01:02Z",
@@ -414,6 +488,42 @@
       "canonical_url": "https://decrypt.co/383743/googles-quantum-chip-beats-classical-limits-in-impossible-game-tests-105-qubits",
       "source": "Decrypt",
       "source_id": "decrypt",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261122-32beeca86f",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T14:00:01Z",
+      "published_at_taipei": "2026-11-22 22:00",
+      "published_at_taipei_iso": "2026-11-22T22:00:01+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "26-year-old Google worker earns $323,000 a year—but lives on less than minimum wage",
+      "url": "https://www.cnbc.com/make-it/2026/11/22/google-worker-earns-323000-a-yearbut-he-lives-on-minimum-wage.html",
+      "canonical_url": "https://cnbc.com/make-it/2026/11/22/google-worker-earns-323000-a-yearbut-he-lives-on-minimum-wage.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
       "category": "美股",
       "markets": [
         "美股"
@@ -511,6 +621,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261122-5eeadde6e9",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T13:50:29Z",
+      "published_at_taipei": "2026-11-22 21:50",
+      "published_at_taipei_iso": "2026-11-22T21:50:29+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "Musk Warns AI’s “Cash Shortage Is Also Going to Be Nuts Next Year.” Credit Markets Put SpaceX Beside Oracle",
+      "url": "https://www.tikr.com/blog/musk-warns-ais-cash-shortage-is-also-going-to-be-nuts-next-year-credit-markets-put-spacex-beside-oracle?ref=yahoofinance&tlnk=yf-261122-hqcrhch5&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/musk-warns-ais-cash-shortage-is-also-going-to-be-nuts-next-year-credit-markets-put-spacex-beside-oracle?tlnk=yf-261122-hqcrhch5&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
       ],
       "sentiment_method": "rule"
     },
@@ -883,6 +1029,74 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261120-b287f3d1da",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-20T10:15:16Z",
+      "published_at_taipei": "2026-11-20 18:15",
+      "published_at_taipei_iso": "2026-11-20T18:15:16+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "[上幣] New listing: Listing of AMDLUSDT on Bybit TradFi Perpetual on Nov 20, 2026, 11:30AM UTC",
+      "url": "https://announcements.bybit.com/en-US/article/new-listing-listing-of-amdlusdt-on-bybit-tradfi-perpetual-on-nov-20-2026-11-30am-utc--arte589f2b0c66c/",
+      "canonical_url": "https://announcements.bybit.com/en-US/article/new-listing-listing-of-amdlusdt-on-bybit-tradfi-perpetual-on-nov-20-2026-11-30am-utc--arte589f2b0c66c",
+      "source": "Bybit 公告",
+      "source_id": "bybit_announcements",
+      "category": "交易所公告",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（listing）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：交易所上幣公告",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261120-2236715c81",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-19T17:22:36Z",
+      "published_at_taipei": "2026-11-20 01:22",
+      "published_at_taipei_iso": "2026-11-20T01:22:36+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "[上幣] Bybit to convert ANTUSDT Pre-Market Perpetual Contract to Standard Perpetual Contract",
+      "url": "https://announcements.bybit.com/en-US/article/bybit-to-convert-antusdt-pre-market-perpetual-contract-to-standard-perpetual-contract--art2b5b655d2b6d/",
+      "canonical_url": "https://announcements.bybit.com/en-US/article/bybit-to-convert-antusdt-pre-market-perpetual-contract-to-standard-perpetual-contract--art2b5b655d2b6d",
+      "source": "Bybit 公告",
+      "source_id": "bybit_announcements",
+      "category": "交易所公告",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（perpetual）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：交易所上幣公告",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261122-3b30cfdd87",
       "issue": "2026-11-22-PM",
       "published_at_utc": "2026-11-22T12:08:44Z",
@@ -959,6 +1173,42 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261122-846e8ba039",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T14:20:03Z",
+      "published_at_taipei": "2026-11-22 22:20",
+      "published_at_taipei_iso": "2026-11-22T22:20:03+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "加密貨幣失寵 昔日支持者加速認賠出場",
+      "url": "https://news.cnyes.com/news/id/6669842",
+      "canonical_url": "https://news.cnyes.com/news/id/6669842",
+      "source": "鉅亨網（加密）",
+      "source_id": "cnyes_crypto",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261122-c80de72720",
       "issue": "2026-11-22-PM",
       "published_at_utc": "2026-11-22T14:07:21Z",
@@ -1006,6 +1256,42 @@
       "canonical_url": "https://decrypt.co/383743/googles-quantum-chip-beats-classical-limits-in-impossible-game-tests-105-qubits",
       "source": "Decrypt",
       "source_id": "decrypt",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261122-32beeca86f",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T14:00:01Z",
+      "published_at_taipei": "2026-11-22 22:00",
+      "published_at_taipei_iso": "2026-11-22T22:00:01+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "26-year-old Google worker earns $323,000 a year—but lives on less than minimum wage",
+      "url": "https://www.cnbc.com/make-it/2026/11/22/google-worker-earns-323000-a-yearbut-he-lives-on-minimum-wage.html",
+      "canonical_url": "https://cnbc.com/make-it/2026/11/22/google-worker-earns-323000-a-yearbut-he-lives-on-minimum-wage.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
       "category": "美股",
       "markets": [
         "美股"
@@ -1103,6 +1389,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261122-5eeadde6e9",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-22T13:50:29Z",
+      "published_at_taipei": "2026-11-22 21:50",
+      "published_at_taipei_iso": "2026-11-22T21:50:29+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "Musk Warns AI’s “Cash Shortage Is Also Going to Be Nuts Next Year.” Credit Markets Put SpaceX Beside Oracle",
+      "url": "https://www.tikr.com/blog/musk-warns-ais-cash-shortage-is-also-going-to-be-nuts-next-year-credit-markets-put-spacex-beside-oracle?ref=yahoofinance&tlnk=yf-261122-hqcrhch5&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/musk-warns-ais-cash-shortage-is-also-going-to-be-nuts-next-year-credit-markets-put-spacex-beside-oracle?tlnk=yf-261122-hqcrhch5&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
       ],
       "sentiment_method": "rule"
     },
@@ -11828,6 +12150,40 @@
       "followup_of": null
     },
     {
+      "id": "news-20261120-b287f3d1da",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-20T10:15:16Z",
+      "published_at_taipei": "2026-11-20 18:15",
+      "published_at_taipei_iso": "2026-11-20T18:15:16+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "[上幣] New listing: Listing of AMDLUSDT on Bybit TradFi Perpetual on Nov 20, 2026, 11:30AM UTC",
+      "url": "https://announcements.bybit.com/en-US/article/new-listing-listing-of-amdlusdt-on-bybit-tradfi-perpetual-on-nov-20-2026-11-30am-utc--arte589f2b0c66c/",
+      "canonical_url": "https://announcements.bybit.com/en-US/article/new-listing-listing-of-amdlusdt-on-bybit-tradfi-perpetual-on-nov-20-2026-11-30am-utc--arte589f2b0c66c",
+      "source": "Bybit 公告",
+      "source_id": "bybit_announcements",
+      "category": "交易所公告",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（listing）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：交易所上幣公告",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261120-e33d95f1c7",
       "issue": "2026-11-21-PM",
       "published_at_utc": "2026-11-20T10:07:46Z",
@@ -12067,6 +12423,40 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
+    },
+    {
+      "id": "news-20261120-a02b55d412",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-20T05:49:52Z",
+      "published_at_taipei": "2026-11-20 13:49",
+      "published_at_taipei_iso": "2026-11-20T13:49:52+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "[下架] Bybit to Delist 5 Token(s) on Nov 27, 2026",
+      "url": "https://announcements.bybit.com/en-US/article/bybit-to-delist-5-token-s-on-nov-27-2026--artf4aaa6a1db57/",
+      "canonical_url": "https://announcements.bybit.com/en-US/article/bybit-to-delist-5-token-s-on-nov-27-2026--artf4aaa6a1db57",
+      "source": "Bybit 公告",
+      "source_id": "bybit_announcements",
+      "category": "交易所公告",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "數據門檻規則",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：交易所下架公告",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
     },
     {
       "id": "news-20261120-126b9127c6",
@@ -12634,6 +13024,40 @@
       "followup_of": null
     },
     {
+      "id": "news-20261120-2236715c81",
+      "issue": "2026-11-22-PM",
+      "published_at_utc": "2026-11-19T17:22:36Z",
+      "published_at_taipei": "2026-11-20 01:22",
+      "published_at_taipei_iso": "2026-11-20T01:22:36+08:00",
+      "first_seen_at_utc": "2026-11-22T14:29:31Z",
+      "first_seen_at_taipei": "2026-11-22 22:29",
+      "month": "2026-11",
+      "title": "[上幣] Bybit to convert ANTUSDT Pre-Market Perpetual Contract to Standard Perpetual Contract",
+      "url": "https://announcements.bybit.com/en-US/article/bybit-to-convert-antusdt-pre-market-perpetual-contract-to-standard-perpetual-contract--art2b5b655d2b6d/",
+      "canonical_url": "https://announcements.bybit.com/en-US/article/bybit-to-convert-antusdt-pre-market-perpetual-contract-to-standard-perpetual-contract--art2b5b655d2b6d",
+      "source": "Bybit 公告",
+      "source_id": "bybit_announcements",
+      "category": "交易所公告",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（perpetual）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：交易所上幣公告",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261120-6ebd077f5d",
       "issue": "2026-11-21-PM",
       "published_at_utc": "2026-11-19T17:12:00Z",
@@ -12976,26 +13400,10 @@
       "month": "2026-11",
       "date": "2026-11-22",
       "half": "PM",
-      "updated_at_taipei": "2026-11-22 22:14",
-      "count": 17,
-      "star3_count": 2,
-      "failed_sources": [
-        {
-          "id": "binance_derivatives",
-          "name": "Binance 永續合約",
-          "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
-        },
-        {
-          "id": "bybit_derivatives",
-          "name": "Bybit 永續合約",
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
-        },
-        {
-          "id": "bybit_announcements",
-          "name": "Bybit 公告",
-          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
-        }
-      ]
+      "updated_at_taipei": "2026-11-22 22:29",
+      "count": 23,
+      "star3_count": 4,
+      "failed_sources": []
     },
     {
       "issue": "2026-11-22-AM",
