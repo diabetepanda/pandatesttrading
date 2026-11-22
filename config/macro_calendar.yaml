@@ -73,7 +73,7 @@ fomc:
     - { period: "2026-09", release_et: "2026-09-16T14:00:00", rate_low: 3.75, rate_high: 4.00, action: "升息 1 碼至 3.75%–4.00%", consensus: "升息 1 碼 93.6%", consensus_high: 4.00, consensus_source: "CME FedWatch" }
     - { period: "2026-10", release_et: "2026-10-28T14:00:00", rate_low: 3.75, rate_high: 4.00, action: "維持 3.75%–4.00%（10–2，兩人主張升息）", consensus: "不變約 93%", consensus_high: 4.00, consensus_source: "CME FedWatch" }
   upcoming:
-    - { period: "2026-12", release_et: "2026-12-09T14:00:00", stars: 3, title: "FOMC 利率決議（含點陣圖與經濟預測）", note: "台北 12/10 03:00 公布決議、03:30 主席記者會；市場押注升息 1 碼機率約 93%" }
+    - { period: "2026-12", release_et: "2026-12-09T14:00:00", stars: 3, title: "FOMC 利率決議（含點陣圖與經濟預測）", note: "台北 12/10 03:00 公布決議、03:30 主席記者會" }
     - { period: "2027-01", release_et: "2027-01-27T14:00:00", stars: 3, title: "FOMC 利率決議", note: "2027 年首場例行決議（台北次日 03:00）" }
     - { period: "2027-03", release_et: "2027-03-17T14:00:00", stars: 3, title: "FOMC 利率決議（含點陣圖與經濟預測）", note: "美東夏令時，台北次日 02:00" }
     - { period: "2027-04", release_et: "2027-04-28T14:00:00", stars: 3, title: "FOMC 利率決議", note: "台北次日 02:00" }
@@ -609,3 +609,144 @@ indicators:
       - { period: "2027-09", release_et: "2027-10-15T08:30:00", stars: 3 }
       - { period: "2027-10", release_et: "2027-11-16T08:30:00", stars: 3 }
       - { period: "2027-11", release_et: "2027-12-15T08:30:00", stars: 3 }
+
+  JOLTS:
+    fred_id: JTSJOL
+    stars: 2
+    # BLS 慣例於隔隔月（M+2）第 1 個週二美東 10:00 公布 M 月份 JOLTS（遇國定假日順延一個工作日）；
+    # 若 BLS 官方公布時程頁面無法免金鑰連線，系統會自動依 BLS 慣例推估未來日期並標示「預估日期」，
+    # 亦可於 schedule_overrides 或 upcoming_releases 手動覆寫為官方確定日期。
+    schedule_overrides: {}
+    past_releases:
+      - { period: "2024-10", release_et: "2024-12-03T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2024-11", release_et: "2025-01-07T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2024-12", release_et: "2025-02-04T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-01", release_et: "2025-03-11T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-02", release_et: "2025-04-01T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-03", release_et: "2025-04-29T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-04", release_et: "2025-06-03T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-05", release_et: "2025-07-01T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-06", release_et: "2025-07-29T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-07", release_et: "2025-09-03T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-08", release_et: "2025-09-30T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-09", release_et: "2025-11-04T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-10", release_et: "2025-12-02T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-11", release_et: "2026-01-06T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2025-12", release_et: "2026-02-03T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2026-01", release_et: "2026-03-03T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2026-02", release_et: "2026-04-07T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2026-03", release_et: "2026-05-05T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2026-04", release_et: "2026-06-02T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2026-05", release_et: "2026-07-07T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2026-06", release_et: "2026-08-04T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2026-07", release_et: "2026-09-01T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2026-08", release_et: "2026-10-06T10:00:00", consensus: null, consensus_source: null }
+      - { period: "2026-09", release_et: "2026-11-03T10:00:00", consensus: null, consensus_source: null }
+    upcoming_releases: []
+
+# ==============================================================================
+# FedWatch 手動備援（預設留空；期貨抓取失敗且資料日期在 7 天內時啟用並標示「手動更新」）
+# ==============================================================================
+# 範例格式：
+# fedwatch_manual:
+#   as_of_date: "2026-11-21"
+#   source: "CME FedWatch 官網人工抄錄"
+#   meetings:
+#     - date: "2026-12-09"
+#       implied_rate: 4.108
+#       current_range: "3.75%–4.00%"
+#       probabilities:
+#         cut_2_plus: 0.0
+#         cut_1: 0.0
+#         hold: 7.0
+#         hike_1: 93.0
+#         hike_2_plus: 0.0
+fedwatch_manual: {}
+
+# ==============================================================================
+# 市場快照判定門檻與中文說明（以對台股與加密貨幣的影響為視角）
+# ==============================================================================
+market_snapshot_rules:
+  DXY:
+    symbol: "DX-Y.NYB"
+    name_zh: "美元指數"
+    unit: ""
+    decimals: 2
+    chg_20d_bear_pct: 1.5
+    chg_20d_bull_pct: -1.5
+    what_is: "美元指數衡量美元對六大貨幣強弱；美元走強通常不利新興市場股市與台幣、對黃金與比特幣偏壓力；走弱相反。"
+    rationale: "近 20 日美元指數上漲超過 1.5% 代表美元轉強，抽離新興市場與風險資產流動性，對台股與加密貨幣偏空；下跌超過 1.5% 代表美元轉弱，有利資金回流，標偏多。"
+  USDTWD:
+    symbol: "TWD=X"
+    name_zh: "美元／台幣"
+    unit: ""
+    decimals: 2
+    chg_20d_bear_pct: 1.0
+    chg_20d_bull_pct: -1.0
+    what_is: "台幣升值（數字變小）通常代表外資匯入，對台股偏多；台幣貶值代表外資匯出，偏空。"
+    rationale: "近 20 日美元／台幣下跌超過 1.0%（台幣升值）反映外資匯入動能，對台股偏多；上漲超過 1.0%（台幣貶值）反映外資匯出壓力，偏空。"
+  GOLD:
+    symbol: "GC=F"
+    name_zh: "黃金"
+    unit: "美元"
+    decimals: 1
+    chg_20d_bull_pct: 3.0
+    chg_20d_bear_pct: -3.0
+    what_is: "黃金為無息避險與抗通膨資產；美元走弱或實質利率下降時通常走強，急漲時亦反映市場避險需求升溫。"
+    rationale: "近 20 日金價上漲超過 3.0% 反映實質利率下行預期或避險買盤（與無主權資產題材共振，對風險資產偏多但須留意避險升溫）；下跌超過 3.0% 通常伴隨強美元或高利率壓抑，偏空。"
+  WTI:
+    symbol: "CL=F"
+    name_zh: "原油 (WTI)"
+    unit: "美元"
+    decimals: 2
+    chg_20d_bear_pct: 5.0
+    chg_20d_bull_pct: -5.0
+    what_is: "西德州原油期貨反映全球景氣需求與能源通膨壓力；油價急漲易推升通膨預期並壓抑聯準會降息空間。"
+    rationale: "近 20 日油價上漲超過 5.0% 易引發能源通膨回溫與鷹派利率定價，對股市與加密貨幣偏空；下跌超過 5.0% 有助舒緩通膨壓力，偏多。"
+  US10Y:
+    symbol: "^TNX"
+    name_zh: "美國 10 年期殖利率"
+    unit: "%"
+    decimals: 2
+    chg_20d_bear_pp: 0.25
+    chg_20d_bull_pp: -0.25
+    what_is: "10 年期美債殖利率是全球風險資產的定價錨；殖利率走高壓縮科技股估值並推升資金成本，回落則相反。"
+    rationale: "10 年期殖利率近 20 日上升超過 0.25 個百分點代表無風險資金成本急升，對股市與加密貨幣偏空；下降超過 0.25 個百分點則舒緩估值壓力，偏多。"
+
+# ==============================================================================
+# JOLTS 職位空缺判定門檻（單位：百萬個）
+# ==============================================================================
+indicator_rules:
+  JOLTS:
+    diff_threshold_m: 0.2
+    sharp_drop_m: 0.6
+    rationale: "職位空缺較前值或市場預期高出 0.2 百萬以上代表勞動市場偏緊、聯準會較難降息，標偏空；下降 0.2 百萬以上代表降溫，標偏多；若單月降幅超過 0.6 百萬，附註「留意景氣放緩」。"
+
+# ==============================================================================
+# 總覽「對各資產的影響」7 塊判斷規則表
+# ==============================================================================
+asset_impact_rules:
+  version: 1
+  assets_order: ["美股", "台股", "加密貨幣", "美債", "黃金", "原油", "美元／台幣"]
+  rules:
+    美股:
+      sub: "標普 500 · 那斯達克 100"
+      rationale: "綜合聯準會利率與 FedWatch 路徑、CPI 通膨熱度、10 年期殖利率水位與 20 日變化、及就業／景氣動能判讀風險偏好與估值壓力。"
+    台股:
+      sub: "加權指數 · 電子權值股"
+      rationale: "綜合美元／台幣匯率（外資匯出入）、美元指數、10 年期殖利率與美股總經環境判讀外資動向與電子權值壓力。"
+    加密貨幣:
+      sub: "BTC · 主流幣"
+      rationale: "綜合美元指數（美元流動性）、聯準會／FedWatch 利率預期與 10 年期殖利率變動判讀流動性寬鬆或緊縮壓力。"
+    美債:
+      sub: "2Y / 10Y 美債殖利率（債價視角）"
+      rationale: "從美債價格視角出發：10 年期殖利率近 20 日急升或聯準會偏鷹升息預期壓抑債價（偏空）；殖利率回落、通膨降溫或降息預期則支撐債價（偏多）。"
+    黃金:
+      sub: "COMEX 黃金期貨"
+      rationale: "綜合黃金近 20 日動能與 1 年區間位置、美元指數強弱及 10 年期殖利率壓力判讀黃金表現。"
+    原油:
+      sub: "WTI 西德州原油"
+      rationale: "綜合 WTI 近 20 日趨勢、美國 ISM 製造業／GDP 景氣需求與美元強弱判讀油價多空結構。"
+    美元／台幣:
+      sub: "USD/TWD 匯率（台幣升貶視角）"
+      rationale: "從台幣強弱／外資視角判讀：美元指數轉弱與台幣近 20 日升值對台幣／外資資金面偏多；美元轉強與台幣貶值則偏空。"

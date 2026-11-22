@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import calendar
 import csv
 import html
 import io
@@ -13,7 +14,7 @@ import time as time_mod
 import xml.etree.ElementTree as ET
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 from zoneinfo import ZoneInfo
 
 import requests
@@ -65,6 +66,94 @@ BLS_FALLBACK_SERIES: dict[str, str] = {
     "NFP": "CES0000000001",
     "UNRATE": "LNS14000000",
     "AVG_HOURLY_EARNINGS": "CES0500000003",
+    "JOLTS": "JTS000000000000000JOL",
+}
+
+# CBOT 30 天期聯邦基金期貨（ZQ）月份代碼（yfinance 實測結果：
+# ZQZ26.CBT / ZQF27.CBT / ZQG27.CBT / ZQH27.CBT 可正常抓取日線；
+# .CME、FF*.CBT 與單碼年份如 ZQZ6.CBT 均回傳 404/delisted）
+ZQ_MONTH_CODES: dict[int, str] = {
+    1: "F", 2: "G", 3: "H", 4: "J", 5: "K", 6: "M",
+    7: "N", 8: "Q", 9: "U", 10: "V", 11: "X", 12: "Z",
+}
+
+FEDWATCH_BUCKETS: tuple[tuple[str, str], ...] = (
+    ("cut_2_plus", "降 2 碼以上"),
+    ("cut_1", "降 1 碼"),
+    ("hold", "維持"),
+    ("hike_1", "升 1 碼"),
+    ("hike_2_plus", "升 2 碼以上"),
+)
+
+DEFAULT_MARKET_SNAPSHOT_RULES: dict[str, dict[str, Any]] = {
+    "DXY": {
+        "symbol": "DX-Y.NYB",
+        "name_zh": "美元指數",
+        "unit": "",
+        "decimals": 2,
+        "chg_20d_bear_pct": 1.5,
+        "chg_20d_bull_pct": -1.5,
+        "what_is": "美元指數衡量美元對六大貨幣強弱；美元走強通常不利新興市場股市與台幣、對黃金與比特幣偏壓力；走弱相反。",
+        "rationale": "近 20 日上漲超過 1.5% 標偏空（美元轉強），下跌超過 1.5% 標偏多（美元轉弱），其餘中性。",
+    },
+    "USDTWD": {
+        "symbol": "TWD=X",
+        "name_zh": "美元／台幣",
+        "unit": "",
+        "decimals": 2,
+        "chg_20d_bear_pct": 1.0,
+        "chg_20d_bull_pct": -1.0,
+        "what_is": "台幣升值（數字變小）通常代表外資匯入，對台股偏多；台幣貶值代表外資匯出，偏空。",
+        "rationale": "近 20 日變動超過 ±1.0%：台幣貶值逾 1% 標偏空（外資匯出壓力），升值逾 1% 標偏多（外資匯入）。",
+    },
+    "GOLD": {
+        "symbol": "GC=F",
+        "name_zh": "黃金",
+        "unit": "美元",
+        "decimals": 1,
+        "chg_20d_bull_pct": 3.0,
+        "chg_20d_bear_pct": -3.0,
+        "what_is": "黃金為無息避險與抗通膨資產；美元走弱或實質利率下降時通常走強，急漲時亦反映市場避險需求升溫。",
+        "rationale": "近 20 日上漲逾 3.0% 反映寬鬆或避險買盤共振（偏多，但留意避險情緒）；下跌逾 3.0% 代表強美元或高利率壓抑（偏空）。",
+    },
+    "WTI": {
+        "symbol": "CL=F",
+        "name_zh": "原油 (WTI)",
+        "unit": "美元",
+        "decimals": 2,
+        "chg_20d_bear_pct": 5.0,
+        "chg_20d_bull_pct": -5.0,
+        "what_is": "西德州原油期貨反映全球景氣需求與能源通膨壓力；油價急漲易推升通膨預期並壓抑聯準會降息空間。",
+        "rationale": "近 20 日上漲逾 5.0% 推升通膨預期（對股幣偏空）；下跌逾 5.0% 舒緩通膨壓力（偏多）。",
+    },
+    "US10Y": {
+        "symbol": "^TNX",
+        "name_zh": "美國 10 年期殖利率",
+        "unit": "%",
+        "decimals": 2,
+        "chg_20d_bear_pp": 0.25,
+        "chg_20d_bull_pp": -0.25,
+        "what_is": "10 年期美債殖利率是全球風險資產的定價錨；殖利率走高壓縮科技股估值並推升資金成本，回落則相反。",
+        "rationale": "近 20 日上升超過 0.25 個百分點對股市與加密貨幣偏空；下降超過 0.25 個百分點則偏多。",
+    },
+}
+
+DEFAULT_JOLTS_RULES: dict[str, Any] = {
+    "diff_threshold_m": 0.2,
+    "sharp_drop_m": 0.6,
+    "rationale": "職位空缺較前值或預期增加 0.2 百萬以上代表勞動市場偏緊、不利降息（偏空）；下降 0.2 百萬以上代表降溫（偏多），單月降幅逾 0.6 百萬附註「留意景氣放緩」。",
+}
+
+# 總覽「對各資產的影響」7 塊判斷規則表（實際判讀結合 17 項指標、FedWatch 與市場快照）
+ASSET_IMPACT_ORDER: tuple[str, ...] = ("美股", "台股", "加密貨幣", "美債", "黃金", "原油", "美元／台幣")
+ASSET_IMPACT_SUBS: dict[str, str] = {
+    "美股": "標普 500 · 那斯達克 100",
+    "台股": "加權指數 · 電子權值股",
+    "加密貨幣": "BTC · 主流幣",
+    "美債": "2Y / 10Y 殖利率（債價視角）",
+    "黃金": "COMEX 黃金期貨",
+    "原油": "WTI 西德州原油",
+    "美元／台幣": "USD/TWD 匯率",
 }
 DBNOMICS_BEA_SERIES: dict[str, str] = {
     "PCE": "BEA/NIPA-T20804/DPCERG-M",
@@ -887,6 +976,12 @@ def _classify_surprise(
             if abs(actual - consensus) <= 0.5:
                 return "符合預期", "consensus"
             return ("高於預期" if actual > consensus else "低於預期"), "consensus"
+        if indicator_id == "JOLTS":
+            a_r = round(actual, 1)
+            c_r = round(consensus, 1)
+            if abs(a_r - c_r) <= 0.1 + 1e-9:
+                return "符合預期", "consensus"
+            return ("高於預期" if a_r > c_r else "低於預期"), "consensus"
         a_r = round(actual, 1)
         c_r = round(consensus, 1)
         if a_r == c_r:
@@ -974,6 +1069,8 @@ def _fmt_val_unit(indicator_id: str, val: float | None) -> str:
         return f"{'+' if val > 0 else ''}{val:.1f} 萬人"
     if indicator_id == "ICSA":
         return f"{val:.1f} 萬人"
+    if indicator_id == "JOLTS":
+        return f"{val:.1f} 百萬個"
     if indicator_id in ("ISM_MFG", "ISM_SVC"):
         return f"{val:.1f}"
     if indicator_id in ("DGS2", "DGS10"):
@@ -990,6 +1087,8 @@ def _fmt_consensus(indicator_id: str, val: float | None) -> str | None:
     if indicator_id in ("NFP", "ICSA"):
         sign = "+" if (indicator_id == "NFP" and val > 0) else ""
         return f"{sign}{val:.1f} 萬人"
+    if indicator_id == "JOLTS":
+        return f"{val:.1f} 百萬個"
     if indicator_id in ("ISM_MFG", "ISM_SVC"):
         return f"{val:.1f}"
     return str(val)
@@ -1008,6 +1107,9 @@ def _fmt_change(indicator_id: str, cur: float | None, prev: float | None) -> tup
     elif indicator_id in ("NFP", "ICSA"):
         dec = 1
         unit = "萬人"
+    elif indicator_id == "JOLTS":
+        dec = 1
+        unit = "百萬個"
     elif indicator_id in ("ISM_MFG", "ISM_SVC"):
         dec = 1
         unit = "點"
@@ -1415,6 +1517,19 @@ def _compute_fred_period_values(
             by_period[p]["prev"] = prev_v
         return by_period, chart_pts[-24:]
 
+    if indicator_id == "JOLTS":
+        # FRED JTSJOL 與 BLS JTS000000000000000JOL 原始單位均為「千個」，換算為百萬個（保留一位小數顯示）
+        clean = [(d, v) for d, v in fred_rows if v is not None]
+        for d_s, val_k in clean:
+            ym = d_s[:7]
+            val_m = val_k / 1000.0
+            by_period[ym] = {"actual": val_m, "level_k": val_k, "date": d_s}
+            chart_pts.append(round(val_m, 2))
+        sorted_p = sorted(by_period.keys())
+        for j, p in enumerate(sorted_p):
+            by_period[p]["prev"] = by_period[sorted_p[j - 1]]["actual"] if j > 0 else None
+        return by_period, chart_pts[-24:]
+
     if indicator_id == "GDP":
         clean = [(d, v) for d, v in fred_rows if v is not None]
         for i, (d_s, val) in enumerate(clean):
@@ -1511,6 +1626,15 @@ INDICATOR_SPECS: dict[str, dict[str, Any]] = {
         "why": "每週公布的高頻就業指標。人數溫和上升顯示裁員增加與就業降溫，高利率期反而舒緩緊縮壓力；暴增則反映衰退風險。",
         "hawkish_when_high": False,
     },
+    "JOLTS": {
+        "category": "jobs",
+        "name": "JOLTS 職位空缺",
+        "code": "JTSJOL",
+        "unit": "",
+        "chart_label": "近 24 個月職位空缺（百萬個）",
+        "why": "衡量美國企業招募需求與勞動市場供需缺口。職缺居高代表搶人壓力大、薪資與通膨不易降溫；適度回落有助聯準會評估降息，但驟降須留意景氣轉弱。",
+        "hawkish_when_high": True,
+    },
     "GDP": {
         "category": "growth",
         "name": "GDP 成長率",
@@ -1550,7 +1674,13 @@ INDICATOR_SPECS: dict[str, dict[str, Any]] = {
 }
 
 
-def _evaluate_verdict(indicator_id: str, actual: float | None, consensus: float | None, prev: float | None) -> tuple[str, str]:
+def _evaluate_verdict(
+    indicator_id: str,
+    actual: float | None,
+    consensus: float | None,
+    prev: float | None,
+    cal_cfg: dict[str, Any] | None = None,
+) -> tuple[str, str]:
     if actual is None:
         return "neut", "🟡 資料不足"
     if indicator_id in ("CPI", "CORE_CPI", "PCE", "CORE_PCE", "PPI"):
@@ -1579,6 +1709,24 @@ def _evaluate_verdict(indicator_id: str, actual: float | None, consensus: float 
         if prev is not None and actual > prev:
             return "bull", "🟢 略為降溫"
         return "neut", "🟡 就業仍穩"
+    if indicator_id == "JOLTS":
+        jrules = dict(DEFAULT_JOLTS_RULES)
+        if cal_cfg:
+            jrules.update((cal_cfg.get("indicator_rules") or {}).get("JOLTS") or {})
+        thresh = float(jrules.get("diff_threshold_m", 0.2))
+        sharp_drop = float(jrules.get("sharp_drop_m", 0.6))
+        ref_val = consensus if consensus is not None else prev
+        if ref_val is not None:
+            diff = actual - ref_val
+            if diff >= thresh - 1e-9:
+                return "bear", "🔴 職缺偏緊"
+            if diff <= -thresh + 1e-9:
+                drop_from_prev = (prev - actual) if prev is not None else 0.0
+                if drop_from_prev >= sharp_drop - 1e-9 or (-diff) >= sharp_drop - 1e-9:
+                    return "bull", "🟢 降溫（留意景氣放緩）"
+                return "bull", "🟢 溫和降溫"
+            return "neut", "🟡 就業平穩"
+        return "neut", "🟡 中性"
     if indicator_id in ("ISM_MFG", "ISM_SVC"):
         if actual >= 55.0:
             return "bear", "🔴 景氣偏熱"
@@ -1587,6 +1735,19 @@ def _evaluate_verdict(indicator_id: str, actual: float | None, consensus: float 
         if prev is not None and actual < prev:
             return "bull", "🟢 溫和降溫"
         return "neut", "🟡 溫和擴張"
+    if indicator_id == "JOLTS":
+        # FRED JTSJOL 與 BLS JTS000000000000000JOL 原始單位均為「千個」，換算為百萬個（保留一位小數顯示）
+        clean = [(d, v) for d, v in fred_rows if v is not None]
+        for d_s, val_k in clean:
+            ym = d_s[:7]
+            val_m = val_k / 1000.0
+            by_period[ym] = {"actual": val_m, "level_k": val_k, "date": d_s}
+            chart_pts.append(round(val_m, 2))
+        sorted_p = sorted(by_period.keys())
+        for j, p in enumerate(sorted_p):
+            by_period[p]["prev"] = by_period[sorted_p[j - 1]]["actual"] if j > 0 else None
+        return by_period, chart_pts[-24:]
+
     if indicator_id == "GDP":
         if actual >= 3.0:
             return "bear", "🔴 成長偏熱"
@@ -1658,7 +1819,10 @@ def _build_standard_indicator_card(
         assert fred_rows is not None
         by_period, chart_vals = _compute_fred_period_values(indicator_id, fred_rows)
         past_entries = [dict(x) for x in (ind_cfg.get("past_releases") or [])]
-        upcoming_entries = [dict(x) for x in (ind_cfg.get("upcoming_releases") or [])]
+        if indicator_id == "JOLTS":
+            upcoming_entries = _build_jolts_upcoming_releases(cal_cfg, now_utc)
+        else:
+            upcoming_entries = [dict(x) for x in (ind_cfg.get("upcoming_releases") or [])]
 
         # Auto-promote any upcoming release whose period already appeared in FRED!
         known_periods = {e["period"] for e in past_entries}
@@ -1676,6 +1840,20 @@ def _build_standard_indicator_card(
                 known_periods.add(p)
             else:
                 remaining_up.append(u)
+        # For JOLTS, also auto-append any newer period in FRED/BLS not listed in YAML
+        if indicator_id == "JOLTS":
+            max_known = max(known_periods) if known_periods else ""
+            for p in sorted(by_period.keys()):
+                if p not in known_periods and p > max_known and by_period[p].get("actual") is not None:
+                    rel_et = _estimate_jolts_release_et(p, ind_cfg.get("schedule_overrides") or {})
+                    past_entries.append({
+                        "period": p,
+                        "release_et": rel_et,
+                        "consensus": None,
+                        "consensus_source": None,
+                        "note": "",
+                    })
+                    known_periods.add(p)
         upcoming_entries = remaining_up
 
         for e in past_entries:
@@ -1703,6 +1881,9 @@ def _build_standard_indicator_card(
         elif indicator_id == "NFP":
             lvl = latest_d.get("level_k")
             sub_info = f"總就業 {lvl:,.0f} 千人" if lvl is not None else "每月非農就業人口變動"
+        elif indicator_id == "JOLTS":
+            lvl = latest_d.get("level_k")
+            sub_info = f"職缺總數 {lvl:,.0f} 千個（單位：百萬個）" if lvl is not None else "BLS JOLTS 非農職位空缺"
         elif indicator_id == "RETAIL_SALES":
             lvl = latest_d.get("index")
             sub_info = f"總額 {lvl:,.0f} 百萬美元" if lvl is not None else "美國零售與餐飲銷售"
@@ -1778,7 +1959,7 @@ def _build_standard_indicator_card(
     chg_str, chg_dir = _fmt_change(indicator_id, latest_actual, latest_prev)
     latest_cons = past_entries[-1].get("consensus") if past_entries else None
     latest_cons_src = past_entries[-1].get("consensus_source") if past_entries else None
-    verdict, vtext = _evaluate_verdict(indicator_id, latest_actual, latest_cons, latest_prev)
+    verdict, vtext = _evaluate_verdict(indicator_id, latest_actual, latest_cons, latest_prev, cal_cfg=cal_cfg)
 
     next_up = _find_next_upcoming(upcoming_entries, now_utc)
     if indicator_id in ("UNRATE", "AVG_HOURLY_EARNINGS"):
@@ -1835,11 +2016,619 @@ def _build_standard_indicator_card(
     return card, cal_past_items
 
 
+def compute_fomc_blackout_start(decision_date: date) -> date:
+    """Compute Fed FOMC blackout period start date (2nd Saturday before the meeting starts)."""
+    meeting_start = decision_date - timedelta(days=1)
+    days_since_sat = (meeting_start.weekday() - 5) % 7
+    first_sat = meeting_start - timedelta(days=7 if days_since_sat == 0 else days_since_sat)
+    return first_sat - timedelta(days=7)
+
+
+def _estimate_jolts_release_et(period_ym: str, overrides: dict[str, Any] | None = None) -> str:
+    """Estimate BLS JOLTS release timestamp (10:00 ET on first Tuesday of M+2)."""
+    if overrides and period_ym in overrides:
+        return str(overrides[period_ym])
+    yr, mo = int(period_ym[:4]), int(period_ym[5:7])
+    r_mo = mo + 2
+    r_yr = yr
+    while r_mo > 12:
+        r_mo -= 12
+        r_yr += 1
+    d = date(r_yr, r_mo, 1)
+    while d.weekday() != 1:
+        d += timedelta(days=1)
+    if (d.month, d.day) in ((1, 1), (7, 4), (11, 11), (12, 25)):
+        d += timedelta(days=1)
+    return f"{d.isoformat()}T10:00:00"
+
+
+def _build_jolts_upcoming_releases(cal_cfg: dict[str, Any], now_utc: datetime) -> list[dict[str, Any]]:
+    """Build upcoming JOLTS releases using config overrides or BLS-convention estimates."""
+    ind_cfg = (cal_cfg.get("indicators") or {}).get("JOLTS") or {}
+    past_periods = {str(e.get("period", "")) for e in (ind_cfg.get("past_releases") or [])}
+    overrides = ind_cfg.get("schedule_overrides") or {}
+    explicit_by_p = {
+        str(u.get("period", "")): dict(u)
+        for u in (ind_cfg.get("upcoming_releases") or [])
+        if u.get("period")
+    }
+    stars = int(ind_cfg.get("stars", 2))
+    out: list[dict[str, Any]] = []
+    base_y, base_m = now_utc.year, now_utc.month - 2
+    while base_m <= 0:
+        base_m += 12
+        base_y -= 1
+    for offset in range(14):
+        mo = base_m + offset
+        yr = base_y + (mo - 1) // 12
+        mo = ((mo - 1) % 12) + 1
+        p = f"{yr:04d}-{mo:02d}"
+        if p in past_periods:
+            continue
+        if p in explicit_by_p:
+            item = explicit_by_p[p]
+            item.setdefault("stars", stars)
+            out.append(item)
+            continue
+        has_override = p in overrides
+        rel_et = _estimate_jolts_release_et(p, overrides)
+        try:
+            dt_utc = _parse_et_iso(rel_et).astimezone(UTC_TZ)
+        except Exception:
+            continue
+        if dt_utc <= now_utc:
+            continue
+        out.append({
+            "period": p,
+            "release_et": rel_et,
+            "stars": stars,
+            "estimated": not has_override,
+            "note": "" if has_override else "預估日期（BLS 慣例：隔隔月首個週二美東 10:00）",
+        })
+    return out
+
+
+def zq_contract_symbol(year: int, month: int) -> str:
+    """Return yfinance CBOT 30-Day Fed Funds futures symbol (e.g. ZQZ26.CBT, ZQF27.CBT)."""
+    code = ZQ_MONTH_CODES[int(month)]
+    return f"ZQ{code}{year % 100:02d}.CBT"
+
+
+def fetch_yfinance_history(symbol: str, period: str = "1y") -> list[tuple[str, float]]:
+    """Fetch daily closing prices via yfinance without API key."""
+    import yfinance as yf  # lazy import so tests without network stay fast
+
+    df = yf.Ticker(symbol).history(period=period)
+    if df is None or len(df) == 0 or "Close" not in df:
+        return []
+    rows: list[tuple[str, float]] = []
+    for idx, val in df["Close"].items():
+        if val is None or (isinstance(val, float) and math.isnan(val)):
+            continue
+        d_s = idx.strftime("%Y-%m-%d") if hasattr(idx, "strftime") else str(idx)[:10]
+        rows.append((d_s, float(val)))
+    rows.sort(key=lambda x: x[0])
+    return rows
+
+
+def _fedwatch_buckets_from_steps(delta_steps: float) -> dict[str, float]:
+    """Decompose expected 25bp step change from current rate into 5 probability buckets."""
+    raw: dict[int, float] = {}
+    low_step = math.floor(delta_steps)
+    frac = delta_steps - low_step
+    if abs(frac) < 1e-9:
+        raw[low_step] = 100.0
+    elif abs(1.0 - frac) < 1e-9:
+        raw[low_step + 1] = 100.0
+    else:
+        raw[low_step] = (1.0 - frac) * 100.0
+        raw[low_step + 1] = frac * 100.0
+
+    buckets = {"cut_2_plus": 0.0, "cut_1": 0.0, "hold": 0.0, "hike_1": 0.0, "hike_2_plus": 0.0}
+    for step, prob in raw.items():
+        if step <= -2:
+            buckets["cut_2_plus"] += prob
+        elif step == -1:
+            buckets["cut_1"] += prob
+        elif step == 0:
+            buckets["hold"] += prob
+        elif step == 1:
+            buckets["hike_1"] += prob
+        else:
+            buckets["hike_2_plus"] += prob
+
+    # Round to 1 decimal while preserving sum == 100.0
+    rounded = {k: round(v, 1) for k, v in buckets.items()}
+    diff = round(100.0 - sum(rounded.values()), 1)
+    if abs(diff) >= 0.05:
+        top_k = max(rounded.keys(), key=lambda k: rounded[k])
+        rounded[top_k] = round(rounded[top_k] + diff, 1)
+    return rounded
+
+
+def _fmt_prob_pct(val: float) -> str:
+    if abs(val - round(val)) < 0.05:
+        return f"{int(round(val))}%"
+    return f"{val:.1f}%"
+
+
+def _build_fedwatch_meeting_summary(probabilities: dict[str, float], date_mmdd: str) -> str:
+    """Format top-2 FedWatch probability summary line (e.g. '市場押注 12/10 會議：升 1 碼 93%｜維持 7%')."""
+    label_map = dict(FEDWATCH_BUCKETS)
+    ranked = [
+        (label_map[k], float(probabilities.get(k, 0.0)))
+        for k, _ in FEDWATCH_BUCKETS
+        if float(probabilities.get(k, 0.0)) > 0.5
+    ]
+    ranked.sort(key=lambda x: x[1], reverse=True)
+    if not ranked:
+        return f"市場押注 {date_mmdd} 會議：資料計算中"
+    parts = [f"{lbl} {_fmt_prob_pct(p)}" for lbl, p in ranked[:2]]
+    return f"市場押注 {date_mmdd} 會議：{'｜'.join(parts)}"
+
+
+def compute_fedwatch_from_prices(
+    meetings_meta: list[dict[str, Any]],
+    current_low: float,
+    current_high: float,
+    prices_by_symbol: dict[str, float],
+    as_of_taipei: str,
+    source_used: str = "yfinance (CBOT ZQ)",
+) -> dict[str, Any]:
+    """Compute CME FedWatch-style probabilities sequentially for up to 2 FOMC meetings."""
+    current_mid = (float(current_low) + float(current_high)) / 2.0
+    current_range = f"{float(current_low):.2f}%–{float(current_high):.2f}%"
+    r_pre = current_mid
+    meetings_out: list[dict[str, Any]] = []
+
+    for m in meetings_meta[:2]:
+        dt_et = _parse_et_iso(m["release_et"])
+        m_date = dt_et.date()
+        t_info = _fmt_tpe(dt_et)
+        days_in_month = calendar.monthrange(m_date.year, m_date.month)[1]
+        in_last_7_days = (days_in_month - m_date.day) < 7
+
+        if in_last_7_days:
+            c_yr = m_date.year + (1 if m_date.month == 12 else 0)
+            c_mo = 1 if m_date.month == 12 else m_date.month + 1
+            sym = zq_contract_symbol(c_yr, c_mo)
+        else:
+            sym = zq_contract_symbol(m_date.year, m_date.month)
+
+        if sym not in prices_by_symbol:
+            raise RuntimeError(f"Missing ZQ futures price for {sym}")
+        f_price = float(prices_by_symbol[sym])
+        implied_avg = 100.0 - f_price
+
+        if in_last_7_days:
+            # 會議落於月底最後 7 天內，改用下個月期貨合約推算會後利率
+            r_post = implied_avg
+        else:
+            days_before = m_date.day
+            days_after = days_in_month - m_date.day
+            r_post = (implied_avg * days_in_month - r_pre * days_before) / days_after
+
+        delta_steps = (r_post - current_mid) / 0.25
+        probs = _fedwatch_buckets_from_steps(delta_steps)
+        mmdd = f"{int(t_info['date_taipei'][5:7])}/{int(t_info['date_taipei'][8:10])}"
+        summary_text = _build_fedwatch_meeting_summary(probs, mmdd)
+
+        meetings_out.append({
+            "period": str(m.get("period", m_date.strftime("%Y-%m"))),
+            "title": str(m.get("title", "FOMC 利率決議")),
+            "date": m_date.isoformat(),
+            "date_taipei": t_info["date_taipei"],
+            "time_taipei": t_info["time_taipei"],
+            "contract_symbol": sym,
+            "used_next_month_contract": in_last_7_days,
+            "futures_price": round(f_price, 4),
+            "implied_rate": round(r_post, 3),
+            "current_range": current_range,
+            "probabilities": probs,
+            "summary_text": summary_text,
+            "source_used": source_used,
+            "as_of_taipei": as_of_taipei,
+        })
+        r_pre = r_post
+
+    return {
+        "meetings": meetings_out,
+        "current_range": current_range,
+        "current_mid": round(current_mid, 3),
+        "source_used": source_used,
+        "as_of_taipei": as_of_taipei,
+        "data_status": "ok",
+        "updating": False,
+        "disclaimer": "機率由聯邦基金期貨價格推算，方法同 CME FedWatch；僅代表市場押注，不是預測。",
+    }
+
+
+def _select_zq_symbol_for_meeting(release_et: str) -> str:
+    m_date = _parse_et_iso(release_et).date()
+    days_in_month = calendar.monthrange(m_date.year, m_date.month)[1]
+    if (days_in_month - m_date.day) < 7:
+        c_yr = m_date.year + (1 if m_date.month == 12 else 0)
+        c_mo = 1 if m_date.month == 12 else m_date.month + 1
+        return zq_contract_symbol(c_yr, c_mo)
+    return zq_contract_symbol(m_date.year, m_date.month)
+
+
+def build_fedwatch_data(
+    cal_cfg: dict[str, Any],
+    now_utc: datetime,
+    prev_doc: dict[str, Any],
+    yf_fetcher: Callable[[str, str], list[tuple[str, float]]] | None = None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Fetch CBOT ZQ futures for next 2 FOMC meetings with manual (<7d) and prev-doc fallback."""
+    t0 = time_mod.monotonic()
+    fetcher = yf_fetcher or fetch_yfinance_history
+    now_tpe = now_utc.astimezone(TPE_TZ)
+    as_of_tpe = now_tpe.strftime("%Y-%m-%d %H:%M")
+
+    fomc_cfg = cal_cfg.get("fomc") or {}
+    past_decs = list(fomc_cfg.get("past_decisions") or [])
+    last_dec = past_decs[-1] if past_decs else {"rate_low": 3.75, "rate_high": 4.00}
+    cur_lo = float(last_dec.get("rate_low", 3.75))
+    cur_hi = float(last_dec.get("rate_high", 4.00))
+
+    upcoming = []
+    for item in (fomc_cfg.get("upcoming") or []):
+        try:
+            dt = _parse_et_iso(item["release_et"]).astimezone(UTC_TZ)
+        except Exception:
+            continue
+        if dt > now_utc:
+            upcoming.append(item)
+        if len(upcoming) >= 2:
+            break
+
+    prices: dict[str, float] = {}
+    fetch_errs: list[str] = []
+    for item in upcoming:
+        sym = _select_zq_symbol_for_meeting(item["release_et"])
+        if sym in prices:
+            continue
+        try:
+            rows = fetcher(sym, "1mo")
+            if rows:
+                prices[sym] = float(rows[-1][1])
+            else:
+                fetch_errs.append(f"{sym}: empty")
+        except Exception as exc:
+            fetch_errs.append(f"{sym}: {exc}")
+
+    # 1) Primary: computed from ZQ futures
+    if upcoming and _select_zq_symbol_for_meeting(upcoming[0]["release_et"]) in prices:
+        usable_meetings = [m for m in upcoming if _select_zq_symbol_for_meeting(m["release_et"]) in prices]
+        try:
+            fw = compute_fedwatch_from_prices(
+                usable_meetings, cur_lo, cur_hi, prices, as_of_taipei=as_of_tpe, source_used="yfinance (CBOT ZQ)"
+            )
+            rep = {
+                "status": "ok" if not fetch_errs else "partial",
+                "source_used": "yfinance (CBOT ZQ)",
+                "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                "contracts": sorted(prices.keys()),
+                "error": "; ".join(fetch_errs) if fetch_errs else None,
+            }
+            return fw, rep
+        except Exception as exc:
+            fetch_errs.append(str(exc))
+
+    # 2) Manual fallback (< 7 days)
+    manual_cfg = cal_cfg.get("fedwatch_manual") or {}
+    if isinstance(manual_cfg, dict) and manual_cfg.get("meetings") and manual_cfg.get("as_of_date"):
+        try:
+            as_of_d = date.fromisoformat(str(manual_cfg["as_of_date"])[:10])
+            age_days = (now_tpe.date() - as_of_d).days
+            if -1 <= age_days <= 7:
+                man_src = str(manual_cfg.get("source") or "CME FedWatch 手動更新")
+                src_label = f"手動更新（{man_src}）"
+                m_out: list[dict[str, Any]] = []
+                for idx, mm in enumerate(manual_cfg["meetings"][:2]):
+                    probs = {k: float((mm.get("probabilities") or {}).get(k, 0.0)) for k, _ in FEDWATCH_BUCKETS}
+                    m_date_s = str(mm.get("date", ""))
+                    tpe_date = m_date_s
+                    if idx < len(upcoming):
+                        t_info = _fmt_tpe(_parse_et_iso(upcoming[idx]["release_et"]))
+                        tpe_date = t_info["date_taipei"]
+                    mmdd = f"{int(tpe_date[5:7])}/{int(tpe_date[8:10])}" if len(tpe_date) >= 10 else m_date_s
+                    m_out.append({
+                        "period": str(mm.get("period", m_date_s[:7])),
+                        "title": str(mm.get("title") or (upcoming[idx].get("title") if idx < len(upcoming) else "FOMC 利率決議")),
+                        "date": m_date_s,
+                        "date_taipei": tpe_date,
+                        "implied_rate": mm.get("implied_rate"),
+                        "current_range": str(mm.get("current_range") or f"{cur_lo:.2f}%–{cur_hi:.2f}%"),
+                        "probabilities": probs,
+                        "summary_text": _build_fedwatch_meeting_summary(probs, mmdd),
+                        "source_used": src_label,
+                        "as_of_taipei": str(manual_cfg["as_of_date"]),
+                    })
+                fw_man = {
+                    "meetings": m_out,
+                    "current_range": f"{cur_lo:.2f}%–{cur_hi:.2f}%",
+                    "current_mid": round((cur_lo + cur_hi) / 2.0, 3),
+                    "source_used": src_label,
+                    "as_of_taipei": str(manual_cfg["as_of_date"]),
+                    "data_status": "ok",
+                    "updating": False,
+                    "disclaimer": "機率由聯邦基金期貨價格推算，方法同 CME FedWatch；僅代表市場押注，不是預測。",
+                }
+                rep = {
+                    "status": "ok",
+                    "source_used": src_label,
+                    "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+                    "error": "; ".join(fetch_errs) if fetch_errs else None,
+                }
+                return fw_man, rep
+        except Exception as exc:
+            fetch_errs.append(f"manual parse: {exc}")
+
+    # 3) Preserve previous macro.json fedwatch with 資料更新中
+    err_str = "; ".join(fetch_errs) or "期貨報價無法取得"
+    prev_fw = prev_doc.get("fedwatch")
+    if isinstance(prev_fw, dict) and prev_fw.get("meetings"):
+        preserved = dict(prev_fw)
+        preserved["data_status"] = "資料更新中"
+        preserved["updating"] = True
+        preserved["updating_notice"] = f"資料更新中（{err_str}，暫保留前次資料）"
+        preserved["meetings"] = [
+            {**m, "data_status": "資料更新中", "updating": True}
+            for m in prev_fw["meetings"]
+        ]
+        rep = {
+            "status": "failed",
+            "source_used": prev_fw.get("source_used") or "前次資料（資料更新中）",
+            "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+            "error": err_str,
+        }
+        return preserved, rep
+
+    empty_fw = {
+        "meetings": [],
+        "current_range": f"{cur_lo:.2f}%–{cur_hi:.2f}%",
+        "current_mid": round((cur_lo + cur_hi) / 2.0, 3),
+        "source_used": None,
+        "as_of_taipei": as_of_tpe,
+        "data_status": "資料更新中",
+        "updating": True,
+        "updating_notice": f"資料更新中（{err_str}）",
+        "disclaimer": "機率由聯邦基金期貨價格推算，方法同 CME FedWatch；僅代表市場押注，不是預測。",
+    }
+    return empty_fw, {
+        "status": "failed",
+        "source_used": None,
+        "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+        "error": err_str,
+    }
+
+
+def _eval_snapshot_item(
+    item_id: str,
+    rows: list[tuple[str, float]],
+    rule: dict[str, Any],
+    as_of_taipei: str,
+    source_used: str,
+) -> dict[str, Any]:
+    """Compute snapshot metrics, 1Y range position, 90d closes, and verdict for one asset."""
+    clean = [(d, float(v)) for d, v in rows if v is not None]
+    if len(clean) < 2:
+        raise ValueError(f"Insufficient rows for market snapshot {item_id}")
+    closes_1y = [v for _, v in clean[-252:]]
+    last_v = closes_1y[-1]
+    prev_1d = closes_1y[-2]
+    ref_20d = closes_1y[-21] if len(closes_1y) >= 21 else closes_1y[0]
+
+    chg_1d_pct = ((last_v / prev_1d) - 1.0) * 100.0 if prev_1d else 0.0
+    chg_20d_pct = ((last_v / ref_20d) - 1.0) * 100.0 if ref_20d else 0.0
+    chg_1d_pp = last_v - prev_1d
+    chg_20d_pp = last_v - ref_20d
+
+    lo_1y = min(closes_1y)
+    hi_1y = max(closes_1y)
+    range_pos = round(((last_v - lo_1y) / (hi_1y - lo_1y)) * 100.0, 1) if hi_1y > lo_1y else 50.0
+    range_pos = max(0.0, min(100.0, range_pos))
+
+    dec = int(rule.get("decimals", 2))
+    closes_90d = [round(v, dec) for v in closes_1y[-90:]]
+
+    if item_id == "DXY":
+        bear_th = float(rule.get("chg_20d_bear_pct", 1.5))
+        bull_th = float(rule.get("chg_20d_bull_pct", -1.5))
+        if chg_20d_pct > bear_th:
+            verdict, vtag = "bear", "🔴 偏空（美元轉強）"
+            reason = f"美元指數近 20 日上漲 {chg_20d_pct:+.2f}%（超過 +{bear_th:.1f}% 門檻），美元轉強易對台股外資與加密貨幣流動性構成壓力。"
+        elif chg_20d_pct < bull_th:
+            verdict, vtag = "bull", "🟢 偏多（美元轉弱）"
+            reason = f"美元指數近 20 日下跌 {chg_20d_pct:+.2f}%（低於 {bull_th:.1f}% 門檻），美元轉弱有利新興市場資金與風險資產。"
+        else:
+            verdict, vtag = "neut", "🟡 中性"
+            reason = f"美元指數近 20 日變動 {chg_20d_pct:+.2f}%，處於 ±{bear_th:.1f}% 中性區間。"
+    elif item_id == "USDTWD":
+        bear_th = float(rule.get("chg_20d_bear_pct", 1.0))
+        bull_th = float(rule.get("chg_20d_bull_pct", -1.0))
+        if chg_20d_pct > bear_th:
+            verdict, vtag = "bear", "🔴 偏空（台幣貶值）"
+            reason = f"美元／台幣近 20 日上漲 {chg_20d_pct:+.2f}%（台幣貶值逾 {bear_th:.1f}%），反映外資匯出壓力，對台股偏空。"
+        elif chg_20d_pct < bull_th:
+            verdict, vtag = "bull", "🟢 偏多（台幣升值）"
+            reason = f"美元／台幣近 20 日下跌 {chg_20d_pct:+.2f}%（台幣升值逾 {abs(bull_th):.1f}%），代表外資匯入動能，對台股偏多。"
+        else:
+            verdict, vtag = "neut", "🟡 中性"
+            reason = f"美元／台幣近 20 日變動 {chg_20d_pct:+.2f}%，匯率維持於 ±{bear_th:.1f}% 區間整理。"
+    elif item_id == "GOLD":
+        bull_th = float(rule.get("chg_20d_bull_pct", 3.0))
+        bear_th = float(rule.get("chg_20d_bear_pct", -3.0))
+        if chg_20d_pct > bull_th:
+            verdict, vtag = "bull", "🟢 偏多（避險／抗通膨）"
+            reason = f"黃金近 20 日上漲 {chg_20d_pct:+.2f}%（超過 +{bull_th:.1f}%），反映寬鬆預期或避險買盤（對非美／抗通膨題材偏多，亦留意避險情緒）。"
+        elif chg_20d_pct < bear_th:
+            verdict, vtag = "bear", "🔴 偏空（強美元承壓）"
+            reason = f"黃金近 20 日下跌 {chg_20d_pct:+.2f}%（低於 {bear_th:.1f}%），反映實質利率上行或美元走強壓抑無息資產。"
+        else:
+            verdict, vtag = "neut", "🟡 中性"
+            reason = f"黃金近 20 日變動 {chg_20d_pct:+.2f}%，位於一年區間 {range_pos:.0f}% 位置，走勢偏震盪。"
+    elif item_id == "WTI":
+        bear_th = float(rule.get("chg_20d_bear_pct", 5.0))
+        bull_th = float(rule.get("chg_20d_bull_pct", -5.0))
+        if chg_20d_pct > bear_th:
+            verdict, vtag = "bear", "🔴 偏空（通膨壓力）"
+            reason = f"WTI 原油近 20 日上漲 {chg_20d_pct:+.2f}%（超過 +{bear_th:.1f}%），能源價格走高易推升通膨預期並壓抑降息空間。"
+        elif chg_20d_pct < bull_th:
+            verdict, vtag = "bull", "🟢 偏多（通膨舒緩）"
+            reason = f"WTI 原油近 20 日下跌 {chg_20d_pct:+.2f}%（低於 {bull_th:.1f}%），油價回落有助通膨降溫，舒緩緊縮預期。"
+        else:
+            verdict, vtag = "neut", "🟡 中性"
+            reason = f"WTI 原油近 20 日變動 {chg_20d_pct:+.2f}%，位於一年區間 {range_pos:.0f}% 位置，通膨邊際影響溫和。"
+    else:  # US10Y
+        bear_pp = float(rule.get("chg_20d_bear_pp", 0.25))
+        bull_pp = float(rule.get("chg_20d_bull_pp", -0.25))
+        if chg_20d_pp > bear_pp:
+            verdict, vtag = "bear", "🔴 偏空（殖利率急升）"
+            reason = f"10 年期殖利率近 20 日上升 {chg_20d_pp:+.2f} 個百分點（逾 +{bear_pp:.2f}），無風險利率攀升壓抑股幣估值。"
+        elif chg_20d_pp < bull_pp:
+            verdict, vtag = "bull", "🟢 偏多（殖利率回落）"
+            reason = f"10 年期殖利率近 20 日回落 {chg_20d_pp:+.2f} 個百分點（低於 {bull_pp:.2f}），估值折現壓力減輕。"
+        else:
+            verdict, vtag = "neut", "🟡 中性"
+            reason = f"10 年期殖利率近 20 日變動 {chg_20d_pp:+.2f} 個百分點（最新 {last_v:.2f}%），短期波動於 ±{bear_pp:.2f} 個百分點內。"
+
+    return {
+        "id": item_id,
+        "symbol": str(rule.get("symbol", item_id)),
+        "name_zh": str(rule.get("name_zh", item_id)),
+        "unit": str(rule.get("unit", "")),
+        "last": round(last_v, dec),
+        "last_str": f"{last_v:,.{dec}f}{('%' if item_id == 'US10Y' else '')}",
+        "chg_1d_pct": round(chg_1d_pct, 2),
+        "chg_20d_pct": round(chg_20d_pct, 2),
+        "chg_1d_pp": round(chg_1d_pp, 2) if item_id == "US10Y" else None,
+        "chg_20d_pp": round(chg_20d_pp, 2) if item_id == "US10Y" else None,
+        "range_1y_pos_pct": range_pos,
+        "range_1y_low": round(lo_1y, dec),
+        "range_1y_high": round(hi_1y, dec),
+        "closes_90d": closes_90d,
+        "verdict": verdict,
+        "verdict_tag": vtag,
+        "verdict_reason": reason,
+        "what_is": str(rule.get("what_is", "")),
+        "rule_rationale": str(rule.get("rationale", "")),
+        "as_of_date": clean[-1][0],
+        "as_of_taipei": as_of_taipei,
+        "source_used": source_used,
+        "data_status": "ok",
+        "updating": False,
+    }
+
+
+def build_market_snapshot(
+    cal_cfg: dict[str, Any],
+    dgs10_rows: list[tuple[str, float | None]] | None,
+    dgs10_source: str | None,
+    now_utc: datetime,
+    prev_doc: dict[str, Any],
+    yf_fetcher: Callable[[str, str], list[tuple[str, float]]] | None = None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Build 5-item Market Snapshot (DXY, USDTWD, GOLD, WTI, US10Y) with prev-doc fallback."""
+    t0 = time_mod.monotonic()
+    fetcher = yf_fetcher or fetch_yfinance_history
+    as_of_tpe = now_utc.astimezone(TPE_TZ).strftime("%Y-%m-%d %H:%M")
+
+    cfg_rules = cal_cfg.get("market_snapshot_rules") or {}
+    prev_items = {
+        it["id"]: it
+        for it in ((prev_doc.get("market_snapshot") or {}).get("items") or [])
+        if isinstance(it, dict) and it.get("id")
+    }
+
+    items_out: list[dict[str, Any]] = []
+    ok_ids: list[str] = []
+    fail_ids: list[str] = []
+    errs: list[str] = []
+
+    for item_id in ("DXY", "USDTWD", "GOLD", "WTI", "US10Y"):
+        rule = dict(DEFAULT_MARKET_SNAPSHOT_RULES[item_id])
+        rule.update(cfg_rules.get(item_id) or {})
+        sym = str(rule["symbol"])
+        try:
+            rows: list[tuple[str, float]] = []
+            src_used = f"yfinance ({sym})"
+            if item_id == "US10Y":
+                clean_dgs10 = [(d, float(v)) for d, v in (dgs10_rows or []) if v is not None]
+                if len(clean_dgs10) >= 200:
+                    rows = clean_dgs10[-260:]
+                    src_used = f"沿用 DGS10（{dgs10_source or 'FRED'}）"
+                else:
+                    try:
+                        raw_tnx = fetcher(sym, "1y")
+                        # Yahoo ^TNX 在部分版本回傳 10 倍殖利率（如 49.12 代表 4.912%），yfinance 0.2.66 實測已為 4.912，
+                        # 故僅在數值 > 15 時除以 10，避免將 4.91% 誤除成 0.49%。
+                        rows = [(d, (v / 10.0 if v > 15.0 else v)) for d, v in raw_tnx]
+                        src_used = "yfinance (^TNX)"
+                    except Exception:
+                        rows = []
+                    if len(rows) < 2 and len(clean_dgs10) >= 2:
+                        rows = clean_dgs10
+                        src_used = f"沿用 DGS10（{dgs10_source or '備用'}）"
+            else:
+                rows = fetcher(sym, "1y")
+
+            item = _eval_snapshot_item(item_id, rows, rule, as_of_tpe, src_used)
+            items_out.append(item)
+            ok_ids.append(item_id)
+        except Exception as exc:
+            fail_ids.append(item_id)
+            errs.append(f"{item_id}: {exc}")
+            if item_id in prev_items:
+                preserved = _mark_preserved_updating(prev_items[item_id], str(exc))
+                items_out.append(preserved)
+            else:
+                items_out.append({
+                    "id": item_id,
+                    "symbol": sym,
+                    "name_zh": str(rule["name_zh"]),
+                    "unit": str(rule.get("unit", "")),
+                    "last": None,
+                    "last_str": "資料更新中",
+                    "chg_1d_pct": None,
+                    "chg_20d_pct": None,
+                    "chg_1d_pp": None,
+                    "chg_20d_pp": None,
+                    "range_1y_pos_pct": None,
+                    "closes_90d": [],
+                    "verdict": "na",
+                    "verdict_tag": "資料更新中",
+                    "verdict_reason": "來源暫時無法取得，資料更新中。",
+                    "what_is": str(rule.get("what_is", "")),
+                    "rule_rationale": str(rule.get("rationale", "")),
+                    "as_of_taipei": as_of_tpe,
+                    "source_used": None,
+                    "data_status": "資料更新中",
+                    "updating": True,
+                })
+
+    snapshot_obj = {
+        "as_of_taipei": as_of_tpe,
+        "hhmm_taipei": now_utc.astimezone(TPE_TZ).strftime("%H:%M"),
+        "items": items_out,
+    }
+    rep = {
+        "status": "ok" if not fail_ids else ("partial" if ok_ids else "failed"),
+        "elapsed_sec": round(time_mod.monotonic() - t0, 3),
+        "series_ok": ok_ids,
+        "series_failed": fail_ids,
+        "error": "; ".join(errs) if errs else None,
+    }
+    return snapshot_obj, rep
+
+
 def _build_upcoming_calendar(
     cal_cfg: dict[str, Any],
     icsa_upcoming: list[dict[str, Any]],
     now_utc: datetime,
     published_keys: set[tuple[str, str]],
+    fedwatch: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     """Collect and sort upcoming calendar events across all indicators + FOMC + extra events."""
     events: list[dict[str, Any]] = []
@@ -1868,17 +2657,43 @@ def _build_upcoming_calendar(
             "note": note,
         })
 
+    fw_meetings = (fedwatch or {}).get("meetings") or []
+    fw_by_period = {str(m.get("period", "")): m for m in fw_meetings if isinstance(m, dict)}
+
     fomc_up = (cal_cfg.get("fomc") or {}).get("upcoming") or []
     for item in fomc_up:
+        p_str = str(item["period"])
+        base_note = str(item.get("note", "")).strip()
+        fw_m = fw_by_period.get(p_str)
+        if fw_m and fw_m.get("summary_text") and not fw_m.get("updating"):
+            fw_note = str(fw_m["summary_text"])
+            full_note = f"{base_note}；{fw_note}" if base_note else fw_note
+        else:
+            full_note = base_note
         _add(
-            f"fomc-{item['period']}",
+            f"fomc-{p_str}",
             item.get("title", "FOMC 利率決議"),
             "FED_RATE",
-            str(item["period"]),
+            p_str,
             item["release_et"],
             int(item.get("stars", 3)),
-            item.get("note", ""),
+            full_note,
         )
+        # 聯準會靜默期開始：FOMC 會議前第二個週六（美東 00:00）
+        try:
+            dec_d = _parse_et_iso(item["release_et"]).date()
+            bo_d = compute_fomc_blackout_start(dec_d)
+            _add(
+                f"fomc-blackout-{p_str}",
+                f"聯準會靜默期開始（{_period_zh(p_str)} FOMC）",
+                "FED_RATE",
+                f"{p_str}-blackout",
+                f"{bo_d.isoformat()}T00:00:00",
+                1,
+                "靜默期內聯準會官員不公開談貨幣政策，市場消息來源變少",
+            )
+        except Exception:
+            pass
 
     for ind_id, ind_cfg in (cal_cfg.get("indicators") or {}).items():
         if ind_id in ("ICSA", "CORE_CPI", "CORE_PCE", "UNRATE", "AVG_HOURLY_EARNINGS"):
@@ -1890,8 +2705,12 @@ def _build_upcoming_calendar(
             "NFP": "非農就業／失業率／時薪",
         }
         name = cal_names.get(ind_id, spec.get("name", ind_id))
-        for item in (ind_cfg.get("upcoming_releases") or []):
+        up_list = _build_jolts_upcoming_releases(cal_cfg, now_utc) if ind_id == "JOLTS" else (ind_cfg.get("upcoming_releases") or [])
+        for item in up_list:
             p = str(item.get("period", ""))
+            ev_note = str(item.get("note", "") or "")
+            if item.get("estimated") and "預估日期" not in ev_note:
+                ev_note = f"預估日期；{ev_note}".strip("；")
             _add(
                 f"{ind_id.lower()}-{p}",
                 f"{name}（{_period_zh(p)}）",
@@ -1899,7 +2718,7 @@ def _build_upcoming_calendar(
                 p,
                 item["release_et"],
                 int(item.get("stars", ind_cfg.get("stars", 2))),
-                item.get("note", ""),
+                ev_note,
                 item.get("consensus"),
                 item.get("consensus_source"),
             )
@@ -1931,12 +2750,28 @@ def _build_upcoming_calendar(
     return events
 
 
-def _build_overview_summary(cards_by_id: dict[str, dict[str, Any]]) -> dict[str, Any]:
-    """Derive macro stance summary & asset impact framing from latest card readings."""
+def _score_to_impact(score: float) -> tuple[str, str]:
+    if score >= 0.75:
+        return "bull", "偏多"
+    if score <= -0.75:
+        return "bear", "偏空"
+    return "neut", "中性"
+
+
+def _build_overview_summary(
+    cards_by_id: dict[str, dict[str, Any]],
+    fedwatch: dict[str, Any] | None = None,
+    market_snapshot: dict[str, Any] | None = None,
+    cal_cfg: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Derive macro stance summary & 7-asset impact table from 17 indicators, FedWatch, and market snapshot."""
     fed = cards_by_id.get("FED_RATE") or {}
     cpi = cards_by_id.get("CPI") or {}
     unrate = cards_by_id.get("UNRATE") or {}
+    dgs2 = cards_by_id.get("DGS2") or {}
     dgs10 = cards_by_id.get("DGS10") or {}
+    jolts = cards_by_id.get("JOLTS") or {}
+    ism_mfg = cards_by_id.get("ISM_MFG") or {}
 
     fed_v = fed.get("verdict", "neut")
     cpi_v = cpi.get("verdict", "neut")
@@ -1963,41 +2798,230 @@ def _build_overview_summary(cards_by_id: dict[str, dict[str, Any]]) -> dict[str,
             f"10 年期美債殖利率 {dgs10.get('value_str', '--')}，市場密切關注後續通膨與就業走勢。"
         )
 
-    is_hawk = stance_cls == "bear"
-    asset_impacts = [
-        {
-            "asset": "美股",
-            "sub": "標普 500 · 那斯達克 100",
-            "cls": "bear" if is_hawk else ("bull" if stance_cls == "bull" else "neut"),
-            "tag": "偏利空" if is_hawk else ("偏利多" if stance_cls == "bull" else "中性"),
-            "note": (
-                f"10 年期殖利率處於 {dgs10.get('value_str', '--')} 高檔，估值倍數承壓；利率敏感度高的科技成長股波動較大。"
-                if is_hawk
-                else "利率與通膨壓力趨緩時，有利成長股與大盤估值修復。"
-            ),
-        },
-        {
-            "asset": "台股",
-            "sub": "加權指數 · 電子權值股",
-            "cls": "bear" if is_hawk else ("bull" if stance_cls == "bull" else "neut"),
-            "tag": "偏利空" if is_hawk else ("偏利多" if stance_cls == "bull" else "中性"),
-            "note": "台股與美股科技股高度連動，美債殖利率走高時外資易調節電子權值與高本益比族群。",
-        },
-        {
-            "asset": "加密貨幣",
-            "sub": "BTC · 主流幣",
-            "cls": "bear" if is_hawk else ("bull" if stance_cls == "bull" else "neut"),
-            "tag": "偏利空" if is_hawk else ("偏利多" if stance_cls == "bull" else "中性"),
-            "note": "加密市場對美元流動性與實質利率最敏感，數據過熱推高緊縮預期時短線震盪易放大。",
-        },
-        {
-            "asset": "美債與黃金",
-            "sub": "2Y / 10Y 殖利率 · 黃金",
-            "cls": "neut",
-            "tag": "拉鋸觀察",
-            "note": f"名目殖利率高檔（2Y {cards_by_id.get('DGS2', {}).get('value_str', '--')} / 10Y {dgs10.get('value_str', '--')}）壓抑無息資產，但避險需求與央行買盤提供下檔支撐。",
-        },
-    ]
+    snap_items = {
+        it["id"]: it
+        for it in ((market_snapshot or {}).get("items") or [])
+        if isinstance(it, dict) and it.get("id") and it.get("last") is not None
+    }
+    dxy = snap_items.get("DXY")
+    twd = snap_items.get("USDTWD")
+    gold = snap_items.get("GOLD")
+    wti = snap_items.get("WTI")
+    us10y = snap_items.get("US10Y")
+
+    # FedWatch bias helper
+    fw_meetings = (fedwatch or {}).get("meetings") or []
+    fw_m0 = fw_meetings[0] if fw_meetings and not (fedwatch or {}).get("updating") else None
+    fw_bias = 0.0
+    fw_phrase = ""
+    if fw_m0 and isinstance(fw_m0.get("probabilities"), dict):
+        p = fw_m0["probabilities"]
+        hike_p = float(p.get("hike_1", 0.0)) + float(p.get("hike_2_plus", 0.0))
+        cut_p = float(p.get("cut_1", 0.0)) + float(p.get("cut_2_plus", 0.0))
+        if hike_p >= 50.0:
+            fw_bias = -1.0
+        elif cut_p >= 50.0:
+            fw_bias = 1.0
+        if fw_m0.get("summary_text"):
+            fw_phrase = str(fw_m0["summary_text"])
+
+    rules_cfg = (cal_cfg or {}).get("asset_impact_rules", {}).get("rules") or {}
+
+    def _sub(asset: str) -> str:
+        return str((rules_cfg.get(asset) or {}).get("sub") or ASSET_IMPACT_SUBS.get(asset, ""))
+
+    def _na_row(asset: str) -> dict[str, str]:
+        return {
+            "asset": asset,
+            "sub": _sub(asset),
+            "cls": "na",
+            "tag": "資料不足",
+            "note": "資料不足，暫不判斷",
+        }
+
+    # 1. 美股
+    us10_val = dgs10.get("value_num") if dgs10.get("value_num") is not None else (us10y["last"] if us10y else None)
+    if sum(1 for x in (fed.get("value_str"), cpi.get("value_str"), us10_val) if x is not None) < 2:
+        us_row = _na_row("美股")
+    else:
+        s = 0.0
+        if fed_v == "bear":
+            s -= 1.0
+        elif fed_v == "bull":
+            s += 1.0
+        if cpi_v == "bear":
+            s -= 1.0
+        elif cpi_v == "bull":
+            s += 1.0
+        if us10_val is not None:
+            if us10_val >= 4.5:
+                s -= 1.0
+            elif us10_val <= 3.5:
+                s += 1.0
+        if us10y and us10y.get("verdict") == "bear":
+            s -= 0.5
+        elif us10y and us10y.get("verdict") == "bull":
+            s += 0.5
+        s += fw_bias * 0.8
+        if jolts.get("verdict") == "bull":
+            s += 0.4
+        elif jolts.get("verdict") == "bear":
+            s -= 0.4
+        cls, tag = _score_to_impact(s)
+        parts = []
+        if us10_val is not None:
+            parts.append(f"10 年期殖利率 {us10_val:.2f}%")
+        if cpi.get("value_str"):
+            parts.append(f"CPI 環比 {cpi['value_str']}")
+        if fw_phrase:
+            parts.append(fw_phrase)
+        if jolts.get("value_str"):
+            parts.append(f"JOLTS {jolts['value_str']}")
+        tail = "估值倍數承壓、高敏感科技股波動放大。" if cls == "bear" else ("估值折現壓力舒緩，有利成長股修復。" if cls == "bull" else "多空力道拉鋸，靜待後續數據指引。")
+        us_row = {"asset": "美股", "sub": _sub("美股"), "cls": cls, "tag": tag, "note": f"{'、'.join(parts)}；{tail}"}
+
+    # 2. 台股
+    if not twd and (not dxy or us10_val is None):
+        tw_row = _na_row("台股")
+    else:
+        s = 0.0
+        if twd:
+            s += 1.5 if twd["verdict"] == "bull" else (-1.5 if twd["verdict"] == "bear" else 0.0)
+        if dxy:
+            s += 0.8 if dxy["verdict"] == "bull" else (-0.8 if dxy["verdict"] == "bear" else 0.0)
+        if us_row["cls"] == "bear":
+            s -= 0.7
+        elif us_row["cls"] == "bull":
+            s += 0.7
+        cls, tag = _score_to_impact(s)
+        parts = []
+        if twd:
+            parts.append(f"美元／台幣現報 {twd['last_str']}（近 20 日 {twd['chg_20d_pct']:+.2f}%）")
+        if dxy:
+            parts.append(f"美元指數近 20 日 {dxy['chg_20d_pct']:+.2f}%")
+        if us10_val is not None:
+            parts.append(f"10Y 殖利率 {us10_val:.2f}%")
+        tail = "外資匯出與權值股調節壓力偏高。" if cls == "bear" else ("台幣偏強與美債壓力趨緩有利外資回補電子權值。" if cls == "bull" else "資金面中性，隨美股科技股與匯率波動。")
+        tw_row = {"asset": "台股", "sub": _sub("台股"), "cls": cls, "tag": tag, "note": f"{'，'.join(parts)}，{tail}"}
+
+    # 3. 加密貨幣
+    if not dxy and not (fed.get("value_str") and us10_val is not None):
+        crypto_row = _na_row("加密貨幣")
+    else:
+        s = 0.0
+        if dxy:
+            s += 1.5 if dxy["verdict"] == "bull" else (-1.5 if dxy["verdict"] == "bear" else 0.0)
+        s += fw_bias * 0.8
+        if fed_v == "bear":
+            s -= 0.8
+        elif fed_v == "bull":
+            s += 0.8
+        if us10y and us10y.get("verdict") == "bear":
+            s -= 0.6
+        elif us10y and us10y.get("verdict") == "bull":
+            s += 0.6
+        cls, tag = _score_to_impact(s)
+        parts = []
+        if dxy:
+            parts.append(f"美元指數近 20 日 {dxy['chg_20d_pct']:+.2f}%（現報 {dxy['last_str']}）")
+        if fed.get("value_str"):
+            parts.append(f"基準利率 {fed['value_str']}")
+        if fw_phrase:
+            parts.append(fw_phrase)
+        tail = "美元流動性偏緊易放大短線回檔。" if cls == "bear" else ("流動性與寬鬆預期支撐風險偏好。" if cls == "bull" else "流動性訊號分歧，維持區間震盪。")
+        crypto_row = {"asset": "加密貨幣", "sub": _sub("加密貨幣"), "cls": cls, "tag": tag, "note": f"{'、'.join(parts)}；{tail}"}
+
+    # 4. 美債（債價視角）
+    if us10_val is None and dgs2.get("value_num") is None:
+        bond_row = _na_row("美債")
+    else:
+        s = 0.0
+        if us10y:
+            s += 1.5 if us10y["verdict"] == "bull" else (-1.5 if us10y["verdict"] == "bear" else 0.0)
+        s += fw_bias * 0.9
+        if cpi_v == "bear":
+            s -= 0.8
+        elif cpi_v == "bull":
+            s += 0.8
+        cls, tag = _score_to_impact(s)
+        parts = [f"2Y {dgs2.get('value_str', '--')} / 10Y {us10_val:.2f}%" if us10_val is not None else f"2Y {dgs2.get('value_str', '--')}"]
+        if us10y and us10y.get("chg_20d_pp") is not None:
+            parts.append(f"10Y 近 20 日 {us10y['chg_20d_pp']:+.2f} 個百分點")
+        if cpi.get("value_str"):
+            parts.append(f"CPI {cpi['value_str']}")
+        tail = "通膨與緊縮預期壓抑債價（殖利率高檔）。" if cls == "bear" else ("殖利率回落與降溫訊號支撐美債價格。" if cls == "bull" else "高息收買盤與政策利率預期拉鋸。")
+        bond_row = {"asset": "美債", "sub": _sub("美債"), "cls": cls, "tag": tag, "note": f"{'、'.join(parts)}；{tail}"}
+
+    # 5. 黃金
+    if not gold:
+        gold_row = _na_row("黃金")
+    else:
+        s = 0.0
+        if gold["chg_20d_pct"] > 3.0:
+            s += 1.2
+        elif gold["chg_20d_pct"] < -3.0:
+            s -= 1.2
+        if dxy:
+            s += 0.8 if dxy["verdict"] == "bull" else (-0.8 if dxy["verdict"] == "bear" else 0.0)
+        if us10y:
+            s += 0.7 if us10y["verdict"] == "bull" else (-0.7 if us10y["verdict"] == "bear" else 0.0)
+        cls, tag = _score_to_impact(s)
+        dxy_s = f"、美元指數近 20 日 {dxy['chg_20d_pct']:+.2f}%" if dxy else ""
+        y_s = f"、10Y 殖利率 {us10_val:.2f}%" if us10_val is not None else ""
+        tail = "避險與央行買盤支撐金價走勢。" if cls == "bull" else ("強美元或高利率壓抑無息資產表現。" if cls == "bear" else "高名目殖利率壓抑與避險需求彼此拉鋸。")
+        gold_row = {
+            "asset": "黃金",
+            "sub": _sub("黃金"),
+            "cls": cls,
+            "tag": tag,
+            "note": f"黃金現報 {gold['last_str']} 美元（近 20 日 {gold['chg_20d_pct']:+.2f}%、一年區間 {gold['range_1y_pos_pct']:.0f}%）{dxy_s}{y_s}；{tail}",
+        }
+
+    # 6. 原油
+    if not wti:
+        oil_row = _na_row("原油")
+    else:
+        s = 0.0
+        if wti["chg_20d_pct"] >= 3.0:
+            s += 1.2
+        elif wti["chg_20d_pct"] <= -3.0:
+            s -= 1.2
+        if ism_mfg.get("value_num") is not None:
+            s += 0.8 if float(ism_mfg["value_num"]) >= 50.0 else -0.8
+        if dxy:
+            s += 0.4 if dxy["verdict"] == "bull" else (-0.4 if dxy["verdict"] == "bear" else 0.0)
+        cls, tag = _score_to_impact(s)
+        ism_s = f"、ISM 製造業 PMI {ism_mfg['value_str']}" if ism_mfg.get("value_str") else ""
+        tail = "需求支撐與短期動能偏強。" if cls == "bull" else ("供給寬鬆或高利率壓抑能源需求預期。" if cls == "bear" else "供需與景氣訊號交錯，油價維持區間震盪。")
+        oil_row = {
+            "asset": "原油",
+            "sub": _sub("原油"),
+            "cls": cls,
+            "tag": tag,
+            "note": f"WTI 原油現報 {wti['last_str']} 美元（近 20 日 {wti['chg_20d_pct']:+.2f}%、一年區間 {wti['range_1y_pos_pct']:.0f}%）{ism_s}；{tail}",
+        }
+
+    # 7. 美元／台幣（台幣升貶與外資視角）
+    if not twd:
+        fx_row = _na_row("美元／台幣")
+    else:
+        s = 0.0
+        s += 1.5 if twd["verdict"] == "bull" else (-1.5 if twd["verdict"] == "bear" else 0.0)
+        if dxy:
+            s += 0.8 if dxy["verdict"] == "bull" else (-0.8 if dxy["verdict"] == "bear" else 0.0)
+        s += fw_bias * 0.4
+        cls, tag = _score_to_impact(s)
+        dxy_s = f"、美元指數近 20 日 {dxy['chg_20d_pct']:+.2f}%" if dxy else ""
+        tail = "台幣偏升有利外資資金匯入。" if cls == "bull" else ("台幣偏貶反映外資匯出與美元強勢壓力。" if cls == "bear" else "匯率隨美元波動於區間整理。")
+        fx_row = {
+            "asset": "美元／台幣",
+            "sub": _sub("美元／台幣"),
+            "cls": cls,
+            "tag": tag,
+            "note": f"美元／台幣現報 {twd['last_str']}（近 20 日 {twd['chg_20d_pct']:+.2f}%）{dxy_s}；{tail}",
+        }
+
+    asset_impacts = [us_row, tw_row, crypto_row, bond_row, gold_row, oil_row, fx_row]
 
     return {
         "stance": stance,
@@ -2037,6 +3061,7 @@ def generate_macro_file(
     use_local_cache: bool = True,
     fred_base_url: str | None = None,
     timeout_sec: int = REQUEST_TIMEOUT_SEC,
+    yf_fetcher: Callable[[str, str], list[tuple[str, float]]] | None = None,
 ) -> dict[str, Any]:
     """Fetch public macro data (FRED primary + no-key fallbacks), compute market reactions, and write `out_dir/macro.json`."""
     run_t0 = time_mod.monotonic()
@@ -2061,7 +3086,7 @@ def generate_macro_file(
     needed_fred = [
         "DFEDTARU", "DFEDTARL", "DGS2", "DGS10",
         "CPIAUCSL", "CPILFESL", "PCEPI", "PCEPILFE", "PPIFIS",
-        "PAYEMS", "UNRATE", "CES0500000003", "ICSA",
+        "PAYEMS", "UNRATE", "CES0500000003", "ICSA", "JTSJOL",
         "A191RL1Q225SBEA", "RSAFS",
     ]
     fred_t0 = time_mod.monotonic()
@@ -2175,7 +3200,7 @@ def generate_macro_file(
 
     # 2c. BLS Public API v1 batch fallback
     needed_bls = [
-        ind_id for ind_id in ("CPI", "CORE_CPI", "PPI", "NFP", "UNRATE", "AVG_HOURLY_EARNINGS")
+        ind_id for ind_id in ("CPI", "CORE_CPI", "PPI", "NFP", "UNRATE", "AVG_HOURLY_EARNINGS", "JOLTS")
         if INDICATOR_SPECS[ind_id]["code"] not in fred_cache
     ]
     if needed_bls:
@@ -2405,10 +3430,10 @@ def generate_macro_file(
             updating_ids.append(yid)
             indicators_report[yid] = {"source_used": None, "fallback_used": True, "status": "failed"}
 
-    # 3c. Remaining 13 standard indicators
+    # 3c. Remaining 14 standard indicators (including JOLTS in jobs group)
     std_order = [
         "CPI", "CORE_CPI", "PCE", "CORE_PCE", "PPI",
-        "NFP", "UNRATE", "AVG_HOURLY_EARNINGS", "ICSA",
+        "NFP", "UNRATE", "AVG_HOURLY_EARNINGS", "ICSA", "JOLTS",
         "GDP", "ISM_MFG", "ISM_SVC", "RETAIL_SALES",
     ]
     ism_t0 = time_mod.monotonic()
@@ -2539,11 +3564,45 @@ def generate_macro_file(
     now_iso = now.strftime("%Y-%m-%dT%H:%M:%SZ")
     past_filtered = [p for p in past_sorted if cutoff_past <= p["time_utc"] <= now_iso]
 
+    # 4) FedWatch probabilities (CBOT ZQ via yfinance -> manual <7d -> prev_doc)
+    fedwatch, fedwatch_report = build_fedwatch_data(cal_cfg, now, prev_doc, yf_fetcher=yf_fetcher)
+    sources_report["YFINANCE_FEDWATCH"] = fedwatch_report
+
+    # Dynamically update FED_RATE card's next_release note with FedWatch summary (omit if unavailable)
+    if fomc_card is not None and isinstance(fomc_card.get("next_release"), dict):
+        fw_m_map = {str(m.get("period", "")): m for m in (fedwatch.get("meetings") or []) if isinstance(m, dict)}
+        nr_p = str(fomc_card["next_release"].get("period", ""))
+        fw_m = fw_m_map.get(nr_p)
+        if fw_m and fw_m.get("summary_text") and not fw_m.get("updating"):
+            base_nr_note = str(fomc_card["next_release"].get("note") or "").strip()
+            fw_txt = str(fw_m["summary_text"])
+            if fw_txt not in base_nr_note:
+                fomc_card["next_release"]["note"] = f"{base_nr_note}；{fw_txt}" if base_nr_note else fw_txt
+
+    # 5) Market Snapshot (DXY, USDTWD, GOLD, WTI, US10Y)
+    dgs10_rows: list[tuple[str, float | None]] | None = None
+    dgs10_source: str | None = None
+    if "DGS10" in fred_cache:
+        dgs10_rows = fred_cache["DGS10"]
+        dgs10_source = "FRED"
+    elif "DGS10" in fallback_series:
+        dgs10_rows = fallback_series["DGS10"]["rows"]
+        dgs10_source = fallback_series["DGS10"]["source_used"]
+    market_snapshot, snapshot_report = build_market_snapshot(
+        cal_cfg, dgs10_rows, dgs10_source, now, prev_doc, yf_fetcher=yf_fetcher
+    )
+    sources_report["YFINANCE_SNAPSHOT"] = snapshot_report
+
     published_keys = {(p.get("indicator_id", ""), p.get("period", "")) for p in past_filtered}
-    upcoming_sorted = _build_upcoming_calendar(cal_cfg, icsa_upcoming, now, published_keys)
+    upcoming_sorted = _build_upcoming_calendar(cal_cfg, icsa_upcoming, now, published_keys, fedwatch=fedwatch)
 
     cards_by_id = {c["id"]: c for c in cards_out}
-    overview = _build_overview_summary(cards_by_id)
+    overview = _build_overview_summary(
+        cards_by_id,
+        fedwatch=fedwatch,
+        market_snapshot=market_snapshot,
+        cal_cfg=cal_cfg,
+    )
 
     payload = {
         "version": 1,
@@ -2557,6 +3616,8 @@ def generate_macro_file(
             "fred_abort_reason": fred_abort_reason,
             "sources": sources_report,
             "indicators": indicators_report,
+            "fedwatch": fedwatch_report,
+            "market_snapshot": snapshot_report,
         },
         "timezone_notes": cal_cfg.get("timezone_notes") or {},
         "reaction_methodology": {
@@ -2566,6 +3627,8 @@ def generate_macro_file(
             "BTCUSDT": "公布前最後一根 UTC 日 K 收盤（08:00 台北）對公布後第一根 UTC 日 K 收盤報酬率",
         },
         "overview": overview,
+        "fedwatch": fedwatch,
+        "market_snapshot": market_snapshot,
         "indicators": cards_out,
         "calendar": {
             "upcoming": upcoming_sorted,

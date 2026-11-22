@@ -3639,9 +3639,13 @@
       .filter((it) => newsSelectedSentiment === "all" || it.sentiment === newsSelectedSentiment)
       .sort((a, b) => (Date.parse(b.published_at_utc || "") || 0) - (Date.parse(a.published_at_utc || "") || 0));
     if (highlightsEl) {
-      highlightsEl.innerHTML = star3Items.length > 0
+      const nextHiHtml = star3Items.length > 0
         ? star3Items.map(renderNewsRowHtml).join("")
         : '<div class="empty-state">目前篩選下無 ★★★ 重點消息。</div>';
+      if (highlightsEl._lastRenderedHtml !== nextHiHtml) {
+        highlightsEl.innerHTML = nextHiHtml;
+        highlightsEl._lastRenderedHtml = nextHiHtml;
+      }
     }
 
     // Filtered list (market + 9-category + symbol + importance + sentiment)
@@ -3668,9 +3672,22 @@
         : `${filtered.length} / ${issueItems.length} 則`;
     }
 
-    listEl.innerHTML = filtered.length > 0
+    const nextListHtml = filtered.length > 0
       ? filtered.map(renderNewsRowHtml).join("")
       : '<div class="empty-state">此篩選條件下沒有消息。</div>';
+    if (listEl._lastRenderedHtml !== nextListHtml) {
+      listEl.innerHTML = nextListHtml;
+      listEl._lastRenderedHtml = nextListHtml;
+    }
+
+    scanNewsGlossary();
+  }
+
+  function scanNewsGlossary() {
+    const g = window.SIGNAL_DESK_GLOSSARY;
+    if (!g || typeof g.scanContainers !== "function" || !g.isEnabled()) return;
+    g.scanContainers(document.getElementById("news-highlights-list"), ".news-row");
+    g.scanContainers(document.getElementById("news-list"), ".news-row");
   }
 
   function renderDataExtras() {
@@ -4273,6 +4290,16 @@
       }
     }
   });
+
+  if (window.SIGNAL_DESK_GLOSSARY && typeof window.SIGNAL_DESK_GLOSSARY.initToggle === "function") {
+    window.SIGNAL_DESK_GLOSSARY.initToggle("glossary-toggle-btn", () => {
+      const hi = document.getElementById("news-highlights-list");
+      const li = document.getElementById("news-list");
+      if (hi) hi._lastRenderedHtml = null;
+      if (li) li._lastRenderedHtml = null;
+      renderNewsView();
+    });
+  }
 
   applyRoute();
   refreshAll();

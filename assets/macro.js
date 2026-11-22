@@ -13,6 +13,30 @@
   let calPastMonth = "recent7"; // 預設：最近 7 天
   let expandedPastIds = new Set();
   let lastFocusEl = null;
+  let activeAssetImpactIdx = null;
+
+  const LS_STANCE_OPEN = "macro_overview_stance_open";
+  const LS_FEDWATCH_OPEN = "macro_fedwatch_open";
+  const LS_LOGIC_OPEN = "macro_logic_fold_open";
+
+  function getBoolPref(key, fallback) {
+    try {
+      const v = window.localStorage ? window.localStorage.getItem(key) : null;
+      if (v === "1") return true;
+      if (v === "0") return false;
+    } catch (_e) {
+      // ignore
+    }
+    return !!fallback;
+  }
+
+  function setBoolPref(key, flag) {
+    try {
+      if (window.localStorage) window.localStorage.setItem(key, flag ? "1" : "0");
+    } catch (_e) {
+      // ignore
+    }
+  }
 
   const INDICATOR_FILTER_GROUPS = {
     FED_RATE: ["FED_RATE"],
@@ -21,6 +45,7 @@
     PPI: ["PPI"],
     NFP: ["NFP", "UNRATE", "AVG_HOURLY_EARNINGS"],
     ICSA: ["ICSA"],
+    JOLTS: ["JOLTS"],
     GDP: ["GDP"],
     ISM_MFG: ["ISM_MFG"],
     ISM_SVC: ["ISM_SVC"],
@@ -457,12 +482,314 @@
     setTimeout(() => URL.revokeObjectURL(url), 4000);
   }
 
+  const FEDWATCH_BUCKET_DEFS = [
+    { key: "cut_2_plus", label: "降 2 碼以上" },
+    { key: "cut_1", label: "降 1 碼" },
+    { key: "hold", label: "維持" },
+    { key: "hike_1", label: "升 1 碼" },
+    { key: "hike_2_plus", label: "升 2 碼以上" },
+  ];
+
+  function fmtProbPct(val) {
+    const n = Number(val || 0);
+    return Math.abs(n - Math.round(n)) < 0.05 ? `${Math.round(n)}%` : `${n.toFixed(1)}%`;
+  }
+
+  function renderAssetImpacts(impacts) {
+    const list = Array.isArray(impacts) ? impacts : [];
+    const pillsEl = document.getElementById("macro-asset-impacts");
+    const detailEl = document.getElementById("macro-asset-detail");
+    if (!pillsEl) return;
+
+    if (!list.length) {
+      pillsEl.innerHTML = '<span class="muted" style="font-size:0.82rem;">對各資產影響：資料更新中</span>';
+      if (detailEl) detailEl.classList.add("hidden");
+      return;
+    }
+
+    if (activeAssetImpactIdx != null && (activeAssetImpactIdx < 0 || activeAssetImpactIdx >= list.length)) {
+      activeAssetImpactIdx = null;
+    }
+
+    pillsEl.innerHTML = list
+      .map((imp, idx) => {
+        const isSel = activeAssetImpactIdx === idx;
+        const cls = imp.cls || "neut";
+        return `
+          <button type="button" class="macro-asset-pill${isSel ? " active" : ""}" data-asset-idx="${idx}" aria-expanded="${isSel ? "true" : "false"}">
+            <span class="macro-asset-pill-name">${escHtml(imp.asset)}</span>
+            <span class="macro-pill-tag ${escAttr(cls)}">${escHtml(imp.tag || "中性")}</span>
+          </button>
+        `;
+      })
+      .join("");
+
+    if (detailEl) {
+      if (activeAssetImpactIdx != null && list[activeAssetImpactIdx]) {
+        const imp = list[activeAssetImpactIdx];
+        detailEl.innerHTML = `
+          <div class="macro-asset-detail-head">
+            <strong>${escHtml(imp.asset)}</strong>
+            ${imp.sub ? `<span class="muted">${escHtml(imp.sub)}</span>` : ""}
+            <span class="macro-pill-tag ${escAttr(imp.cls || "neut")}">${escHtml(imp.tag || "")}</span>
+          </div>
+          <p class="macro-asset-detail-note">${escHtml(imp.note || "資料不足，暫不判斷")}</p>
+        `;
+        detailEl.classList.remove("hidden");
+      } else {
+        detailEl.innerHTML = "";
+        detailEl.classList.add("hidden");
+      }
+    }
+  }
+
+  function buildSnapshotFallbackItems() {
+    return [
+      { id: "DXY", name_zh: "美元指數", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
+      { id: "USDTWD", name_zh: "美元／台幣", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
+      { id: "GOLD", name_zh: "黃金", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
+      { id: "WTI", name_zh: "原油 (WTI)", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
+      { id: "US10Y", name_zh: "美國 10 年期殖利率", last_str: "資料更新中", chg_1d_pct: null, verdict: "na", verdict_tag: "資料更新中", updating: true },
+    ];
+  }
+
+  function renderMarketSnapshot() {
+    const snap = cachedMacro && cachedMacro.market_snapshot;
+    const gridEl = document.getElementById("macro-snapshot-grid");
+    const timeEl = document.getElementById("macro-snapshot-time");
+    if (!gridEl) return;
+
+    const hhmm = (snap && snap.hhmm_taipei) || (cachedMacro && cachedMacro.updated_at_taipei ? String(cachedMacro.updated_at_taipei).slice(11, 16) : "--:--");
+    if (timeEl) timeEl.textContent = `資料時間：台北 ${hhmm}`;
+
+    const items = snap && Array.isArray(snap.items) && snap.items.length ? snap.items : buildSnapshotFallbackItems();
+    gridEl.innerHTML = items
+      .map((it) => {
+        const hasVal = it.last != null && it.last_str !== "資料更新中";
+        let chgHtml = '<span class="muted">資料更新中</span>';
+        if (hasVal) {
+          if (it.id === "US10Y" && it.chg_1d_pp != null) {
+            const pp = Number(it.chg_1d_pp);
+            const cls = pp > 0 ? "chg-up" : pp < 0 ? "chg-down" : "muted";
+            const sign = pp > 0 ? "+" : "";
+            chgHtml = `<span class="macro-snap-chg ${cls}">${sign}${pp.toFixed(2)}pp</span>`;
+          } else if (it.chg_1d_pct != null) {
+            const pct = Number(it.chg_1d_pct);
+            const cls = pct > 0 ? "chg-up" : pct < 0 ? "chg-down" : "muted";
+            const sign = pct > 0 ? "+" : "";
+            chgHtml = `<span class="macro-snap-chg ${cls}">${sign}${pct.toFixed(2)}%</span>`;
+          }
+        }
+        const tagText = it.updating && !hasVal ? "資料更新中" : (it.verdict_tag || "中性");
+        const tagCls = it.verdict || "neut";
+        return `
+          <button type="button" class="macro-snap-card" data-snap-id="${escAttr(it.id)}">
+            <div class="macro-snap-name">${escHtml(it.name_zh || it.id)}</div>
+            <div class="macro-snap-val-row macro-num">
+              <span class="macro-snap-val">${escHtml(it.last_str || "資料更新中")}</span>
+              ${hasVal ? chgHtml : ""}
+            </div>
+            <div class="macro-snap-verdict"><span class="macro-pill-tag ${escAttr(tagCls)}">${escHtml(tagText)}</span></div>
+          </button>
+        `;
+      })
+      .join("");
+  }
+
+  function openSnapshotModal(snapId) {
+    const snap = cachedMacro && cachedMacro.market_snapshot;
+    const items = (snap && Array.isArray(snap.items) && snap.items) || buildSnapshotFallbackItems();
+    const it = items.find((x) => x.id === snapId);
+    if (!it) return;
+    const backdrop = document.getElementById("macro-hist-modal-backdrop");
+    const titleEl = document.getElementById("macro-hist-modal-title");
+    const bodyEl = document.getElementById("macro-hist-modal-body");
+    lastFocusEl = document.activeElement;
+    titleEl.textContent = `${it.name_zh || it.id}（${it.symbol || ""}）｜市場快照詳情`;
+
+    const hasVal = it.last != null && it.last_str !== "資料更新中";
+    const chg20Str =
+      it.chg_20d_pct != null
+        ? (it.id === "US10Y" && it.chg_20d_pp != null
+            ? `${it.chg_20d_pp > 0 ? "+" : ""}${Number(it.chg_20d_pp).toFixed(2)} 個百分點（${it.chg_20d_pct > 0 ? "+" : ""}${Number(it.chg_20d_pct).toFixed(2)}%）`
+            : `${it.chg_20d_pct > 0 ? "+" : ""}${Number(it.chg_20d_pct).toFixed(2)}%`)
+        : "資料更新中";
+    const posStr =
+      it.range_1y_pos_pct != null
+        ? `位於一年區間 ${Math.round(Number(it.range_1y_pos_pct))}% 位置（低 ${escHtml(it.range_1y_low)} ～ 高 ${escHtml(it.range_1y_high)}）`
+        : "資料更新中";
+    const posPct = it.range_1y_pos_pct != null ? Math.max(0, Math.min(100, Number(it.range_1y_pos_pct))) : 0;
+
+    bodyEl.innerHTML = `
+      <div class="macro-snap-modal-top">
+        <div>
+          <div class="muted" style="font-size:0.8rem;">最新報價（${escHtml(it.as_of_date || "--")}）</div>
+          <div class="macro-ind-val macro-num">${escHtml(it.last_str || "資料更新中")}${it.unit && it.unit !== "%" ? ` <span class="macro-ind-unit">${escHtml(it.unit)}</span>` : ""}</div>
+        </div>
+        <span class="macro-pill-tag ${escAttr(it.verdict || "neut")}">${escHtml(it.verdict_tag || "中性")}</span>
+      </div>
+      ${it.updating ? `<div class="macro-updating-pill" style="margin-bottom:10px;">⚠ 資料更新中（暫保留前次資料）</div>` : ""}
+      <div class="macro-snap-modal-kv">
+        <div><span class="k">近 20 日變動</span><span class="v macro-num">${escHtml(chg20Str)}</span></div>
+        <div><span class="k">近一年區間位置</span><span class="v macro-num">${posStr}</span></div>
+      </div>
+      ${hasVal && it.range_1y_pos_pct != null ? `
+        <div class="macro-range-bar-wrap" aria-hidden="true">
+          <div class="macro-range-bar-track"><div class="macro-range-bar-fill" style="width:${posPct}%"></div><div class="macro-range-bar-dot" style="left:${posPct}%"></div></div>
+        </div>
+      ` : ""}
+      <div class="macro-spark-box" style="margin:12px 0;">
+        ${buildSparklineSvg(it.closes_90d)}
+        <div class="macro-spark-cap"><span>近 90 個交易日走勢</span><span>最新 ${escHtml(it.last_str || "--")}</span></div>
+      </div>
+      <div class="macro-snap-modal-desc">
+        <div><strong>是什麼：</strong>${escHtml(it.what_is || "—")}</div>
+        <div><strong>判定理由（對台股／加密貨幣視角）：</strong>${escHtml(it.verdict_reason || "—")}</div>
+        ${it.rule_rationale ? `<div class="muted" style="font-size:0.8rem;"><strong>門檻說明：</strong>${escHtml(it.rule_rationale)}</div>` : ""}
+        <div class="muted" style="font-size:0.78rem;">來源：${escHtml(it.source_used || "資料更新中")}｜更新時間（台北）：${escHtml(it.as_of_taipei || "--")}</div>
+      </div>
+    `;
+    backdrop.classList.remove("hidden");
+    if (document.body && document.body.style) document.body.style.overflow = "hidden";
+    const closeBtn = document.getElementById("macro-hist-modal-close");
+    if (closeBtn && closeBtn.focus) closeBtn.focus();
+  }
+
+  function renderFedWatch() {
+    const fw = cachedMacro && cachedMacro.fedwatch;
+    const upcoming = (cachedMacro.calendar && cachedMacro.calendar.upcoming) || [];
+    const nowMs = Date.now();
+    const nextFomc = upcoming.find(
+      (e) => e.indicator_id === "FED_RATE" && !String(e.id || "").includes("blackout") && !String(e.id || "").includes("press") && !String(e.id || "").includes("fomc-min") && !String(e.id || "").includes("beige") && new Date(e.time_utc).getTime() > nowMs
+    );
+    const fomcLineEl = document.getElementById("macro-fomc-next-line");
+    if (fomcLineEl) {
+      if (nextFomc) {
+        fomcLineEl.innerHTML = `下次 FOMC：<strong>${escHtml(nextFomc.short_taipei)}</strong> · <span class="macro-cd" data-cd="${escAttr(nextFomc.time_taipei_iso)}">${escHtml(formatCountdown(nextFomc.time_taipei_iso, nowMs).text)}</span>`;
+      } else {
+        fomcLineEl.textContent = "下次 FOMC：載入排程中";
+      }
+    }
+
+    const sumEl = document.getElementById("macro-fedwatch-summary");
+    const panelEl = document.getElementById("macro-fedwatch-panel");
+    const toggleBtn = document.getElementById("macro-fedwatch-toggle");
+    const isOpen = getBoolPref(LS_FEDWATCH_OPEN, false);
+    if (toggleBtn) {
+      toggleBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      toggleBtn.textContent = isOpen ? "收起 ▴" : "展開 ▾";
+    }
+    if (panelEl) panelEl.classList.toggle("hidden", !isOpen);
+
+    const meetings = (fw && Array.isArray(fw.meetings) && fw.meetings) || [];
+    if (!meetings.length) {
+      if (sumEl) sumEl.textContent = "FedWatch：資料更新中";
+      if (panelEl) {
+        panelEl.innerHTML = '<div class="muted" style="font-size:0.84rem;padding:8px 0;">FedWatch 期貨利率資料更新中（請稍候或執行每日更新）。</div>';
+      }
+      return;
+    }
+
+    const m0 = meetings[0];
+    const statusBadge = fw.updating
+      ? ' <span class="macro-updating-pill" style="margin:0 0 0 6px;">資料更新中</span>'
+      : (String(fw.source_used || "").includes("手動更新")
+          ? ' <span class="macro-manual-pill">手動更新</span>'
+          : "");
+    if (sumEl) {
+      sumEl.innerHTML = `${escHtml(m0.summary_text || "FedWatch 市場押注")}${statusBadge}`;
+    }
+
+    if (panelEl) {
+      const meetingCards = meetings
+        .map((m) => {
+          const probs = m.probabilities || {};
+          let otherProb = 0;
+          let maxKey = null;
+          let maxVal = -1;
+          const rows = [];
+          FEDWATCH_BUCKET_DEFS.forEach((b) => {
+            const p = Number(probs[b.key] || 0);
+            if (p > maxVal) {
+              maxVal = p;
+              maxKey = b.key;
+            }
+            if (p > 0.5) {
+              rows.push({ key: b.key, label: b.label, prob: p });
+            } else if (p > 0) {
+              otherProb += p;
+            }
+          });
+          if (otherProb > 0.05) {
+            rows.push({ key: "other", label: "其他", prob: Math.round(otherProb * 10) / 10 });
+          }
+          const barsHtml = rows
+            .map((r) => {
+              const isTop = r.key === maxKey;
+              const w = Math.max(2, Math.min(100, r.prob));
+              return `
+                <div class="macro-fw-row${isTop ? " top" : ""}">
+                  <span class="macro-fw-lbl">${escHtml(r.label)}</span>
+                  <div class="macro-fw-track"><div class="macro-fw-fill${isTop ? " top" : ""}" style="width:${w}%"></div></div>
+                  <span class="macro-fw-pct macro-num">${escHtml(fmtProbPct(r.prob))}</span>
+                </div>
+              `;
+            })
+            .join("");
+          const impRateStr = m.implied_rate != null ? `${Number(m.implied_rate).toFixed(3)}%` : "--";
+          return `
+            <div class="macro-fw-card">
+              <div class="macro-fw-card-head">
+                <strong>${escHtml(m.date_taipei || m.date)}｜${escHtml(m.title || "FOMC 會議")}</strong>
+                <span class="muted macro-num" style="font-size:0.78rem;">目前區間 ${escHtml(m.current_range || fw.current_range || "--")} · 隱含利率 ${escHtml(impRateStr)}</span>
+              </div>
+              <div class="macro-fw-bars">${barsHtml}</div>
+            </div>
+          `;
+        })
+        .join("");
+
+      panelEl.innerHTML = `
+        <div class="macro-fw-grid">${meetingCards}</div>
+        <div class="macro-fw-foot">
+          <span>${escHtml(fw.disclaimer || "機率由聯邦基金期貨價格推算，方法同 CME FedWatch；僅代表市場押注，不是預測。")}</span>
+          <span class="muted">資料時間（台北）：${escHtml(fw.as_of_taipei || "--")}｜來源：${escHtml(fw.source_used || "資料更新中")}</span>
+        </div>
+      `;
+    }
+  }
+
+  function applyOverviewStanceFold() {
+    const isOpen = getBoolPref(LS_STANCE_OPEN, false);
+    const btn = document.getElementById("macro-stance-toggle");
+    const box = document.getElementById("macro-stance-detail-box");
+    const brief = document.getElementById("macro-stance-brief");
+    if (btn) {
+      btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      btn.textContent = isOpen ? "收起 ▴" : "說明 ▾";
+    }
+    if (box) box.classList.toggle("hidden", !isOpen);
+    if (brief) brief.classList.toggle("hidden", isOpen);
+  }
+
   function renderOverview() {
     const ov = cachedMacro.overview || {};
     const badge = document.getElementById("macro-stance-badge");
     badge.className = `macro-pill-tag macro-stance-xl ${ov.stance_cls || "neut"}`;
     badge.textContent = ov.stance || "中性觀察";
-    document.getElementById("macro-stance-desc").textContent = ov.stance_desc || "";
+    const fullDesc = ov.stance_desc || "";
+    const descEl = document.getElementById("macro-stance-desc");
+    if (descEl) descEl.textContent = fullDesc;
+    const briefEl = document.getElementById("macro-stance-brief");
+    if (briefEl) {
+      const firstSent = fullDesc.split("。")[0];
+      briefEl.textContent = firstSent ? `${firstSent}。` : "點擊下方標籤查看各資產影響判讀。";
+    }
+    applyOverviewStanceFold();
+
+    renderAssetImpacts(ov.asset_impacts || []);
+    renderMarketSnapshot();
+    renderFedWatch();
 
     const upcoming = (cachedMacro.calendar && cachedMacro.calendar.upcoming) || [];
     const nowMs = Date.now();
@@ -511,19 +838,6 @@
         `;
       })
       .join("");
-
-    const impacts = ov.asset_impacts || [];
-    document.getElementById("macro-asset-impacts").innerHTML = impacts
-      .map(
-        (imp) => `
-        <div class="macro-asset-row">
-          <div class="macro-asset-name">${escHtml(imp.asset)}<span class="macro-asset-sub">${escHtml(imp.sub || "")}</span></div>
-          <span class="macro-pill-tag ${escAttr(imp.cls || "neut")}">${escHtml(imp.tag || "")}</span>
-          <p class="macro-asset-note">${escHtml(imp.note || "")}</p>
-        </div>
-      `
-      )
-      .join("");
   }
 
   function renderIndicators() {
@@ -550,6 +864,7 @@
         ["PPI", "PPI 生產者物價"],
         ["NFP", "非農 / 失業率 / 時薪"],
         ["ICSA", "初領失業金人數"],
+        ["JOLTS", "JOLTS 職位空缺"],
         ["GDP", "GDP 成長率"],
         ["ISM_MFG", "ISM 製造業 PMI"],
         ["ISM_SVC", "ISM 服務業 PMI"],
@@ -684,6 +999,30 @@
     tickCountdowns();
   }
 
+  function scanMacroGlossary() {
+    const g = window.SIGNAL_DESK_GLOSSARY;
+    if (!g || typeof g.scanContainers !== "function" || !g.isEnabled()) return;
+    g.scanContainers(document.getElementById("macro-view-overview"), ".macro-overview-hero-card, #macro-fed-section, #macro-logic-fold");
+    g.scanContainers(document.getElementById("macro-view-data"), ".macro-ind-card");
+    g.scanContainers(document.getElementById("macro-view-calendar"), ".macro-cal-row, .macro-cal-past-item");
+  }
+
+  function openGlossaryModal() {
+    const g = window.SIGNAL_DESK_GLOSSARY;
+    if (!g) return;
+    const backdrop = document.getElementById("macro-hist-modal-backdrop");
+    const titleEl = document.getElementById("macro-hist-modal-title");
+    const bodyEl = document.getElementById("macro-hist-modal-body");
+    if (!backdrop || !titleEl || !bodyEl) return;
+    lastFocusEl = document.activeElement;
+    titleEl.textContent = `交易與總經名詞小辭典（共 ${g.TERMS.length} 則）`;
+    g.renderGlossaryModalBody(bodyEl);
+    backdrop.classList.remove("hidden");
+    if (document.body && document.body.style) document.body.style.overflow = "hidden";
+    const closeBtn = document.getElementById("macro-hist-modal-close");
+    if (closeBtn && closeBtn.focus) closeBtn.focus();
+  }
+
   function renderAll() {
     if (!cachedMacro) return;
     const updEl = document.getElementById("macro-updated-at");
@@ -724,10 +1063,14 @@
         : "--";
     }
 
+    const g = window.SIGNAL_DESK_GLOSSARY;
+    if (g && typeof g.unwrapAll === "function") g.unwrapAll(document);
+
     renderOverview();
     renderIndicators();
     renderCalendar();
     tickCountdowns();
+    scanMacroGlossary();
   }
 
   function switchMacroTab(tabName) {
@@ -809,6 +1152,59 @@
 
     const refreshBtn = document.getElementById("macro-refresh-btn");
     if (refreshBtn) refreshBtn.addEventListener("click", refreshMacro);
+
+    const stanceToggle = document.getElementById("macro-stance-toggle");
+    if (stanceToggle) {
+      stanceToggle.addEventListener("click", () => {
+        setBoolPref(LS_STANCE_OPEN, !getBoolPref(LS_STANCE_OPEN, false));
+        applyOverviewStanceFold();
+      });
+    }
+
+    const fwToggle = document.getElementById("macro-fedwatch-toggle");
+    if (fwToggle) {
+      fwToggle.addEventListener("click", () => {
+        setBoolPref(LS_FEDWATCH_OPEN, !getBoolPref(LS_FEDWATCH_OPEN, false));
+        if (cachedMacro) renderFedWatch();
+      });
+    }
+
+    const logicFold = document.getElementById("macro-logic-fold");
+    if (logicFold) {
+      logicFold.open = getBoolPref(LS_LOGIC_OPEN, false);
+      logicFold.addEventListener("toggle", () => {
+        setBoolPref(LS_LOGIC_OPEN, !!logicFold.open);
+      });
+    }
+
+    const assetImpactsEl = document.getElementById("macro-asset-impacts");
+    if (assetImpactsEl) {
+      assetImpactsEl.addEventListener("click", (e) => {
+        const btn = e.target.closest ? e.target.closest(".macro-asset-pill") : null;
+        if (!btn) return;
+        const idx = Number(btn.getAttribute("data-asset-idx"));
+        if (!Number.isFinite(idx)) return;
+        activeAssetImpactIdx = activeAssetImpactIdx === idx ? null : idx;
+        renderAssetImpacts((cachedMacro && cachedMacro.overview && cachedMacro.overview.asset_impacts) || []);
+        scanMacroGlossary();
+      });
+    }
+
+    const snapGridEl = document.getElementById("macro-snapshot-grid");
+    if (snapGridEl) {
+      snapGridEl.addEventListener("click", (e) => {
+        const card = e.target.closest ? e.target.closest(".macro-snap-card") : null;
+        if (!card) return;
+        openSnapshotModal(card.getAttribute("data-snap-id"));
+      });
+    }
+
+    const glossaryOpenBtn = document.getElementById("macro-glossary-open");
+    if (glossaryOpenBtn) glossaryOpenBtn.addEventListener("click", openGlossaryModal);
+
+    if (window.SIGNAL_DESK_GLOSSARY && typeof window.SIGNAL_DESK_GLOSSARY.initToggle === "function") {
+      window.SIGNAL_DESK_GLOSSARY.initToggle("glossary-toggle-btn", scanMacroGlossary);
+    }
 
     const rangeTabs = document.getElementById("macro-cal-range-tabs");
     if (rangeTabs) {
@@ -913,6 +1309,11 @@
     formatCountdown,
     renderIndicatorCardHtml,
     buildHistModalBodyHtml,
+    renderAssetImpacts,
+    renderMarketSnapshot,
+    renderFedWatch,
+    openSnapshotModal,
+    openGlossaryModal,
     switchMacroTab,
     openHistModal,
     closeHistModal,

@@ -14,9 +14,16 @@ import pytest
 from src.data.models import OHLCVBar
 from src.jobs.ta import _save_history_1d_store
 from src.macro import (
+    _build_overview_summary,
+    _evaluate_verdict,
+    build_fedwatch_data,
+    build_market_snapshot,
+    compute_fedwatch_from_prices,
+    compute_fomc_blackout_start,
     compute_market_reactions,
     generate_macro_file,
     load_macro_calendar,
+    zq_contract_symbol,
 )
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -91,6 +98,11 @@ def _build_synthetic_fred_csv(series_id: str) -> str:
             elif series_id == "UNRATE":
                 val = 4.0 + (mo % 3) * 0.1
                 lines.append(f"{yr:04d}-{mo:02d}-01,{val:.1f}")
+            elif series_id == "JTSJOL":
+                if yr == 2026 and mo > 9:
+                    continue
+                val = 7400 + (mo % 4) * 150
+                lines.append(f"{yr:04d}-{mo:02d}-01,{val:.0f}")
             elif series_id in ("CPIAUCSL",) and yr == 2025 and mo == 10:
                 lines.append(f"{yr:04d}-{mo:02d}-01,")
             else:
@@ -178,6 +190,35 @@ def test_market_reaction_calculation_exact_conventions() -> None:
     assert rx_fomc["BTCUSDT"] == 5.0  # Oct 28 bar (closes Oct 29 00:00Z) vs Oct 27 bar (closed Oct 28 00:00Z)
 
 
+def _make_fake_yf_fetcher(fail_all: bool = False) -> Any:
+    def _fetch(symbol: str, period: str = "1y") -> list[tuple[str, float]]:
+        if fail_all:
+            raise ConnectionError("yfinance blocked")
+        if symbol == "ZQZ26.CBT":
+            return [("2026-11-20", 95.96)]
+        if symbol == "ZQG27.CBT":
+            return [("2026-11-20", 95.755)]
+        if symbol.startswith("ZQ"):
+            return [("2026-11-20", 95.80)]
+        base_map = {
+            "DX-Y.NYB": (101.0, 103.5),
+            "TWD=X": (32.2, 32.9),
+            "GC=F": (3350.0, 3520.0),
+            "CL=F": (82.0, 84.0),
+            "^TNX": (4.55, 4.92),
+        }
+        lo, hi = base_map.get(symbol, (100.0, 102.0))
+        d0 = date(2025, 11, 20)
+        out: list[tuple[str, float]] = []
+        for i in range(252):
+            d = d0 + timedelta(days=int(i * 1.44))
+            val = lo + (hi - lo) * (i / 251.0)
+            out.append((d.isoformat(), round(val, 4)))
+        return out
+
+    return _fetch
+
+
 def test_macro_json_generation_and_failure_preservation(tmp_path: Path) -> None:
     _write_synthetic_history_1d(tmp_path)
 
@@ -197,19 +238,23 @@ def test_macro_json_generation_and_failure_preservation(tmp_path: Path) -> None:
         http_get=_mock_get,
         now_utc=now,
         use_local_cache=False,
+        yf_fetcher=_make_fake_yf_fetcher(),
     )
     assert (tmp_path / "macro.json").exists()
     assert doc["status"] == "ok"
     assert doc["updating_indicators"] == []
-    assert len(doc["indicators"]) == 16
+    assert len(doc["indicators"]) == 17
 
     by_id = {c["id"]: c for c in doc["indicators"]}
     assert set(by_id.keys()) == {
         "FED_RATE", "DGS2", "DGS10",
         "CPI", "CORE_CPI", "PCE", "CORE_PCE", "PPI",
-        "NFP", "UNRATE", "AVG_HOURLY_EARNINGS", "ICSA",
+        "NFP", "UNRATE", "AVG_HOURLY_EARNINGS", "ICSA", "JOLTS",
         "GDP", "ISM_MFG", "ISM_SVC", "RETAIL_SALES",
     }
+    assert len(doc["overview"]["asset_impacts"]) == 7
+    assert len(doc["fedwatch"]["meetings"]) == 2
+    assert len(doc["market_snapshot"]["items"]) == 5
     for cid, card in by_id.items():
         assert card["value_str"], f"{cid} missing value_str"
         assert card["prev_str"], f"{cid} missing prev_str"
@@ -240,6 +285,7 @@ def test_macro_json_generation_and_failure_preservation(tmp_path: Path) -> None:
         http_get=_failing_get,
         now_utc=now + timedelta(days=1),
         use_local_cache=False,
+        yf_fetcher=_make_fake_yf_fetcher(),
     )
     assert doc2["status"] == "partial"
     assert set(doc2["updating_indicators"]) == {"CPI", "ISM_MFG"}
@@ -265,11 +311,13 @@ def test_frontend_macro_html_nav_versions_and_calendar_defaults() -> None:
     # Nav & cache-busting checks
     assert "./macro.html" in index_html
     assert "宏觀數據" in index_html
-    assert "?v=20261121f" in index_html
-    assert "?v=20261121f" in macro_html
-    assert "./assets/style.css?v=20261121f" in macro_html
-    assert "./assets/config.js?v=20261121f" in macro_html
-    assert "./assets/macro.js?v=20261121f" in macro_html
+    assert "?v=20261122a" in index_html
+    assert "?v=20261122a" in macro_html
+    assert "./assets/style.css?v=20261122a" in macro_html
+    assert "./assets/config.js?v=20261122a" in macro_html
+    assert "./assets/glossary.js?v=20261122a" in macro_html
+    assert "./assets/macro.js?v=20261122a" in macro_html
+    assert "./assets/glossary.js?v=20261122a" in index_html
     assert "./index.html#/wall" in macro_html
     assert 'href="/' not in macro_html
     assert 'src="/' not in macro_html
@@ -416,7 +464,9 @@ def test_real_data_macro_json_and_calendar_yaml() -> None:
     macro_path = ROOT_DIR / "data" / "macro.json"
     assert macro_path.exists(), "Expected committed data/macro.json"
     doc = json.loads(macro_path.read_text(encoding="utf-8"))
-    assert len(doc["indicators"]) == 16
+    assert len(doc["indicators"]) == 17
+    assert len(doc["overview"]["asset_impacts"]) == 7
+    assert "fedwatch" in doc and "market_snapshot" in doc
     assert len(doc["calendar"]["upcoming"]) >= 20
     assert len(doc["calendar"]["past"]) >= 50
     for c in doc["indicators"]:
@@ -440,11 +490,14 @@ def _build_synthetic_bls_json() -> str:
         "CES0000000001": lambda i: f"{154000 + i * 120}",
         "LNS14000000": lambda i: f"{3.9 if i % 2 == 0 else 4.1:.1f}",
         "CES0500000003": lambda i: f"{34.00 + i * 0.09:.2f}",
+        "JTS000000000000000JOL": lambda i: f"{7400 + (i % 4) * 150}",
     }
     series_list = []
     for sid, fn in series_defs.items():
         data_rows = []
         for idx, (yr, mo) in enumerate(months):
+            if sid == "JTS000000000000000JOL" and (yr, mo) > (2026, 9):
+                continue
             data_rows.append({"year": str(yr), "period": f"M{mo:02d}", "value": fn(idx)})
         series_list.append({"seriesID": sid, "data": list(reversed(data_rows))})
     return json.dumps({"status": "REQUEST_SUCCEEDED", "Results": {"series": series_list}})
@@ -566,18 +619,19 @@ def test_fred_timeout_triggers_fallback_without_retrying_remaining_fred(tmp_path
         http_get=_timeout_fred_handler,
         now_utc=now,
         use_local_cache=False,
+        yf_fetcher=_make_fake_yf_fetcher(),
     )
 
-    # First FRED series timed out (retried at most once = 2 attempts), zero calls to remaining 14 FRED series
+    # First FRED series timed out (retried at most once = 2 attempts), zero calls to remaining 15 FRED series
     assert fred_calls == ["DFEDTARU", "DFEDTARU"]
     assert all(t <= 10 for t in seen_timeouts)
     assert doc["status"] == "ok"
     assert doc["updating_indicators"] == []
-    assert len(doc["indicators"]) == 16
+    assert len(doc["indicators"]) == 17
     assert doc["fetch_report"]["fred_aborted"] is True
     assert doc["fetch_report"]["sources"]["FRED"]["status"] == "failed"
     assert doc["fetch_report"]["sources"]["FRED"]["attempts"] == 1
-    assert len(doc["fetch_report"]["sources"]["FRED"]["series_skipped"]) == 14
+    assert len(doc["fetch_report"]["sources"]["FRED"]["series_skipped"]) == 15
 
     by_id = {c["id"]: c for c in doc["indicators"]}
     assert by_id["FED_RATE"]["source_used"] == "FOMC 決議紀錄（備用）"
@@ -585,6 +639,7 @@ def test_fred_timeout_triggers_fallback_without_retrying_remaining_fred(tmp_path
     assert by_id["DGS10"]["source_used"] == "美國財政部（備用）"
     assert by_id["CPI"]["source_used"] == "BLS（備用）"
     assert by_id["NFP"]["source_used"] == "BLS（備用）"
+    assert by_id["JOLTS"]["source_used"] == "BLS（備用）"
     assert by_id["PCE"]["source_used"] == "DBnomics BEA（備用）"
     assert by_id["GDP"]["source_used"] == "DBnomics BEA（備用）"
     assert by_id["RETAIL_SALES"]["source_used"] == "美國普查局 Census（備用）"
@@ -612,7 +667,7 @@ def test_fallback_conversion_matches_fred_conventions(tmp_path: Path) -> None:
     dir_a = tmp_path / "run_fred"
     _write_synthetic_history_1d(dir_a)
     now = datetime(2026, 11, 21, 1, 30, tzinfo=timezone.utc)
-    doc_a = generate_macro_file(out_dir=dir_a, http_get=_fred_only, now_utc=now, use_local_cache=False)
+    doc_a = generate_macro_file(out_dir=dir_a, http_get=_fred_only, now_utc=now, use_local_cache=False, yf_fetcher=_make_fake_yf_fetcher())
 
     # Extract exact FRED observations from synthetic CSVs to mirror them inside fallback payloads
     def _csv_to_ym_vals(sid: str) -> list[tuple[str, float]]:
@@ -635,6 +690,7 @@ def test_fallback_conversion_matches_fred_conventions(tmp_path: Path) -> None:
         ("NFP", "PAYEMS", "CES0000000001"),
         ("UNRATE", "UNRATE", "LNS14000000"),
         ("AVG_HOURLY_EARNINGS", "CES0500000003", "CES0500000003"),
+        ("JOLTS", "JTSJOL", "JTS000000000000000JOL"),
     ):
         data_rows = []
         for d_s, val in _csv_to_ym_vals(fred_sid):
@@ -699,12 +755,231 @@ def test_fallback_conversion_matches_fred_conventions(tmp_path: Path) -> None:
 
     dir_b = tmp_path / "run_fb"
     _write_synthetic_history_1d(dir_b)
-    doc_b = generate_macro_file(out_dir=dir_b, http_get=_fallback_identical, now_utc=now, use_local_cache=False)
+    doc_b = generate_macro_file(out_dir=dir_b, http_get=_fallback_identical, now_utc=now, use_local_cache=False, yf_fetcher=_make_fake_yf_fetcher())
     assert doc_b["status"] == "ok"
 
     by_a = {c["id"]: c for c in doc_a["indicators"]}
     by_b = {c["id"]: c for c in doc_b["indicators"]}
-    for ind_id in ("DGS2", "DGS10", "CPI", "CORE_CPI", "PCE", "CORE_PCE", "PPI", "NFP", "UNRATE", "AVG_HOURLY_EARNINGS", "ICSA", "GDP", "RETAIL_SALES"):
+    for ind_id in ("DGS2", "DGS10", "CPI", "CORE_CPI", "PCE", "CORE_PCE", "PPI", "NFP", "UNRATE", "AVG_HOURLY_EARNINGS", "ICSA", "JOLTS", "GDP", "RETAIL_SALES"):
         assert by_b[ind_id]["value_str"] == by_a[ind_id]["value_str"], f"{ind_id} value mismatch"
         assert by_b[ind_id]["prev_str"] == by_a[ind_id]["prev_str"], f"{ind_id} prev mismatch"
         assert by_b[ind_id]["change_str"] == by_a[ind_id]["change_str"], f"{ind_id} change mismatch"
+
+
+def test_fedwatch_algorithm_cut_eom_chaining_and_manual_fallback() -> None:
+    # 1) +0.93 hikes scenario on Dec 9, 2026 (31 days: 9 before, 22 after; r_pre=3.875)
+    # r_post = 3.875 + 0.93*0.25 = 4.1075 -> implied_avg = (9*3.875 + 22*4.1075)/31 = 4.04 -> P = 95.96
+    m_dec = {"period": "2026-12", "title": "FOMC 利率決議", "release_et": "2026-12-09T14:00:00"}
+    m_jan = {"period": "2027-01", "title": "FOMC 利率決議", "release_et": "2027-01-27T14:00:00"}
+    fw_hike = compute_fedwatch_from_prices(
+        [m_dec, m_jan],
+        current_low=3.75,
+        current_high=4.00,
+        prices_by_symbol={"ZQZ26.CBT": 95.96, "ZQG27.CBT": 95.755},
+        as_of_taipei="2026-11-21 15:00",
+    )
+    dec_res, jan_res = fw_hike["meetings"]
+    assert dec_res["contract_symbol"] == "ZQZ26.CBT"
+    assert dec_res["used_next_month_contract"] is False
+    assert dec_res["probabilities"]["hike_1"] == 93.0
+    assert dec_res["probabilities"]["hold"] == 7.0
+    assert "升 1 碼 93%｜維持 7%" in dec_res["summary_text"]
+
+    # Jan 27 is within last 7 days of Jan -> must use Feb contract ZQG27.CBT!
+    assert jan_res["contract_symbol"] == "ZQG27.CBT"
+    assert jan_res["used_next_month_contract"] is True
+    assert jan_res["implied_rate"] == 4.245  # 100 - 95.755
+    assert jan_res["probabilities"]["hike_1"] == 52.0
+    assert jan_res["probabilities"]["hike_2_plus"] == 48.0
+
+    # 2) Rate cut scenario: expected -0.60 cuts -> cut_1=60%, hold=40%
+    # r_post = 3.875 - 0.60*0.25 = 3.725 -> implied_avg = (9*3.875 + 22*3.725)/31 = 3.768548 -> P = 96.231452
+    fw_cut = compute_fedwatch_from_prices(
+        [m_dec],
+        current_low=3.75,
+        current_high=4.00,
+        prices_by_symbol={"ZQZ26.CBT": 96.2314516},
+        as_of_taipei="2026-11-21 15:00",
+    )
+    assert fw_cut["meetings"][0]["probabilities"]["cut_1"] == 60.0
+    assert fw_cut["meetings"][0]["probabilities"]["hold"] == 40.0
+
+    # 3) Sequential chaining across 2 non-EOM meetings (e.g. Dec 9 + Mar 17)
+    m_mar = {"period": "2027-03", "title": "FOMC 利率決議", "release_et": "2027-03-17T14:00:00"}
+    # Dec r_post = 4.1075; Mar (31 days: 17 before at 4.1075, 14 after at 4.3575) -> avg = (17*4.1075 + 14*4.3575)/31 = 4.220403 -> P = 95.779597
+    fw_chain = compute_fedwatch_from_prices(
+        [m_dec, m_mar],
+        current_low=3.75,
+        current_high=4.00,
+        prices_by_symbol={"ZQZ26.CBT": 95.96, "ZQH27.CBT": 95.7795968},
+        as_of_taipei="2026-11-21 15:00",
+    )
+    assert abs(fw_chain["meetings"][1]["implied_rate"] - 4.358) <= 0.001
+
+    # 4) Manual fallback (<7d) and expired manual fallback (>7d preserves prev_doc)
+    cal = load_macro_calendar()
+    cal["fedwatch_manual"] = {
+        "as_of_date": "2026-11-20",
+        "source": "CME FedWatch 人工抄錄",
+        "meetings": [{
+            "date": "2026-12-09",
+            "implied_rate": 4.10,
+            "probabilities": {"cut_2_plus": 0, "cut_1": 0, "hold": 10, "hike_1": 90, "hike_2_plus": 0},
+        }],
+    }
+    now_ok = datetime(2026, 11, 22, 1, 0, tzinfo=timezone.utc)
+    fw_man, rep_man = build_fedwatch_data(cal, now_ok, {}, yf_fetcher=_make_fake_yf_fetcher(fail_all=True))
+    assert rep_man["status"] == "ok"
+    assert "手動更新" in fw_man["source_used"]
+    assert fw_man["meetings"][0]["probabilities"]["hike_1"] == 90.0
+
+    # Expired manual data (>7 days old) -> preserve prev_doc and flag 資料更新中
+    now_exp = datetime(2026, 12, 1, 1, 0, tzinfo=timezone.utc)
+    fw_pres, rep_pres = build_fedwatch_data(cal, now_exp, {"fedwatch": fw_man}, yf_fetcher=_make_fake_yf_fetcher(fail_all=True))
+    assert rep_pres["status"] == "failed"
+    assert fw_pres["data_status"] == "資料更新中"
+    assert fw_pres["updating"] is True
+    assert fw_pres["meetings"][0]["probabilities"]["hike_1"] == 90.0
+
+
+def test_market_snapshot_metrics_verdicts_and_preservation() -> None:
+    cal = load_macro_calendar()
+    now = datetime(2026, 11, 21, 1, 30, tzinfo=timezone.utc)
+
+    def _mock_yf(symbol: str, period: str = "1y") -> list[tuple[str, float]]:
+        d0 = date(2025, 11, 20)
+        out: list[tuple[str, float]] = []
+        for i in range(252):
+            d = (d0 + timedelta(days=int(i * 1.44))).isoformat()
+            if symbol == "DX-Y.NYB":
+                # +2.5% in last 20d -> bear (strong USD)
+                val = 100.0 if i < 231 else 100.0 + (i - 230) * 0.12
+            elif symbol == "TWD=X":
+                # -1.8% in last 20d -> bull (TWD appreciates)
+                val = 33.0 if i < 231 else 33.0 - (i - 230) * 0.03
+            elif symbol == "GC=F":
+                val = 3200.0 + i * 1.2
+            elif symbol == "CL=F":
+                val = 80.0
+            else:  # ^TNX
+                val = 4.60 if i < 231 else 4.60 + (i - 230) * 0.015  # +0.315pp -> bear
+            out.append((d, round(val, 4)))
+        return out
+
+    snap, rep = build_market_snapshot(cal, None, None, now, {}, yf_fetcher=_mock_yf)
+    assert rep["status"] == "ok"
+    by_id = {it["id"]: it for it in snap["items"]}
+    assert set(by_id.keys()) == {"DXY", "USDTWD", "GOLD", "WTI", "US10Y"}
+    assert by_id["DXY"]["verdict"] == "bear"
+    assert by_id["USDTWD"]["verdict"] == "bull"
+    assert by_id["US10Y"]["verdict"] == "bear"
+    assert len(by_id["DXY"]["closes_90d"]) == 90
+    assert by_id["DXY"]["range_1y_pos_pct"] == 100.0
+
+    # Simulate partial failure -> DXY fails on next run, preserved with 資料更新中
+    def _fail_dxy(symbol: str, period: str = "1y") -> list[tuple[str, float]]:
+        if symbol == "DX-Y.NYB":
+            raise TimeoutError("yahoo timeout")
+        return _mock_yf(symbol, period)
+
+    snap2, rep2 = build_market_snapshot(cal, None, None, now + timedelta(days=1), {"market_snapshot": snap}, yf_fetcher=_fail_dxy)
+    assert rep2["status"] == "partial"
+    by_id2 = {it["id"]: it for it in snap2["items"]}
+    assert by_id2["DXY"]["data_status"] == "資料更新中"
+    assert by_id2["DXY"]["updating"] is True
+    assert by_id2["DXY"]["last"] == by_id["DXY"]["last"]
+    assert by_id2["USDTWD"]["updating"] is False
+
+
+def test_jolts_conversion_verdicts_and_blackout_dates() -> None:
+    cal = load_macro_calendar()
+    # JOLTS verdicts: tight (+0.3M vs prev) -> bear; moderate cool (-0.3M) -> bull; sharp drop (-0.8M) -> 留意景氣放緩
+    v_tight, t_tight = _evaluate_verdict("JOLTS", 7.8, None, 7.5, cal_cfg=cal)
+    assert v_tight == "bear"
+    v_cool, t_cool = _evaluate_verdict("JOLTS", 7.2, None, 7.5, cal_cfg=cal)
+    assert v_cool == "bull" and "留意景氣放緩" not in t_cool
+    v_sharp, t_sharp = _evaluate_verdict("JOLTS", 6.7, None, 7.5, cal_cfg=cal)
+    assert v_sharp == "bull" and "留意景氣放緩" in t_sharp
+
+    # Fed Blackout period check for 3 real FOMC meetings (2nd Saturday before meeting starts)
+    assert compute_fomc_blackout_start(date(2026, 12, 9)) == date(2026, 11, 28)
+    assert compute_fomc_blackout_start(date(2027, 1, 27)) == date(2027, 1, 16)
+    assert compute_fomc_blackout_start(date(2027, 3, 17)) == date(2027, 3, 6)
+
+
+def test_overview_7_assets_insufficient_data_and_legacy_json_frontend() -> None:
+    # Missing data -> 7 assets present with 資料不足，暫不判斷 & gray class 'na'
+    ov_empty = _build_overview_summary({}, fedwatch=None, market_snapshot=None)
+    assert len(ov_empty["asset_impacts"]) == 7
+    assert [x["asset"] for x in ov_empty["asset_impacts"]] == ["美股", "台股", "加密貨幣", "美債", "黃金", "原油", "美元／台幣"]
+    for row in ov_empty["asset_impacts"]:
+        assert row["cls"] == "na"
+        assert row["tag"] == "資料不足"
+        assert row["note"] == "資料不足，暫不判斷"
+
+    # Frontend tests via jsc: glossary rules + legacy macro.json compatibility
+    js_bin = shutil.which("node") or "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc"
+    glossary_js = (ROOT_DIR / "assets" / "glossary.js").read_text(encoding="utf-8")
+    macro_js = (ROOT_DIR / "assets" / "macro.js").read_text(encoding="utf-8")
+
+    js_script = f"""
+        const elements = {{}};
+        const stubEl = (id) => {{
+          if (!elements[id]) {{
+            elements[id] = {{
+              id, classList: {{ _s: new Set(), add(c){{this._s.add(c);}}, remove(c){{this._s.delete(c);}}, toggle(c,f){{if(f===undefined){{if(this._s.has(c))this._s.delete(c);else this._s.add(c);}}else if(f)this._s.add(c);else this._s.delete(c);}}, contains(c){{return this._s.has(c);}} }},
+              addEventListener: () => {{}}, setAttribute: () => {{}}, getAttribute: () => null, removeAttribute: () => {{}},
+              focus: () => {{}}, innerHTML: '', textContent: '', value: '', options: [], style: {{}}, querySelectorAll: () => [],
+            }};
+          }}
+          return elements[id];
+        }};
+        var window = {{ location: {{ hash: '' }}, addEventListener: () => {{}}, SIGNAL_DESK_CONFIG: {{}}, localStorage: {{ _m: {{}}, getItem(k){{return this._m[k]??null;}}, setItem(k,v){{this._m[k]=String(v);}} }} }};
+        var document = {{ getElementById: stubEl, querySelectorAll: () => [], querySelector: () => stubEl('_q'), addEventListener: () => {{}}, body: {{ appendChild: () => {{}}, removeChild: () => {{}}, style: {{}} }}, createElement: () => ({{ style: {{}}, setAttribute: () => {{}}, click: () => {{}} }}) }};
+        var history = {{ replaceState: () => {{}} }};
+        function setInterval() {{}} function setTimeout() {{ return 1; }} function clearTimeout() {{}}
+        async function fetch() {{ return {{ ok: false }}; }}
+        {glossary_js}
+        {macro_js}
+
+        const g = window.SIGNAL_DESK_GLOSSARY;
+        if (!g || g.TERMS.length < 40) throw new Error('Expected >= 40 glossary terms, got ' + (g && g.TERMS.length));
+        const required = [
+          '聯準會', 'FOMC', '鷹派', '鴿派', '升息／降息', '碼（基點）', '點陣圖', '褐皮書', '會議紀要', '靜默期',
+          'FedWatch', '聯邦基金利率', 'CPI', '核心 CPI', 'PCE', '核心 PCE', 'PPI', '非農就業', '失業率', '初領失業金',
+          'JOLTS', 'ISM 製造業', 'ISM 服務業', '零售銷售', 'GDP', '殖利率', '殖利率曲線倒掛', '美元指數', '台幣升值／貶值',
+          '外資買超／賣超', 'ETF 淨流入', '資金費率', '未平倉量（OI）', '爆倉', '穩定幣', 'TVL', '利多／利空',
+          '意外值（實際減預期）', '風險偏好（risk-on／risk-off）', '流動性'
+        ];
+        const termSet = new Set(g.TERMS.map(t => t.term));
+        for (const r of required) {{
+          if (!termSet.has(r)) throw new Error('Missing mandatory glossary term: ' + r);
+        }}
+
+        // Same term appears twice in one block -> marked once; 5 distinct terms -> capped at 3; original text untouched
+        const used = new Set();
+        const sampleTitle = '聯準會 FOMC 紀要偏鷹：聯準會重申緊縮，CPI 與 PCE 與 GDP 牽動流動性 123.45%';
+        const hits = g.findTermMatchesInText(sampleTitle, used, 3);
+        if (hits.length !== 3) throw new Error('Expected max 3 hits per block, got ' + hits.length);
+        const fedHits = hits.filter(h => h.id === 'fed');
+        if (fedHits.length !== 1) throw new Error('Expected 聯準會 matched only once per block, got ' + fedHits.length);
+
+        // Legacy macro.json without fedwatch / market_snapshot / JOLTS must render without throwing
+        const legacyDoc = {{
+          version: 1,
+          updated_at_taipei: '2026-11-21 15:00',
+          overview: {{ stance: '偏鷹', stance_cls: 'bear', stance_desc: '說明。', asset_impacts: [{{ asset: '美股', cls: 'bear', tag: '偏利空', note: '承壓' }}] }},
+          indicators: [],
+          calendar: {{ upcoming: [], past: [] }},
+        }};
+        window.__MACRO_DESK_UTILS__.setMacroDataForTest(legacyDoc);
+        if (!elements['macro-snapshot-grid'].innerHTML.includes('資料更新中')) {{
+          throw new Error('Legacy macro.json should show 資料更新中 for missing market_snapshot');
+        }}
+        const fwText = elements['macro-fedwatch-summary'].textContent || elements['macro-fedwatch-summary'].innerHTML;
+        if (!fwText.includes('資料更新中')) {{
+          throw new Error('Legacy macro.json should show 資料更新中 for missing fedwatch');
+        }}
+    """
+    proc = subprocess.run([js_bin, "-e", js_script], capture_output=True, text=True, check=False)
+    assert proc.returncode == 0, f"New JS checks failed:\nSTDOUT:\n{proc.stdout}\nSTDERR:\n{proc.stderr}"

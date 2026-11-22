@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>宏觀數據｜Signal Desk 報單網站</title>
-  <link rel="stylesheet" href="./assets/style.css?v=20261121f" />
+  <link rel="stylesheet" href="./assets/style.css?v=20261122a" />
 </head>
 <body>
   <header class="topbar">
@@ -55,27 +55,64 @@
 
     <!-- ================= 分頁 1：總覽 ================= -->
     <section id="macro-view-overview" class="macro-tab-view">
-      <section class="card">
+      <!-- (1) 現有總覽（含 7 塊資產影響標籤） -->
+      <section class="card macro-overview-hero-card">
         <div class="macro-hero-stance">
-          <div>
+          <div class="macro-hero-title-wrap">
             <h1>美國宏觀數據總覽</h1>
-            <p class="subtitle">追蹤影響美股、台股與加密貨幣的 16 項核心美國宏觀指標、官方公布時程與歷史公布後市場反應。所有時間均已換算為<strong>台北時間</strong>。</p>
+            <button type="button" id="macro-stance-toggle" class="macro-inline-toggle" aria-expanded="false">說明 ▾</button>
           </div>
           <span id="macro-stance-badge" class="macro-pill-tag macro-stance-xl neut">讀取中</span>
         </div>
-        <p id="macro-stance-desc" class="muted" style="margin:0;">正在載入最新宏觀數據...</p>
+        <p id="macro-stance-brief" class="macro-stance-brief">正在載入最新宏觀數據...</p>
+        <div id="macro-stance-detail-box" class="macro-stance-detail hidden">
+          <p class="subtitle" style="margin:0 0 6px;">追蹤影響美股、台股與加密貨幣的 17 項核心美國宏觀指標、FedWatch 期貨定價、市場快照與官方公布時程。所有時間均已換算為<strong>台北時間</strong>。</p>
+          <p id="macro-stance-desc" class="muted" style="margin:0;">正在載入最新宏觀數據...</p>
+        </div>
+
+        <div class="macro-asset-strip-wrap">
+          <div id="macro-asset-impacts" class="macro-asset-pills" role="group" aria-label="對各資產的影響"></div>
+          <div id="macro-asset-detail" class="macro-asset-detail hidden"></div>
+        </div>
       </section>
 
-      <section class="card">
-        <div class="section-header">
-          <div>
-            <h2>接下來最重要的大事</h2>
-            <p class="subtitle">依公布時程自動追蹤，即時倒數（台北時間）；可下載 <code>.ics</code> 加入個人行事曆。</p>
-          </div>
-          <button type="button" class="btn" id="macro-goto-calendar">查看完整日曆 →</button>
+      <!-- (2) 市場快照：一排 5 張小卡 -->
+      <section class="card macro-snapshot-card" id="macro-snapshot-section">
+        <div class="macro-snap-header">
+          <h2>市場快照</h2>
+          <span id="macro-snapshot-time" class="muted macro-snap-time">資料時間：台北 --:--</span>
         </div>
-        <div id="macro-overview-next-grid" class="macro-next-grid">
-          <div class="empty-state">載入中...</div>
+        <div id="macro-snapshot-grid" class="macro-snap-grid">
+          <div class="empty-state">市場快照載入中...</div>
+        </div>
+      </section>
+
+      <!-- (3) 聯準會／利率區：下次 FOMC 倒數＋FedWatch 單行摘要（預設收合）＋近期大事 -->
+      <section class="card" id="macro-fed-section">
+        <div class="macro-fedwatch-bar">
+          <div class="macro-fedwatch-bar-left">
+            <span class="macro-fed-k">聯準會／利率</span>
+            <span id="macro-fomc-next-line" class="macro-fomc-next-line">下次 FOMC 載入中...</span>
+          </div>
+          <div class="macro-fedwatch-bar-right">
+            <span id="macro-fedwatch-summary" class="macro-fedwatch-summary">FedWatch 載入中...</span>
+            <button type="button" id="macro-fedwatch-toggle" class="macro-inline-toggle" aria-expanded="false">展開 ▾</button>
+          </div>
+        </div>
+
+        <div id="macro-fedwatch-panel" class="macro-fedwatch-panel hidden"></div>
+
+        <div class="macro-fed-next-divider">
+          <div class="section-header" style="margin-bottom:10px;">
+            <div>
+              <h2>接下來最重要的大事</h2>
+              <p class="subtitle">依公布時程自動追蹤，即時倒數（台北時間）；可下載 <code>.ics</code> 加入個人行事曆。</p>
+            </div>
+            <button type="button" class="btn" id="macro-goto-calendar">查看完整日曆 →</button>
+          </div>
+          <div id="macro-overview-next-grid" class="macro-next-grid">
+            <div class="empty-state">載入中...</div>
+          </div>
         </div>
       </section>
 
@@ -83,26 +120,19 @@
         <div class="section-header">
           <div>
             <h2>核心指標速覽</h2>
-            <p class="subtitle">涵蓋利率、通膨、就業與長天期殖利率；點擊下方「關鍵指標」查看全部 16 張指標卡與歷史市場反應。</p>
+            <p class="subtitle">涵蓋利率、通膨、就業與長天期殖利率；點擊「關鍵指標」查看全部 17 張指標卡與歷史市場反應。</p>
           </div>
-          <button type="button" class="btn" id="macro-goto-data">查看全部 16 項指標 →</button>
+          <button type="button" class="btn" id="macro-goto-data">查看全部 17 項指標 →</button>
         </div>
         <div id="macro-overview-stats" class="summary-grid"></div>
       </section>
 
       <section class="card">
-        <details class="macro-fold" open>
-          <summary>對各資產的影響判讀</summary>
-          <div id="macro-asset-impacts" class="macro-asset-list"></div>
-        </details>
-      </section>
-
-      <section class="card">
-        <details class="macro-fold">
+        <details class="macro-fold" id="macro-logic-fold">
           <summary>判讀邏輯與資料來源說明</summary>
           <div style="margin-top:10px; font-size:0.86rem; color:#c9d1d9; line-height:1.65;">
             <p style="margin:0 0 8px;">本頁紅／綠顏色邏輯與 <code>pandatracing</code> 一致：對風險資產（美股、台股、加密貨幣）而言，<strong>🔴 代表偏熱／偏鷹（升息或高利率壓力，偏利空）</strong>、<strong>🟢 代表溫和降溫／偏鴿（偏利多）</strong>、🟡 代表中性；市場漲跌幅統計表則維持 <strong>綠漲、紅跌</strong>。</p>
-            <p style="margin:0 0 8px;">實際值由 GitHub Actions 每日更新（<code>daily.yml</code>），取自免 API Key 公開來源：FRED（聖路易斯聯儲 CSV）與 TradingEconomics 公開頁面（ISM PMI）；歷史市場反應使用本站 <code>data</code> 分支 <code>history_1d.json.gz</code> 約 10 年日線計算，不另抓外部行情。</p>
+            <p style="margin:0 0 8px;">實際值由 GitHub Actions 每日更新（<code>daily.yml</code>），取自免 API Key 公開來源：FRED、BLS API v1、美國財政部、DBnomics BEA、美國普查局 Census、TradingEconomics 與 Yahoo Finance（<code>yfinance</code> CBOT ZQ 期貨與匯率商品快照）；歷史市場反應使用本站 <code>data</code> 分支 <code>history_1d.json.gz</code> 約 10 年日線計算。</p>
             <p style="margin:0;">預期值僅於具有可靠公開出處（TradingEconomics、Investing.com、WSJ、路透／道瓊調查、CME FedWatch）時顯示；無可靠來源者一律標示「無可靠預期值」，並改用「高於／低於前值」進行比較與統計。</p>
           </div>
         </details>
@@ -114,7 +144,7 @@
       <nav class="macro-jump-nav" aria-label="指標分類快速跳轉">
         <a href="#macro-sec-rates">利率（3）</a>
         <a href="#macro-sec-inflation">通膨（5）</a>
-        <a href="#macro-sec-jobs">就業（4）</a>
+        <a href="#macro-sec-jobs">就業（5）</a>
         <a href="#macro-sec-growth">成長（4）</a>
       </nav>
 
@@ -131,8 +161,8 @@
       </section>
 
       <section class="card" id="macro-sec-jobs">
-        <h2>就業（4 項）</h2>
-        <p class="subtitle">非農就業新增、失業率、平均時薪與每週初領失業金人數；高利率環境關注就業是否「有序降溫」。</p>
+        <h2>就業（5 項）</h2>
+        <p class="subtitle">非農就業新增、失業率、平均時薪、每週初領失業金人數與 JOLTS 職位空缺；高利率環境關注就業是否「有序降溫」。</p>
         <div id="macro-grid-jobs" class="macro-card-grid"></div>
       </section>
 
@@ -212,11 +242,11 @@
     </section>
   </main>
 
-  <!-- ================= 彈窗：過去最多 24 次公布後市場怎麼走 ================= -->
+  <!-- ================= 共用彈窗（歷史反應 / 市場快照詳情 / 名詞小辭典） ================= -->
   <div id="macro-hist-modal-backdrop" class="macro-modal-backdrop hidden" role="presentation">
     <div class="macro-modal" role="dialog" aria-modal="true" aria-labelledby="macro-hist-modal-title">
       <div class="macro-modal-head">
-        <div id="macro-hist-modal-title" class="macro-modal-title">過去公布後市場怎麼走</div>
+        <div id="macro-hist-modal-title" class="macro-modal-title">詳情</div>
         <button id="macro-hist-modal-close" class="macro-modal-close" type="button" aria-label="關閉">✕</button>
       </div>
       <div id="macro-hist-modal-body" class="macro-modal-body"></div>
@@ -224,10 +254,16 @@
   </div>
 
   <footer class="footer">
-    本站為個人模擬驗證，非投資建議｜宏觀數據來自 FRED、ISM、BLS、BEA 等公開官方來源，歷史反應以本站 <code>history_1d.json.gz</code> 計算
+    <span>本站為個人模擬驗證，非投資建議｜宏觀數據來自 FRED、BLS、美國財政部、DBnomics、Census、ISM 與 Yahoo Finance，歷史反應以本站 <code>history_1d.json.gz</code> 計算</span>
+    <span class="footer-actions">
+      <button type="button" id="macro-glossary-open" class="footer-link-btn">名詞小辭典</button>
+      <span class="muted">｜</span>
+      <button type="button" id="glossary-toggle-btn" class="footer-link-btn" aria-pressed="true">名詞提示：開</button>
+    </span>
   </footer>
 
-  <script src="./assets/config.js?v=20261121f"></script>
-  <script src="./assets/macro.js?v=20261121f"></script>
+  <script src="./assets/config.js?v=20261122a"></script>
+  <script src="./assets/glossary.js?v=20261122a"></script>
+  <script src="./assets/macro.js?v=20261122a"></script>
 </body>
 </html>
