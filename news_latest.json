@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-23-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-23T23:08:27Z",
-  "updated_at_taipei": "2026-11-24 07:08",
-  "last_updated_utc": "2026-11-23T23:08:27Z",
-  "last_updated_taipei": "2026-11-24 07:08",
-  "next_update_hint": "約台北時間 07:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-23T23:23:29Z",
+  "updated_at_taipei": "2026-11-24 07:23",
+  "last_updated_utc": "2026-11-23T23:23:29Z",
+  "last_updated_taipei": "2026-11-24 07:23",
+  "next_update_hint": "約台北時間 07:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 16.531,
+    "total_elapsed_sec": 21.762,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 5,
+    "new_items_added": 9,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.072,
+        "elapsed_sec": 0.123,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -45,16 +45,16 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.137,
+        "elapsed_sec": 0.19,
         "raw_count": 30,
-        "items_kept": 11,
+        "items_kept": 12,
         "error": null
       },
       "cnbc_economy": {
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.121,
+        "elapsed_sec": 0.104,
         "raw_count": 30,
         "items_kept": 1,
         "error": null
@@ -63,25 +63,25 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.091,
+        "elapsed_sec": 0.157,
         "raw_count": 10,
-        "items_kept": 5,
+        "items_kept": 6,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.176,
+        "elapsed_sec": 0.226,
         "raw_count": 18,
-        "items_kept": 15,
+        "items_kept": 14,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.163,
+        "elapsed_sec": 0.203,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.122,
+        "elapsed_sec": 0.118,
         "raw_count": 30,
         "items_kept": 15,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.098,
+        "elapsed_sec": 0.141,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.11,
+        "elapsed_sec": 0.129,
         "raw_count": 37,
         "items_kept": 14,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.423,
+        "elapsed_sec": 0.593,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -126,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.518,
+        "elapsed_sec": 0.669,
         "raw_count": 20,
-        "items_kept": 12,
+        "items_kept": 13,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.642,
+        "elapsed_sec": 0.514,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.615,
+        "elapsed_sec": 0.572,
         "raw_count": 15,
         "items_kept": 5,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.54,
+        "elapsed_sec": 0.253,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.438,
+        "elapsed_sec": 0.476,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.183,
+        "elapsed_sec": 0.103,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.428,
+        "elapsed_sec": 4.014,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.075,
+        "elapsed_sec": 1.224,
         "raw_count": 1375,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 2.07,
+        "elapsed_sec": 2.115,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.422,
+        "elapsed_sec": 0.55,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.526,
+        "elapsed_sec": 1.451,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.463,
+        "elapsed_sec": 0.461,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.748,
+        "elapsed_sec": 0.668,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.194,
+        "elapsed_sec": 0.233,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.55,
+        "elapsed_sec": 0.587,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.353,
+        "elapsed_sec": 0.356,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,12 +303,12 @@
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1421.1,
+      "net_flow_usd_m": -1425.2,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0057,
+        "funding_rate_pct": 0.0056,
         "oi_usd_b": 1.8
       },
       "ETHUSDT": {
@@ -317,14 +317,50 @@
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 3,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 39.5,
-      "tx_count": 58555,
+      "mempool_vsize_mb": 38.8,
+      "tx_count": 56156,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261124-0e6c163be1",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:11:01Z",
+      "published_at_taipei": "2026-11-24 07:11",
+      "published_at_taipei_iso": "2026-11-24T07:11:01+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "台股暴跌2393點眾人忙停損 00406A卻狂掃金像電、台光電兩天大賺近1成",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C2393%E9%BB%9E%E7%9C%BE%E4%BA%BA%E5%BF%99%E5%81%9C%E6%90%8D-00406a%E5%8D%BB%E7%8B%82%E6%8E%83%E9%87%91%E5%83%8F%E9%9B%BB-%E5%8F%B0%E5%85%89%E9%9B%BB%E5%85%A9%E5%A4%A9%E5%A4%A7%E8%B3%BA%E8%BF%911%E6%88%90-231101150.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C2393%E9%BB%9E%E7%9C%BE%E4%BA%BA%E5%BF%99%E5%81%9C%E6%90%8D-00406a%E5%8D%BB%E7%8B%82%E6%8E%83%E9%87%91%E5%83%8F%E9%9B%BB-%E5%8F%B0%E5%85%89%E9%9B%BB%E5%85%A9%E5%A4%A9%E5%A4%A7%E8%B3%BA%E8%BF%911%E6%88%90-231101150.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（暴跌）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：暴跌",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261124-824c255ff1",
       "issue": "2026-11-23-PM",
@@ -838,6 +874,78 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-78f3c76f7b",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:20:03Z",
+      "published_at_taipei": "2026-11-24 07:20",
+      "published_at_taipei_iso": "2026-11-24T07:20:03+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "華爾街賺逾5億美元也得吞怨氣！Anthropic、SpaceX聯手改寫IPO承銷規則",
+      "url": "https://news.cnyes.com/news/id/6670404",
+      "canonical_url": "https://news.cnyes.com/news/id/6670404",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-be2fd4e49f",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:18:00Z",
+      "published_at_taipei": "2026-11-24 07:18",
+      "published_at_taipei_iso": "2026-11-24T07:18:00+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "The newest addition to the S&P 500 is a maker of viral ice-cream machines",
+      "url": "https://www.marketwatch.com/story/the-newest-addition-to-the-s-p-500-is-a-maker-of-viral-ice-cream-machines-5c6e209a?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/the-newest-addition-to-the-s-p-500-is-a-maker-of-viral-ice-cream-machines-5c6e209a?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-bad45d213d",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T23:01:20Z",
@@ -872,6 +980,42 @@
       "sentiment_targets": [
         "TSLA",
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-1ad46101e9",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:59:55Z",
+      "published_at_taipei": "2026-11-24 06:59",
+      "published_at_taipei_iso": "2026-11-24T06:59:55+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "黃仁勳回歸／剛喊黃仁勳快回來了「馬上成真」！ 哲哲嗨喊台股5萬點：拚就對了",
+      "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E6%AD%B8-%E5%89%9B%E5%96%8A%E9%BB%83%E4%BB%81%E5%8B%B3%E5%BF%AB%E5%9B%9E%E4%BE%86%E4%BA%86-%E9%A6%AC%E4%B8%8A%E6%88%90%E7%9C%9F-%E5%93%B2%E5%93%B2%E5%97%A8%E5%96%8A%E5%8F%B0%E8%82%A15%E8%90%AC%E9%BB%9E-%E6%8B%9A%E5%B0%B1%E5%B0%8D%E4%BA%86-225955103.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E6%AD%B8-%E5%89%9B%E5%96%8A%E9%BB%83%E4%BB%81%E5%8B%B3%E5%BF%AB%E5%9B%9E%E4%BE%86%E4%BA%86-%E9%A6%AC%E4%B8%8A%E6%88%90%E7%9C%9F-%E5%93%B2%E5%93%B2%E5%97%A8%E5%96%8A%E5%8F%B0%E8%82%A15%E8%90%AC%E9%BB%9E-%E6%8B%9A%E5%B0%B1%E5%B0%8D%E4%BA%86-225955103.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -10724,6 +10868,115 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-a0a2251d44",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:14:34Z",
+      "published_at_taipei": "2026-11-24 07:14",
+      "published_at_taipei_iso": "2026-11-24T07:14:34+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "Jim Cramer sees more upside for Nvidia stock with Jensen Huang back as CEO",
+      "url": "https://www.cnbc.com/2026/11/23/jim-cramer-nvidia-jensen-huang-ceo-return.html",
+      "canonical_url": "https://cnbc.com/2026/11/23/jim-cramer-nvidia-jensen-huang-ceo-return.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-9b8698cf7d",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:00:03Z",
+      "published_at_taipei": "2026-11-24 07:00",
+      "published_at_taipei_iso": "2026-11-24T07:00:03+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "Why CrowdStrike Stock Was Down Today",
+      "url": "https://www.fool.com/investing/2026/11/23/why-crowdstrike-stock-was-down-today/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/23/why-crowdstrike-stock-was-down-today?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-ebbc4e542c",
+        "issue": "2026-11-21-PM",
+        "title": "3 Canadian Growth Stocks With Earnings Growth Over 46%",
+        "published_at_taipei": "2026-11-21 12:23",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/3-canadian-growth-stocks-earnings-042349038.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-f762b7fca3",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:47:15Z",
+      "published_at_taipei": "2026-11-24 06:47",
+      "published_at_taipei_iso": "2026-11-24T06:47:15+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "Crypto traders saw Anthropic's 34% debut pop coming",
+      "url": "https://www.thestreet.com/crypto/markets/crypto-traders-saw-anthropics-34-debut-pop-coming-?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/crypto/markets/crypto-traders-saw-anthropics-34-debut-pop-coming-?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-fd8fff46f6",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T22:46:28Z",
@@ -10752,6 +11005,46 @@
       "sentiment_label": "利多",
       "sentiment_score": 1,
       "sentiment_reason": "命中：大漲；命中：利多；命中：升息",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-8c4930a1c5",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:38:05Z",
+      "published_at_taipei": "2026-11-24 06:38",
+      "published_at_taipei_iso": "2026-11-24T06:38:05+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "Own Gold As A Hedge? BND Rose More Often",
+      "url": "https://www.trefis.com/stock/bnd/articles/627661/own-gold-as-a-hedge-bnd-rose-more-often/2026-11-23?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/bnd/articles/627661/own-gold-as-a-hedge-bnd-rose-more-often/2026-11-23?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-e06072867c",
+        "issue": "2026-11-22-AM",
+        "title": "Royal Gold Heads 3 Top Gold Stocks To Watch",
+        "published_at_taipei": "2026-11-22 08:13",
+        "url": "https://finance.yahoo.com/markets/commodities/articles/royal-gold-heads-3-top-001315482.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：sec probe",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -10866,6 +11159,40 @@
       "sentiment_label": "利空",
       "sentiment_score": -1,
       "sentiment_reason": "命中：sec probe",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-f10196f780",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:12:14Z",
+      "published_at_taipei": "2026-11-24 06:12",
+      "published_at_taipei_iso": "2026-11-24T06:12:14+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "Jensen Huang is back: Does Washington have a seat in the boardroom?",
+      "url": "https://finance.yahoo.com/video/jensen-huang-is-back-does-washington-have-a-seat-in-the-boardroom-221214249.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/video/jensen-huang-is-back-does-washington-have-a-seat-in-the-boardroom-221214249.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -17942,6 +18269,148 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261124-78f3c76f7b",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:20:03Z",
+      "published_at_taipei": "2026-11-24 07:20",
+      "published_at_taipei_iso": "2026-11-24T07:20:03+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "華爾街賺逾5億美元也得吞怨氣！Anthropic、SpaceX聯手改寫IPO承銷規則",
+      "url": "https://news.cnyes.com/news/id/6670404",
+      "canonical_url": "https://news.cnyes.com/news/id/6670404",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-be2fd4e49f",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:18:00Z",
+      "published_at_taipei": "2026-11-24 07:18",
+      "published_at_taipei_iso": "2026-11-24T07:18:00+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "The newest addition to the S&P 500 is a maker of viral ice-cream machines",
+      "url": "https://www.marketwatch.com/story/the-newest-addition-to-the-s-p-500-is-a-maker-of-viral-ice-cream-machines-5c6e209a?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/the-newest-addition-to-the-s-p-500-is-a-maker-of-viral-ice-cream-machines-5c6e209a?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-a0a2251d44",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:14:34Z",
+      "published_at_taipei": "2026-11-24 07:14",
+      "published_at_taipei_iso": "2026-11-24T07:14:34+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "Jim Cramer sees more upside for Nvidia stock with Jensen Huang back as CEO",
+      "url": "https://www.cnbc.com/2026/11/23/jim-cramer-nvidia-jensen-huang-ceo-return.html",
+      "canonical_url": "https://cnbc.com/2026/11/23/jim-cramer-nvidia-jensen-huang-ceo-return.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-0e6c163be1",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:11:01Z",
+      "published_at_taipei": "2026-11-24 07:11",
+      "published_at_taipei_iso": "2026-11-24T07:11:01+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "台股暴跌2393點眾人忙停損 00406A卻狂掃金像電、台光電兩天大賺近1成",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C2393%E9%BB%9E%E7%9C%BE%E4%BA%BA%E5%BF%99%E5%81%9C%E6%90%8D-00406a%E5%8D%BB%E7%8B%82%E6%8E%83%E9%87%91%E5%83%8F%E9%9B%BB-%E5%8F%B0%E5%85%89%E9%9B%BB%E5%85%A9%E5%A4%A9%E5%A4%A7%E8%B3%BA%E8%BF%911%E6%88%90-231101150.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9A%B4%E8%B7%8C2393%E9%BB%9E%E7%9C%BE%E4%BA%BA%E5%BF%99%E5%81%9C%E6%90%8D-00406a%E5%8D%BB%E7%8B%82%E6%8E%83%E9%87%91%E5%83%8F%E9%9B%BB-%E5%8F%B0%E5%85%89%E9%9B%BB%E5%85%A9%E5%A4%A9%E5%A4%A7%E8%B3%BA%E8%BF%911%E6%88%90-231101150.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（暴跌）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：暴跌",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-bad45d213d",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T23:01:20Z",
@@ -17980,6 +18449,82 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-9b8698cf7d",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:00:03Z",
+      "published_at_taipei": "2026-11-24 07:00",
+      "published_at_taipei_iso": "2026-11-24T07:00:03+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "Why CrowdStrike Stock Was Down Today",
+      "url": "https://www.fool.com/investing/2026/11/23/why-crowdstrike-stock-was-down-today/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/23/why-crowdstrike-stock-was-down-today?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-ebbc4e542c",
+        "issue": "2026-11-21-PM",
+        "title": "3 Canadian Growth Stocks With Earnings Growth Over 46%",
+        "published_at_taipei": "2026-11-21 12:23",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/3-canadian-growth-stocks-earnings-042349038.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-1ad46101e9",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:59:55Z",
+      "published_at_taipei": "2026-11-24 06:59",
+      "published_at_taipei_iso": "2026-11-24T06:59:55+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "黃仁勳回歸／剛喊黃仁勳快回來了「馬上成真」！ 哲哲嗨喊台股5萬點：拚就對了",
+      "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E6%AD%B8-%E5%89%9B%E5%96%8A%E9%BB%83%E4%BB%81%E5%8B%B3%E5%BF%AB%E5%9B%9E%E4%BE%86%E4%BA%86-%E9%A6%AC%E4%B8%8A%E6%88%90%E7%9C%9F-%E5%93%B2%E5%93%B2%E5%97%A8%E5%96%8A%E5%8F%B0%E8%82%A15%E8%90%AC%E9%BB%9E-%E6%8B%9A%E5%B0%B1%E5%B0%8D%E4%BA%86-225955103.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E6%AD%B8-%E5%89%9B%E5%96%8A%E9%BB%83%E4%BB%81%E5%8B%B3%E5%BF%AB%E5%9B%9E%E4%BE%86%E4%BA%86-%E9%A6%AC%E4%B8%8A%E6%88%90%E7%9C%9F-%E5%93%B2%E5%93%B2%E5%97%A8%E5%96%8A%E5%8F%B0%E8%82%A15%E8%90%AC%E9%BB%9E-%E6%8B%9A%E5%B0%B1%E5%B0%8D%E4%BA%86-225955103.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-fae565c479",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T22:50:03Z",
@@ -18012,6 +18557,41 @@
       "sentiment_reason": "命中：大漲",
       "sentiment_targets": [
         "SNDK"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-f762b7fca3",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:47:15Z",
+      "published_at_taipei": "2026-11-24 06:47",
+      "published_at_taipei_iso": "2026-11-24T06:47:15+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "Crypto traders saw Anthropic's 34% debut pop coming",
+      "url": "https://www.thestreet.com/crypto/markets/crypto-traders-saw-anthropics-34-debut-pop-coming-?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/crypto/markets/crypto-traders-saw-anthropics-34-debut-pop-coming-?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -18129,6 +18709,46 @@
         "2317",
         "2382",
         "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-8c4930a1c5",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:38:05Z",
+      "published_at_taipei": "2026-11-24 06:38",
+      "published_at_taipei_iso": "2026-11-24T06:38:05+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "Own Gold As A Hedge? BND Rose More Often",
+      "url": "https://www.trefis.com/stock/bnd/articles/627661/own-gold-as-a-hedge-bnd-rose-more-often/2026-11-23?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/bnd/articles/627661/own-gold-as-a-hedge-bnd-rose-more-often/2026-11-23?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-e06072867c",
+        "issue": "2026-11-22-AM",
+        "title": "Royal Gold Heads 3 Top Gold Stocks To Watch",
+        "published_at_taipei": "2026-11-22 08:13",
+        "url": "https://finance.yahoo.com/markets/commodities/articles/royal-gold-heads-3-top-001315482.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：sec probe",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -18658,6 +19278,40 @@
       "sentiment_label": "利空",
       "sentiment_score": -1,
       "sentiment_reason": "命中：sec probe",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-f10196f780",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:12:14Z",
+      "published_at_taipei": "2026-11-24 06:12",
+      "published_at_taipei_iso": "2026-11-24T06:12:14+08:00",
+      "first_seen_at_utc": "2026-11-23T23:23:29Z",
+      "first_seen_at_taipei": "2026-11-24 07:23",
+      "month": "2026-11",
+      "title": "Jensen Huang is back: Does Washington have a seat in the boardroom?",
+      "url": "https://finance.yahoo.com/video/jensen-huang-is-back-does-washington-have-a-seat-in-the-boardroom-221214249.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/video/jensen-huang-is-back-does-washington-have-a-seat-in-the-boardroom-221214249.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -67731,9 +68385,9 @@
       "month": "2026-11",
       "date": "2026-11-23",
       "half": "PM",
-      "updated_at_taipei": "2026-11-24 07:08",
-      "count": 468,
-      "star3_count": 14,
+      "updated_at_taipei": "2026-11-24 07:23",
+      "count": 477,
+      "star3_count": 15,
       "failed_sources": [
         {
           "id": "binance_derivatives",
