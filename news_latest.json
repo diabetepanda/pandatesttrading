@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-23-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-23T19:22:23Z",
-  "updated_at_taipei": "2026-11-24 03:22",
-  "last_updated_utc": "2026-11-23T19:22:23Z",
-  "last_updated_taipei": "2026-11-24 03:22",
-  "next_update_hint": "約台北時間 03:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-23T19:37:19Z",
+  "updated_at_taipei": "2026-11-24 03:37",
+  "last_updated_utc": "2026-11-23T19:37:19Z",
+  "last_updated_taipei": "2026-11-24 03:37",
+  "next_update_hint": "約台北時間 03:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -20,28 +20,23 @@
       "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
     },
     {
-      "id": "mempool_space",
-      "name": "mempool.space",
-      "error": "HTTPSConnectionPool(host='mempool.space', port=443): Max retries exceeded with url: /api/v1/fees/recommended (Caused by NewConnectionError(\"HTTPSConnection(host='mempool.space', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\"))"
-    },
-    {
       "id": "bybit_announcements",
       "name": "Bybit 公告",
       "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 142.843,
-    "sources_ok": 22,
-    "sources_failed": 4,
-    "new_items_added": 14,
+    "total_elapsed_sec": 21.546,
+    "sources_ok": 23,
+    "sources_failed": 3,
+    "new_items_added": 2,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.041,
+        "elapsed_sec": 0.068,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -50,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.092,
+        "elapsed_sec": 0.182,
         "raw_count": 30,
         "items_kept": 8,
         "error": null
@@ -59,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.089,
+        "elapsed_sec": 0.106,
         "raw_count": 30,
         "items_kept": 2,
         "error": null
@@ -68,16 +63,16 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.03,
+        "elapsed_sec": 0.034,
         "raw_count": 10,
-        "items_kept": 4,
+        "items_kept": 3,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.237,
+        "elapsed_sec": 0.253,
         "raw_count": 19,
         "items_kept": 16,
         "error": null
@@ -86,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.082,
+        "elapsed_sec": 0.26,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -95,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.065,
+        "elapsed_sec": 0.116,
         "raw_count": 30,
         "items_kept": 15,
         "error": null
@@ -104,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.068,
+        "elapsed_sec": 0.106,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -113,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.053,
+        "elapsed_sec": 0.11,
         "raw_count": 37,
         "items_kept": 13,
         "error": null
@@ -122,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.423,
+        "elapsed_sec": 0.548,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -131,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.433,
+        "elapsed_sec": 0.444,
         "raw_count": 20,
-        "items_kept": 9,
+        "items_kept": 10,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.464,
+        "elapsed_sec": 0.468,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -149,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.44,
+        "elapsed_sec": 0.854,
         "raw_count": 15,
         "items_kept": 5,
         "error": null
@@ -158,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.164,
+        "elapsed_sec": 0.419,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -167,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.59,
+        "elapsed_sec": 0.741,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -176,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.056,
+        "elapsed_sec": 0.261,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -185,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.887,
+        "elapsed_sec": 6.558,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -194,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.05,
+        "elapsed_sec": 0.146,
         "raw_count": 1375,
         "items_kept": 2,
         "error": null
@@ -203,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 2.297,
+        "elapsed_sec": 2.181,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -212,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.283,
+        "elapsed_sec": 0.372,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -221,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.371,
+        "elapsed_sec": 1.426,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -230,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.311,
+        "elapsed_sec": 0.337,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -238,17 +233,17 @@
       "mempool_space": {
         "name": "mempool.space",
         "kind": "mempool",
-        "status": "failed",
-        "elapsed_sec": 128.38,
-        "raw_count": 0,
+        "status": "ok",
+        "elapsed_sec": 0.712,
+        "raw_count": 1,
         "items_kept": 0,
-        "error": "HTTPSConnectionPool(host='mempool.space', port=443): Max retries exceeded with url: /api/v1/fees/recommended (Caused by NewConnectionError(\"HTTPSConnection(host='mempool.space', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\"))"
+        "error": null
       },
       "binance_announcements": {
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.031,
+        "elapsed_sec": 0.196,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -257,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.552,
+        "elapsed_sec": 0.508,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -266,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.28,
+        "elapsed_sec": 0.29,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -282,44 +277,51 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.96,
-        "change_1d_pct": 3.76
+        "tvl_b": 36.94,
+        "change_1d_pct": 3.72
       },
       "Base": {
-        "tvl_b": 5.18,
-        "change_1d_pct": 11.05
+        "tvl_b": 5.17,
+        "change_1d_pct": 11.03
       },
       "Solana": {
-        "tvl_b": 4.74,
-        "change_1d_pct": 3.06
+        "tvl_b": 4.73,
+        "change_1d_pct": 2.98
       },
       "Tron": {
-        "tvl_b": 4.49,
-        "change_1d_pct": 2.31
+        "tvl_b": 4.48,
+        "change_1d_pct": 2.05
       },
       "BSC": {
         "tvl_b": 4.36,
-        "change_1d_pct": 1.84
+        "change_1d_pct": 1.72
       },
       "Bitcoin": {
-        "tvl_b": 3.07,
-        "change_1d_pct": 1.93
+        "tvl_b": 3.08,
+        "change_1d_pct": 1.95
       }
     },
     "btc_spot_etf": {
       "date": "Nov 19, 2026",
-      "net_flow_usd_m": -17.5,
+      "net_flow_usd_m": -17.4,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.005,
-        "oi_usd_b": 1.85
+        "funding_rate_pct": 0.0051,
+        "oi_usd_b": 1.83
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0029,
-        "oi_usd_b": 1.15
+        "funding_rate_pct": -0.0036,
+        "oi_usd_b": 1.14
       }
+    },
+    "mempool": {
+      "fastest_fee_sat_vb": 2,
+      "half_hour_fee_sat_vb": 1,
+      "mempool_vsize_mb": 36.4,
+      "tx_count": 57183,
+      "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
@@ -652,6 +654,42 @@
       "sentiment_reason": "數據：公鏈 TVL 資金淨流入",
       "sentiment_targets": [
         "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-9317cc012d",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T19:15:00Z",
+      "published_at_taipei": "2026-11-24 03:15",
+      "published_at_taipei_iso": "2026-11-24T03:15:00+08:00",
+      "first_seen_at_utc": "2026-11-23T19:37:19Z",
+      "first_seen_at_taipei": "2026-11-24 03:37",
+      "month": "2026-11",
+      "title": "輝達跌不停好怕？外媒力薦：改買台積電",
+      "url": "https://tw.news.yahoo.com/%E8%BC%9D%E9%81%94%E8%B7%8C%E4%B8%8D%E5%81%9C%E5%A5%BD%E6%80%95-%E5%A4%96%E5%AA%92%E5%8A%9B%E8%96%A6-%E6%94%B9%E8%B2%B7%E5%8F%B0%E7%A9%8D%E9%9B%BB-191500777.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E8%BC%9D%E9%81%94%E8%B7%8C%E4%B8%8D%E5%81%9C%E5%A5%BD%E6%80%95-%E5%A4%96%E5%AA%92%E5%8A%9B%E8%96%A6-%E6%94%B9%E8%B2%B7%E5%8F%B0%E7%A9%8D%E9%9B%BB-191500777.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：合作；命中：擴產",
+      "sentiment_targets": [
+        "2330"
       ],
       "sentiment_method": "rule"
     },
@@ -8173,6 +8211,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-43965eb71c",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T19:30:03Z",
+      "published_at_taipei": "2026-11-24 03:30",
+      "published_at_taipei_iso": "2026-11-24T03:30:03+08:00",
+      "first_seen_at_utc": "2026-11-23T19:37:19Z",
+      "first_seen_at_taipei": "2026-11-24 03:37",
+      "month": "2026-11",
+      "title": "抱著怕跌 賣了怕漲！輝達暴漲逾30% 揭美股投資人兩難",
+      "url": "https://news.cnyes.com/news/id/6670373",
+      "canonical_url": "https://news.cnyes.com/news/id/6670373",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-27b41107cd",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T19:06:14Z",
@@ -13706,6 +13778,76 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261124-43965eb71c",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T19:30:03Z",
+      "published_at_taipei": "2026-11-24 03:30",
+      "published_at_taipei_iso": "2026-11-24T03:30:03+08:00",
+      "first_seen_at_utc": "2026-11-23T19:37:19Z",
+      "first_seen_at_taipei": "2026-11-24 03:37",
+      "month": "2026-11",
+      "title": "抱著怕跌 賣了怕漲！輝達暴漲逾30% 揭美股投資人兩難",
+      "url": "https://news.cnyes.com/news/id/6670373",
+      "canonical_url": "https://news.cnyes.com/news/id/6670373",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-9317cc012d",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T19:15:00Z",
+      "published_at_taipei": "2026-11-24 03:15",
+      "published_at_taipei_iso": "2026-11-24T03:15:00+08:00",
+      "first_seen_at_utc": "2026-11-23T19:37:19Z",
+      "first_seen_at_taipei": "2026-11-24 03:37",
+      "month": "2026-11",
+      "title": "輝達跌不停好怕？外媒力薦：改買台積電",
+      "url": "https://tw.news.yahoo.com/%E8%BC%9D%E9%81%94%E8%B7%8C%E4%B8%8D%E5%81%9C%E5%A5%BD%E6%80%95-%E5%A4%96%E5%AA%92%E5%8A%9B%E8%96%A6-%E6%94%B9%E8%B2%B7%E5%8F%B0%E7%A9%8D%E9%9B%BB-191500777.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E8%BC%9D%E9%81%94%E8%B7%8C%E4%B8%8D%E5%81%9C%E5%A5%BD%E6%80%95-%E5%A4%96%E5%AA%92%E5%8A%9B%E8%96%A6-%E6%94%B9%E8%B2%B7%E5%8F%B0%E7%A9%8D%E9%9B%BB-191500777.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：合作；命中：擴產",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261124-27b41107cd",
       "issue": "2026-11-23-PM",
@@ -59263,8 +59405,8 @@
       "month": "2026-11",
       "date": "2026-11-23",
       "half": "PM",
-      "updated_at_taipei": "2026-11-24 03:22",
-      "count": 355,
+      "updated_at_taipei": "2026-11-24 03:37",
+      "count": 357,
       "star3_count": 9,
       "failed_sources": [
         {
@@ -59276,11 +59418,6 @@
           "id": "bybit_derivatives",
           "name": "Bybit 永續合約",
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
-        },
-        {
-          "id": "mempool_space",
-          "name": "mempool.space",
-          "error": "HTTPSConnectionPool(host='mempool.space', port=443): Max retries exceeded with url: /api/v1/fees/recommended (Caused by NewConnectionError(\"HTTPSConnection(host='mempool.space', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\"))"
         },
         {
           "id": "bybit_announcements",
