@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-23-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-23T12:50:18Z",
-  "updated_at_taipei": "2026-11-23 20:50",
-  "last_updated_utc": "2026-11-23T12:50:18Z",
-  "last_updated_taipei": "2026-11-23 20:50",
-  "next_update_hint": "約台北時間 21:02（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-23T13:05:29Z",
+  "updated_at_taipei": "2026-11-23 21:05",
+  "last_updated_utc": "2026-11-23T13:05:29Z",
+  "last_updated_taipei": "2026-11-23 21:05",
+  "next_update_hint": "約台北時間 21:17（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 19.432,
+    "total_elapsed_sec": 20.149,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 23,
+    "new_items_added": 9,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.066,
+        "elapsed_sec": 0.105,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.222,
+        "elapsed_sec": 0.135,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.105,
+        "elapsed_sec": 0.103,
         "raw_count": 30,
         "items_kept": 1,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.095,
+        "elapsed_sec": 0.111,
         "raw_count": 10,
         "items_kept": 8,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.299,
+        "elapsed_sec": 0.441,
         "raw_count": 20,
         "items_kept": 18,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.167,
+        "elapsed_sec": 0.314,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.126,
+        "elapsed_sec": 0.127,
         "raw_count": 30,
         "items_kept": 15,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.1,
+        "elapsed_sec": 0.121,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.085,
+        "elapsed_sec": 0.118,
         "raw_count": 37,
         "items_kept": 13,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.524,
+        "elapsed_sec": 0.629,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 1.045,
+        "elapsed_sec": 0.675,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.858,
+        "elapsed_sec": 0.719,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.873,
+        "elapsed_sec": 0.868,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.402,
+        "elapsed_sec": 0.459,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.427,
+        "elapsed_sec": 0.446,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.097,
+        "elapsed_sec": 0.112,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.953,
+        "elapsed_sec": 2.7,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.068,
+        "elapsed_sec": 0.075,
         "raw_count": 1375,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.695,
+        "elapsed_sec": 2.545,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.497,
+        "elapsed_sec": 0.496,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.443,
+        "elapsed_sec": 1.613,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.385,
+        "elapsed_sec": 0.473,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.83,
+        "elapsed_sec": 0.653,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.118,
+        "elapsed_sec": 0.22,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.547,
+        "elapsed_sec": 0.525,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.361,
+        "elapsed_sec": 0.403,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,50 +277,50 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.31,
-        "change_1d_pct": 1.94
+        "tvl_b": 36.32,
+        "change_1d_pct": 1.96
       },
       "Base": {
-        "tvl_b": 5.15,
-        "change_1d_pct": 10.41
+        "tvl_b": 5.14,
+        "change_1d_pct": 10.39
       },
       "Solana": {
         "tvl_b": 4.68,
-        "change_1d_pct": 1.95
+        "change_1d_pct": 1.93
       },
       "Tron": {
         "tvl_b": 4.44,
-        "change_1d_pct": 1.03
+        "change_1d_pct": 1.15
       },
       "BSC": {
         "tvl_b": 4.31,
-        "change_1d_pct": 0.57
+        "change_1d_pct": 0.66
       },
       "Bitcoin": {
-        "tvl_b": 3.07,
-        "change_1d_pct": 1.72
+        "tvl_b": 3.06,
+        "change_1d_pct": 1.52
       }
     },
     "btc_spot_etf": {
       "date": "Nov 19, 2026",
-      "net_flow_usd_m": -17.3,
+      "net_flow_usd_m": -17.4,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0002,
+        "funding_rate_pct": 0.0003,
         "oi_usd_b": 1.95
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0057,
-        "oi_usd_b": 1.2
+        "funding_rate_pct": -0.0054,
+        "oi_usd_b": 1.21
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 2,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.4,
-      "tx_count": 61031,
+      "mempool_vsize_mb": 28.4,
+      "tx_count": 58272,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -473,6 +473,117 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261123-6e208ccc6d",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T13:00:35Z",
+      "published_at_taipei": "2026-11-23 21:00",
+      "published_at_taipei_iso": "2026-11-23T21:00:35+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Tesla's autonomy ambitions just got a Wall Street vote of confidence",
+      "url": "https://finance.yahoo.com/markets/stocks/article/teslas-autonomy-ambitions-just-got-a-wall-street-vote-of-confidence-130035595.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/article/teslas-autonomy-ambitions-just-got-a-wall-street-vote-of-confidence-130035595.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-b05499b045",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:52:11Z",
+      "published_at_taipei": "2026-11-23 20:52",
+      "published_at_taipei_iso": "2026-11-23T20:52:11+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Canadian dollar steadies near 19-month low as oil weakness and rate gap weigh",
+      "url": "https://finance.yahoo.com/markets/currencies/articles/canadian-dollar-steadies-near-19-125211466.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/currencies/articles/canadian-dollar-steadies-near-19-125211466.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-fbfc5c6f4b",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:45:00Z",
+      "published_at_taipei": "2026-11-23 20:45",
+      "published_at_taipei_iso": "2026-11-23T20:45:00+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Sky Quarry (NASDAQ: SKYQ) Sells Diesel at a Crack Spread 25% Above the National Benchmark as Nevada’s Only Crude Oil Refinery Processes 2,000 Barrels in 36 Hours",
+      "url": "https://finance.yahoo.com/energy/articles/sky-quarry-nasdaq-skyq-sells-124500419.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/sky-quarry-nasdaq-skyq-sells-124500419.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "WTI",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI",
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-c39e5a0caf",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T12:43:30Z",
@@ -577,6 +688,88 @@
       "sentiment_score": -1,
       "sentiment_reason": "命中：sued",
       "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-b063a65f90",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:39:53Z",
+      "published_at_taipei": "2026-11-23 20:39",
+      "published_at_taipei_iso": "2026-11-23T20:39:53+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Could Tesla Stock Really Fall To $140?",
+      "url": "https://www.trefis.com/stock/tsla/articles/627621/could-tesla-stock-really-fall-to-140/2026-11-23?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/tsla/articles/627621/could-tesla-stock-really-fall-to-140/2026-11-23?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500",
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-b772c06cb6",
+        "issue": "2026-11-21-PM",
+        "title": "Is Dell Stock Really Cheap?",
+        "published_at_taipei": "2026-11-21 14:32",
+        "url": "https://www.trefis.com/stock/dell/articles/626514/is-dell-stock-really-cheap/2026-11-20?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500",
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-3a3ece033b",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:36:24Z",
+      "published_at_taipei": "2026-11-23 20:36",
+      "published_at_taipei_iso": "2026-11-23T20:36:24+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Musk Says Teslas Will Tap “Grok’s Real-Time X Feed.” Another Tie Between Tesla and SpaceX",
+      "url": "https://www.tikr.com/blog/musk-says-teslas-will-tap-groks-real-time-x-feed-another-tie-between-tesla-and-spacex?ref=yahoofinance&tlnk=yf-261123-7rcmfjxq&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/musk-says-teslas-will-tap-groks-real-time-x-feed-another-tie-between-tesla-and-spacex?tlnk=yf-261123-7rcmfjxq&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA",
         "SPCX"
       ],
       "sentiment_method": "rule"
@@ -2039,6 +2232,74 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261123-38ffaae410",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T13:01:20Z",
+      "published_at_taipei": "2026-11-23 21:01",
+      "published_at_taipei_iso": "2026-11-23T21:01:20+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Live news: Tech futures rebound more than 3% as dollar index tops 104, a 20-month high",
+      "url": "https://www.coindesk.com/tech/2026/11/23/live-news-wall-street-rebounds-as-dollar-index-hits-highest-since-march-2025",
+      "canonical_url": "https://coindesk.com/tech/2026/11/23/live-news-wall-street-rebounds-as-dollar-index-hits-highest-since-march-2025",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-0cccca5191",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T13:00:00Z",
+      "published_at_taipei": "2026-11-23 21:00",
+      "published_at_taipei_iso": "2026-11-23T21:00:00+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "WARABA GOLD REPORTS HISTORICAL EXPLORATION RESULTS AND PERMIT UPDATE FOR ITS SIRASSO GOLD PROJECT, CÔTE D'IVOIRE, AND PROVIDES TENGRELA AND EXPLORATION PROGRAM UPDATE",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/waraba-gold-reports-historical-exploration-130000521.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/waraba-gold-reports-historical-exploration-130000521.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-de432a10e8",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T12:47:44Z",
@@ -2069,6 +2330,86 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-8c4046cde8",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:44:24Z",
+      "published_at_taipei": "2026-11-23 20:44",
+      "published_at_taipei_iso": "2026-11-23T20:44:24+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Premarket movers: Chip stocks lead AI rebound; CrowdStrike falls",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/premarket-movers-chip-stocks-lead-124424524.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/premarket-movers-chip-stocks-lead-124424524.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-87065e7535",
+        "issue": "2026-11-21-PM",
+        "title": "Worried About a Market Crash? This AI Stock Should Bounce Back Fastest.",
+        "published_at_taipei": "2026-11-22 02:47",
+        "url": "https://www.fool.com/investing/2026/11/21/worried-about-a-market-crash-this-ai-stock-should-bounce-back-fastest/?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：acquisition",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-805db90463",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:35:51Z",
+      "published_at_taipei": "2026-11-23 20:35",
+      "published_at_taipei_iso": "2026-11-23T20:35:51+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Why Did Palantir Stock Fall?",
+      "url": "https://www.trefis.com/stock/pltr/articles/627801/why-did-palantir-stock-fall/2026-11-23?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/pltr/articles/627801/why-did-palantir-stock-fall/2026-11-23?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-2129b8bfb8",
+        "issue": "2026-11-23-AM",
+        "title": "What Moved Arista Networks Stock?",
+        "published_at_taipei": "2026-11-23 19:05",
+        "url": "https://www.trefis.com/stock/anet/articles/627774/what-moved-arista-networks-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：sec probe",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -3049,6 +3390,146 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261123-38ffaae410",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T13:01:20Z",
+      "published_at_taipei": "2026-11-23 21:01",
+      "published_at_taipei_iso": "2026-11-23T21:01:20+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Live news: Tech futures rebound more than 3% as dollar index tops 104, a 20-month high",
+      "url": "https://www.coindesk.com/tech/2026/11/23/live-news-wall-street-rebounds-as-dollar-index-hits-highest-since-march-2025",
+      "canonical_url": "https://coindesk.com/tech/2026/11/23/live-news-wall-street-rebounds-as-dollar-index-hits-highest-since-march-2025",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-6e208ccc6d",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T13:00:35Z",
+      "published_at_taipei": "2026-11-23 21:00",
+      "published_at_taipei_iso": "2026-11-23T21:00:35+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Tesla's autonomy ambitions just got a Wall Street vote of confidence",
+      "url": "https://finance.yahoo.com/markets/stocks/article/teslas-autonomy-ambitions-just-got-a-wall-street-vote-of-confidence-130035595.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/article/teslas-autonomy-ambitions-just-got-a-wall-street-vote-of-confidence-130035595.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-0cccca5191",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T13:00:00Z",
+      "published_at_taipei": "2026-11-23 21:00",
+      "published_at_taipei_iso": "2026-11-23T21:00:00+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "WARABA GOLD REPORTS HISTORICAL EXPLORATION RESULTS AND PERMIT UPDATE FOR ITS SIRASSO GOLD PROJECT, CÔTE D'IVOIRE, AND PROVIDES TENGRELA AND EXPLORATION PROGRAM UPDATE",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/waraba-gold-reports-historical-exploration-130000521.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/waraba-gold-reports-historical-exploration-130000521.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-b05499b045",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:52:11Z",
+      "published_at_taipei": "2026-11-23 20:52",
+      "published_at_taipei_iso": "2026-11-23T20:52:11+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Canadian dollar steadies near 19-month low as oil weakness and rate gap weigh",
+      "url": "https://finance.yahoo.com/markets/currencies/articles/canadian-dollar-steadies-near-19-125211466.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/currencies/articles/canadian-dollar-steadies-near-19-125211466.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-de432a10e8",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T12:47:44Z",
@@ -3079,6 +3560,85 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-fbfc5c6f4b",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:45:00Z",
+      "published_at_taipei": "2026-11-23 20:45",
+      "published_at_taipei_iso": "2026-11-23T20:45:00+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Sky Quarry (NASDAQ: SKYQ) Sells Diesel at a Crack Spread 25% Above the National Benchmark as Nevada’s Only Crude Oil Refinery Processes 2,000 Barrels in 36 Hours",
+      "url": "https://finance.yahoo.com/energy/articles/sky-quarry-nasdaq-skyq-sells-124500419.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/sky-quarry-nasdaq-skyq-sells-124500419.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "WTI",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI",
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-8c4046cde8",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:44:24Z",
+      "published_at_taipei": "2026-11-23 20:44",
+      "published_at_taipei_iso": "2026-11-23T20:44:24+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Premarket movers: Chip stocks lead AI rebound; CrowdStrike falls",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/premarket-movers-chip-stocks-lead-124424524.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/premarket-movers-chip-stocks-lead-124424524.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-87065e7535",
+        "issue": "2026-11-21-PM",
+        "title": "Worried About a Market Crash? This AI Stock Should Bounce Back Fastest.",
+        "published_at_taipei": "2026-11-22 02:47",
+        "url": "https://www.fool.com/investing/2026/11/21/worried-about-a-market-crash-this-ai-stock-should-bounce-back-fastest/?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：acquisition",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -3222,6 +3782,128 @@
       "sentiment_reason": "命中：sued",
       "sentiment_targets": [
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-b063a65f90",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:39:53Z",
+      "published_at_taipei": "2026-11-23 20:39",
+      "published_at_taipei_iso": "2026-11-23T20:39:53+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Could Tesla Stock Really Fall To $140?",
+      "url": "https://www.trefis.com/stock/tsla/articles/627621/could-tesla-stock-really-fall-to-140/2026-11-23?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/tsla/articles/627621/could-tesla-stock-really-fall-to-140/2026-11-23?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500",
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-b772c06cb6",
+        "issue": "2026-11-21-PM",
+        "title": "Is Dell Stock Really Cheap?",
+        "published_at_taipei": "2026-11-21 14:32",
+        "url": "https://www.trefis.com/stock/dell/articles/626514/is-dell-stock-really-cheap/2026-11-20?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500",
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-3a3ece033b",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:36:24Z",
+      "published_at_taipei": "2026-11-23 20:36",
+      "published_at_taipei_iso": "2026-11-23T20:36:24+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Musk Says Teslas Will Tap “Grok’s Real-Time X Feed.” Another Tie Between Tesla and SpaceX",
+      "url": "https://www.tikr.com/blog/musk-says-teslas-will-tap-groks-real-time-x-feed-another-tie-between-tesla-and-spacex?ref=yahoofinance&tlnk=yf-261123-7rcmfjxq&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/musk-says-teslas-will-tap-groks-real-time-x-feed-another-tie-between-tesla-and-spacex?tlnk=yf-261123-7rcmfjxq&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-805db90463",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T12:35:51Z",
+      "published_at_taipei": "2026-11-23 20:35",
+      "published_at_taipei_iso": "2026-11-23T20:35:51+08:00",
+      "first_seen_at_utc": "2026-11-23T13:05:29Z",
+      "first_seen_at_taipei": "2026-11-23 21:05",
+      "month": "2026-11",
+      "title": "Why Did Palantir Stock Fall?",
+      "url": "https://www.trefis.com/stock/pltr/articles/627801/why-did-palantir-stock-fall/2026-11-23?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/pltr/articles/627801/why-did-palantir-stock-fall/2026-11-23?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-2129b8bfb8",
+        "issue": "2026-11-23-AM",
+        "title": "What Moved Arista Networks Stock?",
+        "published_at_taipei": "2026-11-23 19:05",
+        "url": "https://www.trefis.com/stock/anet/articles/627774/what-moved-arista-networks-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：sec probe",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -37945,8 +38627,8 @@
       "month": "2026-11",
       "date": "2026-11-23",
       "half": "PM",
-      "updated_at_taipei": "2026-11-23 20:50",
-      "count": 72,
+      "updated_at_taipei": "2026-11-23 21:05",
+      "count": 81,
       "star3_count": 4,
       "failed_sources": [
         {
