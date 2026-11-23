@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "updated_at_utc": "2026-11-23T19:07:14Z",
-  "updated_at_taipei": "2026-11-24 03:07",
+  "updated_at_utc": "2026-11-23T19:22:23Z",
+  "updated_at_taipei": "2026-11-24 03:22",
   "latest_issue": "2026-11-23-PM",
   "months": [
     {
       "month": "2026-11",
       "file": "news/2026-11.jsonl",
-      "count": 1290
+      "count": 1304
     }
   ],
   "issues": [
@@ -16,8 +16,8 @@
       "month": "2026-11",
       "date": "2026-11-23",
       "half": "PM",
-      "updated_at_taipei": "2026-11-24 03:07",
-      "count": 341,
+      "updated_at_taipei": "2026-11-24 03:22",
+      "count": 355,
       "star3_count": 9,
       "failed_sources": [
         {
@@ -29,6 +29,11 @@
           "id": "bybit_derivatives",
           "name": "Bybit 永續合約",
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
+        },
+        {
+          "id": "mempool_space",
+          "name": "mempool.space",
+          "error": "HTTPSConnectionPool(host='mempool.space', port=443): Max retries exceeded with url: /api/v1/fees/recommended (Caused by NewConnectionError(\"HTTPSConnection(host='mempool.space', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\"))"
         },
         {
           "id": "bybit_announcements",
