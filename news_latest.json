@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-23-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-23T02:17:22Z",
-  "updated_at_taipei": "2026-11-23 10:17",
-  "last_updated_utc": "2026-11-23T02:17:22Z",
-  "last_updated_taipei": "2026-11-23 10:17",
-  "next_update_hint": "約台北時間 10:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-23T02:32:27Z",
+  "updated_at_taipei": "2026-11-23 10:32",
+  "last_updated_utc": "2026-11-23T02:32:27Z",
+  "last_updated_taipei": "2026-11-23 10:32",
+  "next_update_hint": "約台北時間 10:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 16.789,
+    "total_elapsed_sec": 12.32,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 4,
+    "new_items_added": 3,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.107,
+        "elapsed_sec": 0.088,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.135,
+        "elapsed_sec": 0.102,
         "raw_count": 30,
         "items_kept": 8,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.089,
+        "elapsed_sec": 0.164,
         "raw_count": 30,
         "items_kept": 1,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.305,
+        "elapsed_sec": 0.177,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.375,
+        "elapsed_sec": 0.175,
         "raw_count": 20,
         "items_kept": 20,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.298,
+        "elapsed_sec": 0.178,
         "raw_count": 25,
         "items_kept": 19,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.121,
+        "elapsed_sec": 0.099,
         "raw_count": 30,
         "items_kept": 18,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.149,
+        "elapsed_sec": 0.079,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.143,
+        "elapsed_sec": 0.068,
         "raw_count": 37,
         "items_kept": 14,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.554,
+        "elapsed_sec": 0.492,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -126,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.322,
+        "elapsed_sec": 0.295,
         "raw_count": 20,
-        "items_kept": 14,
+        "items_kept": 13,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.567,
+        "elapsed_sec": 0.6,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.799,
+        "elapsed_sec": 0.51,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.369,
+        "elapsed_sec": 0.36,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.347,
+        "elapsed_sec": 0.172,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.145,
+        "elapsed_sec": 0.081,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.954,
+        "elapsed_sec": 0.568,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.074,
+        "elapsed_sec": 0.059,
         "raw_count": 1375,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.432,
+        "elapsed_sec": 1.751,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.543,
+        "elapsed_sec": 0.523,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.417,
+        "elapsed_sec": 1.47,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.501,
+        "elapsed_sec": 0.394,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.561,
+        "elapsed_sec": 0.659,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.458,
+        "elapsed_sec": 0.078,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.5,
+        "elapsed_sec": 0.525,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.403,
+        "elapsed_sec": 0.429,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,28 +277,28 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.21,
-        "change_1d_pct": 1.28
+        "tvl_b": 36.22,
+        "change_1d_pct": 2.15
       },
       "Base": {
         "tvl_b": 5.13,
-        "change_1d_pct": 2.24
+        "change_1d_pct": 2.06
       },
       "Solana": {
         "tvl_b": 4.62,
-        "change_1d_pct": 0.14
+        "change_1d_pct": 0.49
       },
       "Tron": {
-        "tvl_b": 4.45,
-        "change_1d_pct": 0.02
+        "tvl_b": 4.44,
+        "change_1d_pct": 0.16
       },
       "BSC": {
-        "tvl_b": 4.33,
-        "change_1d_pct": 0.65
+        "tvl_b": 4.32,
+        "change_1d_pct": 0.53
       },
       "Bitcoin": {
         "tvl_b": 3.05,
-        "change_1d_pct": -0.06
+        "change_1d_pct": -0.04
       }
     },
     "btc_spot_etf": {
@@ -308,19 +308,19 @@
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0016,
-        "oi_usd_b": 1.93
+        "funding_rate_pct": 0.0017,
+        "oi_usd_b": 1.92
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0062,
+        "funding_rate_pct": -0.0063,
         "oi_usd_b": 1.18
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 2,
+      "fastest_fee_sat_vb": 3,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 38.0,
-      "tx_count": 77533,
+      "mempool_vsize_mb": 33.0,
+      "tx_count": 69256,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -683,6 +683,78 @@
       "sentiment_targets": [
         "BTCUSDT",
         "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-7a7347f827",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T02:30:00Z",
+      "published_at_taipei": "2026-11-23 10:30",
+      "published_at_taipei_iso": "2026-11-23T10:30:00+08:00",
+      "first_seen_at_utc": "2026-11-23T02:32:27Z",
+      "first_seen_at_taipei": "2026-11-23 10:32",
+      "month": "2026-11",
+      "title": "台股單周狂瀉7641點！1805檔慘摔年線下 這15檔基本面撐住了、AI股也入列",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E5%96%AE%E5%91%A8%E7%8B%82%E7%80%897641%E9%BB%9E-1805%E6%AA%94%E6%85%98%E6%91%94%E5%B9%B4%E7%B7%9A%E4%B8%8B-%E9%80%9915%E6%AA%94%E5%9F%BA%E6%9C%AC%E9%9D%A2%E6%92%90%E4%BD%8F%E4%BA%86-ai%E8%82%A1%E4%B9%9F%E5%85%A5%E5%88%97-023000142.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E5%96%AE%E5%91%A8%E7%8B%82%E7%80%897641%E9%BB%9E-1805%E6%AA%94%E6%85%98%E6%91%94%E5%B9%B4%E7%B7%9A%E4%B8%8B-%E9%80%9915%E6%AA%94%E5%9F%BA%E6%9C%AC%E9%9D%A2%E6%92%90%E4%BD%8F%E4%BA%86-ai%E8%82%A1%E4%B9%9F%E5%85%A5%E5%88%97-023000142.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-5ac5779fdb",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T02:12:45Z",
+      "published_at_taipei": "2026-11-23 10:12",
+      "published_at_taipei_iso": "2026-11-23T10:12:45+08:00",
+      "first_seen_at_utc": "2026-11-23T02:32:27Z",
+      "first_seen_at_taipei": "2026-11-23 10:32",
+      "month": "2026-11",
+      "title": "會商業代表顧台股 卓揆盼國際局勢儘速穩定",
+      "url": "https://tw.news.yahoo.com/%E6%9C%83%E5%95%86%E6%A5%AD%E4%BB%A3%E8%A1%A8%E9%A1%A7%E5%8F%B0%E8%82%A1-%E5%8D%93%E6%8F%86%E7%9B%BC%E5%9C%8B%E9%9A%9B%E5%B1%80%E5%8B%A2%E5%84%98%E9%80%9F%E7%A9%A9%E5%AE%9A-021245622.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E6%9C%83%E5%95%86%E6%A5%AD%E4%BB%A3%E8%A1%A8%E9%A1%A7%E5%8F%B0%E8%82%A1-%E5%8D%93%E6%8F%86%E7%9B%BC%E5%9C%8B%E9%9A%9B%E5%B1%80%E5%8B%A2%E5%84%98%E9%80%9F%E7%A9%A9%E5%AE%9A-021245622.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -2798,6 +2870,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261123-18e6f49963",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T02:01:47Z",
+      "published_at_taipei": "2026-11-23 10:01",
+      "published_at_taipei_iso": "2026-11-23T10:01:47+08:00",
+      "first_seen_at_utc": "2026-11-23T02:32:27Z",
+      "first_seen_at_taipei": "2026-11-23 10:32",
+      "month": "2026-11",
+      "title": "Wall Street futures jump after major indexes enter correction territory",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-futures-jump-major-020147533.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-futures-jump-major-020147533.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-0d2e980eeb",
+        "issue": "2026-11-22-PM",
+        "title": "Dow Jones Futures Due After Market's Worst Week Since Covid; What To Do Now",
+        "published_at_taipei": "2026-11-22 21:52",
+        "url": "https://finance.yahoo.com/m/9ef9da98-bccf-3565-9a30-9bc3e57ad4b9/dow-jones-futures-due-after.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-a8e41350fa",
       "issue": "2026-11-23-AM",
       "published_at_utc": "2026-11-23T01:58:45Z",
@@ -2868,6 +2980,78 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261123-7a7347f827",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T02:30:00Z",
+      "published_at_taipei": "2026-11-23 10:30",
+      "published_at_taipei_iso": "2026-11-23T10:30:00+08:00",
+      "first_seen_at_utc": "2026-11-23T02:32:27Z",
+      "first_seen_at_taipei": "2026-11-23 10:32",
+      "month": "2026-11",
+      "title": "台股單周狂瀉7641點！1805檔慘摔年線下 這15檔基本面撐住了、AI股也入列",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E5%96%AE%E5%91%A8%E7%8B%82%E7%80%897641%E9%BB%9E-1805%E6%AA%94%E6%85%98%E6%91%94%E5%B9%B4%E7%B7%9A%E4%B8%8B-%E9%80%9915%E6%AA%94%E5%9F%BA%E6%9C%AC%E9%9D%A2%E6%92%90%E4%BD%8F%E4%BA%86-ai%E8%82%A1%E4%B9%9F%E5%85%A5%E5%88%97-023000142.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E5%96%AE%E5%91%A8%E7%8B%82%E7%80%897641%E9%BB%9E-1805%E6%AA%94%E6%85%98%E6%91%94%E5%B9%B4%E7%B7%9A%E4%B8%8B-%E9%80%9915%E6%AA%94%E5%9F%BA%E6%9C%AC%E9%9D%A2%E6%92%90%E4%BD%8F%E4%BA%86-ai%E8%82%A1%E4%B9%9F%E5%85%A5%E5%88%97-023000142.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-5ac5779fdb",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T02:12:45Z",
+      "published_at_taipei": "2026-11-23 10:12",
+      "published_at_taipei_iso": "2026-11-23T10:12:45+08:00",
+      "first_seen_at_utc": "2026-11-23T02:32:27Z",
+      "first_seen_at_taipei": "2026-11-23 10:32",
+      "month": "2026-11",
+      "title": "會商業代表顧台股 卓揆盼國際局勢儘速穩定",
+      "url": "https://tw.news.yahoo.com/%E6%9C%83%E5%95%86%E6%A5%AD%E4%BB%A3%E8%A1%A8%E9%A1%A7%E5%8F%B0%E8%82%A1-%E5%8D%93%E6%8F%86%E7%9B%BC%E5%9C%8B%E9%9A%9B%E5%B1%80%E5%8B%A2%E5%84%98%E9%80%9F%E7%A9%A9%E5%AE%9A-021245622.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E6%9C%83%E5%95%86%E6%A5%AD%E4%BB%A3%E8%A1%A8%E9%A1%A7%E5%8F%B0%E8%82%A1-%E5%8D%93%E6%8F%86%E7%9B%BC%E5%9C%8B%E9%9A%9B%E5%B1%80%E5%8B%A2%E5%84%98%E9%80%9F%E7%A9%A9%E5%AE%9A-021245622.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-a8364c04d3",
       "issue": "2026-11-23-AM",
       "published_at_utc": "2026-11-23T02:10:05Z",
@@ -2892,6 +3076,46 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-18e6f49963",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T02:01:47Z",
+      "published_at_taipei": "2026-11-23 10:01",
+      "published_at_taipei_iso": "2026-11-23T10:01:47+08:00",
+      "first_seen_at_utc": "2026-11-23T02:32:27Z",
+      "first_seen_at_taipei": "2026-11-23 10:32",
+      "month": "2026-11",
+      "title": "Wall Street futures jump after major indexes enter correction territory",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-futures-jump-major-020147533.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-futures-jump-major-020147533.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-0d2e980eeb",
+        "issue": "2026-11-22-PM",
+        "title": "Dow Jones Futures Due After Market's Worst Week Since Covid; What To Do Now",
+        "published_at_taipei": "2026-11-22 21:52",
+        "url": "https://finance.yahoo.com/m/9ef9da98-bccf-3565-9a30-9bc3e57ad4b9/dow-jones-futures-due-after.html?.tsrc=rss"
+      },
       "sentiment": "neutral",
       "sentiment_label": "中性",
       "sentiment_score": 0,
@@ -21184,8 +21408,8 @@
       "month": "2026-11",
       "date": "2026-11-23",
       "half": "AM",
-      "updated_at_taipei": "2026-11-23 10:17",
-      "count": 67,
+      "updated_at_taipei": "2026-11-23 10:32",
+      "count": 70,
       "star3_count": 9,
       "failed_sources": [
         {
