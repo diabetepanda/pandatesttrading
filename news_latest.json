@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-23-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-23T21:07:50Z",
-  "updated_at_taipei": "2026-11-24 05:07",
-  "last_updated_utc": "2026-11-23T21:07:50Z",
-  "last_updated_taipei": "2026-11-24 05:07",
-  "next_update_hint": "約台北時間 05:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-23T21:23:00Z",
+  "updated_at_taipei": "2026-11-24 05:23",
+  "last_updated_utc": "2026-11-23T21:23:00Z",
+  "last_updated_taipei": "2026-11-24 05:23",
+  "next_update_hint": "約台北時間 05:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 17.277,
+    "total_elapsed_sec": 14.447,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 8,
+    "new_items_added": 6,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.092,
+        "elapsed_sec": 0.067,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -45,16 +45,16 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.247,
+        "elapsed_sec": 0.192,
         "raw_count": 30,
-        "items_kept": 10,
+        "items_kept": 9,
         "error": null
       },
       "cnbc_economy": {
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.072,
+        "elapsed_sec": 0.109,
         "raw_count": 30,
         "items_kept": 1,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.056,
+        "elapsed_sec": 0.04,
         "raw_count": 10,
         "items_kept": 4,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.391,
-        "raw_count": 20,
-        "items_kept": 19,
+        "elapsed_sec": 0.273,
+        "raw_count": 19,
+        "items_kept": 15,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.251,
+        "elapsed_sec": 0.122,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.166,
+        "elapsed_sec": 0.109,
         "raw_count": 30,
         "items_kept": 15,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.13,
+        "elapsed_sec": 0.086,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.125,
+        "elapsed_sec": 0.102,
         "raw_count": 37,
         "items_kept": 14,
         "error": null
@@ -117,16 +117,16 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.442,
+        "elapsed_sec": 0.39,
         "raw_count": 20,
-        "items_kept": 11,
+        "items_kept": 12,
         "error": null
       },
       "cnyes_us_stock": {
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.447,
+        "elapsed_sec": 0.406,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.472,
+        "elapsed_sec": 0.406,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.71,
+        "elapsed_sec": 0.54,
         "raw_count": 15,
         "items_kept": 5,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.417,
+        "elapsed_sec": 0.405,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.477,
+        "elapsed_sec": 0.502,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.126,
+        "elapsed_sec": 0.107,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.681,
+        "elapsed_sec": 1.341,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.082,
+        "elapsed_sec": 0.071,
         "raw_count": 1375,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 2.374,
+        "elapsed_sec": 1.899,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.376,
+        "elapsed_sec": 0.333,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.17,
+        "elapsed_sec": 0.975,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.357,
+        "elapsed_sec": 0.33,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.528,
+        "elapsed_sec": 1.223,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.127,
+        "elapsed_sec": 0.092,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.505,
+        "elapsed_sec": 0.472,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.288,
+        "elapsed_sec": 0.309,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,28 +303,64 @@
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1421.9,
+      "net_flow_usd_m": -1424.5,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0059,
+        "funding_rate_pct": 0.0064,
         "oi_usd_b": 1.8
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0069,
-        "oi_usd_b": 1.13
+        "funding_rate_pct": -0.007,
+        "oi_usd_b": 1.12
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 33.8,
-      "tx_count": 54936,
+      "mempool_vsize_mb": 36.4,
+      "tx_count": 64892,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261124-824c255ff1",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:04:03Z",
+      "published_at_taipei": "2026-11-24 05:04",
+      "published_at_taipei_iso": "2026-11-24T05:04:03+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "US seeks to recover $1.1B in crypto stolen in North Korea-linked Binance hack",
+      "url": "https://cointelegraph.com/news/us-seeks-11b-crypto-stolen-north-korea-binance-hack?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/us-seeks-11b-crypto-stolen-north-korea-binance-hack",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261124-68379bf923",
       "issue": "2026-11-23-PM",
@@ -768,6 +804,81 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-dd884281c7",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:10:10Z",
+      "published_at_taipei": "2026-11-24 05:10",
+      "published_at_taipei_iso": "2026-11-24T05:10:10+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "〈台股盤前要聞〉黃仁勳復職、擔保維持率將至120%、永豐金法說",
+      "url": "https://news.cnyes.com/news/id/6670353",
+      "canonical_url": "https://news.cnyes.com/news/id/6670353",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-d7f8486e6c",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:06:28Z",
+      "published_at_taipei": "2026-11-24 05:06",
+      "published_at_taipei_iso": "2026-11-24T05:06:28+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "Derive Lists Options on Anthropic, Oil, and the S&P 500",
+      "url": "https://www.bankless.com/read/news/derive-lists-options-on-anthropic-oil-and-the-sp-500?.tsrc=rss",
+      "canonical_url": "https://bankless.com/read/news/derive-lists-options-on-anthropic-oil-and-the-sp-500?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "衍生品",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "WTI",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-4fd32c29b6",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T21:05:00Z",
@@ -807,6 +918,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-21271e7e33",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:05:00Z",
+      "published_at_taipei": "2026-11-24 05:05",
+      "published_at_taipei_iso": "2026-11-24T05:05:00+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "Epsilon Announces Third Quarter 2026 Results and Fourth Quarter 2026 Update",
+      "url": "https://finance.yahoo.com/energy/articles/epsilon-announces-third-quarter-2026-210500058.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/epsilon-announces-third-quarter-2026-210500058.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -9103,6 +9250,80 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-a1faa38dba",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:16:00Z",
+      "published_at_taipei": "2026-11-24 05:16",
+      "published_at_taipei_iso": "2026-11-24T05:16:00+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "HPE just posted its strongest growth ever — and its stock is tacking on more big gains",
+      "url": "https://www.marketwatch.com/story/hpe-just-posted-its-strongest-growth-ever-and-its-stock-is-tacking-on-more-big-gains-4421cebb?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/hpe-just-posted-its-strongest-growth-ever-and-its-stock-is-tacking-on-more-big-gains-4421cebb?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-59d7a928f9",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:02:26Z",
+      "published_at_taipei": "2026-11-24 05:02",
+      "published_at_taipei_iso": "2026-11-24T05:02:26+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "Should You Buy Cipher Digital Stock Now Or Wait For February?",
+      "url": "https://www.trefis.com/stock/cifr/articles/627678/should-you-buy-cipher-digital-stock-now-or-wait-for-february/2026-11-23?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/cifr/articles/627678/should-you-buy-cipher-digital-stock-now-or-wait-for-february/2026-11-23?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-bd1b710270",
+        "issue": "2026-11-22-PM",
+        "title": "Should You Buy Tesla or SpaceX Stock Before Their Potential Merger?",
+        "published_at_taipei": "2026-11-23 06:21",
+        "url": "https://www.fool.com/investing/2026/11/22/should-you-buy-tesla-or-spacex-stock-before-merger/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：sec probe",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-2e2883939c",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T20:50:06Z",
@@ -15525,6 +15746,115 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261124-a1faa38dba",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:16:00Z",
+      "published_at_taipei": "2026-11-24 05:16",
+      "published_at_taipei_iso": "2026-11-24T05:16:00+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "HPE just posted its strongest growth ever — and its stock is tacking on more big gains",
+      "url": "https://www.marketwatch.com/story/hpe-just-posted-its-strongest-growth-ever-and-its-stock-is-tacking-on-more-big-gains-4421cebb?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/hpe-just-posted-its-strongest-growth-ever-and-its-stock-is-tacking-on-more-big-gains-4421cebb?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-dd884281c7",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:10:10Z",
+      "published_at_taipei": "2026-11-24 05:10",
+      "published_at_taipei_iso": "2026-11-24T05:10:10+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "〈台股盤前要聞〉黃仁勳復職、擔保維持率將至120%、永豐金法說",
+      "url": "https://news.cnyes.com/news/id/6670353",
+      "canonical_url": "https://news.cnyes.com/news/id/6670353",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-d7f8486e6c",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:06:28Z",
+      "published_at_taipei": "2026-11-24 05:06",
+      "published_at_taipei_iso": "2026-11-24T05:06:28+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "Derive Lists Options on Anthropic, Oil, and the S&P 500",
+      "url": "https://www.bankless.com/read/news/derive-lists-options-on-anthropic-oil-and-the-sp-500?.tsrc=rss",
+      "canonical_url": "https://bankless.com/read/news/derive-lists-options-on-anthropic-oil-and-the-sp-500?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "衍生品",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "WTI",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-4fd32c29b6",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T21:05:00Z",
@@ -15564,6 +15894,118 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-21271e7e33",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:05:00Z",
+      "published_at_taipei": "2026-11-24 05:05",
+      "published_at_taipei_iso": "2026-11-24T05:05:00+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "Epsilon Announces Third Quarter 2026 Results and Fourth Quarter 2026 Update",
+      "url": "https://finance.yahoo.com/energy/articles/epsilon-announces-third-quarter-2026-210500058.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/epsilon-announces-third-quarter-2026-210500058.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-824c255ff1",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:04:03Z",
+      "published_at_taipei": "2026-11-24 05:04",
+      "published_at_taipei_iso": "2026-11-24T05:04:03+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "US seeks to recover $1.1B in crypto stolen in North Korea-linked Binance hack",
+      "url": "https://cointelegraph.com/news/us-seeks-11b-crypto-stolen-north-korea-binance-hack?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/us-seeks-11b-crypto-stolen-north-korea-binance-hack",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-59d7a928f9",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T21:02:26Z",
+      "published_at_taipei": "2026-11-24 05:02",
+      "published_at_taipei_iso": "2026-11-24T05:02:26+08:00",
+      "first_seen_at_utc": "2026-11-23T21:23:00Z",
+      "first_seen_at_taipei": "2026-11-24 05:23",
+      "month": "2026-11",
+      "title": "Should You Buy Cipher Digital Stock Now Or Wait For February?",
+      "url": "https://www.trefis.com/stock/cifr/articles/627678/should-you-buy-cipher-digital-stock-now-or-wait-for-february/2026-11-23?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/cifr/articles/627678/should-you-buy-cipher-digital-stock-now-or-wait-for-february/2026-11-23?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-bd1b710270",
+        "issue": "2026-11-22-PM",
+        "title": "Should You Buy Tesla or SpaceX Stock Before Their Potential Merger?",
+        "published_at_taipei": "2026-11-23 06:21",
+        "url": "https://www.fool.com/investing/2026/11/22/should-you-buy-tesla-or-spacex-stock-before-merger/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：sec probe",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -62897,9 +63339,9 @@
       "month": "2026-11",
       "date": "2026-11-23",
       "half": "PM",
-      "updated_at_taipei": "2026-11-24 05:07",
-      "count": 403,
-      "star3_count": 12,
+      "updated_at_taipei": "2026-11-24 05:23",
+      "count": 409,
+      "star3_count": 13,
       "failed_sources": [
         {
           "id": "binance_derivatives",
