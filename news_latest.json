@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-23-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-23T05:33:16Z",
-  "updated_at_taipei": "2026-11-23 13:33",
-  "last_updated_utc": "2026-11-23T05:33:16Z",
-  "last_updated_taipei": "2026-11-23 13:33",
-  "next_update_hint": "約台北時間 13:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-23T05:48:12Z",
+  "updated_at_taipei": "2026-11-23 13:48",
+  "last_updated_utc": "2026-11-23T05:48:12Z",
+  "last_updated_taipei": "2026-11-23 13:48",
+  "next_update_hint": "約台北時間 14:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 20.097,
+    "total_elapsed_sec": 21.865,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 3,
+    "new_items_added": 6,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.067,
+        "elapsed_sec": 0.152,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.103,
+        "elapsed_sec": 0.287,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.097,
+        "elapsed_sec": 0.11,
         "raw_count": 30,
         "items_kept": 1,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.043,
+        "elapsed_sec": 0.12,
         "raw_count": 10,
         "items_kept": 3,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.121,
+        "elapsed_sec": 0.383,
         "raw_count": 19,
         "items_kept": 17,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.122,
+        "elapsed_sec": 0.553,
         "raw_count": 25,
         "items_kept": 19,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.079,
+        "elapsed_sec": 0.165,
         "raw_count": 30,
         "items_kept": 17,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.079,
+        "elapsed_sec": 0.161,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.068,
+        "elapsed_sec": 0.138,
         "raw_count": 37,
         "items_kept": 14,
         "error": null
@@ -117,16 +117,16 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.264,
+        "elapsed_sec": 0.62,
         "raw_count": 20,
-        "items_kept": 6,
+        "items_kept": 7,
         "error": null
       },
       "cnyes_us_stock": {
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.456,
+        "elapsed_sec": 2.487,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.436,
+        "elapsed_sec": 0.697,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.645,
+        "elapsed_sec": 0.791,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.428,
+        "elapsed_sec": 0.424,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.534,
+        "elapsed_sec": 0.621,
         "raw_count": 50,
         "items_kept": 23,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.072,
+        "elapsed_sec": 0.269,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 8.077,
+        "elapsed_sec": 2.375,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.06,
+        "elapsed_sec": 0.102,
         "raw_count": 1375,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.379,
+        "elapsed_sec": 1.69,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.33,
+        "elapsed_sec": 0.522,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 0.97,
+        "elapsed_sec": 1.432,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.332,
+        "elapsed_sec": 0.55,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 1.3,
+        "elapsed_sec": 0.581,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.103,
+        "elapsed_sec": 0.349,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.452,
+        "elapsed_sec": 0.58,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.306,
+        "elapsed_sec": 0.428,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 19, 2026",
-      "net_flow_usd_m": -17.4,
+      "net_flow_usd_m": -17.5,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0035,
-        "oi_usd_b": 1.94
+        "funding_rate_pct": 0.0032,
+        "oi_usd_b": 1.96
       },
       "ETHUSDT": {
         "funding_rate_pct": -0.0045,
-        "oi_usd_b": 1.18
+        "oi_usd_b": 1.19
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 31.4,
-      "tx_count": 70768,
+      "mempool_vsize_mb": 26.0,
+      "tx_count": 61808,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -871,6 +871,162 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261123-03cae5ff9b",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T05:47:21Z",
+      "published_at_taipei": "2026-11-23 13:47",
+      "published_at_taipei_iso": "2026-11-23T13:47:21+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "Spot bitcoin ETFs shed $1.8 billion in past week as outflows become ‘structural’: analysts",
+      "url": "https://www.theblock.co/news/markets/2026-11-23-spot-bitcoin-etfs-shed-1-79-billion-in-past-week-444857",
+      "canonical_url": "https://theblock.co/news/markets/2026-11-23-spot-bitcoin-etfs-shed-1-79-billion-in-past-week-444857",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261120-7f6830a7a4",
+        "issue": "2026-11-21-PM",
+        "title": "US spot bitcoin ETFs see $582 million in daily net outflows as November total nears $3.5 billion",
+        "published_at_taipei": "2026-11-20 20:29",
+        "url": "https://www.theblock.co/news/markets/2026-11-20-us-spot-bitcoin-etfs-see-582-million-in-daily-net-outflows-as-november-total-nears-3-5-billion-444217"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：rate hike；命中：outflows",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-46e16ec938",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T05:46:36Z",
+      "published_at_taipei": "2026-11-23 13:46",
+      "published_at_taipei_iso": "2026-11-23T13:46:36+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "賣了怕反彈、買了怕再跌！越慌越容易犯的3個錯",
+      "url": "https://news.cnyes.com/news/id/6670124",
+      "canonical_url": "https://news.cnyes.com/news/id/6670124",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：反彈",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-f8c8f2f6c1",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T05:42:22Z",
+      "published_at_taipei": "2026-11-23 13:42",
+      "published_at_taipei_iso": "2026-11-23T13:42:22+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "Bitcoin sold for $17,000 on Kraken's Canadian dollar market, and the trades stand",
+      "url": "https://www.coindesk.com/markets/2026/11/23/bitcoin-sold-for-usd17-000-on-kraken-s-canadian-dollar-market-and-the-trades-stand",
+      "canonical_url": "https://coindesk.com/markets/2026/11/23/bitcoin-sold-for-usd17-000-on-kraken-s-canadian-dollar-market-and-the-trades-stand",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-2ce79a8723",
+        "issue": "2026-11-22-AM",
+        "title": "Bitcoin briefly drops to $17K on Kraken, exchange upholds trades",
+        "published_at_taipei": "2026-11-22 17:33",
+        "url": "https://cointelegraph.com/news/bitcoin-17k-kraken-canadian-dollar-market-trades-stand?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-304e42ed8f",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T05:30:00Z",
+      "published_at_taipei": "2026-11-23 13:30",
+      "published_at_taipei_iso": "2026-11-23T13:30:00+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "台股史詩殺盤「是否超越金融海嘯」？一票人搖頭揭2008慘況：現在根本小波浪",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E5%8F%B2%E8%A9%A9%E6%AE%BA%E7%9B%A4-%E6%98%AF%E5%90%A6%E8%B6%85%E8%B6%8A%E9%87%91%E8%9E%8D%E6%B5%B7%E5%98%AF-%E7%A5%A8%E4%BA%BA%E6%90%96%E9%A0%AD%E6%8F%AD2008%E6%85%98%E6%B3%81-%E7%8F%BE%E5%9C%A8%E6%A0%B9%E6%9C%AC%E5%B0%8F%E6%B3%A2%E6%B5%AA-053000941.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E5%8F%B2%E8%A9%A9%E6%AE%BA%E7%9B%A4-%E6%98%AF%E5%90%A6%E8%B6%85%E8%B6%8A%E9%87%91%E8%9E%8D%E6%B5%B7%E5%98%AF-%E7%A5%A8%E4%BA%BA%E6%90%96%E9%A0%AD%E6%8F%AD2008%E6%85%98%E6%B3%81-%E7%8F%BE%E5%9C%A8%E6%A0%B9%E6%9C%AC%E5%B0%8F%E6%B3%A2%E6%B5%AA-053000941.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-454d671101",
       "issue": "2026-11-23-AM",
       "published_at_utc": "2026-11-23T05:20:00Z",
@@ -1008,6 +1164,43 @@
       "sentiment": "bearish",
       "sentiment_label": "利空",
       "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-95719d09c1",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T05:05:30Z",
+      "published_at_taipei": "2026-11-23 13:05",
+      "published_at_taipei_iso": "2026-11-23T13:05:30+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "怕影響選情政院祭出禁空令救台股？沈富雄預言1事",
+      "url": "https://tw.news.yahoo.com/%E6%80%95%E5%BD%B1%E9%9F%BF%E9%81%B8%E6%83%85%E6%94%BF%E9%99%A2%E7%A5%AD%E5%87%BA%E7%A6%81%E7%A9%BA%E4%BB%A4%E6%95%91%E5%8F%B0%E8%82%A1-%E6%B2%88%E5%AF%8C%E9%9B%84%E9%A0%90%E8%A8%801%E4%BA%8B-050530174.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E6%80%95%E5%BD%B1%E9%9F%BF%E9%81%B8%E6%83%85%E6%94%BF%E9%99%A2%E7%A5%AD%E5%87%BA%E7%A6%81%E7%A9%BA%E4%BB%A4%E6%95%91%E5%8F%B0%E8%82%A1-%E6%B2%88%E5%AF%8C%E9%9B%84%E9%A0%90%E8%A8%801%E4%BA%8B-050530174.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
       "sentiment_reason": "命中：重挫",
       "sentiment_targets": [
         "TWII"
@@ -1155,6 +1348,42 @@
       "sentiment_label": "利多",
       "sentiment_score": 1,
       "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-806bd90026",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T04:54:37Z",
+      "published_at_taipei": "2026-11-23 12:54",
+      "published_at_taipei_iso": "2026-11-23T12:54:37+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "台股、選舉夾殺！全台最難訂Buffet爆退訂潮 島語揭真相",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1-%E9%81%B8%E8%88%89%E5%A4%BE%E6%AE%BA-%E5%85%A8%E5%8F%B0%E6%9C%80%E9%9B%A3%E8%A8%82buffet%E7%88%86%E9%80%80%E8%A8%82%E6%BD%AE-%E5%B3%B6%E8%AA%9E%E6%8F%AD%E7%9C%9F%E7%9B%B8-045437366.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1-%E9%81%B8%E8%88%89%E5%A4%BE%E6%AE%BA-%E5%85%A8%E5%8F%B0%E6%9C%80%E9%9B%A3%E8%A8%82buffet%E7%88%86%E9%80%80%E8%A8%82%E6%BD%AE-%E5%B3%B6%E8%AA%9E%E6%8F%AD%E7%9C%9F%E7%9B%B8-045437366.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
       ],
@@ -6723,6 +6952,162 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261123-03cae5ff9b",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T05:47:21Z",
+      "published_at_taipei": "2026-11-23 13:47",
+      "published_at_taipei_iso": "2026-11-23T13:47:21+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "Spot bitcoin ETFs shed $1.8 billion in past week as outflows become ‘structural’: analysts",
+      "url": "https://www.theblock.co/news/markets/2026-11-23-spot-bitcoin-etfs-shed-1-79-billion-in-past-week-444857",
+      "canonical_url": "https://theblock.co/news/markets/2026-11-23-spot-bitcoin-etfs-shed-1-79-billion-in-past-week-444857",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261120-7f6830a7a4",
+        "issue": "2026-11-21-PM",
+        "title": "US spot bitcoin ETFs see $582 million in daily net outflows as November total nears $3.5 billion",
+        "published_at_taipei": "2026-11-20 20:29",
+        "url": "https://www.theblock.co/news/markets/2026-11-20-us-spot-bitcoin-etfs-see-582-million-in-daily-net-outflows-as-november-total-nears-3-5-billion-444217"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：rate hike；命中：outflows",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-46e16ec938",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T05:46:36Z",
+      "published_at_taipei": "2026-11-23 13:46",
+      "published_at_taipei_iso": "2026-11-23T13:46:36+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "賣了怕反彈、買了怕再跌！越慌越容易犯的3個錯",
+      "url": "https://news.cnyes.com/news/id/6670124",
+      "canonical_url": "https://news.cnyes.com/news/id/6670124",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：反彈",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-f8c8f2f6c1",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T05:42:22Z",
+      "published_at_taipei": "2026-11-23 13:42",
+      "published_at_taipei_iso": "2026-11-23T13:42:22+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "Bitcoin sold for $17,000 on Kraken's Canadian dollar market, and the trades stand",
+      "url": "https://www.coindesk.com/markets/2026/11/23/bitcoin-sold-for-usd17-000-on-kraken-s-canadian-dollar-market-and-the-trades-stand",
+      "canonical_url": "https://coindesk.com/markets/2026/11/23/bitcoin-sold-for-usd17-000-on-kraken-s-canadian-dollar-market-and-the-trades-stand",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-2ce79a8723",
+        "issue": "2026-11-22-AM",
+        "title": "Bitcoin briefly drops to $17K on Kraken, exchange upholds trades",
+        "published_at_taipei": "2026-11-22 17:33",
+        "url": "https://cointelegraph.com/news/bitcoin-17k-kraken-canadian-dollar-market-trades-stand?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-304e42ed8f",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T05:30:00Z",
+      "published_at_taipei": "2026-11-23 13:30",
+      "published_at_taipei_iso": "2026-11-23T13:30:00+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "台股史詩殺盤「是否超越金融海嘯」？一票人搖頭揭2008慘況：現在根本小波浪",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E5%8F%B2%E8%A9%A9%E6%AE%BA%E7%9B%A4-%E6%98%AF%E5%90%A6%E8%B6%85%E8%B6%8A%E9%87%91%E8%9E%8D%E6%B5%B7%E5%98%AF-%E7%A5%A8%E4%BA%BA%E6%90%96%E9%A0%AD%E6%8F%AD2008%E6%85%98%E6%B3%81-%E7%8F%BE%E5%9C%A8%E6%A0%B9%E6%9C%AC%E5%B0%8F%E6%B3%A2%E6%B5%AA-053000941.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E5%8F%B2%E8%A9%A9%E6%AE%BA%E7%9B%A4-%E6%98%AF%E5%90%A6%E8%B6%85%E8%B6%8A%E9%87%91%E8%9E%8D%E6%B5%B7%E5%98%AF-%E7%A5%A8%E4%BA%BA%E6%90%96%E9%A0%AD%E6%8F%AD2008%E6%85%98%E6%B3%81-%E7%8F%BE%E5%9C%A8%E6%A0%B9%E6%9C%AC%E5%B0%8F%E6%B3%A2%E6%B5%AA-053000941.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261123-454d671101",
       "issue": "2026-11-23-AM",
       "published_at_utc": "2026-11-23T05:20:00Z",
@@ -6894,6 +7279,43 @@
       "sentiment": "bearish",
       "sentiment_label": "利空",
       "sentiment_score": -1,
+      "sentiment_reason": "命中：重挫",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-95719d09c1",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T05:05:30Z",
+      "published_at_taipei": "2026-11-23 13:05",
+      "published_at_taipei_iso": "2026-11-23T13:05:30+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "怕影響選情政院祭出禁空令救台股？沈富雄預言1事",
+      "url": "https://tw.news.yahoo.com/%E6%80%95%E5%BD%B1%E9%9F%BF%E9%81%B8%E6%83%85%E6%94%BF%E9%99%A2%E7%A5%AD%E5%87%BA%E7%A6%81%E7%A9%BA%E4%BB%A4%E6%95%91%E5%8F%B0%E8%82%A1-%E6%B2%88%E5%AF%8C%E9%9B%84%E9%A0%90%E8%A8%801%E4%BA%8B-050530174.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E6%80%95%E5%BD%B1%E9%9F%BF%E9%81%B8%E6%83%85%E6%94%BF%E9%99%A2%E7%A5%AD%E5%87%BA%E7%A6%81%E7%A9%BA%E4%BB%A4%E6%95%91%E5%8F%B0%E8%82%A1-%E6%B2%88%E5%AF%8C%E9%9B%84%E9%A0%90%E8%A8%801%E4%BA%8B-050530174.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
       "sentiment_reason": "命中：重挫",
       "sentiment_targets": [
         "TWII"
@@ -7075,6 +7497,42 @@
       "sentiment_label": "利多",
       "sentiment_score": 1,
       "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261123-806bd90026",
+      "issue": "2026-11-23-AM",
+      "published_at_utc": "2026-11-23T04:54:37Z",
+      "published_at_taipei": "2026-11-23 12:54",
+      "published_at_taipei_iso": "2026-11-23T12:54:37+08:00",
+      "first_seen_at_utc": "2026-11-23T05:48:12Z",
+      "first_seen_at_taipei": "2026-11-23 13:48",
+      "month": "2026-11",
+      "title": "台股、選舉夾殺！全台最難訂Buffet爆退訂潮 島語揭真相",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1-%E9%81%B8%E8%88%89%E5%A4%BE%E6%AE%BA-%E5%85%A8%E5%8F%B0%E6%9C%80%E9%9B%A3%E8%A8%82buffet%E7%88%86%E9%80%80%E8%A8%82%E6%BD%AE-%E5%B3%B6%E8%AA%9E%E6%8F%AD%E7%9C%9F%E7%9B%B8-045437366.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1-%E9%81%B8%E8%88%89%E5%A4%BE%E6%AE%BA-%E5%85%A8%E5%8F%B0%E6%9C%80%E9%9B%A3%E8%A8%82buffet%E7%88%86%E9%80%80%E8%A8%82%E6%BD%AE-%E5%B3%B6%E8%AA%9E%E6%8F%AD%E7%9C%9F%E7%9B%B8-045437366.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
       ],
@@ -28894,8 +29352,8 @@
       "month": "2026-11",
       "date": "2026-11-23",
       "half": "AM",
-      "updated_at_taipei": "2026-11-23 13:33",
-      "count": 171,
+      "updated_at_taipei": "2026-11-23 13:48",
+      "count": 177,
       "star3_count": 14,
       "failed_sources": [
         {
