@@ -3649,6 +3649,68 @@ tr.ta-detail-row > td.ta-detail-cell {
   line-height: 1.45;
 }
 
+.dca-table th,
+.dca-table td,
+.dca-rolling-table th,
+.dca-rolling-table td {
+  white-space: normal;
+  vertical-align: middle;
+  line-height: 1.45;
+  padding: 8px 10px;
+}
+
+.dca-table th {
+  text-align: center;
+}
+
+.dca-table th:first-child,
+.dca-table td:first-child {
+  text-align: left;
+}
+
+.dca-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.dca-cell-ret {
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.dca-cell-dd {
+  color: var(--danger, #f85149);
+  font-size: 0.80rem;
+}
+
+.dca-cell-mar {
+  color: var(--muted, #8b949e);
+  font-size: 0.76rem;
+}
+
+.group-start-row td {
+  border-top: 2px solid var(--border, #30363d);
+}
+
+.research-details summary {
+  user-select: none;
+  cursor: pointer;
+}
+
+.research-details summary:hover {
+  filter: brightness(1.2);
+}
+
+@media (max-width: 768px) {
+  .dca-table.mobile-cards .dca-cell {
+    align-items: flex-end;
+  }
+}
+
 /* 桌機（≥ 1100px）：左欄約 68%，右欄約 32%，右欄 position: sticky 且欄內捲動 */
 @media (min-width: 1100px) {
   .news-layout-grid {

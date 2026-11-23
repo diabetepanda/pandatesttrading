@@ -5,6 +5,8 @@ Compiles data chronologically for:
   - Article 1: 「短線策略能拿去比賽嗎？」(Contest short-term research: 7 strategies on 1h/15m)
   - Article 2: 「截長補短，能不能把策略組合得更好？」(Combo research: L1/L2/L3/L4/F4 & improvements)
   - Article 3: 「考試回撤規則放寬，結果會不一樣嗎？」(Exam drawdown sensitivity study)
+  - Article 4: 「大戶／法人資金流回測（2026-11）」(Institutional / large-trader flow signals)
+  - Article 5: 「定期定額 vs 單筆買進 vs 六種策略（10 年實證）」(DCA compare: 10y multi-asset & rolling backtest)
 
 Outputs:
   - data/research.json
@@ -696,12 +698,246 @@ def build_research_dict() -> dict:
         },
     }
 
+    # -------------------------------------------------------------
+    # Article 5: 定期定額 vs 單筆買進 vs 六種策略（10 年實證） (DCA Compare)
+    # -------------------------------------------------------------
+    dca_res_path = repo_root / "research" / "dca_compare" / "results.json"
+    if dca_res_path.exists():
+        with open(dca_res_path, "r", encoding="utf-8") as f:
+            dca_res = json.load(f)
+    else:
+        dca_res = {}
+
+    fp_dca = dca_res.get("full_period_by_symbol", {})
+    port_dca = dca_res.get("five_asset_combined_portfolio", {})
+    r3_dca = dca_res.get("rolling_3y_by_symbol", {})
+    r5_dca = dca_res.get("rolling_5y_by_symbol", {})
+
+    core_plan_defs = [
+        ("Lump_Sum", "單筆買進抱著", "被動長抱"),
+        ("DCA_Monthly", "每月定期定額", "定期定額"),
+        ("DCA_Dip_2x", "加碼版定期定額 (2x)", "逢低加碼"),
+        ("L4", "策略 L4（主流週線趨勢）", "上線六策略"),
+        ("L2", "策略 L2（精簡趨勢跟隨）", "上線六策略"),
+        ("Hybrid_50DCA_50L4", "50% 定額 ＋ 50% L4 混合", "半倉混合"),
+    ]
+
+    core_summary_rows = []
+    for pk, pname, pcat in core_plan_defs:
+        core_summary_rows.append({
+            "plan_key": pk,
+            "plan_name": pname,
+            "category": pcat,
+            "twii": {
+                "cagr": fp_dca.get("TWII", {}).get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": fp_dca.get("TWII", {}).get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": fp_dca.get("TWII", {}).get(pk, {}).get("mar_ratio", 0.0),
+            },
+            "sp500": {
+                "cagr": fp_dca.get("SP500", {}).get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": fp_dca.get("SP500", {}).get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": fp_dca.get("SP500", {}).get(pk, {}).get("mar_ratio", 0.0),
+            },
+            "nas100": {
+                "cagr": fp_dca.get("NAS100", {}).get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": fp_dca.get("NAS100", {}).get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": fp_dca.get("NAS100", {}).get(pk, {}).get("mar_ratio", 0.0),
+            },
+            "gold": {
+                "cagr": fp_dca.get("XAUUSD", {}).get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": fp_dca.get("XAUUSD", {}).get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": fp_dca.get("XAUUSD", {}).get(pk, {}).get("mar_ratio", 0.0),
+            },
+            "btc": {
+                "cagr": fp_dca.get("BTCUSDT", {}).get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": fp_dca.get("BTCUSDT", {}).get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": fp_dca.get("BTCUSDT", {}).get(pk, {}).get("mar_ratio", 0.0),
+            },
+            "portfolio": {
+                "cagr": port_dca.get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": port_dca.get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": port_dca.get(pk, {}).get("mar_ratio", 0.0),
+            },
+        })
+
+    all_plan_defs = [
+        ("Lump_Sum", "單筆買進抱著", "被動長抱"),
+        ("DCA_Monthly", "定期定額（每月）", "定期定額"),
+        ("DCA_Weekly", "定期定額（每週）", "定期定額"),
+        ("DCA_Dip_2x", "加碼版定期定額 (2x)", "逢低加碼"),
+        ("L4", "策略 L4（主流週線趨勢）", "上線六策略"),
+        ("L2", "策略 L2（精簡趨勢跟隨）", "上線六策略"),
+        ("L1", "策略 L1（波動調整趨勢）", "上線六策略"),
+        ("L3", "策略 L3（雙動能週輪動）", "上線六策略"),
+        ("S3", "策略 S3（日線 RSI 回檔）", "上線六策略"),
+        ("S2", "策略 S2（通道突破 1D等效）", "上線六策略"),
+        ("F4", "對照 F4（週線趨勢 200MA）", "研究對照"),
+        ("Hybrid_50DCA_50L4", "混合：50%定額 + 50% L4", "半倉混合"),
+        ("Hybrid_50DCA_50L2", "混合：50%定額 + 50% L2", "半倉混合"),
+    ]
+
+    all_schemes_rows = []
+    for pk, pname, pcat in all_plan_defs:
+        all_schemes_rows.append({
+            "plan_key": pk,
+            "plan_name": pname,
+            "category": pcat,
+            "twii": {
+                "cagr": fp_dca.get("TWII", {}).get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": fp_dca.get("TWII", {}).get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": fp_dca.get("TWII", {}).get(pk, {}).get("mar_ratio", 0.0),
+            },
+            "sp500": {
+                "cagr": fp_dca.get("SP500", {}).get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": fp_dca.get("SP500", {}).get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": fp_dca.get("SP500", {}).get(pk, {}).get("mar_ratio", 0.0),
+            },
+            "nas100": {
+                "cagr": fp_dca.get("NAS100", {}).get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": fp_dca.get("NAS100", {}).get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": fp_dca.get("NAS100", {}).get(pk, {}).get("mar_ratio", 0.0),
+            },
+            "gold": {
+                "cagr": fp_dca.get("XAUUSD", {}).get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": fp_dca.get("XAUUSD", {}).get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": fp_dca.get("XAUUSD", {}).get(pk, {}).get("mar_ratio", 0.0),
+            },
+            "btc": {
+                "cagr": fp_dca.get("BTCUSDT", {}).get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": fp_dca.get("BTCUSDT", {}).get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": fp_dca.get("BTCUSDT", {}).get(pk, {}).get("mar_ratio", 0.0),
+            },
+            "portfolio": {
+                "cagr": port_dca.get(pk, {}).get("xirr_pct", 0.0),
+                "maxdd": port_dca.get(pk, {}).get("max_dd_pool_pct", 0.0),
+                "mar": port_dca.get(pk, {}).get("mar_ratio", 0.0),
+            },
+        })
+
+    rolling_symbols = [
+        ("TWII", "台股加權"),
+        ("SP500", "S&P 500"),
+        ("NAS100", "Nasdaq 100"),
+        ("XAUUSD", "黃金"),
+        ("BTCUSDT", "比特幣"),
+    ]
+    rolling_plans = [
+        ("Lump_Sum", "單筆買進"),
+        ("DCA_Monthly", "每月定額"),
+        ("DCA_Dip_2x", "加碼版定額"),
+        ("L4", "策略 L4"),
+        ("L2", "策略 L2"),
+        ("Hybrid_50DCA_50L4", "50/50 混合 L4"),
+    ]
+
+    rolling_rows = []
+    for sym, sym_name in rolling_symbols:
+        p3 = r3_dca.get(sym, {}).get("plans", {})
+        p5 = r5_dca.get(sym, {}).get("plans", {})
+        for pk, pname in rolling_plans:
+            d3 = p3.get(pk, {})
+            d5 = p5.get(pk, {})
+            rolling_rows.append({
+                "symbol": sym,
+                "symbol_name": sym_name,
+                "plan_key": pk,
+                "plan_name": pname,
+                "r3_median_cagr": d3.get("median_annualized_return_pct", 0.0),
+                "r3_worst_cagr": d3.get("worst_annualized_return_pct", 0.0),
+                "r3_median_maxdd": d3.get("median_max_dd_pct", 0.0),
+                "r3_worst_maxdd": d3.get("worst_max_dd_pct", 0.0),
+                "r3_win_rate": d3.get("positive_return_pct", 0.0),
+                "r5_median_cagr": d5.get("median_annualized_return_pct", 0.0),
+                "r5_worst_cagr": d5.get("worst_annualized_return_pct", 0.0),
+                "r5_median_maxdd": d5.get("median_max_dd_pct", 0.0),
+                "r5_worst_maxdd": d5.get("worst_max_dd_pct", 0.0),
+                "r5_win_rate": d5.get("positive_return_pct", 0.0),
+            })
+
+    article_dca = {
+        "id": "dca_compare",
+        "slug": "dca-compare",
+        "title": "定期定額 vs 單筆買進 vs 六種策略（10 年實證）",
+        "subtitle": "台股、S&P 500、那斯達克 100、黃金與比特幣 10 年多標的盲測與 3/5 年滾動實證",
+        "takeaway": "只看報酬，定期定額與單筆買進抱著遠勝六種策略；看回撤，策略穩很多。50/50 混合配置把五標的組合最大回撤從約 49% 降到約 16%。",
+        "badge": "10 年多標的實證",
+        "updated_at": "2026-11",
+        "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/dca_compare/report.md",
+        "github_code": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/dca_compare",
+        "sections": {
+            "takeaway": {
+                "title": "一、一句話結論",
+                "content": [
+                    "只看報酬，定期定額與單筆買進抱著遠勝六種策略；看回撤，策略穩很多。",
+                    "如果你買的是長期向上的指數、黃金或比特幣，且能忍受中途帳面跌掉 25%～77%，單筆買進與每月定期定額賺到的總金額與年化報酬（12%～34%）遠勝每筆只敢冒 0.75% 風險的六種交易策略（單一標的年化約 0.8%～2.7%、五標的同池約 2.4%～4.9%）；但若無法忍受資產大幅縮水或長達 2～3 年套牢，策略能把股災回撤縮小到 2%～8%，而「一半資金定期定額 ＋ 一半跑 L4 策略」則是兼顧報酬（年化 9.45%）與抗回撤（回撤從 48.8% 砍到 16.3%）的最實用折衷方案。",
+                ],
+            },
+            "why_low_return": {
+                "title": "二、為什麼策略報酬低？",
+                "content": [
+                    "每筆只冒 0.75% 風險、大部分資金閒置，設計目的是控制回撤，不是跟滿倉長抱比漲幅。",
+                    "• 單一標的平均動用名目部位極低：策略每次進場嚴格限制「萬一打到停損最多只損失總資金的 0.75%」。在單一標的上，一年平均僅出手 3～5 次，實際動用資金僅約 5%～25%，高達 75%～95% 的資金全年躺在現金中領 0 息。",
+                    "• 犧牲資金利用率換取極致防禦：單一標的跑策略總報酬看似只有個位數，但遇到 2020 年 3 月新冠閃崩與 2022 全年升息熊市時，策略回撤僅 1%～3%，更把比特幣 76.6% 的毀滅性崩盤壓制在 4.9% 以內。",
+                    "• 多標的同池才是策略的完整型態：當 5 個標的共用一個資金池輪動時，L4 策略 10 年總報酬達 +60.49%（年化 4.85%），最大回撤僅 -8.22%，MAR 達 0.59。",
+                ],
+            },
+            "core_table": {
+                "title": "三、核心總表：五大標的與五標的組合全期間對決（同一期間、同樣總投入 $100,000）",
+                "content": [
+                    "台股加權（^TWII）、S&P 500、Nasdaq 100、黃金（XAUUSD）皆為 10 年日線（2016-11 ~ 2026-11）；比特幣依專案既有日線快取為 7.1 年（2019-10 ~ 2026-11）。定期定額與混合方案採資金加權年化內部報酬率（XIRR），單筆與策略採 CAGR；最大回撤統一以總資金池淨值曲線計算，MAR = 年化報酬 ÷ 最大回撤。",
+                ],
+            },
+            "rolling_summary": {
+                "title": "四、滾動測試重點（持有 3 年與 5 年中位數與最差情況）",
+                "content": [
+                    "為了消除「剛好挑在 2016 年底起漲點買進」的起點偏誤，我們把歷史上每一個月都當作一個獨立進場起點，測試連續持有 3 年（85 個梯次）與 5 年（61 個梯次，比特幣 26 個梯次）：",
+                    "• 持有 3 年：定期定額在台美股與黃金的年化報酬中位數（13.7%～21.3%）與 MAR（0.96～1.24）全面高於單筆買進；若不幸買在最高點（最差情況），單筆買進最大回撤達 26%～77%，定期定額與混合方案展現更好的平滑防禦。",
+                    "• 持有 5 年：所有歷史起點月份抱滿 5 年，單筆買進、定期定額、加碼版與 50/50 混合方案正報酬勝率全部達到 100.0%，完全零虧損！",
+                ],
+            },
+            "practical_findings": {
+                "title": "五、實用發現",
+                "items": [
+                    "每週扣與每月扣幾乎沒差：10 年交易次數從 121 次暴增至 522 次，但年化報酬差距在台股、S&P 500、Nasdaq 100 與黃金皆不到 0.08%（比特幣僅差 0.26%）。配合每月發薪日扣一次即可，不需要每週扣增加手續費負擔。",
+                    "跌深加碼版每年只多約 0.25%～0.48%：逢收盤價低於 200MA 或回落超過 20% 時當月加倍扣款（DCA_Dip_2x），每年年化報酬多出約 0.25%～0.48%（若採固定十萬預備金池提早打滿，總報酬可多出 26%～61%），但現實中需具備在市場恐慌時連續掏出雙倍現金的心理韌性。",
+                    "扣滿 5 年在所有起點都沒有虧損：在 5 年滾動測試中，單筆買進、每月/每週定額、加碼版與 50/50 混合配置在所有 61 個歷史起點月份（比特幣 26 個梯次）正報酬勝率全部達到 100.0%，沒有任何一個起點出現虧損。",
+                    "50/50 混合配置把五標的組合最大回撤從約 49% 降到約 16%：一半資金定期定額、一半資金跑 L4 策略，五標的組合總報酬達 +102.5%（年化 XIRR +9.45%），同時把五標的等權單筆買進 -48.8% 的巨額回撤大幅砍至 -16.3%，實現長線複利與心理耐受的最佳平衡。",
+                ],
+            },
+            "limitations": {
+                "title": "六、研究限制與免責聲明",
+                "content": [
+                    "• 比特幣主資料只有約 7.1 年（2019-10 ~ 2026-11，依專案既有日線快取），其餘四大標的為 10 年日線（2016-11 ~ 2026-11）。",
+                    "• 過去績效不代表未來；這是研究，不是投資建議。所有內容僅供量化研究與策略回測分析參考，投資人應獨立評估自身財務能力與風險承受度。",
+                ],
+            },
+        },
+        "tables": {
+            "core_summary": core_summary_rows,
+            "all_schemes": all_schemes_rows,
+            "rolling_summary": rolling_rows,
+        },
+        "disclaimer": {
+            "text": "本研究僅供策略回測與學術實證參考，過去績效不保證未來表現，非個人化投資建議。",
+            "github_links": [
+                {
+                    "title": "完整 10 年定期定額實證報告 (report.md)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/dca_compare/report.md",
+                },
+                {
+                    "title": "回測原始程式碼與資料規格 (research/dca_compare)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/dca_compare",
+                },
+            ],
+        },
+    }
+
     full_payload = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "title": "深度研究 (In-Depth Research)",
         "subtitle": "Signal Desk 策略量化實證、多週期盲測與組合實驗報告",
         "disclaimer": "研究結果僅供參考，過去表現不代表未來，不構成投資建議。",
-        "articles": [article_short, article_combo, article_exam, article_flow],
+        "articles": [article_short, article_combo, article_exam, article_flow, article_dca],
     }
     return full_payload
 

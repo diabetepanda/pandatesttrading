@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-20T10:14:21.161064+00:00",
+  "generated_at_utc": "2026-11-23T15:31:09.243601+00:00",
   "title": "深度研究 (In-Depth Research)",
   "subtitle": "Signal Desk 策略量化實證、多週期盲測與組合實驗報告",
   "disclaimer": "研究結果僅供參考，過去表現不代表未來，不構成投資建議。",
@@ -1447,6 +1447,1231 @@
           {
             "title": "回測程式碼與資料規格 (research/flow_signals)",
             "url": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/flow_signals"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dca_compare",
+      "slug": "dca-compare",
+      "title": "定期定額 vs 單筆買進 vs 六種策略（10 年實證）",
+      "subtitle": "台股、S&P 500、那斯達克 100、黃金與比特幣 10 年多標的盲測與 3/5 年滾動實證",
+      "takeaway": "只看報酬，定期定額與單筆買進抱著遠勝六種策略；看回撤，策略穩很多。50/50 混合配置把五標的組合最大回撤從約 49% 降到約 16%。",
+      "badge": "10 年多標的實證",
+      "updated_at": "2026-11",
+      "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/dca_compare/report.md",
+      "github_code": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/dca_compare",
+      "sections": {
+        "takeaway": {
+          "title": "一、一句話結論",
+          "content": [
+            "只看報酬，定期定額與單筆買進抱著遠勝六種策略；看回撤，策略穩很多。",
+            "如果你買的是長期向上的指數、黃金或比特幣，且能忍受中途帳面跌掉 25%～77%，單筆買進與每月定期定額賺到的總金額與年化報酬（12%～34%）遠勝每筆只敢冒 0.75% 風險的六種交易策略（單一標的年化約 0.8%～2.7%、五標的同池約 2.4%～4.9%）；但若無法忍受資產大幅縮水或長達 2～3 年套牢，策略能把股災回撤縮小到 2%～8%，而「一半資金定期定額 ＋ 一半跑 L4 策略」則是兼顧報酬（年化 9.45%）與抗回撤（回撤從 48.8% 砍到 16.3%）的最實用折衷方案。"
+          ]
+        },
+        "why_low_return": {
+          "title": "二、為什麼策略報酬低？",
+          "content": [
+            "每筆只冒 0.75% 風險、大部分資金閒置，設計目的是控制回撤，不是跟滿倉長抱比漲幅。",
+            "• 單一標的平均動用名目部位極低：策略每次進場嚴格限制「萬一打到停損最多只損失總資金的 0.75%」。在單一標的上，一年平均僅出手 3～5 次，實際動用資金僅約 5%～25%，高達 75%～95% 的資金全年躺在現金中領 0 息。",
+            "• 犧牲資金利用率換取極致防禦：單一標的跑策略總報酬看似只有個位數，但遇到 2020 年 3 月新冠閃崩與 2022 全年升息熊市時，策略回撤僅 1%～3%，更把比特幣 76.6% 的毀滅性崩盤壓制在 4.9% 以內。",
+            "• 多標的同池才是策略的完整型態：當 5 個標的共用一個資金池輪動時，L4 策略 10 年總報酬達 +60.49%（年化 4.85%），最大回撤僅 -8.22%，MAR 達 0.59。"
+          ]
+        },
+        "core_table": {
+          "title": "三、核心總表：五大標的與五標的組合全期間對決（同一期間、同樣總投入 $100,000）",
+          "content": [
+            "台股加權（^TWII）、S&P 500、Nasdaq 100、黃金（XAUUSD）皆為 10 年日線（2016-11 ~ 2026-11）；比特幣依專案既有日線快取為 7.1 年（2019-10 ~ 2026-11）。定期定額與混合方案採資金加權年化內部報酬率（XIRR），單筆與策略採 CAGR；最大回撤統一以總資金池淨值曲線計算，MAR = 年化報酬 ÷ 最大回撤。"
+          ]
+        },
+        "rolling_summary": {
+          "title": "四、滾動測試重點（持有 3 年與 5 年中位數與最差情況）",
+          "content": [
+            "為了消除「剛好挑在 2016 年底起漲點買進」的起點偏誤，我們把歷史上每一個月都當作一個獨立進場起點，測試連續持有 3 年（85 個梯次）與 5 年（61 個梯次，比特幣 26 個梯次）：",
+            "• 持有 3 年：定期定額在台美股與黃金的年化報酬中位數（13.7%～21.3%）與 MAR（0.96～1.24）全面高於單筆買進；若不幸買在最高點（最差情況），單筆買進最大回撤達 26%～77%，定期定額與混合方案展現更好的平滑防禦。",
+            "• 持有 5 年：所有歷史起點月份抱滿 5 年，單筆買進、定期定額、加碼版與 50/50 混合方案正報酬勝率全部達到 100.0%，完全零虧損！"
+          ]
+        },
+        "practical_findings": {
+          "title": "五、實用發現",
+          "items": [
+            "每週扣與每月扣幾乎沒差：10 年交易次數從 121 次暴增至 522 次，但年化報酬差距在台股、S&P 500、Nasdaq 100 與黃金皆不到 0.08%（比特幣僅差 0.26%）。配合每月發薪日扣一次即可，不需要每週扣增加手續費負擔。",
+            "跌深加碼版每年只多約 0.25%～0.48%：逢收盤價低於 200MA 或回落超過 20% 時當月加倍扣款（DCA_Dip_2x），每年年化報酬多出約 0.25%～0.48%（若採固定十萬預備金池提早打滿，總報酬可多出 26%～61%），但現實中需具備在市場恐慌時連續掏出雙倍現金的心理韌性。",
+            "扣滿 5 年在所有起點都沒有虧損：在 5 年滾動測試中，單筆買進、每月/每週定額、加碼版與 50/50 混合配置在所有 61 個歷史起點月份（比特幣 26 個梯次）正報酬勝率全部達到 100.0%，沒有任何一個起點出現虧損。",
+            "50/50 混合配置把五標的組合最大回撤從約 49% 降到約 16%：一半資金定期定額、一半資金跑 L4 策略，五標的組合總報酬達 +102.5%（年化 XIRR +9.45%），同時把五標的等權單筆買進 -48.8% 的巨額回撤大幅砍至 -16.3%，實現長線複利與心理耐受的最佳平衡。"
+          ]
+        },
+        "limitations": {
+          "title": "六、研究限制與免責聲明",
+          "content": [
+            "• 比特幣主資料只有約 7.1 年（2019-10 ~ 2026-11，依專案既有日線快取），其餘四大標的為 10 年日線（2016-11 ~ 2026-11）。",
+            "• 過去績效不代表未來；這是研究，不是投資建議。所有內容僅供量化研究與策略回測分析參考，投資人應獨立評估自身財務能力與風險承受度。"
+          ]
+        }
+      },
+      "tables": {
+        "core_summary": [
+          {
+            "plan_key": "Lump_Sum",
+            "plan_name": "單筆買進抱著",
+            "category": "被動長抱",
+            "twii": {
+              "cagr": 17.12,
+              "maxdd": 31.63,
+              "mar": 0.54
+            },
+            "sp500": {
+              "cagr": 13.25,
+              "maxdd": 33.92,
+              "mar": 0.39
+            },
+            "nas100": {
+              "cagr": 19.27,
+              "maxdd": 35.56,
+              "mar": 0.54
+            },
+            "gold": {
+              "cagr": 12.32,
+              "maxdd": 26.95,
+              "mar": 0.46
+            },
+            "btc": {
+              "cagr": 34.0,
+              "maxdd": 76.63,
+              "mar": 0.44
+            },
+            "portfolio": {
+              "cagr": 17.63,
+              "maxdd": 48.84,
+              "mar": 0.36
+            }
+          },
+          {
+            "plan_key": "DCA_Monthly",
+            "plan_name": "每月定期定額",
+            "category": "定期定額",
+            "twii": {
+              "cagr": 20.7,
+              "maxdd": 25.77,
+              "mar": 0.8
+            },
+            "sp500": {
+              "cagr": 13.58,
+              "maxdd": 17.06,
+              "mar": 0.8
+            },
+            "nas100": {
+              "cagr": 18.23,
+              "maxdd": 25.62,
+              "mar": 0.71
+            },
+            "gold": {
+              "cagr": 14.64,
+              "maxdd": 26.54,
+              "mar": 0.55
+            },
+            "btc": {
+              "cagr": 24.87,
+              "maxdd": 54.69,
+              "mar": 0.45
+            },
+            "portfolio": {
+              "cagr": 18.0,
+              "maxdd": 26.39,
+              "mar": 0.68
+            }
+          },
+          {
+            "plan_key": "DCA_Dip_2x",
+            "plan_name": "加碼版定期定額 (2x)",
+            "category": "逢低加碼",
+            "twii": {
+              "cagr": 21.18,
+              "maxdd": 25.95,
+              "mar": 0.82
+            },
+            "sp500": {
+              "cagr": 13.83,
+              "maxdd": 17.14,
+              "mar": 0.81
+            },
+            "nas100": {
+              "cagr": 18.55,
+              "maxdd": 24.74,
+              "mar": 0.75
+            },
+            "gold": {
+              "cagr": 14.89,
+              "maxdd": 26.37,
+              "mar": 0.56
+            },
+            "btc": {
+              "cagr": 24.98,
+              "maxdd": 51.37,
+              "mar": 0.49
+            },
+            "portfolio": {
+              "cagr": 18.25,
+              "maxdd": 24.44,
+              "mar": 0.75
+            }
+          },
+          {
+            "plan_key": "L4",
+            "plan_name": "策略 L4（主流週線趨勢）",
+            "category": "上線六策略",
+            "twii": {
+              "cagr": 0.91,
+              "maxdd": 3.36,
+              "mar": 0.27
+            },
+            "sp500": {
+              "cagr": 0.82,
+              "maxdd": 1.95,
+              "mar": 0.42
+            },
+            "nas100": {
+              "cagr": 1.02,
+              "maxdd": 2.22,
+              "mar": 0.46
+            },
+            "gold": {
+              "cagr": 0.96,
+              "maxdd": 3.26,
+              "mar": 0.3
+            },
+            "btc": {
+              "cagr": 1.71,
+              "maxdd": 4.9,
+              "mar": 0.35
+            },
+            "portfolio": {
+              "cagr": 4.85,
+              "maxdd": 8.22,
+              "mar": 0.59
+            }
+          },
+          {
+            "plan_key": "L2",
+            "plan_name": "策略 L2（精簡趨勢跟隨）",
+            "category": "上線六策略",
+            "twii": {
+              "cagr": 2.05,
+              "maxdd": 9.04,
+              "mar": 0.23
+            },
+            "sp500": {
+              "cagr": -0.61,
+              "maxdd": 11.74,
+              "mar": -0.05
+            },
+            "nas100": {
+              "cagr": 0.53,
+              "maxdd": 5.64,
+              "mar": 0.09
+            },
+            "gold": {
+              "cagr": 0.51,
+              "maxdd": 9.15,
+              "mar": 0.06
+            },
+            "btc": {
+              "cagr": 1.46,
+              "maxdd": 5.8,
+              "mar": 0.25
+            },
+            "portfolio": {
+              "cagr": 3.38,
+              "maxdd": 17.9,
+              "mar": 0.19
+            }
+          },
+          {
+            "plan_key": "Hybrid_50DCA_50L4",
+            "plan_name": "50% 定額 ＋ 50% L4 混合",
+            "category": "半倉混合",
+            "twii": {
+              "cagr": 9.39,
+              "maxdd": 17.04,
+              "mar": 0.55
+            },
+            "sp500": {
+              "cagr": 5.86,
+              "maxdd": 10.74,
+              "mar": 0.55
+            },
+            "nas100": {
+              "cagr": 8.17,
+              "maxdd": 16.06,
+              "mar": 0.51
+            },
+            "gold": {
+              "cagr": 6.41,
+              "maxdd": 19.61,
+              "mar": 0.33
+            },
+            "btc": {
+              "cagr": 10.98,
+              "maxdd": 41.64,
+              "mar": 0.26
+            },
+            "portfolio": {
+              "cagr": 9.45,
+              "maxdd": 16.34,
+              "mar": 0.58
+            }
+          }
+        ],
+        "all_schemes": [
+          {
+            "plan_key": "Lump_Sum",
+            "plan_name": "單筆買進抱著",
+            "category": "被動長抱",
+            "twii": {
+              "cagr": 17.12,
+              "maxdd": 31.63,
+              "mar": 0.54
+            },
+            "sp500": {
+              "cagr": 13.25,
+              "maxdd": 33.92,
+              "mar": 0.39
+            },
+            "nas100": {
+              "cagr": 19.27,
+              "maxdd": 35.56,
+              "mar": 0.54
+            },
+            "gold": {
+              "cagr": 12.32,
+              "maxdd": 26.95,
+              "mar": 0.46
+            },
+            "btc": {
+              "cagr": 34.0,
+              "maxdd": 76.63,
+              "mar": 0.44
+            },
+            "portfolio": {
+              "cagr": 17.63,
+              "maxdd": 48.84,
+              "mar": 0.36
+            }
+          },
+          {
+            "plan_key": "DCA_Monthly",
+            "plan_name": "定期定額（每月）",
+            "category": "定期定額",
+            "twii": {
+              "cagr": 20.7,
+              "maxdd": 25.77,
+              "mar": 0.8
+            },
+            "sp500": {
+              "cagr": 13.58,
+              "maxdd": 17.06,
+              "mar": 0.8
+            },
+            "nas100": {
+              "cagr": 18.23,
+              "maxdd": 25.62,
+              "mar": 0.71
+            },
+            "gold": {
+              "cagr": 14.64,
+              "maxdd": 26.54,
+              "mar": 0.55
+            },
+            "btc": {
+              "cagr": 24.87,
+              "maxdd": 54.69,
+              "mar": 0.45
+            },
+            "portfolio": {
+              "cagr": 18.0,
+              "maxdd": 26.39,
+              "mar": 0.68
+            }
+          },
+          {
+            "plan_key": "DCA_Weekly",
+            "plan_name": "定期定額（每週）",
+            "category": "定期定額",
+            "twii": {
+              "cagr": 20.78,
+              "maxdd": 25.73,
+              "mar": 0.81
+            },
+            "sp500": {
+              "cagr": 13.59,
+              "maxdd": 17.03,
+              "mar": 0.8
+            },
+            "nas100": {
+              "cagr": 18.22,
+              "maxdd": 25.44,
+              "mar": 0.72
+            },
+            "gold": {
+              "cagr": 14.69,
+              "maxdd": 26.56,
+              "mar": 0.55
+            },
+            "btc": {
+              "cagr": 25.13,
+              "maxdd": 54.63,
+              "mar": 0.46
+            },
+            "portfolio": {
+              "cagr": 18.07,
+              "maxdd": 26.36,
+              "mar": 0.69
+            }
+          },
+          {
+            "plan_key": "DCA_Dip_2x",
+            "plan_name": "加碼版定期定額 (2x)",
+            "category": "逢低加碼",
+            "twii": {
+              "cagr": 21.18,
+              "maxdd": 25.95,
+              "mar": 0.82
+            },
+            "sp500": {
+              "cagr": 13.83,
+              "maxdd": 17.14,
+              "mar": 0.81
+            },
+            "nas100": {
+              "cagr": 18.55,
+              "maxdd": 24.74,
+              "mar": 0.75
+            },
+            "gold": {
+              "cagr": 14.89,
+              "maxdd": 26.37,
+              "mar": 0.56
+            },
+            "btc": {
+              "cagr": 24.98,
+              "maxdd": 51.37,
+              "mar": 0.49
+            },
+            "portfolio": {
+              "cagr": 18.25,
+              "maxdd": 24.44,
+              "mar": 0.75
+            }
+          },
+          {
+            "plan_key": "L4",
+            "plan_name": "策略 L4（主流週線趨勢）",
+            "category": "上線六策略",
+            "twii": {
+              "cagr": 0.91,
+              "maxdd": 3.36,
+              "mar": 0.27
+            },
+            "sp500": {
+              "cagr": 0.82,
+              "maxdd": 1.95,
+              "mar": 0.42
+            },
+            "nas100": {
+              "cagr": 1.02,
+              "maxdd": 2.22,
+              "mar": 0.46
+            },
+            "gold": {
+              "cagr": 0.96,
+              "maxdd": 3.26,
+              "mar": 0.3
+            },
+            "btc": {
+              "cagr": 1.71,
+              "maxdd": 4.9,
+              "mar": 0.35
+            },
+            "portfolio": {
+              "cagr": 4.85,
+              "maxdd": 8.22,
+              "mar": 0.59
+            }
+          },
+          {
+            "plan_key": "L2",
+            "plan_name": "策略 L2（精簡趨勢跟隨）",
+            "category": "上線六策略",
+            "twii": {
+              "cagr": 2.05,
+              "maxdd": 9.04,
+              "mar": 0.23
+            },
+            "sp500": {
+              "cagr": -0.61,
+              "maxdd": 11.74,
+              "mar": -0.05
+            },
+            "nas100": {
+              "cagr": 0.53,
+              "maxdd": 5.64,
+              "mar": 0.09
+            },
+            "gold": {
+              "cagr": 0.51,
+              "maxdd": 9.15,
+              "mar": 0.06
+            },
+            "btc": {
+              "cagr": 1.46,
+              "maxdd": 5.8,
+              "mar": 0.25
+            },
+            "portfolio": {
+              "cagr": 3.38,
+              "maxdd": 17.9,
+              "mar": 0.19
+            }
+          },
+          {
+            "plan_key": "L1",
+            "plan_name": "策略 L1（波動調整趨勢）",
+            "category": "上線六策略",
+            "twii": {
+              "cagr": 2.4,
+              "maxdd": 6.82,
+              "mar": 0.35
+            },
+            "sp500": {
+              "cagr": -0.16,
+              "maxdd": 8.36,
+              "mar": -0.02
+            },
+            "nas100": {
+              "cagr": 0.15,
+              "maxdd": 7.05,
+              "mar": 0.02
+            },
+            "gold": {
+              "cagr": 0.13,
+              "maxdd": 7.96,
+              "mar": 0.02
+            },
+            "btc": {
+              "cagr": 1.95,
+              "maxdd": 3.3,
+              "mar": 0.59
+            },
+            "portfolio": {
+              "cagr": 3.81,
+              "maxdd": 13.05,
+              "mar": 0.29
+            }
+          },
+          {
+            "plan_key": "L3",
+            "plan_name": "策略 L3（雙動能週輪動）",
+            "category": "上線六策略",
+            "twii": {
+              "cagr": 1.84,
+              "maxdd": 6.84,
+              "mar": 0.27
+            },
+            "sp500": {
+              "cagr": 0.13,
+              "maxdd": 7.95,
+              "mar": 0.02
+            },
+            "nas100": {
+              "cagr": 0.93,
+              "maxdd": 4.72,
+              "mar": 0.2
+            },
+            "gold": {
+              "cagr": 0.35,
+              "maxdd": 7.98,
+              "mar": 0.04
+            },
+            "btc": {
+              "cagr": 1.46,
+              "maxdd": 2.41,
+              "mar": 0.6
+            },
+            "portfolio": {
+              "cagr": 2.69,
+              "maxdd": 10.72,
+              "mar": 0.25
+            }
+          },
+          {
+            "plan_key": "S3",
+            "plan_name": "策略 S3（日線 RSI 回檔）",
+            "category": "上線六策略",
+            "twii": {
+              "cagr": 0.39,
+              "maxdd": 1.88,
+              "mar": 0.21
+            },
+            "sp500": {
+              "cagr": 0.16,
+              "maxdd": 3.0,
+              "mar": 0.05
+            },
+            "nas100": {
+              "cagr": -0.01,
+              "maxdd": 5.09,
+              "mar": -0.0
+            },
+            "gold": {
+              "cagr": -0.07,
+              "maxdd": 1.96,
+              "mar": -0.04
+            },
+            "btc": {
+              "cagr": -0.12,
+              "maxdd": 2.48,
+              "mar": -0.05
+            },
+            "portfolio": {
+              "cagr": 0.39,
+              "maxdd": 7.08,
+              "mar": 0.06
+            }
+          },
+          {
+            "plan_key": "S2",
+            "plan_name": "策略 S2（通道突破 1D等效）",
+            "category": "上線六策略",
+            "twii": {
+              "cagr": 1.13,
+              "maxdd": 7.43,
+              "mar": 0.15
+            },
+            "sp500": {
+              "cagr": -0.59,
+              "maxdd": 13.63,
+              "mar": -0.04
+            },
+            "nas100": {
+              "cagr": -0.66,
+              "maxdd": 9.38,
+              "mar": -0.07
+            },
+            "gold": {
+              "cagr": 0.77,
+              "maxdd": 5.64,
+              "mar": 0.14
+            },
+            "btc": {
+              "cagr": 2.68,
+              "maxdd": 4.71,
+              "mar": 0.57
+            },
+            "portfolio": {
+              "cagr": 2.39,
+              "maxdd": 18.52,
+              "mar": 0.13
+            }
+          },
+          {
+            "plan_key": "F4",
+            "plan_name": "對照 F4（週線趨勢 200MA）",
+            "category": "研究對照",
+            "twii": {
+              "cagr": 1.03,
+              "maxdd": 6.32,
+              "mar": 0.16
+            },
+            "sp500": {
+              "cagr": 0.72,
+              "maxdd": 3.88,
+              "mar": 0.19
+            },
+            "nas100": {
+              "cagr": 1.44,
+              "maxdd": 2.41,
+              "mar": 0.6
+            },
+            "gold": {
+              "cagr": 0.59,
+              "maxdd": 5.7,
+              "mar": 0.1
+            },
+            "btc": {
+              "cagr": 1.38,
+              "maxdd": 4.1,
+              "mar": 0.34
+            },
+            "portfolio": {
+              "cagr": 4.68,
+              "maxdd": 10.18,
+              "mar": 0.46
+            }
+          },
+          {
+            "plan_key": "Hybrid_50DCA_50L4",
+            "plan_name": "混合：50%定額 + 50% L4",
+            "category": "半倉混合",
+            "twii": {
+              "cagr": 9.39,
+              "maxdd": 17.04,
+              "mar": 0.55
+            },
+            "sp500": {
+              "cagr": 5.86,
+              "maxdd": 10.74,
+              "mar": 0.55
+            },
+            "nas100": {
+              "cagr": 8.17,
+              "maxdd": 16.06,
+              "mar": 0.51
+            },
+            "gold": {
+              "cagr": 6.41,
+              "maxdd": 19.61,
+              "mar": 0.33
+            },
+            "btc": {
+              "cagr": 10.98,
+              "maxdd": 41.64,
+              "mar": 0.26
+            },
+            "portfolio": {
+              "cagr": 9.45,
+              "maxdd": 16.34,
+              "mar": 0.58
+            }
+          },
+          {
+            "plan_key": "Hybrid_50DCA_50L2",
+            "plan_name": "混合：50%定額 + 50% L2",
+            "category": "半倉混合",
+            "twii": {
+              "cagr": 9.81,
+              "maxdd": 15.23,
+              "mar": 0.64
+            },
+            "sp500": {
+              "cagr": 5.23,
+              "maxdd": 10.79,
+              "mar": 0.48
+            },
+            "nas100": {
+              "cagr": 7.99,
+              "maxdd": 15.95,
+              "mar": 0.5
+            },
+            "gold": {
+              "cagr": 6.22,
+              "maxdd": 20.45,
+              "mar": 0.3
+            },
+            "btc": {
+              "cagr": 10.88,
+              "maxdd": 41.68,
+              "mar": 0.26
+            },
+            "portfolio": {
+              "cagr": 8.73,
+              "maxdd": 18.42,
+              "mar": 0.47
+            }
+          }
+        ],
+        "rolling_summary": [
+          {
+            "symbol": "TWII",
+            "symbol_name": "台股加權",
+            "plan_key": "Lump_Sum",
+            "plan_name": "單筆買進",
+            "r3_median_cagr": 11.13,
+            "r3_worst_cagr": -0.47,
+            "r3_median_maxdd": 28.72,
+            "r3_worst_maxdd": 31.63,
+            "r3_win_rate": 98.8,
+            "r5_median_cagr": 13.62,
+            "r5_worst_cagr": 3.8,
+            "r5_median_maxdd": 31.63,
+            "r5_worst_maxdd": 31.63,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "TWII",
+            "symbol_name": "台股加權",
+            "plan_key": "DCA_Monthly",
+            "plan_name": "每月定額",
+            "r3_median_cagr": 16.0,
+            "r3_worst_cagr": -5.46,
+            "r3_median_maxdd": 18.46,
+            "r3_worst_maxdd": 28.72,
+            "r3_win_rate": 95.3,
+            "r5_median_cagr": 13.93,
+            "r5_worst_cagr": 1.57,
+            "r5_median_maxdd": 23.61,
+            "r5_worst_maxdd": 30.1,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "TWII",
+            "symbol_name": "台股加權",
+            "plan_key": "DCA_Dip_2x",
+            "plan_name": "加碼版定額",
+            "r3_median_cagr": 16.86,
+            "r3_worst_cagr": -5.24,
+            "r3_median_maxdd": 18.27,
+            "r3_worst_maxdd": 27.35,
+            "r3_win_rate": 96.5,
+            "r5_median_cagr": 14.86,
+            "r5_worst_cagr": 2.12,
+            "r5_median_maxdd": 23.34,
+            "r5_worst_maxdd": 29.24,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "TWII",
+            "symbol_name": "台股加權",
+            "plan_key": "L4",
+            "plan_name": "策略 L4",
+            "r3_median_cagr": 0.74,
+            "r3_worst_cagr": -0.35,
+            "r3_median_maxdd": 2.19,
+            "r3_worst_maxdd": 3.36,
+            "r3_win_rate": 81.2,
+            "r5_median_cagr": 0.76,
+            "r5_worst_cagr": 0.22,
+            "r5_median_maxdd": 3.19,
+            "r5_worst_maxdd": 3.36,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "TWII",
+            "symbol_name": "台股加權",
+            "plan_key": "L2",
+            "plan_name": "策略 L2",
+            "r3_median_cagr": 1.1,
+            "r3_worst_cagr": -1.8,
+            "r3_median_maxdd": 4.73,
+            "r3_worst_maxdd": 8.74,
+            "r3_win_rate": 85.9,
+            "r5_median_cagr": 1.01,
+            "r5_worst_cagr": 0.63,
+            "r5_median_maxdd": 8.64,
+            "r5_worst_maxdd": 9.04,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "TWII",
+            "symbol_name": "台股加權",
+            "plan_key": "Hybrid_50DCA_50L4",
+            "plan_name": "50/50 混合 L4",
+            "r3_median_cagr": 5.68,
+            "r3_worst_cagr": -1.83,
+            "r3_median_maxdd": 10.79,
+            "r3_worst_maxdd": 16.66,
+            "r3_win_rate": 95.3,
+            "r5_median_cagr": 5.42,
+            "r5_worst_cagr": 0.72,
+            "r5_median_maxdd": 13.96,
+            "r5_worst_maxdd": 17.94,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "SP500",
+            "symbol_name": "S&P 500",
+            "plan_key": "Lump_Sum",
+            "plan_name": "單筆買進",
+            "r3_median_cagr": 11.89,
+            "r3_worst_cagr": 1.78,
+            "r3_median_maxdd": 25.43,
+            "r3_worst_maxdd": 33.92,
+            "r3_win_rate": 100.0,
+            "r5_median_cagr": 12.47,
+            "r5_worst_cagr": 7.23,
+            "r5_median_maxdd": 33.92,
+            "r5_worst_maxdd": 33.92,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "SP500",
+            "symbol_name": "S&P 500",
+            "plan_key": "DCA_Monthly",
+            "plan_name": "每月定額",
+            "r3_median_cagr": 14.99,
+            "r3_worst_cagr": -6.23,
+            "r3_median_maxdd": 15.73,
+            "r3_worst_maxdd": 33.04,
+            "r3_win_rate": 97.6,
+            "r5_median_cagr": 13.52,
+            "r5_worst_cagr": 4.95,
+            "r5_median_maxdd": 18.33,
+            "r5_worst_maxdd": 24.39,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "SP500",
+            "symbol_name": "S&P 500",
+            "plan_key": "DCA_Dip_2x",
+            "plan_name": "加碼版定額",
+            "r3_median_cagr": 15.86,
+            "r3_worst_cagr": -6.05,
+            "r3_median_maxdd": 15.64,
+            "r3_worst_maxdd": 32.52,
+            "r3_win_rate": 98.8,
+            "r5_median_cagr": 14.2,
+            "r5_worst_cagr": 5.33,
+            "r5_median_maxdd": 17.98,
+            "r5_worst_maxdd": 24.54,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "SP500",
+            "symbol_name": "S&P 500",
+            "plan_key": "L4",
+            "plan_name": "策略 L4",
+            "r3_median_cagr": 0.71,
+            "r3_worst_cagr": -0.13,
+            "r3_median_maxdd": 1.71,
+            "r3_worst_maxdd": 2.28,
+            "r3_win_rate": 91.8,
+            "r5_median_cagr": 0.63,
+            "r5_worst_cagr": 0.05,
+            "r5_median_maxdd": 1.95,
+            "r5_worst_maxdd": 2.28,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "SP500",
+            "symbol_name": "S&P 500",
+            "plan_key": "L2",
+            "plan_name": "策略 L2",
+            "r3_median_cagr": -0.45,
+            "r3_worst_cagr": -1.79,
+            "r3_median_maxdd": 4.72,
+            "r3_worst_maxdd": 9.99,
+            "r3_win_rate": 24.7,
+            "r5_median_cagr": -0.35,
+            "r5_worst_cagr": -1.31,
+            "r5_median_maxdd": 5.23,
+            "r5_worst_maxdd": 9.99,
+            "r5_win_rate": 14.8
+          },
+          {
+            "symbol": "SP500",
+            "symbol_name": "S&P 500",
+            "plan_key": "Hybrid_50DCA_50L4",
+            "plan_name": "50/50 混合 L4",
+            "r3_median_cagr": 5.55,
+            "r3_worst_cagr": -1.06,
+            "r3_median_maxdd": 8.81,
+            "r3_worst_maxdd": 18.12,
+            "r3_win_rate": 98.8,
+            "r5_median_cagr": 5.17,
+            "r5_worst_cagr": 2.07,
+            "r5_median_maxdd": 10.79,
+            "r5_worst_maxdd": 14.46,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "NAS100",
+            "symbol_name": "Nasdaq 100",
+            "plan_key": "Lump_Sum",
+            "plan_name": "單筆買進",
+            "r3_median_cagr": 20.61,
+            "r3_worst_cagr": 6.66,
+            "r3_median_maxdd": 28.03,
+            "r3_worst_maxdd": 35.56,
+            "r3_win_rate": 100.0,
+            "r5_median_cagr": 16.66,
+            "r5_worst_cagr": 10.76,
+            "r5_median_maxdd": 35.56,
+            "r5_worst_maxdd": 35.56,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "NAS100",
+            "symbol_name": "Nasdaq 100",
+            "plan_key": "DCA_Monthly",
+            "plan_name": "每月定額",
+            "r3_median_cagr": 21.25,
+            "r3_worst_cagr": -6.69,
+            "r3_median_maxdd": 18.7,
+            "r3_worst_maxdd": 31.43,
+            "r3_win_rate": 96.5,
+            "r5_median_cagr": 17.51,
+            "r5_worst_cagr": 5.24,
+            "r5_median_maxdd": 22.25,
+            "r5_worst_maxdd": 33.58,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "NAS100",
+            "symbol_name": "Nasdaq 100",
+            "plan_key": "DCA_Dip_2x",
+            "plan_name": "加碼版定額",
+            "r3_median_cagr": 22.02,
+            "r3_worst_cagr": -7.67,
+            "r3_median_maxdd": 18.35,
+            "r3_worst_maxdd": 29.63,
+            "r3_win_rate": 96.5,
+            "r5_median_cagr": 18.7,
+            "r5_worst_cagr": 5.2,
+            "r5_median_maxdd": 21.75,
+            "r5_worst_maxdd": 32.35,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "NAS100",
+            "symbol_name": "Nasdaq 100",
+            "plan_key": "L4",
+            "plan_name": "策略 L4",
+            "r3_median_cagr": 1.03,
+            "r3_worst_cagr": 0.24,
+            "r3_median_maxdd": 1.38,
+            "r3_worst_maxdd": 2.28,
+            "r3_win_rate": 100.0,
+            "r5_median_cagr": 0.85,
+            "r5_worst_cagr": 0.48,
+            "r5_median_maxdd": 2.22,
+            "r5_worst_maxdd": 2.28,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "NAS100",
+            "symbol_name": "Nasdaq 100",
+            "plan_key": "L2",
+            "plan_name": "策略 L2",
+            "r3_median_cagr": 0.57,
+            "r3_worst_cagr": -0.29,
+            "r3_median_maxdd": 3.45,
+            "r3_worst_maxdd": 7.9,
+            "r3_win_rate": 95.3,
+            "r5_median_cagr": 0.61,
+            "r5_worst_cagr": 0.0,
+            "r5_median_maxdd": 3.73,
+            "r5_worst_maxdd": 7.9,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "NAS100",
+            "symbol_name": "Nasdaq 100",
+            "plan_key": "Hybrid_50DCA_50L4",
+            "plan_name": "50/50 混合 L4",
+            "r3_median_cagr": 7.91,
+            "r3_worst_cagr": -1.86,
+            "r3_median_maxdd": 10.66,
+            "r3_worst_maxdd": 18.61,
+            "r3_win_rate": 96.5,
+            "r5_median_cagr": 6.96,
+            "r5_worst_cagr": 2.16,
+            "r5_median_maxdd": 13.45,
+            "r5_worst_maxdd": 21.49,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "XAUUSD",
+            "symbol_name": "黃金",
+            "plan_key": "Lump_Sum",
+            "plan_name": "單筆買進",
+            "r3_median_cagr": 12.33,
+            "r3_worst_cagr": -1.24,
+            "r3_median_maxdd": 18.91,
+            "r3_worst_maxdd": 26.69,
+            "r3_win_rate": 97.6,
+            "r5_median_cagr": 11.02,
+            "r5_worst_cagr": 5.22,
+            "r5_median_maxdd": 21.19,
+            "r5_worst_maxdd": 26.69,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "XAUUSD",
+            "symbol_name": "黃金",
+            "plan_key": "DCA_Monthly",
+            "plan_name": "每月定額",
+            "r3_median_cagr": 13.66,
+            "r3_worst_cagr": -4.42,
+            "r3_median_maxdd": 11.6,
+            "r3_worst_maxdd": 24.43,
+            "r3_win_rate": 96.5,
+            "r5_median_cagr": 10.51,
+            "r5_worst_cagr": 2.53,
+            "r5_median_maxdd": 15.2,
+            "r5_worst_maxdd": 25.57,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "XAUUSD",
+            "symbol_name": "黃金",
+            "plan_key": "DCA_Dip_2x",
+            "plan_name": "加碼版定額",
+            "r3_median_cagr": 13.72,
+            "r3_worst_cagr": -4.91,
+            "r3_median_maxdd": 11.52,
+            "r3_worst_maxdd": 23.43,
+            "r3_win_rate": 96.5,
+            "r5_median_cagr": 11.0,
+            "r5_worst_cagr": 2.8,
+            "r5_median_maxdd": 14.68,
+            "r5_worst_maxdd": 25.12,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "XAUUSD",
+            "symbol_name": "黃金",
+            "plan_key": "L4",
+            "plan_name": "策略 L4",
+            "r3_median_cagr": 1.12,
+            "r3_worst_cagr": -0.89,
+            "r3_median_maxdd": 2.39,
+            "r3_worst_maxdd": 3.22,
+            "r3_win_rate": 75.3,
+            "r5_median_cagr": 0.64,
+            "r5_worst_cagr": 0.22,
+            "r5_median_maxdd": 3.19,
+            "r5_worst_maxdd": 3.26,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "XAUUSD",
+            "symbol_name": "黃金",
+            "plan_key": "L2",
+            "plan_name": "策略 L2",
+            "r3_median_cagr": -0.31,
+            "r3_worst_cagr": -1.76,
+            "r3_median_maxdd": 4.96,
+            "r3_worst_maxdd": 7.22,
+            "r3_win_rate": 44.7,
+            "r5_median_cagr": -0.34,
+            "r5_worst_cagr": -1.26,
+            "r5_median_maxdd": 7.22,
+            "r5_worst_maxdd": 9.15,
+            "r5_win_rate": 34.4
+          },
+          {
+            "symbol": "XAUUSD",
+            "symbol_name": "黃金",
+            "plan_key": "Hybrid_50DCA_50L4",
+            "plan_name": "50/50 混合 L4",
+            "r3_median_cagr": 5.03,
+            "r3_worst_cagr": -1.65,
+            "r3_median_maxdd": 6.91,
+            "r3_worst_maxdd": 15.36,
+            "r3_win_rate": 95.3,
+            "r5_median_cagr": 4.15,
+            "r5_worst_cagr": 1.2,
+            "r5_median_maxdd": 8.92,
+            "r5_worst_maxdd": 17.42,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "BTCUSDT",
+            "symbol_name": "比特幣",
+            "plan_key": "Lump_Sum",
+            "plan_name": "單筆買進",
+            "r3_median_cagr": 35.43,
+            "r3_worst_cagr": 0.3,
+            "r3_median_maxdd": 72.66,
+            "r3_worst_maxdd": 76.63,
+            "r3_win_rate": 100.0,
+            "r5_median_cagr": 49.77,
+            "r5_worst_cagr": 3.0,
+            "r5_median_maxdd": 76.63,
+            "r5_worst_maxdd": 76.63,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "BTCUSDT",
+            "symbol_name": "比特幣",
+            "plan_key": "DCA_Monthly",
+            "plan_name": "每月定額",
+            "r3_median_cagr": 24.77,
+            "r3_worst_cagr": -6.69,
+            "r3_median_maxdd": 41.96,
+            "r3_worst_maxdd": 72.96,
+            "r3_win_rate": 90.0,
+            "r5_median_cagr": 44.78,
+            "r5_worst_cagr": 14.31,
+            "r5_median_maxdd": 49.7,
+            "r5_worst_maxdd": 63.26,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "BTCUSDT",
+            "symbol_name": "比特幣",
+            "plan_key": "DCA_Dip_2x",
+            "plan_name": "加碼版定額",
+            "r3_median_cagr": 30.07,
+            "r3_worst_cagr": -11.53,
+            "r3_median_maxdd": 38.05,
+            "r3_worst_maxdd": 71.42,
+            "r3_win_rate": 92.0,
+            "r5_median_cagr": 46.93,
+            "r5_worst_cagr": 16.97,
+            "r5_median_maxdd": 48.61,
+            "r5_worst_maxdd": 59.43,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "BTCUSDT",
+            "symbol_name": "比特幣",
+            "plan_key": "L4",
+            "plan_name": "策略 L4",
+            "r3_median_cagr": 1.71,
+            "r3_worst_cagr": 0.51,
+            "r3_median_maxdd": 3.87,
+            "r3_worst_maxdd": 4.9,
+            "r3_win_rate": 100.0,
+            "r5_median_cagr": 2.13,
+            "r5_worst_cagr": 0.63,
+            "r5_median_maxdd": 4.38,
+            "r5_worst_maxdd": 4.9,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "BTCUSDT",
+            "symbol_name": "比特幣",
+            "plan_key": "L2",
+            "plan_name": "策略 L2",
+            "r3_median_cagr": 0.5,
+            "r3_worst_cagr": -0.08,
+            "r3_median_maxdd": 2.19,
+            "r3_worst_maxdd": 5.8,
+            "r3_win_rate": 96.0,
+            "r5_median_cagr": 1.57,
+            "r5_worst_cagr": 0.14,
+            "r5_median_maxdd": 4.75,
+            "r5_worst_maxdd": 5.8,
+            "r5_win_rate": 100.0
+          },
+          {
+            "symbol": "BTCUSDT",
+            "symbol_name": "比特幣",
+            "plan_key": "Hybrid_50DCA_50L4",
+            "plan_name": "50/50 混合 L4",
+            "r3_median_cagr": 9.34,
+            "r3_worst_cagr": -0.42,
+            "r3_median_maxdd": 25.09,
+            "r3_worst_maxdd": 55.18,
+            "r3_win_rate": 98.0,
+            "r5_median_cagr": 19.31,
+            "r5_worst_cagr": 5.65,
+            "r5_median_maxdd": 35.84,
+            "r5_worst_maxdd": 45.09,
+            "r5_win_rate": 100.0
+          }
+        ]
+      },
+      "disclaimer": {
+        "text": "本研究僅供策略回測與學術實證參考，過去績效不保證未來表現，非個人化投資建議。",
+        "github_links": [
+          {
+            "title": "完整 10 年定期定額實證報告 (report.md)",
+            "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/dca_compare/report.md"
+          },
+          {
+            "title": "回測原始程式碼與資料規格 (research/dca_compare)",
+            "url": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/dca_compare"
           }
         ]
       }

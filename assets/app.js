@@ -2585,7 +2585,13 @@
     }
     const el = document.getElementById(`article-${id}`);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      try {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      } catch (_) {}
+      try {
+        const topY = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop || 0) - 70;
+        window.scrollTo(0, Math.max(0, topY));
+      } catch (_) {}
     }
   }
   window.scrollToResearchArticle = scrollToResearchArticle;
@@ -3081,6 +3087,223 @@
     `;
   }
 
+  function renderDcaCellHtml(c) {
+    if (!c) return '<div class="dca-cell muted">--</div>';
+    const cagr = Number(c.cagr || 0);
+    const maxdd = Number(c.maxdd || 0);
+    const mar = c.mar !== null && c.mar !== undefined ? Number(c.mar).toFixed(2) : "--";
+    const cagrCls = cagr > 0 ? "text-success" : (cagr < 0 ? "text-danger" : "");
+    const cagrSign = cagr > 0 ? "+" : "";
+    return `
+      <div class="dca-cell">
+        <div class="dca-cell-ret ${cagrCls}">${cagrSign}${cagr.toFixed(2)}%</div>
+        <div class="dca-cell-dd">-${Math.abs(maxdd).toFixed(2)}%</div>
+        <div class="dca-cell-mar">MAR ${mar}</div>
+      </div>
+    `;
+  }
+
+  function renderDcaCoreTableRows(rows) {
+    if (!Array.isArray(rows) || rows.length === 0) {
+      return '<tr><td colspan="7" class="muted center">尚無核心比較資料</td></tr>';
+    }
+    return rows.map((r) => {
+      const isHybrid = String(r.plan_key || "").startsWith("Hybrid");
+      const isLump = r.plan_key === "Lump_Sum";
+      const isDca = r.plan_key === "DCA_Monthly";
+      const highlightCls = (isHybrid || isLump || isDca) ? 'class="highlight-row"' : "";
+      return `
+        <tr ${highlightCls}>
+          <td data-label="方案名稱">
+            <strong>${escapeHtml(r.plan_name || r.plan_key)}</strong>
+            <br><span class="badge ${isHybrid ? "badge-ok" : "badge-warn"}">${escapeHtml(r.category || "")}</span>
+          </td>
+          <td data-label="台股 ^TWII">${renderDcaCellHtml(r.twii)}</td>
+          <td data-label="S&P 500">${renderDcaCellHtml(r.sp500)}</td>
+          <td data-label="Nasdaq 100">${renderDcaCellHtml(r.nas100)}</td>
+          <td data-label="黃金 XAUUSD">${renderDcaCellHtml(r.gold)}</td>
+          <td data-label="比特幣 (7.1年)">${renderDcaCellHtml(r.btc)}</td>
+          <td data-label="五標的組合">${renderDcaCellHtml(r.portfolio)}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function renderDcaRollingTableRows(rows) {
+    if (!Array.isArray(rows) || rows.length === 0) {
+      return '<tr><td colspan="6" class="muted center">尚無滾動測試資料</td></tr>';
+    }
+    let lastSym = "";
+    return rows.map((r) => {
+      const isNewSym = r.symbol !== lastSym;
+      lastSym = r.symbol;
+      const r3Med = Number(r.r3_median_cagr || 0);
+      const r3Worst = Number(r.r3_worst_cagr || 0);
+      const r5Med = Number(r.r5_median_cagr || 0);
+      const r5Worst = Number(r.r5_worst_cagr || 0);
+      const r3Cls = r3Med > 0 ? "text-success" : (r3Med < 0 ? "text-danger" : "");
+      const r5Cls = r5Med > 0 ? "text-success" : (r5Med < 0 ? "text-danger" : "");
+      const r5WinCls = r.r5_win_rate >= 100 ? "text-success font-bold" : "";
+      return `
+        <tr ${isNewSym ? 'class="group-start-row"' : ""}>
+          <td data-label="標的 / 方案">
+            <strong>${escapeHtml(r.symbol_name || r.symbol)}</strong> · ${escapeHtml(r.plan_name || r.plan_key)}
+          </td>
+          <td data-label="3 年中位數">
+            <span class="${r3Cls}">${r3Med > 0 ? "+" : ""}${r3Med.toFixed(2)}%</span>
+            <span class="muted text-xs"> / -${Math.abs(Number(r.r3_median_maxdd || 0)).toFixed(1)}%</span>
+          </td>
+          <td data-label="3 年最差情況">
+            <span class="${r3Worst < 0 ? "text-danger" : ""}">${r3Worst > 0 ? "+" : ""}${r3Worst.toFixed(2)}%</span>
+            <span class="muted text-xs"> / -${Math.abs(Number(r.r3_worst_maxdd || 0)).toFixed(1)}%</span>
+          </td>
+          <td data-label="5 年中位數">
+            <span class="${r5Cls}">${r5Med > 0 ? "+" : ""}${r5Med.toFixed(2)}%</span>
+            <span class="muted text-xs"> / -${Math.abs(Number(r.r5_median_maxdd || 0)).toFixed(1)}%</span>
+          </td>
+          <td data-label="5 年最差情況">
+            <span class="${r5Worst < 0 ? "text-danger" : "text-success"}">${r5Worst > 0 ? "+" : ""}${r5Worst.toFixed(2)}%</span>
+            <span class="muted text-xs"> / -${Math.abs(Number(r.r5_worst_maxdd || 0)).toFixed(1)}%</span>
+          </td>
+          <td data-label="5 年勝率">
+            <span class="${r5WinCls}">${Number(r.r5_win_rate || 0).toFixed(1)}%</span>
+          </td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function renderDcaCompareArticleHtml(art) {
+    if (!art) return "";
+    const takeaway = escapeHtml(art.takeaway || "");
+    const sec = art.sections || {};
+    const why = sec.why_low_return || {};
+    const core = sec.core_table || {};
+    const rolling = sec.rolling_summary || {};
+    const practical = sec.practical_findings || {};
+    const practicalItems = Array.isArray(practical.items) ? practical.items : [];
+    const limitations = sec.limitations || {};
+    const disc = art.disclaimer || {};
+    const ghLinks = Array.isArray(disc.github_links) ? disc.github_links : [];
+
+    const tables = art.tables || {};
+    const coreRows = renderDcaCoreTableRows(tables.core_summary);
+    const allRows = renderDcaCoreTableRows(tables.all_schemes);
+    const rollingRows = renderDcaRollingTableRows(tables.rolling_summary);
+
+    return `
+      <section class="card research-article" id="article-dca_compare">
+        <div class="section-header article-header" onclick="toggleResearchArticle('dca_compare')">
+          <div>
+            <h2>第 5 篇：${escapeHtml(art.title || "定期定額 vs 單筆買進 vs 六種策略（10 年實證）")}</h2>
+            <p class="subtitle">${escapeHtml(art.subtitle || "")}</p>
+          </div>
+          <div class="article-header-actions" onclick="event.stopPropagation()">
+            <span class="badge badge-ok">${escapeHtml(art.badge || "10 年多標的實證")}</span>
+            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-dca_compare" onclick="toggleResearchArticle('dca_compare')">展開閱讀</button>
+          </div>
+        </div>
+
+        <div class="article-body collapsed" id="body-dca_compare">
+          <div class="callout callout-takeaway">
+            <p>💡 <strong>一句話結論：</strong>只看報酬，定期定額與單筆買進抱著遠勝六種策略；看回撤，策略穩很多。</p>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(why.title || "二、為什麼策略報酬低？")}</h2>
+            ${(why.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(core.title || "三、核心總表：五大標的與五標的組合全期間對決")}</h2>
+            ${(core.content || []).map((p) => `<p class="muted">${escapeHtml(p)}</p>`).join("")}
+            <div class="table-wrap table-responsive" style="margin-top: 12px;">
+              <table class="data-table mobile-cards dca-table">
+                <thead>
+                  <tr>
+                    <th>方案名稱 / 類別</th>
+                    <th>台股 ^TWII<br><span class="muted text-xs">年化 / 回撤 / MAR</span></th>
+                    <th>S&P 500<br><span class="muted text-xs">年化 / 回撤 / MAR</span></th>
+                    <th>Nasdaq 100<br><span class="muted text-xs">年化 / 回撤 / MAR</span></th>
+                    <th>黃金 XAUUSD<br><span class="muted text-xs">年化 / 回撤 / MAR</span></th>
+                    <th>比特幣 BTC (7.1年)<br><span class="muted text-xs">年化 / 回撤 / MAR</span></th>
+                    <th>五標的組合<br><span class="muted text-xs">年化 / 回撤 / MAR</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${coreRows}
+                </tbody>
+              </table>
+            </div>
+
+            <details class="research-details" style="margin-top: 16px;">
+              <summary class="cursor-pointer" style="font-weight: 600; color: var(--accent); padding: 8px 0;">展開完整 13 方案比較表（含 L1、L3、S3、S2、F4、每週定額、50/50 L2）▼</summary>
+              <div class="table-wrap table-responsive" style="margin-top: 10px;">
+                <table class="data-table mobile-cards dca-table">
+                  <thead>
+                    <tr>
+                      <th>方案名稱 / 類別</th>
+                      <th>台股 ^TWII</th>
+                      <th>S&P 500</th>
+                      <th>Nasdaq 100</th>
+                      <th>黃金 XAUUSD</th>
+                      <th>比特幣 BTC</th>
+                      <th>五標的組合</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${allRows}
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(rolling.title || "四、滾動測試重點（持有 3 年與 5 年中位數與最差情況）")}</h2>
+            ${(rolling.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+            <div class="table-wrap table-responsive" style="margin-top: 12px;">
+              <table class="data-table mobile-cards dca-rolling-table">
+                <thead>
+                  <tr>
+                    <th>標的 / 方案</th>
+                    <th>3 年中位數<br><span class="muted text-xs">年化 / 回撤</span></th>
+                    <th>3 年最差情況<br><span class="muted text-xs">年化 / 回撤</span></th>
+                    <th>5 年中位數<br><span class="muted text-xs">年化 / 回撤</span></th>
+                    <th>5 年最差情況<br><span class="muted text-xs">年化 / 回撤</span></th>
+                    <th>5 年勝率</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rollingRows}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(practical.title || "五、實用發現")}</h2>
+            <ul class="research-strat-list">
+              ${practicalItems.map((it) => `<li>${escapeHtml(it)}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(limitations.title || "六、研究限制與免責聲明")}</h2>
+            ${(limitations.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section disclaimer-box">
+            <p>⚠️ <strong>免責聲明</strong>：${escapeHtml(disc.text || "本研究僅供策略回測與學術實證參考，非個人化投資建議。")}</p>
+            <div class="github-links">
+              ${ghLinks.map((g) => `<a href="${escapeHtml(g.url)}" target="_blank" rel="noopener noreferrer" class="ext-link">🔗 ${escapeHtml(g.title)}</a>`).join("")}
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
   function renderResearchHtml(data) {
     if (!data) return '<p class="muted">深度研究資料為空。</p>';
     if (!data.articles && data.strategies_intro) {
@@ -3091,6 +3314,7 @@
     const comboArt = articles.find((a) => a.id === "combo") || articles[1];
     const examArt = articles.find((a) => a.id === "exam_sensitivity") || articles[2];
     const flowArt = articles.find((a) => a.id === "flow_signals") || articles[3];
+    const dcaArt = articles.find((a) => a.id === "dca_compare") || articles[4];
 
     return `
       <section class="card">
@@ -3143,6 +3367,18 @@
             <div class="toc-action">點擊展開閱讀 ➔</div>
           </div>
           ` : ""}
+
+          ${dcaArt ? `
+          <div class="research-toc-card" onclick="scrollToResearchArticle('dca_compare')">
+            <div class="toc-card-header">
+              <span class="badge badge-ok">${escapeHtml(dcaArt.badge || "10 年多標的實證")}</span>
+              <span class="toc-num">第 5 篇</span>
+            </div>
+            <h3 class="toc-title">${escapeHtml(dcaArt.title || "定期定額 vs 單筆買進 vs 六種策略（10 年實證）")}</h3>
+            <p class="toc-takeaway">${escapeHtml(dcaArt.takeaway || "")}</p>
+            <div class="toc-action">點擊展開閱讀 ➔</div>
+          </div>
+          ` : ""}
         </div>
       </section>
 
@@ -3165,6 +3401,7 @@
       ${renderComboArticleHtml(comboArt)}
       ${renderExamSensitivityArticleHtml(examArt)}
       ${renderFlowSignalsArticleHtml(flowArt)}
+      ${renderDcaCompareArticleHtml(dcaArt)}
     `;
   }
 
@@ -3998,7 +4235,10 @@
       document.querySelector('.nav-link[data-route="data"]')?.classList.add("active");
       renderDataExtras();
     } else if (route === "research") {
-      pendingResearchArticleId = parts[1] ? decodeURIComponent(parts[1]) : null;
+      let targetArt = parts[1] ? decodeURIComponent(parts[1]) : null;
+      if (targetArt === "dca-compare" || targetArt === "dca_compare") targetArt = "dca_compare";
+      if (targetArt === "flow-signals" || targetArt === "flow_signals") targetArt = "flow_signals";
+      pendingResearchArticleId = targetArt;
       document.getElementById("view-research")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="research"]')?.classList.add("active");
       renderResearchView();
@@ -4477,6 +4717,7 @@
     renderContestResearchHtml,
     renderExamSensitivityArticleHtml,
     renderFlowSignalsArticleHtml,
+    renderDcaCompareArticleHtml,
     renderResearchHtml,
     renderResearchView,
     fetchResearch,
