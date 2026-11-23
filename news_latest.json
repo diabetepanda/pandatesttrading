@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-23-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-23T22:53:24Z",
-  "updated_at_taipei": "2026-11-24 06:53",
-  "last_updated_utc": "2026-11-23T22:53:24Z",
-  "last_updated_taipei": "2026-11-24 06:53",
-  "next_update_hint": "約台北時間 07:02（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-23T23:08:27Z",
+  "updated_at_taipei": "2026-11-24 07:08",
+  "last_updated_utc": "2026-11-23T23:08:27Z",
+  "last_updated_taipei": "2026-11-24 07:08",
+  "next_update_hint": "約台北時間 07:17（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 16.785,
+    "total_elapsed_sec": 16.531,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 1,
+    "new_items_added": 5,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.051,
+        "elapsed_sec": 0.072,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.527,
+        "elapsed_sec": 0.137,
         "raw_count": 30,
         "items_kept": 11,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.127,
+        "elapsed_sec": 0.121,
         "raw_count": 30,
         "items_kept": 1,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.093,
+        "elapsed_sec": 0.091,
         "raw_count": 10,
         "items_kept": 5,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.211,
+        "elapsed_sec": 0.176,
         "raw_count": 18,
         "items_kept": 15,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.228,
+        "elapsed_sec": 0.163,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.098,
+        "elapsed_sec": 0.122,
         "raw_count": 30,
         "items_kept": 15,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.114,
+        "elapsed_sec": 0.098,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.106,
+        "elapsed_sec": 0.11,
         "raw_count": 37,
         "items_kept": 14,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.523,
+        "elapsed_sec": 0.423,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.62,
+        "elapsed_sec": 0.518,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.531,
+        "elapsed_sec": 0.642,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.804,
+        "elapsed_sec": 0.615,
         "raw_count": 15,
         "items_kept": 5,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.891,
+        "elapsed_sec": 0.54,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.472,
+        "elapsed_sec": 0.438,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.122,
+        "elapsed_sec": 0.183,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 2.519,
+        "elapsed_sec": 0.428,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.044,
+        "elapsed_sec": 0.075,
         "raw_count": 1375,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.95,
+        "elapsed_sec": 2.07,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.314,
+        "elapsed_sec": 0.422,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.236,
+        "elapsed_sec": 1.526,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.404,
+        "elapsed_sec": 0.463,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.764,
+        "elapsed_sec": 0.748,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.147,
+        "elapsed_sec": 0.194,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.536,
+        "elapsed_sec": 0.55,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.292,
+        "elapsed_sec": 0.353,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -271,56 +271,56 @@
   "data_metrics_snapshot": {
     "stablecoins": {
       "total_usd_b": 284.5,
-      "change_1d_usd_m": 262.1,
+      "change_1d_usd_m": 254.0,
       "change_1d_pct": 0.09,
       "alert_key": "stablecoins_supply:up"
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.45,
-        "change_1d_pct": 2.32
+        "tvl_b": 36.41,
+        "change_1d_pct": 2.23
       },
       "Base": {
-        "tvl_b": 5.14,
-        "change_1d_pct": 10.19
+        "tvl_b": 5.13,
+        "change_1d_pct": 10.11
       },
       "Solana": {
-        "tvl_b": 4.68,
-        "change_1d_pct": 1.8
+        "tvl_b": 4.67,
+        "change_1d_pct": 1.65
       },
       "Tron": {
-        "tvl_b": 4.47,
-        "change_1d_pct": 1.67
+        "tvl_b": 4.46,
+        "change_1d_pct": 1.61
       },
       "BSC": {
-        "tvl_b": 4.33,
-        "change_1d_pct": 1.07
+        "tvl_b": 4.32,
+        "change_1d_pct": 0.96
       },
       "Bitcoin": {
         "tvl_b": 3.07,
-        "change_1d_pct": 1.69
+        "change_1d_pct": 1.7
       }
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1418.9,
+      "net_flow_usd_m": -1421.1,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0058,
+        "funding_rate_pct": 0.0057,
         "oi_usd_b": 1.8
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0079,
+        "funding_rate_pct": -0.0076,
         "oi_usd_b": 1.13
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 3,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 41.2,
-      "tx_count": 65795,
+      "mempool_vsize_mb": 39.5,
+      "tx_count": 58555,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -838,6 +838,44 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-bad45d213d",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:01:20Z",
+      "published_at_taipei": "2026-11-24 07:01",
+      "published_at_taipei_iso": "2026-11-24T07:01:20+08:00",
+      "first_seen_at_utc": "2026-11-23T23:08:27Z",
+      "first_seen_at_taipei": "2026-11-24 07:08",
+      "month": "2026-11",
+      "title": "馬斯克力挺黃仁勳復職：患難見真情 酒肉朋友無價值",
+      "url": "https://news.cnyes.com/news/id/6670403",
+      "canonical_url": "https://news.cnyes.com/news/id/6670403",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-fae565c479",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T22:50:03Z",
@@ -870,6 +908,126 @@
       "sentiment_reason": "命中：大漲",
       "sentiment_targets": [
         "SNDK"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-e87768cf90",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:41:58Z",
+      "published_at_taipei": "2026-11-24 06:41",
+      "published_at_taipei_iso": "2026-11-24T06:41:58+08:00",
+      "first_seen_at_utc": "2026-11-23T23:08:27Z",
+      "first_seen_at_taipei": "2026-11-24 07:08",
+      "month": "2026-11",
+      "title": "台積電罕見喊話：先進製程需求強勁 打臉泡沫化疑慮",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E7%BD%95%E8%A6%8B%E5%96%8A%E8%A9%B1-%E5%85%88%E9%80%B2%E8%A3%BD%E7%A8%8B%E9%9C%80%E6%B1%82%E5%BC%B7%E5%8B%81-%E6%89%93%E8%87%89%E6%B3%A1%E6%B2%AB%E5%8C%96%E7%96%91%E6%85%AE-224158218.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E7%BD%95%E8%A6%8B%E5%96%8A%E8%A9%B1-%E5%85%88%E9%80%B2%E8%A3%BD%E7%A8%8B%E9%9C%80%E6%B1%82%E5%BC%B7%E5%8B%81-%E6%89%93%E8%87%89%E6%B3%A1%E6%B2%AB%E5%8C%96%E7%96%91%E6%85%AE-224158218.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-bbd4463468",
+        "issue": "2026-11-23-AM",
+        "title": "AI市場雜音不斷！台積電：先進製程需求仍強",
+        "published_at_taipei": "2026-11-23 17:40",
+        "url": "https://tw.news.yahoo.com/ai%E5%B8%82%E5%A0%B4%E9%9B%9C%E9%9F%B3%E4%B8%8D%E6%96%B7-%E5%8F%B0%E7%A9%8D%E9%9B%BB-%E5%85%88%E9%80%B2%E8%A3%BD%E7%A8%8B%E9%9C%80%E6%B1%82%E4%BB%8D%E5%BC%B7-094009309.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-b1667ebb5c",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:41:58Z",
+      "published_at_taipei": "2026-11-24 06:41",
+      "published_at_taipei_iso": "2026-11-24T06:41:58+08:00",
+      "first_seen_at_utc": "2026-11-23T23:08:27Z",
+      "first_seen_at_taipei": "2026-11-24 07:08",
+      "month": "2026-11",
+      "title": "蘋果新平價NB傳下季上秀 升級A19 Pro晶片 帶旺鴻海、廣達後市",
+      "url": "https://tw.news.yahoo.com/%E8%98%8B%E6%9E%9C%E6%96%B0%E5%B9%B3%E5%83%B9nb%E5%82%B3%E4%B8%8B%E5%AD%A3%E4%B8%8A%E7%A7%80-%E5%8D%87%E7%B4%9Aa19-pro%E6%99%B6%E7%89%87-%E5%B8%B6%E6%97%BA%E9%B4%BB%E6%B5%B7-%E5%BB%A3%E9%81%94%E5%BE%8C%E5%B8%82-224158107.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E8%98%8B%E6%9E%9C%E6%96%B0%E5%B9%B3%E5%83%B9nb%E5%82%B3%E4%B8%8B%E5%AD%A3%E4%B8%8A%E7%A7%80-%E5%8D%87%E7%B4%9Aa19-pro%E6%99%B6%E7%89%87-%E5%B8%B6%E6%97%BA%E9%B4%BB%E6%B5%B7-%E5%BB%A3%E9%81%94%E5%BE%8C%E5%B8%82-224158107.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "2317",
+        "2382",
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2317",
+        "2382",
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-36aa425efa",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:34:58Z",
+      "published_at_taipei": "2026-11-24 06:34",
+      "published_at_taipei_iso": "2026-11-24T06:34:58+08:00",
+      "first_seen_at_utc": "2026-11-23T23:08:27Z",
+      "first_seen_at_taipei": "2026-11-24 07:08",
+      "month": "2026-11",
+      "title": "台股開盤將火箭式噴發？黃仁勳成功重掌輝達 台指期夜盤飆漲3170點",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E9%96%8B%E7%9B%A4%E5%B0%87%E7%81%AB%E7%AE%AD%E5%BC%8F%E5%99%B4%E7%99%BC-%E9%BB%83%E4%BB%81%E5%8B%B3%E6%88%90%E5%8A%9F%E9%87%8D%E6%8E%8C%E8%BC%9D%E9%81%94-%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E9%A3%86%E6%BC%B23170%E9%BB%9E-223458693.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E9%96%8B%E7%9B%A4%E5%B0%87%E7%81%AB%E7%AE%AD%E5%BC%8F%E5%99%B4%E7%99%BC-%E9%BB%83%E4%BB%81%E5%8B%B3%E6%88%90%E5%8A%9F%E9%87%8D%E6%8E%8C%E8%BC%9D%E9%81%94-%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E9%A3%86%E6%BC%B23170%E9%BB%9E-223458693.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -10600,6 +10758,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-930a6b93f7",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:31:50Z",
+      "published_at_taipei": "2026-11-24 06:31",
+      "published_at_taipei_iso": "2026-11-24T06:31:50+08:00",
+      "first_seen_at_utc": "2026-11-23T23:08:27Z",
+      "first_seen_at_taipei": "2026-11-24 07:08",
+      "month": "2026-11",
+      "title": "News of the day: Telesat’s role in telecom bid, China becomes top oil buyer, Canada’s southbound startups, Bombardier workers strike, Jensen Huang returns and more",
+      "url": "https://financialpost.com/news/news-of-the-day-telesats-role-in-telecom-bid-china-becomes-top-oil-buyer-canadas-southbound-startups-bombardier-workers-vote-jensen-huang-returns-and-more/?.tsrc=rss",
+      "canonical_url": "https://financialpost.com/news/news-of-the-day-telesats-role-in-telecom-bid-china-becomes-top-oil-buyer-canadas-southbound-startups-bombardier-workers-vote-jensen-huang-returns-and-more?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-9b879a4eab",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T22:20:02Z",
@@ -17750,6 +17942,44 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261124-bad45d213d",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T23:01:20Z",
+      "published_at_taipei": "2026-11-24 07:01",
+      "published_at_taipei_iso": "2026-11-24T07:01:20+08:00",
+      "first_seen_at_utc": "2026-11-23T23:08:27Z",
+      "first_seen_at_taipei": "2026-11-24 07:08",
+      "month": "2026-11",
+      "title": "馬斯克力挺黃仁勳復職：患難見真情 酒肉朋友無價值",
+      "url": "https://news.cnyes.com/news/id/6670403",
+      "canonical_url": "https://news.cnyes.com/news/id/6670403",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-fae565c479",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T22:50:03Z",
@@ -17820,6 +18050,126 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-e87768cf90",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:41:58Z",
+      "published_at_taipei": "2026-11-24 06:41",
+      "published_at_taipei_iso": "2026-11-24T06:41:58+08:00",
+      "first_seen_at_utc": "2026-11-23T23:08:27Z",
+      "first_seen_at_taipei": "2026-11-24 07:08",
+      "month": "2026-11",
+      "title": "台積電罕見喊話：先進製程需求強勁 打臉泡沫化疑慮",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E7%BD%95%E8%A6%8B%E5%96%8A%E8%A9%B1-%E5%85%88%E9%80%B2%E8%A3%BD%E7%A8%8B%E9%9C%80%E6%B1%82%E5%BC%B7%E5%8B%81-%E6%89%93%E8%87%89%E6%B3%A1%E6%B2%AB%E5%8C%96%E7%96%91%E6%85%AE-224158218.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E7%BD%95%E8%A6%8B%E5%96%8A%E8%A9%B1-%E5%85%88%E9%80%B2%E8%A3%BD%E7%A8%8B%E9%9C%80%E6%B1%82%E5%BC%B7%E5%8B%81-%E6%89%93%E8%87%89%E6%B3%A1%E6%B2%AB%E5%8C%96%E7%96%91%E6%85%AE-224158218.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-bbd4463468",
+        "issue": "2026-11-23-AM",
+        "title": "AI市場雜音不斷！台積電：先進製程需求仍強",
+        "published_at_taipei": "2026-11-23 17:40",
+        "url": "https://tw.news.yahoo.com/ai%E5%B8%82%E5%A0%B4%E9%9B%9C%E9%9F%B3%E4%B8%8D%E6%96%B7-%E5%8F%B0%E7%A9%8D%E9%9B%BB-%E5%85%88%E9%80%B2%E8%A3%BD%E7%A8%8B%E9%9C%80%E6%B1%82%E4%BB%8D%E5%BC%B7-094009309.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-b1667ebb5c",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:41:58Z",
+      "published_at_taipei": "2026-11-24 06:41",
+      "published_at_taipei_iso": "2026-11-24T06:41:58+08:00",
+      "first_seen_at_utc": "2026-11-23T23:08:27Z",
+      "first_seen_at_taipei": "2026-11-24 07:08",
+      "month": "2026-11",
+      "title": "蘋果新平價NB傳下季上秀 升級A19 Pro晶片 帶旺鴻海、廣達後市",
+      "url": "https://tw.news.yahoo.com/%E8%98%8B%E6%9E%9C%E6%96%B0%E5%B9%B3%E5%83%B9nb%E5%82%B3%E4%B8%8B%E5%AD%A3%E4%B8%8A%E7%A7%80-%E5%8D%87%E7%B4%9Aa19-pro%E6%99%B6%E7%89%87-%E5%B8%B6%E6%97%BA%E9%B4%BB%E6%B5%B7-%E5%BB%A3%E9%81%94%E5%BE%8C%E5%B8%82-224158107.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E8%98%8B%E6%9E%9C%E6%96%B0%E5%B9%B3%E5%83%B9nb%E5%82%B3%E4%B8%8B%E5%AD%A3%E4%B8%8A%E7%A7%80-%E5%8D%87%E7%B4%9Aa19-pro%E6%99%B6%E7%89%87-%E5%B8%B6%E6%97%BA%E9%B4%BB%E6%B5%B7-%E5%BB%A3%E9%81%94%E5%BE%8C%E5%B8%82-224158107.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "2317",
+        "2382",
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2317",
+        "2382",
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-36aa425efa",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:34:58Z",
+      "published_at_taipei": "2026-11-24 06:34",
+      "published_at_taipei_iso": "2026-11-24T06:34:58+08:00",
+      "first_seen_at_utc": "2026-11-23T23:08:27Z",
+      "first_seen_at_taipei": "2026-11-24 07:08",
+      "month": "2026-11",
+      "title": "台股開盤將火箭式噴發？黃仁勳成功重掌輝達 台指期夜盤飆漲3170點",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E9%96%8B%E7%9B%A4%E5%B0%87%E7%81%AB%E7%AE%AD%E5%BC%8F%E5%99%B4%E7%99%BC-%E9%BB%83%E4%BB%81%E5%8B%B3%E6%88%90%E5%8A%9F%E9%87%8D%E6%8E%8C%E8%BC%9D%E9%81%94-%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E9%A3%86%E6%BC%B23170%E9%BB%9E-223458693.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E9%96%8B%E7%9B%A4%E5%B0%87%E7%81%AB%E7%AE%AD%E5%BC%8F%E5%99%B4%E7%99%BC-%E9%BB%83%E4%BB%81%E5%8B%B3%E6%88%90%E5%8A%9F%E9%87%8D%E6%8E%8C%E8%BC%9D%E9%81%94-%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E9%A3%86%E6%BC%B23170%E9%BB%9E-223458693.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-033ab4160c",
       "issue": "2026-11-23-PM",
       "published_at_utc": "2026-11-23T22:33:24Z",
@@ -17858,6 +18208,40 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-930a6b93f7",
+      "issue": "2026-11-23-PM",
+      "published_at_utc": "2026-11-23T22:31:50Z",
+      "published_at_taipei": "2026-11-24 06:31",
+      "published_at_taipei_iso": "2026-11-24T06:31:50+08:00",
+      "first_seen_at_utc": "2026-11-23T23:08:27Z",
+      "first_seen_at_taipei": "2026-11-24 07:08",
+      "month": "2026-11",
+      "title": "News of the day: Telesat’s role in telecom bid, China becomes top oil buyer, Canada’s southbound startups, Bombardier workers strike, Jensen Huang returns and more",
+      "url": "https://financialpost.com/news/news-of-the-day-telesats-role-in-telecom-bid-china-becomes-top-oil-buyer-canadas-southbound-startups-bombardier-workers-vote-jensen-huang-returns-and-more/?.tsrc=rss",
+      "canonical_url": "https://financialpost.com/news/news-of-the-day-telesats-role-in-telecom-bid-china-becomes-top-oil-buyer-canadas-southbound-startups-bombardier-workers-vote-jensen-huang-returns-and-more?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -67347,8 +67731,8 @@
       "month": "2026-11",
       "date": "2026-11-23",
       "half": "PM",
-      "updated_at_taipei": "2026-11-24 06:53",
-      "count": 463,
+      "updated_at_taipei": "2026-11-24 07:08",
+      "count": 468,
       "star3_count": 14,
       "failed_sources": [
         {
