@@ -1,16 +1,42 @@
 {
   "version": 1,
-  "updated_at_utc": "2026-11-23T11:50:00Z",
-  "updated_at_taipei": "2026-11-23 19:50",
-  "latest_issue": "2026-11-23-AM",
+  "updated_at_utc": "2026-11-23T12:05:07Z",
+  "updated_at_taipei": "2026-11-23 20:05",
+  "latest_issue": "2026-11-23-PM",
   "months": [
     {
       "month": "2026-11",
       "file": "news/2026-11.jsonl",
-      "count": 949
+      "count": 972
     }
   ],
   "issues": [
+    {
+      "issue": "2026-11-23-PM",
+      "month": "2026-11",
+      "date": "2026-11-23",
+      "half": "PM",
+      "updated_at_taipei": "2026-11-23 20:05",
+      "count": 23,
+      "star3_count": 2,
+      "failed_sources": [
+        {
+          "id": "binance_derivatives",
+          "name": "Binance 永續合約",
+          "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
+        },
+        {
+          "id": "bybit_derivatives",
+          "name": "Bybit 永續合約",
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
+        },
+        {
+          "id": "bybit_announcements",
+          "name": "Bybit 公告",
+          "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
+        }
+      ]
+    },
     {
       "issue": "2026-11-23-AM",
       "month": "2026-11",
