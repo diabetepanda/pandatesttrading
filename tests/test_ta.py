@@ -4,11 +4,14 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import shutil
 import subprocess
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+
+from tests.helpers import run_js
 
 from src.config_loader import load_config
 from src.data.models import OHLCVBar
@@ -255,7 +258,9 @@ def test_btcusdt_2y_backtest_nonzero_and_short_bars_fallback(tmp_path: Path) -> 
     btc_bt = res["symbols"]["BTCUSDT"]["backtest"]
     assert btc_bt["support_samples"] > 0
     assert btc_bt["resistance_samples"] > 0
-    assert "0 次" not in btc_bt["support_label"]
+    m = re.search(r"（(\d+)\s*次", btc_bt["support_label"])
+    assert m is not None and int(m.group(1)) > 0
+    assert not re.search(r"（0\s*次", btc_bt["support_label"])
 
 
 def test_frontend_ta_expand_collapse_and_formatting() -> None:
@@ -448,7 +453,7 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
           throw new Error('ATH fallback rendering failed: ' + athHtml);
         }}
     """
-    proc = subprocess.run([js_bin, "-e", script], capture_output=True, text=True, check=False)
+    proc = run_js(script, js_bin=js_bin)
     assert proc.returncode == 0, f"JS TA verification failed:\nSTDOUT:\n{proc.stdout}\nSTDERR:\n{proc.stderr}"
 
 

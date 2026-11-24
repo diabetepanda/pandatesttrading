@@ -11,6 +11,8 @@ from typing import Any
 
 import pytest
 
+from tests.helpers import run_js
+
 from src.data.models import OHLCVBar
 from src.jobs.ta import _save_history_1d_store
 from src.macro import (
@@ -455,7 +457,7 @@ def test_frontend_macro_html_nav_versions_and_calendar_defaults() -> None:
           throw new Error('Modal HTML missing expected markers: ' + mHtml);
         }}
     """
-    proc = subprocess.run([js_bin, "-e", script], capture_output=True, text=True, check=False)
+    proc = run_js(script, js_bin=js_bin)
     assert proc.returncode == 0, f"Macro JS check failed:\nSTDOUT:\n{proc.stdout}\nSTDERR:\n{proc.stderr}"
 
 
@@ -1038,5 +1040,5 @@ def test_overview_7_assets_insufficient_data_and_legacy_json_frontend() -> None:
           throw new Error('Legacy 5-item snapshot should render HSI fallback with 資料更新中');
         }}
     """
-    proc = subprocess.run([js_bin, "-e", js_script], capture_output=True, text=True, check=False)
+    proc = run_js(js_script, js_bin=js_bin)
     assert proc.returncode == 0, f"New JS checks failed:\nSTDOUT:\n{proc.stdout}\nSTDERR:\n{proc.stderr}"

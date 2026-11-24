@@ -9,6 +9,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+from tests.helpers import run_js
+
 from src.config_loader import load_config
 from src.data.adapters import FallbackDataFetcher
 from src.data.models import OHLCVBar
@@ -290,5 +292,5 @@ def test_frontend_no_forex_and_shows_tw_us_stock_categories() -> None:
           throw new Error('TW/US stock categories or Chinese names missing: ' + html);
         }}
     """
-    proc = subprocess.run([js_bin, "-e", script], capture_output=True, text=True, check=False)
+    proc = run_js(script, js_bin=js_bin)
     assert proc.returncode == 0, f"JS no-forex test failed:\n{proc.stdout}\n{proc.stderr}"
