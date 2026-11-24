@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-24-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-24T20:14:21Z",
-  "updated_at_taipei": "2026-11-25 04:14",
-  "last_updated_utc": "2026-11-24T20:14:21Z",
-  "last_updated_taipei": "2026-11-25 04:14",
-  "next_update_hint": "約台北時間 04:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-24T20:29:26Z",
+  "updated_at_taipei": "2026-11-25 04:29",
+  "last_updated_utc": "2026-11-24T20:29:26Z",
+  "last_updated_taipei": "2026-11-25 04:29",
+  "next_update_hint": "約台北時間 04:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 18.856,
+    "total_elapsed_sec": 20.71,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 0,
+    "new_items_added": 8,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.075,
+        "elapsed_sec": 0.103,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.104,
+        "elapsed_sec": 0.146,
         "raw_count": 30,
         "items_kept": 10,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.087,
+        "elapsed_sec": 0.088,
         "raw_count": 30,
         "items_kept": 3,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.125,
+        "elapsed_sec": 0.08,
         "raw_count": 10,
         "items_kept": 3,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.267,
-        "raw_count": 20,
-        "items_kept": 17,
+        "elapsed_sec": 0.307,
+        "raw_count": 19,
+        "items_kept": 16,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.185,
+        "elapsed_sec": 0.283,
         "raw_count": 25,
         "items_kept": 21,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.12,
+        "elapsed_sec": 0.153,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.116,
+        "elapsed_sec": 0.115,
         "raw_count": 38,
         "items_kept": 13,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.45,
+        "elapsed_sec": 0.467,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.354,
+        "elapsed_sec": 0.419,
         "raw_count": 20,
-        "items_kept": 11,
+        "items_kept": 10,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.547,
+        "elapsed_sec": 0.577,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.63,
+        "elapsed_sec": 0.499,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.217,
+        "elapsed_sec": 0.405,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.528,
+        "elapsed_sec": 0.483,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.242,
+        "elapsed_sec": 0.116,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 5.63,
+        "elapsed_sec": 1.952,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.095,
+        "elapsed_sec": 0.073,
         "raw_count": 1376,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.885,
+        "elapsed_sec": 2.028,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.515,
+        "elapsed_sec": 2.117,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.042,
+        "elapsed_sec": 1.167,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.44,
+        "elapsed_sec": 0.409,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.672,
+        "elapsed_sec": 0.487,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.303,
+        "elapsed_sec": 0.11,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.466,
+        "elapsed_sec": 0.451,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.389,
+        "elapsed_sec": 0.337,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -282,7 +282,7 @@
       },
       "Base": {
         "tvl_b": 4.99,
-        "change_1d_pct": -2.8
+        "change_1d_pct": -2.77
       },
       "Solana": {
         "tvl_b": 4.52,
@@ -294,37 +294,80 @@
       },
       "BSC": {
         "tvl_b": 4.26,
-        "change_1d_pct": -1.51
+        "change_1d_pct": -1.5
       },
       "Bitcoin": {
         "tvl_b": 2.92,
-        "change_1d_pct": -4.3
+        "change_1d_pct": -4.32
       }
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1384.6,
+      "net_flow_usd_m": -1385.5,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0097,
-        "oi_usd_b": 1.84
+        "funding_rate_pct": 0.01,
+        "oi_usd_b": 1.83
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0086,
+        "funding_rate_pct": 0.0088,
         "oi_usd_b": 1.13
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 2,
+      "fastest_fee_sat_vb": 3,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.7,
-      "tx_count": 61256,
+      "mempool_vsize_mb": 29.5,
+      "tx_count": 60537,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261125-18331edfe5",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T20:02:52Z",
+      "published_at_taipei": "2026-11-25 04:02",
+      "published_at_taipei_iso": "2026-11-25T04:02:52+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "China tariff threat knocks Bitcoin below $60,000",
+      "url": "https://www.thestreet.com/crypto/markets/china-tariff-threat-knocks-bitcoin-below-60000?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/crypto/markets/china-tariff-threat-knocks-bitcoin-below-60000?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "加密貨幣",
+        "總經"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-991d658add",
+        "issue": "2026-11-23-PM",
+        "title": "Is Bitcoin Heading for $50,000?",
+        "published_at_taipei": "2026-11-24 05:49",
+        "url": "https://www.fool.com/investing/2026/11/23/is-bitcoin-heading-for-50-000/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：tariffs；命中：tariff",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261125-67ebff2a51",
       "issue": "2026-11-24-PM",
@@ -847,6 +890,192 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-79ff490c92",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T20:12:14Z",
+      "published_at_taipei": "2026-11-25 04:12",
+      "published_at_taipei_iso": "2026-11-25T04:12:14+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Royal Gold Sees 2027 Growth From Mine Ramp-Ups, Holds Off on Guidance",
+      "url": "https://www.marketbeat.com/instant-alerts/event-royal-gold-sees-2027-growth-from-mine-ramp-ups-holds-off-on-guidance-2026-11-24/?utm_source=yahoofinance&utm_medium=yahoofinance&.tsrc=rss",
+      "canonical_url": "https://marketbeat.com/instant-alerts/event-royal-gold-sees-2027-growth-from-mine-ramp-ups-holds-off-on-guidance-2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（guidance）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d1ddb358ed",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T20:07:51Z",
+      "published_at_taipei": "2026-11-25 04:07",
+      "published_at_taipei_iso": "2026-11-25T04:07:51+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Tesla's Vertical Integration Makes it Uniquely Positioned in US Robotaxi Market, UBS Says",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-apos-vertical-integration-makes-200751408.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/tesla-apos-vertical-integration-makes-200751408.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-bc178544e8",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:59:22Z",
+      "published_at_taipei": "2026-11-25 03:59",
+      "published_at_taipei_iso": "2026-11-25T03:59:22+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Trump Warns of “Paying 200 Percent on Chips” in Two Years. That Pushes TSMC Toward a $22.6 Billion Texas Plant",
+      "url": "https://www.tikr.com/blog/trump-warns-of-paying-200-percent-on-chips-in-two-years-that-pushes-tsmc-toward-a-22-6-billion-texas-plant?ref=yahoofinance&tlnk=yf-261124-hf56p374&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/trump-warns-of-paying-200-percent-on-chips-in-two-years-that-pushes-tsmc-toward-a-22-6-billion-texas-plant?tlnk=yf-261124-hf56p374&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：tariffs",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-a7ff3c74b9",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:53:25Z",
+      "published_at_taipei": "2026-11-25 03:53",
+      "published_at_taipei_iso": "2026-11-25T03:53:25+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Invest in the Companies Behind Every Oil Well for Passive Income: $90,000 Across These 3 Oilfield Service Stocks Pays More Than $1,900 a Year",
+      "url": "https://247wallst.com/investing/2026/11/24/invest-in-the-companies-behind-every-oil-well-for-passive-income-90000-across-these-3-oilfield-service-stocks-pays-more-than-1900-a-year/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/24/invest-in-the-companies-behind-every-oil-well-for-passive-income-90000-across-these-3-oilfield-service-stocks-pays-more-than-1900-a-year?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-d02f62594b",
+        "issue": "2026-11-21-PM",
+        "title": "Oil Is Taking the Long Way Around, and $90,000 Across These 3 Tanker Stocks Pays More Than $10,000 a Year",
+        "published_at_taipei": "2026-11-22 03:49",
+        "url": "https://247wallst.com/investing/2026/11/21/oil-is-taking-the-long-way-around-and-90000-across-these-3-tanker-stocks-pays-more-than-10000-a-year/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-75e5e80593",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:52:10Z",
+      "published_at_taipei": "2026-11-25 03:52",
+      "published_at_taipei_iso": "2026-11-25T03:52:10+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Ripple’s RLUSD Has Caught Trump’s USD1: What Does XRP Get Out of It?",
+      "url": "https://247wallst.com/investing/cryptocurrency/2026/11/24/ripples-rlusd-has-caught-trumps-usd1-what-does-xrp-get-out-of-it/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/cryptocurrency/2026/11/24/ripples-rlusd-has-caught-trumps-usd1-what-does-xrp-get-out-of-it?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "XRPUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "XRPUSDT"
       ],
       "sentiment_method": "rule"
     },
@@ -7981,6 +8210,75 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-c26ec04f2a",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T20:00:52Z",
+      "published_at_taipei": "2026-11-25 04:00",
+      "published_at_taipei_iso": "2026-11-25T04:00:52+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Gold.com, Inc. (GOLD) Is Expanding Its Precious Metals Platform: Why Riverwater Sees an Attractive Entry Point",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/gold-com-inc-gold-expanding-200052418.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/gold-com-inc-gold-expanding-200052418.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-bfda3e2c70",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T20:00:00Z",
+      "published_at_taipei": "2026-11-25 04:00",
+      "published_at_taipei_iso": "2026-11-25T04:00:00+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "ECB expands role of tokenized assets in traditional finance",
+      "url": "https://finance.yahoo.com/video/ecb-expands-role-tokenized-assets-200000958.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/video/ecb-expands-role-tokenized-assets-200000958.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-a87031155b",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T19:45:11Z",
@@ -14029,6 +14327,304 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261125-79ff490c92",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T20:12:14Z",
+      "published_at_taipei": "2026-11-25 04:12",
+      "published_at_taipei_iso": "2026-11-25T04:12:14+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Royal Gold Sees 2027 Growth From Mine Ramp-Ups, Holds Off on Guidance",
+      "url": "https://www.marketbeat.com/instant-alerts/event-royal-gold-sees-2027-growth-from-mine-ramp-ups-holds-off-on-guidance-2026-11-24/?utm_source=yahoofinance&utm_medium=yahoofinance&.tsrc=rss",
+      "canonical_url": "https://marketbeat.com/instant-alerts/event-royal-gold-sees-2027-growth-from-mine-ramp-ups-holds-off-on-guidance-2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（guidance）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d1ddb358ed",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T20:07:51Z",
+      "published_at_taipei": "2026-11-25 04:07",
+      "published_at_taipei_iso": "2026-11-25T04:07:51+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Tesla's Vertical Integration Makes it Uniquely Positioned in US Robotaxi Market, UBS Says",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-apos-vertical-integration-makes-200751408.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/tesla-apos-vertical-integration-makes-200751408.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-18331edfe5",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T20:02:52Z",
+      "published_at_taipei": "2026-11-25 04:02",
+      "published_at_taipei_iso": "2026-11-25T04:02:52+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "China tariff threat knocks Bitcoin below $60,000",
+      "url": "https://www.thestreet.com/crypto/markets/china-tariff-threat-knocks-bitcoin-below-60000?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/crypto/markets/china-tariff-threat-knocks-bitcoin-below-60000?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "加密貨幣",
+        "總經"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-991d658add",
+        "issue": "2026-11-23-PM",
+        "title": "Is Bitcoin Heading for $50,000?",
+        "published_at_taipei": "2026-11-24 05:49",
+        "url": "https://www.fool.com/investing/2026/11/23/is-bitcoin-heading-for-50-000/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：tariffs；命中：tariff",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-c26ec04f2a",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T20:00:52Z",
+      "published_at_taipei": "2026-11-25 04:00",
+      "published_at_taipei_iso": "2026-11-25T04:00:52+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Gold.com, Inc. (GOLD) Is Expanding Its Precious Metals Platform: Why Riverwater Sees an Attractive Entry Point",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/gold-com-inc-gold-expanding-200052418.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/gold-com-inc-gold-expanding-200052418.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-bfda3e2c70",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T20:00:00Z",
+      "published_at_taipei": "2026-11-25 04:00",
+      "published_at_taipei_iso": "2026-11-25T04:00:00+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "ECB expands role of tokenized assets in traditional finance",
+      "url": "https://finance.yahoo.com/video/ecb-expands-role-tokenized-assets-200000958.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/video/ecb-expands-role-tokenized-assets-200000958.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-bc178544e8",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:59:22Z",
+      "published_at_taipei": "2026-11-25 03:59",
+      "published_at_taipei_iso": "2026-11-25T03:59:22+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Trump Warns of “Paying 200 Percent on Chips” in Two Years. That Pushes TSMC Toward a $22.6 Billion Texas Plant",
+      "url": "https://www.tikr.com/blog/trump-warns-of-paying-200-percent-on-chips-in-two-years-that-pushes-tsmc-toward-a-22-6-billion-texas-plant?ref=yahoofinance&tlnk=yf-261124-hf56p374&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/trump-warns-of-paying-200-percent-on-chips-in-two-years-that-pushes-tsmc-toward-a-22-6-billion-texas-plant?tlnk=yf-261124-hf56p374&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：tariffs",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-a7ff3c74b9",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:53:25Z",
+      "published_at_taipei": "2026-11-25 03:53",
+      "published_at_taipei_iso": "2026-11-25T03:53:25+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Invest in the Companies Behind Every Oil Well for Passive Income: $90,000 Across These 3 Oilfield Service Stocks Pays More Than $1,900 a Year",
+      "url": "https://247wallst.com/investing/2026/11/24/invest-in-the-companies-behind-every-oil-well-for-passive-income-90000-across-these-3-oilfield-service-stocks-pays-more-than-1900-a-year/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/24/invest-in-the-companies-behind-every-oil-well-for-passive-income-90000-across-these-3-oilfield-service-stocks-pays-more-than-1900-a-year?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-d02f62594b",
+        "issue": "2026-11-21-PM",
+        "title": "Oil Is Taking the Long Way Around, and $90,000 Across These 3 Tanker Stocks Pays More Than $10,000 a Year",
+        "published_at_taipei": "2026-11-22 03:49",
+        "url": "https://247wallst.com/investing/2026/11/21/oil-is-taking-the-long-way-around-and-90000-across-these-3-tanker-stocks-pays-more-than-10000-a-year/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-75e5e80593",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:52:10Z",
+      "published_at_taipei": "2026-11-25 03:52",
+      "published_at_taipei_iso": "2026-11-25T03:52:10+08:00",
+      "first_seen_at_utc": "2026-11-24T20:29:26Z",
+      "first_seen_at_taipei": "2026-11-25 04:29",
+      "month": "2026-11",
+      "title": "Ripple’s RLUSD Has Caught Trump’s USD1: What Does XRP Get Out of It?",
+      "url": "https://247wallst.com/investing/cryptocurrency/2026/11/24/ripples-rlusd-has-caught-trumps-usd1-what-does-xrp-get-out-of-it/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/cryptocurrency/2026/11/24/ripples-rlusd-has-caught-trumps-usd1-what-does-xrp-get-out-of-it?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "XRPUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "XRPUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261125-a87031155b",
       "issue": "2026-11-24-PM",
@@ -96616,9 +97212,9 @@
       "month": "2026-11",
       "date": "2026-11-24",
       "half": "PM",
-      "updated_at_taipei": "2026-11-25 04:14",
-      "count": 354,
-      "star3_count": 14,
+      "updated_at_taipei": "2026-11-25 04:29",
+      "count": 362,
+      "star3_count": 15,
       "failed_sources": [
         {
           "id": "binance_derivatives",
