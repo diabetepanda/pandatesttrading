@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-24-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-24T09:56:35Z",
-  "updated_at_taipei": "2026-11-24 17:56",
-  "last_updated_utc": "2026-11-24T09:56:35Z",
-  "last_updated_taipei": "2026-11-24 17:56",
-  "next_update_hint": "約台北時間 18:02（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-24T10:11:35Z",
+  "updated_at_taipei": "2026-11-24 18:11",
+  "last_updated_utc": "2026-11-24T10:11:35Z",
+  "last_updated_taipei": "2026-11-24 18:11",
+  "next_update_hint": "約台北時間 18:17（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 20.677,
+    "total_elapsed_sec": 16.832,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 16,
+    "new_items_added": 9,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.168,
+        "elapsed_sec": 0.097,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -45,16 +45,16 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.212,
+        "elapsed_sec": 0.18,
         "raw_count": 30,
-        "items_kept": 8,
+        "items_kept": 7,
         "error": null
       },
       "cnbc_economy": {
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.111,
+        "elapsed_sec": 0.057,
         "raw_count": 30,
         "items_kept": 2,
         "error": null
@@ -63,16 +63,16 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.152,
+        "elapsed_sec": 0.089,
         "raw_count": 10,
-        "items_kept": 5,
+        "items_kept": 6,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.469,
+        "elapsed_sec": 0.353,
         "raw_count": 19,
         "items_kept": 17,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.296,
+        "elapsed_sec": 0.234,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.167,
+        "elapsed_sec": 0.149,
         "raw_count": 30,
         "items_kept": 18,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.163,
+        "elapsed_sec": 0.114,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.178,
+        "elapsed_sec": 0.129,
         "raw_count": 37,
         "items_kept": 14,
         "error": null
@@ -117,25 +117,25 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.549,
+        "elapsed_sec": 0.739,
         "raw_count": 20,
-        "items_kept": 15,
+        "items_kept": 13,
         "error": null
       },
       "cnyes_us_stock": {
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.717,
+        "elapsed_sec": 1.1,
         "raw_count": 20,
-        "items_kept": 11,
+        "items_kept": 12,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.414,
+        "elapsed_sec": 0.683,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.807,
+        "elapsed_sec": 0.76,
         "raw_count": 15,
         "items_kept": 5,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.471,
+        "elapsed_sec": 0.356,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.45,
+        "elapsed_sec": 0.549,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,16 +171,16 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.174,
+        "elapsed_sec": 0.146,
         "raw_count": 1,
-        "items_kept": 1,
+        "items_kept": 0,
         "error": null
       },
       "defillama_chains": {
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.636,
+        "elapsed_sec": 1.183,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.129,
+        "elapsed_sec": 0.075,
         "raw_count": 1375,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.927,
+        "elapsed_sec": 2.058,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.582,
+        "elapsed_sec": 0.334,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.572,
+        "elapsed_sec": 1.138,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.479,
+        "elapsed_sec": 0.379,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.788,
+        "elapsed_sec": 0.542,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.322,
+        "elapsed_sec": 0.601,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.6,
+        "elapsed_sec": 0.455,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.431,
+        "elapsed_sec": 0.305,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -271,56 +271,56 @@
   "data_metrics_snapshot": {
     "stablecoins": {
       "total_usd_b": 284.99,
-      "change_1d_usd_m": 502.9,
+      "change_1d_usd_m": 498.8,
       "change_1d_pct": 0.18,
       "alert_key": "stablecoins_supply:up"
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.02,
-        "change_1d_pct": -1.14
+        "tvl_b": 35.94,
+        "change_1d_pct": -1.36
       },
       "Base": {
-        "tvl_b": 5.06,
-        "change_1d_pct": -1.49
+        "tvl_b": 5.04,
+        "change_1d_pct": -1.9
       },
       "Solana": {
-        "tvl_b": 4.62,
-        "change_1d_pct": 0.02
+        "tvl_b": 4.61,
+        "change_1d_pct": -0.11
       },
       "Tron": {
-        "tvl_b": 4.45,
-        "change_1d_pct": 0.2
+        "tvl_b": 4.44,
+        "change_1d_pct": -0.06
       },
       "BSC": {
         "tvl_b": 4.27,
         "change_1d_pct": -1.27
       },
       "Bitcoin": {
-        "tvl_b": 3.01,
-        "change_1d_pct": -1.42
+        "tvl_b": 2.99,
+        "change_1d_pct": -2.1
       }
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1393.4,
+      "net_flow_usd_m": -1391.9,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.002,
+        "funding_rate_pct": 0.0026,
         "oi_usd_b": 1.83
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0011,
-        "oi_usd_b": 1.14
+        "funding_rate_pct": -0.001,
+        "oi_usd_b": 1.15
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 3,
-      "half_hour_fee_sat_vb": 2,
-      "mempool_vsize_mb": 28.5,
-      "tx_count": 56009,
+      "fastest_fee_sat_vb": 2,
+      "half_hour_fee_sat_vb": 1,
+      "mempool_vsize_mb": 27.9,
+      "tx_count": 53012,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -735,6 +735,197 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-fb0a5e93c5",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T10:10:03Z",
+      "published_at_taipei": "2026-11-24 18:10",
+      "published_at_taipei_iso": "2026-11-24T18:10:03+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "馬斯克推動特斯拉、SpaceX合併！《FT》稱雙方已派出5名董事主導談判",
+      "url": "https://news.cnyes.com/news/id/6670951",
+      "canonical_url": "https://news.cnyes.com/news/id/6670951",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-d9a9d8bf0b",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T10:08:38Z",
+      "published_at_taipei": "2026-11-24 18:08",
+      "published_at_taipei_iso": "2026-11-24T18:08:38+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "Bitcoin falls below $60,000 as rally on Jensen Huang’s Nvidia return fades",
+      "url": "https://www.coindesk.com/markets/2026/11/24/bitcoin-falls-below-usd60-000-as-rally-on-jensen-huang-s-nvidia-return-fades",
+      "canonical_url": "https://coindesk.com/markets/2026/11/24/bitcoin-falls-below-usd60-000-as-rally-on-jensen-huang-s-nvidia-return-fades",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-592b5963da",
+        "issue": "2026-11-23-PM",
+        "title": "Bitcoin Rallies, Anthropic Sinks as Nvidia Surges 35% on Jensen Huang’s Return",
+        "published_at_taipei": "2026-11-24 00:32",
+        "url": "https://decrypt.co/383801/bitcoin-rallies-anthropic-sinks-as-nvidia-surges-35-on-jensen-huangs-return"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-1a7297c6e4",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T10:02:52Z",
+      "published_at_taipei": "2026-11-24 18:02",
+      "published_at_taipei_iso": "2026-11-24T18:02:52+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "〈台幣〉美元指數強升衝破104大關 台幣終止連3升收在32.939元",
+      "url": "https://news.cnyes.com/news/id/6670979",
+      "canonical_url": "https://news.cnyes.com/news/id/6670979",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：賣超",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-e0642324e7",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:56:00Z",
+      "published_at_taipei": "2026-11-24 17:56",
+      "published_at_taipei_iso": "2026-11-24T17:56:00+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "黃仁勳回任、台股大漲 北市選戰添變數？沈伯洋6字回應",
+      "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E4%BB%BB-%E5%8F%B0%E8%82%A1%E5%A4%A7%E6%BC%B2-%E5%8C%97%E5%B8%82%E9%81%B8%E6%88%B0%E6%B7%BB%E8%AE%8A%E6%95%B8-%E6%B2%88%E4%BC%AF%E6%B4%8B6%E5%AD%97%E5%9B%9E%E6%87%89-095600606.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E4%BB%BB-%E5%8F%B0%E8%82%A1%E5%A4%A7%E6%BC%B2-%E5%8C%97%E5%B8%82%E9%81%B8%E6%88%B0%E6%B7%BB%E8%AE%8A%E6%95%B8-%E6%B2%88%E4%BC%AF%E6%B4%8B6%E5%AD%97%E5%9B%9E%E6%87%89-095600606.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-690519631a",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:51:08Z",
+      "published_at_taipei": "2026-11-24 17:51",
+      "published_at_taipei_iso": "2026-11-24T17:51:08+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "黃仁勳回鍋輝達救不了AI？專家曝2事衝擊算力中心擴張：台股還沒真正落底",
+      "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E8%BC%9D%E9%81%94%E6%95%91%E4%B8%8D%E4%BA%86ai-%E5%B0%88%E5%AE%B6%E6%9B%9D2%E4%BA%8B%E8%A1%9D%E6%93%8A%E7%AE%97%E5%8A%9B%E4%B8%AD%E5%BF%83%E6%93%B4%E5%BC%B5-%E5%8F%B0%E8%82%A1%E9%82%84%E6%B2%92%E7%9C%9F%E6%AD%A3%E8%90%BD%E5%BA%95-095108674.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E8%BC%9D%E9%81%94%E6%95%91%E4%B8%8D%E4%BA%86ai-%E5%B0%88%E5%AE%B6%E6%9B%9D2%E4%BA%8B%E8%A1%9D%E6%93%8A%E7%AE%97%E5%8A%9B%E4%B8%AD%E5%BF%83%E6%93%B4%E5%BC%B5-%E5%8F%B0%E8%82%A1%E9%82%84%E6%B2%92%E7%9C%9F%E6%AD%A3%E8%90%BD%E5%BA%95-095108674.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-3452f68169",
       "issue": "2026-11-24-AM",
       "published_at_utc": "2026-11-24T09:46:06Z",
@@ -767,6 +958,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-cf045a14c3",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:45:40Z",
+      "published_at_taipei": "2026-11-24 17:45",
+      "published_at_taipei_iso": "2026-11-24T17:45:40+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "川普受訪讚魏哲家是傑出人才 稱台積電將在德州建廠",
+      "url": "https://tw.news.yahoo.com/%E5%B7%9D%E6%99%AE%E5%8F%97%E8%A8%AA%E8%AE%9A%E9%AD%8F%E5%93%B2%E5%AE%B6%E6%98%AF%E5%82%91%E5%87%BA%E4%BA%BA%E6%89%8D-%E7%A8%B1%E5%8F%B0%E7%A9%8D%E9%9B%BB%E5%B0%87%E5%9C%A8%E5%BE%B7%E5%B7%9E%E5%BB%BA%E5%BB%A0-094540381.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%B7%9D%E6%99%AE%E5%8F%97%E8%A8%AA%E8%AE%9A%E9%AD%8F%E5%93%B2%E5%AE%B6%E6%98%AF%E5%82%91%E5%87%BA%E4%BA%BA%E6%89%8D-%E7%A8%B1%E5%8F%B0%E7%A9%8D%E9%9B%BB%E5%B0%87%E5%9C%A8%E5%BE%B7%E5%B7%9E%E5%BB%BA%E5%BB%A0-094540381.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
       ],
       "sentiment_method": "rule"
     },
@@ -809,6 +1036,78 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-3a9d724958",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:44:16Z",
+      "published_at_taipei": "2026-11-24 17:44",
+      "published_at_taipei_iso": "2026-11-24T17:44:16+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "台股收漲逾3000點 金管會談限空令退場：視市況判斷",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%94%B6%E6%BC%B2%E9%80%BE3000%E9%BB%9E-%E9%87%91%E7%AE%A1%E6%9C%83%E8%AB%87%E9%99%90%E7%A9%BA%E4%BB%A4%E9%80%80%E5%A0%B4-%E8%A6%96%E5%B8%82%E6%B3%81%E5%88%A4%E6%96%B7-094416205.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%94%B6%E6%BC%B2%E9%80%BE3000%E9%BB%9E-%E9%87%91%E7%AE%A1%E6%9C%83%E8%AB%87%E9%99%90%E7%A9%BA%E4%BB%A4%E9%80%80%E5%A0%B4-%E8%A6%96%E5%B8%82%E6%B3%81%E5%88%A4%E6%96%B7-094416205.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-9f7b65760b",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:44:00Z",
+      "published_at_taipei": "2026-11-24 17:44",
+      "published_at_taipei_iso": "2026-11-24T17:44:00+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "黃仁勳回鍋激勵台股暴漲3,310點！兆豐金總座張傳章：短線提振AI估值",
+      "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E6%BF%80%E5%8B%B5%E5%8F%B0%E8%82%A1%E6%9A%B4%E6%BC%B23-310%E9%BB%9E-%E5%85%86%E8%B1%90%E9%87%91%E7%B8%BD%E5%BA%A7%E5%BC%B5%E5%82%B3%E7%AB%A0-%E7%9F%AD%E7%B7%9A%E6%8F%90%E6%8C%AFai%E4%BC%B0%E5%80%BC-094400673.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E6%BF%80%E5%8B%B5%E5%8F%B0%E8%82%A1%E6%9A%B4%E6%BC%B23-310%E9%BB%9E-%E5%85%86%E8%B1%90%E9%87%91%E7%B8%BD%E5%BA%A7%E5%BC%B5%E5%82%B3%E7%AB%A0-%E7%9F%AD%E7%B7%9A%E6%8F%90%E6%8C%AFai%E4%BC%B0%E5%80%BC-094400673.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -12945,6 +13244,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-2e8aab089a",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:58:00Z",
+      "published_at_taipei": "2026-11-24 17:58",
+      "published_at_taipei_iso": "2026-11-24T17:58:00+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "The bull and bear surprises that could ambush investors next year, according to Bank of America",
+      "url": "https://www.marketwatch.com/story/the-bull-and-bear-surprises-that-could-ambush-investors-next-year-according-to-bank-of-america-1cf7dc26?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/the-bull-and-bear-surprises-that-could-ambush-investors-next-year-according-to-bank-of-america-1cf7dc26?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-af9bb0d9cd",
+        "issue": "2026-11-23-PM",
+        "title": "The biggest investors in AI are doing this",
+        "published_at_taipei": "2026-11-23 20:00",
+        "url": "https://finance.yahoo.com/video/biggest-investors-ai-doing-120000197.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：rate hikes",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-db5a757213",
       "issue": "2026-11-24-AM",
       "published_at_utc": "2026-11-24T09:50:03Z",
@@ -14640,6 +14979,237 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261124-fb0a5e93c5",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T10:10:03Z",
+      "published_at_taipei": "2026-11-24 18:10",
+      "published_at_taipei_iso": "2026-11-24T18:10:03+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "馬斯克推動特斯拉、SpaceX合併！《FT》稱雙方已派出5名董事主導談判",
+      "url": "https://news.cnyes.com/news/id/6670951",
+      "canonical_url": "https://news.cnyes.com/news/id/6670951",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-d9a9d8bf0b",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T10:08:38Z",
+      "published_at_taipei": "2026-11-24 18:08",
+      "published_at_taipei_iso": "2026-11-24T18:08:38+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "Bitcoin falls below $60,000 as rally on Jensen Huang’s Nvidia return fades",
+      "url": "https://www.coindesk.com/markets/2026/11/24/bitcoin-falls-below-usd60-000-as-rally-on-jensen-huang-s-nvidia-return-fades",
+      "canonical_url": "https://coindesk.com/markets/2026/11/24/bitcoin-falls-below-usd60-000-as-rally-on-jensen-huang-s-nvidia-return-fades",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-592b5963da",
+        "issue": "2026-11-23-PM",
+        "title": "Bitcoin Rallies, Anthropic Sinks as Nvidia Surges 35% on Jensen Huang’s Return",
+        "published_at_taipei": "2026-11-24 00:32",
+        "url": "https://decrypt.co/383801/bitcoin-rallies-anthropic-sinks-as-nvidia-surges-35-on-jensen-huangs-return"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-1a7297c6e4",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T10:02:52Z",
+      "published_at_taipei": "2026-11-24 18:02",
+      "published_at_taipei_iso": "2026-11-24T18:02:52+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "〈台幣〉美元指數強升衝破104大關 台幣終止連3升收在32.939元",
+      "url": "https://news.cnyes.com/news/id/6670979",
+      "canonical_url": "https://news.cnyes.com/news/id/6670979",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：賣超",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-2e8aab089a",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:58:00Z",
+      "published_at_taipei": "2026-11-24 17:58",
+      "published_at_taipei_iso": "2026-11-24T17:58:00+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "The bull and bear surprises that could ambush investors next year, according to Bank of America",
+      "url": "https://www.marketwatch.com/story/the-bull-and-bear-surprises-that-could-ambush-investors-next-year-according-to-bank-of-america-1cf7dc26?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/the-bull-and-bear-surprises-that-could-ambush-investors-next-year-according-to-bank-of-america-1cf7dc26?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-af9bb0d9cd",
+        "issue": "2026-11-23-PM",
+        "title": "The biggest investors in AI are doing this",
+        "published_at_taipei": "2026-11-23 20:00",
+        "url": "https://finance.yahoo.com/video/biggest-investors-ai-doing-120000197.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：rate hikes",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-e0642324e7",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:56:00Z",
+      "published_at_taipei": "2026-11-24 17:56",
+      "published_at_taipei_iso": "2026-11-24T17:56:00+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "黃仁勳回任、台股大漲 北市選戰添變數？沈伯洋6字回應",
+      "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E4%BB%BB-%E5%8F%B0%E8%82%A1%E5%A4%A7%E6%BC%B2-%E5%8C%97%E5%B8%82%E9%81%B8%E6%88%B0%E6%B7%BB%E8%AE%8A%E6%95%B8-%E6%B2%88%E4%BC%AF%E6%B4%8B6%E5%AD%97%E5%9B%9E%E6%87%89-095600606.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E4%BB%BB-%E5%8F%B0%E8%82%A1%E5%A4%A7%E6%BC%B2-%E5%8C%97%E5%B8%82%E9%81%B8%E6%88%B0%E6%B7%BB%E8%AE%8A%E6%95%B8-%E6%B2%88%E4%BC%AF%E6%B4%8B6%E5%AD%97%E5%9B%9E%E6%87%89-095600606.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-690519631a",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:51:08Z",
+      "published_at_taipei": "2026-11-24 17:51",
+      "published_at_taipei_iso": "2026-11-24T17:51:08+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "黃仁勳回鍋輝達救不了AI？專家曝2事衝擊算力中心擴張：台股還沒真正落底",
+      "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E8%BC%9D%E9%81%94%E6%95%91%E4%B8%8D%E4%BA%86ai-%E5%B0%88%E5%AE%B6%E6%9B%9D2%E4%BA%8B%E8%A1%9D%E6%93%8A%E7%AE%97%E5%8A%9B%E4%B8%AD%E5%BF%83%E6%93%B4%E5%BC%B5-%E5%8F%B0%E8%82%A1%E9%82%84%E6%B2%92%E7%9C%9F%E6%AD%A3%E8%90%BD%E5%BA%95-095108674.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E8%BC%9D%E9%81%94%E6%95%91%E4%B8%8D%E4%BA%86ai-%E5%B0%88%E5%AE%B6%E6%9B%9D2%E4%BA%8B%E8%A1%9D%E6%93%8A%E7%AE%97%E5%8A%9B%E4%B8%AD%E5%BF%83%E6%93%B4%E5%BC%B5-%E5%8F%B0%E8%82%A1%E9%82%84%E6%B2%92%E7%9C%9F%E6%AD%A3%E8%90%BD%E5%BA%95-095108674.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-db5a757213",
       "issue": "2026-11-24-AM",
       "published_at_utc": "2026-11-24T09:50:03Z",
@@ -14778,6 +15348,42 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-cf045a14c3",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:45:40Z",
+      "published_at_taipei": "2026-11-24 17:45",
+      "published_at_taipei_iso": "2026-11-24T17:45:40+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "川普受訪讚魏哲家是傑出人才 稱台積電將在德州建廠",
+      "url": "https://tw.news.yahoo.com/%E5%B7%9D%E6%99%AE%E5%8F%97%E8%A8%AA%E8%AE%9A%E9%AD%8F%E5%93%B2%E5%AE%B6%E6%98%AF%E5%82%91%E5%87%BA%E4%BA%BA%E6%89%8D-%E7%A8%B1%E5%8F%B0%E7%A9%8D%E9%9B%BB%E5%B0%87%E5%9C%A8%E5%BE%B7%E5%B7%9E%E5%BB%BA%E5%BB%A0-094540381.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%B7%9D%E6%99%AE%E5%8F%97%E8%A8%AA%E8%AE%9A%E9%AD%8F%E5%93%B2%E5%AE%B6%E6%98%AF%E5%82%91%E5%87%BA%E4%BA%BA%E6%89%8D-%E7%A8%B1%E5%8F%B0%E7%A9%8D%E9%9B%BB%E5%B0%87%E5%9C%A8%E5%BE%B7%E5%B7%9E%E5%BB%BA%E5%BB%A0-094540381.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-d79d71fa8e",
       "issue": "2026-11-24-AM",
       "published_at_utc": "2026-11-24T09:44:52Z",
@@ -14816,6 +15422,78 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-3a9d724958",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:44:16Z",
+      "published_at_taipei": "2026-11-24 17:44",
+      "published_at_taipei_iso": "2026-11-24T17:44:16+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "台股收漲逾3000點 金管會談限空令退場：視市況判斷",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%94%B6%E6%BC%B2%E9%80%BE3000%E9%BB%9E-%E9%87%91%E7%AE%A1%E6%9C%83%E8%AB%87%E9%99%90%E7%A9%BA%E4%BB%A4%E9%80%80%E5%A0%B4-%E8%A6%96%E5%B8%82%E6%B3%81%E5%88%A4%E6%96%B7-094416205.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%94%B6%E6%BC%B2%E9%80%BE3000%E9%BB%9E-%E9%87%91%E7%AE%A1%E6%9C%83%E8%AB%87%E9%99%90%E7%A9%BA%E4%BB%A4%E9%80%80%E5%A0%B4-%E8%A6%96%E5%B8%82%E6%B3%81%E5%88%A4%E6%96%B7-094416205.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-9f7b65760b",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T09:44:00Z",
+      "published_at_taipei": "2026-11-24 17:44",
+      "published_at_taipei_iso": "2026-11-24T17:44:00+08:00",
+      "first_seen_at_utc": "2026-11-24T10:11:35Z",
+      "first_seen_at_taipei": "2026-11-24 18:11",
+      "month": "2026-11",
+      "title": "黃仁勳回鍋激勵台股暴漲3,310點！兆豐金總座張傳章：短線提振AI估值",
+      "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E6%BF%80%E5%8B%B5%E5%8F%B0%E8%82%A1%E6%9A%B4%E6%BC%B23-310%E9%BB%9E-%E5%85%86%E8%B1%90%E9%87%91%E7%B8%BD%E5%BA%A7%E5%BC%B5%E5%82%B3%E7%AB%A0-%E7%9F%AD%E7%B7%9A%E6%8F%90%E6%8C%AFai%E4%BC%B0%E5%80%BC-094400673.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E6%BF%80%E5%8B%B5%E5%8F%B0%E8%82%A1%E6%9A%B4%E6%BC%B23-310%E9%BB%9E-%E5%85%86%E8%B1%90%E9%87%91%E7%B8%BD%E5%BA%A7%E5%BC%B5%E5%82%B3%E7%AB%A0-%E7%9F%AD%E7%B7%9A%E6%8F%90%E6%8C%AFai%E4%BC%B0%E5%80%BC-094400673.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -79700,8 +80378,8 @@
       "month": "2026-11",
       "date": "2026-11-24",
       "half": "AM",
-      "updated_at_taipei": "2026-11-24 17:56",
-      "count": 378,
+      "updated_at_taipei": "2026-11-24 18:11",
+      "count": 387,
       "star3_count": 11,
       "failed_sources": [
         {
