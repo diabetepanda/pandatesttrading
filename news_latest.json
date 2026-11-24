@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-24-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-24T19:14:13Z",
-  "updated_at_taipei": "2026-11-25 03:14",
-  "last_updated_utc": "2026-11-24T19:14:13Z",
-  "last_updated_taipei": "2026-11-25 03:14",
-  "next_update_hint": "約台北時間 03:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-24T19:29:08Z",
+  "updated_at_taipei": "2026-11-25 03:29",
+  "last_updated_utc": "2026-11-24T19:29:08Z",
+  "last_updated_taipei": "2026-11-25 03:29",
+  "next_update_hint": "約台北時間 03:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 16.528,
+    "total_elapsed_sec": 20.579,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 6,
+    "new_items_added": 14,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.152,
+        "elapsed_sec": 0.067,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.211,
+        "elapsed_sec": 0.112,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.205,
+        "elapsed_sec": 0.041,
         "raw_count": 30,
         "items_kept": 3,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.048,
+        "elapsed_sec": 0.126,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.241,
+        "elapsed_sec": 0.297,
         "raw_count": 19,
-        "items_kept": 14,
+        "items_kept": 16,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.125,
+        "elapsed_sec": 0.195,
         "raw_count": 25,
         "items_kept": 21,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.075,
+        "elapsed_sec": 0.127,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.074,
+        "elapsed_sec": 0.095,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.088,
+        "elapsed_sec": 0.098,
         "raw_count": 38,
         "items_kept": 13,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.358,
+        "elapsed_sec": 0.589,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.369,
+        "elapsed_sec": 0.336,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.288,
+        "elapsed_sec": 0.449,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.67,
+        "elapsed_sec": 0.551,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.396,
+        "elapsed_sec": 0.448,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.091,
+        "elapsed_sec": 0.441,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.315,
+        "elapsed_sec": 0.165,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 2.393,
+        "elapsed_sec": 0.436,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.218,
+        "elapsed_sec": 0.055,
         "raw_count": 1376,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 2.263,
+        "elapsed_sec": 3.432,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.327,
+        "elapsed_sec": 0.454,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 0.988,
+        "elapsed_sec": 1.521,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.331,
+        "elapsed_sec": 0.379,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 1.244,
+        "elapsed_sec": 0.827,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.087,
+        "elapsed_sec": 0.141,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.463,
+        "elapsed_sec": 0.556,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.306,
+        "elapsed_sec": 0.298,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,50 +277,50 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 35.89,
-        "change_1d_pct": -1.53
+        "tvl_b": 36.04,
+        "change_1d_pct": -1.13
       },
       "Base": {
-        "tvl_b": 4.96,
-        "change_1d_pct": -3.31
+        "tvl_b": 4.99,
+        "change_1d_pct": -2.8
       },
       "Solana": {
         "tvl_b": 4.53,
-        "change_1d_pct": -1.93
+        "change_1d_pct": -1.95
       },
       "Tron": {
-        "tvl_b": 4.43,
-        "change_1d_pct": -0.36
+        "tvl_b": 4.44,
+        "change_1d_pct": -0.03
       },
       "BSC": {
-        "tvl_b": 4.25,
-        "change_1d_pct": -1.68
+        "tvl_b": 4.26,
+        "change_1d_pct": -1.58
       },
       "Bitcoin": {
         "tvl_b": 2.93,
-        "change_1d_pct": -4.09
+        "change_1d_pct": -4.04
       }
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1390.2,
+      "net_flow_usd_m": -1390.3,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0081,
+        "funding_rate_pct": 0.0086,
         "oi_usd_b": 1.84
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0075,
+        "funding_rate_pct": 0.0078,
         "oi_usd_b": 1.14
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 5,
-      "half_hour_fee_sat_vb": 4,
-      "mempool_vsize_mb": 32.8,
-      "tx_count": 75461,
+      "fastest_fee_sat_vb": 2,
+      "half_hour_fee_sat_vb": 1,
+      "mempool_vsize_mb": 31.5,
+      "tx_count": 71186,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -851,6 +851,283 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-55c0d0b188",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:13:33Z",
+      "published_at_taipei": "2026-11-25 03:13",
+      "published_at_taipei_iso": "2026-11-25T03:13:33+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Rocket Lab (RKLB) Has 117 Launches Booked. Barclays Has a View",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-rklb-117-launches-191333487.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-rklb-117-launches-191333487.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-7360f2da2b",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:13:15Z",
+      "published_at_taipei": "2026-11-25 03:13",
+      "published_at_taipei_iso": "2026-11-25T03:13:15+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "ASE Technology (ASX) Is Widening Its Margins. Here’s How",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ase-technology-asx-widening-margins-191315596.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/ase-technology-asx-widening-margins-191315596.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500",
+        "3711"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-5d6de7f881",
+        "issue": "2026-11-23-PM",
+        "title": "Analog Devices Isn't Restocking. It Trades Like Nvidia Now",
+        "published_at_taipei": "2026-11-23 23:45",
+        "url": "https://www.trefis.com/stock/adi/articles/627692/analog-devices-isn-t-restocking-it-trades-like-nvidia-now/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500",
+        "3711"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-9b1a9b2717",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:13:00Z",
+      "published_at_taipei": "2026-11-25 03:13",
+      "published_at_taipei_iso": "2026-11-25T03:13:00+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "The Argument Behind Monness Crespi & Hardt’s Call on SoFi (SOFI)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/argument-behind-monness-crespi-hardt-191300732.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/argument-behind-monness-crespi-hardt-191300732.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-91dfb85ed6",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:12:40Z",
+      "published_at_taipei": "2026-11-25 03:12",
+      "published_at_taipei_iso": "2026-11-25T03:12:40+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "What BTIG Sees in QXO (QXO) Beyond Housing",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/btig-sees-qxo-qxo-beyond-191240965.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/btig-sees-qxo-qxo-beyond-191240965.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-7b09c2842c",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:12:25Z",
+      "published_at_taipei": "2026-11-25 03:12",
+      "published_at_taipei_iso": "2026-11-25T03:12:25+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Can Nu Holdings (NU) Keep Growing Past 143 Million Customers?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nu-holdings-nu-keep-growing-191225547.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/nu-holdings-nu-keep-growing-191225547.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d6010e5c9f",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:11:27Z",
+      "published_at_taipei": "2026-11-25 03:11",
+      "published_at_taipei_iso": "2026-11-25T03:11:27+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "The Bitcoin Price That Would Signal the Sell-Off Is Over",
+      "url": "https://247wallst.com/investing/cryptocurrency/2026/11/24/the-bitcoin-price-that-would-signal-the-sell-off-is-over/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/cryptocurrency/2026/11/24/the-bitcoin-price-that-would-signal-the-sell-off-is-over?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261120-d6471083d6",
+        "issue": "2026-11-21-PM",
+        "title": "Bitcoin price drops to $60K as Anthropic drops to $87 in tech sell-off",
+        "published_at_taipei": "2026-11-20 23:52",
+        "url": "https://cointelegraph.com/markets/bitcoin-hits-new-20-week-low-anthropic-drops-87-tech-sell-off?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-503b783e29",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:10:00Z",
+      "published_at_taipei": "2026-11-25 03:10",
+      "published_at_taipei_iso": "2026-11-25T03:10:00+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Syncracy’s Watkins Says 12.5% of Data Centers Mining Pearl Would Pass Bitcoin’s Energy Use",
+      "url": "https://unchainedcrypto.com/syncracys-watkins-says-12-5-of-data-centers-mining-pearl-would-pass-bitcoins-energy-use/?.tsrc=rss",
+      "canonical_url": "https://unchainedcrypto.com/syncracys-watkins-says-12-5-of-data-centers-mining-pearl-would-pass-bitcoins-energy-use?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-ccfd0de160",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T19:08:38Z",
@@ -919,6 +1196,48 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-5464ec08d2",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:04:02Z",
+      "published_at_taipei": "2026-11-25 03:04",
+      "published_at_taipei_iso": "2026-11-25T03:04:02+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "The S&P 500 Lost More Than 8% in a Week for Only the 13th Time Since 1950. Here's How the Other 12 Played Out.",
+      "url": "https://www.fool.com/investing/2026/11/24/the-s-and-p-500-lost-more-than-8-in-a-week-for-only-the-13th-time-since-1950-here-s-how-the-other-12-played-out/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/24/the-s-and-p-500-lost-more-than-8-in-a-week-for-only-the-13th-time-since-1950-here-s-how-the-other-12-played-out?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-540313cc93",
+        "issue": "2026-11-23-PM",
+        "title": "The S&P 500 Fell 7 Days in a Row for the First Time Since 2020. Here's What Happened After Every Losing Streak of 6 Days or More Since 1950.",
+        "published_at_taipei": "2026-11-23 19:37",
+        "url": "https://www.fool.com/investing/2026/11/23/the-s-and-p-500-fell-7-days-in-a-row-for-the-first-time-since-2020-here-s-what-happened-after-every-losing-streak-of-6-days-or-more-since-1950/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -1101,6 +1420,48 @@
       "sentiment_targets": [
         "NAS100",
         "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-2b53f36656",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:42:34Z",
+      "published_at_taipei": "2026-11-25 02:42",
+      "published_at_taipei_iso": "2026-11-25T02:42:34+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "黃仁勳回鍋台股沸騰 狂飆3310點史上最強",
+      "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E5%8F%B0%E8%82%A1%E6%B2%B8%E9%A8%B0-%E7%8B%82%E9%A3%863310%E9%BB%9E%E5%8F%B2%E4%B8%8A%E6%9C%80%E5%BC%B7-184234818.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E5%8F%B0%E8%82%A1%E6%B2%B8%E9%A8%B0-%E7%8B%82%E9%A3%863310%E9%BB%9E%E5%8F%B2%E4%B8%8A%E6%9C%80%E5%BC%B7-184234818.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-c90f6d8164",
+        "issue": "2026-11-24-AM",
+        "title": "黃仁勳回歸點火！台股收漲3310點創史上最大漲點",
+        "published_at_taipei": "2026-11-24 18:38",
+        "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E6%AD%B8%E9%BB%9E%E7%81%AB-%E5%8F%B0%E8%82%A1%E6%94%B6%E6%BC%B23310%E9%BB%9E%E5%89%B5%E5%8F%B2%E4%B8%8A%E6%9C%80%E5%A4%A7%E6%BC%B2%E9%BB%9E-103800210.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -7418,6 +7779,195 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-877b55359e",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:17:00Z",
+      "published_at_taipei": "2026-11-25 03:17",
+      "published_at_taipei_iso": "2026-11-25T03:17:00+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Anthropic Stock Sinks Below IPO Price. What History Says Happens Next.",
+      "url": "https://finance.yahoo.com/m/a286105e-a938-3486-a9d4-92ce3954de08/anthropic-stock-sinks-below.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/a286105e-a938-3486-a9d4-92ce3954de08/anthropic-stock-sinks-below.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261120-d1b90daff2",
+        "issue": "2026-11-21-PM",
+        "title": "Anthropic Stock Opens 33% Above IPO Price as AI Stocks Rally",
+        "published_at_taipei": "2026-11-20 00:55",
+        "url": "https://decrypt.co/383631/anthropic-stock-indicated-open-33-above-ipo-price"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-287dc2e48f",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:15:00Z",
+      "published_at_taipei": "2026-11-25 03:15",
+      "published_at_taipei_iso": "2026-11-25T03:15:00+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Nvidia's stock surge is crypto's worst nightmare, Arthur Hayes warns",
+      "url": "https://www.thestreet.com/crypto/markets/nvidias-stock-surge-is-cryptos-worst-nightmare-arthur-hayes-warns?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/crypto/markets/nvidias-stock-surge-is-cryptos-worst-nightmare-arthur-hayes-warns?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-98f622d48c",
+        "issue": "2026-11-23-PM",
+        "title": "Nvidia’s stock is surging again. What to know before chasing the AI rally.",
+        "published_at_taipei": "2026-11-24 06:04",
+        "url": "https://www.marketwatch.com/story/nvidias-stock-is-surging-again-what-to-know-before-chasing-the-ai-rally-226688d7?mod=mw_rss_topstories"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：surge",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-85fab37ed7",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:13:00Z",
+      "published_at_taipei": "2026-11-25 03:13",
+      "published_at_taipei_iso": "2026-11-25T03:13:00+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Why Pump Prices Are Likely to Stay High in 2027—Even if Oil Gets Cheaper",
+      "url": "https://finance.yahoo.com/m/45275154-a582-3b17-b28b-c3aa2fc94685/why-pump-prices-are-likely-to.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/45275154-a582-3b17-b28b-c3aa2fc94685/why-pump-prices-are-likely-to.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-b9dcac7a77",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:10:48Z",
+      "published_at_taipei": "2026-11-25 03:10",
+      "published_at_taipei_iso": "2026-11-25T03:10:48+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Dow Jones Leader Sherwin-Williams, Target Stock In Or Near Buy Zone",
+      "url": "https://finance.yahoo.com/m/68930714-b7cf-31f7-b502-a668a0b44f65/dow-jones-leader.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/68930714-b7cf-31f7-b502-a668a0b44f65/dow-jones-leader.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-730614a5c8",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:07:03Z",
+      "published_at_taipei": "2026-11-25 03:07",
+      "published_at_taipei_iso": "2026-11-25T03:07:03+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Billionaire David Abrams’ Top 5 Stock Picks for 2027",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/billionaire-david-abrams-top-5-190703630.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/billionaire-david-abrams-top-5-190703630.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-09b483a7a6",
+        "issue": "2026-11-22-PM",
+        "title": "Billionaire David Tepper’s Appaloosa Opened a $172 Million Stake in Oracle",
+        "published_at_taipei": "2026-11-23 01:59",
+        "url": "https://247wallst.com/investing/2026/11/22/billionaire-david-teppers-appaloosa-opened-a-172-million-stake-in-oracle/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-0b83397de2",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T18:50:18Z",
@@ -13158,6 +13708,432 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261125-877b55359e",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:17:00Z",
+      "published_at_taipei": "2026-11-25 03:17",
+      "published_at_taipei_iso": "2026-11-25T03:17:00+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Anthropic Stock Sinks Below IPO Price. What History Says Happens Next.",
+      "url": "https://finance.yahoo.com/m/a286105e-a938-3486-a9d4-92ce3954de08/anthropic-stock-sinks-below.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/a286105e-a938-3486-a9d4-92ce3954de08/anthropic-stock-sinks-below.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261120-d1b90daff2",
+        "issue": "2026-11-21-PM",
+        "title": "Anthropic Stock Opens 33% Above IPO Price as AI Stocks Rally",
+        "published_at_taipei": "2026-11-20 00:55",
+        "url": "https://decrypt.co/383631/anthropic-stock-indicated-open-33-above-ipo-price"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-287dc2e48f",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:15:00Z",
+      "published_at_taipei": "2026-11-25 03:15",
+      "published_at_taipei_iso": "2026-11-25T03:15:00+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Nvidia's stock surge is crypto's worst nightmare, Arthur Hayes warns",
+      "url": "https://www.thestreet.com/crypto/markets/nvidias-stock-surge-is-cryptos-worst-nightmare-arthur-hayes-warns?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/crypto/markets/nvidias-stock-surge-is-cryptos-worst-nightmare-arthur-hayes-warns?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-98f622d48c",
+        "issue": "2026-11-23-PM",
+        "title": "Nvidia’s stock is surging again. What to know before chasing the AI rally.",
+        "published_at_taipei": "2026-11-24 06:04",
+        "url": "https://www.marketwatch.com/story/nvidias-stock-is-surging-again-what-to-know-before-chasing-the-ai-rally-226688d7?mod=mw_rss_topstories"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：surge",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-55c0d0b188",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:13:33Z",
+      "published_at_taipei": "2026-11-25 03:13",
+      "published_at_taipei_iso": "2026-11-25T03:13:33+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Rocket Lab (RKLB) Has 117 Launches Booked. Barclays Has a View",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-rklb-117-launches-191333487.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-rklb-117-launches-191333487.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-7360f2da2b",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:13:15Z",
+      "published_at_taipei": "2026-11-25 03:13",
+      "published_at_taipei_iso": "2026-11-25T03:13:15+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "ASE Technology (ASX) Is Widening Its Margins. Here’s How",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ase-technology-asx-widening-margins-191315596.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/ase-technology-asx-widening-margins-191315596.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500",
+        "3711"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-5d6de7f881",
+        "issue": "2026-11-23-PM",
+        "title": "Analog Devices Isn't Restocking. It Trades Like Nvidia Now",
+        "published_at_taipei": "2026-11-23 23:45",
+        "url": "https://www.trefis.com/stock/adi/articles/627692/analog-devices-isn-t-restocking-it-trades-like-nvidia-now/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500",
+        "3711"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-9b1a9b2717",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:13:00Z",
+      "published_at_taipei": "2026-11-25 03:13",
+      "published_at_taipei_iso": "2026-11-25T03:13:00+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "The Argument Behind Monness Crespi & Hardt’s Call on SoFi (SOFI)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/argument-behind-monness-crespi-hardt-191300732.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/argument-behind-monness-crespi-hardt-191300732.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-85fab37ed7",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:13:00Z",
+      "published_at_taipei": "2026-11-25 03:13",
+      "published_at_taipei_iso": "2026-11-25T03:13:00+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Why Pump Prices Are Likely to Stay High in 2027—Even if Oil Gets Cheaper",
+      "url": "https://finance.yahoo.com/m/45275154-a582-3b17-b28b-c3aa2fc94685/why-pump-prices-are-likely-to.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/45275154-a582-3b17-b28b-c3aa2fc94685/why-pump-prices-are-likely-to.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-91dfb85ed6",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:12:40Z",
+      "published_at_taipei": "2026-11-25 03:12",
+      "published_at_taipei_iso": "2026-11-25T03:12:40+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "What BTIG Sees in QXO (QXO) Beyond Housing",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/btig-sees-qxo-qxo-beyond-191240965.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/btig-sees-qxo-qxo-beyond-191240965.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-7b09c2842c",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:12:25Z",
+      "published_at_taipei": "2026-11-25 03:12",
+      "published_at_taipei_iso": "2026-11-25T03:12:25+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Can Nu Holdings (NU) Keep Growing Past 143 Million Customers?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nu-holdings-nu-keep-growing-191225547.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/nu-holdings-nu-keep-growing-191225547.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d6010e5c9f",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:11:27Z",
+      "published_at_taipei": "2026-11-25 03:11",
+      "published_at_taipei_iso": "2026-11-25T03:11:27+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "The Bitcoin Price That Would Signal the Sell-Off Is Over",
+      "url": "https://247wallst.com/investing/cryptocurrency/2026/11/24/the-bitcoin-price-that-would-signal-the-sell-off-is-over/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/cryptocurrency/2026/11/24/the-bitcoin-price-that-would-signal-the-sell-off-is-over?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261120-d6471083d6",
+        "issue": "2026-11-21-PM",
+        "title": "Bitcoin price drops to $60K as Anthropic drops to $87 in tech sell-off",
+        "published_at_taipei": "2026-11-20 23:52",
+        "url": "https://cointelegraph.com/markets/bitcoin-hits-new-20-week-low-anthropic-drops-87-tech-sell-off?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-b9dcac7a77",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:10:48Z",
+      "published_at_taipei": "2026-11-25 03:10",
+      "published_at_taipei_iso": "2026-11-25T03:10:48+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Dow Jones Leader Sherwin-Williams, Target Stock In Or Near Buy Zone",
+      "url": "https://finance.yahoo.com/m/68930714-b7cf-31f7-b502-a668a0b44f65/dow-jones-leader.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/68930714-b7cf-31f7-b502-a668a0b44f65/dow-jones-leader.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-503b783e29",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:10:00Z",
+      "published_at_taipei": "2026-11-25 03:10",
+      "published_at_taipei_iso": "2026-11-25T03:10:00+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Syncracy’s Watkins Says 12.5% of Data Centers Mining Pearl Would Pass Bitcoin’s Energy Use",
+      "url": "https://unchainedcrypto.com/syncracys-watkins-says-12-5-of-data-centers-mining-pearl-would-pass-bitcoins-energy-use/?.tsrc=rss",
+      "canonical_url": "https://unchainedcrypto.com/syncracys-watkins-says-12-5-of-data-centers-mining-pearl-would-pass-bitcoins-energy-use?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-ccfd0de160",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T19:08:38Z",
@@ -13194,6 +14170,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-730614a5c8",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:07:03Z",
+      "published_at_taipei": "2026-11-25 03:07",
+      "published_at_taipei_iso": "2026-11-25T03:07:03+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "Billionaire David Abrams’ Top 5 Stock Picks for 2027",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/billionaire-david-abrams-top-5-190703630.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/billionaire-david-abrams-top-5-190703630.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-09b483a7a6",
+        "issue": "2026-11-22-PM",
+        "title": "Billionaire David Tepper’s Appaloosa Opened a $172 Million Stake in Oracle",
+        "published_at_taipei": "2026-11-23 01:59",
+        "url": "https://247wallst.com/investing/2026/11/22/billionaire-david-teppers-appaloosa-opened-a-172-million-stake-in-oracle/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-6d81c3be20",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T19:04:26Z",
@@ -13226,6 +14242,48 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-5464ec08d2",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T19:04:02Z",
+      "published_at_taipei": "2026-11-25 03:04",
+      "published_at_taipei_iso": "2026-11-25T03:04:02+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "The S&P 500 Lost More Than 8% in a Week for Only the 13th Time Since 1950. Here's How the Other 12 Played Out.",
+      "url": "https://www.fool.com/investing/2026/11/24/the-s-and-p-500-lost-more-than-8-in-a-week-for-only-the-13th-time-since-1950-here-s-how-the-other-12-played-out/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/24/the-s-and-p-500-lost-more-than-8-in-a-week-for-only-the-13th-time-since-1950-here-s-how-the-other-12-played-out?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-540313cc93",
+        "issue": "2026-11-23-PM",
+        "title": "The S&P 500 Fell 7 Days in a Row for the First Time Since 2020. Here's What Happened After Every Losing Streak of 6 Days or More Since 1950.",
+        "published_at_taipei": "2026-11-23 19:37",
+        "url": "https://www.fool.com/investing/2026/11/23/the-s-and-p-500-fell-7-days-in-a-row-for-the-first-time-since-2020-here-s-what-happened-after-every-losing-streak-of-6-days-or-more-since-1950/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -13488,6 +14546,48 @@
       "sentiment_targets": [
         "NAS100",
         "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-2b53f36656",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:42:34Z",
+      "published_at_taipei": "2026-11-25 02:42",
+      "published_at_taipei_iso": "2026-11-25T02:42:34+08:00",
+      "first_seen_at_utc": "2026-11-24T19:29:08Z",
+      "first_seen_at_taipei": "2026-11-25 03:29",
+      "month": "2026-11",
+      "title": "黃仁勳回鍋台股沸騰 狂飆3310點史上最強",
+      "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E5%8F%B0%E8%82%A1%E6%B2%B8%E9%A8%B0-%E7%8B%82%E9%A3%863310%E9%BB%9E%E5%8F%B2%E4%B8%8A%E6%9C%80%E5%BC%B7-184234818.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E9%8D%8B%E5%8F%B0%E8%82%A1%E6%B2%B8%E9%A8%B0-%E7%8B%82%E9%A3%863310%E9%BB%9E%E5%8F%B2%E4%B8%8A%E6%9C%80%E5%BC%B7-184234818.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-c90f6d8164",
+        "issue": "2026-11-24-AM",
+        "title": "黃仁勳回歸點火！台股收漲3310點創史上最大漲點",
+        "published_at_taipei": "2026-11-24 18:38",
+        "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9B%9E%E6%AD%B8%E9%BB%9E%E7%81%AB-%E5%8F%B0%E8%82%A1%E6%94%B6%E6%BC%B23310%E9%BB%9E%E5%89%B5%E5%8F%B2%E4%B8%8A%E6%9C%80%E5%A4%A7%E6%BC%B2%E9%BB%9E-103800210.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -94872,8 +95972,8 @@
       "month": "2026-11",
       "date": "2026-11-24",
       "half": "PM",
-      "updated_at_taipei": "2026-11-25 03:14",
-      "count": 332,
+      "updated_at_taipei": "2026-11-25 03:29",
+      "count": 346,
       "star3_count": 14,
       "failed_sources": [
         {
