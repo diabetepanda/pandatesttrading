@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-24-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-24T18:28:55Z",
-  "updated_at_taipei": "2026-11-25 02:28",
-  "last_updated_utc": "2026-11-24T18:28:55Z",
-  "last_updated_taipei": "2026-11-25 02:28",
-  "next_update_hint": "約台北時間 02:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-24T18:43:50Z",
+  "updated_at_taipei": "2026-11-25 02:43",
+  "last_updated_utc": "2026-11-24T18:43:50Z",
+  "last_updated_taipei": "2026-11-25 02:43",
+  "next_update_hint": "約台北時間 02:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 20.406,
+    "total_elapsed_sec": 17.505,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 0,
+    "new_items_added": 16,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.097,
+        "elapsed_sec": 0.068,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.17,
+        "elapsed_sec": 0.116,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.258,
+        "elapsed_sec": 0.074,
         "raw_count": 30,
         "items_kept": 3,
         "error": null
@@ -63,25 +63,25 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.091,
+        "elapsed_sec": 0.121,
         "raw_count": 10,
-        "items_kept": 2,
+        "items_kept": 3,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.303,
+        "elapsed_sec": 0.323,
         "raw_count": 20,
-        "items_kept": 20,
+        "items_kept": 16,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.287,
+        "elapsed_sec": 0.165,
         "raw_count": 25,
         "items_kept": 21,
         "error": null
@@ -90,16 +90,16 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.182,
+        "elapsed_sec": 0.12,
         "raw_count": 30,
-        "items_kept": 18,
+        "items_kept": 19,
         "error": null
       },
       "theblock": {
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.156,
+        "elapsed_sec": 0.085,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -108,16 +108,16 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.136,
+        "elapsed_sec": 0.086,
         "raw_count": 38,
-        "items_kept": 14,
+        "items_kept": 13,
         "error": null
       },
       "cnyes_tw_stock": {
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.431,
+        "elapsed_sec": 0.64,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.47,
+        "elapsed_sec": 0.595,
         "raw_count": 20,
-        "items_kept": 11,
+        "items_kept": 12,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.557,
+        "elapsed_sec": 0.584,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.47,
+        "elapsed_sec": 0.673,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.388,
+        "elapsed_sec": 0.39,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.902,
+        "elapsed_sec": 0.646,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.28,
+        "elapsed_sec": 0.083,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 3.48,
+        "elapsed_sec": 0.368,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.104,
+        "elapsed_sec": 0.074,
         "raw_count": 1376,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 2.114,
+        "elapsed_sec": 2.458,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.355,
+        "elapsed_sec": 0.467,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.232,
+        "elapsed_sec": 1.494,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.345,
+        "elapsed_sec": 0.424,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.484,
+        "elapsed_sec": 0.8,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.864,
+        "elapsed_sec": 0.179,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.458,
+        "elapsed_sec": 0.548,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.312,
+        "elapsed_sec": 0.399,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,16 +303,16 @@
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1394.5,
+      "net_flow_usd_m": -1395.6,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0068,
-        "oi_usd_b": 1.83
+        "funding_rate_pct": 0.0073,
+        "oi_usd_b": 1.84
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0064,
+        "funding_rate_pct": 0.007,
         "oi_usd_b": 1.15
       }
     },
@@ -320,7 +320,7 @@
       "fastest_fee_sat_vb": 2,
       "half_hour_fee_sat_vb": 1,
       "mempool_vsize_mb": 31.0,
-      "tx_count": 70536,
+      "tx_count": 69704,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -811,6 +811,227 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-c760f8661f",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:40:56Z",
+      "published_at_taipei": "2026-11-25 02:40",
+      "published_at_taipei_iso": "2026-11-25T02:40:56+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "大將回歸搶救AI大兵 台股信心失而復得",
+      "url": "https://tw.news.yahoo.com/%E5%A4%A7%E5%B0%87%E5%9B%9E%E6%AD%B8%E6%90%B6%E6%95%91ai%E5%A4%A7%E5%85%B5-%E5%8F%B0%E8%82%A1%E4%BF%A1%E5%BF%83%E5%A4%B1%E8%80%8C%E5%BE%A9%E5%BE%97-184056084.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%A4%A7%E5%B0%87%E5%9B%9E%E6%AD%B8%E6%90%B6%E6%95%91ai%E5%A4%A7%E5%85%B5-%E5%8F%B0%E8%82%A1%E4%BF%A1%E5%BF%83%E5%A4%B1%E8%80%8C%E5%BE%A9%E5%BE%97-184056084.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：反彈",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-6447f8de79",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:35:02Z",
+      "published_at_taipei": "2026-11-25 02:35",
+      "published_at_taipei_iso": "2026-11-25T02:35:02+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Kraken’s Krak plans early 2027 launch of US credit cards with bitcoin cashback, including one secured by USDC",
+      "url": "https://www.theblock.co/news/business/2026-11-24-kraken-krak-early-2027-launch-us-credit-cards-bitcoin-cashback-usdc-collateral-445498",
+      "canonical_url": "https://theblock.co/news/business/2026-11-24-kraken-krak-early-2027-launch-us-credit-cards-bitcoin-cashback-usdc-collateral-445498",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "BCHUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "BCHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-130f7dcca4",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:30:02Z",
+      "published_at_taipei": "2026-11-25 02:30",
+      "published_at_taipei_iso": "2026-11-25T02:30:02+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "美股還能再漲近25%？德銀喊標普2027年底衝9000點",
+      "url": "https://news.cnyes.com/news/id/6671051",
+      "canonical_url": "https://news.cnyes.com/news/id/6671051",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：升息",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-dceb8beeef",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:28:00Z",
+      "published_at_taipei": "2026-11-25 02:28",
+      "published_at_taipei_iso": "2026-11-25T02:28:00+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Tesla has a ‘legitimate multitrillion-dollar opportunity’ in robotaxis, says former skeptic",
+      "url": "https://www.marketwatch.com/story/tesla-has-a-legitimate-multitrillion-dollar-opportunity-in-robotaxis-says-former-skeptic-23507364?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/tesla-has-a-legitimate-multitrillion-dollar-opportunity-in-robotaxis-says-former-skeptic-23507364?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-bcef0d759a",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:25:32Z",
+      "published_at_taipei": "2026-11-25 02:25",
+      "published_at_taipei_iso": "2026-11-25T02:25:32+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Jim Cramer Saw a Reason to Like Perimeter Group Even in a Quiet Fire Season",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-saw-reason-perimeter-182532976.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-saw-reason-perimeter-182532976.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-edf0627424",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:25:11Z",
+      "published_at_taipei": "2026-11-25 02:25",
+      "published_at_taipei_iso": "2026-11-25T02:25:11+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "After the Kenvue Deal, Jim Cramer Favored Buying Kimberly-Clark in Stages",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/kenvue-deal-jim-cramer-favored-182511615.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/kenvue-deal-jim-cramer-favored-182511615.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-bf769c9733",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T18:16:13Z",
@@ -966,6 +1187,50 @@
       "sentiment_targets": [
         "NATGAS",
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-05e0c8b405",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:09:05Z",
+      "published_at_taipei": "2026-11-25 02:09",
+      "published_at_taipei_iso": "2026-11-25T02:09:05+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Here's Why SpaceX Stock Slumped Today, And Why it Could Come Under More Pressure as Tesla Merger Talks Continue",
+      "url": "https://www.fool.com/investing/2026/11/24/here-s-why-spacex-stock-slumped-today-and-why-it-could-come-under-more-pressure-as-tesla-merger-talks-continue/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/24/here-s-why-spacex-stock-slumped-today-and-why-it-could-come-under-more-pressure-as-tesla-merger-talks-continue?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-14e95cb25b",
+        "issue": "2026-11-23-PM",
+        "title": "Why SpaceX Stock Is Gaining Today",
+        "published_at_taipei": "2026-11-23 23:30",
+        "url": "https://www.fool.com/investing/2026/11/23/why-spacex-stock-is-gaining-today/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
       ],
       "sentiment_method": "rule"
     },
@@ -6859,6 +7124,354 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-da0b6a62ea",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:33:00Z",
+      "published_at_taipei": "2026-11-25 02:33",
+      "published_at_taipei_iso": "2026-11-25T02:33:00+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Micron’s stock falls as an analyst warns about a future supply glut",
+      "url": "https://www.marketwatch.com/story/microns-stock-falls-as-an-analyst-warns-about-a-future-supply-glut-f7fbeefb?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/microns-stock-falls-as-an-analyst-warns-about-a-future-supply-glut-f7fbeefb?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-0e147f0415",
+        "issue": "2026-11-21-PM",
+        "title": "Micron and Sandisk stocks might look like bargains, but analysts say that’s actually a red flag",
+        "published_at_taipei": "2026-11-21 05:36",
+        "url": "https://www.marketwatch.com/story/micron-and-sandisk-stocks-might-look-like-bargains-but-analysts-say-thats-actually-a-red-flag-da1f1f5d?mod=mw_rss_topstories"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-5d48939213",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:33:00Z",
+      "published_at_taipei": "2026-11-25 02:33",
+      "published_at_taipei_iso": "2026-11-25T02:33:00+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Bloom Energy Revenue Jumped 138%. Its Next Growth Phase Could Be Even Bigger",
+      "url": "https://247wallst.com/investing/2026/11/24/bloom-energy-revenue-jumped-138-its-next-growth-phase-could-be-even-bigger/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/24/bloom-energy-revenue-jumped-138-its-next-growth-phase-could-be-even-bigger?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-4c513613ff",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:31:42Z",
+      "published_at_taipei": "2026-11-25 02:31",
+      "published_at_taipei_iso": "2026-11-25T02:31:42+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "CFTC sets new prediction market rules as more firms seek US entry",
+      "url": "https://cointelegraph.com/news/cftc-new-prediction-market-rules-firms-seek-us-entry?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/cftc-new-prediction-market-rules-firms-seek-us-entry",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-4f4e54de2b",
+        "issue": "2026-11-23-AM",
+        "title": "Chip Stocks Lead Premarket Bounce as SOXX Soars",
+        "published_at_taipei": "2026-11-23 18:12",
+        "url": "https://finance.yahoo.com/m/da42314d-e4d9-32a7-b543-328e1f71d8ea/chip-stocks-lead-premarket.html?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：approved",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-ea9651c2f1",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:24:09Z",
+      "published_at_taipei": "2026-11-25 02:24",
+      "published_at_taipei_iso": "2026-11-25T02:24:09+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "This Jaws-Like Stock Has Bitten Off Solid Success In 2026",
+      "url": "https://finance.yahoo.com/m/b4cd11c1-e069-35b3-863f-6c09e86c3470/this-jaws-like-stock-has.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/b4cd11c1-e069-35b3-863f-6c09e86c3470/this-jaws-like-stock-has.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-710f379630",
+        "issue": "2026-11-23-PM",
+        "title": "Trade Desk Stock Dips Paid Off, Until 2025",
+        "published_at_taipei": "2026-11-23 20:48",
+        "url": "https://www.trefis.com/stock/ttd/articles/627843/trade-desk-stock-dips-paid-off-until-2025/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-22dc74e60e",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:23:02Z",
+      "published_at_taipei": "2026-11-25 02:23",
+      "published_at_taipei_iso": "2026-11-25T02:23:02+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "ASML Is the Most Important Company You’ve Never Heard Of. Should You Buy the Stock?",
+      "url": "https://www.fool.com/investing/2026/11/24/asml-is-the-most-important-company-youve-never-heard-of-should-you-buy-the-stock/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/24/asml-is-the-most-important-company-youve-never-heard-of-should-you-buy-the-stock?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-9eddca753a",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:20:30Z",
+      "published_at_taipei": "2026-11-25 02:20",
+      "published_at_taipei_iso": "2026-11-25T02:20:30+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Can Boston Scientific Stock Rise 30% From Here?",
+      "url": "https://www.trefis.com/stock/bsx/articles/628417/can-boston-scientific-stock-rise-30-from-here/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/bsx/articles/628417/can-boston-scientific-stock-rise-30-from-here/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-c4b76293a1",
+        "issue": "2026-11-24-AM",
+        "title": "Can Adobe Stock Rise 30% From Here?",
+        "published_at_taipei": "2026-11-24 19:07",
+        "url": "https://www.trefis.com/stock/adbe/articles/628292/can-adobe-stock-rise-30-from-here/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d1e34d38e9",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:18:22Z",
+      "published_at_taipei": "2026-11-25 02:18",
+      "published_at_taipei_iso": "2026-11-25T02:18:22+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "What Would A Short Seller Say About IBM Stock?",
+      "url": "https://www.trefis.com/stock/ibm/articles/628477/what-would-a-short-seller-say-about-ibm-stock/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/ibm/articles/628477/what-would-a-short-seller-say-about-ibm-stock/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-a00c0dfe55",
+        "issue": "2026-11-23-PM",
+        "title": "What Moved Bloom Energy Stock?",
+        "published_at_taipei": "2026-11-23 20:10",
+        "url": "https://www.trefis.com/stock/be/articles/627709/what-moved-bloom-energy-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-febad9e6d1",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:14:11Z",
+      "published_at_taipei": "2026-11-25 02:14",
+      "published_at_taipei_iso": "2026-11-25T02:14:11+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "What Can Make Fair Isaac Stock A Buy?",
+      "url": "https://www.trefis.com/stock/fico/articles/628416/what-can-make-fair-isaac-stock-a-buy/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/fico/articles/628416/what-can-make-fair-isaac-stock-a-buy/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-87ab19636c",
+        "issue": "2026-11-23-PM",
+        "title": "What Explains The Fall In Meta Stock?",
+        "published_at_taipei": "2026-11-24 01:31",
+        "url": "https://www.trefis.com/stock/meta/articles/627808/what-explains-the-fall-in-meta-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-275912e3db",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:09:36Z",
+      "published_at_taipei": "2026-11-25 02:09",
+      "published_at_taipei_iso": "2026-11-25T02:09:36+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "What Could Lift Chipotle Stock Further?",
+      "url": "https://www.trefis.com/stock/cmg/articles/628296/what-could-lift-chipotle-stock-further/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/cmg/articles/628296/what-could-lift-chipotle-stock-further/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-db426c9174",
+        "issue": "2026-11-23-PM",
+        "title": "What Held Up While Bitcoin Fell",
+        "published_at_taipei": "2026-11-24 04:15",
+        "url": "https://www.bankless.com/read/what-held-up-while-bitcoin-fell?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-2d73a2d4aa",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T18:07:22Z",
@@ -12057,6 +12670,495 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261125-c760f8661f",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:40:56Z",
+      "published_at_taipei": "2026-11-25 02:40",
+      "published_at_taipei_iso": "2026-11-25T02:40:56+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "大將回歸搶救AI大兵 台股信心失而復得",
+      "url": "https://tw.news.yahoo.com/%E5%A4%A7%E5%B0%87%E5%9B%9E%E6%AD%B8%E6%90%B6%E6%95%91ai%E5%A4%A7%E5%85%B5-%E5%8F%B0%E8%82%A1%E4%BF%A1%E5%BF%83%E5%A4%B1%E8%80%8C%E5%BE%A9%E5%BE%97-184056084.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%A4%A7%E5%B0%87%E5%9B%9E%E6%AD%B8%E6%90%B6%E6%95%91ai%E5%A4%A7%E5%85%B5-%E5%8F%B0%E8%82%A1%E4%BF%A1%E5%BF%83%E5%A4%B1%E8%80%8C%E5%BE%A9%E5%BE%97-184056084.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：反彈",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-6447f8de79",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:35:02Z",
+      "published_at_taipei": "2026-11-25 02:35",
+      "published_at_taipei_iso": "2026-11-25T02:35:02+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Kraken’s Krak plans early 2027 launch of US credit cards with bitcoin cashback, including one secured by USDC",
+      "url": "https://www.theblock.co/news/business/2026-11-24-kraken-krak-early-2027-launch-us-credit-cards-bitcoin-cashback-usdc-collateral-445498",
+      "canonical_url": "https://theblock.co/news/business/2026-11-24-kraken-krak-early-2027-launch-us-credit-cards-bitcoin-cashback-usdc-collateral-445498",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "BCHUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "BCHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-da0b6a62ea",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:33:00Z",
+      "published_at_taipei": "2026-11-25 02:33",
+      "published_at_taipei_iso": "2026-11-25T02:33:00+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Micron’s stock falls as an analyst warns about a future supply glut",
+      "url": "https://www.marketwatch.com/story/microns-stock-falls-as-an-analyst-warns-about-a-future-supply-glut-f7fbeefb?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/microns-stock-falls-as-an-analyst-warns-about-a-future-supply-glut-f7fbeefb?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-0e147f0415",
+        "issue": "2026-11-21-PM",
+        "title": "Micron and Sandisk stocks might look like bargains, but analysts say that’s actually a red flag",
+        "published_at_taipei": "2026-11-21 05:36",
+        "url": "https://www.marketwatch.com/story/micron-and-sandisk-stocks-might-look-like-bargains-but-analysts-say-thats-actually-a-red-flag-da1f1f5d?mod=mw_rss_topstories"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-5d48939213",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:33:00Z",
+      "published_at_taipei": "2026-11-25 02:33",
+      "published_at_taipei_iso": "2026-11-25T02:33:00+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Bloom Energy Revenue Jumped 138%. Its Next Growth Phase Could Be Even Bigger",
+      "url": "https://247wallst.com/investing/2026/11/24/bloom-energy-revenue-jumped-138-its-next-growth-phase-could-be-even-bigger/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/24/bloom-energy-revenue-jumped-138-its-next-growth-phase-could-be-even-bigger?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-4c513613ff",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:31:42Z",
+      "published_at_taipei": "2026-11-25 02:31",
+      "published_at_taipei_iso": "2026-11-25T02:31:42+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "CFTC sets new prediction market rules as more firms seek US entry",
+      "url": "https://cointelegraph.com/news/cftc-new-prediction-market-rules-firms-seek-us-entry?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/cftc-new-prediction-market-rules-firms-seek-us-entry",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-4f4e54de2b",
+        "issue": "2026-11-23-AM",
+        "title": "Chip Stocks Lead Premarket Bounce as SOXX Soars",
+        "published_at_taipei": "2026-11-23 18:12",
+        "url": "https://finance.yahoo.com/m/da42314d-e4d9-32a7-b543-328e1f71d8ea/chip-stocks-lead-premarket.html?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：approved",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-130f7dcca4",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:30:02Z",
+      "published_at_taipei": "2026-11-25 02:30",
+      "published_at_taipei_iso": "2026-11-25T02:30:02+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "美股還能再漲近25%？德銀喊標普2027年底衝9000點",
+      "url": "https://news.cnyes.com/news/id/6671051",
+      "canonical_url": "https://news.cnyes.com/news/id/6671051",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：升息",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-dceb8beeef",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:28:00Z",
+      "published_at_taipei": "2026-11-25 02:28",
+      "published_at_taipei_iso": "2026-11-25T02:28:00+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Tesla has a ‘legitimate multitrillion-dollar opportunity’ in robotaxis, says former skeptic",
+      "url": "https://www.marketwatch.com/story/tesla-has-a-legitimate-multitrillion-dollar-opportunity-in-robotaxis-says-former-skeptic-23507364?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/tesla-has-a-legitimate-multitrillion-dollar-opportunity-in-robotaxis-says-former-skeptic-23507364?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-bcef0d759a",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:25:32Z",
+      "published_at_taipei": "2026-11-25 02:25",
+      "published_at_taipei_iso": "2026-11-25T02:25:32+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Jim Cramer Saw a Reason to Like Perimeter Group Even in a Quiet Fire Season",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-saw-reason-perimeter-182532976.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-saw-reason-perimeter-182532976.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-edf0627424",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:25:11Z",
+      "published_at_taipei": "2026-11-25 02:25",
+      "published_at_taipei_iso": "2026-11-25T02:25:11+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "After the Kenvue Deal, Jim Cramer Favored Buying Kimberly-Clark in Stages",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/kenvue-deal-jim-cramer-favored-182511615.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/kenvue-deal-jim-cramer-favored-182511615.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-ea9651c2f1",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:24:09Z",
+      "published_at_taipei": "2026-11-25 02:24",
+      "published_at_taipei_iso": "2026-11-25T02:24:09+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "This Jaws-Like Stock Has Bitten Off Solid Success In 2026",
+      "url": "https://finance.yahoo.com/m/b4cd11c1-e069-35b3-863f-6c09e86c3470/this-jaws-like-stock-has.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/b4cd11c1-e069-35b3-863f-6c09e86c3470/this-jaws-like-stock-has.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-710f379630",
+        "issue": "2026-11-23-PM",
+        "title": "Trade Desk Stock Dips Paid Off, Until 2025",
+        "published_at_taipei": "2026-11-23 20:48",
+        "url": "https://www.trefis.com/stock/ttd/articles/627843/trade-desk-stock-dips-paid-off-until-2025/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-22dc74e60e",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:23:02Z",
+      "published_at_taipei": "2026-11-25 02:23",
+      "published_at_taipei_iso": "2026-11-25T02:23:02+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "ASML Is the Most Important Company You’ve Never Heard Of. Should You Buy the Stock?",
+      "url": "https://www.fool.com/investing/2026/11/24/asml-is-the-most-important-company-youve-never-heard-of-should-you-buy-the-stock/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/24/asml-is-the-most-important-company-youve-never-heard-of-should-you-buy-the-stock?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-9eddca753a",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:20:30Z",
+      "published_at_taipei": "2026-11-25 02:20",
+      "published_at_taipei_iso": "2026-11-25T02:20:30+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Can Boston Scientific Stock Rise 30% From Here?",
+      "url": "https://www.trefis.com/stock/bsx/articles/628417/can-boston-scientific-stock-rise-30-from-here/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/bsx/articles/628417/can-boston-scientific-stock-rise-30-from-here/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-c4b76293a1",
+        "issue": "2026-11-24-AM",
+        "title": "Can Adobe Stock Rise 30% From Here?",
+        "published_at_taipei": "2026-11-24 19:07",
+        "url": "https://www.trefis.com/stock/adbe/articles/628292/can-adobe-stock-rise-30-from-here/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d1e34d38e9",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:18:22Z",
+      "published_at_taipei": "2026-11-25 02:18",
+      "published_at_taipei_iso": "2026-11-25T02:18:22+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "What Would A Short Seller Say About IBM Stock?",
+      "url": "https://www.trefis.com/stock/ibm/articles/628477/what-would-a-short-seller-say-about-ibm-stock/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/ibm/articles/628477/what-would-a-short-seller-say-about-ibm-stock/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-a00c0dfe55",
+        "issue": "2026-11-23-PM",
+        "title": "What Moved Bloom Energy Stock?",
+        "published_at_taipei": "2026-11-23 20:10",
+        "url": "https://www.trefis.com/stock/be/articles/627709/what-moved-bloom-energy-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-bf769c9733",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T18:16:13Z",
@@ -12132,6 +13234,46 @@
       "sentiment_reason": "命中：rally",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-febad9e6d1",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:14:11Z",
+      "published_at_taipei": "2026-11-25 02:14",
+      "published_at_taipei_iso": "2026-11-25T02:14:11+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "What Can Make Fair Isaac Stock A Buy?",
+      "url": "https://www.trefis.com/stock/fico/articles/628416/what-can-make-fair-isaac-stock-a-buy/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/fico/articles/628416/what-can-make-fair-isaac-stock-a-buy/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-87ab19636c",
+        "issue": "2026-11-23-PM",
+        "title": "What Explains The Fall In Meta Stock?",
+        "published_at_taipei": "2026-11-24 01:31",
+        "url": "https://www.trefis.com/stock/meta/articles/627808/what-explains-the-fall-in-meta-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -12212,6 +13354,90 @@
       "sentiment_targets": [
         "NATGAS",
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-275912e3db",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:09:36Z",
+      "published_at_taipei": "2026-11-25 02:09",
+      "published_at_taipei_iso": "2026-11-25T02:09:36+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "What Could Lift Chipotle Stock Further?",
+      "url": "https://www.trefis.com/stock/cmg/articles/628296/what-could-lift-chipotle-stock-further/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/cmg/articles/628296/what-could-lift-chipotle-stock-further/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-db426c9174",
+        "issue": "2026-11-23-PM",
+        "title": "What Held Up While Bitcoin Fell",
+        "published_at_taipei": "2026-11-24 04:15",
+        "url": "https://www.bankless.com/read/what-held-up-while-bitcoin-fell?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-05e0c8b405",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:09:05Z",
+      "published_at_taipei": "2026-11-25 02:09",
+      "published_at_taipei_iso": "2026-11-25T02:09:05+08:00",
+      "first_seen_at_utc": "2026-11-24T18:43:50Z",
+      "first_seen_at_taipei": "2026-11-25 02:43",
+      "month": "2026-11",
+      "title": "Here's Why SpaceX Stock Slumped Today, And Why it Could Come Under More Pressure as Tesla Merger Talks Continue",
+      "url": "https://www.fool.com/investing/2026/11/24/here-s-why-spacex-stock-slumped-today-and-why-it-could-come-under-more-pressure-as-tesla-merger-talks-continue/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/24/here-s-why-spacex-stock-slumped-today-and-why-it-could-come-under-more-pressure-as-tesla-merger-talks-continue?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-14e95cb25b",
+        "issue": "2026-11-23-PM",
+        "title": "Why SpaceX Stock Is Gaining Today",
+        "published_at_taipei": "2026-11-23 23:30",
+        "url": "https://www.fool.com/investing/2026/11/23/why-spacex-stock-is-gaining-today/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
       ],
       "sentiment_method": "rule"
     },
@@ -92670,8 +93896,8 @@
       "month": "2026-11",
       "date": "2026-11-24",
       "half": "PM",
-      "updated_at_taipei": "2026-11-25 02:28",
-      "count": 303,
+      "updated_at_taipei": "2026-11-25 02:43",
+      "count": 319,
       "star3_count": 13,
       "failed_sources": [
         {
