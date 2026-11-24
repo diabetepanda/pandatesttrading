@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-24-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-24T12:12:01Z",
-  "updated_at_taipei": "2026-11-24 20:12",
-  "last_updated_utc": "2026-11-24T12:12:01Z",
-  "last_updated_taipei": "2026-11-24 20:12",
-  "next_update_hint": "約台北時間 20:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-24T12:27:18Z",
+  "updated_at_taipei": "2026-11-24 20:27",
+  "last_updated_utc": "2026-11-24T12:27:18Z",
+  "last_updated_taipei": "2026-11-24 20:27",
+  "next_update_hint": "約台北時間 20:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 26.912,
+    "total_elapsed_sec": 15.549,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 22,
+    "new_items_added": 12,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.083,
+        "elapsed_sec": 0.075,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.187,
+        "elapsed_sec": 0.144,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.047,
+        "elapsed_sec": 0.112,
         "raw_count": 30,
         "items_kept": 2,
         "error": null
@@ -63,25 +63,25 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.118,
+        "elapsed_sec": 0.04,
         "raw_count": 10,
-        "items_kept": 3,
+        "items_kept": 4,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.33,
-        "raw_count": 19,
-        "items_kept": 14,
+        "elapsed_sec": 0.302,
+        "raw_count": 20,
+        "items_kept": 17,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.277,
+        "elapsed_sec": 0.145,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.123,
+        "elapsed_sec": 0.087,
         "raw_count": 30,
         "items_kept": 18,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.116,
+        "elapsed_sec": 0.083,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.133,
+        "elapsed_sec": 0.074,
         "raw_count": 37,
         "items_kept": 14,
         "error": null
@@ -117,16 +117,16 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.67,
+        "elapsed_sec": 0.393,
         "raw_count": 20,
-        "items_kept": 13,
+        "items_kept": 14,
         "error": null
       },
       "cnyes_us_stock": {
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.683,
+        "elapsed_sec": 0.487,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.628,
+        "elapsed_sec": 0.398,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.809,
+        "elapsed_sec": 0.44,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.506,
+        "elapsed_sec": 0.307,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.524,
+        "elapsed_sec": 0.288,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.119,
+        "elapsed_sec": 0.089,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 3.786,
+        "elapsed_sec": 0.769,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.078,
+        "elapsed_sec": 0.115,
         "raw_count": 1375,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 2.083,
+        "elapsed_sec": 1.759,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.535,
+        "elapsed_sec": 0.326,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.535,
+        "elapsed_sec": 0.962,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.445,
+        "elapsed_sec": 0.328,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.569,
+        "elapsed_sec": 1.264,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.225,
+        "elapsed_sec": 0.089,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.545,
+        "elapsed_sec": 0.484,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.381,
+        "elapsed_sec": 0.304,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,8 +277,8 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 35.78,
-        "change_1d_pct": -1.79
+        "tvl_b": 35.79,
+        "change_1d_pct": -1.82
       },
       "Base": {
         "tvl_b": 5.02,
@@ -286,41 +286,41 @@
       },
       "Solana": {
         "tvl_b": 4.57,
-        "change_1d_pct": -0.97
+        "change_1d_pct": -1.1
       },
       "Tron": {
         "tvl_b": 4.44,
         "change_1d_pct": -0.24
       },
       "BSC": {
-        "tvl_b": 4.25,
-        "change_1d_pct": -1.67
+        "tvl_b": 4.26,
+        "change_1d_pct": -1.59
       },
       "Bitcoin": {
-        "tvl_b": 2.98,
-        "change_1d_pct": -2.39
+        "tvl_b": 2.99,
+        "change_1d_pct": -2.18
       }
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1399.8,
+      "net_flow_usd_m": -1400.6,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0047,
+        "funding_rate_pct": 0.0049,
         "oi_usd_b": 1.85
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.001,
+        "funding_rate_pct": -0.0009,
         "oi_usd_b": 1.16
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 3,
       "half_hour_fee_sat_vb": 3,
-      "mempool_vsize_mb": 29.4,
-      "tx_count": 56941,
+      "mempool_vsize_mb": 31.7,
+      "tx_count": 66517,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -360,6 +360,242 @@
       "sentiment_label": "利空",
       "sentiment_score": -3,
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-767e959113",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:26:45Z",
+      "published_at_taipei": "2026-11-24 20:26",
+      "published_at_taipei_iso": "2026-11-24T20:26:45+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "傳擬於美德州投266億元建2奈米廠 台積電：提申報資訊為透明良好溝通 仍在評估階段",
+      "url": "https://tw.news.yahoo.com/%E5%82%B3%E6%93%AC%E6%96%BC%E7%BE%8E%E5%BE%B7%E5%B7%9E%E6%8A%95266%E5%84%84%E5%85%83%E5%BB%BA2%E5%A5%88%E7%B1%B3%E5%BB%A0-%E5%8F%B0%E7%A9%8D%E9%9B%BB%EF%BC%9A%E6%8F%90%E7%94%B3%E5%A0%B1%E8%B3%87%E8%A8%8A%E7%82%BA%E9%80%8F%E6%98%8E%E8%89%AF%E5%A5%BD%E6%BA%9D%E9%80%9A-%E4%BB%8D%E5%9C%A8%E8%A9%95%E4%BC%B0%E9%9A%8E%E6%AE%B5-122645454.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%82%B3%E6%93%AC%E6%96%BC%E7%BE%8E%E5%BE%B7%E5%B7%9E%E6%8A%95266%E5%84%84%E5%85%83%E5%BB%BA2%E5%A5%88%E7%B1%B3%E5%BB%A0-%E5%8F%B0%E7%A9%8D%E9%9B%BB%EF%BC%9A%E6%8F%90%E7%94%B3%E5%A0%B1%E8%B3%87%E8%A8%8A%E7%82%BA%E9%80%8F%E6%98%8E%E8%89%AF%E5%A5%BD%E6%BA%9D%E9%80%9A-%E4%BB%8D%E5%9C%A8%E8%A9%95%E4%BC%B0%E9%9A%8E%E6%AE%B5-122645454.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-b282cdaf24",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:18:43Z",
+      "published_at_taipei": "2026-11-24 20:18",
+      "published_at_taipei_iso": "2026-11-24T20:18:43+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "聯發科建構邊緣AI到雲端AI完整技術版圖 今年17篇論文入選全球頂尖期刊及會議",
+      "url": "https://news.cnyes.com/news/id/6671017",
+      "canonical_url": "https://news.cnyes.com/news/id/6671017",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2454"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-0769d91fc0",
+        "issue": "2026-11-24-AM",
+        "title": "聯發科以「邊緣AI到雲端AI」，今年17篇論文入選全球頂尖論壇與期刊",
+        "published_at_taipei": "2026-11-24 16:59",
+        "url": "https://tw.stock.yahoo.com/news/%E8%81%AF%E7%99%BC%E7%A7%91%E4%BB%A5-%E9%82%8A%E7%B7%A3ai%E5%88%B0%E9%9B%B2%E7%AB%AFai-%E4%BB%8A%E5%B9%B417%E7%AF%87%E8%AB%96%E6%96%87%E5%85%A5%E9%81%B8%E5%85%A8%E7%90%83%E9%A0%82%E5%B0%96%E8%AB%96%E5%A3%87%E8%88%87%E6%9C%9F%E5%88%8A-085933382.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2454"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-dc15e19178",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:18:21Z",
+      "published_at_taipei": "2026-11-24 20:18",
+      "published_at_taipei_iso": "2026-11-24T20:18:21+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Gold price today, Tuesday, November 24, 2026: Gold prices improve, lift from 14-month lows",
+      "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-tuesday-november-24-2026-gold-prices-improve-lift-from-14-month-lows-121821092.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-tuesday-november-24-2026-gold-prices-improve-lift-from-14-month-lows-121821092.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "XAUUSD"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-300221c25b",
+        "issue": "2026-11-23-PM",
+        "title": "Gold prices today, Monday, November 23, 2026: Gold prices opened at lowest point since 9/2/25",
+        "published_at_taipei": "2026-11-23 20:24",
+        "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-prices-today-monday-november-23-2026-gold-prices-opened-at-lowest-point-since-9225-122415220.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "XAUUSD"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-65a64e5646",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:09:18Z",
+      "published_at_taipei": "2026-11-24 20:09",
+      "published_at_taipei_iso": "2026-11-24T20:09:18+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Tesla, SpaceX Name Five Directors for Potential $3.5 Trillion Merger",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-spacex-name-five-directors-120918069.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/tesla-spacex-name-five-directors-120918069.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-149eb708b7",
+        "issue": "2026-11-24-AM",
+        "title": "SpaceX and Tesla Directors Hold Talks Over Potential US$3.5 Trillion Merger",
+        "published_at_taipei": "2026-11-24 19:19",
+        "url": "https://investorshub.advfn.com/market-news/article/40597/spacex-and-tesla-directors-hold-talks-over-potential-us3-5-trillion-merger?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-23ab87056d",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:05:04Z",
+      "published_at_taipei": "2026-11-24 20:05",
+      "published_at_taipei_iso": "2026-11-24T20:05:04+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "OpenAI’s Greg Brockman: “The World Is Not Building Enough Compute.” Wall Street Just Stopped Raising Capex Forecasts",
+      "url": "https://www.tikr.com/blog/openais-greg-brockman-the-world-is-not-building-enough-compute-wall-street-just-stopped-raising-capex-forecasts?ref=yahoofinance&tlnk=yf-261124-777pg8fq&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/openais-greg-brockman-the-world-is-not-building-enough-compute-wall-street-just-stopped-raising-capex-forecasts?tlnk=yf-261124-777pg8fq&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（forecast）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-d5706b19ec",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:05:02Z",
+      "published_at_taipei": "2026-11-24 20:05",
+      "published_at_taipei_iso": "2026-11-24T20:05:02+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Bitcoin or Gold? Cathie Wood of Ark Invest Makes a Compelling Case for Buying Bitcoin.",
+      "url": "https://www.fool.com/investing/2026/11/24/bitcoin-or-gold-cathie-wood-of-ark-invest-makes-a-compelling-case-for-buying-bitcoin/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/24/bitcoin-or-gold-cathie-wood-of-ark-invest-makes-a-compelling-case-for-buying-bitcoin?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
       ],
@@ -486,6 +722,86 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-0079c9d0ce",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:02:07Z",
+      "published_at_taipei": "2026-11-24 20:02",
+      "published_at_taipei_iso": "2026-11-24T20:02:07+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Nvidia Regains Nearly $1 Trillion in Value -- Apple Still Holds the Top Spot",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-regains-nearly-1-trillion-120207012.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-regains-nearly-1-trillion-120207012.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-ab0b4f1442",
+        "issue": "2026-11-23-PM",
+        "title": "Nvidia gains nearly $1T as Trump says nobody could 'revive the stock like it's being revived'",
+        "published_at_taipei": "2026-11-24 03:46",
+        "url": "https://finance.yahoo.com/markets/article/nvidia-gains-nearly-1t-as-trump-says-nobody-could-revive-the-stock-like-its-being-revived-194634496.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-a30e31486f",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:02:01Z",
+      "published_at_taipei": "2026-11-24 20:02",
+      "published_at_taipei_iso": "2026-11-24T20:02:01+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Not Apple. Not Microsoft. This Is the \"Magnificent Seven\" Stock I’d Buy for a 10-Year Hold.",
+      "url": "https://www.fool.com/investing/2026/11/24/not-apple-not-microsoft-this-is-the-magnificent-seven-stock-id-buy-for-a-10-year-hold/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/24/not-apple-not-microsoft-this-is-the-magnificent-seven-stock-id-buy-for-a-10-year-hold?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL",
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL",
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-218d6c7897",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T12:00:00Z",
@@ -606,6 +922,42 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-885c965087",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T10:47:00Z",
+      "published_at_taipei": "2026-11-24 18:47",
+      "published_at_taipei_iso": "2026-11-24T18:47:00+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "施羅德看明年：台股重要性提升、多元報酬來源迎新變局",
+      "url": "https://tw.stock.yahoo.com/news/%E6%96%BD%E7%BE%85%E5%BE%B7%E7%9C%8B%E6%98%8E%E5%B9%B4-%E5%8F%B0%E8%82%A1%E9%87%8D%E8%A6%81%E6%80%A7%E6%8F%90%E5%8D%87-%E5%A4%9A%E5%85%83%E5%A0%B1%E9%85%AC%E4%BE%86%E6%BA%90%E8%BF%8E%E6%96%B0%E8%AE%8A%E5%B1%80-104700117.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E6%96%BD%E7%BE%85%E5%BE%B7%E7%9C%8B%E6%98%8E%E5%B9%B4-%E5%8F%B0%E8%82%A1%E9%87%8D%E8%A6%81%E6%80%A7%E6%8F%90%E5%8D%87-%E5%A4%9A%E5%85%83%E5%A0%B1%E9%85%AC%E4%BE%86%E6%BA%90%E8%BF%8E%E6%96%B0%E8%AE%8A%E5%B1%80-104700117.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-a03163d527",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T00:00:00Z",
@@ -645,6 +997,80 @@
       "sentiment_targets": [
         "BTCUSDT",
         "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-9a3e03cac5",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:21:00Z",
+      "published_at_taipei": "2026-11-24 20:21",
+      "published_at_taipei_iso": "2026-11-24T20:21:00+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Jensen Huang’s return was worth nearly $950 billion to Nvidia. How much of the stock market should ride on one man?",
+      "url": "https://www.marketwatch.com/story/jensen-huangs-return-was-worth-nearly-950-billion-to-nvidia-how-much-of-the-stock-market-should-ride-on-one-man-c7129e95?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/jensen-huangs-return-was-worth-nearly-950-billion-to-nvidia-how-much-of-the-stock-market-should-ride-on-one-man-c7129e95?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-31480da7c9",
+        "issue": "2026-11-23-PM",
+        "title": "Jensen Huang Returns to NVIDIA. Which Magnificent 7 Stocks Win and Lose?",
+        "published_at_taipei": "2026-11-24 01:15",
+        "url": "https://247wallst.com/videos/jensen-huang-returns-to-nvidia-which-magnificent-7-stocks-win-and-lose/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：investigation；命中：rally）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-97140af1d5",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:15:00Z",
+      "published_at_taipei": "2026-11-24 20:15",
+      "published_at_taipei_iso": "2026-11-24T20:15:00+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "BULGOLD to Present Its Lutila Gold Exploration Strategy at Resourcing Tomorrow, London",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/bulgold-present-lutila-gold-exploration-121500141.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/bulgold-present-lutila-gold-exploration-121500141.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -753,6 +1179,46 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-2ec07937fc",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:00:25Z",
+      "published_at_taipei": "2026-11-24 20:00",
+      "published_at_taipei_iso": "2026-11-24T20:00:25+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "What Happens To Costco Stock If Its Cash Pile Runs Down?",
+      "url": "https://www.trefis.com/stock/cost/articles/628318/what-happens-to-costco-stock-if-its-cash-pile-runs-down/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/cost/articles/628318/what-happens-to-costco-stock-if-its-cash-pile-runs-down/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-ceb14976f4",
+        "issue": "2026-11-23-PM",
+        "title": "What Sent Cameco Stock Lower Again?",
+        "published_at_taipei": "2026-11-24 02:41",
+        "url": "https://www.trefis.com/stock/ccj/articles/627836/what-sent-cameco-stock-lower-again/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -1175,6 +1641,244 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261124-767e959113",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:26:45Z",
+      "published_at_taipei": "2026-11-24 20:26",
+      "published_at_taipei_iso": "2026-11-24T20:26:45+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "傳擬於美德州投266億元建2奈米廠 台積電：提申報資訊為透明良好溝通 仍在評估階段",
+      "url": "https://tw.news.yahoo.com/%E5%82%B3%E6%93%AC%E6%96%BC%E7%BE%8E%E5%BE%B7%E5%B7%9E%E6%8A%95266%E5%84%84%E5%85%83%E5%BB%BA2%E5%A5%88%E7%B1%B3%E5%BB%A0-%E5%8F%B0%E7%A9%8D%E9%9B%BB%EF%BC%9A%E6%8F%90%E7%94%B3%E5%A0%B1%E8%B3%87%E8%A8%8A%E7%82%BA%E9%80%8F%E6%98%8E%E8%89%AF%E5%A5%BD%E6%BA%9D%E9%80%9A-%E4%BB%8D%E5%9C%A8%E8%A9%95%E4%BC%B0%E9%9A%8E%E6%AE%B5-122645454.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%82%B3%E6%93%AC%E6%96%BC%E7%BE%8E%E5%BE%B7%E5%B7%9E%E6%8A%95266%E5%84%84%E5%85%83%E5%BB%BA2%E5%A5%88%E7%B1%B3%E5%BB%A0-%E5%8F%B0%E7%A9%8D%E9%9B%BB%EF%BC%9A%E6%8F%90%E7%94%B3%E5%A0%B1%E8%B3%87%E8%A8%8A%E7%82%BA%E9%80%8F%E6%98%8E%E8%89%AF%E5%A5%BD%E6%BA%9D%E9%80%9A-%E4%BB%8D%E5%9C%A8%E8%A9%95%E4%BC%B0%E9%9A%8E%E6%AE%B5-122645454.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-9a3e03cac5",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:21:00Z",
+      "published_at_taipei": "2026-11-24 20:21",
+      "published_at_taipei_iso": "2026-11-24T20:21:00+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Jensen Huang’s return was worth nearly $950 billion to Nvidia. How much of the stock market should ride on one man?",
+      "url": "https://www.marketwatch.com/story/jensen-huangs-return-was-worth-nearly-950-billion-to-nvidia-how-much-of-the-stock-market-should-ride-on-one-man-c7129e95?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/jensen-huangs-return-was-worth-nearly-950-billion-to-nvidia-how-much-of-the-stock-market-should-ride-on-one-man-c7129e95?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-31480da7c9",
+        "issue": "2026-11-23-PM",
+        "title": "Jensen Huang Returns to NVIDIA. Which Magnificent 7 Stocks Win and Lose?",
+        "published_at_taipei": "2026-11-24 01:15",
+        "url": "https://247wallst.com/videos/jensen-huang-returns-to-nvidia-which-magnificent-7-stocks-win-and-lose/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：investigation；命中：rally）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-b282cdaf24",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:18:43Z",
+      "published_at_taipei": "2026-11-24 20:18",
+      "published_at_taipei_iso": "2026-11-24T20:18:43+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "聯發科建構邊緣AI到雲端AI完整技術版圖 今年17篇論文入選全球頂尖期刊及會議",
+      "url": "https://news.cnyes.com/news/id/6671017",
+      "canonical_url": "https://news.cnyes.com/news/id/6671017",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2454"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-0769d91fc0",
+        "issue": "2026-11-24-AM",
+        "title": "聯發科以「邊緣AI到雲端AI」，今年17篇論文入選全球頂尖論壇與期刊",
+        "published_at_taipei": "2026-11-24 16:59",
+        "url": "https://tw.stock.yahoo.com/news/%E8%81%AF%E7%99%BC%E7%A7%91%E4%BB%A5-%E9%82%8A%E7%B7%A3ai%E5%88%B0%E9%9B%B2%E7%AB%AFai-%E4%BB%8A%E5%B9%B417%E7%AF%87%E8%AB%96%E6%96%87%E5%85%A5%E9%81%B8%E5%85%A8%E7%90%83%E9%A0%82%E5%B0%96%E8%AB%96%E5%A3%87%E8%88%87%E6%9C%9F%E5%88%8A-085933382.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2454"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-dc15e19178",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:18:21Z",
+      "published_at_taipei": "2026-11-24 20:18",
+      "published_at_taipei_iso": "2026-11-24T20:18:21+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Gold price today, Tuesday, November 24, 2026: Gold prices improve, lift from 14-month lows",
+      "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-tuesday-november-24-2026-gold-prices-improve-lift-from-14-month-lows-121821092.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-tuesday-november-24-2026-gold-prices-improve-lift-from-14-month-lows-121821092.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "XAUUSD"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-300221c25b",
+        "issue": "2026-11-23-PM",
+        "title": "Gold prices today, Monday, November 23, 2026: Gold prices opened at lowest point since 9/2/25",
+        "published_at_taipei": "2026-11-23 20:24",
+        "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-prices-today-monday-november-23-2026-gold-prices-opened-at-lowest-point-since-9225-122415220.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "XAUUSD"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-97140af1d5",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:15:00Z",
+      "published_at_taipei": "2026-11-24 20:15",
+      "published_at_taipei_iso": "2026-11-24T20:15:00+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "BULGOLD to Present Its Lutila Gold Exploration Strategy at Resourcing Tomorrow, London",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/bulgold-present-lutila-gold-exploration-121500141.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/bulgold-present-lutila-gold-exploration-121500141.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-65a64e5646",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:09:18Z",
+      "published_at_taipei": "2026-11-24 20:09",
+      "published_at_taipei_iso": "2026-11-24T20:09:18+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Tesla, SpaceX Name Five Directors for Potential $3.5 Trillion Merger",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-spacex-name-five-directors-120918069.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/tesla-spacex-name-five-directors-120918069.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-149eb708b7",
+        "issue": "2026-11-24-AM",
+        "title": "SpaceX and Tesla Directors Hold Talks Over Potential US$3.5 Trillion Merger",
+        "published_at_taipei": "2026-11-24 19:19",
+        "url": "https://investorshub.advfn.com/market-news/article/40597/spacex-and-tesla-directors-hold-talks-over-potential-us3-5-trillion-merger?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-22b444cacc",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T12:06:04Z",
@@ -1205,6 +1909,78 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-23ab87056d",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:05:04Z",
+      "published_at_taipei": "2026-11-24 20:05",
+      "published_at_taipei_iso": "2026-11-24T20:05:04+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "OpenAI’s Greg Brockman: “The World Is Not Building Enough Compute.” Wall Street Just Stopped Raising Capex Forecasts",
+      "url": "https://www.tikr.com/blog/openais-greg-brockman-the-world-is-not-building-enough-compute-wall-street-just-stopped-raising-capex-forecasts?ref=yahoofinance&tlnk=yf-261124-777pg8fq&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/openais-greg-brockman-the-world-is-not-building-enough-compute-wall-street-just-stopped-raising-capex-forecasts?tlnk=yf-261124-777pg8fq&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（forecast）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-d5706b19ec",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:05:02Z",
+      "published_at_taipei": "2026-11-24 20:05",
+      "published_at_taipei_iso": "2026-11-24T20:05:02+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Bitcoin or Gold? Cathie Wood of Ark Invest Makes a Compelling Case for Buying Bitcoin.",
+      "url": "https://www.fool.com/investing/2026/11/24/bitcoin-or-gold-cathie-wood-of-ark-invest-makes-a-compelling-case-for-buying-bitcoin/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/24/bitcoin-or-gold-cathie-wood-of-ark-invest-makes-a-compelling-case-for-buying-bitcoin?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
       ],
       "sentiment_method": "rule"
     },
@@ -1399,6 +2175,126 @@
       "sentiment_reason": "命中：rally",
       "sentiment_targets": [
         "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-0079c9d0ce",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:02:07Z",
+      "published_at_taipei": "2026-11-24 20:02",
+      "published_at_taipei_iso": "2026-11-24T20:02:07+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Nvidia Regains Nearly $1 Trillion in Value -- Apple Still Holds the Top Spot",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-regains-nearly-1-trillion-120207012.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-regains-nearly-1-trillion-120207012.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-ab0b4f1442",
+        "issue": "2026-11-23-PM",
+        "title": "Nvidia gains nearly $1T as Trump says nobody could 'revive the stock like it's being revived'",
+        "published_at_taipei": "2026-11-24 03:46",
+        "url": "https://finance.yahoo.com/markets/article/nvidia-gains-nearly-1t-as-trump-says-nobody-could-revive-the-stock-like-its-being-revived-194634496.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-a30e31486f",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:02:01Z",
+      "published_at_taipei": "2026-11-24 20:02",
+      "published_at_taipei_iso": "2026-11-24T20:02:01+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "Not Apple. Not Microsoft. This Is the \"Magnificent Seven\" Stock I’d Buy for a 10-Year Hold.",
+      "url": "https://www.fool.com/investing/2026/11/24/not-apple-not-microsoft-this-is-the-magnificent-seven-stock-id-buy-for-a-10-year-hold/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/24/not-apple-not-microsoft-this-is-the-magnificent-seven-stock-id-buy-for-a-10-year-hold?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL",
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL",
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-2ec07937fc",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T12:00:25Z",
+      "published_at_taipei": "2026-11-24 20:00",
+      "published_at_taipei_iso": "2026-11-24T20:00:25+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "What Happens To Costco Stock If Its Cash Pile Runs Down?",
+      "url": "https://www.trefis.com/stock/cost/articles/628318/what-happens-to-costco-stock-if-its-cash-pile-runs-down/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/cost/articles/628318/what-happens-to-costco-stock-if-its-cash-pile-runs-down/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-ceb14976f4",
+        "issue": "2026-11-23-PM",
+        "title": "What Sent Cameco Stock Lower Again?",
+        "published_at_taipei": "2026-11-24 02:41",
+        "url": "https://www.trefis.com/stock/ccj/articles/627836/what-sent-cameco-stock-lower-again/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -4016,6 +4912,42 @@
       "sentiment_targets": [
         "TWII",
         "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-885c965087",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T10:47:00Z",
+      "published_at_taipei": "2026-11-24 18:47",
+      "published_at_taipei_iso": "2026-11-24T18:47:00+08:00",
+      "first_seen_at_utc": "2026-11-24T12:27:18Z",
+      "first_seen_at_taipei": "2026-11-24 20:27",
+      "month": "2026-11",
+      "title": "施羅德看明年：台股重要性提升、多元報酬來源迎新變局",
+      "url": "https://tw.stock.yahoo.com/news/%E6%96%BD%E7%BE%85%E5%BE%B7%E7%9C%8B%E6%98%8E%E5%B9%B4-%E5%8F%B0%E8%82%A1%E9%87%8D%E8%A6%81%E6%80%A7%E6%8F%90%E5%8D%87-%E5%A4%9A%E5%85%83%E5%A0%B1%E9%85%AC%E4%BE%86%E6%BA%90%E8%BF%8E%E6%96%B0%E8%AE%8A%E5%B1%80-104700117.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E6%96%BD%E7%BE%85%E5%BE%B7%E7%9C%8B%E6%98%8E%E5%B9%B4-%E5%8F%B0%E8%82%A1%E9%87%8D%E8%A6%81%E6%80%A7%E6%8F%90%E5%8D%87-%E5%A4%9A%E5%85%83%E5%A0%B1%E9%85%AC%E4%BE%86%E6%BA%90%E8%BF%8E%E6%96%B0%E8%AE%8A%E5%B1%80-104700117.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -70906,8 +71838,8 @@
       "month": "2026-11",
       "date": "2026-11-24",
       "half": "PM",
-      "updated_at_taipei": "2026-11-24 20:12",
-      "count": 22,
+      "updated_at_taipei": "2026-11-24 20:27",
+      "count": 34,
       "star3_count": 1,
       "failed_sources": [
         {
