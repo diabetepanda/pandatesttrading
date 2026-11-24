@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-24-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-24T13:57:30Z",
-  "updated_at_taipei": "2026-11-24 21:57",
-  "last_updated_utc": "2026-11-24T13:57:30Z",
-  "last_updated_taipei": "2026-11-24 21:57",
-  "next_update_hint": "約台北時間 22:02（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-24T14:12:31Z",
+  "updated_at_taipei": "2026-11-24 22:12",
+  "last_updated_utc": "2026-11-24T14:12:31Z",
+  "last_updated_taipei": "2026-11-24 22:12",
+  "next_update_hint": "約台北時間 22:17（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 24.276,
+    "total_elapsed_sec": 21.597,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 13,
+    "new_items_added": 5,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.086,
+        "elapsed_sec": 0.079,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.12,
+        "elapsed_sec": 0.204,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.118,
+        "elapsed_sec": 0.211,
         "raw_count": 30,
         "items_kept": 2,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.063,
+        "elapsed_sec": 0.135,
         "raw_count": 10,
         "items_kept": 3,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.317,
+        "elapsed_sec": 0.237,
         "raw_count": 19,
         "items_kept": 16,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.228,
+        "elapsed_sec": 0.268,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.096,
+        "elapsed_sec": 0.133,
         "raw_count": 30,
         "items_kept": 18,
         "error": null
@@ -99,16 +99,16 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.083,
+        "elapsed_sec": 0.104,
         "raw_count": 20,
-        "items_kept": 14,
+        "items_kept": 15,
         "error": null
       },
       "decrypt": {
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.089,
+        "elapsed_sec": 0.109,
         "raw_count": 37,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.516,
+        "elapsed_sec": 0.501,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 4.275,
+        "elapsed_sec": 1.279,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.508,
+        "elapsed_sec": 0.489,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.783,
+        "elapsed_sec": 0.795,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.201,
+        "elapsed_sec": 0.274,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.477,
+        "elapsed_sec": 0.476,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,16 +171,16 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.167,
+        "elapsed_sec": 0.195,
         "raw_count": 1,
-        "items_kept": 0,
+        "items_kept": 1,
         "error": null
       },
       "defillama_chains": {
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.51,
+        "elapsed_sec": 1.075,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.062,
+        "elapsed_sec": 0.06,
         "raw_count": 1375,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 2.417,
+        "elapsed_sec": 3.338,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.314,
+        "elapsed_sec": 0.585,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.456,
+        "elapsed_sec": 1.673,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.363,
+        "elapsed_sec": 0.459,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.775,
+        "elapsed_sec": 0.724,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.24,
+        "elapsed_sec": 0.333,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.543,
+        "elapsed_sec": 0.545,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.291,
+        "elapsed_sec": 0.403,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -270,9 +270,9 @@
   },
   "data_metrics_snapshot": {
     "stablecoins": {
-      "total_usd_b": 284.98,
-      "change_1d_usd_m": 490.5,
-      "change_1d_pct": 0.17,
+      "total_usd_b": 284.99,
+      "change_1d_usd_m": 502.1,
+      "change_1d_pct": 0.18,
       "alert_key": "stablecoins_supply:up"
     },
     "chains_tvl": {
@@ -303,12 +303,12 @@
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1394.7,
+      "net_flow_usd_m": -1399.0,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0046,
+        "funding_rate_pct": 0.0044,
         "oi_usd_b": 1.84
       },
       "ETHUSDT": {
@@ -319,12 +319,47 @@
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 27.0,
-      "tx_count": 49448,
+      "mempool_vsize_mb": 29.5,
+      "tx_count": 60486,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261124-ff1b9c0a89",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:10:04Z",
+      "published_at_taipei": "2026-11-24 22:10",
+      "published_at_taipei_iso": "2026-11-24T22:10:04+08:00",
+      "first_seen_at_utc": "2026-11-24T14:12:31Z",
+      "first_seen_at_taipei": "2026-11-24 22:12",
+      "month": "2026-11",
+      "title": "黃仁勳復職帶來的美股反彈恐難持久？美股單日暴漲背後藏機械性買盤、AI與升息風險未解",
+      "url": "https://news.cnyes.com/news/id/6670822",
+      "canonical_url": "https://news.cnyes.com/news/id/6670822",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（升息）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：反彈；命中：升息",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261124-0b76dc9d17",
       "issue": "2026-11-24-PM",
@@ -512,6 +547,161 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-4625793c46",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:00:02Z",
+      "published_at_taipei": "2026-11-24 22:00",
+      "published_at_taipei_iso": "2026-11-24T22:00:02+08:00",
+      "first_seen_at_utc": "2026-11-24T14:12:31Z",
+      "first_seen_at_taipei": "2026-11-24 22:12",
+      "month": "2026-11",
+      "title": "XRP Ledger DEX volume hits 4.51 million XRP a day in Q3 as big traders take over: Evernorth",
+      "url": "https://www.theblock.co/news/markets/2026-11-24-xrpl-dex-volume-q3-2026-evernorth-report-445395",
+      "canonical_url": "https://theblock.co/news/markets/2026-11-24-xrpl-dex-volume-q3-2026-evernorth-report-445395",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "XRPUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "XRPUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-ddaa86d439",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:00:00Z",
+      "published_at_taipei": "2026-11-24 22:00",
+      "published_at_taipei_iso": "2026-11-24T22:00:00+08:00",
+      "first_seen_at_utc": "2026-11-24T14:12:31Z",
+      "first_seen_at_taipei": "2026-11-24 22:12",
+      "month": "2026-11",
+      "title": "Ledn brings US business onshore with account to hold, swap and borrow against bitcoin",
+      "url": "https://www.theblock.co/news/business/2026-11-24-ledn-launches-us-custody-account-bitcoin-gold-stablecoins-lending-445411",
+      "canonical_url": "https://theblock.co/news/business/2026-11-24-ledn-launches-us-custody-account-bitcoin-gold-stablecoins-lending-445411",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-7a156da9de",
+        "issue": "2026-11-23-PM",
+        "title": "The surprising reason businesses can’t keep up with customer demand. Hint: It’s not just a strong U.S. economy.",
+        "published_at_taipei": "2026-11-24 00:03",
+        "url": "https://www.marketwatch.com/story/the-surprising-reason-businesses-cant-keep-up-with-customer-demand-hint-its-not-just-a-strong-u-s-economy-70be4a01?mod=mw_rss_topstories"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-66d1630ffc",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:00:00Z",
+      "published_at_taipei": "2026-11-24 22:00",
+      "published_at_taipei_iso": "2026-11-24T22:00:00+08:00",
+      "first_seen_at_utc": "2026-11-24T14:12:31Z",
+      "first_seen_at_taipei": "2026-11-24 22:12",
+      "month": "2026-11",
+      "title": "Neuberger Berman’s HINC fund brings high-yield credit to Aave’s institutional lending platform",
+      "url": "https://www.theblock.co/news/markets/2026-11-24-neuberger-berman-tokenized-hinc-fund-aave-horizon-collateral-445391",
+      "canonical_url": "https://theblock.co/news/markets/2026-11-24-neuberger-berman-tokenized-hinc-fund-aave-horizon-collateral-445391",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（yield）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-e50a2325d1",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:52:43Z",
+      "published_at_taipei": "2026-11-24 21:52",
+      "published_at_taipei_iso": "2026-11-24T21:52:43+08:00",
+      "first_seen_at_utc": "2026-11-24T14:12:31Z",
+      "first_seen_at_taipei": "2026-11-24 22:12",
+      "month": "2026-11",
+      "title": "散戶今日瘋狂融資搶買這檔台股ETF！融資張數大增225％",
+      "url": "https://tw.news.yahoo.com/%E6%95%A3%E6%88%B6%E4%BB%8A%E6%97%A5%E7%98%8B%E7%8B%82%E8%9E%8D%E8%B3%87%E6%90%B6%E8%B2%B7%E9%80%99%E6%AA%94%E5%8F%B0%E8%82%A1etf-%E8%9E%8D%E8%B3%87%E5%BC%B5%E6%95%B8%E5%A4%A7%E5%A2%9E225-135243794.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E6%95%A3%E6%88%B6%E4%BB%8A%E6%97%A5%E7%98%8B%E7%8B%82%E8%9E%8D%E8%B3%87%E6%90%B6%E8%B2%B7%E9%80%99%E6%AA%94%E5%8F%B0%E8%82%A1etf-%E8%9E%8D%E8%B3%87%E5%BC%B5%E6%95%B8%E5%A4%A7%E5%A2%9E225-135243794.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330",
+        "2454",
+        "2308"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII",
+        "2330",
+        "2454",
+        "2308"
       ],
       "sentiment_method": "rule"
     },
@@ -3865,6 +4055,196 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261124-ff1b9c0a89",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:10:04Z",
+      "published_at_taipei": "2026-11-24 22:10",
+      "published_at_taipei_iso": "2026-11-24T22:10:04+08:00",
+      "first_seen_at_utc": "2026-11-24T14:12:31Z",
+      "first_seen_at_taipei": "2026-11-24 22:12",
+      "month": "2026-11",
+      "title": "黃仁勳復職帶來的美股反彈恐難持久？美股單日暴漲背後藏機械性買盤、AI與升息風險未解",
+      "url": "https://news.cnyes.com/news/id/6670822",
+      "canonical_url": "https://news.cnyes.com/news/id/6670822",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（升息）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：反彈；命中：升息",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-4625793c46",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:00:02Z",
+      "published_at_taipei": "2026-11-24 22:00",
+      "published_at_taipei_iso": "2026-11-24T22:00:02+08:00",
+      "first_seen_at_utc": "2026-11-24T14:12:31Z",
+      "first_seen_at_taipei": "2026-11-24 22:12",
+      "month": "2026-11",
+      "title": "XRP Ledger DEX volume hits 4.51 million XRP a day in Q3 as big traders take over: Evernorth",
+      "url": "https://www.theblock.co/news/markets/2026-11-24-xrpl-dex-volume-q3-2026-evernorth-report-445395",
+      "canonical_url": "https://theblock.co/news/markets/2026-11-24-xrpl-dex-volume-q3-2026-evernorth-report-445395",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "XRPUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "XRPUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-ddaa86d439",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:00:00Z",
+      "published_at_taipei": "2026-11-24 22:00",
+      "published_at_taipei_iso": "2026-11-24T22:00:00+08:00",
+      "first_seen_at_utc": "2026-11-24T14:12:31Z",
+      "first_seen_at_taipei": "2026-11-24 22:12",
+      "month": "2026-11",
+      "title": "Ledn brings US business onshore with account to hold, swap and borrow against bitcoin",
+      "url": "https://www.theblock.co/news/business/2026-11-24-ledn-launches-us-custody-account-bitcoin-gold-stablecoins-lending-445411",
+      "canonical_url": "https://theblock.co/news/business/2026-11-24-ledn-launches-us-custody-account-bitcoin-gold-stablecoins-lending-445411",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-7a156da9de",
+        "issue": "2026-11-23-PM",
+        "title": "The surprising reason businesses can’t keep up with customer demand. Hint: It’s not just a strong U.S. economy.",
+        "published_at_taipei": "2026-11-24 00:03",
+        "url": "https://www.marketwatch.com/story/the-surprising-reason-businesses-cant-keep-up-with-customer-demand-hint-its-not-just-a-strong-u-s-economy-70be4a01?mod=mw_rss_topstories"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-66d1630ffc",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:00:00Z",
+      "published_at_taipei": "2026-11-24 22:00",
+      "published_at_taipei_iso": "2026-11-24T22:00:00+08:00",
+      "first_seen_at_utc": "2026-11-24T14:12:31Z",
+      "first_seen_at_taipei": "2026-11-24 22:12",
+      "month": "2026-11",
+      "title": "Neuberger Berman’s HINC fund brings high-yield credit to Aave’s institutional lending platform",
+      "url": "https://www.theblock.co/news/markets/2026-11-24-neuberger-berman-tokenized-hinc-fund-aave-horizon-collateral-445391",
+      "canonical_url": "https://theblock.co/news/markets/2026-11-24-neuberger-berman-tokenized-hinc-fund-aave-horizon-collateral-445391",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（yield）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-e50a2325d1",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:52:43Z",
+      "published_at_taipei": "2026-11-24 21:52",
+      "published_at_taipei_iso": "2026-11-24T21:52:43+08:00",
+      "first_seen_at_utc": "2026-11-24T14:12:31Z",
+      "first_seen_at_taipei": "2026-11-24 22:12",
+      "month": "2026-11",
+      "title": "散戶今日瘋狂融資搶買這檔台股ETF！融資張數大增225％",
+      "url": "https://tw.news.yahoo.com/%E6%95%A3%E6%88%B6%E4%BB%8A%E6%97%A5%E7%98%8B%E7%8B%82%E8%9E%8D%E8%B3%87%E6%90%B6%E8%B2%B7%E9%80%99%E6%AA%94%E5%8F%B0%E8%82%A1etf-%E8%9E%8D%E8%B3%87%E5%BC%B5%E6%95%B8%E5%A4%A7%E5%A2%9E225-135243794.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E6%95%A3%E6%88%B6%E4%BB%8A%E6%97%A5%E7%98%8B%E7%8B%82%E8%9E%8D%E8%B3%87%E6%90%B6%E8%B2%B7%E9%80%99%E6%AA%94%E5%8F%B0%E8%82%A1etf-%E8%9E%8D%E8%B3%87%E5%BC%B5%E6%95%B8%E5%A4%A7%E5%A2%9E225-135243794.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330",
+        "2454",
+        "2308"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII",
+        "2330",
+        "2454",
+        "2308"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261124-7a82c14795",
       "issue": "2026-11-24-PM",
@@ -76288,9 +76668,9 @@
       "month": "2026-11",
       "date": "2026-11-24",
       "half": "PM",
-      "updated_at_taipei": "2026-11-24 21:57",
-      "count": 92,
-      "star3_count": 5,
+      "updated_at_taipei": "2026-11-24 22:12",
+      "count": 97,
+      "star3_count": 6,
       "failed_sources": [
         {
           "id": "binance_derivatives",
