@@ -264,7 +264,7 @@ def test_frontend_ta_expand_collapse_and_formatting() -> None:
     style_css = (root / "assets" / "style.css").read_text(encoding="utf-8")
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
-    assert "?v=20261123a" in index_html
+    assert "?v=20261124a" in index_html
     assert "技術分析" in index_html
     assert ".ta-panel" in style_css
     assert ".ta-detail-row" in style_css

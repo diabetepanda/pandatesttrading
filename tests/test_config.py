@@ -158,7 +158,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261123a" in index_html
+    assert "?v=20261124a" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -714,9 +714,16 @@ def test_in_depth_research_json_and_rendering() -> None:
     root = Path(__file__).resolve().parent.parent
     data = build_research_dict()
 
-    # 1. Articles structure validation (Chronological order: short_term -> combo -> exam_sensitivity -> flow_signals -> dca_compare)
-    assert len(data["articles"]) == 5
-    art1, art2, art3, art4, art5 = data["articles"][0], data["articles"][1], data["articles"][2], data["articles"][3], data["articles"][4]
+    # 1. Articles structure validation (Chronological order: short_term -> combo -> exam_sensitivity -> flow_signals -> dca_compare -> leverage_study)
+    assert len(data["articles"]) == 6
+    art1, art2, art3, art4, art5, art6 = (
+        data["articles"][0],
+        data["articles"][1],
+        data["articles"][2],
+        data["articles"][3],
+        data["articles"][4],
+        data["articles"][5],
+    )
 
     # Article 1: Contest short-term (Earliest research)
     assert art1["id"] == "short_term"
@@ -807,6 +814,19 @@ def test_in_depth_research_json_and_rendering() -> None:
     assert len(art5["tables"]["all_schemes"]) == 13
     assert len(art5["tables"]["rolling_summary"]) >= 25
 
+    # Article 6: Leverage Study (US & TW indices 20-34y)
+    assert art6["id"] == "leverage_study"
+    assert "槓桿" in art6["title"]
+    assert "1.3x～1.6x" in art6["takeaway"]
+    assert "海妖" not in json.dumps(art6, ensure_ascii=False)
+    assert len(art6["highlight_cards"]) == 4
+    assert set(art6["tables"]["heatmap"].keys()) == {"SPY", "QQQ", "0050.TW", "^TWII"}
+    assert len(art6["tables"]["heatmap"]["SPY"]["periods"]["full_history"]["rows"]) == 8
+    assert len(art6["tables"]["real_etfs"]) >= 5
+    assert len(art6["tables"]["tools_comparison"]) == 4
+    assert len(art6["tables"]["margin_buffer_trap"]) == 3
+    assert set(art6["tables"]["dynamic_comparison"].keys()) == {"SPY", "QQQ", "0050.TW", "^TWII"}
+
     # Files existence (single canonical data/research.json; legacy copies removed)
     data_json_path = root / "data" / "research.json"
     assert data_json_path.exists()
@@ -895,19 +915,20 @@ def test_in_depth_research_json_and_rendering() -> None:
         if (!html.includes('research-toc')) {{
           throw new Error('renderResearchHtml missing research-toc');
         }}
-        if (!html.includes('第 1 篇') || !html.includes('第 2 篇') || !html.includes('第 3 篇') || !html.includes('第 4 篇') || !html.includes('第 5 篇')) {{
+        if (!html.includes('第 1 篇') || !html.includes('第 2 篇') || !html.includes('第 3 篇') || !html.includes('第 4 篇') || !html.includes('第 5 篇') || !html.includes('第 6 篇')) {{
           throw new Error('renderResearchHtml missing TOC article markers');
         }}
 
-        // Verify TOC order: short_term (1) -> combo (2) -> exam_sensitivity (3) -> flow_signals (4) -> dca_compare (5)
+        // Verify TOC order: short_term (1) -> combo (2) -> exam_sensitivity (3) -> flow_signals (4) -> dca_compare (5) -> leverage_study (6)
         const tocShort = html.indexOf("scrollToResearchArticle('short_term')");
         const tocCombo = html.indexOf("scrollToResearchArticle('combo')");
         const tocExam = html.indexOf("scrollToResearchArticle('exam_sensitivity')");
         const tocFlow = html.indexOf("scrollToResearchArticle('flow_signals')");
         const tocDca = html.indexOf("scrollToResearchArticle('dca_compare')");
-        if (tocShort === -1 || tocCombo === -1 || tocExam === -1 || tocFlow === -1 || tocDca === -1 ||
-            tocShort >= tocCombo || tocCombo >= tocExam || tocExam >= tocFlow || tocFlow >= tocDca) {{
-          throw new Error('TOC cards not in chronological order (short_term -> combo -> exam_sensitivity -> flow_signals -> dca_compare)');
+        const tocLev = html.indexOf("scrollToResearchArticle('leverage_study')");
+        if (tocShort === -1 || tocCombo === -1 || tocExam === -1 || tocFlow === -1 || tocDca === -1 || tocLev === -1 ||
+            tocShort >= tocCombo || tocCombo >= tocExam || tocExam >= tocFlow || tocFlow >= tocDca || tocDca >= tocLev) {{
+          throw new Error('TOC cards not in chronological order (short_term -> combo -> exam_sensitivity -> flow_signals -> dca_compare -> leverage_study)');
         }}
 
         // Verify article headers order and numbering
@@ -916,9 +937,10 @@ def test_in_depth_research_json_and_rendering() -> None:
         const idx3 = html.indexOf('第 3 篇：考試回撤規則放寬，結果會不一樣嗎？');
         const idx4 = html.indexOf('第 4 篇：大戶／法人資金流回測（2026-11）');
         const idx5 = html.indexOf('第 5 篇：定期定額 vs 單筆買進 vs 六種策略（10 年實證）');
-        if (idx1 === -1 || idx2 === -1 || idx3 === -1 || idx4 === -1 || idx5 === -1 ||
-            idx1 >= idx2 || idx2 >= idx3 || idx3 >= idx4 || idx4 >= idx5) {{
-          throw new Error('Article sections not rendered in chronological order (1 -> 2 -> 3 -> 4 -> 5)');
+        const idx6 = html.indexOf('第 6 篇：美股與台股槓桿實證：倍率甜蜜點、借貸利率紅線與跌深加碼（20～34 年）');
+        if (idx1 === -1 || idx2 === -1 || idx3 === -1 || idx4 === -1 || idx5 === -1 || idx6 === -1 ||
+            idx1 >= idx2 || idx2 >= idx3 || idx3 >= idx4 || idx4 >= idx5 || idx5 >= idx6) {{
+          throw new Error('Article sections not rendered in chronological order (1 -> 2 -> 3 -> 4 -> 5 -> 6)');
         }}
 
         // Verify Article 4 content (Flow Signals)
@@ -929,6 +951,14 @@ def test_in_depth_research_json_and_rendering() -> None:
         // Verify Article 5 content (DCA Compare)
         if (!html.includes('只看報酬，定期定額與單筆買進抱著遠勝六種策略') || !html.includes('16.3%') || !html.includes('48.8%')) {{
           throw new Error('renderResearchHtml missing Article 5 DCA compare content');
+        }}
+
+        // Verify Article 6 content (Leverage Study)
+        if (!html.includes('全週期槓桿甜蜜點落在 1.3x～1.6x') || !html.includes('融資備用金陷阱') || !html.includes('setLeverageHeatmapFilter') || !html.includes('setLeverageDynamicFilter')) {{
+          throw new Error('renderResearchHtml missing Article 6 leverage study content');
+        }}
+        if (!html.includes('class="article-body collapsed" id="body-leverage_study"') && !html.includes('id="body-leverage_study" class="article-body collapsed"')) {{
+          throw new Error('Article 6 should be collapsed by default');
         }}
 
         // Verify default expansion: Article 1 expanded, Articles 2, 3, 4, 5 collapsed

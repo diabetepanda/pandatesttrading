@@ -3304,6 +3304,366 @@
     `;
   }
 
+  let levStudyHeatmapSym = "SPY";
+  let levStudyHeatmapPeriod = "full_history";
+  let levStudyDynSym = "SPY";
+  let levStudyDynPeriod = "full_history";
+  let cachedLeverageArt = null;
+
+  function renderLeverageHeatmapPanel(art) {
+    if (!art || !art.tables || !art.tables.heatmap) return "";
+    const hm = art.tables.heatmap;
+    const syms = ["SPY", "QQQ", "0050.TW", "^TWII"];
+    const symEntry = hm[levStudyHeatmapSym] || hm.SPY || {};
+    const pData = (symEntry.periods && symEntry.periods[levStudyHeatmapPeriod]) || {};
+    const rows = Array.isArray(pData.rows) ? pData.rows : [];
+    const be = pData.breakeven_rates_pct || {};
+    const beEtf = pData.breakeven_rates_with_etf_fee_pct || {};
+    const b1x = pData.benchmark_1x || {};
+
+    const symBtns = syms.map((s) => {
+      const lbl = (hm[s] && hm[s].label) || s;
+      const active = s === levStudyHeatmapSym ? "active" : "";
+      return `<button type="button" class="btn btn-sm lev-filter-btn ${active}" onclick="setLeverageHeatmapFilter('${escapeHtml(s)}', '${escapeHtml(levStudyHeatmapPeriod)}')">${escapeHtml(lbl)}</button>`;
+    }).join("");
+
+    const periodBtns = [
+      ["full_history", "全歷史（含大崩盤）"],
+      ["recent_10y", "近 10 年（2016–2026）"],
+    ].map(([pk, pl]) => {
+      const active = pk === levStudyHeatmapPeriod ? "active" : "";
+      return `<button type="button" class="btn btn-sm lev-filter-btn ${active}" onclick="setLeverageHeatmapFilter('${escapeHtml(levStudyHeatmapSym)}', '${escapeHtml(pk)}')">${escapeHtml(pl)}</button>`;
+    }).join("");
+
+    const baseCagr = Number(b1x.cagr_pct || 0);
+    const fmtRateCell = (val, isBold) => {
+      const n = Number(val || 0);
+      const cls = n > baseCagr + 0.05 ? "text-success" : (n < baseCagr - 0.05 ? "text-danger" : "");
+      const txt = `${n.toFixed(2)}%`;
+      return `<span class="${cls}">${isBold ? `<strong>${txt}</strong>` : txt}</span>`;
+    };
+
+    const rowHtml = rows.map((r) => {
+      const isBase = r.lev === "1.00x";
+      const isSweet = r.lev === "1.30x" || r.lev === "1.50x";
+      const rowCls = isBase ? 'class="highlight-row"' : (isSweet ? 'class="lev-sweet-row"' : "");
+      const winStr = (r.win10y_3pct !== null && r.win10y_3pct !== undefined)
+        ? `${Number(r.win10y_3pct).toFixed(1)}%`
+        : "N/A";
+      const p5Str = (r.p5_10y_3pct !== null && r.p5_10y_3pct !== undefined)
+        ? `${Number(r.p5_10y_3pct) > 0 ? "+" : ""}${Number(r.p5_10y_3pct).toFixed(1)}%`
+        : "N/A";
+      return `
+        <tr ${rowCls}>
+          <td data-label="槓桿倍率"><strong>${escapeHtml(r.lev)}</strong>${isSweet ? ' <span class="badge badge-ok">甜蜜帶</span>' : ""}</td>
+          <td data-label="0% 成本">${fmtRateCell(r.cagr_0pct, false)}</td>
+          <td data-label="2% 利率">${fmtRateCell(r.cagr_2pct, false)}</td>
+          <td data-label="3% 利率">${fmtRateCell(r.cagr_3pct, true)}</td>
+          <td data-label="5% 利率">${fmtRateCell(r.cagr_5pct, false)}</td>
+          <td data-label="7% 利率">${fmtRateCell(r.cagr_7pct, false)}</td>
+          <td data-label="3% 最大回撤"><span class="text-danger">${Number(r.mdd_3pct || 0).toFixed(1)}%</span></td>
+          <td data-label="Sharpe / Calmar">${Number(r.sharpe_3pct || 0).toFixed(2)} / ${Number(r.calmar_3pct || 0).toFixed(2)}</td>
+          <td data-label="10年勝率 (P5年化)">${winStr} <span class="muted text-xs">(${p5Str})</span></td>
+          <td data-label="3% 定投 XIRR"><strong>${Number(r.dca_xirr_3pct || 0).toFixed(2)}%</strong></td>
+        </tr>
+      `;
+    }).join("");
+
+    return `
+      <div class="lev-controls-bar">
+        <div class="lev-btn-group" role="group" aria-label="選擇指數標的">${symBtns}</div>
+        <div class="lev-btn-group" role="group" aria-label="選擇統計期間">${periodBtns}</div>
+      </div>
+      <div class="lev-meta-strip">
+        <span>📅 區間：<strong>${escapeHtml(pData.start_date || "--")} ～ ${escapeHtml(pData.end_date || "--")}</strong>（${Number(pData.years || 0).toFixed(1)} 年）</span>
+        <span>📊 1.0x 基準年化：<strong>${baseCagr.toFixed(2)}%</strong>（最大回撤 ${Number(b1x.mdd_pct || 0).toFixed(1)}%）</span>
+        <span>⚖️ 損益兩平利率（高於此利率開槓桿不如 1x）：1.5x <strong>${Number(be["1.50x"] || 0).toFixed(2)}%</strong>（含ETF費 ${Number(beEtf["1.50x"] || 0).toFixed(2)}%）· 2.0x <strong>${Number(be["2.00x"] || 0).toFixed(2)}%</strong> · 3.0x <strong>${Number(be["3.00x"] || 0).toFixed(2)}%</strong></span>
+      </div>
+      <div class="table-wrap table-responsive" style="margin-top: 10px;">
+        <table class="data-table mobile-cards lev-table">
+          <thead>
+            <tr>
+              <th>槓桿倍率</th>
+              <th>0% 成本<br><span class="muted text-xs">年化 CAGR</span></th>
+              <th>2% 利率<br><span class="muted text-xs">年化 CAGR</span></th>
+              <th>3% 利率<br><span class="muted text-xs">年化 CAGR</span></th>
+              <th>5% 利率<br><span class="muted text-xs">年化 CAGR</span></th>
+              <th>7% 利率<br><span class="muted text-xs">年化 CAGR</span></th>
+              <th>3% 最大回撤<br><span class="muted text-xs">MDD</span></th>
+              <th>Sharpe / Calmar<br><span class="muted text-xs">(3% 利率)</span></th>
+              <th>滾動 10 年勝率<br><span class="muted text-xs">(P5 最差年化)</span></th>
+              <th>每月定投<br><span class="muted text-xs">3% XIRR</span></th>
+            </tr>
+          </thead>
+          <tbody>${rowHtml}</tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  function renderLeverageDynamicPanel(art) {
+    if (!art || !art.tables || !art.tables.dynamic_comparison) return "";
+    const dc = art.tables.dynamic_comparison;
+    const syms = ["SPY", "QQQ", "0050.TW", "^TWII"];
+    const symEntry = dc[levStudyDynSym] || dc.SPY || {};
+    const pData = (symEntry.periods && symEntry.periods[levStudyDynPeriod]) || {};
+    const rows = Array.isArray(pData.rows) ? pData.rows : [];
+
+    const symBtns = syms.map((s) => {
+      const lbl = (dc[s] && dc[s].label) || s;
+      const active = s === levStudyDynSym ? "active" : "";
+      return `<button type="button" class="btn btn-sm lev-filter-btn ${active}" onclick="setLeverageDynamicFilter('${escapeHtml(s)}', '${escapeHtml(levStudyDynPeriod)}')">${escapeHtml(lbl)}</button>`;
+    }).join("");
+
+    const periodBtns = [
+      ["full_history", "全歷史（含大崩盤）"],
+      ["recent_10y", "近 10 年（2016–2026）"],
+    ].map(([pk, pl]) => {
+      const active = pk === levStudyDynPeriod ? "active" : "";
+      return `<button type="button" class="btn btn-sm lev-filter-btn ${active}" onclick="setLeverageDynamicFilter('${escapeHtml(levStudyDynSym)}', '${escapeHtml(pk)}')">${escapeHtml(pl)}</button>`;
+    }).join("");
+
+    const rowHtml = rows.map((r) => {
+      const isE3 = String(r.key || "").startsWith("e3_");
+      const isE1 = String(r.key || "").startsWith("e1_");
+      const isBase = r.key === "baseline_1.0x";
+      const rowCls = isE3 ? 'class="lev-sweet-row"' : (isBase ? 'class="highlight-row"' : "");
+      const badgeCls = isE3 ? "badge-ok" : (isE1 ? "badge-danger" : "badge-warn");
+      const wLump = (r.lump_win10y !== null && r.lump_win10y !== undefined) ? `${Number(r.lump_win10y).toFixed(1)}%` : "N/A";
+      const wDca = (r.dca_win10y !== null && r.dca_win10y !== undefined) ? `${Number(r.dca_win10y).toFixed(1)}%` : "N/A";
+      return `
+        <tr ${rowCls}>
+          <td data-label="策略方案">
+            <strong>${escapeHtml(r.label)}</strong>
+            <br><span class="badge ${badgeCls}">${escapeHtml(r.category || "")}</span>
+          </td>
+          <td data-label="單筆年化"><strong>${Number(r.lump_cagr || 0).toFixed(2)}%</strong></td>
+          <td data-label="單筆回撤"><span class="text-danger">${Number(r.lump_mdd || 0).toFixed(2)}%</span></td>
+          <td data-label="Sharpe / Calmar">${Number(r.lump_sharpe || 0).toFixed(2)} / ${Number(r.lump_calmar || 0).toFixed(2)}</td>
+          <td data-label="單筆10年勝率"><strong>${wLump}</strong></td>
+          <td data-label="定投 XIRR"><strong>${Number(r.dca_xirr || 0).toFixed(2)}%</strong> <span class="muted text-xs">(${Number(r.dca_mult || 0).toFixed(2)}x)</span></td>
+          <td data-label="定投10年勝率"><strong>${wDca}</strong></td>
+          <td data-label="實測觸發與換倉">${escapeHtml(r.note || "")}</td>
+        </tr>
+      `;
+    }).join("");
+
+    return `
+      <div class="lev-controls-bar">
+        <div class="lev-btn-group" role="group" aria-label="選擇動態槓桿標的">${symBtns}</div>
+        <div class="lev-btn-group" role="group" aria-label="選擇動態槓桿期間">${periodBtns}</div>
+      </div>
+      <div class="lev-meta-strip">
+        <span>📅 區間：<strong>${escapeHtml(pData.start_date || "--")} ～ ${escapeHtml(pData.end_date || "--")}</strong>（${Number(pData.years || 0).toFixed(1)} 年）</span>
+        <span>💡 換倉摩擦成本已計入每次 0.10%，E2 跌深借貸採質押／信貸 2.5% 利率，E3 年線濾網採 3.0% 利率。</span>
+      </div>
+      <div class="table-wrap table-responsive" style="margin-top: 10px;">
+        <table class="data-table mobile-cards lev-table">
+          <thead>
+            <tr>
+              <th>策略方案</th>
+              <th>單筆 CAGR</th>
+              <th>單筆 MDD</th>
+              <th>Sharpe / Calmar</th>
+              <th>單筆 10 年勝率</th>
+              <th>每月定投 XIRR</th>
+              <th>定投 10 年勝率</th>
+              <th>觸發次數 / 斷頭檢驗</th>
+            </tr>
+          </thead>
+          <tbody>${rowHtml}</tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  window.setLeverageHeatmapFilter = function (sym, period) {
+    levStudyHeatmapSym = sym || "SPY";
+    levStudyHeatmapPeriod = period || "full_history";
+    const el = document.getElementById("lev-heatmap-panel");
+    if (el && cachedLeverageArt) {
+      el.innerHTML = renderLeverageHeatmapPanel(cachedLeverageArt);
+    }
+  };
+
+  window.setLeverageDynamicFilter = function (sym, period) {
+    levStudyDynSym = sym || "SPY";
+    levStudyDynPeriod = period || "full_history";
+    const el = document.getElementById("lev-dynamic-panel");
+    if (el && cachedLeverageArt) {
+      el.innerHTML = renderLeverageDynamicPanel(cachedLeverageArt);
+    }
+  };
+
+  function renderLeverageStudyArticleHtml(art) {
+    if (!art) return "";
+    cachedLeverageArt = art;
+    const cards = Array.isArray(art.highlight_cards) ? art.highlight_cards : [];
+    const tables = art.tables || {};
+    const realEtfs = Array.isArray(tables.real_etfs) ? tables.real_etfs : [];
+    const toolsRows = Array.isArray(tables.tools_comparison) ? tables.tools_comparison : [];
+    const trapRows = Array.isArray(tables.margin_buffer_trap) ? tables.margin_buffer_trap : [];
+    const sec = art.sections || {};
+    const safety = sec.safety_rules || {};
+    const safetyItems = Array.isArray(safety.items) ? safety.items : [];
+    const limitations = sec.limitations || {};
+    const disc = art.disclaimer || {};
+    const ghLinks = Array.isArray(disc.github_links) ? disc.github_links : [];
+
+    const cardsHtml = cards.map((c) => `
+      <div class="lev-highlight-card">
+        <div class="lev-card-label">${escapeHtml(c.label)}</div>
+        <div class="lev-card-value">${escapeHtml(c.value)}</div>
+        <div class="lev-card-desc">${escapeHtml(c.desc)}</div>
+      </div>
+    `).join("");
+
+    const realEtfHtml = realEtfs.map((r) => `
+      <tr>
+        <td data-label="真實槓桿 ETF"><strong>${escapeHtml(r.etf)}</strong> <span class="muted text-xs">(${escapeHtml(r.desc)})</span></td>
+        <td data-label="對照基準"><code>${escapeHtml(r.underlying)}</code></td>
+        <td data-label="重疊期間">${escapeHtml(r.start_date)} ~ ${escapeHtml(r.end_date)} (${Number(r.years || 0).toFixed(1)}y)</td>
+        <td data-label="基準 1x 年化">${Number(r.und_1x_cagr || 0).toFixed(2)}%</td>
+        <td data-label="理論 0% 成本">${Number(r.theo_0pct_cagr || 0).toFixed(2)}%</td>
+        <td data-label="真實 ETF 年化"><strong>${Number(r.actual_cagr || 0).toFixed(2)}%</strong></td>
+        <td data-label="真實 ETF MDD"><span class="text-danger">${Number(r.actual_mdd || 0).toFixed(2)}%</span></td>
+        <td data-label="反推隱含利率"><strong>${Number(r.implied_rate_pct) > 0 ? "+" : ""}${Number(r.implied_rate_pct || 0).toFixed(2)}%/年</strong></td>
+      </tr>
+    `).join("");
+
+    const toolsHtml = toolsRows.map((t) => `
+      <tr>
+        <td data-label="工具名稱">
+          <strong>${escapeHtml(t.tool)}</strong>
+          <br><span class="badge ${escapeHtml(t.badge_cls || "badge-ok")}">${escapeHtml(t.rank || "")}</span>
+        </td>
+        <td data-label="資金利率區間">${escapeHtml(t.rate_range)}</td>
+        <td data-label="安全倍率上限">${escapeHtml(t.safe_cap)}</td>
+        <td data-label="歷史斷頭率">${escapeHtml(t.mc_rate)}</td>
+        <td data-label="實測績效摘要">${escapeHtml(t.perf_summary)}</td>
+        <td data-label="實戰優缺點">${escapeHtml(t.pros_cons)}</td>
+      </tr>
+    `).join("");
+
+    const trapHtml = trapRows.map((tr) => `
+      <li>
+        <strong>${escapeHtml(tr.label)}</strong>：買進後跌 <strong>${Number(tr.entry_dd_mc || 0).toFixed(1)}%</strong> 即斷頭（滾動 10 年斷頭率 <strong>${Number(tr.mc_rate_10y || 0).toFixed(1)}%</strong>）；若要在歷史最大崩盤不斷頭，須在場外多留 <strong>+${Number(tr.req_buf_pct || 0).toFixed(1)}%</strong> 備用現金，實質有效槓桿被稀釋至僅剩 <strong>${Number(tr.eff_lev || 0).toFixed(2)}x</strong>（計入備用金後年化僅 ${Number(tr.buf_cagr || 0).toFixed(2)}%）。
+      </li>
+    `).join("");
+
+    return `
+      <section class="card research-article" id="article-leverage_study">
+        <div class="section-header article-header" onclick="toggleResearchArticle('leverage_study')">
+          <div>
+            <h2>第 6 篇：${escapeHtml(art.title || "美股與台股槓桿實證：倍率甜蜜點、借貸利率紅線與跌深加碼（20～34 年）")}</h2>
+            <p class="subtitle">${escapeHtml(art.subtitle || "")}</p>
+          </div>
+          <div class="article-header-actions" onclick="event.stopPropagation()">
+            <span class="badge badge-ok">${escapeHtml(art.badge || "20～34 年實證")}</span>
+            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-leverage_study" onclick="toggleResearchArticle('leverage_study')">展開閱讀</button>
+          </div>
+        </div>
+
+        <div class="article-body collapsed" id="body-leverage_study">
+          <div class="callout callout-takeaway">
+            <p>💡 <strong>一句話總結論：</strong>${escapeHtml(art.takeaway || "")}</p>
+          </div>
+
+          <div class="lev-highlight-grid">
+            ${cardsHtml}
+          </div>
+
+          <div class="research-section">
+            <h2>一、槓桿倍率 × 利率甜蜜點矩陣（每日再平衡模型 + 真實槓桿 ETF 對照）</h2>
+            <p class="muted">切換不同指數與統計期間，檢視各槓桿倍率（1.0x～3.0x）在不同借貸成本下的年化報酬（CAGR）、最大回撤與滾動 10 年勝過 1.0x 原型指數的機率。</p>
+            <div id="lev-heatmap-panel">
+              ${renderLeverageHeatmapPanel(art)}
+            </div>
+
+            <details class="research-details" style="margin-top: 16px;">
+              <summary class="cursor-pointer" style="font-weight: 600; color: var(--accent); padding: 8px 0;">展開真實槓桿 ETF（SSO / UPRO / QLD / TQQQ / 00631L.TW）隱含資金成本對照表 ▼</summary>
+              <p class="muted text-xs" style="margin: 6px 0 10px;">注意：台股 00631L.TW 透過台指期除權息逆價差吃進兩倍股息，若對齊不含息的 ^TWII 會出現負隱含利率假象；改以含息還原的 0050.TW 為基準後，真實隱含成本為 +2.92%/年，與美股正二 ETF 一致。</p>
+              <div class="table-wrap table-responsive">
+                <table class="data-table mobile-cards lev-table">
+                  <thead>
+                    <tr>
+                      <th>真實槓桿 ETF</th>
+                      <th>對照基準</th>
+                      <th>重疊期間</th>
+                      <th>基準 1x 年化</th>
+                      <th>理論 0% 成本</th>
+                      <th>真實 ETF 年化</th>
+                      <th>真實 ETF MDD</th>
+                      <th>反推隱含資金成本</th>
+                    </tr>
+                  </thead>
+                  <tbody>${realEtfHtml}</tbody>
+                </table>
+              </div>
+            </details>
+          </div>
+
+          <div class="research-section">
+            <h2>二、四種開槓桿工具實戰評比表（正二 ETF vs 房貸／信貸 vs 質押 vs 融資）</h2>
+            <div class="table-wrap table-responsive" style="margin-top: 10px;">
+              <table class="data-table mobile-cards lev-table">
+                <thead>
+                  <tr>
+                    <th>工具與推薦度</th>
+                    <th>利率區間</th>
+                    <th>安全倍率上限</th>
+                    <th>歷史斷頭率</th>
+                    <th>實測績效摘要</th>
+                    <th>實戰優缺點</th>
+                  </tr>
+                </thead>
+                <tbody>${toolsHtml}</tbody>
+              </table>
+            </div>
+
+            <div class="lev-trap-box">
+              <h3>⚠️ 散戶最常踩的坑：「融資備用金陷阱」</h3>
+              <p>很多人以為「開 2.0x～2.5x 融資，旁邊多留一筆現金準備補維持率就安全了」。但實證顯示，一旦把為了防斷頭而閒置的備用現金算進總資金分母，<strong>真實有效槓桿立刻掉回 1.05x～1.41x</strong>，你卻依然在付 6%～6.5% 的高利，完全不如直接用低利或正二 ETF 配置 1.3x～1.4x：</p>
+              <ul>${trapHtml}</ul>
+            </div>
+          </div>
+
+          <div class="research-section">
+            <h2>三、跌深加碼 vs 200 日均線動態槓桿評比（E1 vs E2 vs E3）</h2>
+            <p class="muted">在相同本金（單筆）與相同每月現金流（定投）基準上，比較「平時留現金等大跌（E1）」、「平時滿倉 1x、跌深才低利借貸加碼（E2）」與「200 日均線 ±2% 緩衝動態槓桿（E3）」。</p>
+            <div class="lev-conclusion-pills">
+              <span class="badge badge-danger">E1 留現金等大跌：77%～100% 輸給直接 1x（迷思）</span>
+              <span class="badge badge-ok">E2 跌 -15%～-20% 才借低利開 1.5x：SPY/0050 零斷頭且勝率大增</span>
+              <span class="badge badge-ok">E3 200 日線 ±2% 緩衝：綜合最強，SPY 10 年勝率 97.6%～99.7%</span>
+            </div>
+            <div id="lev-dynamic-panel">
+              ${renderLeverageDynamicPanel(art)}
+            </div>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(safety.title || "四、給一般投資人的安全界線")}</h2>
+            <ul class="research-strat-list">
+              ${safetyItems.map((it) => `<li>${escapeHtml(it)}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(limitations.title || "五、研究限制與資料校正誠實揭露")}</h2>
+            ${(limitations.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section disclaimer-box">
+            <p>⚠️ <strong>免責聲明</strong>：${escapeHtml(disc.text || "本研究僅供量化回測與歷史實證參考，非個人化投資建議。")}</p>
+            <div class="github-links">
+              ${ghLinks.map((g) => `<a href="${escapeHtml(g.url)}" target="_blank" rel="noopener noreferrer" class="ext-link">🔗 ${escapeHtml(g.title)}</a>`).join("")}
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
   function renderResearchHtml(data) {
     if (!data) return '<p class="muted">深度研究資料為空。</p>';
     if (!data.articles && data.strategies_intro) {
@@ -3315,6 +3675,7 @@
     const examArt = articles.find((a) => a.id === "exam_sensitivity") || articles[2];
     const flowArt = articles.find((a) => a.id === "flow_signals") || articles[3];
     const dcaArt = articles.find((a) => a.id === "dca_compare") || articles[4];
+    const levArt = articles.find((a) => a.id === "leverage_study") || articles[5];
 
     return `
       <section class="card">
@@ -3379,6 +3740,18 @@
             <div class="toc-action">點擊展開閱讀 ➔</div>
           </div>
           ` : ""}
+
+          ${levArt ? `
+          <div class="research-toc-card" onclick="scrollToResearchArticle('leverage_study')">
+            <div class="toc-card-header">
+              <span class="badge badge-ok">${escapeHtml(levArt.badge || "20～34 年實證")}</span>
+              <span class="toc-num">第 6 篇</span>
+            </div>
+            <h3 class="toc-title">${escapeHtml(levArt.title || "美股與台股槓桿實證：倍率甜蜜點、借貸利率紅線與跌深加碼（20～34 年）")}</h3>
+            <p class="toc-takeaway">${escapeHtml(levArt.takeaway || "")}</p>
+            <div class="toc-action">點擊展開閱讀 ➔</div>
+          </div>
+          ` : ""}
         </div>
       </section>
 
@@ -3402,6 +3775,7 @@
       ${renderExamSensitivityArticleHtml(examArt)}
       ${renderFlowSignalsArticleHtml(flowArt)}
       ${renderDcaCompareArticleHtml(dcaArt)}
+      ${renderLeverageStudyArticleHtml(levArt)}
     `;
   }
 
@@ -4238,6 +4612,7 @@
       let targetArt = parts[1] ? decodeURIComponent(parts[1]) : null;
       if (targetArt === "dca-compare" || targetArt === "dca_compare") targetArt = "dca_compare";
       if (targetArt === "flow-signals" || targetArt === "flow_signals") targetArt = "flow_signals";
+      if (targetArt === "leverage-study" || targetArt === "leverage_study") targetArt = "leverage_study";
       pendingResearchArticleId = targetArt;
       document.getElementById("view-research")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="research"]')?.classList.add("active");

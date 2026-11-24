@@ -3756,3 +3756,118 @@ tr.ta-detail-row > td.ta-detail-cell {
 
 
 
+
+/* Article 6: Leverage Study */
+.lev-highlight-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 14px 0 18px;
+}
+
+.lev-highlight-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border, #30363d);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.lev-card-label {
+  font-size: 0.78rem;
+  color: var(--muted, #8b949e);
+  margin-bottom: 4px;
+}
+
+.lev-card-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent, #58a6ff);
+  margin-bottom: 6px;
+}
+
+.lev-card-desc {
+  font-size: 0.80rem;
+  line-height: 1.45;
+  color: var(--text, #c9d1d9);
+}
+
+.lev-controls-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.lev-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lev-filter-btn.active {
+  background: var(--accent, #58a6ff);
+  color: #0d1117;
+  border-color: var(--accent, #58a6ff);
+  font-weight: 700;
+}
+
+.lev-meta-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(88, 166, 255, 0.06);
+  border-left: 3px solid var(--accent, #58a6ff);
+  border-radius: 6px;
+  font-size: 0.83rem;
+}
+
+.lev-sweet-row {
+  background: rgba(63, 185, 80, 0.07);
+}
+
+.lev-trap-box {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: rgba(248, 81, 73, 0.08);
+  border: 1px solid rgba(248, 81, 73, 0.35);
+  border-radius: 10px;
+}
+
+.lev-trap-box h3 {
+  margin: 0 0 8px;
+  font-size: 0.98rem;
+  color: var(--danger, #f85149);
+}
+
+.lev-trap-box p,
+.lev-trap-box li {
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.lev-trap-box ul {
+  margin: 8px 0 0 18px;
+}
+
+.lev-conclusion-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 4px;
+}
+
+@media (max-width: 900px) {
+  .lev-highlight-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .lev-highlight-grid {
+    grid-template-columns: 1fr;
+  }
+}

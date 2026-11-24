@@ -932,12 +932,346 @@ def build_research_dict() -> dict:
         },
     }
 
+    # -------------------------------------------------------------
+    # Article 6: 美股與台股槓桿實證：倍率甜蜜點、借貸利率紅線與跌深加碼（20～34 年）
+    # -------------------------------------------------------------
+    lev_res_path = repo_root / "research" / "leverage_study" / "results.json"
+    if lev_res_path.exists():
+        with open(lev_res_path, "r", encoding="utf-8") as f:
+            lev_res = json.load(f)
+    else:
+        lev_res = {}
+
+    lev_m1 = lev_res.get("module_1", {})
+    lev_m2 = lev_res.get("module_2", {})
+    lev_m3 = lev_res.get("module_3", {})
+    lev_m4 = lev_res.get("module_4", {})
+    lev_m5 = lev_res.get("module_5", {})
+    lev_ds = lev_res.get("data_summary", {})
+
+    lev_target_syms = [
+        ("SPY", "S&P 500 含息 (SPY)"),
+        ("QQQ", "Nasdaq 100 含息 (QQQ)"),
+        ("0050.TW", "台股台灣50含息 (0050.TW)"),
+        ("^TWII", "台股加權指數 (^TWII 不含息)"),
+    ]
+    lev_heatmap: dict[str, Any] = {}
+    for sym, sym_label in lev_target_syms:
+        sym_m1 = lev_m1.get("symbols", {}).get(sym, {})
+        lev_heatmap[sym] = {"label": sym_label, "periods": {}}
+        for pk in ("full_history", "recent_10y"):
+            p_data = sym_m1.get(pk, {})
+            lm = p_data.get("lump_sum_matrix", {})
+            dm = p_data.get("dca_matrix", {})
+            rows = []
+            for lv in lev_m1.get("grid_leverages", [1.0, 1.2, 1.3, 1.5, 1.75, 2.0, 2.5, 3.0]):
+                lk = f"{lv:.2f}x"
+                c0 = lm.get(lk, {}).get("0pct", {})
+                c2 = lm.get(lk, {}).get("2pct", {})
+                c3 = lm.get(lk, {}).get("3pct", {})
+                c5 = lm.get(lk, {}).get("5pct", {})
+                c7 = lm.get(lk, {}).get("7pct", {})
+                d3 = dm.get(lk, {}).get("3pct", {})
+                r10 = c3.get("rolling", {}).get("10y", {})
+                rows.append({
+                    "lev": lk,
+                    "cagr_0pct": c0.get("cagr_pct", 0.0),
+                    "cagr_2pct": c2.get("cagr_pct", 0.0),
+                    "cagr_3pct": c3.get("cagr_pct", 0.0),
+                    "cagr_5pct": c5.get("cagr_pct", 0.0),
+                    "cagr_7pct": c7.get("cagr_pct", 0.0),
+                    "mdd_3pct": c3.get("mdd_pct", 0.0),
+                    "sharpe_3pct": c3.get("sharpe", 0.0),
+                    "calmar_3pct": c3.get("calmar", 0.0),
+                    "win10y_3pct": r10.get("win_rate_vs_1x_pct"),
+                    "p5_10y_3pct": r10.get("p5_cagr_pct"),
+                    "dca_xirr_3pct": d3.get("xirr_pct", 0.0),
+                })
+            lev_heatmap[sym]["periods"][pk] = {
+                "start_date": p_data.get("start_date", ""),
+                "end_date": p_data.get("end_date", ""),
+                "years": p_data.get("years", 0.0),
+                "benchmark_1x": p_data.get("benchmark_1x", {}),
+                "breakeven_rates_pct": p_data.get("breakeven_rates_pct", {}),
+                "breakeven_rates_with_etf_fee_pct": p_data.get("breakeven_rates_with_etf_fee_pct", {}),
+                "rows": rows,
+            }
+
+    real_etf_pairs = [
+        ("SSO", "SPY", "2x S&P 500"),
+        ("UPRO", "SPY", "3x S&P 500"),
+        ("QLD", "QQQ", "2x Nasdaq 100"),
+        ("TQQQ", "QQQ", "3x Nasdaq 100"),
+        ("00631L.TW", "0050.TW", "2x 台灣50 (期貨正二)"),
+        ("00631L.TW", "^TWII", "2x 台灣50 vs 不含息加權"),
+    ]
+    real_etf_rows = []
+    for etf_s, und_s, desc_s in real_etf_pairs:
+        c = lev_m1.get("real_etf_comparison", {}).get(etf_s, {}).get(und_s, {})
+        if not c:
+            continue
+        real_etf_rows.append({
+            "etf": etf_s,
+            "underlying": und_s,
+            "desc": desc_s,
+            "start_date": c.get("start_date", ""),
+            "end_date": c.get("end_date", ""),
+            "years": c.get("actual_etf", {}).get("years", 0.0),
+            "und_1x_cagr": c.get("underlying_1x", {}).get("cagr_pct", 0.0),
+            "theo_0pct_cagr": c.get("theoretical_0pct_cost", {}).get("cagr_pct", 0.0),
+            "actual_cagr": c.get("actual_etf", {}).get("cagr_pct", 0.0),
+            "actual_mdd": c.get("actual_etf", {}).get("mdd_pct", 0.0),
+            "implied_rate_pct": c.get("implied_annual_financing_rate_pct", 0.0),
+            "corr": c.get("daily_return_corr", 0.0),
+        })
+
+    # Tools comparison & margin buffer trap from Modules 1-4
+    spy_m1_15x = lev_m1.get("symbols", {}).get("SPY", {}).get("full_history", {}).get("lump_sum_matrix", {}).get("1.50x", {}).get("3pct", {})
+    tw50_m1_15x = lev_m1.get("symbols", {}).get("0050.TW", {}).get("full_history", {}).get("lump_sum_matrix", {}).get("1.50x", {}).get("3pct", {})
+    spy_m2_20x = lev_m2.get("symbols", {}).get("SPY", {}).get("full_history", {}).get("grid", {}).get("2.00x", {}).get("6.0pct", {})
+    qqq_m2_20x = lev_m2.get("symbols", {}).get("QQQ", {}).get("full_history", {}).get("grid", {}).get("2.00x", {}).get("6.0pct", {})
+    twii_m2_25x = lev_m2.get("symbols", {}).get("^TWII", {}).get("full_history", {}).get("grid", {}).get("2.50x", {}).get("6.5pct", {})
+    tw50_m2_25x = lev_m2.get("symbols", {}).get("0050.TW", {}).get("full_history", {}).get("grid", {}).get("2.50x", {}).get("6.5pct", {})
+    spy_m3_20y = lev_m3.get("symbols", {}).get("SPY", {}).get("full_history", {}).get("tenors", {}).get("20y_loan", {}).get("by_loan_size", {}).get("borrow_3y_savings", {}).get("by_rate", {}).get("2.5pct", {}).get("lump_sum_loan", {})
+    spy_m3_7y = lev_m3.get("symbols", {}).get("SPY", {}).get("full_history", {}).get("tenors", {}).get("7y_loan", {}).get("by_loan_size", {}).get("borrow_3y_savings", {}).get("by_rate", {}).get("3.5pct", {}).get("lump_sum_loan", {})
+    tw50_m3_20y = lev_m3.get("symbols", {}).get("0050.TW", {}).get("full_history", {}).get("tenors", {}).get("20y_loan", {}).get("by_loan_size", {}).get("borrow_3y_savings", {}).get("by_rate", {}).get("2.5pct", {}).get("lump_sum_loan", {})
+    spy_m4_13x = lev_m4.get("symbols", {}).get("SPY", {}).get("full_history", {}).get("thresholds", {}).get("maint_130pct", {}).get("grid", {}).get("1.30x", {}).get("2.5pct", {})
+    spy_m4_20x = lev_m4.get("symbols", {}).get("SPY", {}).get("full_history", {}).get("thresholds", {}).get("maint_130pct", {}).get("grid", {}).get("2.00x", {}).get("2.5pct", {})
+    twii_m4_13x = lev_m4.get("symbols", {}).get("^TWII", {}).get("full_history", {}).get("thresholds", {}).get("maint_130pct", {}).get("grid", {}).get("1.30x", {}).get("2.5pct", {})
+    tw50_m4_14x = lev_m4.get("symbols", {}).get("0050.TW", {}).get("full_history", {}).get("thresholds", {}).get("maint_130pct", {}).get("grid", {}).get("1.40x", {}).get("2.5pct", {})
+
+    tools_comparison_rows = [
+        {
+            "tool": "房貸增貸 / 7年低利信貸",
+            "rate_range": "房貸 2.2%～2.8% / 信貸 2.5%～3.5%",
+            "safe_cap": "借 2～3 年儲蓄額（月付 <50% 月現金流）",
+            "mc_rate": "0.0%（無維持率斷頭）",
+            "perf_summary": (
+                f"SPY 20年房貸@2.5% 10年勝率 {spy_m3_20y.get('rolling', {}).get('10y', {}).get('win_rate_vs_dca_pct', 0.0):.1f}%（中位數淨值多 +{spy_m3_20y.get('rolling', {}).get('10y', {}).get('median_excess_vs_dca_pct', 0.0):.1f}%）；"
+                f"7年信貸@3.5% 月付佔比 {spy_m3_7y.get('pmt_to_monthly_cf_pct', 0.0):.1f}%；0050.TW 勝率 {tw50_m3_20y.get('rolling', {}).get('10y', {}).get('win_rate_vs_dca_pct', 0.0):.1f}%"
+            ),
+            "pros_cons": "優點：有穩定薪資就抱得住股災。缺點：每月需固定還本付息。",
+            "rank": "🏆 首選",
+            "badge_cls": "badge-ok",
+        },
+        {
+            "tool": "正二槓桿 ETF（配置 50%～100%）",
+            "rate_range": "隱含總成本約 2.9%～3.2%/年",
+            "safe_cap": "1.3x～1.5x 長抱 / 2.0x 搭年線濾網",
+            "mc_rate": "0.0%（每日再平衡，永不追繳）",
+            "perf_summary": (
+                f"SPY 1.5x@3% 年化 {spy_m1_15x.get('cagr_pct', 0.0):.2f}%（10年勝率 {spy_m1_15x.get('rolling', {}).get('10y', {}).get('win_rate_vs_1x_pct', 0.0):.1f}%）；"
+                f"0050.TW 1.5x@3% 年化 {tw50_m1_15x.get('cagr_pct', 0.0):.2f}%（勝率 {tw50_m1_15x.get('rolling', {}).get('10y', {}).get('win_rate_vs_1x_pct', 0.0):.1f}%）"
+            ),
+            "pros_cons": "優點：免盯盤、無現金流壓力、00631L免股利稅。缺點：震盪盤有波動耗損。",
+            "rank": "🏆 首選",
+            "badge_cls": "badge-ok",
+        },
+        {
+            "tool": "股票質押（只繳息不還本）",
+            "rate_range": "約 2.3%～3.2%/年",
+            "safe_cap": "總槓桿 ≤ 1.30x～1.40x（初始維持率 ≥350%）",
+            "mc_rate": (
+                f"1.3x 斷頭率 {spy_m4_13x.get('rolling', {}).get('10y', {}).get('margin_call_rate_pct', 0.0):.1f}%（SPY/^TWII 皆 0%）；"
+                f"開到 2.0x 斷頭率飆至 {spy_m4_20x.get('rolling', {}).get('10y', {}).get('margin_call_rate_pct', 0.0):.1f}%"
+            ),
+            "perf_summary": (
+                f"SPY 1.3x@2.5% 年化 {spy_m4_13x.get('cagr_pct', 0.0):.2f}%（勝率 {spy_m4_13x.get('rolling', {}).get('10y', {}).get('win_rate_vs_1x_pct', 0.0):.1f}%）；"
+                f"^TWII 1.3x 斷頭 {twii_m4_13x.get('rolling', {}).get('10y', {}).get('margin_call_rate_pct', 0.0):.1f}%；"
+                f"0050.TW 1.4x 年化 {tw50_m4_14x.get('cagr_pct', 0.0):.2f}%"
+            ),
+            "pros_cons": "優點：只繳息不還本、股息可付息。缺點：借太滿遇 -50% 大崩盤仍會斷頭。",
+            "rank": "🥈 次選",
+            "badge_cls": "badge-warn",
+        },
+        {
+            "tool": "券商一般融資（Margin）",
+            "rate_range": "台股 6.5%～7.0% / 美股 6.0%～8.0%+",
+            "safe_cap": "不建議長期持有（>1.4x 即高危）",
+            "mc_rate": (
+                f"^TWII 2.5x 10年斷頭率 {twii_m2_25x.get('rolling', {}).get('10y', {}).get('margin_call_rate_pct', 0.0):.1f}%；"
+                f"SPY 2.0x {spy_m2_20x.get('rolling', {}).get('10y', {}).get('margin_call_rate_pct', 0.0):.1f}%；"
+                f"QQQ 2.0x {qqq_m2_20x.get('rolling', {}).get('10y', {}).get('margin_call_rate_pct', 0.0):.1f}%"
+            ),
+            "perf_summary": (
+                f"0050.TW 2.5x 在 2009 後多頭仍有 {tw50_m2_25x.get('rolling', {}).get('5y', {}).get('margin_call_rate_pct', 0.0):.1f}% 5年斷頭率；"
+                f"若留備用金防斷頭，SPY 2.0x 實質槓桿剩 {spy_m2_20x.get('peak_crash_effective_leverage', 0.0):.2f}x"
+            ),
+            "pros_cons": "缺點：利率極高又容易斷頭在阿呆谷，留備用金會把有效槓桿稀釋到不划算。",
+            "rank": "💀 不推薦",
+            "badge_cls": "badge-danger",
+        },
+    ]
+
+    margin_buffer_trap = [
+        {
+            "label": "SPY 2.0x 美股融資 (@6.0%)",
+            "entry_dd_mc": spy_m2_20x.get("entry_drawdown_to_margin_call_pct", 0.0),
+            "mc_rate_10y": spy_m2_20x.get("rolling", {}).get("10y", {}).get("margin_call_rate_pct", 0.0),
+            "req_buf_pct": spy_m2_20x.get("peak_crash_req_buffer_pct", 0.0),
+            "eff_lev": spy_m2_20x.get("peak_crash_effective_leverage", 0.0),
+            "buf_cagr": spy_m2_20x.get("peak_crash_buffered_cagr_pct", 0.0),
+        },
+        {
+            "label": "QQQ 2.0x 美股融資 (@6.0%)",
+            "entry_dd_mc": qqq_m2_20x.get("entry_drawdown_to_margin_call_pct", 0.0),
+            "mc_rate_10y": qqq_m2_20x.get("rolling", {}).get("10y", {}).get("margin_call_rate_pct", 0.0),
+            "req_buf_pct": qqq_m2_20x.get("peak_crash_req_buffer_pct", 0.0),
+            "eff_lev": qqq_m2_20x.get("peak_crash_effective_leverage", 0.0),
+            "buf_cagr": qqq_m2_20x.get("peak_crash_buffered_cagr_pct", 0.0),
+        },
+        {
+            "label": "^TWII 2.5x 台股四成融資 (@6.5%)",
+            "entry_dd_mc": twii_m2_25x.get("entry_drawdown_to_margin_call_pct", 0.0),
+            "mc_rate_10y": twii_m2_25x.get("rolling", {}).get("10y", {}).get("margin_call_rate_pct", 0.0),
+            "req_buf_pct": twii_m2_25x.get("peak_crash_req_buffer_pct", 0.0),
+            "eff_lev": twii_m2_25x.get("peak_crash_effective_leverage", 0.0),
+            "buf_cagr": twii_m2_25x.get("peak_crash_buffered_cagr_pct", 0.0),
+        },
+    ]
+
+    # Module 5 dynamic leverage & dip buying comparison
+    mod5_defs = [
+        ("baselines", "baseline_1.0x", "基準：全程 1.0x（滿倉／定投）", "基準"),
+        ("baselines", "baseline_fixed_1.5x_r3pct", "對照：全程固定 1.5x（3% 成本）", "固定槓桿"),
+        ("e1_cash_reserve_dip", "e1_80_20_staged", "E1：留 20% 現金等大跌分批抄底", "現金等跌"),
+        ("e1_cash_reserve_dip", "e1_70_30_staged", "E1：留 30% 現金等大跌分批抄底", "現金等跌"),
+        ("e2_leveraged_dip", "e2_dd15_lev1.5x_r2.5pct", "E2：跌 -15% 開 1.5x（回前高降 1x, 2.5%）", "跌深借貸"),
+        ("e2_leveraged_dip", "e2_dd20_lev1.5x_r2.5pct", "E2：跌 -20% 開 1.5x（回前高降 1x, 2.5%）", "跌深借貸"),
+        ("e2_leveraged_dip", "e2_dd20_lev2.0x_r2.5pct", "E2：跌 -20% 開 2.0x（回前高降 1x, 2.5%）", "跌深借貸"),
+        ("e3_sma200_dynamic", "e3_sma200_lev1.5x_buf2pct_r3pct", "E3：200日線 ±2% 緩衝 1.5x / 1.0x (3%)", "年線濾網"),
+        ("e3_sma200_dynamic", "e3_sma200_lev2.0x_buf2pct_r3pct", "E3：200日線 ±2% 緩衝 2.0x / 1.0x (3%)", "年線濾網"),
+    ]
+    lev_dynamic: dict[str, Any] = {}
+    for sym, sym_label in lev_target_syms:
+        sym_m5 = lev_m5.get("symbols", {}).get(sym, {})
+        lev_dynamic[sym] = {"label": sym_label, "periods": {}}
+        for pk in ("full_history", "recent_10y"):
+            p_data = sym_m5.get(pk, {})
+            d_rows = []
+            for grp, k, row_label, cat_label in mod5_defs:
+                cell = p_data.get(grp, {}).get(k, {})
+                lump = cell.get("lump_sum", {})
+                dca = cell.get("dca", {})
+                r10_l = lump.get("rolling", {}).get("10y", {})
+                r10_d = dca.get("rolling", {}).get("10y", {})
+                w_dca = r10_d.get("win_rate_vs_1x_dca_pct", r10_d.get("win_rate_vs_1x_pct"))
+                note = ""
+                if grp == "e1_cash_reserve_dip":
+                    note = f"加碼觸發 {lump.get('deploy_triggers_count', 0)} 次"
+                elif grp == "e2_leveraged_dip":
+                    note = f"啟動 {lump.get('episodes_triggered', 0)} 次 · 130%斷頭 {lump.get('pledge_130_breach_episodes', 0)} 次"
+                elif grp == "e3_sma200_dynamic":
+                    note = f"年均換倉 {lump.get('switches_per_year', 0.0):.1f} 次 · 開槓桿佔時 {lump.get('pct_time_in_bull_leverage', 0.0):.0f}%"
+                else:
+                    note = "固定配置對照"
+                d_rows.append({
+                    "key": k,
+                    "label": row_label,
+                    "category": cat_label,
+                    "lump_cagr": lump.get("cagr_pct", 0.0),
+                    "lump_mdd": lump.get("mdd_pct", 0.0),
+                    "lump_sharpe": lump.get("sharpe", 0.0),
+                    "lump_calmar": lump.get("calmar", 0.0),
+                    "lump_win10y": r10_l.get("win_rate_vs_1x_pct"),
+                    "dca_xirr": dca.get("xirr_pct", 0.0),
+                    "dca_mult": dca.get("final_multiple", 0.0),
+                    "dca_win10y": w_dca,
+                    "note": note,
+                })
+            lev_dynamic[sym]["periods"][pk] = {
+                "start_date": p_data.get("start_date", ""),
+                "end_date": p_data.get("end_date", ""),
+                "years": p_data.get("years", 0.0),
+                "rows": d_rows,
+            }
+
+    spy_e3_15 = lev_m5.get("symbols", {}).get("SPY", {}).get("full_history", {}).get("e3_sma200_dynamic", {}).get("e3_sma200_lev1.5x_buf2pct_r3pct", {})
+    spy_e3_lump_win = spy_e3_15.get("lump_sum", {}).get("rolling", {}).get("10y", {}).get("win_rate_vs_1x_pct", 0.0)
+    spy_e3_dca_win = spy_e3_15.get("dca", {}).get("rolling", {}).get("10y", {}).get("win_rate_vs_1x_pct", 0.0)
+
+    article_leverage = {
+        "id": "leverage_study",
+        "slug": "leverage-study",
+        "title": "美股與台股槓桿實證：倍率甜蜜點、借貸利率紅線與跌深加碼（20～34 年）",
+        "subtitle": "S&P 500、Nasdaq 100 與台股 0050／加權之全歷史含大崩盤與近 10 年雙期間、滾動 5/10/15 年與四大工具實戰比較",
+        "takeaway": (
+            f"全週期槓桿甜蜜點落在 1.3x～1.6x（正二 ETF 或年線濾網上限 1.5x～2.0x）；利率 ≤3.5% 為黃金區、>5.0% 進禁區；"
+            f"房貸增貸／低利信貸與正二 ETF 零斷頭勝出；200 日線 ±2% 緩衝法在 SPY 滾動 10 年勝率達 {spy_e3_lump_win:.1f}%～{spy_e3_dca_win:.1f}%。"
+        ),
+        "badge": "20～34 年實證",
+        "updated_at": "2026-11",
+        "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/leverage_study/report.md",
+        "github_code": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/leverage_study",
+        "highlight_cards": [
+            {
+                "label": "全週期甜蜜點",
+                "value": "1.3x ～ 1.6x",
+                "desc": "正二 ETF 或 200 日線濾網上限可達 1.5x～2.0x；超過 2.0x 遇大崩盤會因波動耗損倒退。",
+            },
+            {
+                "label": "利率黃金區",
+                "value": "≤ 3.5%",
+                "desc": "4%～5% 為警戒區，超過 5.0% 進禁區（QQQ 2x 全歷史兩平利率僅 2.56%）。",
+            },
+            {
+                "label": "工具首選",
+                "value": "房貸增貸／正二",
+                "desc": "低利房貸／信貸與正二 ETF 零維持率斷頭；券商 2.5x 融資在台股 10 年斷頭率達 92.7%。",
+            },
+            {
+                "label": "最強動態法",
+                "value": "200 日線 ±2%",
+                "desc": f"SPY 全歷史 1.5x 單筆與定投滾動 10 年勝率高達 {spy_e3_lump_win:.1f}% ～ {spy_e3_dca_win:.1f}%，回撤大幅壓低。",
+            },
+        ],
+        "tables": {
+            "heatmap": lev_heatmap,
+            "real_etfs": real_etf_rows,
+            "tools_comparison": tools_comparison_rows,
+            "margin_buffer_trap": margin_buffer_trap,
+            "dynamic_comparison": lev_dynamic,
+        },
+        "sections": {
+            "safety_rules": {
+                "title": "四、給一般投資人的安全界線",
+                "items": [
+                    "利率紅線：年利率 ≤3.5%（如台灣房貸增貸 2.2%～2.8%、低利質押／信貸 2.5%～3.2%、台股正二隱含成本 2.92%）屬於黃金區；3.5%～5.0% 需搭定期定額或年線濾網；>5.0%（如券商融資 6%～7%）在完整週期中不該借。",
+                    "信貸月付金上限：7 年期個人信貸本息均攤，建議借款上限為「2～3 年儲蓄額」，月付金嚴守「< 月可支配儲蓄的 50%」（3 年儲蓄額在 2.5%～3.5% 利率下佔 46.8%～48.4%），切勿拖到 24 個月才慢慢買，避免資金空轉白繳息。",
+                    "股票質押安全上限：若以能挺過 2000 / 2008 年級別大崩盤（-55%～-66%）為標準，總槓桿應嚴格控制在 ≤ 1.30x～1.40x（初始維持率 350%～433% 以上，即每 100 萬現股最多借 30～40 萬），此時歷史滾動 10 年斷頭率趨近 0%。",
+                    "最容易爆倉排行：第 1 名台股 2.5x 券商融資（跌 22% 即斷頭，^TWII 滾動 10 年斷頭率 92.7%）；第 2 名美股 2.0x 融資／質押借滿 2.0x（10 年斷頭率 40%～50%）；第 3 名單筆重倉 3 倍 ETF（TQQQ/UPRO）遇網路泡沫級崩盤淨值蒸發 99%。",
+                ],
+            },
+            "limitations": {
+                "title": "五、研究限制與資料校正誠實揭露",
+                "content": [
+                    f"1. 台股含息與不含息期間差異：^TWII（價格指數不含息）抓取期間為 {lev_ds.get('^TWII', {}).get('start_date', '1997-07-02')} ～ {lev_ds.get('^TWII', {}).get('end_date', '2026-11-24')}（{lev_ds.get('^TWII', {}).get('years', 29.4):.2f} 年），完整涵蓋 2000 年網路泡沫（-66.22%）與 2008 年金融海嘯；而 Yahoo Finance 上 0050.TW 含息還原有效日線始於 {lev_ds.get('0050.TW', {}).get('start_date', '2009-03-10')}（{lev_ds.get('0050.TW', {}).get('years', 17.71):.2f} 年），期間最大回撤僅 -33.83%，未涵蓋 2000/2008 兩次腰斬。因此台股「殖利率付息能力」看 0050.TW（股息年貢獻 +3.52%），但「極端維持率斷頭壓力」必須以 ^TWII 的 29.4 年數據為準。",
+                    "2. Yahoo Finance 台灣 ETF 分割與配息斷層修正：0050.TW 於 2025-06-11 進行 1 拆 4 分割，原始資料僅回溯至 2014-01-02 並遺漏 2009–2014 調整係數，本研究已於回測腳本中修正 2013-12-31 前價格 ÷4、補齊歷年官方配息還原並剔除 2009 年初異常錯價；00631L.TW 於 2026-03-25 進行 1 拆 22 分割且 2015-08-24 前存在錯價，故取完整無斷層區間 2015-08-25 ～ 2026-11-24（11.25 年，與大盤日報酬相關係數 0.9766）進行實證對照。",
+                    "3. 倖存者偏差與利率環境變遷：美股與台股過去 30 年受惠於科技與半導體紅利屬於全球最強市場，若套用於長期盤整市場（如 1990–2020 日經）開槓桿將會虧損；且 2009–2021 處於罕見低利率環境，高利率時期應改對照熱力矩陣中的 5%～7% 欄位。",
+                ],
+            },
+        },
+        "disclaimer": {
+            "text": "本研究僅供量化回測與歷史實證參考，過去績效不代表未來表現，亦不構成個人化投資或借貸建議。",
+            "github_links": [
+                {
+                    "title": "完整槓桿實證研究報告 (report.md)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/leverage_study/report.md",
+                },
+                {
+                    "title": "回測主程式與可重現腳本 (research/leverage_study)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/leverage_study",
+                },
+            ],
+        },
+    }
+
     full_payload = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "title": "深度研究 (In-Depth Research)",
         "subtitle": "Signal Desk 策略量化實證、多週期盲測與組合實驗報告",
         "disclaimer": "研究結果僅供參考，過去表現不代表未來，不構成投資建議。",
-        "articles": [article_short, article_combo, article_exam, article_flow, article_dca],
+        "articles": [article_short, article_combo, article_exam, article_flow, article_dca, article_leverage],
     }
     return full_payload
 
