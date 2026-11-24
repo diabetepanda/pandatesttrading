@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-24-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-24T18:13:48Z",
-  "updated_at_taipei": "2026-11-25 02:13",
-  "last_updated_utc": "2026-11-24T18:13:48Z",
-  "last_updated_taipei": "2026-11-25 02:13",
-  "next_update_hint": "約台北時間 02:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-24T18:21:19Z",
+  "updated_at_taipei": "2026-11-25 02:21",
+  "last_updated_utc": "2026-11-24T18:21:19Z",
+  "last_updated_taipei": "2026-11-25 02:21",
+  "next_update_hint": "約台北時間 02:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 21.144,
+    "total_elapsed_sec": 20.955,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 18,
+    "new_items_added": 7,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.045,
+        "elapsed_sec": 0.054,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.107,
+        "elapsed_sec": 0.11,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.075,
+        "elapsed_sec": 0.043,
         "raw_count": 30,
         "items_kept": 3,
         "error": null
@@ -63,25 +63,25 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.126,
+        "elapsed_sec": 0.046,
         "raw_count": 10,
-        "items_kept": 3,
+        "items_kept": 2,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.374,
+        "elapsed_sec": 0.419,
         "raw_count": 20,
-        "items_kept": 17,
+        "items_kept": 20,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.203,
+        "elapsed_sec": 0.191,
         "raw_count": 25,
         "items_kept": 21,
         "error": null
@@ -90,16 +90,16 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.088,
+        "elapsed_sec": 0.098,
         "raw_count": 30,
-        "items_kept": 17,
+        "items_kept": 18,
         "error": null
       },
       "theblock": {
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.093,
+        "elapsed_sec": 0.096,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.088,
+        "elapsed_sec": 0.102,
         "raw_count": 38,
         "items_kept": 14,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.438,
+        "elapsed_sec": 0.337,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.723,
+        "elapsed_sec": 0.399,
         "raw_count": 20,
-        "items_kept": 12,
+        "items_kept": 11,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.614,
+        "elapsed_sec": 0.386,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.722,
+        "elapsed_sec": 0.542,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.105,
+        "elapsed_sec": 0.174,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.156,
+        "elapsed_sec": 0.418,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.083,
+        "elapsed_sec": 0.088,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.264,
+        "elapsed_sec": 6.472,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.043,
+        "elapsed_sec": 0.044,
         "raw_count": 1376,
         "items_kept": 2,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 2.978,
+        "elapsed_sec": 2.0,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.386,
+        "elapsed_sec": 0.321,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.4,
+        "elapsed_sec": 0.988,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.44,
+        "elapsed_sec": 0.322,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.85,
+        "elapsed_sec": 0.585,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.16,
+        "elapsed_sec": 0.092,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.555,
+        "elapsed_sec": 0.481,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.312,
+        "elapsed_sec": 0.3,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1396.2,
+      "net_flow_usd_m": -1395.6,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0063,
-        "oi_usd_b": 1.84
+        "funding_rate_pct": 0.0065,
+        "oi_usd_b": 1.83
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0058,
+        "funding_rate_pct": 0.0061,
         "oi_usd_b": 1.15
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 28.6,
-      "tx_count": 60977,
+      "mempool_vsize_mb": 30.6,
+      "tx_count": 69042,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -811,6 +811,165 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-bf769c9733",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:16:13Z",
+      "published_at_taipei": "2026-11-25 02:16",
+      "published_at_taipei_iso": "2026-11-25T02:16:13+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "Tesla’s Robotaxi Business Could Generate $3-4B In Annual Recurring Revenue By 2027-End, Says Seaport Global",
+      "url": "https://stocktwits.com/news-articles/markets/equity/tesla-s-robotaxi-business-could-generate-3-4-b-in-annual-recurring-revenue-by-2027-end-says-seaport-global/cNbs0INR9kD?.tsrc=rss",
+      "canonical_url": "https://stocktwits.com/news-articles/markets/equity/tesla-s-robotaxi-business-could-generate-3-4-b-in-annual-recurring-revenue-by-2027-end-says-seaport-global/cNbs0INR9kD?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d95982b02c",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:16:02Z",
+      "published_at_taipei": "2026-11-25 02:16",
+      "published_at_taipei_iso": "2026-11-25T02:16:02+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "Wall Street and Crypto Are in 'Extreme Fear'. What's Spooking Investors?",
+      "url": "https://decrypt.co/383898/wall-street-crypto-extreme-whats-spooking-investors",
+      "canonical_url": "https://decrypt.co/383898/wall-street-crypto-extreme-whats-spooking-investors",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-2710a8f535",
+        "issue": "2026-11-23-PM",
+        "title": "Exxon, Chevron and ConocoPhillips Are Down. Here’s What Their Dividends Tell Investors",
+        "published_at_taipei": "2026-11-23 22:17",
+        "url": "https://247wallst.com/investing/2026/11/23/exxon-chevron-and-conocophillips-are-down-heres-what-their-dividends-tell-investors/?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-daa7a17152",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:14:02Z",
+      "published_at_taipei": "2026-11-25 02:14",
+      "published_at_taipei_iso": "2026-11-25T02:14:02+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "BoC’s Macklem sees softer year-end inflation but warns of 2027 price spillover",
+      "url": "https://finance.yahoo.com/economy/policy/articles/boc-macklem-sees-softer-end-181402630.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/economy/policy/articles/boc-macklem-sees-softer-end-181402630.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（inflation）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-6fce5ea220",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:13:57Z",
+      "published_at_taipei": "2026-11-25 02:13",
+      "published_at_taipei_iso": "2026-11-25T02:13:57+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "What Epsilon Energy (EPSN) Said on Its Q3 Earnings Call",
+      "url": "https://www.marketbeat.com/instant-alerts/transcript-what-epsilon-energy-epsn-said-on-its-q3-earnings-call-2026-11-24/?utm_source=yahoofinance&utm_medium=yahoofinance&.tsrc=rss",
+      "canonical_url": "https://marketbeat.com/instant-alerts/transcript-what-epsilon-energy-epsn-said-on-its-q3-earnings-call-2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NATGAS",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（earnings）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-a00c0dfe55",
+        "issue": "2026-11-23-PM",
+        "title": "What Moved Bloom Energy Stock?",
+        "published_at_taipei": "2026-11-23 20:10",
+        "url": "https://www.trefis.com/stock/be/articles/627709/what-moved-bloom-energy-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NATGAS",
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-ad769c4f86",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T18:08:55Z",
@@ -986,6 +1145,46 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-cbfbff7d85",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T17:58:54Z",
+      "published_at_taipei": "2026-11-25 01:58",
+      "published_at_taipei_iso": "2026-11-25T01:58:54+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "Is Netflix Stock Worth More Than Its Competitors?",
+      "url": "https://www.trefis.com/stock/nflx/articles/628356/is-netflix-stock-worth-more-than-its-competitors-2/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/nflx/articles/628356/is-netflix-stock-worth-more-than-its-competitors-2/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-63a055f67c",
+        "issue": "2026-11-23-PM",
+        "title": "Is UPS Stock Riskier Than Its Rally Suggests?",
+        "published_at_taipei": "2026-11-23 19:44",
+        "url": "https://www.trefis.com/stock/ups/articles/627577/is-ups-stock-riskier-than-its-rally-suggests/2026-11-23?.tsrc=rss"
+      },
       "sentiment": "neutral",
       "sentiment_label": "中性",
       "sentiment_score": 0,
@@ -6660,6 +6859,80 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-2d73a2d4aa",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:07:22Z",
+      "published_at_taipei": "2026-11-25 02:07",
+      "published_at_taipei_iso": "2026-11-25T02:07:22+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "BlackRock launches tokenized money market fund accepting stablecoins in Hong Kong",
+      "url": "https://cointelegraph.com/news/blackrock-launches-tokenized-money-market-fund-stablecoins-hong-kong?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/blackrock-launches-tokenized-money-market-fund-stablecoins-hong-kong",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-cd50b90344",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:02:38Z",
+      "published_at_taipei": "2026-11-25 02:02",
+      "published_at_taipei_iso": "2026-11-25T02:02:38+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "What Should Reddit Stock Owners Watch Now?",
+      "url": "https://www.trefis.com/stock/rddt/articles/628374/what-should-reddit-stock-owners-watch-now/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/rddt/articles/628374/what-should-reddit-stock-owners-watch-now/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-f0b88b2859",
+        "issue": "2026-11-23-PM",
+        "title": "Why Should Axon Stock Holders Watch This Shrinking Figure?",
+        "published_at_taipei": "2026-11-23 21:11",
+        "url": "https://www.trefis.com/stock/axon/articles/627635/why-should-axon-stock-holders-watch-this-shrinking-figure/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-b1497c91a4",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T18:00:53Z",
@@ -11784,6 +12057,165 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261125-bf769c9733",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:16:13Z",
+      "published_at_taipei": "2026-11-25 02:16",
+      "published_at_taipei_iso": "2026-11-25T02:16:13+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "Tesla’s Robotaxi Business Could Generate $3-4B In Annual Recurring Revenue By 2027-End, Says Seaport Global",
+      "url": "https://stocktwits.com/news-articles/markets/equity/tesla-s-robotaxi-business-could-generate-3-4-b-in-annual-recurring-revenue-by-2027-end-says-seaport-global/cNbs0INR9kD?.tsrc=rss",
+      "canonical_url": "https://stocktwits.com/news-articles/markets/equity/tesla-s-robotaxi-business-could-generate-3-4-b-in-annual-recurring-revenue-by-2027-end-says-seaport-global/cNbs0INR9kD?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d95982b02c",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:16:02Z",
+      "published_at_taipei": "2026-11-25 02:16",
+      "published_at_taipei_iso": "2026-11-25T02:16:02+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "Wall Street and Crypto Are in 'Extreme Fear'. What's Spooking Investors?",
+      "url": "https://decrypt.co/383898/wall-street-crypto-extreme-whats-spooking-investors",
+      "canonical_url": "https://decrypt.co/383898/wall-street-crypto-extreme-whats-spooking-investors",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-2710a8f535",
+        "issue": "2026-11-23-PM",
+        "title": "Exxon, Chevron and ConocoPhillips Are Down. Here’s What Their Dividends Tell Investors",
+        "published_at_taipei": "2026-11-23 22:17",
+        "url": "https://247wallst.com/investing/2026/11/23/exxon-chevron-and-conocophillips-are-down-heres-what-their-dividends-tell-investors/?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-daa7a17152",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:14:02Z",
+      "published_at_taipei": "2026-11-25 02:14",
+      "published_at_taipei_iso": "2026-11-25T02:14:02+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "BoC’s Macklem sees softer year-end inflation but warns of 2027 price spillover",
+      "url": "https://finance.yahoo.com/economy/policy/articles/boc-macklem-sees-softer-end-181402630.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/economy/policy/articles/boc-macklem-sees-softer-end-181402630.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（inflation）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-6fce5ea220",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:13:57Z",
+      "published_at_taipei": "2026-11-25 02:13",
+      "published_at_taipei_iso": "2026-11-25T02:13:57+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "What Epsilon Energy (EPSN) Said on Its Q3 Earnings Call",
+      "url": "https://www.marketbeat.com/instant-alerts/transcript-what-epsilon-energy-epsn-said-on-its-q3-earnings-call-2026-11-24/?utm_source=yahoofinance&utm_medium=yahoofinance&.tsrc=rss",
+      "canonical_url": "https://marketbeat.com/instant-alerts/transcript-what-epsilon-energy-epsn-said-on-its-q3-earnings-call-2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NATGAS",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（earnings）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-a00c0dfe55",
+        "issue": "2026-11-23-PM",
+        "title": "What Moved Bloom Energy Stock?",
+        "published_at_taipei": "2026-11-23 20:10",
+        "url": "https://www.trefis.com/stock/be/articles/627709/what-moved-bloom-energy-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NATGAS",
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-ad769c4f86",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T18:08:55Z",
@@ -11817,6 +12249,40 @@
         "published_at_taipei": "2026-11-24 05:49",
         "url": "https://www.fool.com/investing/2026/11/23/is-bitcoin-heading-for-50-000/?.tsrc=rss"
       },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-2d73a2d4aa",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:07:22Z",
+      "published_at_taipei": "2026-11-25 02:07",
+      "published_at_taipei_iso": "2026-11-25T02:07:22+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "BlackRock launches tokenized money market fund accepting stablecoins in Hong Kong",
+      "url": "https://cointelegraph.com/news/blackrock-launches-tokenized-money-market-fund-stablecoins-hong-kong?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/blackrock-launches-tokenized-money-market-fund-stablecoins-hong-kong",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
       "sentiment": "neutral",
       "sentiment_label": "中性",
       "sentiment_score": 0,
@@ -11895,6 +12361,46 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-cd50b90344",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T18:02:38Z",
+      "published_at_taipei": "2026-11-25 02:02",
+      "published_at_taipei_iso": "2026-11-25T02:02:38+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "What Should Reddit Stock Owners Watch Now?",
+      "url": "https://www.trefis.com/stock/rddt/articles/628374/what-should-reddit-stock-owners-watch-now/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/rddt/articles/628374/what-should-reddit-stock-owners-watch-now/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-f0b88b2859",
+        "issue": "2026-11-23-PM",
+        "title": "Why Should Axon Stock Holders Watch This Shrinking Figure?",
+        "published_at_taipei": "2026-11-23 21:11",
+        "url": "https://www.trefis.com/stock/axon/articles/627635/why-should-axon-stock-holders-watch-this-shrinking-figure/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -12193,6 +12699,46 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-cbfbff7d85",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T17:58:54Z",
+      "published_at_taipei": "2026-11-25 01:58",
+      "published_at_taipei_iso": "2026-11-25T01:58:54+08:00",
+      "first_seen_at_utc": "2026-11-24T18:21:19Z",
+      "first_seen_at_taipei": "2026-11-25 02:21",
+      "month": "2026-11",
+      "title": "Is Netflix Stock Worth More Than Its Competitors?",
+      "url": "https://www.trefis.com/stock/nflx/articles/628356/is-netflix-stock-worth-more-than-its-competitors-2/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/nflx/articles/628356/is-netflix-stock-worth-more-than-its-competitors-2/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-63a055f67c",
+        "issue": "2026-11-23-PM",
+        "title": "Is UPS Stock Riskier Than Its Rally Suggests?",
+        "published_at_taipei": "2026-11-23 19:44",
+        "url": "https://www.trefis.com/stock/ups/articles/627577/is-ups-stock-riskier-than-its-rally-suggests/2026-11-23?.tsrc=rss"
+      },
       "sentiment": "neutral",
       "sentiment_label": "中性",
       "sentiment_score": 0,
@@ -92124,8 +92670,8 @@
       "month": "2026-11",
       "date": "2026-11-24",
       "half": "PM",
-      "updated_at_taipei": "2026-11-25 02:13",
-      "count": 296,
+      "updated_at_taipei": "2026-11-25 02:21",
+      "count": 303,
       "star3_count": 13,
       "failed_sources": [
         {
