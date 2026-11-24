@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-24-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-24T00:38:56Z",
-  "updated_at_taipei": "2026-11-24 08:38",
-  "last_updated_utc": "2026-11-24T00:38:56Z",
-  "last_updated_taipei": "2026-11-24 08:38",
-  "next_update_hint": "約台北時間 08:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-24T00:53:51Z",
+  "updated_at_taipei": "2026-11-24 08:53",
+  "last_updated_utc": "2026-11-24T00:53:51Z",
+  "last_updated_taipei": "2026-11-24 08:53",
+  "next_update_hint": "約台北時間 09:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -20,28 +20,23 @@
       "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
     },
     {
-      "id": "mempool_space",
-      "name": "mempool.space",
-      "error": "HTTPSConnectionPool(host='mempool.space', port=443): Max retries exceeded with url: /api/v1/fees/recommended (Caused by NewConnectionError(\"HTTPSConnection(host='mempool.space', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\"))"
-    },
-    {
       "id": "bybit_announcements",
       "name": "Bybit 公告",
       "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 141.269,
-    "sources_ok": 22,
-    "sources_failed": 4,
-    "new_items_added": 8,
+    "total_elapsed_sec": 17.067,
+    "sources_ok": 23,
+    "sources_failed": 3,
+    "new_items_added": 5,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.036,
+        "elapsed_sec": 0.047,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -50,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.074,
+        "elapsed_sec": 0.137,
         "raw_count": 30,
         "items_kept": 10,
         "error": null
@@ -59,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.093,
+        "elapsed_sec": 0.18,
         "raw_count": 30,
         "items_kept": 1,
         "error": null
@@ -68,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.03,
+        "elapsed_sec": 0.162,
         "raw_count": 10,
         "items_kept": 6,
         "error": null
@@ -77,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.133,
+        "elapsed_sec": 0.145,
         "raw_count": 18,
-        "items_kept": 16,
+        "items_kept": 17,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.098,
+        "elapsed_sec": 0.101,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -95,16 +90,16 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.064,
+        "elapsed_sec": 0.107,
         "raw_count": 30,
-        "items_kept": 15,
+        "items_kept": 16,
         "error": null
       },
       "theblock": {
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.054,
+        "elapsed_sec": 0.081,
         "raw_count": 20,
         "items_kept": 16,
         "error": null
@@ -113,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.06,
+        "elapsed_sec": 0.071,
         "raw_count": 37,
         "items_kept": 14,
         "error": null
@@ -122,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.531,
+        "elapsed_sec": 0.594,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -131,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.272,
+        "elapsed_sec": 0.454,
         "raw_count": 20,
-        "items_kept": 11,
+        "items_kept": 10,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.303,
+        "elapsed_sec": 0.391,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -149,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.471,
+        "elapsed_sec": 0.738,
         "raw_count": 15,
         "items_kept": 5,
         "error": null
@@ -158,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.316,
+        "elapsed_sec": 0.357,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -167,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.378,
+        "elapsed_sec": 0.143,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -176,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.061,
+        "elapsed_sec": 0.158,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -185,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.351,
+        "elapsed_sec": 1.217,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -194,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.035,
+        "elapsed_sec": 0.043,
         "raw_count": 1375,
         "items_kept": 1,
         "error": null
@@ -203,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 2.22,
+        "elapsed_sec": 2.702,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -212,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.288,
+        "elapsed_sec": 0.546,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -221,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.391,
+        "elapsed_sec": 1.412,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -230,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.283,
+        "elapsed_sec": 0.338,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -238,17 +233,17 @@
       "mempool_space": {
         "name": "mempool.space",
         "kind": "mempool",
-        "status": "failed",
-        "elapsed_sec": 128.386,
-        "raw_count": 0,
+        "status": "ok",
+        "elapsed_sec": 0.734,
+        "raw_count": 1,
         "items_kept": 0,
-        "error": "HTTPSConnectionPool(host='mempool.space', port=443): Max retries exceeded with url: /api/v1/fees/recommended (Caused by NewConnectionError(\"HTTPSConnection(host='mempool.space', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\"))"
+        "error": null
       },
       "binance_announcements": {
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.03,
+        "elapsed_sec": 0.125,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -257,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.527,
+        "elapsed_sec": 1.022,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -266,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.279,
+        "elapsed_sec": 0.358,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -308,7 +303,7 @@
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1421.0,
+      "net_flow_usd_m": -1421.7,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
@@ -317,9 +312,16 @@
         "oi_usd_b": 1.81
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0059,
+        "funding_rate_pct": -0.0053,
         "oi_usd_b": 1.14
       }
+    },
+    "mempool": {
+      "fastest_fee_sat_vb": 2,
+      "half_hour_fee_sat_vb": 1,
+      "mempool_vsize_mb": 36.9,
+      "tx_count": 55122,
+      "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
@@ -477,6 +479,42 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-92be99ef05",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T00:36:26Z",
+      "published_at_taipei": "2026-11-24 08:36",
+      "published_at_taipei_iso": "2026-11-24T08:36:26+08:00",
+      "first_seen_at_utc": "2026-11-24T00:53:51Z",
+      "first_seen_at_taipei": "2026-11-24 08:53",
+      "month": "2026-11",
+      "title": "Ethereum Foundation doubles protocol security team ahead of overhaul",
+      "url": "https://cointelegraph.com/news/ethereum-foundation-doubles-protocol-security-team-amid-ai-quantum-overhaul?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/ethereum-foundation-doubles-protocol-security-team-amid-ai-quantum-overhaul",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "ETHUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：upgrade",
+      "sentiment_targets": [
+        "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-3394cdab15",
       "issue": "2026-11-24-AM",
       "published_at_utc": "2026-11-24T00:33:22Z",
@@ -553,6 +591,48 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-030d17dae6",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T00:24:33Z",
+      "published_at_taipei": "2026-11-24 08:24",
+      "published_at_taipei_iso": "2026-11-24T08:24:33+08:00",
+      "first_seen_at_utc": "2026-11-24T00:53:51Z",
+      "first_seen_at_taipei": "2026-11-24 08:53",
+      "month": "2026-11",
+      "title": "Oil prices steady after logging deep losses on supply glut fears",
+      "url": "https://finance.yahoo.com/energy/articles/oil-prices-steady-logging-deep-002433621.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/oil-prices-steady-logging-deep-002433621.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-c20dc91adb",
+        "issue": "2026-11-23-PM",
+        "title": "Oil Prices Fall as Traders Weigh Supply Surplus, Gulf Attacks",
+        "published_at_taipei": "2026-11-23 20:58",
+        "url": "https://www.wsj.com/business/energy-oil/oil-prices-edge-lower-as-traders-weigh-supply-surplus-gulf-attacks-6861119f?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
       ],
       "sentiment_method": "rule"
     },
@@ -637,6 +717,46 @@
         "NAS100",
         "SP500",
         "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-5fc845352d",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T00:16:49Z",
+      "published_at_taipei": "2026-11-24 08:16",
+      "published_at_taipei_iso": "2026-11-24T08:16:49+08:00",
+      "first_seen_at_utc": "2026-11-24T00:53:51Z",
+      "first_seen_at_taipei": "2026-11-24 08:53",
+      "month": "2026-11",
+      "title": "Orezone Gold (TSX:ORE) Posted Stronger Earnings, Is It Still Undervalued?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/orezone-gold-tsx-ore-posted-001649563.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/orezone-gold-tsx-ore-posted-001649563.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（earnings）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-44e7e0d210",
+        "issue": "2026-11-23-PM",
+        "title": "Is Equinox Gold (TSX:EQX) Undervalued After Earnings And Its New Dividend?",
+        "published_at_taipei": "2026-11-24 07:17",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/equinox-gold-tsx-eqx-undervalued-231754343.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -1034,6 +1154,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-8ff18a75ec",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T00:40:06Z",
+      "published_at_taipei": "2026-11-24 08:40",
+      "published_at_taipei_iso": "2026-11-24T08:40:06+08:00",
+      "first_seen_at_utc": "2026-11-24T00:53:51Z",
+      "first_seen_at_taipei": "2026-11-24 08:53",
+      "month": "2026-11",
+      "title": "CoreWeave大漲22%攜甲骨文強彈！投資人押注AI資金熱將持續",
+      "url": "https://news.cnyes.com/news/id/6670396",
+      "canonical_url": "https://news.cnyes.com/news/id/6670396",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-f260790e4d",
       "issue": "2026-11-24-AM",
       "published_at_utc": "2026-11-24T00:25:04Z",
@@ -1070,6 +1224,46 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-8817e08b95",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T00:08:03Z",
+      "published_at_taipei": "2026-11-24 08:08",
+      "published_at_taipei_iso": "2026-11-24T08:08:03+08:00",
+      "first_seen_at_utc": "2026-11-24T00:53:51Z",
+      "first_seen_at_taipei": "2026-11-24 08:53",
+      "month": "2026-11",
+      "title": "What Did CF Industries Stock Investors Miss Before The Run?",
+      "url": "https://www.trefis.com/stock/cf/articles/627632/what-did-cf-industries-stock-investors-miss-before-the-run/2026-11-23?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/cf/articles/627632/what-did-cf-industries-stock-investors-miss-before-the-run/2026-11-23?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-7ab8b4ee0f",
+        "issue": "2026-11-21-PM",
+        "title": "Jensen Huang Passed Billions in Nvidia Stock to His Heirs Months Before His Downfall",
+        "published_at_taipei": "2026-11-21 11:14",
+        "url": "https://finance.yahoo.com/m/f93688e0-5c36-372b-855e-b722a7cce11d/jensen-huang-passed-billions.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：sec probe",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -1195,6 +1389,76 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261124-8ff18a75ec",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T00:40:06Z",
+      "published_at_taipei": "2026-11-24 08:40",
+      "published_at_taipei_iso": "2026-11-24T08:40:06+08:00",
+      "first_seen_at_utc": "2026-11-24T00:53:51Z",
+      "first_seen_at_taipei": "2026-11-24 08:53",
+      "month": "2026-11",
+      "title": "CoreWeave大漲22%攜甲骨文強彈！投資人押注AI資金熱將持續",
+      "url": "https://news.cnyes.com/news/id/6670396",
+      "canonical_url": "https://news.cnyes.com/news/id/6670396",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-92be99ef05",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T00:36:26Z",
+      "published_at_taipei": "2026-11-24 08:36",
+      "published_at_taipei_iso": "2026-11-24T08:36:26+08:00",
+      "first_seen_at_utc": "2026-11-24T00:53:51Z",
+      "first_seen_at_taipei": "2026-11-24 08:53",
+      "month": "2026-11",
+      "title": "Ethereum Foundation doubles protocol security team ahead of overhaul",
+      "url": "https://cointelegraph.com/news/ethereum-foundation-doubles-protocol-security-team-amid-ai-quantum-overhaul?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/ethereum-foundation-doubles-protocol-security-team-amid-ai-quantum-overhaul",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "ETHUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：upgrade",
+      "sentiment_targets": [
+        "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261124-3394cdab15",
       "issue": "2026-11-24-AM",
@@ -1352,6 +1616,48 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-030d17dae6",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T00:24:33Z",
+      "published_at_taipei": "2026-11-24 08:24",
+      "published_at_taipei_iso": "2026-11-24T08:24:33+08:00",
+      "first_seen_at_utc": "2026-11-24T00:53:51Z",
+      "first_seen_at_taipei": "2026-11-24 08:53",
+      "month": "2026-11",
+      "title": "Oil prices steady after logging deep losses on supply glut fears",
+      "url": "https://finance.yahoo.com/energy/articles/oil-prices-steady-logging-deep-002433621.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/oil-prices-steady-logging-deep-002433621.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-c20dc91adb",
+        "issue": "2026-11-23-PM",
+        "title": "Oil Prices Fall as Traders Weigh Supply Surplus, Gulf Attacks",
+        "published_at_taipei": "2026-11-23 20:58",
+        "url": "https://www.wsj.com/business/energy-oil/oil-prices-edge-lower-as-traders-weigh-supply-surplus-gulf-attacks-6861119f?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-75033a23e0",
       "issue": "2026-11-24-AM",
       "published_at_utc": "2026-11-24T00:20:06Z",
@@ -1436,6 +1742,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-5fc845352d",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T00:16:49Z",
+      "published_at_taipei": "2026-11-24 08:16",
+      "published_at_taipei_iso": "2026-11-24T08:16:49+08:00",
+      "first_seen_at_utc": "2026-11-24T00:53:51Z",
+      "first_seen_at_taipei": "2026-11-24 08:53",
+      "month": "2026-11",
+      "title": "Orezone Gold (TSX:ORE) Posted Stronger Earnings, Is It Still Undervalued?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/orezone-gold-tsx-ore-posted-001649563.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/orezone-gold-tsx-ore-posted-001649563.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（earnings）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-44e7e0d210",
+        "issue": "2026-11-23-PM",
+        "title": "Is Equinox Gold (TSX:EQX) Undervalued After Earnings And Its New Dividend?",
+        "published_at_taipei": "2026-11-24 07:17",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/equinox-gold-tsx-eqx-undervalued-231754343.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-34b2a624f3",
       "issue": "2026-11-24-AM",
       "published_at_utc": "2026-11-24T00:15:00Z",
@@ -1506,6 +1852,46 @@
       "sentiment_targets": [
         "BTCUSDT",
         "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-8817e08b95",
+      "issue": "2026-11-24-AM",
+      "published_at_utc": "2026-11-24T00:08:03Z",
+      "published_at_taipei": "2026-11-24 08:08",
+      "published_at_taipei_iso": "2026-11-24T08:08:03+08:00",
+      "first_seen_at_utc": "2026-11-24T00:53:51Z",
+      "first_seen_at_taipei": "2026-11-24 08:53",
+      "month": "2026-11",
+      "title": "What Did CF Industries Stock Investors Miss Before The Run?",
+      "url": "https://www.trefis.com/stock/cf/articles/627632/what-did-cf-industries-stock-investors-miss-before-the-run/2026-11-23?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/cf/articles/627632/what-did-cf-industries-stock-investors-miss-before-the-run/2026-11-23?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-7ab8b4ee0f",
+        "issue": "2026-11-21-PM",
+        "title": "Jensen Huang Passed Billions in Nvidia Stock to His Heirs Months Before His Downfall",
+        "published_at_taipei": "2026-11-21 11:14",
+        "url": "https://finance.yahoo.com/m/f93688e0-5c36-372b-855e-b722a7cce11d/jensen-huang-passed-billions.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：sec probe",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -52814,8 +53200,8 @@
       "month": "2026-11",
       "date": "2026-11-24",
       "half": "AM",
-      "updated_at_taipei": "2026-11-24 08:38",
-      "count": 22,
+      "updated_at_taipei": "2026-11-24 08:53",
+      "count": 27,
       "star3_count": 4,
       "failed_sources": [
         {
@@ -52827,11 +53213,6 @@
           "id": "bybit_derivatives",
           "name": "Bybit 永續合約",
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
-        },
-        {
-          "id": "mempool_space",
-          "name": "mempool.space",
-          "error": "HTTPSConnectionPool(host='mempool.space', port=443): Max retries exceeded with url: /api/v1/fees/recommended (Caused by NewConnectionError(\"HTTPSConnection(host='mempool.space', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\"))"
         },
         {
           "id": "bybit_announcements",
