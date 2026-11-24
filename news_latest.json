@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-24-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-24T14:12:31Z",
-  "updated_at_taipei": "2026-11-24 22:12",
-  "last_updated_utc": "2026-11-24T14:12:31Z",
-  "last_updated_taipei": "2026-11-24 22:12",
-  "next_update_hint": "約台北時間 22:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-24T14:27:35Z",
+  "updated_at_taipei": "2026-11-24 22:27",
+  "last_updated_utc": "2026-11-24T14:27:35Z",
+  "last_updated_taipei": "2026-11-24 22:27",
+  "next_update_hint": "約台北時間 22:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 21.597,
+    "total_elapsed_sec": 25.088,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 5,
+    "new_items_added": 14,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.079,
+        "elapsed_sec": 0.107,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.204,
+        "elapsed_sec": 0.164,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.211,
+        "elapsed_sec": 0.088,
         "raw_count": 30,
         "items_kept": 2,
         "error": null
@@ -63,17 +63,17 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.135,
+        "elapsed_sec": 0.108,
         "raw_count": 10,
-        "items_kept": 3,
+        "items_kept": 2,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.237,
-        "raw_count": 19,
+        "elapsed_sec": 0.32,
+        "raw_count": 20,
         "items_kept": 16,
         "error": null
       },
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.268,
+        "elapsed_sec": 0.292,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.133,
+        "elapsed_sec": 0.207,
         "raw_count": 30,
         "items_kept": 18,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.104,
+        "elapsed_sec": 0.14,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.109,
+        "elapsed_sec": 0.152,
         "raw_count": 37,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.501,
+        "elapsed_sec": 0.459,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 1.279,
+        "elapsed_sec": 0.523,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -135,16 +135,16 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.489,
+        "elapsed_sec": 0.516,
         "raw_count": 20,
-        "items_kept": 9,
+        "items_kept": 8,
         "error": null
       },
       "cnyes_crypto": {
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.795,
+        "elapsed_sec": 3.311,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.274,
+        "elapsed_sec": 0.431,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.476,
+        "elapsed_sec": 0.563,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.195,
+        "elapsed_sec": 0.275,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.075,
+        "elapsed_sec": 2.115,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.06,
+        "elapsed_sec": 0.091,
         "raw_count": 1375,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 3.338,
+        "elapsed_sec": 2.143,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.585,
+        "elapsed_sec": 0.481,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,16 +216,16 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.673,
+        "elapsed_sec": 1.469,
         "raw_count": 6,
-        "items_kept": 0,
+        "items_kept": 1,
         "error": null
       },
       "bybit_derivatives": {
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.459,
+        "elapsed_sec": 0.453,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.724,
+        "elapsed_sec": 0.632,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.333,
+        "elapsed_sec": 0.19,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.545,
+        "elapsed_sec": 0.633,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.403,
+        "elapsed_sec": 0.364,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -278,11 +278,11 @@
     "chains_tvl": {
       "Ethereum": {
         "tvl_b": 36.0,
-        "change_1d_pct": -1.23
+        "change_1d_pct": -1.22
       },
       "Base": {
-        "tvl_b": 5.05,
-        "change_1d_pct": -1.72
+        "tvl_b": 5.04,
+        "change_1d_pct": -1.74
       },
       "Solana": {
         "tvl_b": 4.57,
@@ -293,8 +293,8 @@
         "change_1d_pct": 0.02
       },
       "BSC": {
-        "tvl_b": 4.28,
-        "change_1d_pct": -1.16
+        "tvl_b": 4.27,
+        "change_1d_pct": -1.21
       },
       "Bitcoin": {
         "tvl_b": 3.02,
@@ -303,28 +303,68 @@
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1399.0,
+      "net_flow_usd_m": -1402.2,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0044,
+        "funding_rate_pct": 0.0042,
         "oi_usd_b": 1.84
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0015,
+        "funding_rate_pct": -0.0013,
         "oi_usd_b": 1.15
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 2,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.5,
-      "tx_count": 60486,
+      "mempool_vsize_mb": 30.5,
+      "tx_count": 67250,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261124-8a9c31f7f7",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:13:03Z",
+      "published_at_taipei": "2026-11-24 22:13",
+      "published_at_taipei_iso": "2026-11-24T22:13:03+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Justice Department Moves to Forfeit $1.1B in USDC From North Korea's Binance Hack",
+      "url": "https://decrypt.co/383874/justice-department-moves-to-forfeit-1-1b-in-usdc-from-north-koreas-binance-hack",
+      "canonical_url": "https://decrypt.co/383874/justice-department-moves-to-forfeit-1-1b-in-usdc-from-north-koreas-binance-hack",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-824c255ff1",
+        "issue": "2026-11-23-PM",
+        "title": "US seeks to recover $1.1B in crypto stolen in North Korea-linked Binance hack",
+        "published_at_taipei": "2026-11-24 05:04",
+        "url": "https://cointelegraph.com/news/us-seeks-11b-crypto-stolen-north-korea-binance-hack?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261124-ff1b9c0a89",
       "issue": "2026-11-24-PM",
@@ -551,6 +591,120 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-8d94487e72",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:27:35Z",
+      "published_at_taipei": "2026-11-24 22:27",
+      "published_at_taipei_iso": "2026-11-24T22:27:35+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "SOLUSDT 24h 未平倉量劇減 -10.25%（現為 $0.20B）｜OKX",
+      "url": "https://www.okx.com/trade-swap/funding-rate",
+      "canonical_url": "https://okx.com/trade-swap/funding-rate",
+      "source": "OKX",
+      "source_id": "okx_derivatives",
+      "category": "衍生品",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "SOLUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "數據門檻規則",
+      "is_data_alert": true,
+      "metrics": {
+        "symbol": "SOLUSDT",
+        "exchange": "OKX",
+        "oi_24h_pct": -10.25,
+        "oi_usd": 203847693.0,
+        "alert_key": "open_interest:SOLUSDT:down"
+      },
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "數據：未平倉量劇烈變動（方向中性）",
+      "sentiment_targets": [
+        "SOLUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-3139513345",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:15:23Z",
+      "published_at_taipei": "2026-11-24 22:15",
+      "published_at_taipei_iso": "2026-11-24T22:15:23+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "大漲真能治百病？台股狂噴3310點 專家卻揭「這問題」還在：只是方向反過來",
+      "url": "https://tw.news.yahoo.com/%E5%A4%A7%E6%BC%B2%E7%9C%9F%E8%83%BD%E6%B2%BB%E7%99%BE%E7%97%85-%E5%8F%B0%E8%82%A1%E7%8B%82%E5%99%B43310%E9%BB%9E-%E5%B0%88%E5%AE%B6%E5%8D%BB%E6%8F%AD-%E9%80%99%E5%95%8F%E9%A1%8C-%E9%82%84%E5%9C%A8-141523282.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%A4%A7%E6%BC%B2%E7%9C%9F%E8%83%BD%E6%B2%BB%E7%99%BE%E7%97%85-%E5%8F%B0%E8%82%A1%E7%8B%82%E5%99%B43310%E9%BB%9E-%E5%B0%88%E5%AE%B6%E5%8D%BB%E6%8F%AD-%E9%80%99%E5%95%8F%E9%A1%8C-%E9%82%84%E5%9C%A8-141523282.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：大漲；命中：重挫）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-3f55fff2b3",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:04:31Z",
+      "published_at_taipei": "2026-11-24 22:04",
+      "published_at_taipei_iso": "2026-11-24T22:04:31+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "台股救市18套劇本再添一招？ 金管會：檢討處置股制度",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%95%91%E5%B8%8218%E5%A5%97%E5%8A%87%E6%9C%AC%E5%86%8D%E6%B7%BB-%E6%8B%9B-%E9%87%91%E7%AE%A1%E6%9C%83-%E6%AA%A2%E8%A8%8E%E8%99%95%E7%BD%AE%E8%82%A1%E5%88%B6%E5%BA%A6-140431043.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%95%91%E5%B8%8218%E5%A5%97%E5%8A%87%E6%9C%AC%E5%86%8D%E6%B7%BB-%E6%8B%9B-%E9%87%91%E7%AE%A1%E6%9C%83-%E6%AA%A2%E8%A8%8E%E8%99%95%E7%BD%AE%E8%82%A1%E5%88%B6%E5%BA%A6-140431043.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：處置股",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-4625793c46",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T14:00:02Z",
@@ -659,6 +813,84 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-0d985826e7",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:54:02Z",
+      "published_at_taipei": "2026-11-24 21:54",
+      "published_at_taipei_iso": "2026-11-24T21:54:02+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "What Changed In Apple Stock's Story?",
+      "url": "https://www.trefis.com/stock/aapl/articles/628423/what-changed-in-apple-stock-s-story/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/aapl/articles/628423/what-changed-in-apple-stock-s-story/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-faf3f5a2eb",
+        "issue": "2026-11-23-PM",
+        "title": "What Just Happened To Applied Digital Stock?",
+        "published_at_taipei": "2026-11-23 20:22",
+        "url": "https://www.trefis.com/stock/apld/articles/627717/what-just-happened-to-applied-digital-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-fa4703c14a",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:54:02Z",
+      "published_at_taipei": "2026-11-24 21:54",
+      "published_at_taipei_iso": "2026-11-24T21:54:02+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Should You Trim Or Add To Your Tesla Position?",
+      "url": "https://www.trefis.com/stock/tsla/articles/628369/should-you-trim-or-add-to-your-tesla-position/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/tsla/articles/628369/should-you-trim-or-add-to-your-tesla-position/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
       ],
       "sentiment_method": "rule"
     },
@@ -942,6 +1174,48 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-3c43f60640",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:33:16Z",
+      "published_at_taipei": "2026-11-24 21:33",
+      "published_at_taipei_iso": "2026-11-24T21:33:16+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Why Are Oil Prices Falling to 3-Month Lows?",
+      "url": "https://beincrypto.com/oil-price-three-month-low-opec-meeting/?.tsrc=rss",
+      "canonical_url": "https://beincrypto.com/oil-price-three-month-low-opec-meeting?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-8c3b769625",
+        "issue": "2026-11-24-AM",
+        "title": "Oil Falls Toward 3-Month Lows",
+        "published_at_taipei": "2026-11-24 17:42",
+        "url": "https://finance.yahoo.com/m/177db888-b72c-3426-b053-a13676898fc5/oil-falls-toward-3-month-lows.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
       ],
       "sentiment_method": "rule"
     },
@@ -2639,6 +2913,44 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-39b359ef07",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T04:30:56Z",
+      "published_at_taipei": "2026-11-24 12:30",
+      "published_at_taipei_iso": "2026-11-24T12:30:56+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "AI 空運引擎續旺 航空股強勢起飛",
+      "url": "https://money.udn.com/money/story/5710/9898379",
+      "canonical_url": "https://money.udn.com/money/story/5710/9898379",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2603"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：反彈",
+      "sentiment_targets": [
+        "TWII",
+        "2603"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-a03163d527",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T00:00:00Z",
@@ -2678,6 +2990,240 @@
       "sentiment_targets": [
         "BTCUSDT",
         "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-a03ab92a3b",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:10:23Z",
+      "published_at_taipei": "2026-11-24 22:10",
+      "published_at_taipei_iso": "2026-11-24T22:10:23+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "USDT buyers face 22% VAT when Moscow Exchange opens crypto trading",
+      "url": "https://cointelegraph.com/news/russia-usdt-buyer-face-22-tax-december-launch?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/russia-usdt-buyer-face-22-tax-december-launch",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-0ed8bdf83c",
+        "issue": "2026-11-21-PM",
+        "title": "Fraudsters Used Fake Crypto Exchanges to Steal $37 Million, SEC Alleges",
+        "published_at_taipei": "2026-11-22 01:01",
+        "url": "https://decrypt.co/383752/fraudsters-fake-crypto-exchanges-steal-37-million-sec"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-b41c15d3ff",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:00:00Z",
+      "published_at_taipei": "2026-11-24 22:00",
+      "published_at_taipei_iso": "2026-11-24T22:00:00+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "MetalsBackedWealth Launches Free Gold IRA Planning Tools to Help Retirement Savers Understand Investment Costs and Break-Even Requirements",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/metalsbackedwealth-launches-free-gold-ira-140000285.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/metalsbackedwealth-launches-free-gold-ira-140000285.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-c33bcd34dd",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:56:14Z",
+      "published_at_taipei": "2026-11-24 21:56",
+      "published_at_taipei_iso": "2026-11-24T21:56:14+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "The Single Most Important Metric For Accenture Stock",
+      "url": "https://www.trefis.com/stock/acn/articles/628410/the-single-most-important-metric-for-accenture-stock/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/acn/articles/628410/the-single-most-important-metric-for-accenture-stock/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-78d249f3b1",
+        "issue": "2026-11-23-PM",
+        "title": "Tesla’s Big Self-Driving Upgrade Arrives Right on Time for the Stock",
+        "published_at_taipei": "2026-11-23 23:15",
+        "url": "https://finance.yahoo.com/m/6a733e08-c8a9-3da6-bbdc-9f5eb9ca9edd/tesla%E2%80%99s-big-self-driving.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-91dd5ee7c5",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:51:50Z",
+      "published_at_taipei": "2026-11-24 21:51",
+      "published_at_taipei_iso": "2026-11-24T21:51:50+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Can You Justify Buying Loar Stock Today?",
+      "url": "https://www.trefis.com/stock/loar/articles/628311/can-you-justify-buying-loar-stock-today/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/loar/articles/628311/can-you-justify-buying-loar-stock-today/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-bad493bcda",
+        "issue": "2026-11-23-PM",
+        "title": "This is when you should start buying gold again: BCA",
+        "published_at_taipei": "2026-11-23 21:28",
+        "url": "https://finance.yahoo.com/markets/commodities/articles/start-buying-gold-again-bca-132835981.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-54526d2080",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:48:27Z",
+      "published_at_taipei": "2026-11-24 21:48",
+      "published_at_taipei_iso": "2026-11-24T21:48:27+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Is Palantir Stock Priced Right Against Its Rivals?",
+      "url": "https://www.trefis.com/stock/pltr/articles/628308/is-palantir-stock-priced-right-against-its-rivals/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/pltr/articles/628308/is-palantir-stock-priced-right-against-its-rivals/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-63a055f67c",
+        "issue": "2026-11-23-PM",
+        "title": "Is UPS Stock Riskier Than Its Rally Suggests?",
+        "published_at_taipei": "2026-11-23 19:44",
+        "url": "https://www.trefis.com/stock/ups/articles/627577/is-ups-stock-riskier-than-its-rally-suggests/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-2f95576f1e",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:42:38Z",
+      "published_at_taipei": "2026-11-24 21:42",
+      "published_at_taipei_iso": "2026-11-24T21:42:38+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Own AMD Stock? Watch Its Pile Of Unsold Chips",
+      "url": "https://www.trefis.com/stock/amd/articles/628253/own-amd-stock-watch-its-pile-of-unsold-chips/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/amd/articles/628253/own-amd-stock-watch-its-pile-of-unsold-chips/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-634c10eee9",
+        "issue": "2026-11-23-PM",
+        "title": "Own Dell Stock? Its Profit Isn't All Cash",
+        "published_at_taipei": "2026-11-23 23:02",
+        "url": "https://www.trefis.com/stock/dell/articles/627663/own-dell-stock-its-profit-isn-t-all-cash/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -4056,6 +4602,164 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261124-8d94487e72",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:27:35Z",
+      "published_at_taipei": "2026-11-24 22:27",
+      "published_at_taipei_iso": "2026-11-24T22:27:35+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "SOLUSDT 24h 未平倉量劇減 -10.25%（現為 $0.20B）｜OKX",
+      "url": "https://www.okx.com/trade-swap/funding-rate",
+      "canonical_url": "https://okx.com/trade-swap/funding-rate",
+      "source": "OKX",
+      "source_id": "okx_derivatives",
+      "category": "衍生品",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "SOLUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "數據門檻規則",
+      "is_data_alert": true,
+      "metrics": {
+        "symbol": "SOLUSDT",
+        "exchange": "OKX",
+        "oi_24h_pct": -10.25,
+        "oi_usd": 203847693.0,
+        "alert_key": "open_interest:SOLUSDT:down"
+      },
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "數據：未平倉量劇烈變動（方向中性）",
+      "sentiment_targets": [
+        "SOLUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-3139513345",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:15:23Z",
+      "published_at_taipei": "2026-11-24 22:15",
+      "published_at_taipei_iso": "2026-11-24T22:15:23+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "大漲真能治百病？台股狂噴3310點 專家卻揭「這問題」還在：只是方向反過來",
+      "url": "https://tw.news.yahoo.com/%E5%A4%A7%E6%BC%B2%E7%9C%9F%E8%83%BD%E6%B2%BB%E7%99%BE%E7%97%85-%E5%8F%B0%E8%82%A1%E7%8B%82%E5%99%B43310%E9%BB%9E-%E5%B0%88%E5%AE%B6%E5%8D%BB%E6%8F%AD-%E9%80%99%E5%95%8F%E9%A1%8C-%E9%82%84%E5%9C%A8-141523282.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%A4%A7%E6%BC%B2%E7%9C%9F%E8%83%BD%E6%B2%BB%E7%99%BE%E7%97%85-%E5%8F%B0%E8%82%A1%E7%8B%82%E5%99%B43310%E9%BB%9E-%E5%B0%88%E5%AE%B6%E5%8D%BB%E6%8F%AD-%E9%80%99%E5%95%8F%E9%A1%8C-%E9%82%84%E5%9C%A8-141523282.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：大漲；命中：重挫）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-8a9c31f7f7",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:13:03Z",
+      "published_at_taipei": "2026-11-24 22:13",
+      "published_at_taipei_iso": "2026-11-24T22:13:03+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Justice Department Moves to Forfeit $1.1B in USDC From North Korea's Binance Hack",
+      "url": "https://decrypt.co/383874/justice-department-moves-to-forfeit-1-1b-in-usdc-from-north-koreas-binance-hack",
+      "canonical_url": "https://decrypt.co/383874/justice-department-moves-to-forfeit-1-1b-in-usdc-from-north-koreas-binance-hack",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-824c255ff1",
+        "issue": "2026-11-23-PM",
+        "title": "US seeks to recover $1.1B in crypto stolen in North Korea-linked Binance hack",
+        "published_at_taipei": "2026-11-24 05:04",
+        "url": "https://cointelegraph.com/news/us-seeks-11b-crypto-stolen-north-korea-binance-hack?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-a03ab92a3b",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:10:23Z",
+      "published_at_taipei": "2026-11-24 22:10",
+      "published_at_taipei_iso": "2026-11-24T22:10:23+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "USDT buyers face 22% VAT when Moscow Exchange opens crypto trading",
+      "url": "https://cointelegraph.com/news/russia-usdt-buyer-face-22-tax-december-launch?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/russia-usdt-buyer-face-22-tax-december-launch",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-0ed8bdf83c",
+        "issue": "2026-11-21-PM",
+        "title": "Fraudsters Used Fake Crypto Exchanges to Steal $37 Million, SEC Alleges",
+        "published_at_taipei": "2026-11-22 01:01",
+        "url": "https://decrypt.co/383752/fraudsters-fake-crypto-exchanges-steal-37-million-sec"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-ff1b9c0a89",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T14:10:04Z",
@@ -4087,6 +4791,42 @@
       "sentiment_reason": "命中：反彈；命中：升息",
       "sentiment_targets": [
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-3f55fff2b3",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:04:31Z",
+      "published_at_taipei": "2026-11-24 22:04",
+      "published_at_taipei_iso": "2026-11-24T22:04:31+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "台股救市18套劇本再添一招？ 金管會：檢討處置股制度",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%95%91%E5%B8%8218%E5%A5%97%E5%8A%87%E6%9C%AC%E5%86%8D%E6%B7%BB-%E6%8B%9B-%E9%87%91%E7%AE%A1%E6%9C%83-%E6%AA%A2%E8%A8%8E%E8%99%95%E7%BD%AE%E8%82%A1%E5%88%B6%E5%BA%A6-140431043.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%95%91%E5%B8%8218%E5%A5%97%E5%8A%87%E6%9C%AC%E5%86%8D%E6%B7%BB-%E6%8B%9B-%E9%87%91%E7%AE%A1%E6%9C%83-%E6%AA%A2%E8%A8%8E%E8%99%95%E7%BD%AE%E8%82%A1%E5%88%B6%E5%BA%A6-140431043.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：處置股",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -4203,6 +4943,158 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-b41c15d3ff",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T14:00:00Z",
+      "published_at_taipei": "2026-11-24 22:00",
+      "published_at_taipei_iso": "2026-11-24T22:00:00+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "MetalsBackedWealth Launches Free Gold IRA Planning Tools to Help Retirement Savers Understand Investment Costs and Break-Even Requirements",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/metalsbackedwealth-launches-free-gold-ira-140000285.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/metalsbackedwealth-launches-free-gold-ira-140000285.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-c33bcd34dd",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:56:14Z",
+      "published_at_taipei": "2026-11-24 21:56",
+      "published_at_taipei_iso": "2026-11-24T21:56:14+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "The Single Most Important Metric For Accenture Stock",
+      "url": "https://www.trefis.com/stock/acn/articles/628410/the-single-most-important-metric-for-accenture-stock/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/acn/articles/628410/the-single-most-important-metric-for-accenture-stock/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-78d249f3b1",
+        "issue": "2026-11-23-PM",
+        "title": "Tesla’s Big Self-Driving Upgrade Arrives Right on Time for the Stock",
+        "published_at_taipei": "2026-11-23 23:15",
+        "url": "https://finance.yahoo.com/m/6a733e08-c8a9-3da6-bbdc-9f5eb9ca9edd/tesla%E2%80%99s-big-self-driving.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-0d985826e7",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:54:02Z",
+      "published_at_taipei": "2026-11-24 21:54",
+      "published_at_taipei_iso": "2026-11-24T21:54:02+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "What Changed In Apple Stock's Story?",
+      "url": "https://www.trefis.com/stock/aapl/articles/628423/what-changed-in-apple-stock-s-story/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/aapl/articles/628423/what-changed-in-apple-stock-s-story/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-faf3f5a2eb",
+        "issue": "2026-11-23-PM",
+        "title": "What Just Happened To Applied Digital Stock?",
+        "published_at_taipei": "2026-11-23 20:22",
+        "url": "https://www.trefis.com/stock/apld/articles/627717/what-just-happened-to-applied-digital-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-fa4703c14a",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:54:02Z",
+      "published_at_taipei": "2026-11-24 21:54",
+      "published_at_taipei_iso": "2026-11-24T21:54:02+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Should You Trim Or Add To Your Tesla Position?",
+      "url": "https://www.trefis.com/stock/tsla/articles/628369/should-you-trim-or-add-to-your-tesla-position/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/tsla/articles/628369/should-you-trim-or-add-to-your-tesla-position/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-e50a2325d1",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T13:52:43Z",
@@ -4242,6 +5134,86 @@
         "2330",
         "2454",
         "2308"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-91dd5ee7c5",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:51:50Z",
+      "published_at_taipei": "2026-11-24 21:51",
+      "published_at_taipei_iso": "2026-11-24T21:51:50+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Can You Justify Buying Loar Stock Today?",
+      "url": "https://www.trefis.com/stock/loar/articles/628311/can-you-justify-buying-loar-stock-today/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/loar/articles/628311/can-you-justify-buying-loar-stock-today/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-bad493bcda",
+        "issue": "2026-11-23-PM",
+        "title": "This is when you should start buying gold again: BCA",
+        "published_at_taipei": "2026-11-23 21:28",
+        "url": "https://finance.yahoo.com/markets/commodities/articles/start-buying-gold-again-bca-132835981.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-54526d2080",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:48:27Z",
+      "published_at_taipei": "2026-11-24 21:48",
+      "published_at_taipei_iso": "2026-11-24T21:48:27+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Is Palantir Stock Priced Right Against Its Rivals?",
+      "url": "https://www.trefis.com/stock/pltr/articles/628308/is-palantir-stock-priced-right-against-its-rivals/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/pltr/articles/628308/is-palantir-stock-priced-right-against-its-rivals/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-63a055f67c",
+        "issue": "2026-11-23-PM",
+        "title": "Is UPS Stock Riskier Than Its Rally Suggests?",
+        "published_at_taipei": "2026-11-23 19:44",
+        "url": "https://www.trefis.com/stock/ups/articles/627577/is-ups-stock-riskier-than-its-rally-suggests/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -4440,6 +5412,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261124-2f95576f1e",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:42:38Z",
+      "published_at_taipei": "2026-11-24 21:42",
+      "published_at_taipei_iso": "2026-11-24T21:42:38+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Own AMD Stock? Watch Its Pile Of Unsold Chips",
+      "url": "https://www.trefis.com/stock/amd/articles/628253/own-amd-stock-watch-its-pile-of-unsold-chips/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/amd/articles/628253/own-amd-stock-watch-its-pile-of-unsold-chips/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-634c10eee9",
+        "issue": "2026-11-23-PM",
+        "title": "Own Dell Stock? Its Profit Isn't All Cash",
+        "published_at_taipei": "2026-11-23 23:02",
+        "url": "https://www.trefis.com/stock/dell/articles/627663/own-dell-stock-its-profit-isn-t-all-cash/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261124-9aa5d04aa2",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T13:36:00Z",
@@ -4516,6 +5528,48 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-3c43f60640",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T13:33:16Z",
+      "published_at_taipei": "2026-11-24 21:33",
+      "published_at_taipei_iso": "2026-11-24T21:33:16+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "Why Are Oil Prices Falling to 3-Month Lows?",
+      "url": "https://beincrypto.com/oil-price-three-month-low-opec-meeting/?.tsrc=rss",
+      "canonical_url": "https://beincrypto.com/oil-price-three-month-low-opec-meeting?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-8c3b769625",
+        "issue": "2026-11-24-AM",
+        "title": "Oil Falls Toward 3-Month Lows",
+        "published_at_taipei": "2026-11-24 17:42",
+        "url": "https://finance.yahoo.com/m/177db888-b72c-3426-b053-a13676898fc5/oil-falls-toward-3-month-lows.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
       ],
       "sentiment_method": "rule"
     },
@@ -18376,6 +19430,44 @@
       "sentiment_reason": "命中：反彈；命中：利多",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261124-39b359ef07",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T04:30:56Z",
+      "published_at_taipei": "2026-11-24 12:30",
+      "published_at_taipei_iso": "2026-11-24T12:30:56+08:00",
+      "first_seen_at_utc": "2026-11-24T14:27:35Z",
+      "first_seen_at_taipei": "2026-11-24 22:27",
+      "month": "2026-11",
+      "title": "AI 空運引擎續旺 航空股強勢起飛",
+      "url": "https://money.udn.com/money/story/5710/9898379",
+      "canonical_url": "https://money.udn.com/money/story/5710/9898379",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2603"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：反彈",
+      "sentiment_targets": [
+        "TWII",
+        "2603"
       ],
       "sentiment_method": "rule"
     },
@@ -76668,9 +77760,9 @@
       "month": "2026-11",
       "date": "2026-11-24",
       "half": "PM",
-      "updated_at_taipei": "2026-11-24 22:12",
-      "count": 97,
-      "star3_count": 6,
+      "updated_at_taipei": "2026-11-24 22:27",
+      "count": 111,
+      "star3_count": 7,
       "failed_sources": [
         {
           "id": "binance_derivatives",
