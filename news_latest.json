@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-24-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-24T16:13:17Z",
-  "updated_at_taipei": "2026-11-25 00:13",
-  "last_updated_utc": "2026-11-24T16:13:17Z",
-  "last_updated_taipei": "2026-11-25 00:13",
-  "next_update_hint": "約台北時間 00:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-24T16:28:24Z",
+  "updated_at_taipei": "2026-11-25 00:28",
+  "last_updated_utc": "2026-11-24T16:28:24Z",
+  "last_updated_taipei": "2026-11-25 00:28",
+  "next_update_hint": "約台北時間 00:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 27.464,
+    "total_elapsed_sec": 23.479,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 20,
+    "new_items_added": 11,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.09,
+        "elapsed_sec": 0.077,
         "raw_count": 20,
         "items_kept": 0,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.267,
+        "elapsed_sec": 0.339,
         "raw_count": 30,
         "items_kept": 10,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.66,
+        "elapsed_sec": 0.177,
         "raw_count": 30,
         "items_kept": 3,
         "error": null
@@ -63,16 +63,16 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.103,
+        "elapsed_sec": 0.085,
         "raw_count": 10,
-        "items_kept": 5,
+        "items_kept": 6,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.31,
+        "elapsed_sec": 0.278,
         "raw_count": 20,
         "items_kept": 20,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.408,
+        "elapsed_sec": 0.213,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.13,
+        "elapsed_sec": 0.167,
         "raw_count": 30,
         "items_kept": 18,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.135,
+        "elapsed_sec": 0.121,
         "raw_count": 20,
         "items_kept": 16,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.11,
+        "elapsed_sec": 0.146,
         "raw_count": 37,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.541,
+        "elapsed_sec": 0.489,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.399,
+        "elapsed_sec": 0.384,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.601,
+        "elapsed_sec": 0.427,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.678,
+        "elapsed_sec": 0.707,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.46,
+        "elapsed_sec": 0.443,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.525,
+        "elapsed_sec": 0.582,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.241,
+        "elapsed_sec": 0.144,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.696,
+        "elapsed_sec": 5.358,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.655,
+        "elapsed_sec": 0.087,
         "raw_count": 1375,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 2.023,
+        "elapsed_sec": 1.774,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.462,
+        "elapsed_sec": 0.449,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.421,
+        "elapsed_sec": 1.012,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.452,
+        "elapsed_sec": 0.44,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.68,
+        "elapsed_sec": 0.635,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.218,
+        "elapsed_sec": 0.235,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.533,
+        "elapsed_sec": 0.411,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.391,
+        "elapsed_sec": 0.379,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,7 +277,7 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 35.94,
+        "tvl_b": 35.93,
         "change_1d_pct": -1.41
       },
       "Base": {
@@ -286,7 +286,7 @@
       },
       "Solana": {
         "tvl_b": 4.54,
-        "change_1d_pct": -1.72
+        "change_1d_pct": -1.78
       },
       "Tron": {
         "tvl_b": 4.44,
@@ -303,28 +303,62 @@
     },
     "btc_spot_etf": {
       "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1384.8,
+      "net_flow_usd_m": -1386.7,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0024,
-        "oi_usd_b": 1.81
+        "funding_rate_pct": 0.0026,
+        "oi_usd_b": 1.82
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0009,
+        "funding_rate_pct": 0.0012,
         "oi_usd_b": 1.15
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 3,
-      "half_hour_fee_sat_vb": 3,
-      "mempool_vsize_mb": 33.0,
-      "tx_count": 75227,
+      "fastest_fee_sat_vb": 2,
+      "half_hour_fee_sat_vb": 1,
+      "mempool_vsize_mb": 29.1,
+      "tx_count": 62203,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261125-6d801253e3",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:24:00Z",
+      "published_at_taipei": "2026-11-25 00:24",
+      "published_at_taipei_iso": "2026-11-25T00:24:00+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Americans don’t like Trump’s tariffs. He’s doubling down anyway — as soon as this week.",
+      "url": "https://www.marketwatch.com/story/americans-dont-like-trumps-tariffs-hes-doubling-down-anyway-as-soon-as-this-week-74c8bed5?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/americans-dont-like-trumps-tariffs-hes-doubling-down-anyway-as-soon-as-this-week-74c8bed5?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：tariffs",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261124-fc25c576da",
       "issue": "2026-11-24-PM",
@@ -725,6 +759,86 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d71613cb1e",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:11:00Z",
+      "published_at_taipei": "2026-11-25 00:11",
+      "published_at_taipei_iso": "2026-11-25T00:11:00+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Fidelity Adds Aave, Chainlink and Uniswap to Its Crypto Trading Platform",
+      "url": "https://www.cryptoprowl.com/releases/fidelity-adds-aave-chainlink-and-uniswap-to-its-crypto-trading-platform-8054?.tsrc=rss",
+      "canonical_url": "https://cryptoprowl.com/releases/fidelity-adds-aave-chainlink-and-uniswap-to-its-crypto-trading-platform-8054?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "LINKUSDT",
+        "UNIUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "LINKUSDT",
+        "UNIUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-808d5154db",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:10:31Z",
+      "published_at_taipei": "2026-11-25 00:10",
+      "published_at_taipei_iso": "2026-11-25T00:10:31+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Alphabet (GOOGL) Expands AI Search With Wallet Data",
+      "url": "https://finance.yahoo.com/technology/ai/articles/alphabet-googl-expands-ai-search-161031910.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/alphabet-googl-expands-ai-search-161031910.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-87ab19636c",
+        "issue": "2026-11-23-PM",
+        "title": "What Explains The Fall In Meta Stock?",
+        "published_at_taipei": "2026-11-24 01:31",
+        "url": "https://www.trefis.com/stock/meta/articles/627808/what-explains-the-fall-in-meta-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
       ],
       "sentiment_method": "rule"
     },
@@ -5132,6 +5246,203 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-3123aaf34b",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:22:24Z",
+      "published_at_taipei": "2026-11-25 00:22",
+      "published_at_taipei_iso": "2026-11-25T00:22:24+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "The Fed Just Said AI May Be a Major Threat to the U.S. Economy",
+      "url": "https://247wallst.com/investing/2026/11/24/the-fed-just-said-ai-may-be-a-major-threat-to-the-u-s-economy/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/24/the-fed-just-said-ai-may-be-a-major-threat-to-the-u-s-economy?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-30b5b4a07a",
+        "issue": "2026-11-24-AM",
+        "title": "The Nasdaq Just Had Its Best Day Since April 2025. Anthropic Stock Fell Anyway.",
+        "published_at_taipei": "2026-11-24 08:42",
+        "url": "https://www.fool.com/investing/2026/11/23/the-nasdaq-just-had-its-best-day-since-april-2025-anthropic-stock-fell-anyway/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-3cadf82444",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:18:15Z",
+      "published_at_taipei": "2026-11-25 00:18",
+      "published_at_taipei_iso": "2026-11-25T00:18:15+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Revvity (RVTY) Rallies on Resilient Instrument Demand and Rebound in Life Sciences R&D",
+      "url": "https://finance.yahoo.com/healthcare/articles/revvity-rvty-rallies-resilient-instrument-161815389.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/healthcare/articles/revvity-rvty-rallies-resilient-instrument-161815389.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：rate hike；命中：rallies）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-811584576e",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:16:07Z",
+      "published_at_taipei": "2026-11-25 00:16",
+      "published_at_taipei_iso": "2026-11-25T00:16:07+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "ESAB (ESAB) Positioned for High-Margin Expansion",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/esab-esab-positioned-high-margin-161607187.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/esab-esab-positioned-high-margin-161607187.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-48eb60af72",
+        "issue": "2026-11-23-PM",
+        "title": "Is Kimberly-Clark (KMB) Positioned for Earnings Expansion?",
+        "published_at_taipei": "2026-11-23 23:06",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/kimberly-clark-kmb-positioned-earnings-150608254.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：rate hike",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-fc15a73f6f",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:12:49Z",
+      "published_at_taipei": "2026-11-25 00:12",
+      "published_at_taipei_iso": "2026-11-25T00:12:49+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Red Rock Resorts’ (RRR) Long-Term Opportunity Remains Intact Amid Near-Term Headwinds",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/red-rock-resorts-rrr-long-161249468.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/red-rock-resorts-rrr-long-161249468.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-7a2e068819",
+        "issue": "2026-11-23-PM",
+        "title": "Regal Rexnord Corp. (RRX): Demand Outlook Intact Despite Near-Term Pressures",
+        "published_at_taipei": "2026-11-24 02:06",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/regal-rexnord-corp-rrx-demand-180602674.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：rate hike",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-17a887ae18",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:12:13Z",
+      "published_at_taipei": "2026-11-25 00:12",
+      "published_at_taipei_iso": "2026-11-25T00:12:13+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Jensen Huang Is Back at Nvidia, but Wall Street Is Already Getting Nervous Again",
+      "url": "https://247wallst.com/investing/2026/11/24/jensen-huang-is-back-at-nvidia-but-wall-street-is-already-getting-nervous-again/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/24/jensen-huang-is-back-at-nvidia-but-wall-street-is-already-getting-nervous-again?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-f6fe02dae5",
+        "issue": "2026-11-23-PM",
+        "title": "Jensen Huang back at Nvidia, stock soars; Anthropic slides",
+        "published_at_taipei": "2026-11-23 23:46",
+        "url": "https://finance.yahoo.com/video/jensen-huang-back-at-nvidia-stock-soars-anthropic-slides-154615662.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-64f0a614e9",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T16:10:08Z",
@@ -5156,6 +5467,46 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-3d258f79b8",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:09:23Z",
+      "published_at_taipei": "2026-11-25 00:09",
+      "published_at_taipei_iso": "2026-11-25T00:09:23+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "What Is Driving Palantir Stock?",
+      "url": "https://www.trefis.com/stock/pltr/articles/628622/what-is-driving-palantir-stock-2/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/pltr/articles/628622/what-is-driving-palantir-stock-2/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-805db90463",
+        "issue": "2026-11-23-PM",
+        "title": "Why Did Palantir Stock Fall?",
+        "published_at_taipei": "2026-11-23 20:35",
+        "url": "https://www.trefis.com/stock/pltr/articles/627801/why-did-palantir-stock-fall/2026-11-23?.tsrc=rss"
+      },
       "sentiment": "neutral",
       "sentiment_label": "中性",
       "sentiment_score": 0,
@@ -5201,6 +5552,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-b0f0a6365d",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:07:12Z",
+      "published_at_taipei": "2026-11-25 00:07",
+      "published_at_taipei_iso": "2026-11-25T00:07:12+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Bessent Warns the Fed Could Be Making a “Policy Mistake” if It Over-Tightens",
+      "url": "https://247wallst.com/investing/2026/11/24/bessent-warns-the-fed-could-be-making-a-policy-mistake-if-it-over-tightens/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/24/bessent-warns-the-fed-could-be-making-a-policy-mistake-if-it-over-tightens?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-62c109f4a8",
+        "issue": "2026-11-23-AM",
+        "title": "Billionaire Bill Ackman warns Fed will make a rate ‘mistake’ in December",
+        "published_at_taipei": "2026-11-23 10:47",
+        "url": "https://cointelegraph.com/markets/billionaire-bill-ackman-warns-fed-rate-hikes-could-trigger-recession?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-b9fb09b1a1",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T16:04:57Z",
@@ -5236,6 +5627,46 @@
       "sentiment_label": "利空",
       "sentiment_score": -1,
       "sentiment_reason": "命中：rate hike",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-397edf27b9",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:02:54Z",
+      "published_at_taipei": "2026-11-25 00:02",
+      "published_at_taipei_iso": "2026-11-25T00:02:54+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Does Archer Aviation Stock's Fall Change Anything?",
+      "url": "https://www.trefis.com/stock/achr/articles/628370/does-archer-aviation-stock-s-fall-change-anything/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/achr/articles/628370/does-archer-aviation-stock-s-fall-change-anything/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-7e6e4b6661",
+        "issue": "2026-11-23-PM",
+        "title": "Why Did Robinhood Markets Stock Fall Again?",
+        "published_at_taipei": "2026-11-23 19:35",
+        "url": "https://www.trefis.com/stock/hood/articles/627793/why-did-robinhood-markets-stock-fall-again/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -8197,6 +8628,237 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261125-6d801253e3",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:24:00Z",
+      "published_at_taipei": "2026-11-25 00:24",
+      "published_at_taipei_iso": "2026-11-25T00:24:00+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Americans don’t like Trump’s tariffs. He’s doubling down anyway — as soon as this week.",
+      "url": "https://www.marketwatch.com/story/americans-dont-like-trumps-tariffs-hes-doubling-down-anyway-as-soon-as-this-week-74c8bed5?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/americans-dont-like-trumps-tariffs-hes-doubling-down-anyway-as-soon-as-this-week-74c8bed5?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：tariffs",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-3123aaf34b",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:22:24Z",
+      "published_at_taipei": "2026-11-25 00:22",
+      "published_at_taipei_iso": "2026-11-25T00:22:24+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "The Fed Just Said AI May Be a Major Threat to the U.S. Economy",
+      "url": "https://247wallst.com/investing/2026/11/24/the-fed-just-said-ai-may-be-a-major-threat-to-the-u-s-economy/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/24/the-fed-just-said-ai-may-be-a-major-threat-to-the-u-s-economy?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-30b5b4a07a",
+        "issue": "2026-11-24-AM",
+        "title": "The Nasdaq Just Had Its Best Day Since April 2025. Anthropic Stock Fell Anyway.",
+        "published_at_taipei": "2026-11-24 08:42",
+        "url": "https://www.fool.com/investing/2026/11/23/the-nasdaq-just-had-its-best-day-since-april-2025-anthropic-stock-fell-anyway/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-3cadf82444",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:18:15Z",
+      "published_at_taipei": "2026-11-25 00:18",
+      "published_at_taipei_iso": "2026-11-25T00:18:15+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Revvity (RVTY) Rallies on Resilient Instrument Demand and Rebound in Life Sciences R&D",
+      "url": "https://finance.yahoo.com/healthcare/articles/revvity-rvty-rallies-resilient-instrument-161815389.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/healthcare/articles/revvity-rvty-rallies-resilient-instrument-161815389.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：rate hike；命中：rallies）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-811584576e",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:16:07Z",
+      "published_at_taipei": "2026-11-25 00:16",
+      "published_at_taipei_iso": "2026-11-25T00:16:07+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "ESAB (ESAB) Positioned for High-Margin Expansion",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/esab-esab-positioned-high-margin-161607187.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/esab-esab-positioned-high-margin-161607187.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-48eb60af72",
+        "issue": "2026-11-23-PM",
+        "title": "Is Kimberly-Clark (KMB) Positioned for Earnings Expansion?",
+        "published_at_taipei": "2026-11-23 23:06",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/kimberly-clark-kmb-positioned-earnings-150608254.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：rate hike",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-fc15a73f6f",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:12:49Z",
+      "published_at_taipei": "2026-11-25 00:12",
+      "published_at_taipei_iso": "2026-11-25T00:12:49+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Red Rock Resorts’ (RRR) Long-Term Opportunity Remains Intact Amid Near-Term Headwinds",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/red-rock-resorts-rrr-long-161249468.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/red-rock-resorts-rrr-long-161249468.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-7a2e068819",
+        "issue": "2026-11-23-PM",
+        "title": "Regal Rexnord Corp. (RRX): Demand Outlook Intact Despite Near-Term Pressures",
+        "published_at_taipei": "2026-11-24 02:06",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/regal-rexnord-corp-rrx-demand-180602674.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：rate hike",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-17a887ae18",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:12:13Z",
+      "published_at_taipei": "2026-11-25 00:12",
+      "published_at_taipei_iso": "2026-11-25T00:12:13+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Jensen Huang Is Back at Nvidia, but Wall Street Is Already Getting Nervous Again",
+      "url": "https://247wallst.com/investing/2026/11/24/jensen-huang-is-back-at-nvidia-but-wall-street-is-already-getting-nervous-again/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/24/jensen-huang-is-back-at-nvidia-but-wall-street-is-already-getting-nervous-again?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-f6fe02dae5",
+        "issue": "2026-11-23-PM",
+        "title": "Jensen Huang back at Nvidia, stock soars; Anthropic slides",
+        "published_at_taipei": "2026-11-23 23:46",
+        "url": "https://finance.yahoo.com/video/jensen-huang-back-at-nvidia-stock-soars-anthropic-slides-154615662.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-ff27318afb",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T16:11:00Z",
@@ -8233,6 +8895,86 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-d71613cb1e",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:11:00Z",
+      "published_at_taipei": "2026-11-25 00:11",
+      "published_at_taipei_iso": "2026-11-25T00:11:00+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Fidelity Adds Aave, Chainlink and Uniswap to Its Crypto Trading Platform",
+      "url": "https://www.cryptoprowl.com/releases/fidelity-adds-aave-chainlink-and-uniswap-to-its-crypto-trading-platform-8054?.tsrc=rss",
+      "canonical_url": "https://cryptoprowl.com/releases/fidelity-adds-aave-chainlink-and-uniswap-to-its-crypto-trading-platform-8054?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "LINKUSDT",
+        "UNIUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "LINKUSDT",
+        "UNIUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-808d5154db",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:10:31Z",
+      "published_at_taipei": "2026-11-25 00:10",
+      "published_at_taipei_iso": "2026-11-25T00:10:31+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Alphabet (GOOGL) Expands AI Search With Wallet Data",
+      "url": "https://finance.yahoo.com/technology/ai/articles/alphabet-googl-expands-ai-search-161031910.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/alphabet-googl-expands-ai-search-161031910.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-87ab19636c",
+        "issue": "2026-11-23-PM",
+        "title": "What Explains The Fall In Meta Stock?",
+        "published_at_taipei": "2026-11-24 01:31",
+        "url": "https://www.trefis.com/stock/meta/articles/627808/what-explains-the-fall-in-meta-stock/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-64f0a614e9",
       "issue": "2026-11-24-PM",
       "published_at_utc": "2026-11-24T16:10:08Z",
@@ -8257,6 +8999,46 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-3d258f79b8",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:09:23Z",
+      "published_at_taipei": "2026-11-25 00:09",
+      "published_at_taipei_iso": "2026-11-25T00:09:23+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "What Is Driving Palantir Stock?",
+      "url": "https://www.trefis.com/stock/pltr/articles/628622/what-is-driving-palantir-stock-2/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/pltr/articles/628622/what-is-driving-palantir-stock-2/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-805db90463",
+        "issue": "2026-11-23-PM",
+        "title": "Why Did Palantir Stock Fall?",
+        "published_at_taipei": "2026-11-23 20:35",
+        "url": "https://www.trefis.com/stock/pltr/articles/627801/why-did-palantir-stock-fall/2026-11-23?.tsrc=rss"
+      },
       "sentiment": "neutral",
       "sentiment_label": "中性",
       "sentiment_score": 0,
@@ -8296,6 +9078,46 @@
       "sentiment_label": "利空",
       "sentiment_score": -1,
       "sentiment_reason": "命中：rate hike",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-b0f0a6365d",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:07:12Z",
+      "published_at_taipei": "2026-11-25 00:07",
+      "published_at_taipei_iso": "2026-11-25T00:07:12+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Bessent Warns the Fed Could Be Making a “Policy Mistake” if It Over-Tightens",
+      "url": "https://247wallst.com/investing/2026/11/24/bessent-warns-the-fed-could-be-making-a-policy-mistake-if-it-over-tightens/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/24/bessent-warns-the-fed-could-be-making-a-policy-mistake-if-it-over-tightens?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-62c109f4a8",
+        "issue": "2026-11-23-AM",
+        "title": "Billionaire Bill Ackman warns Fed will make a rate ‘mistake’ in December",
+        "published_at_taipei": "2026-11-23 10:47",
+        "url": "https://cointelegraph.com/markets/billionaire-bill-ackman-warns-fed-rate-hikes-could-trigger-recession?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -8371,6 +9193,46 @@
       "sentiment_label": "利空",
       "sentiment_score": -1,
       "sentiment_reason": "命中：rate hike",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-397edf27b9",
+      "issue": "2026-11-24-PM",
+      "published_at_utc": "2026-11-24T16:02:54Z",
+      "published_at_taipei": "2026-11-25 00:02",
+      "published_at_taipei_iso": "2026-11-25T00:02:54+08:00",
+      "first_seen_at_utc": "2026-11-24T16:28:24Z",
+      "first_seen_at_taipei": "2026-11-25 00:28",
+      "month": "2026-11",
+      "title": "Does Archer Aviation Stock's Fall Change Anything?",
+      "url": "https://www.trefis.com/stock/achr/articles/628370/does-archer-aviation-stock-s-fall-change-anything/2026-11-24?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/achr/articles/628370/does-archer-aviation-stock-s-fall-change-anything/2026-11-24?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-7e6e4b6661",
+        "issue": "2026-11-23-PM",
+        "title": "Why Did Robinhood Markets Stock Fall Again?",
+        "published_at_taipei": "2026-11-23 19:35",
+        "url": "https://www.trefis.com/stock/hood/articles/627793/why-did-robinhood-markets-stock-fall-again/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -84950,9 +85812,9 @@
       "month": "2026-11",
       "date": "2026-11-24",
       "half": "PM",
-      "updated_at_taipei": "2026-11-25 00:13",
-      "count": 204,
-      "star3_count": 10,
+      "updated_at_taipei": "2026-11-25 00:28",
+      "count": 215,
+      "star3_count": 11,
       "failed_sources": [
         {
           "id": "binance_derivatives",
