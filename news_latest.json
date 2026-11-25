@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-25-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-25T13:34:12Z",
-  "updated_at_taipei": "2026-11-25 21:34",
-  "last_updated_utc": "2026-11-25T13:34:12Z",
-  "last_updated_taipei": "2026-11-25 21:34",
-  "next_update_hint": "約台北時間 21:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-25T13:49:14Z",
+  "updated_at_taipei": "2026-11-25 21:49",
+  "last_updated_utc": "2026-11-25T13:49:14Z",
+  "last_updated_taipei": "2026-11-25 21:49",
+  "next_update_hint": "約台北時間 22:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 23.528,
+    "total_elapsed_sec": 23.999,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 7,
+    "new_items_added": 11,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.105,
+        "elapsed_sec": 0.109,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.168,
+        "elapsed_sec": 0.269,
         "raw_count": 30,
         "items_kept": 11,
         "error": null
@@ -54,26 +54,26 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.142,
+        "elapsed_sec": 0.126,
         "raw_count": 30,
-        "items_kept": 4,
+        "items_kept": 5,
         "error": null
       },
       "marketwatch_top": {
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.161,
+        "elapsed_sec": 0.17,
         "raw_count": 10,
-        "items_kept": 6,
+        "items_kept": 7,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.313,
-        "raw_count": 19,
+        "elapsed_sec": 0.241,
+        "raw_count": 18,
         "items_kept": 17,
         "error": null
       },
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.31,
+        "elapsed_sec": 0.314,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.165,
+        "elapsed_sec": 0.129,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.133,
+        "elapsed_sec": 0.177,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.152,
+        "elapsed_sec": 0.128,
         "raw_count": 37,
         "items_kept": 14,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.472,
+        "elapsed_sec": 0.755,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -126,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.571,
+        "elapsed_sec": 1.366,
         "raw_count": 20,
-        "items_kept": 13,
+        "items_kept": 14,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.566,
+        "elapsed_sec": 0.863,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 3.239,
+        "elapsed_sec": 0.903,
         "raw_count": 15,
         "items_kept": 5,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.424,
+        "elapsed_sec": 0.674,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.569,
+        "elapsed_sec": 0.517,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.156,
+        "elapsed_sec": 0.138,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 3.302,
+        "elapsed_sec": 0.733,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.087,
+        "elapsed_sec": 1.089,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.453,
+        "elapsed_sec": 1.562,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.473,
+        "elapsed_sec": 0.449,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.57,
+        "elapsed_sec": 1.535,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.445,
+        "elapsed_sec": 0.444,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.667,
+        "elapsed_sec": 0.846,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.273,
+        "elapsed_sec": 0.241,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.559,
+        "elapsed_sec": 0.567,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.379,
+        "elapsed_sec": 0.381,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,28 +303,132 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -781.4,
+      "net_flow_usd_m": -774.2,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0072,
-        "oi_usd_b": 1.86
+        "funding_rate_pct": 0.0065,
+        "oi_usd_b": 1.85
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0009,
+        "funding_rate_pct": 0.0012,
         "oi_usd_b": 1.1
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 2,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.9,
-      "tx_count": 69181,
+      "mempool_vsize_mb": 29.2,
+      "tx_count": 63993,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261125-3fcc06fb37",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:48:49Z",
+      "published_at_taipei": "2026-11-25 21:48",
+      "published_at_taipei_iso": "2026-11-25T21:48:49+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "美國Q3 GDP強勁上修至4.3% 消費與投資雙引擎熱絡 聯準會12月升息機率飆升",
+      "url": "https://news.cnyes.com/news/id/6671691",
+      "canonical_url": "https://news.cnyes.com/news/id/6671691",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（gdp）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：升息",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-98905472c6",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:44:20Z",
+      "published_at_taipei": "2026-11-25 21:44",
+      "published_at_taipei_iso": "2026-11-25T21:44:20+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "美10月核心PCE超預期年升3.3% Fed下月升息恐成定局",
+      "url": "https://news.cnyes.com/news/id/6671729",
+      "canonical_url": "https://news.cnyes.com/news/id/6671729",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "XAUUSD"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（升息）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "反轉：通膨／就業升溫（高於預期）；命中：升息",
+      "sentiment_targets": [
+        "XAUUSD"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-8db7b961f6",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:41:00Z",
+      "published_at_taipei": "2026-11-25 21:41",
+      "published_at_taipei_iso": "2026-11-25T21:41:00+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Third-quarter GDP already looked great. Now it looks even better.",
+      "url": "https://www.marketwatch.com/story/third-quarter-gdp-already-looked-great-now-it-looks-even-better-12057da5?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/third-quarter-gdp-already-looked-great-now-it-looks-even-better-12057da5?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（gdp）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261125-138603acbe",
       "issue": "2026-11-25-PM",
@@ -389,6 +493,46 @@
       "sentiment_label": "利空",
       "sentiment_score": -2,
       "sentiment_reason": "命中：tariffs",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-cb625ec132",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:25:02Z",
+      "published_at_taipei": "2026-11-25 21:25",
+      "published_at_taipei_iso": "2026-11-25T21:25:02+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "PCE Inflation Data Looms Large As Fed Fears Worsen AI-Stock Volatility (Live Coverage)",
+      "url": "https://finance.yahoo.com/m/b30124ad-742e-3a7a-9720-272c18c9df53/pce-inflation-data-looms.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/b30124ad-742e-3a7a-9720-272c18c9df53/pce-inflation-data-looms.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（pce）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-1268a0683a",
+        "issue": "2026-11-23-PM",
+        "title": "Stock Market Today: Dow, Nasdaq Surge As Jensen Huang Returns To Nvidia; Chip Plays Rocket (Live Coverage)",
+        "published_at_taipei": "2026-11-23 23:36",
+        "url": "https://finance.yahoo.com/m/8751de70-467e-380a-82cb-f4ee42adc461/stock-market-today%3A-dow%2C.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：rate hikes",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -785,6 +929,82 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-f47abf7362",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:41:38Z",
+      "published_at_taipei": "2026-11-25 21:41",
+      "published_at_taipei_iso": "2026-11-25T21:41:38+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Morning Minute: Ethereum Focuses on Security As AI Threats Rise",
+      "url": "https://decrypt.co/383945/morning-minute-ethereum-focuses-on-security-as-ai-threats-rise",
+      "canonical_url": "https://decrypt.co/383945/morning-minute-ethereum-focuses-on-security-as-ai-threats-rise",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "ETHUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-92be99ef05",
+        "issue": "2026-11-24-AM",
+        "title": "Ethereum Foundation doubles protocol security team ahead of overhaul",
+        "published_at_taipei": "2026-11-24 08:36",
+        "url": "https://cointelegraph.com/news/ethereum-foundation-doubles-protocol-security-team-amid-ai-quantum-overhaul?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-b2d33c77c7",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:34:00Z",
+      "published_at_taipei": "2026-11-25 21:34",
+      "published_at_taipei_iso": "2026-11-25T21:34:00+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Inflation gets worse. Now the Fed no choice but to raise U.S. interest rates.",
+      "url": "https://www.marketwatch.com/story/inflation-gets-worse-now-the-fed-no-choice-but-to-raise-u-s-interest-rates-8b0c2c1f?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/inflation-gets-worse-now-the-fed-no-choice-but-to-raise-u-s-interest-rates-8b0c2c1f?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（inflation）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -1306,6 +1526,48 @@
       "sentiment_targets": [
         "BTCUSDT",
         "XRPUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-a180a27b36",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:01:49Z",
+      "published_at_taipei": "2026-11-25 21:01",
+      "published_at_taipei_iso": "2026-11-25T21:01:49+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "白宮官員：台積電亞利桑那廠12/04擴建典禮 川普可能出席主持",
+      "url": "https://tw.news.yahoo.com/%E7%99%BD%E5%AE%AE%E5%AE%98%E5%93%A1-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E4%BA%9E%E5%88%A9%E6%A1%91%E9%82%A3%E5%BB%A012-04%E6%93%B4%E5%BB%BA%E5%85%B8%E7%A6%AE-%E5%B7%9D%E6%99%AE%E5%8F%AF%E8%83%BD%E5%87%BA%E5%B8%AD%E4%B8%BB%E6%8C%81-130149612.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E7%99%BD%E5%AE%AE%E5%AE%98%E5%93%A1-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E4%BA%9E%E5%88%A9%E6%A1%91%E9%82%A3%E5%BB%A012-04%E6%93%B4%E5%BB%BA%E5%85%B8%E7%A6%AE-%E5%B7%9D%E6%99%AE%E5%8F%AF%E8%83%BD%E5%87%BA%E5%B8%AD%E4%B8%BB%E6%8C%81-130149612.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-d21fb78076",
+        "issue": "2026-11-25-AM",
+        "title": "台積電亞利桑那廠12/4辦擴建典禮 2奈米考慮落腳德州",
+        "published_at_taipei": "2026-11-25 14:22",
+        "url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E4%BA%9E%E5%88%A9%E6%A1%91%E9%82%A3%E5%BB%A012-4%E8%BE%A6%E6%93%B4%E5%BB%BA%E5%85%B8%E7%A6%AE-2%E5%A5%88%E7%B1%B3%E8%80%83%E6%85%AE%E8%90%BD%E8%85%B3%E5%BE%B7%E5%B7%9E-062233306.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
       ],
       "sentiment_method": "rule"
     },
@@ -2762,6 +3024,86 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-b8f6aaf091",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:30:00Z",
+      "published_at_taipei": "2026-11-25 21:30",
+      "published_at_taipei_iso": "2026-11-25T21:30:00+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Phenom Intersects 3.6 g/t Au (0.12 opt) over 15.2 Metres (50 ft), Including 18.2 g/t Au (0.59 opt) over 1.2 Metres (4 ft), in First Drill Results at the Dobbin Gold Project, Nevada",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/phenom-intersects-3-6-g-133000109.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/phenom-intersects-3-6-g-133000109.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-4bc10e90de",
+        "issue": "2026-11-24-PM",
+        "title": "Honey Badger Silver Intersects Broad Mineralized Zones That Include 1,535 g/t AgEq Over 4.38 Meters and 1,154 g/t AgEq Over 7.30 Meters in First 2026 Drill Results at Sunrise Lake, NWT",
+        "published_at_taipei": "2026-11-25 02:36",
+        "url": "https://finance.yahoo.com/markets/commodities/articles/honey-badger-silver-intersects-broad-183600241.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-c548d9bd15",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:16:30Z",
+      "published_at_taipei": "2026-11-25 21:16",
+      "published_at_taipei_iso": "2026-11-25T21:16:30+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Nvidia, chipmakers slide premarket; Dell falls despite upbeat outlook",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-chipmakers-slide-premarket-dell-131630827.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-chipmakers-slide-premarket-dell-131630827.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-4f4e54de2b",
+        "issue": "2026-11-23-AM",
+        "title": "Chip Stocks Lead Premarket Bounce as SOXX Soars",
+        "published_at_taipei": "2026-11-23 18:12",
+        "url": "https://finance.yahoo.com/m/da42314d-e4d9-32a7-b543-328e1f71d8ea/chip-stocks-lead-premarket.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：tariffs；命中：selloff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-5fc943ae88",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T13:16:00Z",
@@ -2792,6 +3134,40 @@
         "published_at_taipei": "2026-11-25 05:53",
         "url": "https://www.usatoday.com/story/money/personal-finance/2026/11/24/what-jensen-huangs-return-to-nvidia-means-for-your-401k/92947391007/?.tsrc=rss"
       },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-4ba3321346",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:15:49Z",
+      "published_at_taipei": "2026-11-25 21:15",
+      "published_at_taipei_iso": "2026-11-25T21:15:49+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Retirees with gold-plated pensions in line for bonus payments worth thousands",
+      "url": "https://uk.finance.yahoo.com/news/retirees-gold-plated-pensions-line-131549481.html?.tsrc=rss",
+      "canonical_url": "https://uk.finance.yahoo.com/news/retirees-gold-plated-pensions-line-131549481.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
       "sentiment": "neutral",
       "sentiment_label": "中性",
       "sentiment_score": 0,
@@ -2877,6 +3253,40 @@
       "sentiment_label": "利空",
       "sentiment_score": -1,
       "sentiment_reason": "命中：rate hike",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d311281a1d",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:10:23Z",
+      "published_at_taipei": "2026-11-25 21:10",
+      "published_at_taipei_iso": "2026-11-25T21:10:23+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Can NIQ Global Intelligence (NIQ) Hold Its Value After A 16% Slide?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/niq-global-intelligence-niq-hold-131023828.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/niq-global-intelligence-niq-hold-131023828.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -3917,6 +4327,186 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261125-3fcc06fb37",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:48:49Z",
+      "published_at_taipei": "2026-11-25 21:48",
+      "published_at_taipei_iso": "2026-11-25T21:48:49+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "美國Q3 GDP強勁上修至4.3% 消費與投資雙引擎熱絡 聯準會12月升息機率飆升",
+      "url": "https://news.cnyes.com/news/id/6671691",
+      "canonical_url": "https://news.cnyes.com/news/id/6671691",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（gdp）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：升息",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-98905472c6",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:44:20Z",
+      "published_at_taipei": "2026-11-25 21:44",
+      "published_at_taipei_iso": "2026-11-25T21:44:20+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "美10月核心PCE超預期年升3.3% Fed下月升息恐成定局",
+      "url": "https://news.cnyes.com/news/id/6671729",
+      "canonical_url": "https://news.cnyes.com/news/id/6671729",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "XAUUSD"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（升息）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "反轉：通膨／就業升溫（高於預期）；命中：升息",
+      "sentiment_targets": [
+        "XAUUSD"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-f47abf7362",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:41:38Z",
+      "published_at_taipei": "2026-11-25 21:41",
+      "published_at_taipei_iso": "2026-11-25T21:41:38+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Morning Minute: Ethereum Focuses on Security As AI Threats Rise",
+      "url": "https://decrypt.co/383945/morning-minute-ethereum-focuses-on-security-as-ai-threats-rise",
+      "canonical_url": "https://decrypt.co/383945/morning-minute-ethereum-focuses-on-security-as-ai-threats-rise",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "ETHUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-92be99ef05",
+        "issue": "2026-11-24-AM",
+        "title": "Ethereum Foundation doubles protocol security team ahead of overhaul",
+        "published_at_taipei": "2026-11-24 08:36",
+        "url": "https://cointelegraph.com/news/ethereum-foundation-doubles-protocol-security-team-amid-ai-quantum-overhaul?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-8db7b961f6",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:41:00Z",
+      "published_at_taipei": "2026-11-25 21:41",
+      "published_at_taipei_iso": "2026-11-25T21:41:00+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Third-quarter GDP already looked great. Now it looks even better.",
+      "url": "https://www.marketwatch.com/story/third-quarter-gdp-already-looked-great-now-it-looks-even-better-12057da5?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/third-quarter-gdp-already-looked-great-now-it-looks-even-better-12057da5?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（gdp）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-b2d33c77c7",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:34:00Z",
+      "published_at_taipei": "2026-11-25 21:34",
+      "published_at_taipei_iso": "2026-11-25T21:34:00+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Inflation gets worse. Now the Fed no choice but to raise U.S. interest rates.",
+      "url": "https://www.marketwatch.com/story/inflation-gets-worse-now-the-fed-no-choice-but-to-raise-u-s-interest-rates-8b0c2c1f?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/inflation-gets-worse-now-the-fed-no-choice-but-to-raise-u-s-interest-rates-8b0c2c1f?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（inflation）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-792f5ef864",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T13:33:36Z",
@@ -4014,6 +4604,86 @@
       "sentiment_label": "利空",
       "sentiment_score": -2,
       "sentiment_reason": "命中：tariffs",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-b8f6aaf091",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:30:00Z",
+      "published_at_taipei": "2026-11-25 21:30",
+      "published_at_taipei_iso": "2026-11-25T21:30:00+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Phenom Intersects 3.6 g/t Au (0.12 opt) over 15.2 Metres (50 ft), Including 18.2 g/t Au (0.59 opt) over 1.2 Metres (4 ft), in First Drill Results at the Dobbin Gold Project, Nevada",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/phenom-intersects-3-6-g-133000109.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/phenom-intersects-3-6-g-133000109.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-4bc10e90de",
+        "issue": "2026-11-24-PM",
+        "title": "Honey Badger Silver Intersects Broad Mineralized Zones That Include 1,535 g/t AgEq Over 4.38 Meters and 1,154 g/t AgEq Over 7.30 Meters in First 2026 Drill Results at Sunrise Lake, NWT",
+        "published_at_taipei": "2026-11-25 02:36",
+        "url": "https://finance.yahoo.com/markets/commodities/articles/honey-badger-silver-intersects-broad-183600241.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-cb625ec132",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:25:02Z",
+      "published_at_taipei": "2026-11-25 21:25",
+      "published_at_taipei_iso": "2026-11-25T21:25:02+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "PCE Inflation Data Looms Large As Fed Fears Worsen AI-Stock Volatility (Live Coverage)",
+      "url": "https://finance.yahoo.com/m/b30124ad-742e-3a7a-9720-272c18c9df53/pce-inflation-data-looms.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/b30124ad-742e-3a7a-9720-272c18c9df53/pce-inflation-data-looms.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（pce）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-1268a0683a",
+        "issue": "2026-11-23-PM",
+        "title": "Stock Market Today: Dow, Nasdaq Surge As Jensen Huang Returns To Nvidia; Chip Plays Rocket (Live Coverage)",
+        "published_at_taipei": "2026-11-23 23:36",
+        "url": "https://finance.yahoo.com/m/8751de70-467e-380a-82cb-f4ee42adc461/stock-market-today%3A-dow%2C.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：rate hikes",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -4180,6 +4850,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-c548d9bd15",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:16:30Z",
+      "published_at_taipei": "2026-11-25 21:16",
+      "published_at_taipei_iso": "2026-11-25T21:16:30+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Nvidia, chipmakers slide premarket; Dell falls despite upbeat outlook",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-chipmakers-slide-premarket-dell-131630827.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-chipmakers-slide-premarket-dell-131630827.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-4f4e54de2b",
+        "issue": "2026-11-23-AM",
+        "title": "Chip Stocks Lead Premarket Bounce as SOXX Soars",
+        "published_at_taipei": "2026-11-23 18:12",
+        "url": "https://finance.yahoo.com/m/da42314d-e4d9-32a7-b543-328e1f71d8ea/chip-stocks-lead-premarket.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：tariffs；命中：selloff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-5fc943ae88",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T13:16:00Z",
@@ -4258,6 +4968,40 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-4ba3321346",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:15:49Z",
+      "published_at_taipei": "2026-11-25 21:15",
+      "published_at_taipei_iso": "2026-11-25T21:15:49+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Retirees with gold-plated pensions in line for bonus payments worth thousands",
+      "url": "https://uk.finance.yahoo.com/news/retirees-gold-plated-pensions-line-131549481.html?.tsrc=rss",
+      "canonical_url": "https://uk.finance.yahoo.com/news/retirees-gold-plated-pensions-line-131549481.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -4412,6 +5156,40 @@
       "sentiment_label": "利空",
       "sentiment_score": -1,
       "sentiment_reason": "命中：tariffs",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d311281a1d",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:10:23Z",
+      "published_at_taipei": "2026-11-25 21:10",
+      "published_at_taipei_iso": "2026-11-25T21:10:23+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "Can NIQ Global Intelligence (NIQ) Hold Its Value After A 16% Slide?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/niq-global-intelligence-niq-hold-131023828.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/niq-global-intelligence-niq-hold-131023828.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -4846,6 +5624,48 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-a180a27b36",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:01:49Z",
+      "published_at_taipei": "2026-11-25 21:01",
+      "published_at_taipei_iso": "2026-11-25T21:01:49+08:00",
+      "first_seen_at_utc": "2026-11-25T13:49:14Z",
+      "first_seen_at_taipei": "2026-11-25 21:49",
+      "month": "2026-11",
+      "title": "白宮官員：台積電亞利桑那廠12/04擴建典禮 川普可能出席主持",
+      "url": "https://tw.news.yahoo.com/%E7%99%BD%E5%AE%AE%E5%AE%98%E5%93%A1-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E4%BA%9E%E5%88%A9%E6%A1%91%E9%82%A3%E5%BB%A012-04%E6%93%B4%E5%BB%BA%E5%85%B8%E7%A6%AE-%E5%B7%9D%E6%99%AE%E5%8F%AF%E8%83%BD%E5%87%BA%E5%B8%AD%E4%B8%BB%E6%8C%81-130149612.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E7%99%BD%E5%AE%AE%E5%AE%98%E5%93%A1-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E4%BA%9E%E5%88%A9%E6%A1%91%E9%82%A3%E5%BB%A012-04%E6%93%B4%E5%BB%BA%E5%85%B8%E7%A6%AE-%E5%B7%9D%E6%99%AE%E5%8F%AF%E8%83%BD%E5%87%BA%E5%B8%AD%E4%B8%BB%E6%8C%81-130149612.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-d21fb78076",
+        "issue": "2026-11-25-AM",
+        "title": "台積電亞利桑那廠12/4辦擴建典禮 2奈米考慮落腳德州",
+        "published_at_taipei": "2026-11-25 14:22",
+        "url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E4%BA%9E%E5%88%A9%E6%A1%91%E9%82%A3%E5%BB%A012-4%E8%BE%A6%E6%93%B4%E5%BB%BA%E5%85%B8%E7%A6%AE-2%E5%A5%88%E7%B1%B3%E8%80%83%E6%85%AE%E8%90%BD%E8%85%B3%E5%BE%B7%E5%B7%9E-062233306.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
       ],
       "sentiment_method": "rule"
     },
@@ -109740,9 +110560,9 @@
       "month": "2026-11",
       "date": "2026-11-25",
       "half": "PM",
-      "updated_at_taipei": "2026-11-25 21:34",
-      "count": 92,
-      "star3_count": 12,
+      "updated_at_taipei": "2026-11-25 21:49",
+      "count": 103,
+      "star3_count": 16,
       "failed_sources": [
         {
           "id": "binance_derivatives",
