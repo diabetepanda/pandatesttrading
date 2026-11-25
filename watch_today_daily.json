@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-11-25T00:15:33Z",
+  "updated_at_utc": "2026-11-25T08:24:24Z",
   "items": [
     {
       "symbol": "BTCUSDT",
@@ -683,11 +683,11 @@
       "symbol": "PEPEUSDT",
       "market": "crypto",
       "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): 平倉（S3 收盤 3.46e-06 站回 5 日均線出場）；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 未入選雙動能前排名",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L3 (已驗證): 未入選雙動能前排名",
       "strategies": {
         "S3": {
           "status": "watch",
-          "reason": "S3 (觀察中（未通過驗證）): 平倉（S3 收盤 3.46e-06 站回 5 日均線出場）"
+          "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件"
         },
         "L1": {
           "status": "watch",
@@ -809,7 +809,7 @@
       "symbol": "NATGAS",
       "market": "commodity",
       "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 未通過風控或排程檢查",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道",
       "strategies": {
         "S3": {
           "status": "watch",
@@ -817,7 +817,7 @@
         },
         "L1": {
           "status": "watch",
-          "reason": "L1 未通過風控或排程檢查"
+          "reason": "L1 (已驗證): L1 未突破 Donchian 通道"
         }
       },
       "data_status_1d": "ok"
@@ -901,26 +901,26 @@
       "symbol": "JP225",
       "market": "index",
       "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): 資料過期（最新 1d 收盤 2026-11-21T00:00:00Z，距今 5776m > 1500m）；L1 (已驗證): 資料過期（最新 1d 收盤 2026-11-21T00:00:00Z，距今 5776m > 1500m）；L2 (已驗證): 資料過期（最新 1d 收盤 2026-11-21T00:00:00Z，距今 5776m > 1500m）；L3 (已驗證): 資料過期（最新 1d 收盤 2026-11-21T00:00:00Z，距今 5776m > 1500m）",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L2 (已驗證): L2 未突破 Donchian 通道；L3 (已驗證): 未入選雙動能前排名",
       "strategies": {
         "S3": {
-          "status": "expired",
-          "reason": "S3 (觀察中（未通過驗證）): 資料過期（最新 1d 收盤 2026-11-21T00:00:00Z，距今 5776m > 1500m）"
+          "status": "watch",
+          "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件"
         },
         "L1": {
-          "status": "expired",
-          "reason": "L1 (已驗證): 資料過期（最新 1d 收盤 2026-11-21T00:00:00Z，距今 5776m > 1500m）"
+          "status": "watch",
+          "reason": "L1 (已驗證): L1 未突破 Donchian 通道"
         },
         "L2": {
-          "status": "expired",
-          "reason": "L2 (已驗證): 資料過期（最新 1d 收盤 2026-11-21T00:00:00Z，距今 5776m > 1500m）"
+          "status": "watch",
+          "reason": "L2 (已驗證): L2 未突破 Donchian 通道"
         },
         "L3": {
-          "status": "expired",
-          "reason": "L3 (已驗證): 資料過期（最新 1d 收盤 2026-11-21T00:00:00Z，距今 5776m > 1500m）"
+          "status": "watch",
+          "reason": "L3 (已驗證): 未入選雙動能前排名"
         }
       },
-      "data_status_1d": "stale"
+      "data_status_1d": "ok"
     },
     {
       "symbol": "TWII",
@@ -1102,11 +1102,11 @@
       "symbol": "2881",
       "market": "stock",
       "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): 平倉（S3 收盤 143.5 站回 5 日均線出場）；L1 (已驗證): L1 未突破 Donchian 通道；L2 (已驗證): L2 未突破 Donchian 通道",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L2 (已驗證): L2 未突破 Donchian 通道",
       "strategies": {
         "S3": {
           "status": "watch",
-          "reason": "S3 (觀察中（未通過驗證）): 平倉（S3 收盤 143.5 站回 5 日均線出場）"
+          "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件"
         },
         "L1": {
           "status": "watch",
@@ -1123,11 +1123,11 @@
       "symbol": "2882",
       "market": "stock",
       "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): 平倉（S3 收盤 104.5 站回 5 日均線出場）；L1 (已驗證): L1 未突破 Donchian 通道；L2 (已驗證): L2 未突破 Donchian 通道",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L2 (已驗證): L2 未突破 Donchian 通道",
       "strategies": {
         "S3": {
           "status": "watch",
-          "reason": "S3 (觀察中（未通過驗證）): 平倉（S3 收盤 104.5 站回 5 日均線出場）"
+          "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件"
         },
         "L1": {
           "status": "watch",
@@ -1165,11 +1165,11 @@
       "symbol": "2603",
       "market": "stock",
       "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): 平倉（S3 收盤 257 站回 5 日均線出場）；L1 (已驗證): L1 未突破 Donchian 通道；L2 (已驗證): L2 未突破 Donchian 通道",
+      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 (已驗證): L1 未突破 Donchian 通道；L2 (已驗證): L2 未突破 Donchian 通道",
       "strategies": {
         "S3": {
           "status": "watch",
-          "reason": "S3 (觀察中（未通過驗證）): 平倉（S3 收盤 257 站回 5 日均線出場）"
+          "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件"
         },
         "L1": {
           "status": "watch",
@@ -1291,19 +1291,19 @@
       "symbol": "SNDK",
       "market": "stock",
       "decision": "watch",
-      "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件；L1 未通過風控或排程檢查；L2 未通過風控或排程檢查",
+      "reason": "S3 (觀察中（未通過驗證）): 資料過期（最新 1d 收盤 2026-11-20T00:00:00Z，距今 7704m > 1500m）；L1 (已驗證): 資料過期（最新 1d 收盤 2026-11-20T00:00:00Z，距今 7704m > 1500m）；L2 (已驗證): 資料過期（最新 1d 收盤 2026-11-20T00:00:00Z，距今 7704m > 1500m）",
       "strategies": {
         "S3": {
-          "status": "watch",
-          "reason": "S3 (觀察中（未通過驗證）): S3 未達日線超買／超賣條件"
+          "status": "expired",
+          "reason": "S3 (觀察中（未通過驗證）): 資料過期（最新 1d 收盤 2026-11-20T00:00:00Z，距今 7704m > 1500m）"
         },
         "L1": {
-          "status": "watch",
-          "reason": "L1 未通過風控或排程檢查"
+          "status": "expired",
+          "reason": "L1 (已驗證): 資料過期（最新 1d 收盤 2026-11-20T00:00:00Z，距今 7704m > 1500m）"
         },
         "L2": {
-          "status": "watch",
-          "reason": "L2 未通過風控或排程檢查"
+          "status": "expired",
+          "reason": "L2 (已驗證): 資料過期（最新 1d 收盤 2026-11-20T00:00:00Z，距今 7704m > 1500m）"
         }
       },
       "data_status_1d": "ok"
