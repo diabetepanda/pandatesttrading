@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-25-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-25T18:20:58Z",
-  "updated_at_taipei": "2026-11-26 02:20",
-  "last_updated_utc": "2026-11-25T18:20:58Z",
-  "last_updated_taipei": "2026-11-26 02:20",
-  "next_update_hint": "約台北時間 02:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-25T18:35:51Z",
+  "updated_at_taipei": "2026-11-26 02:35",
+  "last_updated_utc": "2026-11-25T18:35:51Z",
+  "last_updated_taipei": "2026-11-26 02:35",
+  "next_update_hint": "約台北時間 02:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 16.782,
+    "total_elapsed_sec": 17.975,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 10,
+    "new_items_added": 3,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.074,
+        "elapsed_sec": 0.107,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,16 +45,16 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.095,
+        "elapsed_sec": 0.281,
         "raw_count": 30,
-        "items_kept": 11,
+        "items_kept": 12,
         "error": null
       },
       "cnbc_economy": {
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.202,
+        "elapsed_sec": 0.07,
         "raw_count": 30,
         "items_kept": 5,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.043,
+        "elapsed_sec": 0.063,
         "raw_count": 10,
         "items_kept": 7,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.216,
+        "elapsed_sec": 0.28,
         "raw_count": 19,
         "items_kept": 18,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.145,
+        "elapsed_sec": 0.194,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.094,
+        "elapsed_sec": 0.142,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.098,
+        "elapsed_sec": 0.132,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.121,
+        "elapsed_sec": 0.132,
         "raw_count": 38,
         "items_kept": 17,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.326,
+        "elapsed_sec": 0.447,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.557,
+        "elapsed_sec": 0.515,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.369,
+        "elapsed_sec": 0.326,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.44,
+        "elapsed_sec": 0.737,
         "raw_count": 15,
         "items_kept": 4,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.427,
+        "elapsed_sec": 0.396,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.345,
+        "elapsed_sec": 0.505,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.096,
+        "elapsed_sec": 0.179,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,16 +180,16 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.681,
+        "elapsed_sec": 2.189,
         "raw_count": 6,
-        "items_kept": 0,
+        "items_kept": 1,
         "error": null
       },
       "defillama_hacks": {
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.078,
+        "elapsed_sec": 0.095,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.306,
+        "elapsed_sec": 1.319,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.333,
+        "elapsed_sec": 0.372,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.036,
+        "elapsed_sec": 1.142,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.339,
+        "elapsed_sec": 0.333,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 1.218,
+        "elapsed_sec": 1.33,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.09,
+        "elapsed_sec": 0.157,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.433,
+        "elapsed_sec": 0.512,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.308,
+        "elapsed_sec": 0.323,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,50 +277,50 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 35.48,
-        "change_1d_pct": -2.36
+        "tvl_b": 35.67,
+        "change_1d_pct": -1.83
       },
       "Base": {
-        "tvl_b": 4.96,
-        "change_1d_pct": -2.55
+        "tvl_b": 5.02,
+        "change_1d_pct": -1.4
       },
       "Solana": {
-        "tvl_b": 4.43,
-        "change_1d_pct": -4.51
+        "tvl_b": 4.44,
+        "change_1d_pct": -4.29
       },
       "Tron": {
         "tvl_b": 4.37,
-        "change_1d_pct": -2.55
+        "change_1d_pct": -2.54
       },
       "BSC": {
-        "tvl_b": 4.19,
-        "change_1d_pct": -3.02
+        "tvl_b": 4.23,
+        "change_1d_pct": -2.02
       },
       "Bitcoin": {
-        "tvl_b": 2.93,
-        "change_1d_pct": -4.24
+        "tvl_b": 2.22,
+        "change_1d_pct": -27.38
       }
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -792.7,
+      "net_flow_usd_m": -792.4,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
         "funding_rate_pct": 0.0078,
-        "oi_usd_b": 1.91
+        "oi_usd_b": 1.9
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0056,
-        "oi_usd_b": 1.09
+        "funding_rate_pct": 0.0055,
+        "oi_usd_b": 1.08
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 3,
-      "half_hour_fee_sat_vb": 3,
-      "mempool_vsize_mb": 33.0,
-      "tx_count": 79866,
+      "fastest_fee_sat_vb": 1,
+      "half_hour_fee_sat_vb": 1,
+      "mempool_vsize_mb": 30.9,
+      "tx_count": 70229,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -1947,6 +1947,42 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-fc734f3a09",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:22:59Z",
+      "published_at_taipei": "2026-11-26 02:22",
+      "published_at_taipei_iso": "2026-11-26T02:22:59+08:00",
+      "first_seen_at_utc": "2026-11-25T18:35:51Z",
+      "first_seen_at_taipei": "2026-11-26 02:35",
+      "month": "2026-11",
+      "title": "SpaceX wins FCC approval to deploy 1 million orbital data center satellites",
+      "url": "https://www.cnbc.com/2026/11/25/spacex-fcc-satellite-approval.html",
+      "canonical_url": "https://cnbc.com/2026/11/25/spacex-fcc-satellite-approval.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：approval",
+      "sentiment_targets": [
+        "SPCX"
       ],
       "sentiment_method": "rule"
     },
@@ -7737,6 +7773,87 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-e8379c7f40",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:24:47Z",
+      "published_at_taipei": "2026-11-26 02:24",
+      "published_at_taipei_iso": "2026-11-26T02:24:47+08:00",
+      "first_seen_at_utc": "2026-11-25T18:35:51Z",
+      "first_seen_at_taipei": "2026-11-26 02:35",
+      "month": "2026-11",
+      "title": "French Senate blocks new crypto tax and wallet list critics called a kidnapping risk",
+      "url": "https://www.coindesk.com/business/2026/11/25/french-senate-blocks-new-crypto-tax-and-wallet-list-critics-called-a-kidnapping-risk",
+      "canonical_url": "https://coindesk.com/business/2026/11/25/french-senate-blocks-new-crypto-tax-and-wallet-list-critics-called-a-kidnapping-risk",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "總經",
+      "markets": [
+        "加密貨幣",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-d4e353b90a",
+        "issue": "2026-11-25-AM",
+        "title": "French Senate rejects 100K euro crypto wallet disclosure requirement",
+        "published_at_taipei": "2026-11-25 17:58",
+        "url": "https://cointelegraph.com/news/french-senate-rejects-disclosing-self-custodied-crypto-wallets-100k?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-a5aca8f572",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:23:12Z",
+      "published_at_taipei": "2026-11-26 02:23",
+      "published_at_taipei_iso": "2026-11-26T02:23:12+08:00",
+      "first_seen_at_utc": "2026-11-25T18:35:51Z",
+      "first_seen_at_taipei": "2026-11-26 02:35",
+      "month": "2026-11",
+      "title": "Saudi national in OpenAI bugging case is out on bond after DOJ tries to block release",
+      "url": "https://www.cnbc.com/2026/11/25/openai-bugging-aflozan-bond-release-saudi.html",
+      "canonical_url": "https://cnbc.com/2026/11/25/openai-bugging-aflozan-bond-release-saudi.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-06f1a59129",
+        "issue": "2026-11-24-PM",
+        "title": "Saudi national charged in OpenAI bugging to be released on $1 million bond",
+        "published_at_taipei": "2026-11-25 05:54",
+        "url": "https://www.cnbc.com/2026/11/24/openai-bugging-aflozan-release-saudi.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-f8eef5bc1e",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T18:05:18Z",
@@ -11567,6 +11684,123 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261126-e8379c7f40",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:24:47Z",
+      "published_at_taipei": "2026-11-26 02:24",
+      "published_at_taipei_iso": "2026-11-26T02:24:47+08:00",
+      "first_seen_at_utc": "2026-11-25T18:35:51Z",
+      "first_seen_at_taipei": "2026-11-26 02:35",
+      "month": "2026-11",
+      "title": "French Senate blocks new crypto tax and wallet list critics called a kidnapping risk",
+      "url": "https://www.coindesk.com/business/2026/11/25/french-senate-blocks-new-crypto-tax-and-wallet-list-critics-called-a-kidnapping-risk",
+      "canonical_url": "https://coindesk.com/business/2026/11/25/french-senate-blocks-new-crypto-tax-and-wallet-list-critics-called-a-kidnapping-risk",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "總經",
+      "markets": [
+        "加密貨幣",
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-d4e353b90a",
+        "issue": "2026-11-25-AM",
+        "title": "French Senate rejects 100K euro crypto wallet disclosure requirement",
+        "published_at_taipei": "2026-11-25 17:58",
+        "url": "https://cointelegraph.com/news/french-senate-rejects-disclosing-self-custodied-crypto-wallets-100k?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-a5aca8f572",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:23:12Z",
+      "published_at_taipei": "2026-11-26 02:23",
+      "published_at_taipei_iso": "2026-11-26T02:23:12+08:00",
+      "first_seen_at_utc": "2026-11-25T18:35:51Z",
+      "first_seen_at_taipei": "2026-11-26 02:35",
+      "month": "2026-11",
+      "title": "Saudi national in OpenAI bugging case is out on bond after DOJ tries to block release",
+      "url": "https://www.cnbc.com/2026/11/25/openai-bugging-aflozan-bond-release-saudi.html",
+      "canonical_url": "https://cnbc.com/2026/11/25/openai-bugging-aflozan-bond-release-saudi.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-06f1a59129",
+        "issue": "2026-11-24-PM",
+        "title": "Saudi national charged in OpenAI bugging to be released on $1 million bond",
+        "published_at_taipei": "2026-11-25 05:54",
+        "url": "https://www.cnbc.com/2026/11/24/openai-bugging-aflozan-release-saudi.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-fc734f3a09",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:22:59Z",
+      "published_at_taipei": "2026-11-26 02:22",
+      "published_at_taipei_iso": "2026-11-26T02:22:59+08:00",
+      "first_seen_at_utc": "2026-11-25T18:35:51Z",
+      "first_seen_at_taipei": "2026-11-26 02:35",
+      "month": "2026-11",
+      "title": "SpaceX wins FCC approval to deploy 1 million orbital data center satellites",
+      "url": "https://www.cnbc.com/2026/11/25/spacex-fcc-satellite-approval.html",
+      "canonical_url": "https://cnbc.com/2026/11/25/spacex-fcc-satellite-approval.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：approval",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261126-66e750d919",
       "issue": "2026-11-25-PM",
@@ -125042,8 +125276,8 @@
       "month": "2026-11",
       "date": "2026-11-25",
       "half": "PM",
-      "updated_at_taipei": "2026-11-26 02:20",
-      "count": 287,
+      "updated_at_taipei": "2026-11-26 02:35",
+      "count": 290,
       "star3_count": 42,
       "failed_sources": [
         {
