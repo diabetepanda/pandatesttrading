@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-25-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-25T22:06:56Z",
-  "updated_at_taipei": "2026-11-26 06:06",
-  "last_updated_utc": "2026-11-25T22:06:56Z",
-  "last_updated_taipei": "2026-11-26 06:06",
-  "next_update_hint": "約台北時間 06:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-25T22:21:55Z",
+  "updated_at_taipei": "2026-11-26 06:21",
+  "last_updated_utc": "2026-11-25T22:21:55Z",
+  "last_updated_taipei": "2026-11-26 06:21",
+  "next_update_hint": "約台北時間 06:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 18.021,
+    "total_elapsed_sec": 21.416,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 4,
+    "new_items_added": 8,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.069,
+        "elapsed_sec": 0.086,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.188,
+        "elapsed_sec": 0.116,
         "raw_count": 30,
         "items_kept": 12,
         "error": null
@@ -54,16 +54,16 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.131,
+        "elapsed_sec": 0.126,
         "raw_count": 30,
-        "items_kept": 5,
+        "items_kept": 6,
         "error": null
       },
       "marketwatch_top": {
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.065,
+        "elapsed_sec": 0.103,
         "raw_count": 10,
         "items_kept": 7,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.195,
-        "raw_count": 18,
-        "items_kept": 14,
+        "elapsed_sec": 0.499,
+        "raw_count": 19,
+        "items_kept": 16,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.17,
+        "elapsed_sec": 0.224,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.129,
+        "elapsed_sec": 0.154,
         "raw_count": 30,
         "items_kept": 21,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.101,
+        "elapsed_sec": 0.111,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.092,
+        "elapsed_sec": 0.127,
         "raw_count": 38,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.408,
+        "elapsed_sec": 0.363,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -126,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.501,
+        "elapsed_sec": 0.397,
         "raw_count": 20,
-        "items_kept": 13,
+        "items_kept": 14,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.385,
+        "elapsed_sec": 0.436,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.802,
+        "elapsed_sec": 0.406,
         "raw_count": 15,
         "items_kept": 4,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.713,
+        "elapsed_sec": 0.354,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.46,
+        "elapsed_sec": 0.455,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.075,
+        "elapsed_sec": 0.092,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.441,
+        "elapsed_sec": 5.149,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.054,
+        "elapsed_sec": 0.971,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.829,
+        "elapsed_sec": 1.527,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.505,
+        "elapsed_sec": 0.511,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.483,
+        "elapsed_sec": 1.002,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.341,
+        "elapsed_sec": 0.521,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.791,
+        "elapsed_sec": 0.625,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.149,
+        "elapsed_sec": 0.268,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.552,
+        "elapsed_sec": 0.419,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.301,
+        "elapsed_sec": 0.38,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,28 +303,68 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -798.6,
+      "net_flow_usd_m": -798.4,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
         "funding_rate_pct": 0.01,
-        "oi_usd_b": 1.9
+        "oi_usd_b": 1.89
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0084,
+        "funding_rate_pct": 0.0083,
         "oi_usd_b": 1.08
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.3,
-      "tx_count": 70546,
+      "mempool_vsize_mb": 30.2,
+      "tx_count": 70326,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261126-c4f588d35e",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:06:45Z",
+      "published_at_taipei": "2026-11-26 06:06",
+      "published_at_taipei_iso": "2026-11-26T06:06:45+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Stock Market Today, Nov. 25: Nvidia Slides 3.9% as the Market Considers Hot PCE Inflation Data and New Tariff Proposals",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/25/stock-market-today-nov-25-nvidia-slides-3-9-as-the-market-considers-hot-pce-inflation-data-and-new-tariff-proposals/?.tsrc=rss",
+      "canonical_url": "https://fool.com/coverage/stock-market-today/2026/11/25/stock-market-today-nov-25-nvidia-slides-3-9-as-the-market-considers-hot-pce-inflation-data-and-new-tariff-proposals?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-1e00bb7394",
+        "issue": "2026-11-23-PM",
+        "title": "Stock Market Today, Nov. 23: Markets Rebound From Correction on AI Relief Rally",
+        "published_at_taipei": "2026-11-24 06:16",
+        "url": "https://www.fool.com/coverage/stock-market-today/2026/11/23/stock-market-today-nov-23-markets-rebound-from-correction-on-ai-relief-rally/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：tariff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261126-88abde948d",
       "issue": "2026-11-25-PM",
@@ -2331,6 +2371,162 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-713fecf2d4",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:20:05Z",
+      "published_at_taipei": "2026-11-26 06:20",
+      "published_at_taipei_iso": "2026-11-26T06:20:05+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "輝達跌近4% 為何黃仁勳回歸也救不了AI交易？",
+      "url": "https://news.cnyes.com/news/id/6671877",
+      "canonical_url": "https://news.cnyes.com/news/id/6671877",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SNDK"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SNDK"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-ff36426002",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:14:48Z",
+      "published_at_taipei": "2026-11-26 06:14",
+      "published_at_taipei_iso": "2026-11-26T06:14:48+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "How Much of Your Portfolio Should Be in Bitcoin After a 50% Drop?",
+      "url": "https://247wallst.com/investing/cryptocurrency/2026/11/25/how-much-of-your-portfolio-should-be-in-bitcoin-after-a-50-drop/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/cryptocurrency/2026/11/25/how-much-of-your-portfolio-should-be-in-bitcoin-after-a-50-drop?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：all-time high",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-2c997e059e",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:07:20Z",
+      "published_at_taipei": "2026-11-26 06:07",
+      "published_at_taipei_iso": "2026-11-26T06:07:20+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Dow Jones Futures: Market Goes On Wild Ride. Nasdaq, Nvidia Slash Losses While Anthropic Reverses Higher.",
+      "url": "https://finance.yahoo.com/m/158e82fc-b889-34b6-8704-99a49e9a83ae/dow-jones-futures%3A-market.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/158e82fc-b889-34b6-8704-99a49e9a83ae/dow-jones-futures%3A-market.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-0d2e980eeb",
+        "issue": "2026-11-22-PM",
+        "title": "Dow Jones Futures Due After Market's Worst Week Since Covid; What To Do Now",
+        "published_at_taipei": "2026-11-22 21:52",
+        "url": "https://finance.yahoo.com/m/9ef9da98-bccf-3565-9a30-9bc3e57ad4b9/dow-jones-futures-due-after.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-f172872b2f",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:05:52Z",
+      "published_at_taipei": "2026-11-26 06:05",
+      "published_at_taipei_iso": "2026-11-26T06:05:52+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Stock Market Today, Nov. 25: SpaceX Gets Historic FCC Approval for 1 Million Satellites. Is This Its Next Growth Engine?",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/25/stock-market-today-nov-25-spacex-gets-historic-fcc-approval-for-1-million-satellites-is-this-its-next-growth-engine/?.tsrc=rss",
+      "canonical_url": "https://fool.com/coverage/stock-market-today/2026/11/25/stock-market-today-nov-25-spacex-gets-historic-fcc-approval-for-1-million-satellites-is-this-its-next-growth-engine?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-854059542f",
+        "issue": "2026-11-24-PM",
+        "title": "Stock Market Midday, Nov. 24: Nvidia Drops 9% as Wall Street's Historic AI Rally Loses Momentum",
+        "published_at_taipei": "2026-11-25 01:45",
+        "url": "https://www.fool.com/coverage/stock-market-today/2026/11/24/stock-market-midday-nov-24-nvidia-drops-9-as-wall-street-s-historic-ai-rally-loses-momentum/?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：approval",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-8728bcdf00",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T22:04:58Z",
@@ -2408,6 +2604,45 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-c85c29c98a",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:00:00Z",
+      "published_at_taipei": "2026-11-26 06:00",
+      "published_at_taipei_iso": "2026-11-26T06:00:00+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Analyst explains why Bitcoin’s next move depends on Nasdaq",
+      "url": "https://www.thestreet.com/crypto/markets/analyst-explains-why-bitcoins-next-move-depends-on-nasdaq?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/crypto/markets/analyst-explains-why-bitcoins-next-move-depends-on-nasdaq?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -9955,6 +10190,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-568aeeabc7",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:20:02Z",
+      "published_at_taipei": "2026-11-26 06:20",
+      "published_at_taipei_iso": "2026-11-26T06:20:02+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Sens. Warren, Van Hollen lead push to scrap SEC’s Regulation Crypto and innovation exemption",
+      "url": "https://www.theblock.co/news/regulation/2026-11-25-warren-van-hollen-lead-push-scrap-sec-regulation-crypto-innovation-exemption-446756",
+      "canonical_url": "https://theblock.co/news/regulation/2026-11-25-warren-van-hollen-lead-push-scrap-sec-regulation-crypto-innovation-exemption-446756",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-ddeb09d5eb",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T21:56:43Z",
@@ -10019,6 +10288,46 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-642e302b0a",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T21:46:20Z",
+      "published_at_taipei": "2026-11-26 05:46",
+      "published_at_taipei_iso": "2026-11-26T05:46:20+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Was Archer Aviation Stock's Fall One Bad Day?",
+      "url": "https://www.trefis.com/stock/achr/articles/628861/was-archer-aviation-stock-s-fall-one-bad-day/2026-11-25?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/achr/articles/628861/was-archer-aviation-stock-s-fall-one-bad-day/2026-11-25?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-397edf27b9",
+        "issue": "2026-11-24-PM",
+        "title": "Does Archer Aviation Stock's Fall Change Anything?",
+        "published_at_taipei": "2026-11-25 00:02",
+        "url": "https://www.trefis.com/stock/achr/articles/628370/does-archer-aviation-stock-s-fall-change-anything/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -15957,6 +16266,236 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261126-713fecf2d4",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:20:05Z",
+      "published_at_taipei": "2026-11-26 06:20",
+      "published_at_taipei_iso": "2026-11-26T06:20:05+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "輝達跌近4% 為何黃仁勳回歸也救不了AI交易？",
+      "url": "https://news.cnyes.com/news/id/6671877",
+      "canonical_url": "https://news.cnyes.com/news/id/6671877",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SNDK"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SNDK"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-568aeeabc7",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:20:02Z",
+      "published_at_taipei": "2026-11-26 06:20",
+      "published_at_taipei_iso": "2026-11-26T06:20:02+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Sens. Warren, Van Hollen lead push to scrap SEC’s Regulation Crypto and innovation exemption",
+      "url": "https://www.theblock.co/news/regulation/2026-11-25-warren-van-hollen-lead-push-scrap-sec-regulation-crypto-innovation-exemption-446756",
+      "canonical_url": "https://theblock.co/news/regulation/2026-11-25-warren-van-hollen-lead-push-scrap-sec-regulation-crypto-innovation-exemption-446756",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-ff36426002",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:14:48Z",
+      "published_at_taipei": "2026-11-26 06:14",
+      "published_at_taipei_iso": "2026-11-26T06:14:48+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "How Much of Your Portfolio Should Be in Bitcoin After a 50% Drop?",
+      "url": "https://247wallst.com/investing/cryptocurrency/2026/11/25/how-much-of-your-portfolio-should-be-in-bitcoin-after-a-50-drop/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/cryptocurrency/2026/11/25/how-much-of-your-portfolio-should-be-in-bitcoin-after-a-50-drop?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：all-time high",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-2c997e059e",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:07:20Z",
+      "published_at_taipei": "2026-11-26 06:07",
+      "published_at_taipei_iso": "2026-11-26T06:07:20+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Dow Jones Futures: Market Goes On Wild Ride. Nasdaq, Nvidia Slash Losses While Anthropic Reverses Higher.",
+      "url": "https://finance.yahoo.com/m/158e82fc-b889-34b6-8704-99a49e9a83ae/dow-jones-futures%3A-market.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/158e82fc-b889-34b6-8704-99a49e9a83ae/dow-jones-futures%3A-market.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261122-0d2e980eeb",
+        "issue": "2026-11-22-PM",
+        "title": "Dow Jones Futures Due After Market's Worst Week Since Covid; What To Do Now",
+        "published_at_taipei": "2026-11-22 21:52",
+        "url": "https://finance.yahoo.com/m/9ef9da98-bccf-3565-9a30-9bc3e57ad4b9/dow-jones-futures-due-after.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-c4f588d35e",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:06:45Z",
+      "published_at_taipei": "2026-11-26 06:06",
+      "published_at_taipei_iso": "2026-11-26T06:06:45+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Stock Market Today, Nov. 25: Nvidia Slides 3.9% as the Market Considers Hot PCE Inflation Data and New Tariff Proposals",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/25/stock-market-today-nov-25-nvidia-slides-3-9-as-the-market-considers-hot-pce-inflation-data-and-new-tariff-proposals/?.tsrc=rss",
+      "canonical_url": "https://fool.com/coverage/stock-market-today/2026/11/25/stock-market-today-nov-25-nvidia-slides-3-9-as-the-market-considers-hot-pce-inflation-data-and-new-tariff-proposals?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-1e00bb7394",
+        "issue": "2026-11-23-PM",
+        "title": "Stock Market Today, Nov. 23: Markets Rebound From Correction on AI Relief Rally",
+        "published_at_taipei": "2026-11-24 06:16",
+        "url": "https://www.fool.com/coverage/stock-market-today/2026/11/23/stock-market-today-nov-23-markets-rebound-from-correction-on-ai-relief-rally/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：tariff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-f172872b2f",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:05:52Z",
+      "published_at_taipei": "2026-11-26 06:05",
+      "published_at_taipei_iso": "2026-11-26T06:05:52+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Stock Market Today, Nov. 25: SpaceX Gets Historic FCC Approval for 1 Million Satellites. Is This Its Next Growth Engine?",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/25/stock-market-today-nov-25-spacex-gets-historic-fcc-approval-for-1-million-satellites-is-this-its-next-growth-engine/?.tsrc=rss",
+      "canonical_url": "https://fool.com/coverage/stock-market-today/2026/11/25/stock-market-today-nov-25-spacex-gets-historic-fcc-approval-for-1-million-satellites-is-this-its-next-growth-engine?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-854059542f",
+        "issue": "2026-11-24-PM",
+        "title": "Stock Market Midday, Nov. 24: Nvidia Drops 9% as Wall Street's Historic AI Rally Loses Momentum",
+        "published_at_taipei": "2026-11-25 01:45",
+        "url": "https://www.fool.com/coverage/stock-market-today/2026/11/24/stock-market-midday-nov-24-nvidia-drops-9-as-wall-street-s-historic-ai-rally-loses-momentum/?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：approval",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-8728bcdf00",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T22:04:58Z",
@@ -16034,6 +16573,45 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-c85c29c98a",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:00:00Z",
+      "published_at_taipei": "2026-11-26 06:00",
+      "published_at_taipei_iso": "2026-11-26T06:00:00+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Analyst explains why Bitcoin’s next move depends on Nasdaq",
+      "url": "https://www.thestreet.com/crypto/markets/analyst-explains-why-bitcoins-next-move-depends-on-nasdaq?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/crypto/markets/analyst-explains-why-bitcoins-next-move-depends-on-nasdaq?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -16144,6 +16722,46 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-642e302b0a",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T21:46:20Z",
+      "published_at_taipei": "2026-11-26 05:46",
+      "published_at_taipei_iso": "2026-11-26T05:46:20+08:00",
+      "first_seen_at_utc": "2026-11-25T22:21:55Z",
+      "first_seen_at_taipei": "2026-11-26 06:21",
+      "month": "2026-11",
+      "title": "Was Archer Aviation Stock's Fall One Bad Day?",
+      "url": "https://www.trefis.com/stock/achr/articles/628861/was-archer-aviation-stock-s-fall-one-bad-day/2026-11-25?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/achr/articles/628861/was-archer-aviation-stock-s-fall-one-bad-day/2026-11-25?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-397edf27b9",
+        "issue": "2026-11-24-PM",
+        "title": "Does Archer Aviation Stock's Fall Change Anything?",
+        "published_at_taipei": "2026-11-25 00:02",
+        "url": "https://www.trefis.com/stock/achr/articles/628370/does-archer-aviation-stock-s-fall-change-anything/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -133799,9 +134417,9 @@
       "month": "2026-11",
       "date": "2026-11-25",
       "half": "PM",
-      "updated_at_taipei": "2026-11-26 06:06",
-      "count": 399,
-      "star3_count": 52,
+      "updated_at_taipei": "2026-11-26 06:21",
+      "count": 407,
+      "star3_count": 53,
       "failed_sources": [
         {
           "id": "binance_derivatives",
