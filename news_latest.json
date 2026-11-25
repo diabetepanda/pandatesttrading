@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-25-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-25T19:36:12Z",
-  "updated_at_taipei": "2026-11-26 03:36",
-  "last_updated_utc": "2026-11-25T19:36:12Z",
-  "last_updated_taipei": "2026-11-26 03:36",
-  "next_update_hint": "約台北時間 03:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-25T19:51:34Z",
+  "updated_at_taipei": "2026-11-26 03:51",
+  "last_updated_utc": "2026-11-25T19:51:34Z",
+  "last_updated_taipei": "2026-11-26 03:51",
+  "next_update_hint": "約台北時間 04:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 32.83,
+    "total_elapsed_sec": 20.483,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 13,
+    "new_items_added": 6,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.088,
+        "elapsed_sec": 0.087,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.221,
+        "elapsed_sec": 0.154,
         "raw_count": 30,
         "items_kept": 12,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.172,
+        "elapsed_sec": 0.257,
         "raw_count": 30,
         "items_kept": 5,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.135,
+        "elapsed_sec": 0.069,
         "raw_count": 10,
         "items_kept": 6,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.306,
+        "elapsed_sec": 0.368,
         "raw_count": 19,
-        "items_kept": 18,
+        "items_kept": 19,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.21,
+        "elapsed_sec": 0.158,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.166,
+        "elapsed_sec": 0.139,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 8.779,
+        "elapsed_sec": 0.084,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.128,
+        "elapsed_sec": 0.102,
         "raw_count": 38,
         "items_kept": 18,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.615,
+        "elapsed_sec": 0.395,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.597,
+        "elapsed_sec": 0.462,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.484,
+        "elapsed_sec": 0.38,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.797,
+        "elapsed_sec": 0.446,
         "raw_count": 15,
         "items_kept": 4,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.655,
+        "elapsed_sec": 0.486,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.206,
+        "elapsed_sec": 0.875,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.123,
+        "elapsed_sec": 0.081,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 3.839,
+        "elapsed_sec": 2.925,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.093,
+        "elapsed_sec": 0.773,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.587,
+        "elapsed_sec": 1.28,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.538,
+        "elapsed_sec": 0.338,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.599,
+        "elapsed_sec": 1.056,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.445,
+        "elapsed_sec": 0.351,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.71,
+        "elapsed_sec": 0.548,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.277,
+        "elapsed_sec": 0.088,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.589,
+        "elapsed_sec": 0.496,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.377,
+        "elapsed_sec": 0.297,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,28 +303,64 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -798.8,
+      "net_flow_usd_m": -796.2,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0088,
-        "oi_usd_b": 1.91
+        "funding_rate_pct": 0.009,
+        "oi_usd_b": 1.9
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0063,
-        "oi_usd_b": 1.09
+        "funding_rate_pct": 0.0064,
+        "oi_usd_b": 1.08
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
       "mempool_vsize_mb": 31.2,
-      "tx_count": 74249,
+      "tx_count": 73611,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261126-8e1c88ff27",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:37:10Z",
+      "published_at_taipei": "2026-11-26 03:37",
+      "published_at_taipei_iso": "2026-11-26T03:37:10+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "Bitcoin miners hit by hashrate hijacking attack exploiting unencrypted connections",
+      "url": "https://www.theblock.co/news/ecosystems/2026-11-25-bitcoin-miners-hit-hashrate-hijacking-attack-exploiting-unencrypted-connections-446723",
+      "canonical_url": "https://theblock.co/news/ecosystems/2026-11-25-bitcoin-miners-hit-hashrate-hijacking-attack-exploiting-unencrypted-connections-446723",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261126-4eaf944697",
       "issue": "2026-11-25-PM",
@@ -1993,6 +2029,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-3fc846e8dd",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:39:00Z",
+      "published_at_taipei": "2026-11-26 03:39",
+      "published_at_taipei_iso": "2026-11-26T03:39:00+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "The Fed says inflation hasn’t gotten any better ahead of its key December vote to raise rates",
+      "url": "https://www.marketwatch.com/story/the-fed-says-inflation-hasnt-gotten-any-better-ahead-of-its-key-december-vote-to-raise-rates-65024d33?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/the-fed-says-inflation-hasnt-gotten-any-better-ahead-of-its-key-december-vote-to-raise-rates-65024d33?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（inflation）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-94f170b18e",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T19:32:42Z",
@@ -2113,6 +2183,48 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-1e9494bad3",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:20:00Z",
+      "published_at_taipei": "2026-11-26 03:20",
+      "published_at_taipei_iso": "2026-11-26T03:20:00+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "This Strategist Still Sees the S&P 500 Hitting 10,000",
+      "url": "https://finance.yahoo.com/m/f24bf1b4-b64e-35a6-8dc1-c6ce8ed67405/this-strategist-still-sees.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/f24bf1b4-b64e-35a6-8dc1-c6ce8ed67405/this-strategist-still-sees.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-1c1351ca39",
+        "issue": "2026-11-23-PM",
+        "title": "Deutsche Bank sees S&P 500 hitting 9,000 in 2027",
+        "published_at_taipei": "2026-11-23 22:21",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-sees-p-500-142138581.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -8580,6 +8692,86 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-13ee9db81b",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:43:00Z",
+      "published_at_taipei": "2026-11-26 03:43",
+      "published_at_taipei_iso": "2026-11-26T03:43:00+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "Nvidia is heading for its first ‘death cross’ since March 2025 as stock continues to struggle",
+      "url": "https://www.marketwatch.com/story/nvidia-is-heading-for-its-first-death-cross-since-march-2025-as-stock-continues-to-struggle-a611b99c?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/nvidia-is-heading-for-its-first-death-cross-since-march-2025-as-stock-continues-to-struggle-a611b99c?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-30b5b4a07a",
+        "issue": "2026-11-24-AM",
+        "title": "The Nasdaq Just Had Its Best Day Since April 2025. Anthropic Stock Fell Anyway.",
+        "published_at_taipei": "2026-11-24 08:42",
+        "url": "https://www.fool.com/investing/2026/11/23/the-nasdaq-just-had-its-best-day-since-april-2025-anthropic-stock-fell-anyway/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-7b9213a000",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:38:59Z",
+      "published_at_taipei": "2026-11-26 03:38",
+      "published_at_taipei_iso": "2026-11-26T03:38:59+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "Why Lucid Stock Is Moving in Reverse Today",
+      "url": "https://www.fool.com/investing/2026/11/25/why-lucid-stock-is-moving-in-reverse-today/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/25/why-lucid-stock-is-moving-in-reverse-today?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-14e95cb25b",
+        "issue": "2026-11-23-PM",
+        "title": "Why SpaceX Stock Is Gaining Today",
+        "published_at_taipei": "2026-11-23 23:30",
+        "url": "https://www.fool.com/investing/2026/11/23/why-spacex-stock-is-gaining-today/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-6cba502ac6",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T19:30:56Z",
@@ -8952,6 +9144,46 @@
         "title": "Why Did NRG Stock Jump?",
         "published_at_taipei": "2026-11-25 01:22",
         "url": "https://www.trefis.com/stock/nrg/articles/628623/why-did-nrg-stock-jump/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-cfcaed846f",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:05:00Z",
+      "published_at_taipei": "2026-11-26 03:05",
+      "published_at_taipei_iso": "2026-11-26T03:05:00+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "Why HSBC Thinks Stocks Are in a Sweet Spot",
+      "url": "https://finance.yahoo.com/m/2e4e6861-9220-30f7-8873-0f5222c17611/why-hsbc-thinks-stocks-are-in.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/2e4e6861-9220-30f7-8873-0f5222c17611/why-hsbc-thinks-stocks-are-in.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-ff2eec7089",
+        "issue": "2026-11-23-PM",
+        "title": "Why Is DraftKings Stock Falling?",
+        "published_at_taipei": "2026-11-23 22:26",
+        "url": "https://www.trefis.com/stock/dkng/articles/627575/why-is-draftkings-stock-falling/2026-11-23?.tsrc=rss"
       },
       "sentiment": "neutral",
       "sentiment_label": "中性",
@@ -13229,6 +13461,156 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261126-13ee9db81b",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:43:00Z",
+      "published_at_taipei": "2026-11-26 03:43",
+      "published_at_taipei_iso": "2026-11-26T03:43:00+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "Nvidia is heading for its first ‘death cross’ since March 2025 as stock continues to struggle",
+      "url": "https://www.marketwatch.com/story/nvidia-is-heading-for-its-first-death-cross-since-march-2025-as-stock-continues-to-struggle-a611b99c?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/nvidia-is-heading-for-its-first-death-cross-since-march-2025-as-stock-continues-to-struggle-a611b99c?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-30b5b4a07a",
+        "issue": "2026-11-24-AM",
+        "title": "The Nasdaq Just Had Its Best Day Since April 2025. Anthropic Stock Fell Anyway.",
+        "published_at_taipei": "2026-11-24 08:42",
+        "url": "https://www.fool.com/investing/2026/11/23/the-nasdaq-just-had-its-best-day-since-april-2025-anthropic-stock-fell-anyway/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-3fc846e8dd",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:39:00Z",
+      "published_at_taipei": "2026-11-26 03:39",
+      "published_at_taipei_iso": "2026-11-26T03:39:00+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "The Fed says inflation hasn’t gotten any better ahead of its key December vote to raise rates",
+      "url": "https://www.marketwatch.com/story/the-fed-says-inflation-hasnt-gotten-any-better-ahead-of-its-key-december-vote-to-raise-rates-65024d33?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/the-fed-says-inflation-hasnt-gotten-any-better-ahead-of-its-key-december-vote-to-raise-rates-65024d33?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（inflation）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-7b9213a000",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:38:59Z",
+      "published_at_taipei": "2026-11-26 03:38",
+      "published_at_taipei_iso": "2026-11-26T03:38:59+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "Why Lucid Stock Is Moving in Reverse Today",
+      "url": "https://www.fool.com/investing/2026/11/25/why-lucid-stock-is-moving-in-reverse-today/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/25/why-lucid-stock-is-moving-in-reverse-today?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-14e95cb25b",
+        "issue": "2026-11-23-PM",
+        "title": "Why SpaceX Stock Is Gaining Today",
+        "published_at_taipei": "2026-11-23 23:30",
+        "url": "https://www.fool.com/investing/2026/11/23/why-spacex-stock-is-gaining-today/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-8e1c88ff27",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:37:10Z",
+      "published_at_taipei": "2026-11-26 03:37",
+      "published_at_taipei_iso": "2026-11-26T03:37:10+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "Bitcoin miners hit by hashrate hijacking attack exploiting unencrypted connections",
+      "url": "https://www.theblock.co/news/ecosystems/2026-11-25-bitcoin-miners-hit-hashrate-hijacking-attack-exploiting-unencrypted-connections-446723",
+      "canonical_url": "https://theblock.co/news/ecosystems/2026-11-25-bitcoin-miners-hit-hashrate-hijacking-attack-exploiting-unencrypted-connections-446723",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-94f170b18e",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T19:32:42Z",
@@ -13535,6 +13917,48 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-1e9494bad3",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:20:00Z",
+      "published_at_taipei": "2026-11-26 03:20",
+      "published_at_taipei_iso": "2026-11-26T03:20:00+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "This Strategist Still Sees the S&P 500 Hitting 10,000",
+      "url": "https://finance.yahoo.com/m/f24bf1b4-b64e-35a6-8dc1-c6ce8ed67405/this-strategist-still-sees.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/f24bf1b4-b64e-35a6-8dc1-c6ce8ed67405/this-strategist-still-sees.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-1c1351ca39",
+        "issue": "2026-11-23-PM",
+        "title": "Deutsche Bank sees S&P 500 hitting 9,000 in 2027",
+        "published_at_taipei": "2026-11-23 22:21",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-sees-p-500-142138581.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-ca6949d69b",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T19:16:00Z",
@@ -13725,6 +14149,46 @@
         "title": "Why Did NRG Stock Jump?",
         "published_at_taipei": "2026-11-25 01:22",
         "url": "https://www.trefis.com/stock/nrg/articles/628623/why-did-nrg-stock-jump/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-cfcaed846f",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T19:05:00Z",
+      "published_at_taipei": "2026-11-26 03:05",
+      "published_at_taipei_iso": "2026-11-26T03:05:00+08:00",
+      "first_seen_at_utc": "2026-11-25T19:51:34Z",
+      "first_seen_at_taipei": "2026-11-26 03:51",
+      "month": "2026-11",
+      "title": "Why HSBC Thinks Stocks Are in a Sweet Spot",
+      "url": "https://finance.yahoo.com/m/2e4e6861-9220-30f7-8873-0f5222c17611/why-hsbc-thinks-stocks-are-in.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/2e4e6861-9220-30f7-8873-0f5222c17611/why-hsbc-thinks-stocks-are-in.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-ff2eec7089",
+        "issue": "2026-11-23-PM",
+        "title": "Why Is DraftKings Stock Falling?",
+        "published_at_taipei": "2026-11-23 22:26",
+        "url": "https://www.trefis.com/stock/dkng/articles/627575/why-is-draftkings-stock-falling/2026-11-23?.tsrc=rss"
       },
       "sentiment": "neutral",
       "sentiment_label": "中性",
@@ -128343,9 +128807,9 @@
       "month": "2026-11",
       "date": "2026-11-25",
       "half": "PM",
-      "updated_at_taipei": "2026-11-26 03:36",
-      "count": 329,
-      "star3_count": 43,
+      "updated_at_taipei": "2026-11-26 03:51",
+      "count": 335,
+      "star3_count": 44,
       "failed_sources": [
         {
           "id": "binance_derivatives",
