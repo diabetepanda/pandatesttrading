@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-25-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-25T13:49:14Z",
-  "updated_at_taipei": "2026-11-25 21:49",
-  "last_updated_utc": "2026-11-25T13:49:14Z",
-  "last_updated_taipei": "2026-11-25 21:49",
-  "next_update_hint": "約台北時間 22:02（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-25T14:04:32Z",
+  "updated_at_taipei": "2026-11-25 22:04",
+  "last_updated_utc": "2026-11-25T14:04:32Z",
+  "last_updated_taipei": "2026-11-25 22:04",
+  "next_update_hint": "約台北時間 22:17（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,7 +26,7 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 23.999,
+    "total_elapsed_sec": 16.317,
     "sources_ok": 23,
     "sources_failed": 3,
     "new_items_added": 11,
@@ -36,7 +36,7 @@
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.109,
+        "elapsed_sec": 0.065,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.269,
+        "elapsed_sec": 0.111,
         "raw_count": 30,
         "items_kept": 11,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.126,
+        "elapsed_sec": 0.2,
         "raw_count": 30,
         "items_kept": 5,
         "error": null
@@ -63,25 +63,25 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.17,
+        "elapsed_sec": 0.044,
         "raw_count": 10,
-        "items_kept": 7,
+        "items_kept": 6,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.241,
+        "elapsed_sec": 0.256,
         "raw_count": 18,
-        "items_kept": 17,
+        "items_kept": 16,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.314,
+        "elapsed_sec": 0.146,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.129,
+        "elapsed_sec": 0.073,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.177,
+        "elapsed_sec": 0.071,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.128,
+        "elapsed_sec": 0.102,
         "raw_count": 37,
         "items_kept": 14,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.755,
+        "elapsed_sec": 0.366,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -126,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 1.366,
+        "elapsed_sec": 0.432,
         "raw_count": 20,
-        "items_kept": 14,
+        "items_kept": 13,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.863,
+        "elapsed_sec": 0.475,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.903,
+        "elapsed_sec": 0.448,
         "raw_count": 15,
         "items_kept": 5,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.674,
+        "elapsed_sec": 0.329,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.517,
+        "elapsed_sec": 0.35,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.138,
+        "elapsed_sec": 0.075,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.733,
+        "elapsed_sec": 0.297,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 1.089,
+        "elapsed_sec": 0.059,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.562,
+        "elapsed_sec": 1.165,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.449,
+        "elapsed_sec": 0.33,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.535,
+        "elapsed_sec": 0.961,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.444,
+        "elapsed_sec": 0.333,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.846,
+        "elapsed_sec": 1.343,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.241,
+        "elapsed_sec": 0.088,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.567,
+        "elapsed_sec": 0.437,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.381,
+        "elapsed_sec": 0.313,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,54 +277,94 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 35.53,
-        "change_1d_pct": -2.21
+        "tvl_b": 35.55,
+        "change_1d_pct": -2.18
       },
       "Base": {
         "tvl_b": 4.98,
-        "change_1d_pct": -2.28
+        "change_1d_pct": -2.27
       },
       "Solana": {
         "tvl_b": 4.45,
-        "change_1d_pct": -4.06
+        "change_1d_pct": -4.03
       },
       "Tron": {
-        "tvl_b": 4.38,
-        "change_1d_pct": -2.2
+        "tvl_b": 4.39,
+        "change_1d_pct": -2.04
       },
       "BSC": {
         "tvl_b": 4.2,
-        "change_1d_pct": -2.72
+        "change_1d_pct": -2.77
       },
       "Bitcoin": {
         "tvl_b": 2.94,
-        "change_1d_pct": -3.86
+        "change_1d_pct": -3.73
       }
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -774.2,
+      "net_flow_usd_m": -771.3,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0065,
-        "oi_usd_b": 1.85
+        "funding_rate_pct": 0.0059,
+        "oi_usd_b": 1.86
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0012,
+        "funding_rate_pct": 0.0015,
         "oi_usd_b": 1.1
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.2,
-      "tx_count": 63993,
+      "mempool_vsize_mb": 31.3,
+      "tx_count": 75120,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261125-af5730de15",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:54:09Z",
+      "published_at_taipei": "2026-11-25 21:54",
+      "published_at_taipei_iso": "2026-11-25T21:54:09+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "TSX futures slip amid deepening tech selloff, U.S. tariff reports",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tsx-futures-slip-amid-deepening-135409021.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/tsx-futures-slip-amid-deepening-135409021.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-1853c58b97",
+        "issue": "2026-11-23-PM",
+        "title": "TSX futures rise as Wall Street bounces following AI selloff",
+        "published_at_taipei": "2026-11-23 21:34",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/tsx-futures-rise-wall-street-133418863.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：tariffs；命中：selloff；命中：tariff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261125-3fcc06fb37",
       "issue": "2026-11-25-PM",
@@ -933,6 +973,114 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-12ccb0a0c9",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T14:01:00Z",
+      "published_at_taipei": "2026-11-25 22:01",
+      "published_at_taipei_iso": "2026-11-25T22:01:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "拿台灣做實驗？爆索羅斯放空台積電4000萬美金 謝寒冰起底沈伯洋補助風波：政治版黃琪",
+      "url": "https://tw.news.yahoo.com/%E6%8B%BF%E5%8F%B0%E7%81%A3%E5%81%9A%E5%AF%A6%E9%A9%97-%E7%88%86%E7%B4%A2%E7%BE%85%E6%96%AF%E6%94%BE%E7%A9%BA%E5%8F%B0%E7%A9%8D%E9%9B%BB4000%E8%90%AC%E7%BE%8E%E9%87%91-%E8%AC%9D%E5%AF%92%E5%86%B0%E8%B5%B7%E5%BA%95%E6%B2%88%E4%BC%AF%E6%B4%8B%E8%A3%9C%E5%8A%A9%E9%A2%A8%E6%B3%A2-%E6%94%BF%E6%B2%BB%E7%89%88%E9%BB%83%E7%90%AA-140100138.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E6%8B%BF%E5%8F%B0%E7%81%A3%E5%81%9A%E5%AF%A6%E9%A9%97-%E7%88%86%E7%B4%A2%E7%BE%85%E6%96%AF%E6%94%BE%E7%A9%BA%E5%8F%B0%E7%A9%8D%E9%9B%BB4000%E8%90%AC%E7%BE%8E%E9%87%91-%E8%AC%9D%E5%AF%92%E5%86%B0%E8%B5%B7%E5%BA%95%E6%B2%88%E4%BC%AF%E6%B4%8B%E8%A3%9C%E5%8A%A9%E9%A2%A8%E6%B3%A2-%E6%94%BF%E6%B2%BB%E7%89%88%E9%BB%83%E7%90%AA-140100138.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-243361aa7b",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T14:00:00Z",
+      "published_at_taipei": "2026-11-25 22:00",
+      "published_at_taipei_iso": "2026-11-25T22:00:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "Data Center Americas 2027 Announces Industry Leaders from AWS, Google, Microsoft, Oracle, CoreWeave and Applied Digital as Featured Speakers",
+      "url": "https://finance.yahoo.com/technology/ai/articles/data-center-americas-2027-announces-140000391.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/data-center-americas-2027-announces-140000391.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-836dd13374",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:54:00Z",
+      "published_at_taipei": "2026-11-25 21:54",
+      "published_at_taipei_iso": "2026-11-25T21:54:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "台股還有4大變數！專家警告風一吹「高檔族群先被拿來殺」",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%82%84%E6%9C%894%E5%A4%A7%E8%AE%8A%E6%95%B8-%E5%B0%88%E5%AE%B6%E8%AD%A6%E5%91%8A%E9%A2%A8-%E5%90%B9-%E9%AB%98%E6%AA%94%E6%97%8F%E7%BE%A4%E5%85%88%E8%A2%AB%E6%8B%BF%E4%BE%86%E6%AE%BA-135400232.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%82%84%E6%9C%894%E5%A4%A7%E8%AE%8A%E6%95%B8-%E5%B0%88%E5%AE%B6%E8%AD%A6%E5%91%8A%E9%A2%A8-%E5%90%B9-%E9%AB%98%E6%AA%94%E6%97%8F%E7%BE%A4%E5%85%88%E8%A2%AB%E6%8B%BF%E4%BE%86%E6%AE%BA-135400232.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲；命中：利多；命中：賣超",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-f47abf7362",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T13:41:38Z",
@@ -975,6 +1123,90 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-1efceda9aa",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:35:21Z",
+      "published_at_taipei": "2026-11-25 21:35",
+      "published_at_taipei_iso": "2026-11-25T21:35:21+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "明天台股挫哩等？台指期夜盤大跌逾1100點 失守3.7萬點大關",
+      "url": "https://tw.stock.yahoo.com/news/%E6%98%8E%E5%A4%A9%E5%8F%B0%E8%82%A1%E6%8C%AB%E5%93%A9%E7%AD%89-%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E5%A4%A7%E8%B7%8C%E9%80%BE1100%E9%BB%9E-%E5%A4%B1%E5%AE%883-7%E8%90%AC%E9%BB%9E%E5%A4%A7%E9%97%9C-133521602.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E6%98%8E%E5%A4%A9%E5%8F%B0%E8%82%A1%E6%8C%AB%E5%93%A9%E7%AD%89-%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E5%A4%A7%E8%B7%8C%E9%80%BE1100%E9%BB%9E-%E5%A4%B1%E5%AE%883-7%E8%90%AC%E9%BB%9E%E5%A4%A7%E9%97%9C-133521602.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-0e41922bdc",
+        "issue": "2026-11-25-AM",
+        "title": "台股重挫1926點還沒完? 台指期夜盤再跌逾900點 逆價差擴大至993點",
+        "published_at_taipei": "2026-11-25 18:24",
+        "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%87%8D%E6%8C%AB1926%E9%BB%9E%E9%82%84%E6%B2%92%E5%AE%8C-%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E5%86%8D%E8%B7%8C%E9%80%BE900%E9%BB%9E-%E9%80%86%E5%83%B9%E5%B7%AE%E6%93%B4%E5%A4%A7%E8%87%B3993%E9%BB%9E-102454150.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-94acac6bad",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:35:02Z",
+      "published_at_taipei": "2026-11-25 21:35",
+      "published_at_taipei_iso": "2026-11-25T21:35:02+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "Not SpaceX, Not Anthropic: These Are the 2 AI Stocks I Bought During the Sell-Off",
+      "url": "https://www.fool.com/investing/2026/11/25/not-spacex-not-anthropic-these-are-the-2-ai-stocks-i-bought-during-the-sell-off/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/25/not-spacex-not-anthropic-these-are-the-2-ai-stocks-i-bought-during-the-sell-off?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-7d162e4990",
+        "issue": "2026-11-25-AM",
+        "title": "Jim Cramer and Tom Lee are Buying More AI Stocks. Are They Right?",
+        "published_at_taipei": "2026-11-25 08:53",
+        "url": "https://beincrypto.com/jim-cramer-tom-lee-ai-stock-call/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-b2d33c77c7",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T13:34:00Z",
@@ -1003,6 +1235,48 @@
       "sentiment_label": "中性",
       "sentiment_score": 0,
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-1ef4f21ba0",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:28:00Z",
+      "published_at_taipei": "2026-11-25 21:28",
+      "published_at_taipei_iso": "2026-11-25T21:28:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "Nasdaq Futures Tumble as AI Selloff Returns",
+      "url": "https://www.wsj.com/finance/stocks/nasdaq-futures-slide-as-ai-growth-fears-return-to-center-stage-ff9a6d6b?.tsrc=rss",
+      "canonical_url": "https://wsj.com/finance/stocks/nasdaq-futures-slide-as-ai-growth-fears-return-to-center-stage-ff9a6d6b?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-44aed2ad73",
+        "issue": "2026-11-23-PM",
+        "title": "Stock Futures Rise as Traders Await Key Inflation Report",
+        "published_at_taipei": "2026-11-23 20:02",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/stock-futures-rise-traders-await-120219341.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -2990,6 +3264,80 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-a1984e4c2c",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:42:51Z",
+      "published_at_taipei": "2026-11-25 21:42",
+      "published_at_taipei_iso": "2026-11-25T21:42:51+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "Stocks or Gold? GDE Refuses to Choose: Every $100 Buys $90 of Each",
+      "url": "https://247wallst.com/investing/etf/2026/11/25/stocks-or-gold-gde-refuses-to-choose-every-100-buys-90-of-each/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/etf/2026/11/25/stocks-or-gold-gde-refuses-to-choose-every-100-buys-90-of-each?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-574abbe512",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:35:00Z",
+      "published_at_taipei": "2026-11-25 21:35",
+      "published_at_taipei_iso": "2026-11-25T21:35:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "West Wits Mining to Present at the Precious Metals & Critical Minerals Virtual Investor Conference December 3rd",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/west-wits-mining-present-precious-133500583.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/west-wits-mining-present-precious-133500583.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-ba2aff32f0",
+        "issue": "2026-11-24-PM",
+        "title": "Precious Metals & Critical Minerals Virtual Investor Conference Agenda Announced for December 1–3",
+        "published_at_taipei": "2026-11-25 05:25",
+        "url": "https://finance.yahoo.com/markets/commodities/articles/precious-metals-critical-minerals-virtual-212500360.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-792f5ef864",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T13:33:36Z",
@@ -3053,6 +3401,80 @@
         "title": "Honey Badger Silver Intersects Broad Mineralized Zones That Include 1,535 g/t AgEq Over 4.38 Meters and 1,154 g/t AgEq Over 7.30 Meters in First 2026 Drill Results at Sunrise Lake, NWT",
         "published_at_taipei": "2026-11-25 02:36",
         "url": "https://finance.yahoo.com/markets/commodities/articles/honey-badger-silver-intersects-broad-183600241.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-4f3d94aa62",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:30:00Z",
+      "published_at_taipei": "2026-11-25 21:30",
+      "published_at_taipei_iso": "2026-11-25T21:30:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "Lion One Drills 2.0 m of 44.39 g/t Gold in Zone 500",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/lion-one-drills-2-0-133000773.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/lion-one-drills-2-0-133000773.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-fadddf434c",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:25:06Z",
+      "published_at_taipei": "2026-11-25 21:25",
+      "published_at_taipei_iso": "2026-11-25T21:25:06+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "What Sent DKS Stock Higher On Tuesday?",
+      "url": "https://www.trefis.com/stock/dks/articles/628963/what-sent-dks-stock-higher-on-tuesday/2026-11-25?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/dks/articles/628963/what-sent-dks-stock-higher-on-tuesday/2026-11-25?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-7f810c69aa",
+        "issue": "2026-11-23-PM",
+        "title": "What Sent NVIDIA Stock Lower On Friday?",
+        "published_at_taipei": "2026-11-23 20:27",
+        "url": "https://www.trefis.com/stock/nvda/articles/627754/what-sent-nvidia-stock-lower-on-friday/2026-11-23?.tsrc=rss"
       },
       "sentiment": "neutral",
       "sentiment_label": "中性",
@@ -4327,6 +4749,154 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261125-12ccb0a0c9",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T14:01:00Z",
+      "published_at_taipei": "2026-11-25 22:01",
+      "published_at_taipei_iso": "2026-11-25T22:01:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "拿台灣做實驗？爆索羅斯放空台積電4000萬美金 謝寒冰起底沈伯洋補助風波：政治版黃琪",
+      "url": "https://tw.news.yahoo.com/%E6%8B%BF%E5%8F%B0%E7%81%A3%E5%81%9A%E5%AF%A6%E9%A9%97-%E7%88%86%E7%B4%A2%E7%BE%85%E6%96%AF%E6%94%BE%E7%A9%BA%E5%8F%B0%E7%A9%8D%E9%9B%BB4000%E8%90%AC%E7%BE%8E%E9%87%91-%E8%AC%9D%E5%AF%92%E5%86%B0%E8%B5%B7%E5%BA%95%E6%B2%88%E4%BC%AF%E6%B4%8B%E8%A3%9C%E5%8A%A9%E9%A2%A8%E6%B3%A2-%E6%94%BF%E6%B2%BB%E7%89%88%E9%BB%83%E7%90%AA-140100138.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E6%8B%BF%E5%8F%B0%E7%81%A3%E5%81%9A%E5%AF%A6%E9%A9%97-%E7%88%86%E7%B4%A2%E7%BE%85%E6%96%AF%E6%94%BE%E7%A9%BA%E5%8F%B0%E7%A9%8D%E9%9B%BB4000%E8%90%AC%E7%BE%8E%E9%87%91-%E8%AC%9D%E5%AF%92%E5%86%B0%E8%B5%B7%E5%BA%95%E6%B2%88%E4%BC%AF%E6%B4%8B%E8%A3%9C%E5%8A%A9%E9%A2%A8%E6%B3%A2-%E6%94%BF%E6%B2%BB%E7%89%88%E9%BB%83%E7%90%AA-140100138.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-243361aa7b",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T14:00:00Z",
+      "published_at_taipei": "2026-11-25 22:00",
+      "published_at_taipei_iso": "2026-11-25T22:00:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "Data Center Americas 2027 Announces Industry Leaders from AWS, Google, Microsoft, Oracle, CoreWeave and Applied Digital as Featured Speakers",
+      "url": "https://finance.yahoo.com/technology/ai/articles/data-center-americas-2027-announces-140000391.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/data-center-americas-2027-announces-140000391.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-af5730de15",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:54:09Z",
+      "published_at_taipei": "2026-11-25 21:54",
+      "published_at_taipei_iso": "2026-11-25T21:54:09+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "TSX futures slip amid deepening tech selloff, U.S. tariff reports",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tsx-futures-slip-amid-deepening-135409021.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/tsx-futures-slip-amid-deepening-135409021.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-1853c58b97",
+        "issue": "2026-11-23-PM",
+        "title": "TSX futures rise as Wall Street bounces following AI selloff",
+        "published_at_taipei": "2026-11-23 21:34",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/tsx-futures-rise-wall-street-133418863.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：tariffs；命中：selloff；命中：tariff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-836dd13374",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:54:00Z",
+      "published_at_taipei": "2026-11-25 21:54",
+      "published_at_taipei_iso": "2026-11-25T21:54:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "台股還有4大變數！專家警告風一吹「高檔族群先被拿來殺」",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%82%84%E6%9C%894%E5%A4%A7%E8%AE%8A%E6%95%B8-%E5%B0%88%E5%AE%B6%E8%AD%A6%E5%91%8A%E9%A2%A8-%E5%90%B9-%E9%AB%98%E6%AA%94%E6%97%8F%E7%BE%A4%E5%85%88%E8%A2%AB%E6%8B%BF%E4%BE%86%E6%AE%BA-135400232.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%82%84%E6%9C%894%E5%A4%A7%E8%AE%8A%E6%95%B8-%E5%B0%88%E5%AE%B6%E8%AD%A6%E5%91%8A%E9%A2%A8-%E5%90%B9-%E9%AB%98%E6%AA%94%E6%97%8F%E7%BE%A4%E5%85%88%E8%A2%AB%E6%8B%BF%E4%BE%86%E6%AE%BA-135400232.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲；命中：利多；命中：賣超",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-3fcc06fb37",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T13:48:49Z",
@@ -4397,6 +4967,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-a1984e4c2c",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:42:51Z",
+      "published_at_taipei": "2026-11-25 21:42",
+      "published_at_taipei_iso": "2026-11-25T21:42:51+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "Stocks or Gold? GDE Refuses to Choose: Every $100 Buys $90 of Each",
+      "url": "https://247wallst.com/investing/etf/2026/11/25/stocks-or-gold-gde-refuses-to-choose-every-100-buys-90-of-each/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/etf/2026/11/25/stocks-or-gold-gde-refuses-to-choose-every-100-buys-90-of-each?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-f47abf7362",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T13:41:38Z",
@@ -4463,6 +5067,130 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-1efceda9aa",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:35:21Z",
+      "published_at_taipei": "2026-11-25 21:35",
+      "published_at_taipei_iso": "2026-11-25T21:35:21+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "明天台股挫哩等？台指期夜盤大跌逾1100點 失守3.7萬點大關",
+      "url": "https://tw.stock.yahoo.com/news/%E6%98%8E%E5%A4%A9%E5%8F%B0%E8%82%A1%E6%8C%AB%E5%93%A9%E7%AD%89-%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E5%A4%A7%E8%B7%8C%E9%80%BE1100%E9%BB%9E-%E5%A4%B1%E5%AE%883-7%E8%90%AC%E9%BB%9E%E5%A4%A7%E9%97%9C-133521602.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E6%98%8E%E5%A4%A9%E5%8F%B0%E8%82%A1%E6%8C%AB%E5%93%A9%E7%AD%89-%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E5%A4%A7%E8%B7%8C%E9%80%BE1100%E9%BB%9E-%E5%A4%B1%E5%AE%883-7%E8%90%AC%E9%BB%9E%E5%A4%A7%E9%97%9C-133521602.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-0e41922bdc",
+        "issue": "2026-11-25-AM",
+        "title": "台股重挫1926點還沒完? 台指期夜盤再跌逾900點 逆價差擴大至993點",
+        "published_at_taipei": "2026-11-25 18:24",
+        "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%87%8D%E6%8C%AB1926%E9%BB%9E%E9%82%84%E6%B2%92%E5%AE%8C-%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E5%86%8D%E8%B7%8C%E9%80%BE900%E9%BB%9E-%E9%80%86%E5%83%B9%E5%B7%AE%E6%93%B4%E5%A4%A7%E8%87%B3993%E9%BB%9E-102454150.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-94acac6bad",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:35:02Z",
+      "published_at_taipei": "2026-11-25 21:35",
+      "published_at_taipei_iso": "2026-11-25T21:35:02+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "Not SpaceX, Not Anthropic: These Are the 2 AI Stocks I Bought During the Sell-Off",
+      "url": "https://www.fool.com/investing/2026/11/25/not-spacex-not-anthropic-these-are-the-2-ai-stocks-i-bought-during-the-sell-off/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/25/not-spacex-not-anthropic-these-are-the-2-ai-stocks-i-bought-during-the-sell-off?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-7d162e4990",
+        "issue": "2026-11-25-AM",
+        "title": "Jim Cramer and Tom Lee are Buying More AI Stocks. Are They Right?",
+        "published_at_taipei": "2026-11-25 08:53",
+        "url": "https://beincrypto.com/jim-cramer-tom-lee-ai-stock-call/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-574abbe512",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:35:00Z",
+      "published_at_taipei": "2026-11-25 21:35",
+      "published_at_taipei_iso": "2026-11-25T21:35:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "West Wits Mining to Present at the Precious Metals & Critical Minerals Virtual Investor Conference December 3rd",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/west-wits-mining-present-precious-133500583.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/west-wits-mining-present-precious-133500583.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-ba2aff32f0",
+        "issue": "2026-11-24-PM",
+        "title": "Precious Metals & Critical Minerals Virtual Investor Conference Agenda Announced for December 1–3",
+        "published_at_taipei": "2026-11-25 05:25",
+        "url": "https://finance.yahoo.com/markets/commodities/articles/precious-metals-critical-minerals-virtual-212500360.html?.tsrc=rss"
+      },
       "sentiment": "neutral",
       "sentiment_label": "中性",
       "sentiment_score": 0,
@@ -4639,6 +5367,122 @@
         "title": "Honey Badger Silver Intersects Broad Mineralized Zones That Include 1,535 g/t AgEq Over 4.38 Meters and 1,154 g/t AgEq Over 7.30 Meters in First 2026 Drill Results at Sunrise Lake, NWT",
         "published_at_taipei": "2026-11-25 02:36",
         "url": "https://finance.yahoo.com/markets/commodities/articles/honey-badger-silver-intersects-broad-183600241.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-4f3d94aa62",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:30:00Z",
+      "published_at_taipei": "2026-11-25 21:30",
+      "published_at_taipei_iso": "2026-11-25T21:30:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "Lion One Drills 2.0 m of 44.39 g/t Gold in Zone 500",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/lion-one-drills-2-0-133000773.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/commodities/articles/lion-one-drills-2-0-133000773.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-1ef4f21ba0",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:28:00Z",
+      "published_at_taipei": "2026-11-25 21:28",
+      "published_at_taipei_iso": "2026-11-25T21:28:00+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "Nasdaq Futures Tumble as AI Selloff Returns",
+      "url": "https://www.wsj.com/finance/stocks/nasdaq-futures-slide-as-ai-growth-fears-return-to-center-stage-ff9a6d6b?.tsrc=rss",
+      "canonical_url": "https://wsj.com/finance/stocks/nasdaq-futures-slide-as-ai-growth-fears-return-to-center-stage-ff9a6d6b?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-44aed2ad73",
+        "issue": "2026-11-23-PM",
+        "title": "Stock Futures Rise as Traders Await Key Inflation Report",
+        "published_at_taipei": "2026-11-23 20:02",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/stock-futures-rise-traders-await-120219341.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-fadddf434c",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T13:25:06Z",
+      "published_at_taipei": "2026-11-25 21:25",
+      "published_at_taipei_iso": "2026-11-25T21:25:06+08:00",
+      "first_seen_at_utc": "2026-11-25T14:04:32Z",
+      "first_seen_at_taipei": "2026-11-25 22:04",
+      "month": "2026-11",
+      "title": "What Sent DKS Stock Higher On Tuesday?",
+      "url": "https://www.trefis.com/stock/dks/articles/628963/what-sent-dks-stock-higher-on-tuesday/2026-11-25?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/dks/articles/628963/what-sent-dks-stock-higher-on-tuesday/2026-11-25?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-7f810c69aa",
+        "issue": "2026-11-23-PM",
+        "title": "What Sent NVIDIA Stock Lower On Friday?",
+        "published_at_taipei": "2026-11-23 20:27",
+        "url": "https://www.trefis.com/stock/nvda/articles/627754/what-sent-nvidia-stock-lower-on-friday/2026-11-23?.tsrc=rss"
       },
       "sentiment": "neutral",
       "sentiment_label": "中性",
@@ -110560,9 +111404,9 @@
       "month": "2026-11",
       "date": "2026-11-25",
       "half": "PM",
-      "updated_at_taipei": "2026-11-25 21:49",
-      "count": 103,
-      "star3_count": 16,
+      "updated_at_taipei": "2026-11-25 22:04",
+      "count": 114,
+      "star3_count": 17,
       "failed_sources": [
         {
           "id": "binance_derivatives",
