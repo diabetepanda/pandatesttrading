@@ -2,18 +2,13 @@
   "version": 1,
   "latest_issue": "2026-11-25-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-25T23:22:16Z",
-  "updated_at_taipei": "2026-11-26 07:22",
-  "last_updated_utc": "2026-11-25T23:22:16Z",
-  "last_updated_taipei": "2026-11-26 07:22",
-  "next_update_hint": "約台北時間 07:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-25T23:37:11Z",
+  "updated_at_taipei": "2026-11-26 07:37",
+  "last_updated_utc": "2026-11-25T23:37:11Z",
+  "last_updated_taipei": "2026-11-26 07:37",
+  "next_update_hint": "約台北時間 07:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
-    {
-      "id": "fed_press",
-      "name": "Federal Reserve",
-      "error": "404 Client Error: Not Found for url: https://www.federalreserve.gov/feeds/press_all.xml"
-    },
     {
       "id": "binance_derivatives",
       "name": "Binance 永續合約",
@@ -31,26 +26,26 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 20.828,
-    "sources_ok": 22,
-    "sources_failed": 4,
-    "new_items_added": 7,
+    "total_elapsed_sec": 18.214,
+    "sources_ok": 23,
+    "sources_failed": 3,
+    "new_items_added": 6,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
-        "status": "failed",
-        "elapsed_sec": 0.435,
-        "raw_count": 0,
-        "items_kept": 0,
-        "error": "404 Client Error: Not Found for url: https://www.federalreserve.gov/feeds/press_all.xml"
+        "status": "ok",
+        "elapsed_sec": 0.083,
+        "raw_count": 20,
+        "items_kept": 3,
+        "error": null
       },
       "cnbc_top": {
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.188,
+        "elapsed_sec": 0.121,
         "raw_count": 30,
         "items_kept": 12,
         "error": null
@@ -59,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.141,
+        "elapsed_sec": 0.087,
         "raw_count": 30,
         "items_kept": 6,
         "error": null
@@ -68,16 +63,16 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.118,
+        "elapsed_sec": 0.134,
         "raw_count": 10,
-        "items_kept": 6,
+        "items_kept": 4,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.191,
+        "elapsed_sec": 0.181,
         "raw_count": 19,
         "items_kept": 15,
         "error": null
@@ -86,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.174,
+        "elapsed_sec": 0.196,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -95,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.151,
+        "elapsed_sec": 0.154,
         "raw_count": 30,
         "items_kept": 21,
         "error": null
@@ -104,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.103,
+        "elapsed_sec": 0.112,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -113,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.139,
+        "elapsed_sec": 0.11,
         "raw_count": 38,
         "items_kept": 17,
         "error": null
@@ -122,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.483,
+        "elapsed_sec": 0.468,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -131,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.542,
+        "elapsed_sec": 0.506,
         "raw_count": 20,
-        "items_kept": 13,
+        "items_kept": 12,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.307,
+        "elapsed_sec": 0.485,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -149,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.507,
+        "elapsed_sec": 0.551,
         "raw_count": 15,
         "items_kept": 4,
         "error": null
@@ -158,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.29,
+        "elapsed_sec": 0.327,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -167,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.401,
+        "elapsed_sec": 0.321,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -176,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.269,
+        "elapsed_sec": 0.095,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -185,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 5.753,
+        "elapsed_sec": 4.136,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -194,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.06,
+        "elapsed_sec": 0.052,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -203,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.133,
+        "elapsed_sec": 1.277,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -212,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.517,
+        "elapsed_sec": 0.795,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -221,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 0.977,
+        "elapsed_sec": 1.011,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -230,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.446,
+        "elapsed_sec": 0.494,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -239,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.655,
+        "elapsed_sec": 0.447,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -248,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.343,
+        "elapsed_sec": 0.259,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -257,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.403,
+        "elapsed_sec": 0.46,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -266,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.38,
+        "elapsed_sec": 0.376,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -282,16 +277,16 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.32,
-        "change_1d_pct": -0.05
+        "tvl_b": 36.35,
+        "change_1d_pct": 0.03
       },
       "Base": {
-        "tvl_b": 5.06,
-        "change_1d_pct": -0.54
+        "tvl_b": 5.07,
+        "change_1d_pct": -0.53
       },
       "Solana": {
         "tvl_b": 4.56,
-        "change_1d_pct": -1.66
+        "change_1d_pct": -1.58
       },
       "Tron": {
         "tvl_b": 4.4,
@@ -299,7 +294,7 @@
       },
       "BSC": {
         "tvl_b": 4.28,
-        "change_1d_pct": -0.8
+        "change_1d_pct": -0.89
       },
       "Bitcoin": {
         "tvl_b": 2.25,
@@ -308,7 +303,7 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -800.2,
+      "net_flow_usd_m": -732.0,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
@@ -317,15 +312,15 @@
         "oi_usd_b": 1.9
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0076,
+        "funding_rate_pct": 0.0072,
         "oi_usd_b": 1.09
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 2,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 32.8,
-      "tx_count": 75802,
+      "mempool_vsize_mb": 30.3,
+      "tx_count": 67173,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -2410,6 +2405,43 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-d3d6183fa3",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T23:23:00Z",
+      "published_at_taipei": "2026-11-26 07:23",
+      "published_at_taipei_iso": "2026-11-26T07:23:00+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "台指期夜盤殺2190點竟翻紅！道瓊狂拉逾千點上演大逆轉 輝達仍挫3.9％、台積電期貨收紅",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E6%AE%BA2190%E9%BB%9E%E7%AB%9F%E7%BF%BB%E7%B4%85-%E9%81%93%E7%93%8A%E7%8B%82%E6%8B%89%E9%80%BE%E5%8D%83%E9%BB%9E%E4%B8%8A%E6%BC%94%E5%A4%A7%E9%80%86%E8%BD%89-%E8%BC%9D%E9%81%94%E4%BB%8D%E6%8C%AB3-9-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%9C%9F%E8%B2%A8%E6%94%B6%E7%B4%85-232300721.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E6%AE%BA2190%E9%BB%9E%E7%AB%9F%E7%BF%BB%E7%B4%85-%E9%81%93%E7%93%8A%E7%8B%82%E6%8B%89%E9%80%BE%E5%8D%83%E9%BB%9E%E4%B8%8A%E6%BC%94%E5%A4%A7%E9%80%86%E8%BD%89-%E8%BC%9D%E9%81%94%E4%BB%8D%E6%8C%AB3-9-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%9C%9F%E8%B2%A8%E6%94%B6%E7%B4%85-232300721.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "反轉：通膨／就業升溫（高於預期）；命中：關稅；命中：利空",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-506a9a9974",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T23:20:08Z",
@@ -2442,6 +2474,89 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-fc853c1dcb",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T23:15:00Z",
+      "published_at_taipei": "2026-11-26 07:15",
+      "published_at_taipei_iso": "2026-11-26T07:15:00+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "Gold vs. Bitcoin: Analyst reveals why the tide is turning",
+      "url": "https://www.thestreet.com/crypto/markets/gold-vs-bitcoin-analyst-reveals-why-the-tide-is-turning?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/crypto/markets/gold-vs-bitcoin-analyst-reveals-why-the-tide-is-turning?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-b0fa9d898a",
+        "issue": "2026-11-23-AM",
+        "title": "LIVE Crypto News – Bitcoin and Ethereum Bounce Back: Market Finally Turning?",
+        "published_at_taipei": "2026-11-23 15:12",
+        "url": "https://cryptonews.com/news/crypto-news-bitcoin-ethereum-recovery/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-56781e4daf",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T23:04:30Z",
+      "published_at_taipei": "2026-11-26 07:04",
+      "published_at_taipei_iso": "2026-11-26T07:04:30+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "感恩節前AI股逢賣壓！美股多收黑 台積電挫近2%",
+      "url": "https://tw.news.yahoo.com/%E6%84%9F%E6%81%A9%E7%AF%80%E5%89%8Dai%E8%82%A1%E9%80%A2%E8%B3%A3%E5%A3%93-%E7%BE%8E%E8%82%A1%E5%A4%9A%E6%94%B6%E9%BB%91-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%8C%AB%E8%BF%912-230430135.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E6%84%9F%E6%81%A9%E7%AF%80%E5%89%8Dai%E8%82%A1%E9%80%A2%E8%B3%A3%E5%A3%93-%E7%BE%8E%E8%82%A1%E5%A4%9A%E6%94%B6%E9%BB%91-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%8C%AB%E8%BF%912-230430135.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500",
+        "2330"
       ],
       "sentiment_method": "rule"
     },
@@ -3212,6 +3327,48 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-cca4ee0d2a",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:16:00Z",
+      "published_at_taipei": "2026-11-26 06:16",
+      "published_at_taipei_iso": "2026-11-26T06:16:00+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "Looking for Bargains? These S&P 500 Companies Are Aggressively Buying Back Stock.",
+      "url": "https://finance.yahoo.com/m/4e6a065b-848e-36f7-ab73-17a73dde122f/looking-for-bargains%3F-these.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/4e6a065b-848e-36f7-ab73-17a73dde122f/looking-for-bargains%3F-these.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-45cc9fd22b",
+        "issue": "2026-11-24-PM",
+        "title": "SharkNinja (SN) Joins The S&P 500 As Fair Value Debate Heats Up",
+        "published_at_taipei": "2026-11-25 06:14",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/sharkninja-sn-joins-p-500-221420996.html?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：buyback",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-ff36426002",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T22:14:48Z",
@@ -3490,6 +3647,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-24846902b0",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T21:28:30Z",
+      "published_at_taipei": "2026-11-26 05:28",
+      "published_at_taipei_iso": "2026-11-26T05:28:30+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "1表看》單日洗刷3千點！台股還要跌多久？5次歷史經驗太誅心 達人：最慘熬6年",
+      "url": "https://tw.stock.yahoo.com/news/1%E8%A1%A8%E7%9C%8B-%E5%96%AE%E6%97%A5%E6%B4%97%E5%88%B73%E5%8D%83%E9%BB%9E-%E5%8F%B0%E8%82%A1%E9%82%84%E8%A6%81%E8%B7%8C%E5%A4%9A%E4%B9%85-5%E6%AC%A1%E6%AD%B7%E5%8F%B2%E7%B6%93%E9%A9%97%E5%A4%AA%E8%AA%85%E5%BF%83-%E9%81%94%E4%BA%BA-212830341.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/1%E8%A1%A8%E7%9C%8B-%E5%96%AE%E6%97%A5%E6%B4%97%E5%88%B73%E5%8D%83%E9%BB%9E-%E5%8F%B0%E8%82%A1%E9%82%84%E8%A6%81%E8%B7%8C%E5%A4%9A%E4%B9%85-5%E6%AC%A1%E6%AD%B7%E5%8F%B2%E7%B6%93%E9%A9%97%E5%A4%AA%E8%AA%85%E5%BF%83-%E9%81%94%E4%BA%BA-212830341.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：關稅",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -10995,6 +11188,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-9def8522fb",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:50:00Z",
+      "published_at_taipei": "2026-11-26 06:50",
+      "published_at_taipei_iso": "2026-11-26T06:50:00+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "Horizon Gold hits 10.79 g/t gold at Kingfisher as Gum Creek resource growth potential builds",
+      "url": "https://www.proactiveinvestors.com/companies/news/1102470/horizon-gold-hits-10-79-g-t-gold-at-kingfisher-as-gum-creek-resource-growth-potential-builds-1102470.html?.tsrc=rss",
+      "canonical_url": "https://proactiveinvestors.com/companies/news/1102470/horizon-gold-hits-10-79-g-t-gold-at-kingfisher-as-gum-creek-resource-growth-potential-builds-1102470.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-194e42f25a",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T22:46:00Z",
@@ -17226,6 +17453,43 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261126-d3d6183fa3",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T23:23:00Z",
+      "published_at_taipei": "2026-11-26 07:23",
+      "published_at_taipei_iso": "2026-11-26T07:23:00+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "台指期夜盤殺2190點竟翻紅！道瓊狂拉逾千點上演大逆轉 輝達仍挫3.9％、台積電期貨收紅",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E6%AE%BA2190%E9%BB%9E%E7%AB%9F%E7%BF%BB%E7%B4%85-%E9%81%93%E7%93%8A%E7%8B%82%E6%8B%89%E9%80%BE%E5%8D%83%E9%BB%9E%E4%B8%8A%E6%BC%94%E5%A4%A7%E9%80%86%E8%BD%89-%E8%BC%9D%E9%81%94%E4%BB%8D%E6%8C%AB3-9-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%9C%9F%E8%B2%A8%E6%94%B6%E7%B4%85-232300721.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E6%8C%87%E6%9C%9F%E5%A4%9C%E7%9B%A4%E6%AE%BA2190%E9%BB%9E%E7%AB%9F%E7%BF%BB%E7%B4%85-%E9%81%93%E7%93%8A%E7%8B%82%E6%8B%89%E9%80%BE%E5%8D%83%E9%BB%9E%E4%B8%8A%E6%BC%94%E5%A4%A7%E9%80%86%E8%BD%89-%E8%BC%9D%E9%81%94%E4%BB%8D%E6%8C%AB3-9-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%9C%9F%E8%B2%A8%E6%94%B6%E7%B4%85-232300721.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "反轉：通膨／就業升溫（高於預期）；命中：關稅；命中：利空",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-506a9a9974",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T23:20:08Z",
@@ -17258,6 +17522,89 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-fc853c1dcb",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T23:15:00Z",
+      "published_at_taipei": "2026-11-26 07:15",
+      "published_at_taipei_iso": "2026-11-26T07:15:00+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "Gold vs. Bitcoin: Analyst reveals why the tide is turning",
+      "url": "https://www.thestreet.com/crypto/markets/gold-vs-bitcoin-analyst-reveals-why-the-tide-is-turning?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/crypto/markets/gold-vs-bitcoin-analyst-reveals-why-the-tide-is-turning?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-b0fa9d898a",
+        "issue": "2026-11-23-AM",
+        "title": "LIVE Crypto News – Bitcoin and Ethereum Bounce Back: Market Finally Turning?",
+        "published_at_taipei": "2026-11-23 15:12",
+        "url": "https://cryptonews.com/news/crypto-news-bitcoin-ethereum-recovery/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-56781e4daf",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T23:04:30Z",
+      "published_at_taipei": "2026-11-26 07:04",
+      "published_at_taipei_iso": "2026-11-26T07:04:30+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "感恩節前AI股逢賣壓！美股多收黑 台積電挫近2%",
+      "url": "https://tw.news.yahoo.com/%E6%84%9F%E6%81%A9%E7%AF%80%E5%89%8Dai%E8%82%A1%E9%80%A2%E8%B3%A3%E5%A3%93-%E7%BE%8E%E8%82%A1%E5%A4%9A%E6%94%B6%E9%BB%91-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%8C%AB%E8%BF%912-230430135.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E6%84%9F%E6%81%A9%E7%AF%80%E5%89%8Dai%E8%82%A1%E9%80%A2%E8%B3%A3%E5%A3%93-%E7%BE%8E%E8%82%A1%E5%A4%9A%E6%94%B6%E9%BB%91-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%8C%AB%E8%BF%912-230430135.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500",
+        "2330"
       ],
       "sentiment_method": "rule"
     },
@@ -17488,6 +17835,40 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-9def8522fb",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:50:00Z",
+      "published_at_taipei": "2026-11-26 06:50",
+      "published_at_taipei_iso": "2026-11-26T06:50:00+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "Horizon Gold hits 10.79 g/t gold at Kingfisher as Gum Creek resource growth potential builds",
+      "url": "https://www.proactiveinvestors.com/companies/news/1102470/horizon-gold-hits-10-79-g-t-gold-at-kingfisher-as-gum-creek-resource-growth-potential-builds-1102470.html?.tsrc=rss",
+      "canonical_url": "https://proactiveinvestors.com/companies/news/1102470/horizon-gold-hits-10-79-g-t-gold-at-kingfisher-as-gum-creek-resource-growth-potential-builds-1102470.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -18207,6 +18588,48 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-cca4ee0d2a",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T22:16:00Z",
+      "published_at_taipei": "2026-11-26 06:16",
+      "published_at_taipei_iso": "2026-11-26T06:16:00+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "Looking for Bargains? These S&P 500 Companies Are Aggressively Buying Back Stock.",
+      "url": "https://finance.yahoo.com/m/4e6a065b-848e-36f7-ab73-17a73dde122f/looking-for-bargains%3F-these.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/4e6a065b-848e-36f7-ab73-17a73dde122f/looking-for-bargains%3F-these.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-45cc9fd22b",
+        "issue": "2026-11-24-PM",
+        "title": "SharkNinja (SN) Joins The S&P 500 As Fair Value Debate Heats Up",
+        "published_at_taipei": "2026-11-25 06:14",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/sharkninja-sn-joins-p-500-221420996.html?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：buyback",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -18985,6 +19408,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-24846902b0",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T21:28:30Z",
+      "published_at_taipei": "2026-11-26 05:28",
+      "published_at_taipei_iso": "2026-11-26T05:28:30+08:00",
+      "first_seen_at_utc": "2026-11-25T23:37:11Z",
+      "first_seen_at_taipei": "2026-11-26 07:37",
+      "month": "2026-11",
+      "title": "1表看》單日洗刷3千點！台股還要跌多久？5次歷史經驗太誅心 達人：最慘熬6年",
+      "url": "https://tw.stock.yahoo.com/news/1%E8%A1%A8%E7%9C%8B-%E5%96%AE%E6%97%A5%E6%B4%97%E5%88%B73%E5%8D%83%E9%BB%9E-%E5%8F%B0%E8%82%A1%E9%82%84%E8%A6%81%E8%B7%8C%E5%A4%9A%E4%B9%85-5%E6%AC%A1%E6%AD%B7%E5%8F%B2%E7%B6%93%E9%A9%97%E5%A4%AA%E8%AA%85%E5%BF%83-%E9%81%94%E4%BA%BA-212830341.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/1%E8%A1%A8%E7%9C%8B-%E5%96%AE%E6%97%A5%E6%B4%97%E5%88%B73%E5%8D%83%E9%BB%9E-%E5%8F%B0%E8%82%A1%E9%82%84%E8%A6%81%E8%B7%8C%E5%A4%9A%E4%B9%85-5%E6%AC%A1%E6%AD%B7%E5%8F%B2%E7%B6%93%E9%A9%97%E5%A4%AA%E8%AA%85%E5%BF%83-%E9%81%94%E4%BA%BA-212830341.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：關稅",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -136332,15 +136791,10 @@
       "month": "2026-11",
       "date": "2026-11-25",
       "half": "PM",
-      "updated_at_taipei": "2026-11-26 07:22",
-      "count": 431,
+      "updated_at_taipei": "2026-11-26 07:37",
+      "count": 437,
       "star3_count": 54,
       "failed_sources": [
-        {
-          "id": "fed_press",
-          "name": "Federal Reserve",
-          "error": "404 Client Error: Not Found for url: https://www.federalreserve.gov/feeds/press_all.xml"
-        },
         {
           "id": "binance_derivatives",
           "name": "Binance 永續合約",
