@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-25-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-25T15:34:53Z",
-  "updated_at_taipei": "2026-11-25 23:34",
-  "last_updated_utc": "2026-11-25T15:34:53Z",
-  "last_updated_taipei": "2026-11-25 23:34",
-  "next_update_hint": "約台北時間 23:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-25T15:50:00Z",
+  "updated_at_taipei": "2026-11-25 23:50",
+  "last_updated_utc": "2026-11-25T15:50:00Z",
+  "last_updated_taipei": "2026-11-25 23:50",
+  "next_update_hint": "約台北時間 00:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 26.748,
+    "total_elapsed_sec": 15.745,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 18,
+    "new_items_added": 5,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.062,
+        "elapsed_sec": 0.056,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.091,
+        "elapsed_sec": 0.066,
         "raw_count": 30,
         "items_kept": 11,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.06,
+        "elapsed_sec": 0.037,
         "raw_count": 30,
         "items_kept": 5,
         "error": null
@@ -63,16 +63,16 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.067,
+        "elapsed_sec": 0.03,
         "raw_count": 10,
-        "items_kept": 4,
+        "items_kept": 5,
         "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 1.633,
+        "elapsed_sec": 0.144,
         "raw_count": 19,
         "items_kept": 19,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.141,
+        "elapsed_sec": 0.104,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.119,
+        "elapsed_sec": 0.221,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.081,
+        "elapsed_sec": 0.069,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.086,
+        "elapsed_sec": 0.075,
         "raw_count": 36,
         "items_kept": 14,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.559,
+        "elapsed_sec": 0.368,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -126,16 +126,16 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.96,
+        "elapsed_sec": 0.539,
         "raw_count": 20,
-        "items_kept": 16,
+        "items_kept": 17,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.596,
+        "elapsed_sec": 0.443,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 2.8,
+        "elapsed_sec": 0.789,
         "raw_count": 15,
         "items_kept": 4,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.459,
+        "elapsed_sec": 0.076,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.47,
+        "elapsed_sec": 0.106,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.18,
+        "elapsed_sec": 0.053,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.788,
+        "elapsed_sec": 0.353,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.041,
+        "elapsed_sec": 0.046,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.52,
+        "elapsed_sec": 1.441,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.477,
+        "elapsed_sec": 0.286,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,16 +216,16 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.405,
+        "elapsed_sec": 1.435,
         "raw_count": 6,
-        "items_kept": 0,
+        "items_kept": 1,
         "error": null
       },
       "bybit_derivatives": {
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.439,
+        "elapsed_sec": 0.278,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.816,
+        "elapsed_sec": 1.43,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.238,
+        "elapsed_sec": 0.038,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.59,
+        "elapsed_sec": 0.581,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.361,
+        "elapsed_sec": 0.282,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -769.3,
+      "net_flow_usd_m": -773.4,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0033,
-        "oi_usd_b": 1.84
+        "funding_rate_pct": 0.0038,
+        "oi_usd_b": 1.83
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0041,
+        "funding_rate_pct": 0.0046,
         "oi_usd_b": 1.09
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 3,
-      "half_hour_fee_sat_vb": 3,
-      "mempool_vsize_mb": 32.9,
-      "tx_count": 78419,
+      "fastest_fee_sat_vb": 2,
+      "half_hour_fee_sat_vb": 2,
+      "mempool_vsize_mb": 33.2,
+      "tx_count": 79600,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -1417,6 +1417,127 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-315e5f1fb6",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T15:50:00Z",
+      "published_at_taipei": "2026-11-25 23:50",
+      "published_at_taipei_iso": "2026-11-25T23:50:00+08:00",
+      "first_seen_at_utc": "2026-11-25T15:50:00Z",
+      "first_seen_at_taipei": "2026-11-25 23:50",
+      "month": "2026-11",
+      "title": "XRPUSDT 24h 未平倉量暴增 +10.12%｜OKX",
+      "url": "https://www.okx.com/trade-swap/funding-rate",
+      "canonical_url": "https://okx.com/trade-swap/funding-rate",
+      "source": "OKX",
+      "source_id": "okx_derivatives",
+      "category": "衍生品",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "XRPUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "數據門檻規則",
+      "is_data_alert": true,
+      "metrics": {
+        "symbol": "XRPUSDT",
+        "exchange": "OKX",
+        "oi_24h_pct": 10.12,
+        "oi_usd": 65859822.0,
+        "alert_key": "open_interest:XRPUSDT:up"
+      },
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "數據：未平倉量劇烈變動（方向中性）",
+      "sentiment_targets": [
+        "XRPUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-426d13453a",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T15:46:16Z",
+      "published_at_taipei": "2026-11-25 23:46",
+      "published_at_taipei_iso": "2026-11-25T23:46:16+08:00",
+      "first_seen_at_utc": "2026-11-25T15:50:00Z",
+      "first_seen_at_taipei": "2026-11-25 23:50",
+      "month": "2026-11",
+      "title": "科技股罕見折價10%！為何小摩卻轉趨謹慎？",
+      "url": "https://news.cnyes.com/news/id/6671827",
+      "canonical_url": "https://news.cnyes.com/news/id/6671827",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：反彈；命中：升息",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-0aae75ca58",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T15:40:12Z",
+      "published_at_taipei": "2026-11-25 23:40",
+      "published_at_taipei_iso": "2026-11-25T23:40:12+08:00",
+      "first_seen_at_utc": "2026-11-25T15:50:00Z",
+      "first_seen_at_taipei": "2026-11-25 23:50",
+      "month": "2026-11",
+      "title": "長榮航看旺明年客貨運",
+      "url": "https://money.udn.com/money/story/5710/9902081",
+      "canonical_url": "https://money.udn.com/money/story/5710/9902081",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2603"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-9206af16bc",
+        "issue": "2026-11-25-AM",
+        "title": "長榮航看好 明年Q1客貨運收益均處高檔",
+        "published_at_taipei": "2026-11-25 17:40",
+        "url": "https://news.cnyes.com/news/id/6671702"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2603"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-ca27a90deb",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T15:28:28Z",
@@ -1731,6 +1852,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-860074a271",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T15:00:47Z",
+      "published_at_taipei": "2026-11-25 23:00",
+      "published_at_taipei_iso": "2026-11-25T23:00:47+08:00",
+      "first_seen_at_utc": "2026-11-25T15:50:00Z",
+      "first_seen_at_taipei": "2026-11-25 23:50",
+      "month": "2026-11",
+      "title": "台股雲霄飛車！呂文婉才睡一覺「20萬又吐回去」曝續約定存2％",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9B%B2%E9%9C%84%E9%A3%9B%E8%BB%8A-%E5%91%82%E6%96%87%E5%A9%89%E6%89%8D%E7%9D%A1-%E8%A6%BA-20%E8%90%AC%E5%8F%88%E5%90%90%E5%9B%9E%E5%8E%BB-%E6%9B%9D%E7%BA%8C%E7%B4%84%E5%AE%9A%E5%AD%982-150047029.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9B%B2%E9%9C%84%E9%A3%9B%E8%BB%8A-%E5%91%82%E6%96%87%E5%A9%89%E6%89%8D%E7%9D%A1-%E8%A6%BA-20%E8%90%AC%E5%8F%88%E5%90%90%E5%9B%9E%E5%8E%BB-%E6%9B%9D%E7%BA%8C%E7%B4%84%E5%AE%9A%E5%AD%982-150047029.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -4901,6 +5058,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-d00d370973",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T15:43:00Z",
+      "published_at_taipei": "2026-11-25 23:43",
+      "published_at_taipei_iso": "2026-11-25T23:43:00+08:00",
+      "first_seen_at_utc": "2026-11-25T15:50:00Z",
+      "first_seen_at_taipei": "2026-11-25 23:50",
+      "month": "2026-11",
+      "title": "Nvidia’s stock is giving back more than half of Monday’s rally as dip buyers cash in",
+      "url": "https://www.marketwatch.com/story/nvidias-stock-is-giving-back-more-than-half-of-mondays-rally-as-dip-buyers-cash-in-ee4fa52c?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/nvidias-stock-is-giving-back-more-than-half-of-mondays-rally-as-dip-buyers-cash-in-ee4fa52c?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-63a055f67c",
+        "issue": "2026-11-23-PM",
+        "title": "Is UPS Stock Riskier Than Its Rally Suggests?",
+        "published_at_taipei": "2026-11-23 19:44",
+        "url": "https://www.trefis.com/stock/ups/articles/627577/is-ups-stock-riskier-than-its-rally-suggests/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-bb361c6abe",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T15:30:03Z",
@@ -7264,6 +7461,167 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261125-315e5f1fb6",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T15:50:00Z",
+      "published_at_taipei": "2026-11-25 23:50",
+      "published_at_taipei_iso": "2026-11-25T23:50:00+08:00",
+      "first_seen_at_utc": "2026-11-25T15:50:00Z",
+      "first_seen_at_taipei": "2026-11-25 23:50",
+      "month": "2026-11",
+      "title": "XRPUSDT 24h 未平倉量暴增 +10.12%｜OKX",
+      "url": "https://www.okx.com/trade-swap/funding-rate",
+      "canonical_url": "https://okx.com/trade-swap/funding-rate",
+      "source": "OKX",
+      "source_id": "okx_derivatives",
+      "category": "衍生品",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "XRPUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "數據門檻規則",
+      "is_data_alert": true,
+      "metrics": {
+        "symbol": "XRPUSDT",
+        "exchange": "OKX",
+        "oi_24h_pct": 10.12,
+        "oi_usd": 65859822.0,
+        "alert_key": "open_interest:XRPUSDT:up"
+      },
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "數據：未平倉量劇烈變動（方向中性）",
+      "sentiment_targets": [
+        "XRPUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-426d13453a",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T15:46:16Z",
+      "published_at_taipei": "2026-11-25 23:46",
+      "published_at_taipei_iso": "2026-11-25T23:46:16+08:00",
+      "first_seen_at_utc": "2026-11-25T15:50:00Z",
+      "first_seen_at_taipei": "2026-11-25 23:50",
+      "month": "2026-11",
+      "title": "科技股罕見折價10%！為何小摩卻轉趨謹慎？",
+      "url": "https://news.cnyes.com/news/id/6671827",
+      "canonical_url": "https://news.cnyes.com/news/id/6671827",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：反彈；命中：升息",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d00d370973",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T15:43:00Z",
+      "published_at_taipei": "2026-11-25 23:43",
+      "published_at_taipei_iso": "2026-11-25T23:43:00+08:00",
+      "first_seen_at_utc": "2026-11-25T15:50:00Z",
+      "first_seen_at_taipei": "2026-11-25 23:50",
+      "month": "2026-11",
+      "title": "Nvidia’s stock is giving back more than half of Monday’s rally as dip buyers cash in",
+      "url": "https://www.marketwatch.com/story/nvidias-stock-is-giving-back-more-than-half-of-mondays-rally-as-dip-buyers-cash-in-ee4fa52c?mod=mw_rss_topstories",
+      "canonical_url": "https://marketwatch.com/story/nvidias-stock-is-giving-back-more-than-half-of-mondays-rally-as-dip-buyers-cash-in-ee4fa52c?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "source_id": "marketwatch_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-63a055f67c",
+        "issue": "2026-11-23-PM",
+        "title": "Is UPS Stock Riskier Than Its Rally Suggests?",
+        "published_at_taipei": "2026-11-23 19:44",
+        "url": "https://www.trefis.com/stock/ups/articles/627577/is-ups-stock-riskier-than-its-rally-suggests/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-0aae75ca58",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T15:40:12Z",
+      "published_at_taipei": "2026-11-25 23:40",
+      "published_at_taipei_iso": "2026-11-25T23:40:12+08:00",
+      "first_seen_at_utc": "2026-11-25T15:50:00Z",
+      "first_seen_at_taipei": "2026-11-25 23:50",
+      "month": "2026-11",
+      "title": "長榮航看旺明年客貨運",
+      "url": "https://money.udn.com/money/story/5710/9902081",
+      "canonical_url": "https://money.udn.com/money/story/5710/9902081",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2603"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-9206af16bc",
+        "issue": "2026-11-25-AM",
+        "title": "長榮航看好 明年Q1客貨運收益均處高檔",
+        "published_at_taipei": "2026-11-25 17:40",
+        "url": "https://news.cnyes.com/news/id/6671702"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2603"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-bb361c6abe",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T15:30:03Z",
@@ -7999,6 +8357,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-860074a271",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T15:00:47Z",
+      "published_at_taipei": "2026-11-25 23:00",
+      "published_at_taipei_iso": "2026-11-25T23:00:47+08:00",
+      "first_seen_at_utc": "2026-11-25T15:50:00Z",
+      "first_seen_at_taipei": "2026-11-25 23:50",
+      "month": "2026-11",
+      "title": "台股雲霄飛車！呂文婉才睡一覺「20萬又吐回去」曝續約定存2％",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9B%B2%E9%9C%84%E9%A3%9B%E8%BB%8A-%E5%91%82%E6%96%87%E5%A9%89%E6%89%8D%E7%9D%A1-%E8%A6%BA-20%E8%90%AC%E5%8F%88%E5%90%90%E5%9B%9E%E5%8E%BB-%E6%9B%9D%E7%BA%8C%E7%B4%84%E5%AE%9A%E5%AD%982-150047029.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%9B%B2%E9%9C%84%E9%A3%9B%E8%BB%8A-%E5%91%82%E6%96%87%E5%A9%89%E6%89%8D%E7%9D%A1-%E8%A6%BA-20%E8%90%AC%E5%8F%88%E5%90%90%E5%9B%9E%E5%8E%BB-%E6%9B%9D%E7%BA%8C%E7%B4%84%E5%AE%9A%E5%AD%982-150047029.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -116434,8 +116828,8 @@
       "month": "2026-11",
       "date": "2026-11-25",
       "half": "PM",
-      "updated_at_taipei": "2026-11-25 23:34",
-      "count": 179,
+      "updated_at_taipei": "2026-11-25 23:50",
+      "count": 184,
       "star3_count": 29,
       "failed_sources": [
         {
