@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-25-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-25T18:35:51Z",
-  "updated_at_taipei": "2026-11-26 02:35",
-  "last_updated_utc": "2026-11-25T18:35:51Z",
-  "last_updated_taipei": "2026-11-26 02:35",
-  "next_update_hint": "約台北時間 02:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-25T18:50:54Z",
+  "updated_at_taipei": "2026-11-26 02:50",
+  "last_updated_utc": "2026-11-25T18:50:54Z",
+  "last_updated_taipei": "2026-11-26 02:50",
+  "next_update_hint": "約台北時間 03:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 17.975,
+    "total_elapsed_sec": 23.432,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 3,
+    "new_items_added": 11,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.107,
+        "elapsed_sec": 0.081,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.281,
+        "elapsed_sec": 0.123,
         "raw_count": 30,
         "items_kept": 12,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.07,
+        "elapsed_sec": 0.114,
         "raw_count": 30,
         "items_kept": 5,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.063,
+        "elapsed_sec": 0.141,
         "raw_count": 10,
         "items_kept": 7,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.28,
-        "raw_count": 19,
-        "items_kept": 18,
+        "elapsed_sec": 0.311,
+        "raw_count": 17,
+        "items_kept": 17,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.194,
+        "elapsed_sec": 0.219,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.142,
+        "elapsed_sec": 0.181,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.132,
+        "elapsed_sec": 0.108,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.132,
+        "elapsed_sec": 0.105,
         "raw_count": 38,
         "items_kept": 17,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.447,
+        "elapsed_sec": 0.487,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.515,
+        "elapsed_sec": 0.613,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.326,
+        "elapsed_sec": 0.491,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.737,
+        "elapsed_sec": 0.574,
         "raw_count": 15,
         "items_kept": 4,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.396,
+        "elapsed_sec": 0.524,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.505,
+        "elapsed_sec": 0.436,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.179,
+        "elapsed_sec": 0.109,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 2.189,
+        "elapsed_sec": 4.8,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.095,
+        "elapsed_sec": 0.659,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.319,
+        "elapsed_sec": 1.691,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.372,
+        "elapsed_sec": 0.489,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.142,
+        "elapsed_sec": 1.46,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.333,
+        "elapsed_sec": 0.456,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 1.33,
+        "elapsed_sec": 0.6,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.157,
+        "elapsed_sec": 0.286,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.512,
+        "elapsed_sec": 0.529,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.323,
+        "elapsed_sec": 0.384,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -792.4,
+      "net_flow_usd_m": -792.3,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0078,
+        "funding_rate_pct": 0.0082,
         "oi_usd_b": 1.9
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0055,
+        "funding_rate_pct": 0.0059,
         "oi_usd_b": 1.08
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 2,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.9,
-      "tx_count": 70229,
+      "mempool_vsize_mb": 30.7,
+      "tx_count": 72614,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -1951,6 +1951,206 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-68b2943cc8",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:40:32Z",
+      "published_at_taipei": "2026-11-26 02:40",
+      "published_at_taipei_iso": "2026-11-26T02:40:32+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Update: US Equity Indexes Mixed While Treasury Yields Drop Amid Sharp Sell-Off in Chipmakers",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-mixed-while-184032886.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-mixed-while-184032886.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（treasury）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-9931cb9e07",
+        "issue": "2026-11-24-PM",
+        "title": "Why Flex (FLEX) Stock Is Down Today: AI Chip Selloff Hits Peers",
+        "published_at_taipei": "2026-11-25 04:31",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/why-flex-flex-stock-down-203125271.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-0544ae3d08",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:38:45Z",
+      "published_at_taipei": "2026-11-26 02:38",
+      "published_at_taipei_iso": "2026-11-26T02:38:45+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "SpaceX砍輝達Blackwell租金最多35% Anthropic為何不續租5萬顆H200？",
+      "url": "https://news.cnyes.com/news/id/6671846",
+      "canonical_url": "https://news.cnyes.com/news/id/6671846",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-01b9fe5be1",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:37:57Z",
+      "published_at_taipei": "2026-11-26 02:37",
+      "published_at_taipei_iso": "2026-11-26T02:37:57+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "SpaceX stock pares losses following FCC approval for data centers in space",
+      "url": "https://finance.yahoo.com/technology/article/spacex-stock-pares-losses-following-fcc-approval-for-data-centers-in-space-183757039.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/article/spacex-stock-pares-losses-following-fcc-approval-for-data-centers-in-space-183757039.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-ccfe9c564b",
+        "issue": "2026-11-24-AM",
+        "title": "Is Amphenol Stock Paying You Enough For The Swings?",
+        "published_at_taipei": "2026-11-24 19:07",
+        "url": "https://www.trefis.com/stock/aph/articles/628286/is-amphenol-stock-paying-you-enough-for-the-swings/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：approval",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-45143cba34",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:30:20Z",
+      "published_at_taipei": "2026-11-26 02:30",
+      "published_at_taipei_iso": "2026-11-26T02:30:20+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Fluence Energy (FLNC) Stock Is Up 17.5% Today: Q4 Results, RBC Target Raise",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/fluence-energy-flnc-stock-17-183020237.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/fluence-energy-flnc-stock-17-183020237.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-6aa22e5098",
+        "issue": "2026-11-23-PM",
+        "title": "Advanced Energy (AEIS) Stock Is Up 11.8% Today Without Company News",
+        "published_at_taipei": "2026-11-24 02:30",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/advanced-energy-aeis-stock-11-183032783.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-21ff3c8dcf",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:30:19Z",
+      "published_at_taipei": "2026-11-26 02:30",
+      "published_at_taipei_iso": "2026-11-26T02:30:19+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Why Adamas Trust (ADAM) Stock Is Up Today: Mortgage REITs Rise as Yields Fall",
+      "url": "https://finance.yahoo.com/real-estate/articles/why-adamas-trust-adam-stock-183019578.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/real-estate/articles/why-adamas-trust-adam-stock-183019578.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（yield）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-45a09786cc",
+        "issue": "2026-11-24-PM",
+        "title": "Why Guardian Pharmacy (GRDN) Stock Is Up Today: Joins S&P SmallCap 600",
+        "published_at_taipei": "2026-11-25 05:01",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/why-guardian-pharmacy-grdn-stock-210113461.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-fc734f3a09",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T18:22:59Z",
@@ -2029,6 +2229,49 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-bcced43a3d",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:17:37Z",
+      "published_at_taipei": "2026-11-26 02:17",
+      "published_at_taipei_iso": "2026-11-26T02:17:37+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Stock Market Today: Dow Cuts Loss Of 1,100 Points, Equal-Weighted S&P 500 Fund Up (Live Coverage)",
+      "url": "https://finance.yahoo.com/m/90407e46-3b17-34e8-8c82-527bf00b63e4/stock-market-today%3A-dow-cuts.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/90407e46-3b17-34e8-8c82-527bf00b63e4/stock-market-today%3A-dow-cuts.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-f965e7a344",
+        "issue": "2026-11-23-PM",
+        "title": "Stock Market Today: Dow Surges 1,200 Points As Nvidia Soars 30% On Jensen Huang's Return (Live Coverage)",
+        "published_at_taipei": "2026-11-23 22:50",
+        "url": "https://finance.yahoo.com/m/8751de70-467e-380a-82cb-f4ee42adc461/stock-market-today%3A-dow.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：plunge",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-867b1d268a",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T18:16:20Z",
@@ -2053,6 +2296,47 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-51c37a08f8",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:15:00Z",
+      "published_at_taipei": "2026-11-26 02:15",
+      "published_at_taipei_iso": "2026-11-26T02:15:00+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Franklin Templeton Adds Hyperliquid's HYPE to Its Crypto Index ETF",
+      "url": "https://www.cryptoprowl.com/releases/franklin-templeton-adds-hyperliquids-hype-to-its-crypto-index-etf-8076?.tsrc=rss",
+      "canonical_url": "https://cryptoprowl.com/releases/franklin-templeton-adds-hyperliquids-hype-to-its-crypto-index-etf-8076?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-d71613cb1e",
+        "issue": "2026-11-24-PM",
+        "title": "Fidelity Adds Aave, Chainlink and Uniswap to Its Crypto Trading Platform",
+        "published_at_taipei": "2026-11-25 00:11",
+        "url": "https://www.cryptoprowl.com/releases/fidelity-adds-aave-chainlink-and-uniswap-to-its-crypto-trading-platform-8054?.tsrc=rss"
+      },
       "sentiment": "neutral",
       "sentiment_label": "中性",
       "sentiment_score": 0,
@@ -7773,6 +8057,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-eb1b190e72",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:26:03Z",
+      "published_at_taipei": "2026-11-26 02:26",
+      "published_at_taipei_iso": "2026-11-26T02:26:03+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Why HP Inc. Stock Jumped Nearly 15% Today",
+      "url": "https://www.fool.com/investing/2026/11/25/why-hp-inc-stock-jumped-nearly-15-today/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/25/why-hp-inc-stock-jumped-nearly-15-today?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-813988ff3f",
+        "issue": "2026-11-23-PM",
+        "title": "Why Micron Stock Is Up Today",
+        "published_at_taipei": "2026-11-23 23:47",
+        "url": "https://www.fool.com/investing/2026/11/23/why-micron-stock-is-up-today/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-e8379c7f40",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T18:24:47Z",
@@ -7848,6 +8172,120 @@
       "sentiment_label": "中性",
       "sentiment_score": 0,
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-739d97aa59",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:22:05Z",
+      "published_at_taipei": "2026-11-26 02:22",
+      "published_at_taipei_iso": "2026-11-26T02:22:05+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Fund Trims and Adds Seabridge Gold (SA) on Volatility",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/fund-trims-adds-seabridge-gold-182205546.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/fund-trims-adds-seabridge-gold-182205546.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-81235b104e",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:18:50Z",
+      "published_at_taipei": "2026-11-26 02:18",
+      "published_at_taipei_iso": "2026-11-26T02:18:50+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "What Has The Market Missed In Boston Scientific Stock's Drop?",
+      "url": "https://www.trefis.com/stock/bsx/articles/628915/what-has-the-market-missed-in-boston-scientific-stock-s-drop/2026-11-25?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/bsx/articles/628915/what-has-the-market-missed-in-boston-scientific-stock-s-drop/2026-11-25?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-9eddca753a",
+        "issue": "2026-11-24-PM",
+        "title": "Can Boston Scientific Stock Rise 30% From Here?",
+        "published_at_taipei": "2026-11-25 02:20",
+        "url": "https://www.trefis.com/stock/bsx/articles/628417/can-boston-scientific-stock-rise-30-from-here/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-1e39d11239",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:15:24Z",
+      "published_at_taipei": "2026-11-26 02:15",
+      "published_at_taipei_iso": "2026-11-26T02:15:24+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Armstrong World (AWI) Stock Is Up 4.6% Today as Housing Stocks Gain in Tech Selloff",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/armstrong-world-awi-stock-4-181524760.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/armstrong-world-awi-stock-4-181524760.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-15305a6597",
+        "issue": "2026-11-24-PM",
+        "title": "MACOM (MTSI) Stock Is Down 12.2% Today: Chip Stocks Sell Off",
+        "published_at_taipei": "2026-11-25 00:01",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/macom-mtsi-stock-down-12-160110027.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -11685,6 +12123,246 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261126-68b2943cc8",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:40:32Z",
+      "published_at_taipei": "2026-11-26 02:40",
+      "published_at_taipei_iso": "2026-11-26T02:40:32+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Update: US Equity Indexes Mixed While Treasury Yields Drop Amid Sharp Sell-Off in Chipmakers",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-mixed-while-184032886.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-mixed-while-184032886.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（treasury）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-9931cb9e07",
+        "issue": "2026-11-24-PM",
+        "title": "Why Flex (FLEX) Stock Is Down Today: AI Chip Selloff Hits Peers",
+        "published_at_taipei": "2026-11-25 04:31",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/why-flex-flex-stock-down-203125271.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-0544ae3d08",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:38:45Z",
+      "published_at_taipei": "2026-11-26 02:38",
+      "published_at_taipei_iso": "2026-11-26T02:38:45+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "SpaceX砍輝達Blackwell租金最多35% Anthropic為何不續租5萬顆H200？",
+      "url": "https://news.cnyes.com/news/id/6671846",
+      "canonical_url": "https://news.cnyes.com/news/id/6671846",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-01b9fe5be1",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:37:57Z",
+      "published_at_taipei": "2026-11-26 02:37",
+      "published_at_taipei_iso": "2026-11-26T02:37:57+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "SpaceX stock pares losses following FCC approval for data centers in space",
+      "url": "https://finance.yahoo.com/technology/article/spacex-stock-pares-losses-following-fcc-approval-for-data-centers-in-space-183757039.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/article/spacex-stock-pares-losses-following-fcc-approval-for-data-centers-in-space-183757039.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-ccfe9c564b",
+        "issue": "2026-11-24-AM",
+        "title": "Is Amphenol Stock Paying You Enough For The Swings?",
+        "published_at_taipei": "2026-11-24 19:07",
+        "url": "https://www.trefis.com/stock/aph/articles/628286/is-amphenol-stock-paying-you-enough-for-the-swings/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：approval",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-45143cba34",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:30:20Z",
+      "published_at_taipei": "2026-11-26 02:30",
+      "published_at_taipei_iso": "2026-11-26T02:30:20+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Fluence Energy (FLNC) Stock Is Up 17.5% Today: Q4 Results, RBC Target Raise",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/fluence-energy-flnc-stock-17-183020237.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/fluence-energy-flnc-stock-17-183020237.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-6aa22e5098",
+        "issue": "2026-11-23-PM",
+        "title": "Advanced Energy (AEIS) Stock Is Up 11.8% Today Without Company News",
+        "published_at_taipei": "2026-11-24 02:30",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/advanced-energy-aeis-stock-11-183032783.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-21ff3c8dcf",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:30:19Z",
+      "published_at_taipei": "2026-11-26 02:30",
+      "published_at_taipei_iso": "2026-11-26T02:30:19+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Why Adamas Trust (ADAM) Stock Is Up Today: Mortgage REITs Rise as Yields Fall",
+      "url": "https://finance.yahoo.com/real-estate/articles/why-adamas-trust-adam-stock-183019578.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/real-estate/articles/why-adamas-trust-adam-stock-183019578.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（yield）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-45a09786cc",
+        "issue": "2026-11-24-PM",
+        "title": "Why Guardian Pharmacy (GRDN) Stock Is Up Today: Joins S&P SmallCap 600",
+        "published_at_taipei": "2026-11-25 05:01",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/why-guardian-pharmacy-grdn-stock-210113461.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-eb1b190e72",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:26:03Z",
+      "published_at_taipei": "2026-11-26 02:26",
+      "published_at_taipei_iso": "2026-11-26T02:26:03+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Why HP Inc. Stock Jumped Nearly 15% Today",
+      "url": "https://www.fool.com/investing/2026/11/25/why-hp-inc-stock-jumped-nearly-15-today/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/25/why-hp-inc-stock-jumped-nearly-15-today?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-813988ff3f",
+        "issue": "2026-11-23-PM",
+        "title": "Why Micron Stock Is Up Today",
+        "published_at_taipei": "2026-11-23 23:47",
+        "url": "https://www.fool.com/investing/2026/11/23/why-micron-stock-is-up-today/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-e8379c7f40",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T18:24:47Z",
@@ -11802,6 +12480,80 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-739d97aa59",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:22:05Z",
+      "published_at_taipei": "2026-11-26 02:22",
+      "published_at_taipei_iso": "2026-11-26T02:22:05+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Fund Trims and Adds Seabridge Gold (SA) on Volatility",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/fund-trims-adds-seabridge-gold-182205546.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/fund-trims-adds-seabridge-gold-182205546.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-81235b104e",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:18:50Z",
+      "published_at_taipei": "2026-11-26 02:18",
+      "published_at_taipei_iso": "2026-11-26T02:18:50+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "What Has The Market Missed In Boston Scientific Stock's Drop?",
+      "url": "https://www.trefis.com/stock/bsx/articles/628915/what-has-the-market-missed-in-boston-scientific-stock-s-drop/2026-11-25?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/bsx/articles/628915/what-has-the-market-missed-in-boston-scientific-stock-s-drop/2026-11-25?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-9eddca753a",
+        "issue": "2026-11-24-PM",
+        "title": "Can Boston Scientific Stock Rise 30% From Here?",
+        "published_at_taipei": "2026-11-25 02:20",
+        "url": "https://www.trefis.com/stock/bsx/articles/628417/can-boston-scientific-stock-rise-30-from-here/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-66e750d919",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T18:18:10Z",
@@ -11844,6 +12596,49 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-bcced43a3d",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:17:37Z",
+      "published_at_taipei": "2026-11-26 02:17",
+      "published_at_taipei_iso": "2026-11-26T02:17:37+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Stock Market Today: Dow Cuts Loss Of 1,100 Points, Equal-Weighted S&P 500 Fund Up (Live Coverage)",
+      "url": "https://finance.yahoo.com/m/90407e46-3b17-34e8-8c82-527bf00b63e4/stock-market-today%3A-dow-cuts.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/m/90407e46-3b17-34e8-8c82-527bf00b63e4/stock-market-today%3A-dow-cuts.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-f965e7a344",
+        "issue": "2026-11-23-PM",
+        "title": "Stock Market Today: Dow Surges 1,200 Points As Nvidia Soars 30% On Jensen Huang's Return (Live Coverage)",
+        "published_at_taipei": "2026-11-23 22:50",
+        "url": "https://finance.yahoo.com/m/8751de70-467e-380a-82cb-f4ee42adc461/stock-market-today%3A-dow.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：plunge",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-867b1d268a",
       "issue": "2026-11-25-PM",
       "published_at_utc": "2026-11-25T18:16:20Z",
@@ -11868,6 +12663,87 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-1e39d11239",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:15:24Z",
+      "published_at_taipei": "2026-11-26 02:15",
+      "published_at_taipei_iso": "2026-11-26T02:15:24+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Armstrong World (AWI) Stock Is Up 4.6% Today as Housing Stocks Gain in Tech Selloff",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/armstrong-world-awi-stock-4-181524760.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/armstrong-world-awi-stock-4-181524760.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-15305a6597",
+        "issue": "2026-11-24-PM",
+        "title": "MACOM (MTSI) Stock Is Down 12.2% Today: Chip Stocks Sell Off",
+        "published_at_taipei": "2026-11-25 00:01",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/macom-mtsi-stock-down-12-160110027.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-51c37a08f8",
+      "issue": "2026-11-25-PM",
+      "published_at_utc": "2026-11-25T18:15:00Z",
+      "published_at_taipei": "2026-11-26 02:15",
+      "published_at_taipei_iso": "2026-11-26T02:15:00+08:00",
+      "first_seen_at_utc": "2026-11-25T18:50:54Z",
+      "first_seen_at_taipei": "2026-11-26 02:50",
+      "month": "2026-11",
+      "title": "Franklin Templeton Adds Hyperliquid's HYPE to Its Crypto Index ETF",
+      "url": "https://www.cryptoprowl.com/releases/franklin-templeton-adds-hyperliquids-hype-to-its-crypto-index-etf-8076?.tsrc=rss",
+      "canonical_url": "https://cryptoprowl.com/releases/franklin-templeton-adds-hyperliquids-hype-to-its-crypto-index-etf-8076?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-d71613cb1e",
+        "issue": "2026-11-24-PM",
+        "title": "Fidelity Adds Aave, Chainlink and Uniswap to Its Crypto Trading Platform",
+        "published_at_taipei": "2026-11-25 00:11",
+        "url": "https://www.cryptoprowl.com/releases/fidelity-adds-aave-chainlink-and-uniswap-to-its-crypto-trading-platform-8054?.tsrc=rss"
+      },
       "sentiment": "neutral",
       "sentiment_label": "中性",
       "sentiment_score": 0,
@@ -125276,8 +126152,8 @@
       "month": "2026-11",
       "date": "2026-11-25",
       "half": "PM",
-      "updated_at_taipei": "2026-11-26 02:35",
-      "count": 290,
+      "updated_at_taipei": "2026-11-26 02:50",
+      "count": 301,
       "star3_count": 42,
       "failed_sources": [
         {
