@@ -2,13 +2,18 @@
   "version": 1,
   "latest_issue": "2026-11-25-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-25T00:45:41Z",
-  "updated_at_taipei": "2026-11-25 08:45",
-  "last_updated_utc": "2026-11-25T00:45:41Z",
-  "last_updated_taipei": "2026-11-25 08:45",
-  "next_update_hint": "約台北時間 08:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-25T01:00:51Z",
+  "updated_at_taipei": "2026-11-25 09:00",
+  "last_updated_utc": "2026-11-25T01:00:51Z",
+  "last_updated_taipei": "2026-11-25 09:00",
+  "next_update_hint": "約台北時間 09:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
+    {
+      "id": "bitbo_btc_etf",
+      "name": "Bitbo BTC 現貨 ETF",
+      "error": "HTTPSConnectionPool(host='bitbo.io', port=443): Read timed out. (read timeout=8)"
+    },
     {
       "id": "binance_derivatives",
       "name": "Binance 永續合約",
@@ -26,17 +31,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 45.907,
-    "sources_ok": 23,
-    "sources_failed": 3,
-    "new_items_added": 5,
+    "total_elapsed_sec": 38.065,
+    "sources_ok": 22,
+    "sources_failed": 4,
+    "new_items_added": 7,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.053,
+        "elapsed_sec": 0.064,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -45,16 +50,16 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.059,
+        "elapsed_sec": 0.069,
         "raw_count": 30,
-        "items_kept": 10,
+        "items_kept": 11,
         "error": null
       },
       "cnbc_economy": {
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.042,
+        "elapsed_sec": 0.037,
         "raw_count": 30,
         "items_kept": 3,
         "error": null
@@ -63,7 +68,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.036,
+        "elapsed_sec": 0.027,
         "raw_count": 10,
         "items_kept": 4,
         "error": null
@@ -72,7 +77,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.159,
+        "elapsed_sec": 0.31,
         "raw_count": 18,
         "items_kept": 14,
         "error": null
@@ -81,7 +86,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.169,
+        "elapsed_sec": 0.093,
         "raw_count": 25,
         "items_kept": 21,
         "error": null
@@ -90,7 +95,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.063,
+        "elapsed_sec": 0.103,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +104,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.078,
+        "elapsed_sec": 0.067,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -108,7 +113,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.07,
+        "elapsed_sec": 0.063,
         "raw_count": 38,
         "items_kept": 13,
         "error": null
@@ -117,25 +122,25 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.419,
+        "elapsed_sec": 0.298,
         "raw_count": 20,
-        "items_kept": 15,
+        "items_kept": 16,
         "error": null
       },
       "cnyes_us_stock": {
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.381,
+        "elapsed_sec": 0.435,
         "raw_count": 20,
-        "items_kept": 14,
+        "items_kept": 11,
         "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.428,
+        "elapsed_sec": 0.801,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -144,7 +149,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.588,
+        "elapsed_sec": 0.674,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +158,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.334,
+        "elapsed_sec": 0.33,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -162,7 +167,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.103,
+        "elapsed_sec": 0.132,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -180,7 +185,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.265,
+        "elapsed_sec": 0.383,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +194,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.045,
+        "elapsed_sec": 0.033,
         "raw_count": 1376,
         "items_kept": 1,
         "error": null
@@ -197,17 +202,17 @@
       "bitbo_btc_etf": {
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
-        "status": "ok",
-        "elapsed_sec": 2.051,
-        "raw_count": 1,
-        "items_kept": 1,
-        "error": null
+        "status": "failed",
+        "elapsed_sec": 23.245,
+        "raw_count": 0,
+        "items_kept": 0,
+        "error": "HTTPSConnectionPool(host='bitbo.io', port=443): Read timed out. (read timeout=8)"
       },
       "binance_derivatives": {
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.278,
+        "elapsed_sec": 0.281,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +221,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.512,
+        "elapsed_sec": 1.389,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +230,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.273,
+        "elapsed_sec": 0.29,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +239,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 33.383,
+        "elapsed_sec": 1.554,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +248,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.04,
+        "elapsed_sec": 0.043,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +257,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.545,
+        "elapsed_sec": 0.54,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +266,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.282,
+        "elapsed_sec": 0.277,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,16 +282,16 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.15,
+        "tvl_b": 36.09,
         "change_1d_pct": -0.06
       },
       "Base": {
-        "tvl_b": 5.02,
-        "change_1d_pct": 0.0
+        "tvl_b": 5.0,
+        "change_1d_pct": -0.04
       },
       "Solana": {
         "tvl_b": 4.53,
-        "change_1d_pct": 0.0
+        "change_1d_pct": -0.32
       },
       "Tron": {
         "tvl_b": 4.45,
@@ -294,33 +299,28 @@
       },
       "BSC": {
         "tvl_b": 4.26,
-        "change_1d_pct": 0.0
+        "change_1d_pct": -0.01
       },
       "Bitcoin": {
         "tvl_b": 2.93,
-        "change_1d_pct": 0.0
+        "change_1d_pct": -0.01
       }
-    },
-    "btc_spot_etf": {
-      "date": "Nov 20, 2026",
-      "net_flow_usd_m": -1382.9,
-      "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0044,
-        "oi_usd_b": 1.83
+        "funding_rate_pct": 0.0043,
+        "oi_usd_b": 1.84
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0083,
+        "funding_rate_pct": 0.0086,
         "oi_usd_b": 1.13
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 2,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.8,
-      "tx_count": 59263,
+      "mempool_vsize_mb": 29.7,
+      "tx_count": 60736,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -446,6 +446,123 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-ed4e8437b7",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T01:00:11Z",
+      "published_at_taipei": "2026-11-25 09:00",
+      "published_at_taipei_iso": "2026-11-25T09:00:11+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "盤中速報 - 集中市場加權指數上漲3310.46點至40122.35點，漲幅8.99%",
+      "url": "https://news.cnyes.com/news/id/6671225",
+      "canonical_url": "https://news.cnyes.com/news/id/6671225",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-697bfb2e94",
+        "issue": "2026-11-24-AM",
+        "title": "盤中速報 - 集中市場加權指數上漲3338.92點至40150.81點，漲幅9.07%",
+        "published_at_taipei": "2026-11-24 09:05",
+        "url": "https://news.cnyes.com/news/id/6670568"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-4a7597f4e0",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T00:59:15Z",
+      "published_at_taipei": "2026-11-25 08:59",
+      "published_at_taipei_iso": "2026-11-25T08:59:15+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "【昨天搶不到，今天不敢買？】反攻是假象？3大考驗決定台股能否再創高！",
+      "url": "https://news.cnyes.com/news/id/6671222",
+      "canonical_url": "https://news.cnyes.com/news/id/6671222",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-bab16ed17b",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T00:51:52Z",
+      "published_at_taipei": "2026-11-25 08:51",
+      "published_at_taipei_iso": "2026-11-25T08:51:52+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "黃仁勳行情只燃了一天！分析師：市場面臨三大現實關卡",
+      "url": "https://news.cnyes.com/news/id/6671217",
+      "canonical_url": "https://news.cnyes.com/news/id/6671217",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：緊縮；命中：重挫",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-d2b27e53f9",
       "issue": "2026-11-25-AM",
       "published_at_utc": "2026-11-25T00:40:05Z",
@@ -476,6 +593,42 @@
       "sentiment_reason": "命中：優於預期",
       "sentiment_targets": [
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-bd6a0cb591",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T00:32:26Z",
+      "published_at_taipei": "2026-11-25 08:32",
+      "published_at_taipei_iso": "2026-11-25T08:32:26+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "He Lets His Tesla Drive at 93, Trusting the Brand. A $400,000 Crash Judgment Could Reach His Savings, While His $2,800 Social Security Check Stays Off-Limits to the Victim",
+      "url": "https://247wallst.com/personal-finance/social-security/2026/11/24/he-lets-his-tesla-drive-at-93-trusting-the-brand-a-400000-crash-judgment-could-reach-his-savings-while-his-2800-social-security-check-stays-off-limits-to-the-victim/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/personal-finance/social-security/2026/11/24/he-lets-his-tesla-drive-at-93-trusting-the-brand-a-400000-crash-judgment-could-reach-his-savings-while-his-2800-social-security-check-stays-off-limits-to-the-victim?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：crash",
+      "sentiment_targets": [
+        "TSLA"
       ],
       "sentiment_method": "rule"
     },
@@ -891,6 +1044,44 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-c82489e552",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-24T22:41:30Z",
+      "published_at_taipei": "2026-11-25 06:41",
+      "published_at_taipei_iso": "2026-11-25T06:41:30+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "日月光765元修正41％後「強攻漲停」！吃下台積電CoWoS外溢大單、EPS估衝35元 投顧喊出目標價：還有18％空間",
+      "url": "https://tw.stock.yahoo.com/news/%E6%97%A5%E6%9C%88%E5%85%89765%E5%85%83%E4%BF%AE%E6%AD%A341-%E5%BE%8C-%E5%BC%B7%E6%94%BB%E6%BC%B2%E5%81%9C-%E5%90%83%E4%B8%8B%E5%8F%B0%E7%A9%8D%E9%9B%BBcowos%E5%A4%96%E6%BA%A2%E5%A4%A7%E5%96%AE-eps%E4%BC%B0%E8%A1%9D35%E5%85%83-224130139.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E6%97%A5%E6%9C%88%E5%85%89765%E5%85%83%E4%BF%AE%E6%AD%A341-%E5%BE%8C-%E5%BC%B7%E6%94%BB%E6%BC%B2%E5%81%9C-%E5%90%83%E4%B8%8B%E5%8F%B0%E7%A9%8D%E9%9B%BBcowos%E5%A4%96%E6%BA%A2%E5%A4%A7%E5%96%AE-eps%E4%BC%B0%E8%A1%9D35%E5%85%83-224130139.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330",
+        "3711"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330",
+        "3711"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-48a79216b8",
       "issue": "2026-11-25-AM",
       "published_at_utc": "2026-11-24T21:37:30Z",
@@ -972,6 +1163,86 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-bb4de6eb32",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T00:57:45Z",
+      "published_at_taipei": "2026-11-25 08:57",
+      "published_at_taipei_iso": "2026-11-25T08:57:45+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "Jensen Huang's Nvidia return shows the U.S.-China AI race is about more than chips",
+      "url": "https://www.cnbc.com/2026/11/25/jensen-huang-nvidia-ai-talent-race.html",
+      "canonical_url": "https://cnbc.com/2026/11/25/jensen-huang-nvidia-ai-talent-race.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-2ab448cb62",
+        "issue": "2026-11-24-PM",
+        "title": "Jensen Huang’s Nvidia return is a ‘bullish black swan’ and bitcoin is in gold’s ‘doghouse’ era: Eric Balchunas",
+        "published_at_taipei": "2026-11-25 03:25",
+        "url": "http://videos.coindesk.com/previews/4vD9Xjkt?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d84fd24da6",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T00:55:35Z",
+      "published_at_taipei": "2026-11-25 08:55",
+      "published_at_taipei_iso": "2026-11-25T08:55:35+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "SoftBank drops over 11% as Wall Street AI sell-off ripples across Asian tech names",
+      "url": "https://www.cnbc.com/2026/11/25/tech-stocks-softbank-group-advantest-sk-hynix-samsung.html",
+      "canonical_url": "https://cnbc.com/2026/11/25/tech-stocks-softbank-group-advantest-sk-hynix-samsung.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261120-c771bba7bb",
+        "issue": "2026-11-21-PM",
+        "title": "Bitcoin drops for third straight day as Asian tech shares slide",
+        "published_at_taipei": "2026-11-20 19:42",
+        "url": "https://www.coindesk.com/markets/2026/11/20/bitcoin-drops-for-third-straight-day-as-asian-tech-shares-slide"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261125-d2826a932e",
       "issue": "2026-11-25-AM",
       "published_at_utc": "2026-11-25T00:30:05Z",
@@ -1007,6 +1278,203 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261125-ed4e8437b7",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T01:00:11Z",
+      "published_at_taipei": "2026-11-25 09:00",
+      "published_at_taipei_iso": "2026-11-25T09:00:11+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "盤中速報 - 集中市場加權指數上漲3310.46點至40122.35點，漲幅8.99%",
+      "url": "https://news.cnyes.com/news/id/6671225",
+      "canonical_url": "https://news.cnyes.com/news/id/6671225",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-697bfb2e94",
+        "issue": "2026-11-24-AM",
+        "title": "盤中速報 - 集中市場加權指數上漲3338.92點至40150.81點，漲幅9.07%",
+        "published_at_taipei": "2026-11-24 09:05",
+        "url": "https://news.cnyes.com/news/id/6670568"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-4a7597f4e0",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T00:59:15Z",
+      "published_at_taipei": "2026-11-25 08:59",
+      "published_at_taipei_iso": "2026-11-25T08:59:15+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "【昨天搶不到，今天不敢買？】反攻是假象？3大考驗決定台股能否再創高！",
+      "url": "https://news.cnyes.com/news/id/6671222",
+      "canonical_url": "https://news.cnyes.com/news/id/6671222",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-bb4de6eb32",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T00:57:45Z",
+      "published_at_taipei": "2026-11-25 08:57",
+      "published_at_taipei_iso": "2026-11-25T08:57:45+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "Jensen Huang's Nvidia return shows the U.S.-China AI race is about more than chips",
+      "url": "https://www.cnbc.com/2026/11/25/jensen-huang-nvidia-ai-talent-race.html",
+      "canonical_url": "https://cnbc.com/2026/11/25/jensen-huang-nvidia-ai-talent-race.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-2ab448cb62",
+        "issue": "2026-11-24-PM",
+        "title": "Jensen Huang’s Nvidia return is a ‘bullish black swan’ and bitcoin is in gold’s ‘doghouse’ era: Eric Balchunas",
+        "published_at_taipei": "2026-11-25 03:25",
+        "url": "http://videos.coindesk.com/previews/4vD9Xjkt?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-d84fd24da6",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T00:55:35Z",
+      "published_at_taipei": "2026-11-25 08:55",
+      "published_at_taipei_iso": "2026-11-25T08:55:35+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "SoftBank drops over 11% as Wall Street AI sell-off ripples across Asian tech names",
+      "url": "https://www.cnbc.com/2026/11/25/tech-stocks-softbank-group-advantest-sk-hynix-samsung.html",
+      "canonical_url": "https://cnbc.com/2026/11/25/tech-stocks-softbank-group-advantest-sk-hynix-samsung.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261120-c771bba7bb",
+        "issue": "2026-11-21-PM",
+        "title": "Bitcoin drops for third straight day as Asian tech shares slide",
+        "published_at_taipei": "2026-11-20 19:42",
+        "url": "https://www.coindesk.com/markets/2026/11/20/bitcoin-drops-for-third-straight-day-as-asian-tech-shares-slide"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-bab16ed17b",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T00:51:52Z",
+      "published_at_taipei": "2026-11-25 08:51",
+      "published_at_taipei_iso": "2026-11-25T08:51:52+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "黃仁勳行情只燃了一天！分析師：市場面臨三大現實關卡",
+      "url": "https://news.cnyes.com/news/id/6671217",
+      "canonical_url": "https://news.cnyes.com/news/id/6671217",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：緊縮；命中：重挫",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261125-d2b27e53f9",
       "issue": "2026-11-25-AM",
@@ -1077,6 +1545,42 @@
       "sentiment_targets": [
         "TWII",
         "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-bd6a0cb591",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-25T00:32:26Z",
+      "published_at_taipei": "2026-11-25 08:32",
+      "published_at_taipei_iso": "2026-11-25T08:32:26+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "He Lets His Tesla Drive at 93, Trusting the Brand. A $400,000 Crash Judgment Could Reach His Savings, While His $2,800 Social Security Check Stays Off-Limits to the Victim",
+      "url": "https://247wallst.com/personal-finance/social-security/2026/11/24/he-lets-his-tesla-drive-at-93-trusting-the-brand-a-400000-crash-judgment-could-reach-his-savings-while-his-2800-social-security-check-stays-off-limits-to-the-victim/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/personal-finance/social-security/2026/11/24/he-lets-his-tesla-drive-at-93-trusting-the-brand-a-400000-crash-judgment-could-reach-his-savings-while-his-2800-social-security-check-stays-off-limits-to-the-victim?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：crash",
+      "sentiment_targets": [
+        "TSLA"
       ],
       "sentiment_method": "rule"
     },
@@ -2055,6 +2559,44 @@
       "sentiment_reason": "命中：outflows",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-c82489e552",
+      "issue": "2026-11-25-AM",
+      "published_at_utc": "2026-11-24T22:41:30Z",
+      "published_at_taipei": "2026-11-25 06:41",
+      "published_at_taipei_iso": "2026-11-25T06:41:30+08:00",
+      "first_seen_at_utc": "2026-11-25T01:00:51Z",
+      "first_seen_at_taipei": "2026-11-25 09:00",
+      "month": "2026-11",
+      "title": "日月光765元修正41％後「強攻漲停」！吃下台積電CoWoS外溢大單、EPS估衝35元 投顧喊出目標價：還有18％空間",
+      "url": "https://tw.stock.yahoo.com/news/%E6%97%A5%E6%9C%88%E5%85%89765%E5%85%83%E4%BF%AE%E6%AD%A341-%E5%BE%8C-%E5%BC%B7%E6%94%BB%E6%BC%B2%E5%81%9C-%E5%90%83%E4%B8%8B%E5%8F%B0%E7%A9%8D%E9%9B%BBcowos%E5%A4%96%E6%BA%A2%E5%A4%A7%E5%96%AE-eps%E4%BC%B0%E8%A1%9D35%E5%85%83-224130139.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E6%97%A5%E6%9C%88%E5%85%89765%E5%85%83%E4%BF%AE%E6%AD%A341-%E5%BE%8C-%E5%BC%B7%E6%94%BB%E6%BC%B2%E5%81%9C-%E5%90%83%E4%B8%8B%E5%8F%B0%E7%A9%8D%E9%9B%BBcowos%E5%A4%96%E6%BA%A2%E5%A4%A7%E5%96%AE-eps%E4%BC%B0%E8%A1%9D35%E5%85%83-224130139.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330",
+        "3711"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330",
+        "3711"
       ],
       "sentiment_method": "rule"
     },
@@ -88794,10 +89336,15 @@
       "month": "2026-11",
       "date": "2026-11-25",
       "half": "AM",
-      "updated_at_taipei": "2026-11-25 08:45",
-      "count": 17,
+      "updated_at_taipei": "2026-11-25 09:00",
+      "count": 24,
       "star3_count": 3,
       "failed_sources": [
+        {
+          "id": "bitbo_btc_etf",
+          "name": "Bitbo BTC 現貨 ETF",
+          "error": "HTTPSConnectionPool(host='bitbo.io', port=443): Read timed out. (read timeout=8)"
+        },
         {
           "id": "binance_derivatives",
           "name": "Binance 永續合約",
