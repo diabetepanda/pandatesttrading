@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-26-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-26T18:12:23Z",
-  "updated_at_taipei": "2026-11-27 02:12",
-  "last_updated_utc": "2026-11-26T18:12:23Z",
-  "last_updated_taipei": "2026-11-27 02:12",
-  "next_update_hint": "約台北時間 02:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-26T18:27:23Z",
+  "updated_at_taipei": "2026-11-27 02:27",
+  "last_updated_utc": "2026-11-26T18:27:23Z",
+  "last_updated_taipei": "2026-11-27 02:27",
+  "next_update_hint": "約台北時間 02:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 20.184,
+    "total_elapsed_sec": 18.137,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 5,
+    "new_items_added": 2,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.092,
+        "elapsed_sec": 0.059,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.134,
+        "elapsed_sec": 0.371,
         "raw_count": 30,
         "items_kept": 12,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.152,
+        "elapsed_sec": 0.082,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.126,
+        "elapsed_sec": 0.108,
         "raw_count": 10,
         "items_kept": 1,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.512,
+        "elapsed_sec": 0.154,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.169,
+        "elapsed_sec": 0.187,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.137,
+        "elapsed_sec": 0.086,
         "raw_count": 30,
         "items_kept": 21,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.115,
+        "elapsed_sec": 0.102,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,16 +108,16 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.139,
+        "elapsed_sec": 0.113,
         "raw_count": 36,
-        "items_kept": 17,
+        "items_kept": 18,
         "error": null
       },
       "cnyes_tw_stock": {
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.666,
+        "elapsed_sec": 0.55,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.681,
+        "elapsed_sec": 0.627,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.348,
+        "elapsed_sec": 0.394,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 1.138,
+        "elapsed_sec": 0.937,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.204,
+        "elapsed_sec": 0.321,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.418,
+        "elapsed_sec": 0.4,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.193,
+        "elapsed_sec": 0.069,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.376,
+        "elapsed_sec": 3.459,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.062,
+        "elapsed_sec": 0.056,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.502,
+        "elapsed_sec": 1.344,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.449,
+        "elapsed_sec": 0.529,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.486,
+        "elapsed_sec": 1.26,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.412,
+        "elapsed_sec": 0.424,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.825,
+        "elapsed_sec": 0.692,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.153,
+        "elapsed_sec": 0.156,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.564,
+        "elapsed_sec": 0.528,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.387,
+        "elapsed_sec": 0.338,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,8 +277,8 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.59,
-        "change_1d_pct": 1.58
+        "tvl_b": 36.61,
+        "change_1d_pct": 1.65
       },
       "Base": {
         "tvl_b": 4.99,
@@ -289,38 +289,38 @@
         "change_1d_pct": 1.71
       },
       "Tron": {
-        "tvl_b": 4.39,
-        "change_1d_pct": -1.36
+        "tvl_b": 4.38,
+        "change_1d_pct": -1.56
       },
       "BSC": {
         "tvl_b": 4.3,
         "change_1d_pct": 1.16
       },
       "Bitcoin": {
-        "tvl_b": 2.25,
-        "change_1d_pct": -22.51
+        "tvl_b": 2.24,
+        "change_1d_pct": -22.79
       }
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -735.8,
+      "net_flow_usd_m": -735.9,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0053,
+        "funding_rate_pct": 0.0052,
         "oi_usd_b": 1.94
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0051,
+        "funding_rate_pct": 0.0049,
         "oi_usd_b": 1.1
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 11,
-      "half_hour_fee_sat_vb": 10,
-      "mempool_vsize_mb": 38.7,
-      "tx_count": 100188,
+      "fastest_fee_sat_vb": 12,
+      "half_hour_fee_sat_vb": 11,
+      "mempool_vsize_mb": 38.8,
+      "tx_count": 98351,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -753,6 +753,48 @@
       "sentiment_label": "利空",
       "sentiment_score": -3,
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-f8438ab553",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T18:15:29Z",
+      "published_at_taipei": "2026-11-27 02:15",
+      "published_at_taipei_iso": "2026-11-27T02:15:29+08:00",
+      "first_seen_at_utc": "2026-11-26T18:27:23Z",
+      "first_seen_at_taipei": "2026-11-27 02:27",
+      "month": "2026-11",
+      "title": "Bitcoin Holds Above $60K as Death Cross Clouds Thanksgiving Recovery",
+      "url": "https://decrypt.co/384079/bitcoin-holds-above-60k-as-death-cross-clouds-thanksgiving-recovery",
+      "canonical_url": "https://decrypt.co/384079/bitcoin-holds-above-60k-as-death-cross-clouds-thanksgiving-recovery",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261120-d6471083d6",
+        "issue": "2026-11-21-PM",
+        "title": "Bitcoin price drops to $60K as Anthropic drops to $87 in tech sell-off",
+        "published_at_taipei": "2026-11-20 23:52",
+        "url": "https://cointelegraph.com/markets/bitcoin-hits-new-20-week-low-anthropic-drops-87-tech-sell-off?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：bearish",
       "sentiment_targets": [
         "BTCUSDT"
       ],
@@ -4925,6 +4967,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-12e42d2792",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:32:00Z",
+      "published_at_taipei": "2026-11-27 01:32",
+      "published_at_taipei_iso": "2026-11-27T01:32:00+08:00",
+      "first_seen_at_utc": "2026-11-26T18:27:23Z",
+      "first_seen_at_taipei": "2026-11-27 02:27",
+      "month": "2026-11",
+      "title": "Tokenized Anthropic Holders Doubled in 3 Days",
+      "url": "https://www.theblock.co/newsletters/tokenization-briefing/2026-11-26-tokenized-anthropic-holders-doubled-in-3-days-446013",
+      "canonical_url": "https://theblock.co/newsletters/tokenization-briefing/2026-11-26-tokenized-anthropic-holders-doubled-in-3-days-446013",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-6a06c10374",
+        "issue": "2026-11-23-PM",
+        "title": "Did Anthropic Stock's 9% Slide Make It Cheap?",
+        "published_at_taipei": "2026-11-24 02:48",
+        "url": "https://www.trefis.com/stock/ant/articles/627440/did-anthropic-stock-s-9-slide-make-it-cheap/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-bab86c64e1",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T17:23:52Z",
@@ -6789,6 +6871,48 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261127-f8438ab553",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T18:15:29Z",
+      "published_at_taipei": "2026-11-27 02:15",
+      "published_at_taipei_iso": "2026-11-27T02:15:29+08:00",
+      "first_seen_at_utc": "2026-11-26T18:27:23Z",
+      "first_seen_at_taipei": "2026-11-27 02:27",
+      "month": "2026-11",
+      "title": "Bitcoin Holds Above $60K as Death Cross Clouds Thanksgiving Recovery",
+      "url": "https://decrypt.co/384079/bitcoin-holds-above-60k-as-death-cross-clouds-thanksgiving-recovery",
+      "canonical_url": "https://decrypt.co/384079/bitcoin-holds-above-60k-as-death-cross-clouds-thanksgiving-recovery",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261120-d6471083d6",
+        "issue": "2026-11-21-PM",
+        "title": "Bitcoin price drops to $60K as Anthropic drops to $87 in tech sell-off",
+        "published_at_taipei": "2026-11-20 23:52",
+        "url": "https://cointelegraph.com/markets/bitcoin-hits-new-20-week-low-anthropic-drops-87-tech-sell-off?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：bearish",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-b768c2ae44",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T18:01:02Z",
@@ -7022,6 +7146,46 @@
       "sentiment_reason": "命中：hawkish；反轉：否定「dovish」",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-12e42d2792",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:32:00Z",
+      "published_at_taipei": "2026-11-27 01:32",
+      "published_at_taipei_iso": "2026-11-27T01:32:00+08:00",
+      "first_seen_at_utc": "2026-11-26T18:27:23Z",
+      "first_seen_at_taipei": "2026-11-27 02:27",
+      "month": "2026-11",
+      "title": "Tokenized Anthropic Holders Doubled in 3 Days",
+      "url": "https://www.theblock.co/newsletters/tokenization-briefing/2026-11-26-tokenized-anthropic-holders-doubled-in-3-days-446013",
+      "canonical_url": "https://theblock.co/newsletters/tokenization-briefing/2026-11-26-tokenized-anthropic-holders-doubled-in-3-days-446013",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-6a06c10374",
+        "issue": "2026-11-23-PM",
+        "title": "Did Anthropic Stock's 9% Slide Make It Cheap?",
+        "published_at_taipei": "2026-11-24 02:48",
+        "url": "https://www.trefis.com/stock/ant/articles/627440/did-anthropic-stock-s-9-slide-make-it-cheap/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -146021,29 +146185,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261120-7beef05f91",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-19T18:20:49Z",
-      "published_at_taipei": "2026-11-20 02:20",
-      "published_at_taipei_iso": "2026-11-20T02:20:49+08:00",
-      "month": "2026-11",
-      "title": "Ethereum’s Glamsterdam upgrade could slip to May 2027 over compatibility concerns",
-      "url": "https://cointelegraph.com/news/ethereum-glamsterdam-could-slip-to-may-2027?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "canonical_url": "https://cointelegraph.com/news/ethereum-glamsterdam-could-slip-to-may-2027",
-      "source": "Cointelegraph",
-      "source_id": "cointelegraph",
-      "category": "加密貨幣",
-      "symbols": [
-        "ETHUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "市場重點（upgrade）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -146052,8 +146193,8 @@
       "month": "2026-11",
       "date": "2026-11-26",
       "half": "PM",
-      "updated_at_taipei": "2026-11-27 02:12",
-      "count": 169,
+      "updated_at_taipei": "2026-11-27 02:27",
+      "count": 171,
       "star3_count": 12,
       "failed_sources": [
         {
