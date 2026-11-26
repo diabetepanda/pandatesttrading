@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-26-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-26T23:13:43Z",
-  "updated_at_taipei": "2026-11-27 07:13",
-  "last_updated_utc": "2026-11-26T23:13:43Z",
-  "last_updated_taipei": "2026-11-27 07:13",
-  "next_update_hint": "約台北時間 07:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-26T23:28:49Z",
+  "updated_at_taipei": "2026-11-27 07:28",
+  "last_updated_utc": "2026-11-26T23:28:49Z",
+  "last_updated_taipei": "2026-11-27 07:28",
+  "next_update_hint": "約台北時間 07:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 13.499,
+    "total_elapsed_sec": 19.28,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 0,
+    "new_items_added": 2,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.048,
+        "elapsed_sec": 0.148,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.086,
+        "elapsed_sec": 0.184,
         "raw_count": 30,
         "items_kept": 12,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.038,
+        "elapsed_sec": 0.087,
         "raw_count": 30,
         "items_kept": 6,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.023,
+        "elapsed_sec": 0.087,
         "raw_count": 10,
         "items_kept": 0,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.168,
+        "elapsed_sec": 0.279,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.094,
+        "elapsed_sec": 0.269,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.066,
+        "elapsed_sec": 0.168,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.066,
+        "elapsed_sec": 0.12,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.059,
+        "elapsed_sec": 0.124,
         "raw_count": 35,
         "items_kept": 17,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.499,
+        "elapsed_sec": 0.545,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.525,
+        "elapsed_sec": 0.464,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.336,
+        "elapsed_sec": 0.265,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.905,
+        "elapsed_sec": 0.686,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.392,
+        "elapsed_sec": 0.316,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.408,
+        "elapsed_sec": 0.153,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.065,
+        "elapsed_sec": 0.864,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.249,
+        "elapsed_sec": 4.386,
         "raw_count": 6,
         "items_kept": 2,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.051,
+        "elapsed_sec": 0.062,
         "raw_count": 1378,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.453,
+        "elapsed_sec": 1.18,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.28,
+        "elapsed_sec": 0.493,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.329,
+        "elapsed_sec": 0.976,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.274,
+        "elapsed_sec": 0.445,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 1.436,
+        "elapsed_sec": 0.552,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.038,
+        "elapsed_sec": 0.238,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.509,
+        "elapsed_sec": 0.442,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.271,
+        "elapsed_sec": 0.37,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,8 +277,8 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.75,
-        "change_1d_pct": 2.02
+        "tvl_b": 36.74,
+        "change_1d_pct": 2.01
       },
       "Base": {
         "tvl_b": 4.67,
@@ -286,15 +286,15 @@
       },
       "Solana": {
         "tvl_b": 4.63,
-        "change_1d_pct": 2.37
+        "change_1d_pct": 2.35
       },
       "Tron": {
         "tvl_b": 4.41,
         "change_1d_pct": -0.95
       },
       "BSC": {
-        "tvl_b": 4.32,
-        "change_1d_pct": 1.64
+        "tvl_b": 4.31,
+        "change_1d_pct": 1.57
       },
       "Bitcoin": {
         "tvl_b": 2.25,
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -734.6,
+      "net_flow_usd_m": -734.8,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": -0.0003,
+        "funding_rate_pct": -0.0002,
         "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0089,
+        "funding_rate_pct": 0.0086,
         "oi_usd_b": 1.1
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 3,
-      "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 31.8,
-      "tx_count": 72707,
+      "fastest_fee_sat_vb": 5,
+      "half_hour_fee_sat_vb": 4,
+      "mempool_vsize_mb": 32.5,
+      "tx_count": 74620,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -797,6 +797,90 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-93291546bd",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T23:07:15Z",
+      "published_at_taipei": "2026-11-27 07:07",
+      "published_at_taipei_iso": "2026-11-27T07:07:15+08:00",
+      "first_seen_at_utc": "2026-11-26T23:28:49Z",
+      "first_seen_at_taipei": "2026-11-27 07:28",
+      "month": "2026-11",
+      "title": "美媒：川普關注輝達市值 將出席台積電擴廠動土",
+      "url": "https://tw.news.yahoo.com/%E7%BE%8E%E5%AA%92-%E5%B7%9D%E6%99%AE%E9%97%9C%E6%B3%A8%E8%BC%9D%E9%81%94%E5%B8%82%E5%80%BC-%E5%B0%87%E5%87%BA%E5%B8%AD%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%93%B4%E5%BB%A0%E5%8B%95%E5%9C%9F-230715492.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E7%BE%8E%E5%AA%92-%E5%B7%9D%E6%99%AE%E9%97%9C%E6%B3%A8%E8%BC%9D%E9%81%94%E5%B8%82%E5%80%BC-%E5%B0%87%E5%87%BA%E5%B8%AD%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%93%B4%E5%BB%A0%E5%8B%95%E5%9C%9F-230715492.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-931e8bce52",
+        "issue": "2026-11-26-AM",
+        "title": "AI推升晶片投資布局 川普將出席台積電亞利桑那州新廠動土典禮",
+        "published_at_taipei": "2026-11-26 12:23",
+        "url": "https://tw.stock.yahoo.com/news/ai%E6%8E%A8%E5%8D%87%E6%99%B6%E7%89%87%E6%8A%95%E8%B3%87%E5%B8%83%E5%B1%80-%E5%B7%9D%E6%99%AE%E5%B0%87%E5%87%BA%E5%B8%AD%E5%8F%B0%E7%A9%8D%E9%9B%BB%E4%BA%9E%E5%88%A9%E6%A1%91%E9%82%A3%E5%B7%9E%E6%96%B0%E5%BB%A0%E5%8B%95%E5%9C%9F%E5%85%B8%E7%A6%AE-042300540.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-3932ac59ec",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T22:50:02Z",
+      "published_at_taipei": "2026-11-27 06:50",
+      "published_at_taipei_iso": "2026-11-27T06:50:02+08:00",
+      "first_seen_at_utc": "2026-11-26T23:28:49Z",
+      "first_seen_at_taipei": "2026-11-27 07:28",
+      "month": "2026-11",
+      "title": "Prediction: These 3 Consumer Stocks Will Beat the S&P 500 Over the Next 10 Years",
+      "url": "https://www.fool.com/investing/2026/11/26/prediction-these-3-consumer-stocks-will-beat-the-sp-500-over-the-next-10-years/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/26/prediction-these-3-consumer-stocks-will-beat-the-sp-500-over-the-next-10-years?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-2f97887672",
+        "issue": "2026-11-23-PM",
+        "title": "Prediction: This AI Hardware Stock Could Surprise Investors Over the Next 3 Years",
+        "published_at_taipei": "2026-11-24 00:33",
+        "url": "https://247wallst.com/investing/2026/11/23/prediction-this-ai-hardware-stock-could-surprise-investors-over-the-next-3-years/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -8534,6 +8618,90 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261127-93291546bd",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T23:07:15Z",
+      "published_at_taipei": "2026-11-27 07:07",
+      "published_at_taipei_iso": "2026-11-27T07:07:15+08:00",
+      "first_seen_at_utc": "2026-11-26T23:28:49Z",
+      "first_seen_at_taipei": "2026-11-27 07:28",
+      "month": "2026-11",
+      "title": "美媒：川普關注輝達市值 將出席台積電擴廠動土",
+      "url": "https://tw.news.yahoo.com/%E7%BE%8E%E5%AA%92-%E5%B7%9D%E6%99%AE%E9%97%9C%E6%B3%A8%E8%BC%9D%E9%81%94%E5%B8%82%E5%80%BC-%E5%B0%87%E5%87%BA%E5%B8%AD%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%93%B4%E5%BB%A0%E5%8B%95%E5%9C%9F-230715492.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E7%BE%8E%E5%AA%92-%E5%B7%9D%E6%99%AE%E9%97%9C%E6%B3%A8%E8%BC%9D%E9%81%94%E5%B8%82%E5%80%BC-%E5%B0%87%E5%87%BA%E5%B8%AD%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%93%B4%E5%BB%A0%E5%8B%95%E5%9C%9F-230715492.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-931e8bce52",
+        "issue": "2026-11-26-AM",
+        "title": "AI推升晶片投資布局 川普將出席台積電亞利桑那州新廠動土典禮",
+        "published_at_taipei": "2026-11-26 12:23",
+        "url": "https://tw.stock.yahoo.com/news/ai%E6%8E%A8%E5%8D%87%E6%99%B6%E7%89%87%E6%8A%95%E8%B3%87%E5%B8%83%E5%B1%80-%E5%B7%9D%E6%99%AE%E5%B0%87%E5%87%BA%E5%B8%AD%E5%8F%B0%E7%A9%8D%E9%9B%BB%E4%BA%9E%E5%88%A9%E6%A1%91%E9%82%A3%E5%B7%9E%E6%96%B0%E5%BB%A0%E5%8B%95%E5%9C%9F%E5%85%B8%E7%A6%AE-042300540.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-3932ac59ec",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T22:50:02Z",
+      "published_at_taipei": "2026-11-27 06:50",
+      "published_at_taipei_iso": "2026-11-27T06:50:02+08:00",
+      "first_seen_at_utc": "2026-11-26T23:28:49Z",
+      "first_seen_at_taipei": "2026-11-27 07:28",
+      "month": "2026-11",
+      "title": "Prediction: These 3 Consumer Stocks Will Beat the S&P 500 Over the Next 10 Years",
+      "url": "https://www.fool.com/investing/2026/11/26/prediction-these-3-consumer-stocks-will-beat-the-sp-500-over-the-next-10-years/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/26/prediction-these-3-consumer-stocks-will-beat-the-sp-500-over-the-next-10-years?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-2f97887672",
+        "issue": "2026-11-23-PM",
+        "title": "Prediction: This AI Hardware Stock Could Surprise Investors Over the Next 3 Years",
+        "published_at_taipei": "2026-11-24 00:33",
+        "url": "https://247wallst.com/investing/2026/11/23/prediction-this-ai-hardware-stock-could-surprise-investors-over-the-next-3-years/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261127-2ec16821c4",
       "issue": "2026-11-26-PM",
@@ -149344,8 +149512,8 @@
       "month": "2026-11",
       "date": "2026-11-26",
       "half": "PM",
-      "updated_at_taipei": "2026-11-27 07:13",
-      "count": 212,
+      "updated_at_taipei": "2026-11-27 07:28",
+      "count": 214,
       "star3_count": 13,
       "failed_sources": [
         {
