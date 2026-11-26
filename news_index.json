@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "updated_at_utc": "2026-11-26T22:43:36Z",
-  "updated_at_taipei": "2026-11-27 06:43",
+  "updated_at_utc": "2026-11-26T22:58:40Z",
+  "updated_at_taipei": "2026-11-27 06:58",
   "latest_issue": "2026-11-26-PM",
   "months": [
     {
       "month": "2026-11",
       "file": "news/2026-11.jsonl",
-      "count": 3801
+      "count": 3804
     }
   ],
   "issues": [
@@ -16,10 +16,15 @@
       "month": "2026-11",
       "date": "2026-11-26",
       "half": "PM",
-      "updated_at_taipei": "2026-11-27 06:43",
-      "count": 209,
+      "updated_at_taipei": "2026-11-27 06:58",
+      "count": 212,
       "star3_count": 13,
       "failed_sources": [
+        {
+          "id": "fed_press",
+          "name": "Federal Reserve",
+          "error": "404 Client Error: Not Found for url: https://www.federalreserve.gov/feeds/press_all.xml"
+        },
         {
           "id": "binance_derivatives",
           "name": "Binance 永續合約",
