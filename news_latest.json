@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-26-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-26T14:11:15Z",
-  "updated_at_taipei": "2026-11-26 22:11",
-  "last_updated_utc": "2026-11-26T14:11:15Z",
-  "last_updated_taipei": "2026-11-26 22:11",
-  "next_update_hint": "約台北時間 22:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-26T14:26:26Z",
+  "updated_at_taipei": "2026-11-26 22:26",
+  "last_updated_utc": "2026-11-26T14:26:26Z",
+  "last_updated_taipei": "2026-11-26 22:26",
+  "next_update_hint": "約台北時間 22:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 19.912,
+    "total_elapsed_sec": 34.953,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 10,
+    "new_items_added": 4,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.079,
+        "elapsed_sec": 0.084,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.116,
+        "elapsed_sec": 0.213,
         "raw_count": 30,
         "items_kept": 11,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.141,
+        "elapsed_sec": 0.128,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.123,
+        "elapsed_sec": 0.064,
         "raw_count": 10,
         "items_kept": 4,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.301,
+        "elapsed_sec": 0.399,
         "raw_count": 18,
-        "items_kept": 15,
+        "items_kept": 13,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.203,
+        "elapsed_sec": 0.133,
         "raw_count": 25,
         "items_kept": 23,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.126,
+        "elapsed_sec": 0.115,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.108,
+        "elapsed_sec": 0.096,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.096,
+        "elapsed_sec": 0.095,
         "raw_count": 38,
         "items_kept": 17,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.442,
+        "elapsed_sec": 0.409,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.545,
+        "elapsed_sec": 1.382,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.364,
+        "elapsed_sec": 0.277,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.524,
+        "elapsed_sec": 0.698,
         "raw_count": 15,
         "items_kept": 5,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.53,
+        "elapsed_sec": 0.141,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.373,
+        "elapsed_sec": 0.548,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.263,
+        "elapsed_sec": 0.126,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 3.784,
+        "elapsed_sec": 2.536,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.058,
+        "elapsed_sec": 0.045,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.27,
+        "elapsed_sec": 1.244,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.515,
+        "elapsed_sec": 0.353,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.024,
+        "elapsed_sec": 1.041,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.514,
+        "elapsed_sec": 0.334,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.579,
+        "elapsed_sec": 16.598,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,16 +243,16 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.307,
+        "elapsed_sec": 0.111,
         "raw_count": 20,
-        "items_kept": 4,
+        "items_kept": 3,
         "error": null
       },
       "okx_announcements": {
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.586,
+        "elapsed_sec": 0.446,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.391,
+        "elapsed_sec": 0.289,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -282,7 +282,7 @@
       },
       "Base": {
         "tvl_b": 5.01,
-        "change_1d_pct": 0.47
+        "change_1d_pct": 0.48
       },
       "Solana": {
         "tvl_b": 4.58,
@@ -303,28 +303,68 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -739.5,
+      "net_flow_usd_m": -738.8,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0048,
-        "oi_usd_b": 1.95
+        "funding_rate_pct": 0.0047,
+        "oi_usd_b": 1.94
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0077,
-        "oi_usd_b": 1.14
+        "funding_rate_pct": 0.0079,
+        "oi_usd_b": 1.13
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.6,
-      "tx_count": 65302,
+      "mempool_vsize_mb": 29.5,
+      "tx_count": 65932,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261126-6b25738b79",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:11:40Z",
+      "published_at_taipei": "2026-11-26 22:11",
+      "published_at_taipei_iso": "2026-11-26T22:11:40+08:00",
+      "first_seen_at_utc": "2026-11-26T14:26:26Z",
+      "first_seen_at_taipei": "2026-11-26 22:26",
+      "month": "2026-11",
+      "title": "ECB minutes show ’large’ number of members could have backed rate hike in October",
+      "url": "https://finance.yahoo.com/economy/policy/articles/ecb-minutes-show-large-number-141140980.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/economy/policy/articles/ecb-minutes-show-large-number-141140980.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（rate hike）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-1447ef03b0",
+        "issue": "2026-11-21-PM",
+        "title": "This Stock Market Selloff Could Block the Fed’s Rate Hikes",
+        "published_at_taipei": "2026-11-21 23:17",
+        "url": "https://247wallst.com/investing/2026/11/21/this-stock-market-selloff-could-block-the-feds-rate-hikes/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：rate hike",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261126-b45f7c8b1d",
       "issue": "2026-11-26-PM",
@@ -613,6 +653,121 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-1b4f461af3",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:18:00Z",
+      "published_at_taipei": "2026-11-26 22:18",
+      "published_at_taipei_iso": "2026-11-26T22:18:00+08:00",
+      "first_seen_at_utc": "2026-11-26T14:26:26Z",
+      "first_seen_at_taipei": "2026-11-26 22:26",
+      "month": "2026-11",
+      "title": "Global Wearable Healthcare Devices Market Report 2026 | Capitalize on 24.9% CAGR Through 2030 as Apple, Abbott, Medtronic and Dexcom Scale AI and Remote Monitoring",
+      "url": "https://finance.yahoo.com/healthcare/articles/global-wearable-healthcare-devices-market-141800552.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/healthcare/articles/global-wearable-healthcare-devices-market-141800552.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-5fda12c741",
+        "issue": "2026-11-24-PM",
+        "title": "Global Neural Processor Market Report 2026: Size, Share, Trends, and Forecast to 2030 | Capitalize on 22.2% CAGR as NVIDIA, Apple, Alphabet, and Intel Accelerate Edge AI",
+        "published_at_taipei": "2026-11-24 22:41",
+        "url": "https://finance.yahoo.com/technology/ai/articles/global-neural-processor-market-report-144100416.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-75d45641be",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:12:00Z",
+      "published_at_taipei": "2026-11-26 22:12",
+      "published_at_taipei_iso": "2026-11-26T22:12:00+08:00",
+      "first_seen_at_utc": "2026-11-26T14:26:26Z",
+      "first_seen_at_taipei": "2026-11-26 22:26",
+      "month": "2026-11",
+      "title": "台股狂飆956點別高興太早！陳嘉偉喊「最後逃命」示警12月五大利空：恐跌破35542點",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E7%8B%82%E9%A3%86956%E9%BB%9E%E5%88%A5%E9%AB%98%E8%88%88%E5%A4%AA%E6%97%A9-%E9%99%B3%E5%98%89%E5%81%89%E5%96%8A-%E6%9C%80%E5%BE%8C%E9%80%83%E5%91%BD-%E7%A4%BA%E8%AD%A612%E6%9C%88%E4%BA%94%E5%A4%A7%E5%88%A9%E7%A9%BA-%E6%81%90%E8%B7%8C%E7%A0%B435542%E9%BB%9E-141200844.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E7%8B%82%E9%A3%86956%E9%BB%9E%E5%88%A5%E9%AB%98%E8%88%88%E5%A4%AA%E6%97%A9-%E9%99%B3%E5%98%89%E5%81%89%E5%96%8A-%E6%9C%80%E5%BE%8C%E9%80%83%E5%91%BD-%E7%A4%BA%E8%AD%A612%E6%9C%88%E4%BA%94%E5%A4%A7%E5%88%A9%E7%A9%BA-%E6%81%90%E8%B7%8C%E7%A0%B435542%E9%BB%9E-141200844.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲；命中：反彈；命中：利空",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-a3337ada46",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:11:00Z",
+      "published_at_taipei": "2026-11-26 22:11",
+      "published_at_taipei_iso": "2026-11-26T22:11:00+08:00",
+      "first_seen_at_utc": "2026-11-26T14:26:26Z",
+      "first_seen_at_taipei": "2026-11-26 22:26",
+      "month": "2026-11",
+      "title": "台股飆漲956點！PCB女王看好「AI備貨潮來了」點名這2檔強力買進",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%A3%86%E6%BC%B2956%E9%BB%9E-pcb%E5%A5%B3%E7%8E%8B%E7%9C%8B%E5%A5%BD-ai%E5%82%99%E8%B2%A8%E6%BD%AE%E4%BE%86%E4%BA%86-%E9%BB%9E%E5%90%8D%E9%80%992%E6%AA%94%E5%BC%B7%E5%8A%9B%E8%B2%B7%E9%80%B2-141100391.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%A3%86%E6%BC%B2956%E9%BB%9E-pcb%E5%A5%B3%E7%8E%8B%E7%9C%8B%E5%A5%BD-ai%E5%82%99%E8%B2%A8%E6%BD%AE%E4%BE%86%E4%BA%86-%E9%BB%9E%E5%90%8D%E9%80%992%E6%AA%94%E5%BC%B7%E5%8A%9B%E8%B2%B7%E9%80%B2-141100391.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -2968,6 +3123,161 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261126-1b4f461af3",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:18:00Z",
+      "published_at_taipei": "2026-11-26 22:18",
+      "published_at_taipei_iso": "2026-11-26T22:18:00+08:00",
+      "first_seen_at_utc": "2026-11-26T14:26:26Z",
+      "first_seen_at_taipei": "2026-11-26 22:26",
+      "month": "2026-11",
+      "title": "Global Wearable Healthcare Devices Market Report 2026 | Capitalize on 24.9% CAGR Through 2030 as Apple, Abbott, Medtronic and Dexcom Scale AI and Remote Monitoring",
+      "url": "https://finance.yahoo.com/healthcare/articles/global-wearable-healthcare-devices-market-141800552.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/healthcare/articles/global-wearable-healthcare-devices-market-141800552.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-5fda12c741",
+        "issue": "2026-11-24-PM",
+        "title": "Global Neural Processor Market Report 2026: Size, Share, Trends, and Forecast to 2030 | Capitalize on 22.2% CAGR as NVIDIA, Apple, Alphabet, and Intel Accelerate Edge AI",
+        "published_at_taipei": "2026-11-24 22:41",
+        "url": "https://finance.yahoo.com/technology/ai/articles/global-neural-processor-market-report-144100416.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-75d45641be",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:12:00Z",
+      "published_at_taipei": "2026-11-26 22:12",
+      "published_at_taipei_iso": "2026-11-26T22:12:00+08:00",
+      "first_seen_at_utc": "2026-11-26T14:26:26Z",
+      "first_seen_at_taipei": "2026-11-26 22:26",
+      "month": "2026-11",
+      "title": "台股狂飆956點別高興太早！陳嘉偉喊「最後逃命」示警12月五大利空：恐跌破35542點",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E7%8B%82%E9%A3%86956%E9%BB%9E%E5%88%A5%E9%AB%98%E8%88%88%E5%A4%AA%E6%97%A9-%E9%99%B3%E5%98%89%E5%81%89%E5%96%8A-%E6%9C%80%E5%BE%8C%E9%80%83%E5%91%BD-%E7%A4%BA%E8%AD%A612%E6%9C%88%E4%BA%94%E5%A4%A7%E5%88%A9%E7%A9%BA-%E6%81%90%E8%B7%8C%E7%A0%B435542%E9%BB%9E-141200844.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E7%8B%82%E9%A3%86956%E9%BB%9E%E5%88%A5%E9%AB%98%E8%88%88%E5%A4%AA%E6%97%A9-%E9%99%B3%E5%98%89%E5%81%89%E5%96%8A-%E6%9C%80%E5%BE%8C%E9%80%83%E5%91%BD-%E7%A4%BA%E8%AD%A612%E6%9C%88%E4%BA%94%E5%A4%A7%E5%88%A9%E7%A9%BA-%E6%81%90%E8%B7%8C%E7%A0%B435542%E9%BB%9E-141200844.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲；命中：反彈；命中：利空",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-6b25738b79",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:11:40Z",
+      "published_at_taipei": "2026-11-26 22:11",
+      "published_at_taipei_iso": "2026-11-26T22:11:40+08:00",
+      "first_seen_at_utc": "2026-11-26T14:26:26Z",
+      "first_seen_at_taipei": "2026-11-26 22:26",
+      "month": "2026-11",
+      "title": "ECB minutes show ’large’ number of members could have backed rate hike in October",
+      "url": "https://finance.yahoo.com/economy/policy/articles/ecb-minutes-show-large-number-141140980.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/economy/policy/articles/ecb-minutes-show-large-number-141140980.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（rate hike）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-1447ef03b0",
+        "issue": "2026-11-21-PM",
+        "title": "This Stock Market Selloff Could Block the Fed’s Rate Hikes",
+        "published_at_taipei": "2026-11-21 23:17",
+        "url": "https://247wallst.com/investing/2026/11/21/this-stock-market-selloff-could-block-the-feds-rate-hikes/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：rate hike",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-a3337ada46",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:11:00Z",
+      "published_at_taipei": "2026-11-26 22:11",
+      "published_at_taipei_iso": "2026-11-26T22:11:00+08:00",
+      "first_seen_at_utc": "2026-11-26T14:26:26Z",
+      "first_seen_at_taipei": "2026-11-26 22:26",
+      "month": "2026-11",
+      "title": "台股飆漲956點！PCB女王看好「AI備貨潮來了」點名這2檔強力買進",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%A3%86%E6%BC%B2956%E9%BB%9E-pcb%E5%A5%B3%E7%8E%8B%E7%9C%8B%E5%A5%BD-ai%E5%82%99%E8%B2%A8%E6%BD%AE%E4%BE%86%E4%BA%86-%E9%BB%9E%E5%90%8D%E9%80%992%E6%AA%94%E5%BC%B7%E5%8A%9B%E8%B2%B7%E9%80%B2-141100391.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%A3%86%E6%BC%B2956%E9%BB%9E-pcb%E5%A5%B3%E7%8E%8B%E7%9C%8B%E5%A5%BD-ai%E5%82%99%E8%B2%A8%E6%BD%AE%E4%BE%86%E4%BA%86-%E9%BB%9E%E5%90%8D%E9%80%992%E6%AA%94%E5%BC%B7%E5%8A%9B%E8%B2%B7%E9%80%B2-141100391.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261126-41a7c3f0b4",
       "issue": "2026-11-26-PM",
@@ -138808,9 +139118,9 @@
       "month": "2026-11",
       "date": "2026-11-26",
       "half": "PM",
-      "updated_at_taipei": "2026-11-26 22:11",
-      "count": 69,
-      "star3_count": 8,
+      "updated_at_taipei": "2026-11-26 22:26",
+      "count": 73,
+      "star3_count": 9,
       "failed_sources": [
         {
           "id": "binance_derivatives",
