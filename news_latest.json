@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-26-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-26T18:27:23Z",
-  "updated_at_taipei": "2026-11-27 02:27",
-  "last_updated_utc": "2026-11-26T18:27:23Z",
-  "last_updated_taipei": "2026-11-27 02:27",
-  "next_update_hint": "約台北時間 02:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-26T18:42:28Z",
+  "updated_at_taipei": "2026-11-27 02:42",
+  "last_updated_utc": "2026-11-26T18:42:28Z",
+  "last_updated_taipei": "2026-11-27 02:42",
+  "next_update_hint": "約台北時間 02:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 18.137,
+    "total_elapsed_sec": 26.306,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 2,
+    "new_items_added": 1,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.059,
+        "elapsed_sec": 0.095,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.371,
+        "elapsed_sec": 0.161,
         "raw_count": 30,
         "items_kept": 12,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.082,
+        "elapsed_sec": 0.181,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.108,
+        "elapsed_sec": 0.095,
         "raw_count": 10,
         "items_kept": 1,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.154,
+        "elapsed_sec": 0.24,
         "raw_count": 20,
-        "items_kept": 19,
+        "items_kept": 18,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.187,
+        "elapsed_sec": 0.213,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.086,
+        "elapsed_sec": 0.157,
         "raw_count": 30,
         "items_kept": 21,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.102,
+        "elapsed_sec": 0.135,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.113,
+        "elapsed_sec": 0.118,
         "raw_count": 36,
         "items_kept": 18,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.55,
+        "elapsed_sec": 0.611,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.627,
+        "elapsed_sec": 0.668,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.394,
+        "elapsed_sec": 0.42,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.937,
+        "elapsed_sec": 0.718,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.321,
+        "elapsed_sec": 2.652,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.4,
+        "elapsed_sec": 0.974,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.069,
+        "elapsed_sec": 0.123,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 3.459,
+        "elapsed_sec": 5.7,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.056,
+        "elapsed_sec": 0.717,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.344,
+        "elapsed_sec": 1.393,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.529,
+        "elapsed_sec": 0.499,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.26,
+        "elapsed_sec": 1.421,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.424,
+        "elapsed_sec": 0.507,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.692,
+        "elapsed_sec": 0.631,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.156,
+        "elapsed_sec": 0.261,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.528,
+        "elapsed_sec": 0.537,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.338,
+        "elapsed_sec": 0.41,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -282,11 +282,11 @@
       },
       "Base": {
         "tvl_b": 4.99,
-        "change_1d_pct": 0.09
+        "change_1d_pct": 0.06
       },
       "Solana": {
         "tvl_b": 4.6,
-        "change_1d_pct": 1.71
+        "change_1d_pct": 1.66
       },
       "Tron": {
         "tvl_b": 4.38,
@@ -294,7 +294,7 @@
       },
       "BSC": {
         "tvl_b": 4.3,
-        "change_1d_pct": 1.16
+        "change_1d_pct": 1.15
       },
       "Bitcoin": {
         "tvl_b": 2.24,
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -735.9,
+      "net_flow_usd_m": -736.4,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0052,
+        "funding_rate_pct": 0.0051,
         "oi_usd_b": 1.94
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0049,
+        "funding_rate_pct": 0.0048,
         "oi_usd_b": 1.1
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 12,
-      "half_hour_fee_sat_vb": 11,
-      "mempool_vsize_mb": 38.8,
-      "tx_count": 98351,
+      "fastest_fee_sat_vb": 8,
+      "half_hour_fee_sat_vb": 7,
+      "mempool_vsize_mb": 39.2,
+      "tx_count": 97900,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -4932,6 +4932,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-e69854923a",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T18:26:31Z",
+      "published_at_taipei": "2026-11-27 02:26",
+      "published_at_taipei_iso": "2026-11-27T02:26:31+08:00",
+      "first_seen_at_utc": "2026-11-26T18:42:28Z",
+      "first_seen_at_taipei": "2026-11-27 02:42",
+      "month": "2026-11",
+      "title": "Spain moves to grant financial watchdog power to freeze crypto accounts",
+      "url": "https://cointelegraph.com/news/spain-moves-grant-financial-watchdog-power-freeze-crypto-accounts?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/spain-moves-grant-financial-watchdog-power-freeze-crypto-accounts",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-f5981130e1",
+        "issue": "2026-11-25-PM",
+        "title": "SpaceX, Musk pledge to donate a share each to active Trump Accounts",
+        "published_at_taipei": "2026-11-26 04:07",
+        "url": "https://www.cnbc.com/2026/11/25/spacex-musk-trump-account-stock.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-c00ec8da87",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T17:39:53Z",
@@ -6870,6 +6910,46 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261127-e69854923a",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T18:26:31Z",
+      "published_at_taipei": "2026-11-27 02:26",
+      "published_at_taipei_iso": "2026-11-27T02:26:31+08:00",
+      "first_seen_at_utc": "2026-11-26T18:42:28Z",
+      "first_seen_at_taipei": "2026-11-27 02:42",
+      "month": "2026-11",
+      "title": "Spain moves to grant financial watchdog power to freeze crypto accounts",
+      "url": "https://cointelegraph.com/news/spain-moves-grant-financial-watchdog-power-freeze-crypto-accounts?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/spain-moves-grant-financial-watchdog-power-freeze-crypto-accounts",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-f5981130e1",
+        "issue": "2026-11-25-PM",
+        "title": "SpaceX, Musk pledge to donate a share each to active Trump Accounts",
+        "published_at_taipei": "2026-11-26 04:07",
+        "url": "https://www.cnbc.com/2026/11/25/spacex-musk-trump-account-stock.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261127-f8438ab553",
       "issue": "2026-11-26-PM",
@@ -146193,8 +146273,8 @@
       "month": "2026-11",
       "date": "2026-11-26",
       "half": "PM",
-      "updated_at_taipei": "2026-11-27 02:27",
-      "count": 171,
+      "updated_at_taipei": "2026-11-27 02:42",
+      "count": 172,
       "star3_count": 12,
       "failed_sources": [
         {
