@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-26-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-26T13:11:07Z",
-  "updated_at_taipei": "2026-11-26 21:11",
-  "last_updated_utc": "2026-11-26T13:11:07Z",
-  "last_updated_taipei": "2026-11-26 21:11",
-  "next_update_hint": "約台北時間 21:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-26T13:26:01Z",
+  "updated_at_taipei": "2026-11-26 21:26",
+  "last_updated_utc": "2026-11-26T13:26:01Z",
+  "last_updated_taipei": "2026-11-26 21:26",
+  "next_update_hint": "約台北時間 21:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 17.16,
+    "total_elapsed_sec": 20.601,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 6,
+    "new_items_added": 8,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.145,
+        "elapsed_sec": 0.077,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.102,
+        "elapsed_sec": 0.14,
         "raw_count": 30,
         "items_kept": 11,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.056,
+        "elapsed_sec": 0.118,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.041,
+        "elapsed_sec": 0.07,
         "raw_count": 10,
         "items_kept": 4,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.272,
+        "elapsed_sec": 0.291,
         "raw_count": 20,
-        "items_kept": 15,
+        "items_kept": 18,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.15,
+        "elapsed_sec": 0.195,
         "raw_count": 25,
         "items_kept": 23,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.075,
+        "elapsed_sec": 0.106,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.078,
+        "elapsed_sec": 0.114,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.079,
+        "elapsed_sec": 0.123,
         "raw_count": 38,
         "items_kept": 18,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.349,
+        "elapsed_sec": 0.585,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.517,
+        "elapsed_sec": 0.662,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.432,
+        "elapsed_sec": 0.345,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.75,
+        "elapsed_sec": 0.888,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.926,
+        "elapsed_sec": 0.406,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.31,
+        "elapsed_sec": 0.425,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.071,
+        "elapsed_sec": 0.084,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.006,
+        "elapsed_sec": 2.271,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.057,
+        "elapsed_sec": 0.914,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.059,
+        "elapsed_sec": 1.672,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.33,
+        "elapsed_sec": 0.396,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 0.949,
+        "elapsed_sec": 1.296,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.328,
+        "elapsed_sec": 0.44,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 1.385,
+        "elapsed_sec": 0.755,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.088,
+        "elapsed_sec": 0.171,
         "raw_count": 20,
         "items_kept": 4,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.462,
+        "elapsed_sec": 0.562,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.304,
+        "elapsed_sec": 0.371,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,13 +303,13 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -738.8,
+      "net_flow_usd_m": -738.9,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0056,
-        "oi_usd_b": 1.92
+        "funding_rate_pct": 0.0054,
+        "oi_usd_b": 1.93
       },
       "ETHUSDT": {
         "funding_rate_pct": 0.0074,
@@ -317,14 +317,88 @@
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 2,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 31.3,
-      "tx_count": 71523,
+      "mempool_vsize_mb": 30.5,
+      "tx_count": 67993,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261126-2eae87f109",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:17:38Z",
+      "published_at_taipei": "2026-11-26 21:17",
+      "published_at_taipei_iso": "2026-11-26T21:17:38+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Trump Is Hiking Tariffs Again. Here Are the New Tariff Rates on 14 Countries",
+      "url": "https://247wallst.com/investing/2026/11/26/trump-is-hiking-tariffs-again-here-are-the-new-tariff-rates-on-14-countries/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/26/trump-is-hiking-tariffs-again-here-are-the-new-tariff-rates-on-14-countries?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-4e583277d0",
+        "issue": "2026-11-25-PM",
+        "title": "Oracle’s stock sinks toward a 3-year low as the AI trade continues to unravel",
+        "published_at_taipei": "2026-11-26 00:52",
+        "url": "https://www.marketwatch.com/story/oracles-stock-sinks-toward-a-3-year-low-as-the-ai-trade-continues-to-unravel-d4698d77?mod=mw_rss_topstories"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：tariffs；命中：tariff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-4ee9c3fd25",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:13:19Z",
+      "published_at_taipei": "2026-11-26 21:13",
+      "published_at_taipei_iso": "2026-11-26T21:13:19+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Standard Chartered's Zodia Custody Says Hackers Accessed Client Contact Details",
+      "url": "https://decrypt.co/384033/standard-chartereds-zodia-custody-says-hackers-accessed-client-contact-details",
+      "canonical_url": "https://decrypt.co/384033/standard-chartereds-zodia-custody-says-hackers-accessed-client-contact-details",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261126-36fd403bd0",
       "issue": "2026-11-26-PM",
@@ -475,6 +549,120 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-18e87fa397",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:16:25Z",
+      "published_at_taipei": "2026-11-26 21:16",
+      "published_at_taipei_iso": "2026-11-26T21:16:25+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Jensen Huang Says Grok Bot Consumption Is “Really Skyrocketing.” That’s Good News for SpaceX",
+      "url": "https://www.tikr.com/blog/jensen-huang-says-grok-bot-consumption-is-really-skyrocketing-thats-good-news-for-spacex?ref=yahoofinance&tlnk=yf-261126-q7mrmmjx&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/jensen-huang-says-grok-bot-consumption-is-really-skyrocketing-thats-good-news-for-spacex?tlnk=yf-261126-q7mrmmjx&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-17a887ae18",
+        "issue": "2026-11-24-PM",
+        "title": "Jensen Huang Is Back at Nvidia, but Wall Street Is Already Getting Nervous Again",
+        "published_at_taipei": "2026-11-25 00:12",
+        "url": "https://247wallst.com/investing/2026/11/24/jensen-huang-is-back-at-nvidia-but-wall-street-is-already-getting-nervous-again/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-7c2230c715",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:07:13Z",
+      "published_at_taipei": "2026-11-26 21:07",
+      "published_at_taipei_iso": "2026-11-26T21:07:13+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "4年前台積電、4年後美光 張善政痛心：產業發展只能是民進黨選舉工具？",
+      "url": "https://tw.news.yahoo.com/4%E5%B9%B4%E5%89%8D%E5%8F%B0%E7%A9%8D%E9%9B%BB-4%E5%B9%B4%E5%BE%8C%E7%BE%8E%E5%85%89-%E5%BC%B5%E5%96%84%E6%94%BF%E7%97%9B%E5%BF%83-%E7%94%A2%E6%A5%AD%E7%99%BC%E5%B1%95%E5%8F%AA%E8%83%BD%E6%98%AF%E6%B0%91%E9%80%B2%E9%BB%A8%E9%81%B8%E8%88%89%E5%B7%A5%E5%85%B7-130713692.html",
+      "canonical_url": "https://tw.news.yahoo.com/4%E5%B9%B4%E5%89%8D%E5%8F%B0%E7%A9%8D%E9%9B%BB-4%E5%B9%B4%E5%BE%8C%E7%BE%8E%E5%85%89-%E5%BC%B5%E5%96%84%E6%94%BF%E7%97%9B%E5%BF%83-%E7%94%A2%E6%A5%AD%E7%99%BC%E5%B1%95%E5%8F%AA%E8%83%BD%E6%98%AF%E6%B0%91%E9%80%B2%E9%BB%A8%E9%81%B8%E8%88%89%E5%B7%A5%E5%85%B7-130713692.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-0cacc3a10f",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:00:53Z",
+      "published_at_taipei": "2026-11-26 21:00",
+      "published_at_taipei_iso": "2026-11-26T21:00:53+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Saskatchewan's Path to Budget Balance Remains Dependent on Oil Prices, Scotiabank Says",
+      "url": "https://finance.yahoo.com/economy/policy/articles/saskatchewan-apos-path-budget-balance-130053231.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/economy/policy/articles/saskatchewan-apos-path-budget-balance-130053231.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-b975ee297a",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T13:00:16Z",
@@ -619,6 +807,46 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-7db9f9a57f",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T12:38:15Z",
+      "published_at_taipei": "2026-11-26 20:38",
+      "published_at_taipei_iso": "2026-11-26T20:38:15+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Orior cuts sales, earnings outlook",
+      "url": "https://www.just-drinks.com/news/orior-annual-sales-earnings-outlook/?.tsrc=rss",
+      "canonical_url": "https://just-drinks.com/news/orior-annual-sales-earnings-outlook?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（earnings）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-c786c84e81",
+        "issue": "2026-11-21-PM",
+        "title": "Is Marriott Stock Worth 41x Earnings Next To Booking?",
+        "published_at_taipei": "2026-11-21 14:32",
+        "url": "https://www.trefis.com/stock/mar/articles/627178/is-marriott-stock-worth-41x-earnings-next-to-booking/2026-11-20?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -1613,6 +1841,80 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-955da11dda",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:22:47Z",
+      "published_at_taipei": "2026-11-26 21:22",
+      "published_at_taipei_iso": "2026-11-26T21:22:47+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "‘The time to prepare for a cryptographic breakthrough is before it happens’: Zcash team urges faster deprecation of legacy shielded pool",
+      "url": "https://www.theblock.co/news/ecosystems/2026-11-26-the-time-to-prepare-for-a-cryptographic-breakthrough-is-before-it-happens-zcash-team-urges-faster-deprecation-of-legacy-shielded-pool-447000",
+      "canonical_url": "https://theblock.co/news/ecosystems/2026-11-26-the-time-to-prepare-for-a-cryptographic-breakthrough-is-before-it-happens-zcash-team-urges-faster-deprecation-of-legacy-shielded-pool-447000",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-0bdb463b44",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:02:31Z",
+      "published_at_taipei": "2026-11-26 21:02",
+      "published_at_taipei_iso": "2026-11-26T21:02:31+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Will Anthropic’s Float Tripling by February Sink a Stock Already Below Its IPO Price?",
+      "url": "https://www.tikr.com/blog/will-anthropics-float-tripling-by-february-sink-a-stock-already-below-its-ipo-price?ref=yahoofinance&tlnk=yf-261126-rh7435mm&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/will-anthropics-float-tripling-by-february-sink-a-stock-already-below-its-ipo-price?tlnk=yf-261126-rh7435mm&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-084ba1c92b",
+        "issue": "2026-11-24-PM",
+        "title": "Anthropic’s stock just broke below its IPO price for the first time",
+        "published_at_taipei": "2026-11-24 22:55",
+        "url": "https://www.marketwatch.com/story/anthropics-stock-just-broke-below-its-ipo-price-for-the-first-time-5dc82668?mod=mw_rss_topstories"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-dcc6f4d0f3",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T13:00:11Z",
@@ -1939,6 +2241,268 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261126-955da11dda",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:22:47Z",
+      "published_at_taipei": "2026-11-26 21:22",
+      "published_at_taipei_iso": "2026-11-26T21:22:47+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "‘The time to prepare for a cryptographic breakthrough is before it happens’: Zcash team urges faster deprecation of legacy shielded pool",
+      "url": "https://www.theblock.co/news/ecosystems/2026-11-26-the-time-to-prepare-for-a-cryptographic-breakthrough-is-before-it-happens-zcash-team-urges-faster-deprecation-of-legacy-shielded-pool-447000",
+      "canonical_url": "https://theblock.co/news/ecosystems/2026-11-26-the-time-to-prepare-for-a-cryptographic-breakthrough-is-before-it-happens-zcash-team-urges-faster-deprecation-of-legacy-shielded-pool-447000",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-2eae87f109",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:17:38Z",
+      "published_at_taipei": "2026-11-26 21:17",
+      "published_at_taipei_iso": "2026-11-26T21:17:38+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Trump Is Hiking Tariffs Again. Here Are the New Tariff Rates on 14 Countries",
+      "url": "https://247wallst.com/investing/2026/11/26/trump-is-hiking-tariffs-again-here-are-the-new-tariff-rates-on-14-countries/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/26/trump-is-hiking-tariffs-again-here-are-the-new-tariff-rates-on-14-countries?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-4e583277d0",
+        "issue": "2026-11-25-PM",
+        "title": "Oracle’s stock sinks toward a 3-year low as the AI trade continues to unravel",
+        "published_at_taipei": "2026-11-26 00:52",
+        "url": "https://www.marketwatch.com/story/oracles-stock-sinks-toward-a-3-year-low-as-the-ai-trade-continues-to-unravel-d4698d77?mod=mw_rss_topstories"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：tariffs；命中：tariff",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-18e87fa397",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:16:25Z",
+      "published_at_taipei": "2026-11-26 21:16",
+      "published_at_taipei_iso": "2026-11-26T21:16:25+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Jensen Huang Says Grok Bot Consumption Is “Really Skyrocketing.” That’s Good News for SpaceX",
+      "url": "https://www.tikr.com/blog/jensen-huang-says-grok-bot-consumption-is-really-skyrocketing-thats-good-news-for-spacex?ref=yahoofinance&tlnk=yf-261126-q7mrmmjx&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/jensen-huang-says-grok-bot-consumption-is-really-skyrocketing-thats-good-news-for-spacex?tlnk=yf-261126-q7mrmmjx&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-17a887ae18",
+        "issue": "2026-11-24-PM",
+        "title": "Jensen Huang Is Back at Nvidia, but Wall Street Is Already Getting Nervous Again",
+        "published_at_taipei": "2026-11-25 00:12",
+        "url": "https://247wallst.com/investing/2026/11/24/jensen-huang-is-back-at-nvidia-but-wall-street-is-already-getting-nervous-again/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-4ee9c3fd25",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:13:19Z",
+      "published_at_taipei": "2026-11-26 21:13",
+      "published_at_taipei_iso": "2026-11-26T21:13:19+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Standard Chartered's Zodia Custody Says Hackers Accessed Client Contact Details",
+      "url": "https://decrypt.co/384033/standard-chartereds-zodia-custody-says-hackers-accessed-client-contact-details",
+      "canonical_url": "https://decrypt.co/384033/standard-chartereds-zodia-custody-says-hackers-accessed-client-contact-details",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-7c2230c715",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:07:13Z",
+      "published_at_taipei": "2026-11-26 21:07",
+      "published_at_taipei_iso": "2026-11-26T21:07:13+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "4年前台積電、4年後美光 張善政痛心：產業發展只能是民進黨選舉工具？",
+      "url": "https://tw.news.yahoo.com/4%E5%B9%B4%E5%89%8D%E5%8F%B0%E7%A9%8D%E9%9B%BB-4%E5%B9%B4%E5%BE%8C%E7%BE%8E%E5%85%89-%E5%BC%B5%E5%96%84%E6%94%BF%E7%97%9B%E5%BF%83-%E7%94%A2%E6%A5%AD%E7%99%BC%E5%B1%95%E5%8F%AA%E8%83%BD%E6%98%AF%E6%B0%91%E9%80%B2%E9%BB%A8%E9%81%B8%E8%88%89%E5%B7%A5%E5%85%B7-130713692.html",
+      "canonical_url": "https://tw.news.yahoo.com/4%E5%B9%B4%E5%89%8D%E5%8F%B0%E7%A9%8D%E9%9B%BB-4%E5%B9%B4%E5%BE%8C%E7%BE%8E%E5%85%89-%E5%BC%B5%E5%96%84%E6%94%BF%E7%97%9B%E5%BF%83-%E7%94%A2%E6%A5%AD%E7%99%BC%E5%B1%95%E5%8F%AA%E8%83%BD%E6%98%AF%E6%B0%91%E9%80%B2%E9%BB%A8%E9%81%B8%E8%88%89%E5%B7%A5%E5%85%B7-130713692.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-0bdb463b44",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:02:31Z",
+      "published_at_taipei": "2026-11-26 21:02",
+      "published_at_taipei_iso": "2026-11-26T21:02:31+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Will Anthropic’s Float Tripling by February Sink a Stock Already Below Its IPO Price?",
+      "url": "https://www.tikr.com/blog/will-anthropics-float-tripling-by-february-sink-a-stock-already-below-its-ipo-price?ref=yahoofinance&tlnk=yf-261126-rh7435mm&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/will-anthropics-float-tripling-by-february-sink-a-stock-already-below-its-ipo-price?tlnk=yf-261126-rh7435mm&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-084ba1c92b",
+        "issue": "2026-11-24-PM",
+        "title": "Anthropic’s stock just broke below its IPO price for the first time",
+        "published_at_taipei": "2026-11-24 22:55",
+        "url": "https://www.marketwatch.com/story/anthropics-stock-just-broke-below-its-ipo-price-for-the-first-time-5dc82668?mod=mw_rss_topstories"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-0cacc3a10f",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T13:00:53Z",
+      "published_at_taipei": "2026-11-26 21:00",
+      "published_at_taipei_iso": "2026-11-26T21:00:53+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Saskatchewan's Path to Budget Balance Remains Dependent on Oil Prices, Scotiabank Says",
+      "url": "https://finance.yahoo.com/economy/policy/articles/saskatchewan-apos-path-budget-balance-130053231.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/economy/policy/articles/saskatchewan-apos-path-budget-balance-130053231.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-b975ee297a",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T13:00:16Z",
@@ -2219,6 +2783,46 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-7db9f9a57f",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T12:38:15Z",
+      "published_at_taipei": "2026-11-26 20:38",
+      "published_at_taipei_iso": "2026-11-26T20:38:15+08:00",
+      "first_seen_at_utc": "2026-11-26T13:26:01Z",
+      "first_seen_at_taipei": "2026-11-26 21:26",
+      "month": "2026-11",
+      "title": "Orior cuts sales, earnings outlook",
+      "url": "https://www.just-drinks.com/news/orior-annual-sales-earnings-outlook/?.tsrc=rss",
+      "canonical_url": "https://just-drinks.com/news/orior-annual-sales-earnings-outlook?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（earnings）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-c786c84e81",
+        "issue": "2026-11-21-PM",
+        "title": "Is Marriott Stock Worth 41x Earnings Next To Booking?",
+        "published_at_taipei": "2026-11-21 14:32",
+        "url": "https://www.trefis.com/stock/mar/articles/627178/is-marriott-stock-worth-41x-earnings-next-to-booking/2026-11-20?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -136769,9 +137373,9 @@
       "month": "2026-11",
       "date": "2026-11-26",
       "half": "PM",
-      "updated_at_taipei": "2026-11-26 21:11",
-      "count": 42,
-      "star3_count": 4,
+      "updated_at_taipei": "2026-11-26 21:26",
+      "count": 50,
+      "star3_count": 6,
       "failed_sources": [
         {
           "id": "binance_derivatives",
