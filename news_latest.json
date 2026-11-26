@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-26-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-26T15:41:44Z",
-  "updated_at_taipei": "2026-11-26 23:41",
-  "last_updated_utc": "2026-11-26T15:41:44Z",
-  "last_updated_taipei": "2026-11-26 23:41",
-  "next_update_hint": "約台北時間 23:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-26T15:56:45Z",
+  "updated_at_taipei": "2026-11-26 23:56",
+  "last_updated_utc": "2026-11-26T15:56:45Z",
+  "last_updated_taipei": "2026-11-26 23:56",
+  "next_update_hint": "約台北時間 00:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 20.059,
+    "total_elapsed_sec": 20.006,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 5,
+    "new_items_added": 8,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.082,
+        "elapsed_sec": 0.077,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,16 +45,16 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.106,
+        "elapsed_sec": 0.317,
         "raw_count": 30,
-        "items_kept": 11,
+        "items_kept": 12,
         "error": null
       },
       "cnbc_economy": {
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.052,
+        "elapsed_sec": 0.16,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.139,
+        "elapsed_sec": 0.171,
         "raw_count": 10,
         "items_kept": 3,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.303,
+        "elapsed_sec": 0.167,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.249,
+        "elapsed_sec": 0.185,
         "raw_count": 25,
         "items_kept": 23,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.16,
+        "elapsed_sec": 0.118,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.105,
+        "elapsed_sec": 0.122,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.092,
+        "elapsed_sec": 0.12,
         "raw_count": 37,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.439,
+        "elapsed_sec": 0.488,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.662,
+        "elapsed_sec": 0.674,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.412,
+        "elapsed_sec": 0.421,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.953,
+        "elapsed_sec": 0.996,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,16 +153,16 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.183,
+        "elapsed_sec": 0.519,
         "raw_count": 20,
-        "items_kept": 8,
+        "items_kept": 9,
         "error": null
       },
       "yahoo_tw_stock": {
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.376,
+        "elapsed_sec": 0.167,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.114,
+        "elapsed_sec": 0.595,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.969,
+        "elapsed_sec": 2.307,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.059,
+        "elapsed_sec": 0.096,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.404,
+        "elapsed_sec": 1.764,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.491,
+        "elapsed_sec": 0.367,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.465,
+        "elapsed_sec": 1.311,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.472,
+        "elapsed_sec": 0.403,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.75,
+        "elapsed_sec": 0.657,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.276,
+        "elapsed_sec": 0.157,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.58,
+        "elapsed_sec": 0.509,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.423,
+        "elapsed_sec": 0.293,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,50 +277,50 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.76,
-        "change_1d_pct": 2.05
+        "tvl_b": 36.61,
+        "change_1d_pct": 1.65
       },
       "Base": {
-        "tvl_b": 5.0,
-        "change_1d_pct": 0.26
+        "tvl_b": 5.01,
+        "change_1d_pct": 0.33
       },
       "Solana": {
         "tvl_b": 4.59,
-        "change_1d_pct": 1.53
+        "change_1d_pct": 1.44
       },
       "Tron": {
-        "tvl_b": 4.41,
-        "change_1d_pct": -0.93
+        "tvl_b": 4.39,
+        "change_1d_pct": -1.27
       },
       "BSC": {
-        "tvl_b": 4.31,
-        "change_1d_pct": 1.51
+        "tvl_b": 4.3,
+        "change_1d_pct": 1.26
       },
       "Bitcoin": {
-        "tvl_b": 2.26,
-        "change_1d_pct": -22.26
+        "tvl_b": 2.25,
+        "change_1d_pct": -22.4
       }
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -733.5,
+      "net_flow_usd_m": -735.6,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0046,
-        "oi_usd_b": 1.93
+        "funding_rate_pct": 0.0045,
+        "oi_usd_b": 1.94
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0067,
+        "funding_rate_pct": 0.0062,
         "oi_usd_b": 1.09
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 3,
-      "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 31.6,
-      "tx_count": 72832,
+      "fastest_fee_sat_vb": 4,
+      "half_hour_fee_sat_vb": 3,
+      "mempool_vsize_mb": 31.2,
+      "tx_count": 71572,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -3140,6 +3140,284 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-7bde384eae",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:54:29Z",
+      "published_at_taipei": "2026-11-26 23:54",
+      "published_at_taipei_iso": "2026-11-26T23:54:29+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "神達擴充設備並備妥電力 對營運充滿信心 明年成長無懸念",
+      "url": "https://money.udn.com/money/story/5710/9904369",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904369",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-7167002f97",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:52:16Z",
+      "published_at_taipei": "2026-11-26 23:52",
+      "published_at_taipei_iso": "2026-11-26T23:52:16+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "健策訂單看到六個月 高毛利率產品明年量產",
+      "url": "https://money.udn.com/money/story/5710/9904370",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904370",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-f2cc6c13a1",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:49:55Z",
+      "published_at_taipei": "2026-11-26 23:49",
+      "published_at_taipei_iso": "2026-11-26T23:49:55+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "Gogolook 有望首度配息",
+      "url": "https://money.udn.com/money/story/5710/9904376",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904376",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-10927652fe",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:45:07Z",
+      "published_at_taipei": "2026-11-26 23:45",
+      "published_at_taipei_iso": "2026-11-26T23:45:07+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "How EU brokers could lose access to Kyrgyz crypto exchanges",
+      "url": "https://cointelegraph.com/news/how-eu-brokers-could-lose-access-to-kyrgyz-crypto-exchanges?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/how-eu-brokers-could-lose-access-to-kyrgyz-crypto-exchanges",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-a58552d5e9",
+        "issue": "2026-11-25-PM",
+        "title": "How Big Could Planet Labs Stock's Next Fall Be?",
+        "published_at_taipei": "2026-11-26 02:33",
+        "url": "https://www.trefis.com/stock/pl/articles/628756/how-big-could-planet-labs-stock-s-next-fall-be/2026-11-25?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-b50ae295c8",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:36:09Z",
+      "published_at_taipei": "2026-11-26 23:36",
+      "published_at_taipei_iso": "2026-11-26T23:36:09+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "大同三路並進拚業績 模組化算力中心下季可望接單",
+      "url": "https://money.udn.com/money/story/5710/9904579",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904579",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-98d7212b36",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:34:51Z",
+      "published_at_taipei": "2026-11-26 23:34",
+      "published_at_taipei_iso": "2026-11-26T23:34:51+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "統一實升級鋼鐵產品 預計年底商轉",
+      "url": "https://money.udn.com/money/story/5710/9904584",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904584",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-989f0dd03d",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:34:08Z",
+      "published_at_taipei": "2026-11-26 23:34",
+      "published_at_taipei_iso": "2026-11-26T23:34:08+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "Nvidia chip buyers told to rule out Chinese renters to buy GPUs, sources say",
+      "url": "https://www.cnbc.com/2026/11/26/neoclouds-nvidia-china-ai.html",
+      "canonical_url": "https://cnbc.com/2026/11/26/neoclouds-nvidia-china-ai.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-6ec8a236da",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:32:22Z",
+      "published_at_taipei": "2026-11-26 23:32",
+      "published_at_taipei_iso": "2026-11-26T23:32:22+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "威力暘轉型高階電子模組策略夥伴 衝刺四大賽道",
+      "url": "https://money.udn.com/money/story/5710/9904586",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904586",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-6a64ef4f34",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T15:15:26Z",
@@ -4167,6 +4445,284 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261126-7bde384eae",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:54:29Z",
+      "published_at_taipei": "2026-11-26 23:54",
+      "published_at_taipei_iso": "2026-11-26T23:54:29+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "神達擴充設備並備妥電力 對營運充滿信心 明年成長無懸念",
+      "url": "https://money.udn.com/money/story/5710/9904369",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904369",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-7167002f97",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:52:16Z",
+      "published_at_taipei": "2026-11-26 23:52",
+      "published_at_taipei_iso": "2026-11-26T23:52:16+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "健策訂單看到六個月 高毛利率產品明年量產",
+      "url": "https://money.udn.com/money/story/5710/9904370",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904370",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-f2cc6c13a1",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:49:55Z",
+      "published_at_taipei": "2026-11-26 23:49",
+      "published_at_taipei_iso": "2026-11-26T23:49:55+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "Gogolook 有望首度配息",
+      "url": "https://money.udn.com/money/story/5710/9904376",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904376",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-10927652fe",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:45:07Z",
+      "published_at_taipei": "2026-11-26 23:45",
+      "published_at_taipei_iso": "2026-11-26T23:45:07+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "How EU brokers could lose access to Kyrgyz crypto exchanges",
+      "url": "https://cointelegraph.com/news/how-eu-brokers-could-lose-access-to-kyrgyz-crypto-exchanges?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+      "canonical_url": "https://cointelegraph.com/news/how-eu-brokers-could-lose-access-to-kyrgyz-crypto-exchanges",
+      "source": "Cointelegraph",
+      "source_id": "cointelegraph",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-a58552d5e9",
+        "issue": "2026-11-25-PM",
+        "title": "How Big Could Planet Labs Stock's Next Fall Be?",
+        "published_at_taipei": "2026-11-26 02:33",
+        "url": "https://www.trefis.com/stock/pl/articles/628756/how-big-could-planet-labs-stock-s-next-fall-be/2026-11-25?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-b50ae295c8",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:36:09Z",
+      "published_at_taipei": "2026-11-26 23:36",
+      "published_at_taipei_iso": "2026-11-26T23:36:09+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "大同三路並進拚業績 模組化算力中心下季可望接單",
+      "url": "https://money.udn.com/money/story/5710/9904579",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904579",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-98d7212b36",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:34:51Z",
+      "published_at_taipei": "2026-11-26 23:34",
+      "published_at_taipei_iso": "2026-11-26T23:34:51+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "統一實升級鋼鐵產品 預計年底商轉",
+      "url": "https://money.udn.com/money/story/5710/9904584",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904584",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-989f0dd03d",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:34:08Z",
+      "published_at_taipei": "2026-11-26 23:34",
+      "published_at_taipei_iso": "2026-11-26T23:34:08+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "Nvidia chip buyers told to rule out Chinese renters to buy GPUs, sources say",
+      "url": "https://www.cnbc.com/2026/11/26/neoclouds-nvidia-china-ai.html",
+      "canonical_url": "https://cnbc.com/2026/11/26/neoclouds-nvidia-china-ai.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-6ec8a236da",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:32:22Z",
+      "published_at_taipei": "2026-11-26 23:32",
+      "published_at_taipei_iso": "2026-11-26T23:32:22+08:00",
+      "first_seen_at_utc": "2026-11-26T15:56:45Z",
+      "first_seen_at_taipei": "2026-11-26 23:56",
+      "month": "2026-11",
+      "title": "威力暘轉型高階電子模組策略夥伴 衝刺四大賽道",
+      "url": "https://money.udn.com/money/story/5710/9904586",
+      "canonical_url": "https://money.udn.com/money/story/5710/9904586",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261126-d9c1fd40f0",
       "issue": "2026-11-26-PM",
@@ -141076,29 +141632,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261119-21964bb802",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-19T15:54:03Z",
-      "published_at_taipei": "2026-11-19 23:54",
-      "published_at_taipei_iso": "2026-11-19T23:54:03+08:00",
-      "month": "2026-11",
-      "title": "Anthropic Tops SpaceX's Initial IPO With $81 Billion Deal: Where the Money Went",
-      "url": "https://decrypt.co/383623/anthropic-tops-spacex-initial-ipo-81-billion-deal-where-the-money-went",
-      "canonical_url": "https://decrypt.co/383623/anthropic-tops-spacex-initial-ipo-81-billion-deal-where-the-money-went",
-      "source": "Decrypt",
-      "source_id": "decrypt",
-      "category": "美股",
-      "symbols": [
-        "SPCX"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "追蹤標的相關",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -141107,8 +141640,8 @@
       "month": "2026-11",
       "date": "2026-11-26",
       "half": "PM",
-      "updated_at_taipei": "2026-11-26 23:41",
-      "count": 100,
+      "updated_at_taipei": "2026-11-26 23:56",
+      "count": 108,
       "star3_count": 11,
       "failed_sources": [
         {
