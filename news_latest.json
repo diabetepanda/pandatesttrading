@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-26-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-26T15:26:33Z",
-  "updated_at_taipei": "2026-11-26 23:26",
-  "last_updated_utc": "2026-11-26T15:26:33Z",
-  "last_updated_taipei": "2026-11-26 23:26",
-  "next_update_hint": "約台北時間 23:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-26T15:41:44Z",
+  "updated_at_taipei": "2026-11-26 23:41",
+  "last_updated_utc": "2026-11-26T15:41:44Z",
+  "last_updated_taipei": "2026-11-26 23:41",
+  "next_update_hint": "約台北時間 23:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 18.133,
+    "total_elapsed_sec": 20.059,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 8,
+    "new_items_added": 5,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.107,
+        "elapsed_sec": 0.082,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.153,
+        "elapsed_sec": 0.106,
         "raw_count": 30,
         "items_kept": 11,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.057,
+        "elapsed_sec": 0.052,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.182,
+        "elapsed_sec": 0.139,
         "raw_count": 10,
         "items_kept": 3,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.313,
+        "elapsed_sec": 0.303,
         "raw_count": 20,
-        "items_kept": 16,
+        "items_kept": 14,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.185,
+        "elapsed_sec": 0.249,
         "raw_count": 25,
         "items_kept": 23,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.136,
+        "elapsed_sec": 0.16,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.114,
+        "elapsed_sec": 0.105,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.112,
+        "elapsed_sec": 0.092,
         "raw_count": 37,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.36,
+        "elapsed_sec": 0.439,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.659,
+        "elapsed_sec": 0.662,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.346,
+        "elapsed_sec": 0.412,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 1.032,
+        "elapsed_sec": 0.953,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.415,
+        "elapsed_sec": 0.183,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.222,
+        "elapsed_sec": 0.376,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.192,
+        "elapsed_sec": 0.114,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.533,
+        "elapsed_sec": 0.969,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.069,
+        "elapsed_sec": 0.059,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.207,
+        "elapsed_sec": 1.404,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.447,
+        "elapsed_sec": 0.491,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.615,
+        "elapsed_sec": 1.465,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.408,
+        "elapsed_sec": 0.472,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.748,
+        "elapsed_sec": 0.75,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.274,
+        "elapsed_sec": 0.276,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.535,
+        "elapsed_sec": 0.58,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.319,
+        "elapsed_sec": 0.423,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -281,8 +281,8 @@
         "change_1d_pct": 2.05
       },
       "Base": {
-        "tvl_b": 5.01,
-        "change_1d_pct": 0.48
+        "tvl_b": 5.0,
+        "change_1d_pct": 0.26
       },
       "Solana": {
         "tvl_b": 4.59,
@@ -290,7 +290,7 @@
       },
       "Tron": {
         "tvl_b": 4.41,
-        "change_1d_pct": -0.86
+        "change_1d_pct": -0.93
       },
       "BSC": {
         "tvl_b": 4.31,
@@ -298,33 +298,67 @@
       },
       "Bitcoin": {
         "tvl_b": 2.26,
-        "change_1d_pct": -22.33
+        "change_1d_pct": -22.26
       }
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -731.5,
+      "net_flow_usd_m": -733.5,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
         "funding_rate_pct": 0.0046,
-        "oi_usd_b": 1.94
+        "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.007,
-        "oi_usd_b": 1.08
+        "funding_rate_pct": 0.0067,
+        "oi_usd_b": 1.09
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 3,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.6,
-      "tx_count": 69027,
+      "mempool_vsize_mb": 31.6,
+      "tx_count": 72832,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261126-d9c1fd40f0",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:28:09Z",
+      "published_at_taipei": "2026-11-26 23:28",
+      "published_at_taipei_iso": "2026-11-26T23:28:09+08:00",
+      "first_seen_at_utc": "2026-11-26T15:41:44Z",
+      "first_seen_at_taipei": "2026-11-26 23:41",
+      "month": "2026-11",
+      "title": "The Economy Grew Way Faster Than First Reported: Q3 GDP Revised Up to 4.3%",
+      "url": "https://247wallst.com/investing/2026/11/26/the-economy-grew-way-faster-than-first-reported-q3-gdp-revised-up-to-4-3/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/26/the-economy-grew-way-faster-than-first-reported-q3-gdp-revised-up-to-4-3?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（gdp）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261126-0e585c70d3",
       "issue": "2026-11-26-PM",
@@ -807,6 +841,42 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-3e07439e41",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:05:24Z",
+      "published_at_taipei": "2026-11-26 23:05",
+      "published_at_taipei_iso": "2026-11-26T23:05:24+08:00",
+      "first_seen_at_utc": "2026-11-26T15:41:44Z",
+      "first_seen_at_taipei": "2026-11-26 23:41",
+      "month": "2026-11",
+      "title": "Lucid Sinks 13% in a Week as the Tech Selloff Hits EV Stocks. Seaport Sets a $1 Target",
+      "url": "https://www.tikr.com/blog/lucid-sinks-13-in-a-week-as-the-tech-selloff-hits-ev-stocks-seaport-sets-a-1-target?ref=yahoofinance&tlnk=yf-261126-44rpr8gm&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/lucid-sinks-13-in-a-week-as-the-tech-selloff-hits-ev-stocks-seaport-sets-a-1-target?tlnk=yf-261126-44rpr8gm&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-07785942ba",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T15:05:00Z",
@@ -1029,6 +1099,42 @@
       "sentiment_targets": [
         "TWII",
         "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-9eb283cc47",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:45:00Z",
+      "published_at_taipei": "2026-11-26 22:45",
+      "published_at_taipei_iso": "2026-11-26T22:45:00+08:00",
+      "first_seen_at_utc": "2026-11-26T15:41:44Z",
+      "first_seen_at_taipei": "2026-11-26 23:41",
+      "month": "2026-11",
+      "title": "北榮機器人藏黃仁勳晶片！鴻海秀3大戰力 鋼鐵雙臂調毒藥＋會搭電梯抽屜送藥",
+      "url": "https://tw.news.yahoo.com/%E5%8C%97%E6%A6%AE%E6%A9%9F%E5%99%A8%E4%BA%BA%E8%97%8F%E9%BB%83%E4%BB%81%E5%8B%B3%E6%99%B6%E7%89%87-%E9%B4%BB%E6%B5%B7%E7%A7%803%E5%A4%A7%E6%88%B0%E5%8A%9B-%E9%8B%BC%E9%90%B5%E9%9B%99%E8%87%82%E8%AA%BF%E6%AF%92%E8%97%A5-%E6%9C%83%E6%90%AD%E9%9B%BB%E6%A2%AF%E6%8A%BD%E5%B1%9C%E9%80%81%E8%97%A5-144500168.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8C%97%E6%A6%AE%E6%A9%9F%E5%99%A8%E4%BA%BA%E8%97%8F%E9%BB%83%E4%BB%81%E5%8B%B3%E6%99%B6%E7%89%87-%E9%B4%BB%E6%B5%B7%E7%A7%803%E5%A4%A7%E6%88%B0%E5%8A%9B-%E9%8B%BC%E9%90%B5%E9%9B%99%E8%87%82%E8%AA%BF%E6%AF%92%E8%97%A5-%E6%9C%83%E6%90%AD%E9%9B%BB%E6%A2%AF%E6%8A%BD%E5%B1%9C%E9%80%81%E8%97%A5-144500168.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2317"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2317"
       ],
       "sentiment_method": "rule"
     },
@@ -3034,6 +3140,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-6a64ef4f34",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:15:26Z",
+      "published_at_taipei": "2026-11-26 23:15",
+      "published_at_taipei_iso": "2026-11-26T23:15:26+08:00",
+      "first_seen_at_utc": "2026-11-26T15:41:44Z",
+      "first_seen_at_taipei": "2026-11-26 23:41",
+      "month": "2026-11",
+      "title": "What Sent Archer Aviation Stock So Much Lower?",
+      "url": "https://www.trefis.com/stock/achr/articles/629323/what-sent-archer-aviation-stock-so-much-lower/2026-11-26?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/achr/articles/629323/what-sent-archer-aviation-stock-so-much-lower/2026-11-26?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-ecf865b0cf",
+        "issue": "2026-11-23-AM",
+        "title": "What Sent Intuit Stock Lower?",
+        "published_at_taipei": "2026-11-23 19:09",
+        "url": "https://www.trefis.com/stock/intu/articles/627772/what-sent-intuit-stock-lower/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-b08bb297d1",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T15:12:07Z",
@@ -3104,6 +3250,46 @@
       "sentiment_reason": "命中：利空",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-a5f8eed324",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:58:59Z",
+      "published_at_taipei": "2026-11-26 22:58",
+      "published_at_taipei_iso": "2026-11-26T22:58:59+08:00",
+      "first_seen_at_utc": "2026-11-26T15:41:44Z",
+      "first_seen_at_taipei": "2026-11-26 23:41",
+      "month": "2026-11",
+      "title": "Russian oil firm Lukoil’s overseas assets sold to investors led by US billionaire Todd Boehly",
+      "url": "https://www.cnn.com/2026/11/25/business/lukoil-sale-todd-boehly-intl?.tsrc=rss",
+      "canonical_url": "https://cnn.com/2026/11/25/business/lukoil-sale-todd-boehly-intl?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-3d1d00994b",
+        "issue": "2026-11-25-PM",
+        "title": "Investors led by U.S. billionaire Todd Boehly to buy Lukoil's oil and gas assets outside Russia, sources say",
+        "published_at_taipei": "2026-11-26 00:00",
+        "url": "https://www.cnbc.com/2026/11/25/investors-led-by-todd-boehly-to-buy-lukoil-oil-and-gas-assets-outside-russia.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -3982,6 +4168,40 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261126-d9c1fd40f0",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:28:09Z",
+      "published_at_taipei": "2026-11-26 23:28",
+      "published_at_taipei_iso": "2026-11-26T23:28:09+08:00",
+      "first_seen_at_utc": "2026-11-26T15:41:44Z",
+      "first_seen_at_taipei": "2026-11-26 23:41",
+      "month": "2026-11",
+      "title": "The Economy Grew Way Faster Than First Reported: Q3 GDP Revised Up to 4.3%",
+      "url": "https://247wallst.com/investing/2026/11/26/the-economy-grew-way-faster-than-first-reported-q3-gdp-revised-up-to-4-3/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/26/the-economy-grew-way-faster-than-first-reported-q3-gdp-revised-up-to-4-3?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（gdp）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-bcc11a7695",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T15:16:00Z",
@@ -4016,6 +4236,46 @@
       "sentiment_targets": [
         "TWII",
         "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-6a64ef4f34",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:15:26Z",
+      "published_at_taipei": "2026-11-26 23:15",
+      "published_at_taipei_iso": "2026-11-26T23:15:26+08:00",
+      "first_seen_at_utc": "2026-11-26T15:41:44Z",
+      "first_seen_at_taipei": "2026-11-26 23:41",
+      "month": "2026-11",
+      "title": "What Sent Archer Aviation Stock So Much Lower?",
+      "url": "https://www.trefis.com/stock/achr/articles/629323/what-sent-archer-aviation-stock-so-much-lower/2026-11-26?.tsrc=rss",
+      "canonical_url": "https://trefis.com/stock/achr/articles/629323/what-sent-archer-aviation-stock-so-much-lower/2026-11-26?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-ecf865b0cf",
+        "issue": "2026-11-23-AM",
+        "title": "What Sent Intuit Stock Lower?",
+        "published_at_taipei": "2026-11-23 19:09",
+        "url": "https://www.trefis.com/stock/intu/articles/627772/what-sent-intuit-stock-lower/2026-11-23?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -4134,6 +4394,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-3e07439e41",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T15:05:24Z",
+      "published_at_taipei": "2026-11-26 23:05",
+      "published_at_taipei_iso": "2026-11-26T23:05:24+08:00",
+      "first_seen_at_utc": "2026-11-26T15:41:44Z",
+      "first_seen_at_taipei": "2026-11-26 23:41",
+      "month": "2026-11",
+      "title": "Lucid Sinks 13% in a Week as the Tech Selloff Hits EV Stocks. Seaport Sets a $1 Target",
+      "url": "https://www.tikr.com/blog/lucid-sinks-13-in-a-week-as-the-tech-selloff-hits-ev-stocks-seaport-sets-a-1-target?ref=yahoofinance&tlnk=yf-261126-44rpr8gm&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/lucid-sinks-13-in-a-week-as-the-tech-selloff-hits-ev-stocks-seaport-sets-a-1-target?tlnk=yf-261126-44rpr8gm&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：selloff",
+      "sentiment_targets": [
+        "TSLA"
       ],
       "sentiment_method": "rule"
     },
@@ -4286,6 +4582,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-a5f8eed324",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:58:59Z",
+      "published_at_taipei": "2026-11-26 22:58",
+      "published_at_taipei_iso": "2026-11-26T22:58:59+08:00",
+      "first_seen_at_utc": "2026-11-26T15:41:44Z",
+      "first_seen_at_taipei": "2026-11-26 23:41",
+      "month": "2026-11",
+      "title": "Russian oil firm Lukoil’s overseas assets sold to investors led by US billionaire Todd Boehly",
+      "url": "https://www.cnn.com/2026/11/25/business/lukoil-sale-todd-boehly-intl?.tsrc=rss",
+      "canonical_url": "https://cnn.com/2026/11/25/business/lukoil-sale-todd-boehly-intl?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-3d1d00994b",
+        "issue": "2026-11-25-PM",
+        "title": "Investors led by U.S. billionaire Todd Boehly to buy Lukoil's oil and gas assets outside Russia, sources say",
+        "published_at_taipei": "2026-11-26 00:00",
+        "url": "https://www.cnbc.com/2026/11/25/investors-led-by-todd-boehly-to-buy-lukoil-oil-and-gas-assets-outside-russia.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-d914eebf68",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T14:50:28Z",
@@ -4394,6 +4730,42 @@
       "sentiment_targets": [
         "TWII",
         "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-9eb283cc47",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T14:45:00Z",
+      "published_at_taipei": "2026-11-26 22:45",
+      "published_at_taipei_iso": "2026-11-26T22:45:00+08:00",
+      "first_seen_at_utc": "2026-11-26T15:41:44Z",
+      "first_seen_at_taipei": "2026-11-26 23:41",
+      "month": "2026-11",
+      "title": "北榮機器人藏黃仁勳晶片！鴻海秀3大戰力 鋼鐵雙臂調毒藥＋會搭電梯抽屜送藥",
+      "url": "https://tw.news.yahoo.com/%E5%8C%97%E6%A6%AE%E6%A9%9F%E5%99%A8%E4%BA%BA%E8%97%8F%E9%BB%83%E4%BB%81%E5%8B%B3%E6%99%B6%E7%89%87-%E9%B4%BB%E6%B5%B7%E7%A7%803%E5%A4%A7%E6%88%B0%E5%8A%9B-%E9%8B%BC%E9%90%B5%E9%9B%99%E8%87%82%E8%AA%BF%E6%AF%92%E8%97%A5-%E6%9C%83%E6%90%AD%E9%9B%BB%E6%A2%AF%E6%8A%BD%E5%B1%9C%E9%80%81%E8%97%A5-144500168.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8C%97%E6%A6%AE%E6%A9%9F%E5%99%A8%E4%BA%BA%E8%97%8F%E9%BB%83%E4%BB%81%E5%8B%B3%E6%99%B6%E7%89%87-%E9%B4%BB%E6%B5%B7%E7%A7%803%E5%A4%A7%E6%88%B0%E5%8A%9B-%E9%8B%BC%E9%90%B5%E9%9B%99%E8%87%82%E8%AA%BF%E6%AF%92%E8%97%A5-%E6%9C%83%E6%90%AD%E9%9B%BB%E6%A2%AF%E6%8A%BD%E5%B1%9C%E9%80%81%E8%97%A5-144500168.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2317"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2317"
       ],
       "sentiment_method": "rule"
     },
@@ -140727,27 +141099,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261119-eac115dc1f",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-19T15:38:16Z",
-      "published_at_taipei": "2026-11-19 23:38",
-      "published_at_taipei_iso": "2026-11-19T23:38:16+08:00",
-      "month": "2026-11",
-      "title": "玉晶光全力衝刺 CPO 明年營收拚增20%",
-      "url": "https://money.udn.com/money/story/5710/9889786",
-      "canonical_url": "https://money.udn.com/money/story/5710/9889786",
-      "source": "經濟日報",
-      "source_id": "udn_money_stock",
-      "category": "台股",
-      "symbols": [],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "市場重點（營收）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -140756,9 +141107,9 @@
       "month": "2026-11",
       "date": "2026-11-26",
       "half": "PM",
-      "updated_at_taipei": "2026-11-26 23:26",
-      "count": 95,
-      "star3_count": 10,
+      "updated_at_taipei": "2026-11-26 23:41",
+      "count": 100,
+      "star3_count": 11,
       "failed_sources": [
         {
           "id": "binance_derivatives",
