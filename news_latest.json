@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-26-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-26T20:27:52Z",
-  "updated_at_taipei": "2026-11-27 04:27",
-  "last_updated_utc": "2026-11-26T20:27:52Z",
-  "last_updated_taipei": "2026-11-27 04:27",
-  "next_update_hint": "約台北時間 04:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-26T20:43:02Z",
+  "updated_at_taipei": "2026-11-27 04:43",
+  "last_updated_utc": "2026-11-26T20:43:02Z",
+  "last_updated_taipei": "2026-11-27 04:43",
+  "next_update_hint": "約台北時間 04:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 15.238,
+    "total_elapsed_sec": 17.023,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 0,
+    "new_items_added": 2,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.058,
+        "elapsed_sec": 0.097,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.12,
+        "elapsed_sec": 0.137,
         "raw_count": 30,
         "items_kept": 12,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.051,
+        "elapsed_sec": 0.113,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.054,
+        "elapsed_sec": 0.114,
         "raw_count": 10,
         "items_kept": 1,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.18,
+        "elapsed_sec": 0.487,
         "raw_count": 20,
-        "items_kept": 16,
+        "items_kept": 14,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.175,
+        "elapsed_sec": 0.26,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.118,
+        "elapsed_sec": 0.148,
         "raw_count": 30,
         "items_kept": 21,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.091,
+        "elapsed_sec": 0.129,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.08,
+        "elapsed_sec": 0.121,
         "raw_count": 35,
         "items_kept": 18,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.698,
+        "elapsed_sec": 0.64,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.619,
+        "elapsed_sec": 0.544,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.28,
+        "elapsed_sec": 0.334,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.961,
+        "elapsed_sec": 0.677,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.106,
+        "elapsed_sec": 0.386,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.414,
+        "elapsed_sec": 0.429,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.156,
+        "elapsed_sec": 0.238,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.501,
+        "elapsed_sec": 1.234,
         "raw_count": 6,
         "items_kept": 2,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.041,
+        "elapsed_sec": 0.056,
         "raw_count": 1378,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.199,
+        "elapsed_sec": 1.135,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.452,
+        "elapsed_sec": 0.486,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.4,
+        "elapsed_sec": 1.005,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.438,
+        "elapsed_sec": 0.446,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.74,
+        "elapsed_sec": 0.513,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.216,
+        "elapsed_sec": 0.261,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.535,
+        "elapsed_sec": 0.435,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.384,
+        "elapsed_sec": 0.353,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -294,7 +294,7 @@
       },
       "BSC": {
         "tvl_b": 4.31,
-        "change_1d_pct": 1.4
+        "change_1d_pct": 1.41
       },
       "Bitcoin": {
         "tvl_b": 2.25,
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -737.3,
+      "net_flow_usd_m": -738.2,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.002,
+        "funding_rate_pct": 0.0017,
         "oi_usd_b": 1.95
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0058,
+        "funding_rate_pct": 0.0059,
         "oi_usd_b": 1.11
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 5,
+      "fastest_fee_sat_vb": 4,
       "half_hour_fee_sat_vb": 4,
-      "mempool_vsize_mb": 36.9,
-      "tx_count": 86669,
+      "mempool_vsize_mb": 37.9,
+      "tx_count": 90459,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -2578,6 +2578,40 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-33719d71aa",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:00:01Z",
+      "published_at_taipei": "2026-11-27 00:00",
+      "published_at_taipei_iso": "2026-11-27T00:00:01+08:00",
+      "first_seen_at_utc": "2026-11-26T20:43:02Z",
+      "first_seen_at_taipei": "2026-11-27 04:43",
+      "month": "2026-11",
+      "title": "Buyer beware? Nvidia's volatile swings expose risks of single-stock ETFs",
+      "url": "https://www.cnbc.com/2026/11/26/nvidias-volatile-swings-expose-risks-of-single-stock-etfs.html",
+      "canonical_url": "https://cnbc.com/2026/11/26/nvidias-volatile-swings-expose-risks-of-single-stock-etfs.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -5508,6 +5542,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-b09b2f1565",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T20:02:17Z",
+      "published_at_taipei": "2026-11-27 04:02",
+      "published_at_taipei_iso": "2026-11-27T04:02:17+08:00",
+      "first_seen_at_utc": "2026-11-26T20:43:02Z",
+      "first_seen_at_taipei": "2026-11-27 04:43",
+      "month": "2026-11",
+      "title": "HP Stock Just Had Its Best Day Since May and Blew Past Wall Street’s Price Target",
+      "url": "https://247wallst.com/investing/2026/11/26/hp-stock-just-had-its-best-day-since-may-and-blew-past-wall-streets-price-target/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/26/hp-stock-just-had-its-best-day-since-may-and-blew-past-wall-streets-price-target?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-30b5b4a07a",
+        "issue": "2026-11-24-AM",
+        "title": "The Nasdaq Just Had Its Best Day Since April 2025. Anthropic Stock Fell Anyway.",
+        "published_at_taipei": "2026-11-24 08:42",
+        "url": "https://www.fool.com/investing/2026/11/23/the-nasdaq-just-had-its-best-day-since-april-2025-anthropic-stock-fell-anyway/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-b6bf324c21",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T19:02:17Z",
@@ -7599,6 +7673,46 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-b09b2f1565",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T20:02:17Z",
+      "published_at_taipei": "2026-11-27 04:02",
+      "published_at_taipei_iso": "2026-11-27T04:02:17+08:00",
+      "first_seen_at_utc": "2026-11-26T20:43:02Z",
+      "first_seen_at_taipei": "2026-11-27 04:43",
+      "month": "2026-11",
+      "title": "HP Stock Just Had Its Best Day Since May and Blew Past Wall Street’s Price Target",
+      "url": "https://247wallst.com/investing/2026/11/26/hp-stock-just-had-its-best-day-since-may-and-blew-past-wall-streets-price-target/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/26/hp-stock-just-had-its-best-day-since-may-and-blew-past-wall-streets-price-target?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-30b5b4a07a",
+        "issue": "2026-11-24-AM",
+        "title": "The Nasdaq Just Had Its Best Day Since April 2025. Anthropic Stock Fell Anyway.",
+        "published_at_taipei": "2026-11-24 08:42",
+        "url": "https://www.fool.com/investing/2026/11/23/the-nasdaq-just-had-its-best-day-since-april-2025-anthropic-stock-fell-anyway/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -10053,6 +10167,40 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-33719d71aa",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:00:01Z",
+      "published_at_taipei": "2026-11-27 00:00",
+      "published_at_taipei_iso": "2026-11-27T00:00:01+08:00",
+      "first_seen_at_utc": "2026-11-26T20:43:02Z",
+      "first_seen_at_taipei": "2026-11-27 04:43",
+      "month": "2026-11",
+      "title": "Buyer beware? Nvidia's volatile swings expose risks of single-stock ETFs",
+      "url": "https://www.cnbc.com/2026/11/26/nvidias-volatile-swings-expose-risks-of-single-stock-etfs.html",
+      "canonical_url": "https://cnbc.com/2026/11/26/nvidias-volatile-swings-expose-risks-of-single-stock-etfs.html",
+      "source": "CNBC",
+      "source_id": "cnbc_top",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -147406,29 +147554,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261120-0920493673",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-19T20:33:24Z",
-      "published_at_taipei": "2026-11-20 04:33",
-      "published_at_taipei_iso": "2026-11-20T04:33:24+08:00",
-      "month": "2026-11",
-      "title": "Hyperliquid Anthropic futures priced within 1% of Nasdaq opening price",
-      "url": "https://cointelegraph.com/markets/hyperliquid-anthropic-futures-nasdaq-opening-price?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "canonical_url": "https://cointelegraph.com/markets/hyperliquid-anthropic-futures-nasdaq-opening-price",
-      "source": "Cointelegraph",
-      "source_id": "cointelegraph",
-      "category": "美股",
-      "symbols": [
-        "NAS100"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "追蹤標的相關",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -147437,8 +147562,8 @@
       "month": "2026-11",
       "date": "2026-11-26",
       "half": "PM",
-      "updated_at_taipei": "2026-11-27 04:27",
-      "count": 187,
+      "updated_at_taipei": "2026-11-27 04:43",
+      "count": 189,
       "star3_count": 12,
       "failed_sources": [
         {
