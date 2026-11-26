@@ -3871,3 +3871,55 @@ tr.ta-detail-row > td.ta-detail-cell {
     grid-template-columns: 1fr;
   }
 }
+
+/* Article 7: DCA Allocation Grid */
+.research-charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin: 14px 0 18px;
+}
+
+.research-chart-fig {
+  margin: 0;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border, #30363d);
+  border-radius: 10px;
+}
+
+.research-chart-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--text, #c9d1d9);
+}
+
+.research-chart-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+.research-chart-cap {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--muted, #8b949e);
+}
+
+.dca-grid-zero-row {
+  background: rgba(248, 81, 73, 0.05);
+}
+
+.dca-grid-top5-group {
+  margin-top: 14px;
+}
+
+.dca-grid-top5-group h4 {
+  margin: 0 0 8px;
+  font-size: 0.90rem;
+  color: var(--accent, #58a6ff);
+}

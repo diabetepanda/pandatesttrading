@@ -3664,6 +3664,284 @@
     `;
   }
 
+  function renderDcaAllocationGridArticleHtml(art) {
+    if (!art) return "";
+    const cards = Array.isArray(art.highlight_cards) ? art.highlight_cards : [];
+    const charts = Array.isArray(art.charts) ? art.charts : [];
+    const tables = art.tables || {};
+    const fullRows = Array.isArray(tables.full_history_summary) ? tables.full_history_summary : [];
+    const recentRows = Array.isArray(tables.recent_10y_summary) ? tables.recent_10y_summary : [];
+    const extremeRows = Array.isArray(tables.extreme_crashes) ? tables.extreme_crashes : [];
+    const fullTop5 = Array.isArray(tables.full_history_top5) ? tables.full_history_top5 : [];
+    const recentTop5 = Array.isArray(tables.recent_10y_top5) ? tables.recent_10y_top5 : [];
+    const sections = art.sections || {};
+    const setup = sections.setup || {};
+    const conclusions = sections.conclusions || {};
+    const howToUse = sections.how_to_use || {};
+    const limitations = sections.limitations || {};
+    const disc = art.disclaimer || {};
+    const ghLinks = Array.isArray(disc.github_links) ? disc.github_links : [];
+
+    const fmtSignedPct = (v) => {
+      if (v == null || !Number.isFinite(Number(v))) return "—";
+      const n = Number(v);
+      return `${n >= 0 ? "+" : ""}${n.toFixed(2)}%`;
+    };
+    const fmtPct = (v) => (v == null || !Number.isFinite(Number(v)) ? "—" : `${Number(v).toFixed(2)}%`);
+    const fmtNum = (v, digits = 3) => (v == null || !Number.isFinite(Number(v)) ? "—" : Number(v).toFixed(digits));
+
+    const cardsHtml = cards.map((c) => `
+      <div class="lev-highlight-card">
+        <div class="lev-card-label">${escapeHtml(c.label)}</div>
+        <div class="lev-card-value">${escapeHtml(c.value)}</div>
+        <div class="lev-card-desc">${escapeHtml(c.desc)}</div>
+      </div>
+    `).join("");
+
+    const renderCapSummaryRows = (rows, isRecent10y) => rows.map((r) => {
+      if (!r.has_match) {
+        return `
+          <tr class="dca-grid-zero-row">
+            <td data-label="回撤上限"><strong>${escapeHtml(r.cap)}</strong></td>
+            <td data-label="群組">${escapeHtml(r.group_label)}</td>
+            <td data-label="符合組數"><span class="badge badge-danger">${escapeHtml(r.qualified_label || "0 組符合")}</span></td>
+            <td data-label="第 1 名配置 / 說明" colspan="${isRecent10y ? 9 : 8}" class="muted"><strong>0 組符合</strong>：${escapeHtml(r.zero_reason || "")}</td>
+          </tr>
+        `;
+      }
+      const r10Cell = r.rolling_10y_status === "OK"
+        ? `${fmtPct(r.rolling_10y_win_pct)} / ${fmtSignedPct(r.rolling_10y_p5_pct)}`
+        : escapeHtml(r.rolling_10y_status || "資料不足");
+      const r5Cell = r.rolling_5y_status === "OK"
+        ? `${fmtPct(r.rolling_5y_win_pct)} / ${fmtSignedPct(r.rolling_5y_p5_pct)}`
+        : "—";
+      return `
+        <tr>
+          <td data-label="回撤上限"><strong>${escapeHtml(r.cap)}</strong></td>
+          <td data-label="群組">${escapeHtml(r.group_label)}</td>
+          <td data-label="符合組數">${escapeHtml(r.qualified_label)}</td>
+          <td data-label="第 1 名配置"><strong>${escapeHtml(r.config)}</strong></td>
+          <td data-label="XIRR" class="num chg-up"><strong>${fmtPct(r.xirr_pct)}</strong></td>
+          <td data-label="MDD" class="num chg-down">${fmtPct(r.mdd_pct)}</td>
+          <td data-label="MAR" class="num">${fmtNum(r.mar, 3)}</td>
+          <td data-label="有效槓桿" class="num">${Number(r.effective_leverage || 0).toFixed(1)}x</td>
+          <td data-label="再平衡">${escapeHtml(r.rebalance)}</td>
+          <td data-label="200 日線濾網">${escapeHtml(r.filter_200ma)}</td>
+          <td data-label="滾動 10 年（勝率 / 最差 5%）" class="num">${r10Cell}</td>
+          ${isRecent10y ? `<td data-label="滾動 5 年（勝率 / 最差 5%）" class="num">${r5Cell}</td>` : ""}
+        </tr>
+      `;
+    }).join("");
+
+    const extremeHtml = extremeRows.map((r) => `
+      <tr>
+        <td data-label="群組"><strong>${escapeHtml(r.group_label)}</strong></td>
+        <td data-label="極限冠軍配置"><strong>${escapeHtml(r.config)}</strong><div class="muted text-xs">${Number(r.effective_leverage || 0).toFixed(1)}x｜${escapeHtml(r.rebalance)}再平衡｜200 日線濾網：${escapeHtml(r.filter_200ma)}</div></td>
+        <td data-label="期末總資產" class="num chg-up"><strong>${escapeHtml(r.final_value_label)}</strong><div class="muted text-xs">投入 ${escapeHtml(r.total_invested_label)}</div></td>
+        <td data-label="XIRR" class="num chg-up">${fmtPct(r.xirr_pct)}</td>
+        <td data-label="最大回撤 / 回本" class="num chg-down"><strong>${fmtPct(r.mdd_pct)}</strong><div class="muted text-xs">回本 ${escapeHtml(r.recovery)}</div></td>
+        <td data-label="2000 網路泡沫" class="num chg-down">${fmtPct(r.crash_2000)}</td>
+        <td data-label="2008 金融海嘯" class="num chg-down">${fmtPct(r.crash_2008)}</td>
+        <td data-label="2020 疫情崩盤" class="num chg-down">${fmtPct(r.crash_2020)}</td>
+        <td data-label="2022 升息熊市" class="num chg-down">${fmtPct(r.crash_2022)}</td>
+      </tr>
+    `).join("");
+
+    const renderTop5Blocks = (blocks, isRecent10y) => blocks.map((blk) => `
+      <div class="dca-grid-top5-group">
+        <h4>${escapeHtml(blk.title)}</h4>
+        <div class="table-wrap table-responsive">
+          <table class="data-table mobile-cards lev-table">
+            <thead>
+              <tr>
+                <th>名次</th>
+                <th>配置權重</th>
+                <th>XIRR</th>
+                <th>MDD</th>
+                <th>回本月數</th>
+                <th>MAR</th>
+                <th>有效槓桿</th>
+                <th>再平衡</th>
+                <th>200 日線濾網</th>
+                <th>${isRecent10y ? "滾動 10 年 / 滾動 5 年" : "滾動 10 年（勝率 / 最差 5%）"}</th>
+                <th>期末總資產</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${(blk.rows || []).map((row) => {
+                const rollTxt = isRecent10y
+                  ? `資料不足｜5Y: ${fmtPct(row.rolling_5y_win_pct)} / ${fmtSignedPct(row.rolling_5y_p5_pct)}`
+                  : `${fmtPct(row.rolling_10y_win_pct)} / ${fmtSignedPct(row.rolling_10y_p5_pct)}`;
+                return `
+                  <tr>
+                    <td data-label="名次">#${escapeHtml(row.rank)}</td>
+                    <td data-label="配置權重"><strong>${escapeHtml(row.config)}</strong></td>
+                    <td data-label="XIRR" class="num chg-up"><strong>${fmtPct(row.xirr_pct)}</strong></td>
+                    <td data-label="MDD" class="num chg-down">${fmtPct(row.mdd_pct)}</td>
+                    <td data-label="回本月數" class="num">${escapeHtml(row.recovery)}</td>
+                    <td data-label="MAR" class="num">${fmtNum(row.mar, 3)}</td>
+                    <td data-label="有效槓桿" class="num">${Number(row.effective_leverage || 0).toFixed(1)}x</td>
+                    <td data-label="再平衡">${escapeHtml(row.rebalance)}</td>
+                    <td data-label="200 日線濾網">${escapeHtml(row.filter_200ma)}</td>
+                    <td data-label="滾動勝率" class="num">${rollTxt}</td>
+                    <td data-label="期末總資產" class="num">${escapeHtml(row.final_value_label)}</td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `).join("");
+
+    const chartsHtml = charts.map((ch) => `
+      <figure class="research-chart-fig">
+        <div class="research-chart-title">${escapeHtml(ch.title)}</div>
+        <img src="${escapeHtml(ch.src)}" alt="${escapeHtml(ch.title)}" class="research-chart-img" loading="lazy" />
+        <figcaption class="research-chart-cap">${escapeHtml(ch.caption)}</figcaption>
+      </figure>
+    `).join("");
+
+    return `
+      <section class="card research-article" id="article-dca_allocation_grid">
+        <div class="section-header article-header" onclick="toggleResearchArticle('dca_allocation_grid')">
+          <div>
+            <h2>第 7 篇：${escapeHtml(art.title || "每月 1 萬台幣定期定額：台美股與槓桿 ETF 全組合最佳配置（約 27～29 年）")}</h2>
+            <p class="subtitle">${escapeHtml(art.subtitle || "")}</p>
+          </div>
+          <div class="article-header-actions" onclick="event.stopPropagation()">
+            <span class="badge badge-ok">${escapeHtml(art.badge || "23 萬組回測")}</span>
+            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-dca_allocation_grid" onclick="toggleResearchArticle('dca_allocation_grid')">展開閱讀</button>
+          </div>
+        </div>
+
+        <div class="article-body collapsed" id="body-dca_allocation_grid">
+          <div class="callout callout-takeaway">
+            <p>💡 <strong>一句話總結論：</strong>${escapeHtml(art.takeaway || "")}</p>
+          </div>
+
+          <div class="lev-highlight-grid">
+            ${cardsHtml}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(setup.title || "一、研究設定")}</h2>
+            ${(setup.content || []).map((p) => `<p>${escapeHtml(p)}</p>`).join("")}
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(conclusions.title || "二、主要結論")}</h2>
+            <ul class="research-strat-list">
+              ${(conclusions.items || []).map((it) => `<li>${escapeHtml(it)}</li>`).join("")}
+            </ul>
+
+            <div class="research-charts-grid">
+              ${chartsHtml}
+            </div>
+
+            <h3>（a）全歷史各回撤上限最佳配置（A 群 1997～2026 / B 群 1999～2026）</h3>
+            <p class="muted text-xs" style="margin: 4px 0 8px;">涵蓋 2000 網路泡沫與 2008 金融海嘯；0 組符合代表沒有任何純股票配置能把最大回撤壓進該上限內。</p>
+            <div class="table-wrap table-responsive">
+              <table class="data-table mobile-cards lev-table">
+                <thead>
+                  <tr>
+                    <th>回撤上限</th>
+                    <th>群組</th>
+                    <th>符合組數</th>
+                    <th>第 1 名配置</th>
+                    <th>XIRR</th>
+                    <th>MDD</th>
+                    <th>MAR</th>
+                    <th>有效槓桿</th>
+                    <th>再平衡</th>
+                    <th>200 日線濾網</th>
+                    <th>滾動 10 年（勝率 / 最差 5%）</th>
+                  </tr>
+                </thead>
+                <tbody>${renderCapSummaryRows(fullRows, false)}</tbody>
+              </table>
+            </div>
+
+            <h3 style="margin-top: 18px;">（b）近 10 年各回撤上限最佳配置（2016/12～2026/11，共 120 個月）</h3>
+            <p class="muted text-xs" style="margin: 4px 0 8px;">區間總長剛好 10 年，無法切出多個獨立的滾動 10 年窗口，故標示「資料不足」並附上滾動 5 年勝率與最差 5% XIRR。</p>
+            <div class="table-wrap table-responsive">
+              <table class="data-table mobile-cards lev-table">
+                <thead>
+                  <tr>
+                    <th>回撤上限</th>
+                    <th>群組</th>
+                    <th>符合組數</th>
+                    <th>第 1 名配置</th>
+                    <th>XIRR</th>
+                    <th>MDD</th>
+                    <th>MAR</th>
+                    <th>有效槓桿</th>
+                    <th>再平衡</th>
+                    <th>200 日線濾網</th>
+                    <th>滾動 10 年</th>
+                    <th>滾動 5 年（勝率 / 最差 5%）</th>
+                  </tr>
+                </thead>
+                <tbody>${renderCapSummaryRows(recentRows, true)}</tbody>
+              </table>
+            </div>
+
+            <h3 style="margin-top: 18px;">（c）極限不歸零配置在四大股災的最大跌幅（全歷史 A、B 群冠軍）</h3>
+            <div class="table-wrap table-responsive" style="margin-top: 8px;">
+              <table class="data-table mobile-cards lev-table">
+                <thead>
+                  <tr>
+                    <th>群組</th>
+                    <th>極限冠軍配置</th>
+                    <th>期末總資產</th>
+                    <th>XIRR</th>
+                    <th>最大回撤 / 回本</th>
+                    <th>2000 網路泡沫</th>
+                    <th>2008 金融海嘯</th>
+                    <th>2020 疫情崩盤</th>
+                    <th>2022 升息熊市</th>
+                  </tr>
+                </thead>
+                <tbody>${extremeHtml}</tbody>
+              </table>
+            </div>
+
+            <details class="research-details" style="margin-top: 16px;">
+              <summary class="cursor-pointer" style="font-weight: 600; color: var(--accent); padding: 8px 0;">展開（d-1）全歷史各回撤上限前 5 名完整清單 ▼</summary>
+              ${renderTop5Blocks(fullTop5, false)}
+            </details>
+
+            <details class="research-details" style="margin-top: 10px;">
+              <summary class="cursor-pointer" style="font-weight: 600; color: var(--accent); padding: 8px 0;">展開（d-2）近 10 年各回撤上限前 5 名完整清單 ▼</summary>
+              ${renderTop5Blocks(recentTop5, true)}
+            </details>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(howToUse.title || "三、怎麼用這份結果")}</h2>
+            <ul class="research-strat-list">
+              ${(howToUse.items || []).map((it) => `<li>${escapeHtml(it)}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="research-section">
+            <h2>${escapeHtml(limitations.title || "四、研究限制")}</h2>
+            <ul class="research-strat-list">
+              ${(limitations.items || []).map((it) => `<li>${escapeHtml(it)}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="research-section disclaimer-box">
+            <p>⚠️ <strong>免責聲明</strong>：${escapeHtml(disc.text || "本研究僅供量化回測與歷史實證參考，過去績效不代表未來表現，不構成投資建議。")}</p>
+            <div class="github-links">
+              ${ghLinks.map((g) => `<a href="${escapeHtml(g.url)}" target="_blank" rel="noopener noreferrer" class="ext-link">🔗 ${escapeHtml(g.title)}</a>`).join("")}
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
   function renderResearchHtml(data) {
     if (!data) return '<p class="muted">深度研究資料為空。</p>';
     if (!data.articles && data.strategies_intro) {
@@ -3676,6 +3954,7 @@
     const flowArt = articles.find((a) => a.id === "flow_signals") || articles[3];
     const dcaArt = articles.find((a) => a.id === "dca_compare") || articles[4];
     const levArt = articles.find((a) => a.id === "leverage_study") || articles[5];
+    const dcaGridArt = articles.find((a) => a.id === "dca_allocation_grid") || articles[6];
 
     return `
       <section class="card">
@@ -3752,6 +4031,18 @@
             <div class="toc-action">點擊展開閱讀 ➔</div>
           </div>
           ` : ""}
+
+          ${dcaGridArt ? `
+          <div class="research-toc-card" onclick="scrollToResearchArticle('dca_allocation_grid')">
+            <div class="toc-card-header">
+              <span class="badge badge-ok">${escapeHtml(dcaGridArt.badge || "23 萬組回測")}</span>
+              <span class="toc-num">第 7 篇</span>
+            </div>
+            <h3 class="toc-title">${escapeHtml(dcaGridArt.title || "每月 1 萬台幣定期定額：台美股與槓桿 ETF 全組合最佳配置（約 27～29 年）")}</h3>
+            <p class="toc-takeaway">${escapeHtml(dcaGridArt.takeaway || "")}</p>
+            <div class="toc-action">點擊展開閱讀 ➔</div>
+          </div>
+          ` : ""}
         </div>
       </section>
 
@@ -3776,6 +4067,7 @@
       ${renderFlowSignalsArticleHtml(flowArt)}
       ${renderDcaCompareArticleHtml(dcaArt)}
       ${renderLeverageStudyArticleHtml(levArt)}
+      ${renderDcaAllocationGridArticleHtml(dcaGridArt)}
     `;
   }
 
@@ -3962,6 +4254,7 @@
       container.innerHTML = renderResearchHtml(cachedResearch);
       lastRenderedResearchStamp = stamp;
     }
+    scanResearchGlossary();
     if (pendingResearchArticleId) {
       const targetId = pendingResearchArticleId;
       pendingResearchArticleId = null;
@@ -4513,6 +4806,15 @@
     g.scanContainers(document.getElementById("news-list"), ".news-row");
   }
 
+  function scanResearchGlossary() {
+    const g = window.SIGNAL_DESK_GLOSSARY;
+    if (!g || typeof g.scanContainers !== "function" || !g.isEnabled()) return;
+    const art7 = document.getElementById("article-dca_allocation_grid");
+    if (art7) {
+      g.scanContainers(art7, ".callout-takeaway, .lev-highlight-card, .research-section p, .research-section li");
+    }
+  }
+
   function renderFlowTwSlot() {
     if (window.SIGNAL_DESK_FLOW_TW && typeof window.SIGNAL_DESK_FLOW_TW.mountFlowTwCard === "function") {
       window.SIGNAL_DESK_FLOW_TW.mountFlowTwCard("flow-tw-card-slot", cachedFlowTw, {
@@ -4613,6 +4915,7 @@
       if (targetArt === "dca-compare" || targetArt === "dca_compare") targetArt = "dca_compare";
       if (targetArt === "flow-signals" || targetArt === "flow_signals") targetArt = "flow_signals";
       if (targetArt === "leverage-study" || targetArt === "leverage_study") targetArt = "leverage_study";
+      if (targetArt === "dca-allocation-grid" || targetArt === "dca_allocation_grid") targetArt = "dca_allocation_grid";
       pendingResearchArticleId = targetArt;
       document.getElementById("view-research")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="research"]')?.classList.add("active");
@@ -5175,6 +5478,7 @@
       if (li) li._lastRenderedHtml = null;
       renderNewsView();
       renderFlowTwSlot();
+      scanResearchGlossary();
     });
   }
 

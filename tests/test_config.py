@@ -158,7 +158,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261124a" in index_html
+    assert "?v=20261126a" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -714,15 +714,16 @@ def test_in_depth_research_json_and_rendering() -> None:
     root = Path(__file__).resolve().parent.parent
     data = build_research_dict()
 
-    # 1. Articles structure validation (Chronological order: short_term -> combo -> exam_sensitivity -> flow_signals -> dca_compare -> leverage_study)
-    assert len(data["articles"]) == 6
-    art1, art2, art3, art4, art5, art6 = (
+    # 1. Articles structure validation (Chronological order: short_term -> combo -> exam_sensitivity -> flow_signals -> dca_compare -> leverage_study -> dca_allocation_grid)
+    assert len(data["articles"]) == 7
+    art1, art2, art3, art4, art5, art6, art7 = (
         data["articles"][0],
         data["articles"][1],
         data["articles"][2],
         data["articles"][3],
         data["articles"][4],
         data["articles"][5],
+        data["articles"][6],
     )
 
     # Article 1: Contest short-term (Earliest research)
@@ -827,6 +828,39 @@ def test_in_depth_research_json_and_rendering() -> None:
     assert len(art6["tables"]["margin_buffer_trap"]) == 3
     assert set(art6["tables"]["dynamic_comparison"].keys()) == {"SPY", "QQQ", "0050.TW", "^TWII"}
 
+    # Article 7: DCA Allocation Grid (230k+ combos, 27-29y)
+    assert art7["id"] == "dca_allocation_grid"
+    assert art7["slug"] == "dca-allocation-grid"
+    assert art7["title"] == "每月 1 萬台幣定期定額：台美股與槓桿 ETF 全組合最佳配置（約 27～29 年）"
+    assert art7["badge"] == "23 萬組回測"
+    assert "-45%" in art7["takeaway"]
+    assert "1.2x～1.4x" in art7["takeaway"]
+    assert "-80%" in art7["takeaway"]
+    assert len(art7["highlight_cards"]) == 4
+    assert len(art7["charts"]) == 2
+    for ch in art7["charts"]:
+        rel_chart = ch["src"].lstrip("./")
+        assert (root / rel_chart).exists(), f"Chart image missing: {rel_chart}"
+    assert len(art7["tables"]["full_history_summary"]) == 8
+    assert len(art7["tables"]["recent_10y_summary"]) == 8
+    assert len(art7["tables"]["extreme_crashes"]) == 2
+    assert len(art7["tables"]["full_history_top5"]) == 3
+    assert len(art7["tables"]["recent_10y_top5"]) == 8
+    assert set(art7["sections"].keys()) == {"setup", "conclusions", "how_to_use", "limitations"}
+    assert "report.md" in art7["github_report"]
+    assert "dca_allocation_grid" in art7["github_code"]
+    assert "不構成" in art7["disclaimer"]["text"]
+
+    # Spot-check Article 7 numbers against research/dca_allocation_grid/results.json
+    grid_raw = json.loads((root / "research" / "dca_allocation_grid" / "results.json").read_text(encoding="utf-8"))
+    b_full_50 = next(r for r in art7["tables"]["full_history_summary"] if r["cap"] == "-50%" and r["group"] == "B")
+    assert b_full_50["xirr_pct"] == grid_raw["groups"]["B"]["full_history"]["top_by_drawdown_cap"]["-50"][0]["xirr"]
+    b_full_60 = next(r for r in art7["tables"]["full_history_summary"] if r["cap"] == "-60%" and r["group"] == "B")
+    assert b_full_60["xirr_pct"] == grid_raw["groups"]["B"]["full_history"]["top_by_drawdown_cap"]["-60"][0]["xirr"]
+    ext_b_row = next(r for r in art7["tables"]["extreme_crashes"] if r["group"] == "B")
+    assert ext_b_row["mdd_pct"] == grid_raw["groups"]["B"]["full_history"]["extreme"]["max_drawdown_pct"]
+    assert ext_b_row["final_value_twd"] == grid_raw["groups"]["B"]["full_history"]["extreme"]["final_value_twd"]
+
     # Files existence (single canonical data/research.json; legacy copies removed)
     data_json_path = root / "data" / "research.json"
     assert data_json_path.exists()
@@ -915,20 +949,21 @@ def test_in_depth_research_json_and_rendering() -> None:
         if (!html.includes('research-toc')) {{
           throw new Error('renderResearchHtml missing research-toc');
         }}
-        if (!html.includes('第 1 篇') || !html.includes('第 2 篇') || !html.includes('第 3 篇') || !html.includes('第 4 篇') || !html.includes('第 5 篇') || !html.includes('第 6 篇')) {{
+        if (!html.includes('第 1 篇') || !html.includes('第 2 篇') || !html.includes('第 3 篇') || !html.includes('第 4 篇') || !html.includes('第 5 篇') || !html.includes('第 6 篇') || !html.includes('第 7 篇')) {{
           throw new Error('renderResearchHtml missing TOC article markers');
         }}
 
-        // Verify TOC order: short_term (1) -> combo (2) -> exam_sensitivity (3) -> flow_signals (4) -> dca_compare (5) -> leverage_study (6)
+        // Verify TOC order: short_term (1) -> combo (2) -> exam_sensitivity (3) -> flow_signals (4) -> dca_compare (5) -> leverage_study (6) -> dca_allocation_grid (7)
         const tocShort = html.indexOf("scrollToResearchArticle('short_term')");
         const tocCombo = html.indexOf("scrollToResearchArticle('combo')");
         const tocExam = html.indexOf("scrollToResearchArticle('exam_sensitivity')");
         const tocFlow = html.indexOf("scrollToResearchArticle('flow_signals')");
         const tocDca = html.indexOf("scrollToResearchArticle('dca_compare')");
         const tocLev = html.indexOf("scrollToResearchArticle('leverage_study')");
-        if (tocShort === -1 || tocCombo === -1 || tocExam === -1 || tocFlow === -1 || tocDca === -1 || tocLev === -1 ||
-            tocShort >= tocCombo || tocCombo >= tocExam || tocExam >= tocFlow || tocFlow >= tocDca || tocDca >= tocLev) {{
-          throw new Error('TOC cards not in chronological order (short_term -> combo -> exam_sensitivity -> flow_signals -> dca_compare -> leverage_study)');
+        const tocGrid = html.indexOf("scrollToResearchArticle('dca_allocation_grid')");
+        if (tocShort === -1 || tocCombo === -1 || tocExam === -1 || tocFlow === -1 || tocDca === -1 || tocLev === -1 || tocGrid === -1 ||
+            tocShort >= tocCombo || tocCombo >= tocExam || tocExam >= tocFlow || tocFlow >= tocDca || tocDca >= tocLev || tocLev >= tocGrid) {{
+          throw new Error('TOC cards not in chronological order (short_term -> combo -> exam_sensitivity -> flow_signals -> dca_compare -> leverage_study -> dca_allocation_grid)');
         }}
 
         // Verify article headers order and numbering
@@ -938,9 +973,10 @@ def test_in_depth_research_json_and_rendering() -> None:
         const idx4 = html.indexOf('第 4 篇：大戶／法人資金流回測（2026-11）');
         const idx5 = html.indexOf('第 5 篇：定期定額 vs 單筆買進 vs 六種策略（10 年實證）');
         const idx6 = html.indexOf('第 6 篇：美股與台股槓桿實證：倍率甜蜜點、借貸利率紅線與跌深加碼（20～34 年）');
-        if (idx1 === -1 || idx2 === -1 || idx3 === -1 || idx4 === -1 || idx5 === -1 || idx6 === -1 ||
-            idx1 >= idx2 || idx2 >= idx3 || idx3 >= idx4 || idx4 >= idx5 || idx5 >= idx6) {{
-          throw new Error('Article sections not rendered in chronological order (1 -> 2 -> 3 -> 4 -> 5 -> 6)');
+        const idx7 = html.indexOf('第 7 篇：每月 1 萬台幣定期定額：台美股與槓桿 ETF 全組合最佳配置（約 27～29 年）');
+        if (idx1 === -1 || idx2 === -1 || idx3 === -1 || idx4 === -1 || idx5 === -1 || idx6 === -1 || idx7 === -1 ||
+            idx1 >= idx2 || idx2 >= idx3 || idx3 >= idx4 || idx4 >= idx5 || idx5 >= idx6 || idx6 >= idx7) {{
+          throw new Error('Article sections not rendered in chronological order (1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7)');
         }}
 
         // Verify Article 4 content (Flow Signals)
@@ -959,6 +995,17 @@ def test_in_depth_research_json_and_rendering() -> None:
         }}
         if (!html.includes('class="article-body collapsed" id="body-leverage_study"') && !html.includes('id="body-leverage_study" class="article-body collapsed"')) {{
           throw new Error('Article 6 should be collapsed by default');
+        }}
+
+        // Verify Article 7 content (DCA Allocation Grid)
+        if (!html.includes('0 組符合') || !html.includes('資料不足') || !html.includes('15.49%') || !html.includes('18.18%') || !html.includes('-87.72%') || !html.includes('2.39%')) {{
+          throw new Error('renderResearchHtml missing Article 7 DCA allocation grid content');
+        }}
+        if (!html.includes('efficient_frontier_full_history.png') || !html.includes('efficient_frontier_recent_10y.png')) {{
+          throw new Error('renderResearchHtml missing Article 7 chart images');
+        }}
+        if (!html.includes('class="article-body collapsed" id="body-dca_allocation_grid"') && !html.includes('id="body-dca_allocation_grid" class="article-body collapsed"')) {{
+          throw new Error('Article 7 should be collapsed by default');
         }}
 
         // Verify default expansion: Article 1 expanded, Articles 2, 3, 4, 5 collapsed
@@ -1034,6 +1081,11 @@ def test_in_depth_research_json_and_rendering() -> None:
         if (window.location.hash !== '#/research') {{
           throw new Error('Redirect failed for #/research-short, got: ' + window.location.hash);
         }}
+
+        window.location.hash = '#/research/dca-allocation-grid';
+        u.applyRoute();
+        window.location.hash = '#/research/dca_allocation_grid';
+        u.applyRoute();
     """
     with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as tf:
         tf.write(script)

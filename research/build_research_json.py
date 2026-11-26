@@ -7,6 +7,8 @@ Compiles data chronologically for:
   - Article 3: 「考試回撤規則放寬，結果會不一樣嗎？」(Exam drawdown sensitivity study)
   - Article 4: 「大戶／法人資金流回測（2026-11）」(Institutional / large-trader flow signals)
   - Article 5: 「定期定額 vs 單筆買進 vs 六種策略（10 年實證）」(DCA compare: 10y multi-asset & rolling backtest)
+  - Article 6: 「美股與台股槓桿實證：倍率甜蜜點、借貸利率紅線與跌深加碼（20～34 年）」(Leverage study)
+  - Article 7: 「每月 1 萬台幣定期定額：台美股與槓桿 ETF 全組合最佳配置（約 27～29 年）」(DCA allocation grid)
 
 Outputs:
   - data/research.json
@@ -1266,12 +1268,320 @@ def build_research_dict() -> dict:
         },
     }
 
+    # -------------------------------------------------------------
+    # Article 7: 每月 1 萬台幣定期定額：台美股與槓桿 ETF 全組合最佳配置（約 27～29 年）
+    # -------------------------------------------------------------
+    grid_res_path = repo_root / "research" / "dca_allocation_grid" / "results.json"
+    if grid_res_path.exists():
+        with open(grid_res_path, "r", encoding="utf-8") as f:
+            grid_res = json.load(f)
+    else:
+        grid_res = {}
+
+    def _fmt_weights(weights: dict) -> str:
+        order = ["0050", "00631L", "SPY", "QQQ", "SSO", "QLD", "UPRO", "TQQQ"]
+        parts = []
+        for sym in order:
+            w = weights.get(sym, 0)
+            if w:
+                parts.append(f"{sym} {int(w)}%")
+        for sym, w in weights.items():
+            if sym not in order and w:
+                parts.append(f"{sym} {int(w)}%")
+        return " + ".join(parts)
+
+    def _fmt_rebalance(mode: str) -> str:
+        return {"none": "不做", "annual": "每年", "quarterly": "每季"}.get(mode, mode or "—")
+
+    def _fmt_filter(mode: str) -> str:
+        return "開啟" if mode == "sma200_buf2" else "不加"
+
+    def _fmt_twd_wan(val: float | None) -> str:
+        if val is None:
+            return "—"
+        if abs(val) >= 1e8:
+            yi = int(val // 1e8)
+            rem_wan = round((val - yi * 1e8) / 1e4)
+            return f"{yi} 億 {rem_wan:,} 萬"
+        wan = val / 1e4
+        if abs(wan) >= 1000:
+            return f"{round(wan):,} 萬"
+        return f"{wan:,.1f} 萬"
+
+    def _fmt_recovery(item: dict) -> str:
+        rec = item.get("recovery_months")
+        if isinstance(rec, (int, float)):
+            return f"{rec:.1f} 個月"
+        return str(rec) if rec is not None else "—"
+
+    def _extract_grid_entry(item: dict, rank: int) -> dict:
+        r5 = item.get("rolling", {}).get("5y", {})
+        r10 = item.get("rolling", {}).get("10y", {})
+        return {
+            "rank": rank,
+            "config": _fmt_weights(item.get("weights", {})),
+            "xirr_pct": item.get("xirr"),
+            "mdd_pct": item.get("max_drawdown_pct"),
+            "mdd_twd": item.get("max_drawdown_twd"),
+            "recovery": _fmt_recovery(item),
+            "mar": item.get("mar"),
+            "sharpe": item.get("sharpe"),
+            "effective_leverage": item.get("effective_leverage"),
+            "rebalance": _fmt_rebalance(item.get("rebalance", "")),
+            "filter_200ma": _fmt_filter(item.get("filter", "")),
+            "rolling_10y_status": r10.get("status", "資料不足"),
+            "rolling_10y_win_pct": r10.get("win_rate_pct"),
+            "rolling_10y_p5_pct": r10.get("p5_xirr_pct"),
+            "rolling_5y_status": r5.get("status", "資料不足"),
+            "rolling_5y_win_pct": r5.get("win_rate_pct"),
+            "rolling_5y_p5_pct": r5.get("p5_xirr_pct"),
+            "final_value_twd": item.get("final_value_twd"),
+            "final_value_label": _fmt_twd_wan(item.get("final_value_twd")),
+        }
+
+    grid_groups = grid_res.get("groups", {})
+    g_a_full = grid_groups.get("A", {}).get("full_history", {})
+    g_b_full = grid_groups.get("B", {}).get("full_history", {})
+    g_a_10y = grid_groups.get("A", {}).get("recent_10y", {})
+    g_b_10y = grid_groups.get("B", {}).get("recent_10y", {})
+
+    a_full_low = g_a_full.get("summary_stats", {}).get("lowest_drawdown_portfolio", {})
+    b_full_low = g_b_full.get("summary_stats", {}).get("lowest_drawdown_portfolio", {})
+    a_full_low_mdd = a_full_low.get("max_drawdown_pct", -53.76)
+    b_full_low_mdd = b_full_low.get("max_drawdown_pct", -44.49)
+    a_full_low_cfg = _fmt_weights(a_full_low.get("weights", {"0050": 100}))
+    b_full_low_cfg = _fmt_weights(b_full_low.get("weights", {"SPY": 80, "QQQ": 20}))
+
+    def _build_cap_summary_rows(period_key: str) -> list[dict]:
+        rows = []
+        for cap_key in ("-30", "-40", "-50", "-60"):
+            cap_label = f"{cap_key}%"
+            for grp_key, grp_label in (("A", "A 群（只買台股）"), ("B", "B 群（台美股）")):
+                g_sub = grid_groups.get(grp_key, {}).get(period_key, {})
+                cap_list = g_sub.get("top_by_drawdown_cap", {}).get(cap_key, [])
+                if not cap_list:
+                    if grp_key == "A":
+                        reason = f"純台股全組合最小回撤為 {a_full_low_cfg} 的 {a_full_low_mdd:.2f}%，無法壓進 {cap_label} 以內"
+                    else:
+                        reason = f"台美股全組合最小回撤為 {b_full_low_cfg}（每季再平衡）的 {b_full_low_mdd:.2f}%，2008 海嘯期間無法壓進 {cap_label} 以內"
+                    rows.append({
+                        "cap": cap_label,
+                        "group": grp_key,
+                        "group_label": grp_label,
+                        "qualified_label": "0 組符合",
+                        "has_match": False,
+                        "zero_reason": reason,
+                    })
+                else:
+                    top1 = _extract_grid_entry(cap_list[0], 1)
+                    q_label = f"{len(cap_list)} 組符合" if len(cap_list) < 5 else "≥ 5 組（取前 5 名）"
+                    rows.append({
+                        "cap": cap_label,
+                        "group": grp_key,
+                        "group_label": grp_label,
+                        "qualified_label": q_label,
+                        "has_match": True,
+                        **top1,
+                    })
+        return rows
+
+    full_history_summary_rows = _build_cap_summary_rows("full_history")
+    recent_10y_summary_rows = _build_cap_summary_rows("recent_10y")
+
+    def _build_top5_groups(period_key: str) -> list[dict]:
+        blocks = []
+        for cap_key in ("-30", "-40", "-50", "-60"):
+            for grp_key, grp_label in (("A", "A 群（只買台股）"), ("B", "B 群（台美股）")):
+                cap_list = grid_groups.get(grp_key, {}).get(period_key, {}).get("top_by_drawdown_cap", {}).get(cap_key, [])
+                if not cap_list:
+                    continue
+                blocks.append({
+                    "title": f"{cap_key}% 上限 · {grp_label}（列出前 {len(cap_list)} 名）",
+                    "cap": f"{cap_key}%",
+                    "group": grp_key,
+                    "rows": [_extract_grid_entry(item, idx + 1) for idx, item in enumerate(cap_list)],
+                })
+        return blocks
+
+    full_history_top5_blocks = _build_top5_groups("full_history")
+    recent_10y_top5_blocks = _build_top5_groups("recent_10y")
+
+    # Extreme crash comparison (A & B full_history extreme)
+    ext_a = g_a_full.get("extreme", {})
+    ext_b = g_b_full.get("extreme", {})
+    extreme_crashes_rows = []
+    for grp_key, grp_label, ext in (
+        ("B", "B 群（台美股）極限冠軍", ext_b),
+        ("A", "A 群（只買台股）極限冠軍", ext_a),
+    ):
+        if not ext:
+            continue
+        crashes = ext.get("crash_drawdowns_pct", {})
+        extreme_crashes_rows.append({
+            "group": grp_key,
+            "group_label": grp_label,
+            "config": _fmt_weights(ext.get("weights", {})),
+            "effective_leverage": ext.get("effective_leverage"),
+            "rebalance": _fmt_rebalance(ext.get("rebalance", "")),
+            "filter_200ma": _fmt_filter(ext.get("filter", "")),
+            "total_invested_twd": ext.get("total_invested_twd"),
+            "total_invested_label": _fmt_twd_wan(ext.get("total_invested_twd")),
+            "final_value_twd": ext.get("final_value_twd"),
+            "final_value_label": _fmt_twd_wan(ext.get("final_value_twd")),
+            "xirr_pct": ext.get("xirr"),
+            "mdd_pct": ext.get("max_drawdown_pct"),
+            "recovery": _fmt_recovery(ext),
+            "crash_2000": crashes.get("2000_dotcom"),
+            "crash_2008": crashes.get("2008_gfc"),
+            "crash_2020": crashes.get("2020_covid"),
+            "crash_2022": crashes.get("2022_rates"),
+        })
+
+    # Extract key champions for highlight cards directly from results.json
+    b_full_50_1 = (g_b_full.get("top_by_drawdown_cap", {}).get("-50") or [{}])[0]
+    a_full_60_1 = (g_a_full.get("top_by_drawdown_cap", {}).get("-60") or [{}])[0]
+    b_full_60_1 = (g_b_full.get("top_by_drawdown_cap", {}).get("-60") or [{}])[0]
+    b_10y_40_1 = (g_b_10y.get("top_by_drawdown_cap", {}).get("-40") or [{}])[0]
+    b_10y_40_sens = b_10y_40_1.get("sensitivity_min_fee_15usd", {})
+    b_10y_40_loss_twd = (b_10y_40_1.get("final_value_twd", 0.0) - b_10y_40_sens.get("final_value_twd", 0.0))
+
+    total_runs = grid_res.get("meta", {}).get("grid_counts", {}).get("total_backtest_runs", 233508)
+    b_full_50_xirr = b_full_50_1.get("xirr", 15.49)
+    b_full_60_xirr = b_full_60_1.get("xirr", 18.18)
+    a_full_60_xirr = a_full_60_1.get("xirr", 15.27)
+    ext_b_mdd = ext_b.get("max_drawdown_pct", -87.72)
+    ext_a_mdd = ext_a.get("max_drawdown_pct", -82.46)
+    b_10y_40_xirr_diff = b_10y_40_sens.get("xirr_diff", -2.39)
+
+    article_dca_grid = {
+        "id": "dca_allocation_grid",
+        "slug": "dca-allocation-grid",
+        "title": "每月 1 萬台幣定期定額：台美股與槓桿 ETF 全組合最佳配置（約 27～29 年）",
+        "subtitle": (
+            f"8 檔台美股與 1x～3x 槓桿 ETF、{total_runs:,} 組全網格回測（全歷史與近 10 年雙期間、再平衡、200 日線濾網與 15 美元低消敏感度）"
+        ),
+        "takeaway": (
+            f"長期全股票定期定額很難把最大回撤壓在 -45% 以內（全歷史最低為 {b_full_low_mdd:.2f}%）；"
+            f"能承受 -50%～-60% 回撤的人，小幅槓桿（1.2x～1.4x）就能把全歷史年化報酬明顯拉高至 {b_full_50_xirr:.2f}%～{b_full_60_xirr:.2f}%；"
+            f"極限槓桿雖然期末金額最高（{_fmt_twd_wan(ext_b.get('final_value_twd'))}），但中途回撤超過 -80%（{ext_a_mdd:.2f}%～{ext_b_mdd:.2f}%），現實中很難撐住。"
+        ),
+        "badge": "23 萬組回測",
+        "updated_at": "2026-11",
+        "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/dca_allocation_grid/report.md",
+        "github_code": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/dca_allocation_grid",
+        "highlight_cards": [
+            {
+                "label": "全歷史 -50% 上限冠軍（B 群）",
+                "value": f"XIRR {b_full_50_xirr:.2f}%（{b_full_50_1.get('effective_leverage', 1.2):.1f}x）",
+                "desc": (
+                    f"{_fmt_weights(b_full_50_1.get('weights', {}))}（{_fmt_rebalance(b_full_50_1.get('rebalance', 'none'))}再平衡、{_fmt_filter(b_full_50_1.get('filter', ''))} 200 日線濾網），"
+                    f"MDD {b_full_50_1.get('max_drawdown_pct', -49.81):.2f}%、期末 {_fmt_twd_wan(b_full_50_1.get('final_value_twd'))}，滾動 10 年勝率 {b_full_50_1.get('rolling', {}).get('10y', {}).get('win_rate_pct', 97.65):.2f}%。"
+                ),
+            },
+            {
+                "label": "全歷史 -60% 上限冠軍（A / B 群）",
+                "value": f"A {a_full_60_xirr:.2f}% ｜ B {b_full_60_xirr:.2f}%",
+                "desc": (
+                    f"A 群只買台股：{_fmt_weights(a_full_60_1.get('weights', {}))}（{a_full_60_1.get('effective_leverage', 1.3):.1f}x、MDD {a_full_60_1.get('max_drawdown_pct', -58.63):.2f}%、期末 {_fmt_twd_wan(a_full_60_1.get('final_value_twd'))}）；"
+                    f"B 群台美混搭：{_fmt_weights(b_full_60_1.get('weights', {}))}（{b_full_60_1.get('effective_leverage', 1.4):.1f}x、年平衡、MDD {b_full_60_1.get('max_drawdown_pct', -59.77):.2f}%、期末 {_fmt_twd_wan(b_full_60_1.get('final_value_twd'))}）。"
+                ),
+            },
+            {
+                "label": "極限不歸零配置（20% 00631L + 80% TQQQ）",
+                "value": _fmt_twd_wan(ext_b.get("final_value_twd")),
+                "desc": (
+                    f"有效槓桿 {ext_b.get('effective_leverage', 2.8):.1f}x（{_fmt_rebalance(ext_b.get('rebalance', ''))}再平衡＋{_fmt_filter(ext_b.get('filter', ''))} 200 日線濾網），"
+                    f"XIRR {ext_b.get('xirr', 25.27):.2f}%，但最大回撤高達 {ext_b_mdd:.2f}%、谷底回本需 {_fmt_recovery(ext_b)}，現實中極難抱住。"
+                ),
+            },
+            {
+                "label": "15 美元低消的影響（近 10 年 -40% 冠軍）",
+                "value": f"每年少 {abs(b_10y_40_xirr_diff):.2f}%",
+                "desc": (
+                    f"近 10 年 B 群 -40% 冠軍（{_fmt_weights(b_10y_40_1.get('weights', {}))}）若用傳統每筆低消 15 美元複委託，"
+                    f"XIRR 由 {b_10y_40_1.get('xirr', 34.46):.2f}% 降至 {b_10y_40_sens.get('xirr', 32.07):.2f}%，10 年期末少賺 {_fmt_twd_wan(b_10y_40_loss_twd)}。"
+                ),
+            },
+        ],
+        "charts": [
+            {
+                "title": "全歷史效率前緣圖（1997～2026 / 1999～2026）",
+                "src": "./assets/research/efficient_frontier_full_history.png",
+                "caption": "深藍線（B 群：台美股混搭）整條位在橘紅線（A 群：只買台股）左上方，代表相同回撤下台美分散能換到更高的年化報酬（如 -60% 內 B 群 18.18% vs A 群 15.27%）。",
+            },
+            {
+                "title": "近 10 年效率前緣圖（2016/12～2026/11）",
+                "src": "./assets/research/efficient_frontier_recent_10y.png",
+                "caption": "近 10 年受惠台積電與 AI 狂潮，台股橘紅線緊貼台美深藍線；但在低回撤區間（-24%～-40%），加入 20%～40% 美股搭配每季再平衡仍能把回撤再往下壓。",
+            },
+        ],
+        "tables": {
+            "full_history_summary": full_history_summary_rows,
+            "recent_10y_summary": recent_10y_summary_rows,
+            "extreme_crashes": extreme_crashes_rows,
+            "full_history_top5": full_history_top5_blocks,
+            "recent_10y_top5": recent_10y_top5_blocks,
+        },
+        "sections": {
+            "setup": {
+                "title": "一、研究設定（每月 1 萬台幣，怎麼扣、算哪些成本？）",
+                "content": [
+                    "這份研究模擬一般上班族每月第一個交易日固定投入 10,000 元台幣（不擇時、不借錢、不留現金），把台股 2 檔（0050、00631L）與美股 6 檔（SPY、QQQ、SSO、QLD、UPRO、TQQQ）以每 10% 為一格做全組合網格搜尋，搭配 3 種再平衡（不做／每年／每季）與 2 種濾網（不加／200 日線濾網），總共跑完 233,508 組回測（全歷史與近 10 年雙期間）。",
+                    "• 兩大群組與期間：A 群（只用台股 0050、00631L，全歷史 1997-07-02 ～ 2026-11-25，共 353 個月、投入 353 萬）；B 群（台美股 8 檔全開，全歷史 1999-03-10 ～ 2026-11-25，共 333 個月、投入 333 萬）；兩群另同步測試近 10 年（2016-12-01 ～ 2026-11-25，120 個月、投入 120 萬）。",
+                    "• 真實交易成本與稅負：美股買賣計算換匯手續費 0.1%、複委託手續費 0.1%（主回測假設無低消，另對前段班重跑每筆低消 15 美元敏感度測試）、美股配息預扣 30% 股息稅；台股定期定額買進手續費以 0% 模擬（貼近券商 1 元優惠），但再平衡買賣時計入 0.1425% 手續費與賣出 0.1% ETF 證交稅。最終資產一律依當日美元兌台幣匯率（TWD=X）換算回台幣。",
+                    "• 200 日線 ±2% 濾網規則：當大盤收盤跌破 200 日均線 -2% 時，之後每個月新扣的 1 萬元原本要買槓桿 ETF 的部分，暫時改買對應的 1 倍原型 ETF（00631L→0050、SSO/UPRO→SPY、QLD/TQQQ→QQQ），等站回 200 日均線 +2% 再恢復買槓桿 ETF。這個濾網只改變新資金的去向，完全不賣出原本手上的舊部位，避免熊市殺低與頻繁交易摩擦。",
+                ],
+            },
+            "conclusions": {
+                "title": "二、主要結論（從 23 萬組回測看到的四件事）",
+                "items": [
+                    f"純股票長期幾乎不可能把最大回撤壓在 -45% 以內：在涵蓋 2000 網路泡沫與 2008 金融海嘯的全歷史裡，就算完全不開槓桿，100% 買 0050 最大回撤仍有 {a_full_low_mdd:.2f}%，台美股全組合最小回撤也要 {b_full_low_mdd:.2f}%（{b_full_low_cfg} 每季再平衡）。所以全歷史 -30% 與 -40% 上限都是 0 組符合；近 10 年能出現 -30% 內高報酬，純粹是因為沒遇到 2008 等級的大崩盤。",
+                    f"能承受 -50%～-60% 回撤，小幅槓桿（1.2x～1.4x）性價比最高：B 群 -50% 上限冠軍（1.2x、開 200 日線濾網）全歷史 XIRR 達 {b_full_50_xirr:.2f}%、期末 {_fmt_twd_wan(b_full_50_1.get('final_value_twd'))}；-60% 上限冠軍（40% 0050 + 40% QQQ + 20% TQQQ，1.4x、年平衡）更衝上 {b_full_60_xirr:.2f}%、期末 {_fmt_twd_wan(b_full_60_1.get('final_value_twd'))}，且滾動 10 年正報酬勝率高達 97.65%（最差 5% 梯次仍有 +3.75%/年）。只買台股的 A 群用 70% 0050 + 30% 00631L（1.3x）也能在 -60% 內拿到 {a_full_60_xirr:.2f}%（期末 {_fmt_twd_wan(a_full_60_1.get('final_value_twd'))}）。",
+                    f"極限槓桿帳面最驚人，但現實中很難撐過兩次 -80% 崩盤：不限回撤下沒有任何一組歸零，B 群極限冠軍（20% 00631L + 80% TQQQ，2.8x）333 萬本金滾成 {_fmt_twd_wan(ext_b.get('final_value_twd'))}，A 群極限冠軍（100% 00631L，2.0x）滾成 {_fmt_twd_wan(ext_a.get('final_value_twd'))}。但代價是 2000 與 2008 兩度蒸發約八成以上（{ext_a_mdd:.2f}%～{ext_b_mdd:.2f}%），谷底回本要熬 3.2～4.9 年，多數人在中途就會崩潰停扣。",
+                    f"每月 1 萬元千萬不能踩「15 美元低消」地雷：若把 1 萬元拆成 10%（1,000 元台幣）去買美股卻用每筆低消 15 美元（約 480 台幣）的傳統複委託，等於還沒開始投資就先被吃掉將近一半本金。近 10 年 -40% 冠軍一旦加上 15 美元低消，年化報酬直接少掉 {abs(b_10y_40_xirr_diff):.2f}%（10 年少賺 {_fmt_twd_wan(b_10y_40_loss_twd)}）。小額定期定額美股務必選無低消方案，或集中成 1 檔／累積一季再買。",
+                ],
+            },
+            "how_to_use": {
+                "title": "三、怎麼用這份結果（給一般投資人的實戰步驟）",
+                "items": [
+                    "第一步：先誠實決定自己能承受多少帳面回撤，而不是先看報酬率。如果帳面跌超過 -30% 就睡不著，全股票配置本身就不適合你（需要搭配債券或現金）；能承受 -50%～-60% 波動，再考慮 1.0x～1.4x 的溫和槓桿配置。",
+                    "第二步：看「大方向與槓桿區間」，不要死守第 1 名的精確比例。從下方前 5 名清單可以看到，同一個回撤上限裡第 1 名到第 5 名的年化報酬往往只差 0.1%～0.3%，重點在於「台美股分散＋1.2x～1.4x 溫和槓桿＋每年或每季再平衡」，把 3 倍 ETF 最多控制在 10%～20% 衛星部位（或直接改用 2 倍 ETF 00631L / QLD 取代），效果就很接近。",
+                    "第三步：檢視工具成本與操作紀律。有美股免低消定期定額管道再用台美混搭；只用台股證券戶的人，70% 0050 + 30% 00631L（或 50/50 每年再平衡）就已經非常簡單好用（註：台灣 00631L 無法設定券商自動定期定額，需每月手動買零股並先開信用戶簽署風險預告書）。",
+                ],
+            },
+            "limitations": {
+                "title": "四、研究限制（讀完這些再做決定）",
+                "items": [
+                    "上市前模擬資料誤差：00631L 在 2015-08-25 以前、0050 在 2009-03-10 以前（以 ^TWII 加計每年 3.0% 估計股息率回溯），以及 SSO／QLD（2006-06 前）、UPRO（2009-06 前）、TQQQ（2010-02 前）上市以前都是模擬資料。真實上市後重疊期比對顯示，模擬版年化報酬比真實 ETF 略高約 0.77%～2.37%（主因真實交換合約利差與台指期收盤時間差），早期數據偏微幅樂觀。",
+                    "事後挑選的過度擬合風險：表中的第 1 名是從 233,508 組參數裡事後挑出來的最佳解，必然帶有歷史運氣成分（Overfitting），未來不可能剛好由同一組比例繼續奪冠，因此只應參考區間規律而非死抄單一配方。",
+                    "近 10 年剛好是大多頭：2016/12～2026/11 受惠台積電、AI 與美股科技長牛，沒有經歷 2000 或 2008 級別的長期熊市，年化 30%～40% 與較淺的回撤絕對不能當成未來常態。",
+                    "主要結果假設沒有 15 美元低消：主回測的美股手續費純按 0.1% 計算、無最低消費限制；若你的券商有單筆低消，小額拆買多檔美股會大幅拉低真實報酬。",
+                    "Yahoo 匯率錯價與早期延用：Yahoo Finance 的 TWD=X 匯率原始資料存在小數點錯位（如 2011-10-25、2014-12-31）與單日異常跳點，已在回測前清洗修正；此外 TWD=X 最早資料僅到 2004-03-24（32.0230），更早期間往前延用該匯率作為近似值。",
+                    "單一歷史路徑限制：這份研究只回測了過去一條已經發生的歷史路徑（且台美股剛好是近 30 年全球最強市場，具有倖存者偏差），尚未針對未來「長期上漲、長期盤整、持續下跌」等不同假設情境做蒙地卡羅或壓力測試。",
+                ],
+            },
+        },
+        "disclaimer": {
+            "text": "本研究僅供量化回測與歷史實證參考，過去績效不代表未來表現，亦不構成任何個人化投資建議。",
+            "github_links": [
+                {
+                    "title": "完整 23 萬組定期定額研究報告 (report.md)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/dca_allocation_grid/report.md",
+                },
+                {
+                    "title": "回測原始程式碼與資料 (research/dca_allocation_grid)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/dca_allocation_grid",
+                },
+            ],
+        },
+    }
+
     full_payload = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "title": "深度研究 (In-Depth Research)",
         "subtitle": "Signal Desk 策略量化實證、多週期盲測與組合實驗報告",
         "disclaimer": "研究結果僅供參考，過去表現不代表未來，不構成投資建議。",
-        "articles": [article_short, article_combo, article_exam, article_flow, article_dca, article_leverage],
+        "articles": [article_short, article_combo, article_exam, article_flow, article_dca, article_leverage, article_dca_grid],
     }
     return full_payload
 
