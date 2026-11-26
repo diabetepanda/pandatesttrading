@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-26-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-26T16:57:04Z",
-  "updated_at_taipei": "2026-11-27 00:57",
-  "last_updated_utc": "2026-11-26T16:57:04Z",
-  "last_updated_taipei": "2026-11-27 00:57",
-  "next_update_hint": "約台北時間 01:02（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-26T17:12:15Z",
+  "updated_at_taipei": "2026-11-27 01:12",
+  "last_updated_utc": "2026-11-26T17:12:15Z",
+  "last_updated_taipei": "2026-11-27 01:12",
+  "next_update_hint": "約台北時間 01:17（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 18.642,
+    "total_elapsed_sec": 24.715,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 3,
+    "new_items_added": 16,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.099,
+        "elapsed_sec": 0.093,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.194,
+        "elapsed_sec": 0.095,
         "raw_count": 30,
         "items_kept": 11,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.072,
+        "elapsed_sec": 0.064,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.121,
+        "elapsed_sec": 0.052,
         "raw_count": 10,
         "items_kept": 1,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.24,
+        "elapsed_sec": 0.334,
         "raw_count": 20,
         "items_kept": 20,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.193,
+        "elapsed_sec": 0.176,
         "raw_count": 25,
         "items_kept": 23,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.135,
+        "elapsed_sec": 0.129,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.108,
+        "elapsed_sec": 0.11,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.118,
+        "elapsed_sec": 0.09,
         "raw_count": 37,
         "items_kept": 17,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.609,
+        "elapsed_sec": 0.413,
         "raw_count": 20,
         "items_kept": 14,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.647,
+        "elapsed_sec": 0.502,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.328,
+        "elapsed_sec": 0.26,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.909,
+        "elapsed_sec": 0.672,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.366,
+        "elapsed_sec": 0.296,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.405,
+        "elapsed_sec": 0.274,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.108,
+        "elapsed_sec": 0.088,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.082,
+        "elapsed_sec": 2.22,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.07,
+        "elapsed_sec": 0.068,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.571,
+        "elapsed_sec": 1.281,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.536,
+        "elapsed_sec": 0.356,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.508,
+        "elapsed_sec": 1.031,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.555,
+        "elapsed_sec": 0.333,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.723,
+        "elapsed_sec": 0.534,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.186,
+        "elapsed_sec": 0.099,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.604,
+        "elapsed_sec": 0.482,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.361,
+        "elapsed_sec": 0.289,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -271,22 +271,22 @@
   "data_metrics_snapshot": {
     "stablecoins": {
       "total_usd_b": 283.98,
-      "change_1d_usd_m": -249.5,
+      "change_1d_usd_m": -253.1,
       "change_1d_pct": -0.09,
       "alert_key": "stablecoins_supply:down"
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.62,
-        "change_1d_pct": 1.65
+        "tvl_b": 36.56,
+        "change_1d_pct": 1.49
       },
       "Base": {
         "tvl_b": 4.99,
         "change_1d_pct": 0.09
       },
       "Solana": {
-        "tvl_b": 4.59,
-        "change_1d_pct": 1.44
+        "tvl_b": 4.58,
+        "change_1d_pct": 1.26
       },
       "Tron": {
         "tvl_b": 4.39,
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -736.5,
+      "net_flow_usd_m": -736.6,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0048,
+        "funding_rate_pct": 0.0053,
         "oi_usd_b": 1.94
       },
       "ETHUSDT": {
         "funding_rate_pct": 0.0058,
-        "oi_usd_b": 1.09
+        "oi_usd_b": 1.1
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 4,
-      "half_hour_fee_sat_vb": 4,
-      "mempool_vsize_mb": 34.0,
-      "tx_count": 80695,
+      "fastest_fee_sat_vb": 5,
+      "half_hour_fee_sat_vb": 5,
+      "mempool_vsize_mb": 34.1,
+      "tx_count": 82438,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -725,6 +725,306 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-88718985e2",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:06:10Z",
+      "published_at_taipei": "2026-11-27 01:06",
+      "published_at_taipei_iso": "2026-11-27T01:06:10+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "AppLovin’s (APP) E-Commerce Bet Is Paying Off—And Ad Prices Prove It",
+      "url": "https://finance.yahoo.com/media-advertising/articles/applovin-app-e-commerce-bet-170610809.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/media-advertising/articles/applovin-app-e-commerce-bet-170610809.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-9427b9852e",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:03:15Z",
+      "published_at_taipei": "2026-11-27 01:03",
+      "published_at_taipei_iso": "2026-11-27T01:03:15+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Sea Ltd (SE): High Reinvestment Drag Mutes Near-Term Margins Despite Strong Top-Line Compounding",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sea-ltd-se-high-reinvestment-170315251.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/sea-ltd-se-high-reinvestment-170315251.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-b4cec773f0",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:03:00Z",
+      "published_at_taipei": "2026-11-27 01:03",
+      "published_at_taipei_iso": "2026-11-27T01:03:00+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Bank of America issues blunt 2027 hard-landing warning on S&P 500",
+      "url": "https://www.thestreet.com/investing/bank-of-america-sp500-2027-recession-risk?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/investing/bank-of-america-sp500-2027-recession-risk?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-aad81a1cd7",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:00:31Z",
+      "published_at_taipei": "2026-11-27 01:00",
+      "published_at_taipei_iso": "2026-11-27T01:00:31+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Was CrowdStrike’s $43.9 Billion Bid for Zscaler the Right Move at the Wrong Time?",
+      "url": "https://247wallst.com/investing/2026/11/26/was-crowdstrikes-43-9-billion-bid-for-zscaler-the-right-move-at-the-wrong-time/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/26/was-crowdstrikes-43-9-billion-bid-for-zscaler-the-right-move-at-the-wrong-time?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-82a5d2b1c4",
+        "issue": "2026-11-23-PM",
+        "title": "CrowdStrike Shares Fall 10% After a $44 Billion Zscaler Deal Despite an Earnings Beat and Raised Guidance",
+        "published_at_taipei": "2026-11-24 03:55",
+        "url": "https://247wallst.com/videos/crowdstrike-shares-fall-10-after-a-44-billion-zscaler-deal-despite-an-earnings-beat-and-raised-guidance/?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：acquisition",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-b365db88b8",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:00:00Z",
+      "published_at_taipei": "2026-11-27 01:00",
+      "published_at_taipei_iso": "2026-11-27T01:00:00+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Elon Musk didn’t sell a single share in SpaceX’s record $85.7B IPO. Anthropic’s 7 cofounders cashed out $1.96B in theirs",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/elon-musk-didn-t-sell-170000854.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/elon-musk-didn-t-sell-170000854.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-cda125271a",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:59:27Z",
+      "published_at_taipei": "2026-11-27 00:59",
+      "published_at_taipei_iso": "2026-11-27T00:59:27+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Meta Platforms’ (META) Surging Capex Pressures Free Cash Flow Amid Monetization Debates",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/meta-platforms-meta-surging-capex-165927360.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/meta-platforms-meta-surging-capex-165927360.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-4b9c0bfbaa",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:56:32Z",
+      "published_at_taipei": "2026-11-27 00:56",
+      "published_at_taipei_iso": "2026-11-27T00:56:32+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Can Coupang (CPNG) Overcome Operational Headwinds to Restore Margins?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/coupang-cpng-overcome-operational-headwinds-165632876.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/coupang-cpng-overcome-operational-headwinds-165632876.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-6409c364e4",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:54:11Z",
+      "published_at_taipei": "2026-11-27 00:54",
+      "published_at_taipei_iso": "2026-11-27T00:54:11+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "MercadoLibre (MELI): Near-Term Margin Compression Masks Strong User and Credit Growth",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-meli-near-term-margin-165411501.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-meli-near-term-margin-165411501.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-03093c7114",
+        "issue": "2026-11-24-PM",
+        "title": "Gartner (IT) Eases AI Disruption Fears with Strong Quarterly Contract Growth",
+        "published_at_taipei": "2026-11-24 23:51",
+        "url": "https://finance.yahoo.com/technology/ai/articles/gartner-eases-ai-disruption-fears-155126936.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-05c796d9fc",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T16:50:23Z",
@@ -756,6 +1056,250 @@
         "title": "Bitcoin Losses Are the Worst Since FTX. Is the Bottom Near?",
         "published_at_taipei": "2026-11-25 03:35",
         "url": "https://decrypt.co/383909/bitcoin-losses-worst-since-ftx-is-bottom-near"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-117f077e3e",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:46:57Z",
+      "published_at_taipei": "2026-11-27 00:46",
+      "published_at_taipei_iso": "2026-11-27T00:46:57+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Victory Capital Holdings (VCTR) Rose on Record Q2 Results",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/victory-capital-holdings-vctr-rose-164657364.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/victory-capital-holdings-vctr-rose-164657364.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-a56703f833",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:45:09Z",
+      "published_at_taipei": "2026-11-27 00:45",
+      "published_at_taipei_iso": "2026-11-27T00:45:09+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Underappreciated AI Beneficiary Zeta Global (ZETA) Expands Full-Year Guidance Across the Board",
+      "url": "https://finance.yahoo.com/technology/ai/articles/underappreciated-ai-beneficiary-zeta-global-164509491.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/underappreciated-ai-beneficiary-zeta-global-164509491.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（guidance）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-f4f8a46426",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:39:31Z",
+      "published_at_taipei": "2026-11-27 00:39",
+      "published_at_taipei_iso": "2026-11-27T00:39:31+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Here’s What Pulled Back FTAI Aviation Ltd. (FTAI) in Q3",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/pulled-back-ftai-aviation-ltd-163931315.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/pulled-back-ftai-aviation-ltd-163931315.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-b7ba3cfa35",
+        "issue": "2026-11-25-PM",
+        "title": "What Pulled Marvell Stock Down On Tuesday?",
+        "published_at_taipei": "2026-11-25 22:14",
+        "url": "https://www.trefis.com/stock/mrvl/articles/628981/what-pulled-marvell-stock-down-on-tuesday/2026-11-25?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-5f1b6ee10d",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:37:00Z",
+      "published_at_taipei": "2026-11-27 00:37",
+      "published_at_taipei_iso": "2026-11-27T00:37:00+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Galaxy Research Warns Bitcoin Could Fall to $28,200 if June Low Breaks",
+      "url": "https://www.cryptoprowl.com/releases/galaxy-research-warns-bitcoin-could-fall-to-28200-if-june-low-breaks-8091?.tsrc=rss",
+      "canonical_url": "https://cryptoprowl.com/releases/galaxy-research-warns-bitcoin-could-fall-to-28200-if-june-low-breaks-8091?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-0c48a4f319",
+        "issue": "2026-11-26-AM",
+        "title": "Galaxy Withdraws Bitcoin Bottom Call, Warns BTC Could Fall to $28,200",
+        "published_at_taipei": "2026-11-26 18:32",
+        "url": "https://www.ccn.com/news/crypto/galaxy-bitcoin-bear-market-bottom-28200-price-target/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-6bbaa67c5f",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:32:40Z",
+      "published_at_taipei": "2026-11-27 00:32",
+      "published_at_taipei_iso": "2026-11-27T00:32:40+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "XPeng Raises Stakes for Tesla Stock Investors' Big Growth Bet",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/xpeng-raises-stakes-tesla-stock-163240808.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/xpeng-raises-stakes-tesla-stock-163240808.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-2a6cefdc30",
+        "issue": "2026-11-26-AM",
+        "title": "Goldman Sachs lays out three signals stock investors should watch",
+        "published_at_taipei": "2026-11-26 09:37",
+        "url": "https://www.thestreet.com/investing/stocks/goldman-sachs-lays-out-three-signals-stock-investors-should-watch?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-28fc530d78",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:28:23Z",
+      "published_at_taipei": "2026-11-27 00:28",
+      "published_at_taipei_iso": "2026-11-27T00:28:23+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Bitcoin Tops $60,000 as Risk Assets Rise in Holiday Trading",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/bitcoin-tops-60-000-risk-162823539.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/crypto/articles/bitcoin-tops-60-000-risk-162823539.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-d9a9d8bf0b",
+        "issue": "2026-11-24-AM",
+        "title": "Bitcoin falls below $60,000 as rally on Jensen Huang’s Nvidia return fades",
+        "published_at_taipei": "2026-11-24 18:08",
+        "url": "https://www.coindesk.com/markets/2026/11/24/bitcoin-falls-below-usd60-000-as-rally-on-jensen-huang-s-nvidia-return-fades"
       },
       "sentiment": "neutral",
       "sentiment_label": "中性",
@@ -3870,6 +4414,86 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261125-a3b002dea4",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-25T03:30:04Z",
+      "published_at_taipei": "2026-11-25 11:30",
+      "published_at_taipei_iso": "2026-11-25T11:30:04+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "[上幣] Binance Will Add 5 bStocks Tokenized Securities as Collateral Asset - 2026-11-25",
+      "url": "https://www.binance.com/en/support/announcement/bbad3eb0d13f4a90954a38797b9077de",
+      "canonical_url": "https://binance.com/en/support/announcement/bbad3eb0d13f4a90954a38797b9077de",
+      "source": "Binance 公告",
+      "source_id": "binance_announcements",
+      "category": "交易所公告",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（上幣）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-03ce1a70ca",
+        "issue": "2026-11-25-AM",
+        "title": "[上幣] Binance Exchange Adds New bStocks Trading Pairs on Binance Spot/Convert and Extends Zero Maker Fee Promotion - 2026-11-25",
+        "published_at_taipei": "2026-11-25 11:00",
+        "url": "https://www.binance.com/en/support/announcement/94eb40096c2d44179a3e48fd4e5bf3d4"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：交易所上幣公告",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-02db012ffa",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:00:39Z",
+      "published_at_taipei": "2026-11-27 01:00",
+      "published_at_taipei_iso": "2026-11-27T01:00:39+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "I'm an Investing Expert: What Warren Buffett's Cash Stockpile Says About Stocks",
+      "url": "https://moneylion.com/trending/money/investing-expert-warren-buffett-cash-stockpile-stock-market-signs?.tsrc=rss",
+      "canonical_url": "https://moneylion.com/trending/money/investing-expert-warren-buffett-cash-stockpile-stock-market-signs?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-d1e34d38e9",
+        "issue": "2026-11-24-PM",
+        "title": "What Would A Short Seller Say About IBM Stock?",
+        "published_at_taipei": "2026-11-25 02:18",
+        "url": "https://www.trefis.com/stock/ibm/articles/628477/what-would-a-short-seller-say-about-ibm-stock/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-9b1ee3b06f",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T16:43:02Z",
@@ -5580,6 +6204,346 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261127-88718985e2",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:06:10Z",
+      "published_at_taipei": "2026-11-27 01:06",
+      "published_at_taipei_iso": "2026-11-27T01:06:10+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "AppLovin’s (APP) E-Commerce Bet Is Paying Off—And Ad Prices Prove It",
+      "url": "https://finance.yahoo.com/media-advertising/articles/applovin-app-e-commerce-bet-170610809.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/media-advertising/articles/applovin-app-e-commerce-bet-170610809.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-9427b9852e",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:03:15Z",
+      "published_at_taipei": "2026-11-27 01:03",
+      "published_at_taipei_iso": "2026-11-27T01:03:15+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Sea Ltd (SE): High Reinvestment Drag Mutes Near-Term Margins Despite Strong Top-Line Compounding",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sea-ltd-se-high-reinvestment-170315251.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/sea-ltd-se-high-reinvestment-170315251.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-b4cec773f0",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:03:00Z",
+      "published_at_taipei": "2026-11-27 01:03",
+      "published_at_taipei_iso": "2026-11-27T01:03:00+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Bank of America issues blunt 2027 hard-landing warning on S&P 500",
+      "url": "https://www.thestreet.com/investing/bank-of-america-sp500-2027-recession-risk?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/investing/bank-of-america-sp500-2027-recession-risk?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-02db012ffa",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:00:39Z",
+      "published_at_taipei": "2026-11-27 01:00",
+      "published_at_taipei_iso": "2026-11-27T01:00:39+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "I'm an Investing Expert: What Warren Buffett's Cash Stockpile Says About Stocks",
+      "url": "https://moneylion.com/trending/money/investing-expert-warren-buffett-cash-stockpile-stock-market-signs?.tsrc=rss",
+      "canonical_url": "https://moneylion.com/trending/money/investing-expert-warren-buffett-cash-stockpile-stock-market-signs?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-d1e34d38e9",
+        "issue": "2026-11-24-PM",
+        "title": "What Would A Short Seller Say About IBM Stock?",
+        "published_at_taipei": "2026-11-25 02:18",
+        "url": "https://www.trefis.com/stock/ibm/articles/628477/what-would-a-short-seller-say-about-ibm-stock/2026-11-24?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-aad81a1cd7",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:00:31Z",
+      "published_at_taipei": "2026-11-27 01:00",
+      "published_at_taipei_iso": "2026-11-27T01:00:31+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Was CrowdStrike’s $43.9 Billion Bid for Zscaler the Right Move at the Wrong Time?",
+      "url": "https://247wallst.com/investing/2026/11/26/was-crowdstrikes-43-9-billion-bid-for-zscaler-the-right-move-at-the-wrong-time/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/26/was-crowdstrikes-43-9-billion-bid-for-zscaler-the-right-move-at-the-wrong-time?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-82a5d2b1c4",
+        "issue": "2026-11-23-PM",
+        "title": "CrowdStrike Shares Fall 10% After a $44 Billion Zscaler Deal Despite an Earnings Beat and Raised Guidance",
+        "published_at_taipei": "2026-11-24 03:55",
+        "url": "https://247wallst.com/videos/crowdstrike-shares-fall-10-after-a-44-billion-zscaler-deal-despite-an-earnings-beat-and-raised-guidance/?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：acquisition",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-b365db88b8",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T17:00:00Z",
+      "published_at_taipei": "2026-11-27 01:00",
+      "published_at_taipei_iso": "2026-11-27T01:00:00+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Elon Musk didn’t sell a single share in SpaceX’s record $85.7B IPO. Anthropic’s 7 cofounders cashed out $1.96B in theirs",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/elon-musk-didn-t-sell-170000854.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/elon-musk-didn-t-sell-170000854.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-cda125271a",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:59:27Z",
+      "published_at_taipei": "2026-11-27 00:59",
+      "published_at_taipei_iso": "2026-11-27T00:59:27+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Meta Platforms’ (META) Surging Capex Pressures Free Cash Flow Amid Monetization Debates",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/meta-platforms-meta-surging-capex-165927360.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/meta-platforms-meta-surging-capex-165927360.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-4b9c0bfbaa",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:56:32Z",
+      "published_at_taipei": "2026-11-27 00:56",
+      "published_at_taipei_iso": "2026-11-27T00:56:32+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Can Coupang (CPNG) Overcome Operational Headwinds to Restore Margins?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/coupang-cpng-overcome-operational-headwinds-165632876.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/coupang-cpng-overcome-operational-headwinds-165632876.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-6409c364e4",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:54:11Z",
+      "published_at_taipei": "2026-11-27 00:54",
+      "published_at_taipei_iso": "2026-11-27T00:54:11+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "MercadoLibre (MELI): Near-Term Margin Compression Masks Strong User and Credit Growth",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-meli-near-term-margin-165411501.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-meli-near-term-margin-165411501.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-03093c7114",
+        "issue": "2026-11-24-PM",
+        "title": "Gartner (IT) Eases AI Disruption Fears with Strong Quarterly Contract Growth",
+        "published_at_taipei": "2026-11-24 23:51",
+        "url": "https://finance.yahoo.com/technology/ai/articles/gartner-eases-ai-disruption-fears-155126936.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-05c796d9fc",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T16:50:23Z",
@@ -5618,6 +6582,78 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-117f077e3e",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:46:57Z",
+      "published_at_taipei": "2026-11-27 00:46",
+      "published_at_taipei_iso": "2026-11-27T00:46:57+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Victory Capital Holdings (VCTR) Rose on Record Q2 Results",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/victory-capital-holdings-vctr-rose-164657364.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/victory-capital-holdings-vctr-rose-164657364.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-a56703f833",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:45:09Z",
+      "published_at_taipei": "2026-11-27 00:45",
+      "published_at_taipei_iso": "2026-11-27T00:45:09+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Underappreciated AI Beneficiary Zeta Global (ZETA) Expands Full-Year Guidance Across the Board",
+      "url": "https://finance.yahoo.com/technology/ai/articles/underappreciated-ai-beneficiary-zeta-global-164509491.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/underappreciated-ai-beneficiary-zeta-global-164509491.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（guidance）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
       ],
       "sentiment_method": "rule"
     },
@@ -5690,6 +6726,135 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-f4f8a46426",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:39:31Z",
+      "published_at_taipei": "2026-11-27 00:39",
+      "published_at_taipei_iso": "2026-11-27T00:39:31+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Here’s What Pulled Back FTAI Aviation Ltd. (FTAI) in Q3",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/pulled-back-ftai-aviation-ltd-163931315.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/pulled-back-ftai-aviation-ltd-163931315.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-b7ba3cfa35",
+        "issue": "2026-11-25-PM",
+        "title": "What Pulled Marvell Stock Down On Tuesday?",
+        "published_at_taipei": "2026-11-25 22:14",
+        "url": "https://www.trefis.com/stock/mrvl/articles/628981/what-pulled-marvell-stock-down-on-tuesday/2026-11-25?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-5f1b6ee10d",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:37:00Z",
+      "published_at_taipei": "2026-11-27 00:37",
+      "published_at_taipei_iso": "2026-11-27T00:37:00+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Galaxy Research Warns Bitcoin Could Fall to $28,200 if June Low Breaks",
+      "url": "https://www.cryptoprowl.com/releases/galaxy-research-warns-bitcoin-could-fall-to-28200-if-june-low-breaks-8091?.tsrc=rss",
+      "canonical_url": "https://cryptoprowl.com/releases/galaxy-research-warns-bitcoin-could-fall-to-28200-if-june-low-breaks-8091?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-0c48a4f319",
+        "issue": "2026-11-26-AM",
+        "title": "Galaxy Withdraws Bitcoin Bottom Call, Warns BTC Could Fall to $28,200",
+        "published_at_taipei": "2026-11-26 18:32",
+        "url": "https://www.ccn.com/news/crypto/galaxy-bitcoin-bear-market-bottom-28200-price-target/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-6bbaa67c5f",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:32:40Z",
+      "published_at_taipei": "2026-11-27 00:32",
+      "published_at_taipei_iso": "2026-11-27T00:32:40+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "XPeng Raises Stakes for Tesla Stock Investors' Big Growth Bet",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/xpeng-raises-stakes-tesla-stock-163240808.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/xpeng-raises-stakes-tesla-stock-163240808.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-2a6cefdc30",
+        "issue": "2026-11-26-AM",
+        "title": "Goldman Sachs lays out three signals stock investors should watch",
+        "published_at_taipei": "2026-11-26 09:37",
+        "url": "https://www.thestreet.com/investing/stocks/goldman-sachs-lays-out-three-signals-stock-investors-should-watch?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-2f26d5729a",
       "issue": "2026-11-26-PM",
       "published_at_utc": "2026-11-26T16:30:00Z",
@@ -5726,6 +6891,49 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-28fc530d78",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-26T16:28:23Z",
+      "published_at_taipei": "2026-11-27 00:28",
+      "published_at_taipei_iso": "2026-11-27T00:28:23+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "Bitcoin Tops $60,000 as Risk Assets Rise in Holiday Trading",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/bitcoin-tops-60-000-risk-162823539.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/crypto/articles/bitcoin-tops-60-000-risk-162823539.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-d9a9d8bf0b",
+        "issue": "2026-11-24-AM",
+        "title": "Bitcoin falls below $60,000 as rally on Jensen Huang’s Nvidia return fades",
+        "published_at_taipei": "2026-11-24 18:08",
+        "url": "https://www.coindesk.com/markets/2026/11/24/bitcoin-falls-below-usd60-000-as-rally-on-jensen-huang-s-nvidia-return-fades"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
       ],
       "sentiment_method": "rule"
     },
@@ -51435,6 +52643,46 @@
       "sentiment_reason": "命中：關稅",
       "sentiment_targets": [
         "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261125-a3b002dea4",
+      "issue": "2026-11-26-PM",
+      "published_at_utc": "2026-11-25T03:30:04Z",
+      "published_at_taipei": "2026-11-25 11:30",
+      "published_at_taipei_iso": "2026-11-25T11:30:04+08:00",
+      "first_seen_at_utc": "2026-11-26T17:12:15Z",
+      "first_seen_at_taipei": "2026-11-27 01:12",
+      "month": "2026-11",
+      "title": "[上幣] Binance Will Add 5 bStocks Tokenized Securities as Collateral Asset - 2026-11-25",
+      "url": "https://www.binance.com/en/support/announcement/bbad3eb0d13f4a90954a38797b9077de",
+      "canonical_url": "https://binance.com/en/support/announcement/bbad3eb0d13f4a90954a38797b9077de",
+      "source": "Binance 公告",
+      "source_id": "binance_announcements",
+      "category": "交易所公告",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（上幣）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-03ce1a70ca",
+        "issue": "2026-11-25-AM",
+        "title": "[上幣] Binance Exchange Adds New bStocks Trading Pairs on Binance Spot/Convert and Extends Zero Maker Fee Promotion - 2026-11-25",
+        "published_at_taipei": "2026-11-25 11:00",
+        "url": "https://www.binance.com/en/support/announcement/94eb40096c2d44179a3e48fd4e5bf3d4"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：交易所上幣公告",
+      "sentiment_targets": [
+        "BTCUSDT"
       ],
       "sentiment_method": "rule"
     },
@@ -143772,50 +145020,6 @@
         "BTCUSDT"
       ],
       "sentiment_method": "rule"
-    },
-    {
-      "id": "news-20261120-6ebd077f5d",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-19T17:12:00Z",
-      "published_at_taipei": "2026-11-20 01:12",
-      "published_at_taipei_iso": "2026-11-20T01:12:00+08:00",
-      "month": "2026-11",
-      "title": "Tokenized Stocks Shrug Off the Crypto Selloff",
-      "url": "https://www.theblock.co/newsletters/tokenization-briefing/2026-11-19-tokenized-stocks-shrug-off-crypto-selloff-442829",
-      "canonical_url": "https://theblock.co/newsletters/tokenization-briefing/2026-11-19-tokenized-stocks-shrug-off-crypto-selloff-442829",
-      "source": "The Block",
-      "source_id": "theblock",
-      "category": "加密貨幣",
-      "symbols": [
-        "BTCUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261120-c250ec4d8b",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-19T17:10:04Z",
-      "published_at_taipei": "2026-11-20 01:10",
-      "published_at_taipei_iso": "2026-11-20T01:10:04+08:00",
-      "month": "2026-11",
-      "title": "[上幣] Binance Will Add Anthropic (ANTB) bStocks Tokenized Securities as Collateral Asset - 2026-11-19",
-      "url": "https://www.binance.com/en/support/announcement/c4a6afb79b32434a88e826b9632242c0",
-      "canonical_url": "https://binance.com/en/support/announcement/c4a6afb79b32434a88e826b9632242c0",
-      "source": "Binance 公告",
-      "source_id": "binance_announcements",
-      "category": "交易所公告",
-      "symbols": [],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "市場重點（上幣）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -143824,8 +145028,8 @@
       "month": "2026-11",
       "date": "2026-11-26",
       "half": "PM",
-      "updated_at_taipei": "2026-11-27 00:57",
-      "count": 138,
+      "updated_at_taipei": "2026-11-27 01:12",
+      "count": 154,
       "star3_count": 11,
       "failed_sources": [
         {
