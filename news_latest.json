@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-26-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-26T05:38:46Z",
-  "updated_at_taipei": "2026-11-26 13:38",
-  "last_updated_utc": "2026-11-26T05:38:46Z",
-  "last_updated_taipei": "2026-11-26 13:38",
-  "next_update_hint": "約台北時間 13:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-26T05:53:53Z",
+  "updated_at_taipei": "2026-11-26 13:53",
+  "last_updated_utc": "2026-11-26T05:53:53Z",
+  "last_updated_taipei": "2026-11-26 13:53",
+  "next_update_hint": "約台北時間 14:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 15.736,
+    "total_elapsed_sec": 14.278,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 6,
+    "new_items_added": 5,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.055,
+        "elapsed_sec": 0.08,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.186,
+        "elapsed_sec": 0.144,
         "raw_count": 30,
         "items_kept": 13,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.055,
+        "elapsed_sec": 0.041,
         "raw_count": 30,
         "items_kept": 6,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.038,
+        "elapsed_sec": 0.12,
         "raw_count": 10,
         "items_kept": 4,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.185,
+        "elapsed_sec": 0.293,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.14,
+        "elapsed_sec": 0.138,
         "raw_count": 25,
         "items_kept": 22,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.135,
+        "elapsed_sec": 0.094,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.073,
+        "elapsed_sec": 0.101,
         "raw_count": 20,
         "items_kept": 18,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.117,
+        "elapsed_sec": 0.074,
         "raw_count": 38,
         "items_kept": 17,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.505,
+        "elapsed_sec": 0.521,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 1.045,
+        "elapsed_sec": 1.067,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.399,
+        "elapsed_sec": 0.544,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.656,
+        "elapsed_sec": 0.609,
         "raw_count": 15,
         "items_kept": 5,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.349,
+        "elapsed_sec": 0.545,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.411,
+        "elapsed_sec": 0.388,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.166,
+        "elapsed_sec": 0.081,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.338,
+        "elapsed_sec": 0.379,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.047,
+        "elapsed_sec": 0.04,
         "raw_count": 1377,
         "items_kept": 1,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.544,
+        "elapsed_sec": 1.236,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.544,
+        "elapsed_sec": 0.528,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.404,
+        "elapsed_sec": 1.245,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.385,
+        "elapsed_sec": 0.423,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.743,
+        "elapsed_sec": 0.73,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.217,
+        "elapsed_sec": 0.1,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.53,
+        "elapsed_sec": 0.507,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.355,
+        "elapsed_sec": 0.337,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,28 +303,70 @@
     },
     "btc_spot_etf": {
       "date": "Nov 24, 2026",
-      "net_flow_usd_m": -741.5,
+      "net_flow_usd_m": -740.3,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0085,
+        "funding_rate_pct": 0.0082,
         "oi_usd_b": 1.91
       },
       "ETHUSDT": {
         "funding_rate_pct": 0.0095,
-        "oi_usd_b": 1.13
+        "oi_usd_b": 1.12
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.4,
-      "tx_count": 65604,
+      "mempool_vsize_mb": 29.5,
+      "tx_count": 63593,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261126-ed5b0e1156",
+      "issue": "2026-11-26-AM",
+      "published_at_utc": "2026-11-26T04:57:44Z",
+      "published_at_taipei": "2026-11-26 12:57",
+      "published_at_taipei_iso": "2026-11-26T12:57:44+08:00",
+      "first_seen_at_utc": "2026-11-26T05:53:53Z",
+      "first_seen_at_taipei": "2026-11-26 13:53",
+      "month": "2026-11",
+      "title": "LIVE – Crypto News Today: Is Bitcoin Bottoming Out? BTC Bounces Back After PCE Shock",
+      "url": "https://cryptonews.com/news/bitcoin-crypto-news-btc-bottom-pce-rebound/?.tsrc=rss",
+      "canonical_url": "https://cryptonews.com/news/bitcoin-crypto-news-btc-bottom-pce-rebound?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "鏈上資金",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（pce）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-b0fa9d898a",
+        "issue": "2026-11-23-AM",
+        "title": "LIVE Crypto News – Bitcoin and Ethereum Bounce Back: Market Finally Turning?",
+        "published_at_taipei": "2026-11-23 15:12",
+        "url": "https://cryptonews.com/news/crypto-news-bitcoin-ethereum-recovery/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "反轉：通膨／就業升溫（hotter）；命中：outflows；命中：bearish",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261126-d26d1fa5cf",
       "issue": "2026-11-26-AM",
@@ -1325,6 +1367,87 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-b71136ddb6",
+      "issue": "2026-11-26-AM",
+      "published_at_utc": "2026-11-26T05:46:00Z",
+      "published_at_taipei": "2026-11-26 13:46",
+      "published_at_taipei_iso": "2026-11-26T13:46:00+08:00",
+      "first_seen_at_utc": "2026-11-26T05:53:53Z",
+      "first_seen_at_taipei": "2026-11-26 13:53",
+      "month": "2026-11",
+      "title": "台股收盤／台積電跌5元！台股大漲956點 PCB族群領軍反攻",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%94%B6%E7%9B%A4-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E8%B7%8C5%E5%85%83-%E5%8F%B0%E8%82%A1%E5%A4%A7%E6%BC%B2956%E9%BB%9E-pcb%E6%97%8F%E7%BE%A4%E9%A0%98%E8%BB%8D%E5%8F%8D%E6%94%BB-054600223.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%94%B6%E7%9B%A4-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E8%B7%8C5%E5%85%83-%E5%8F%B0%E8%82%A1%E5%A4%A7%E6%BC%B2956%E9%BB%9E-pcb%E6%97%8F%E7%BE%A4%E9%A0%98%E8%BB%8D%E5%8F%8D%E6%94%BB-054600223.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-c9f7dd8e9d",
+        "issue": "2026-11-25-AM",
+        "title": "台股收盤／台積電重挫80元！台股殺1926點寫第6大收盤跌點 各類股慘綠",
+        "published_at_taipei": "2026-11-25 13:53",
+        "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%94%B6%E7%9B%A4-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E9%87%8D%E6%8C%AB80%E5%85%83-%E5%8F%B0%E8%82%A1%E6%AE%BA1926%E9%BB%9E%E5%AF%AB%E7%AC%AC6%E5%A4%A7%E6%94%B6%E7%9B%A4%E8%B7%8C%E9%BB%9E-%E5%90%84%E9%A1%9E%E8%82%A1%E6%85%98%E7%B6%A0-055300829.html"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 3,
+      "sentiment_reason": "命中：大漲；命中：反彈",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-f67ee3a12d",
+      "issue": "2026-11-26-AM",
+      "published_at_utc": "2026-11-26T05:41:22Z",
+      "published_at_taipei": "2026-11-26 13:41",
+      "published_at_taipei_iso": "2026-11-26T13:41:22+08:00",
+      "first_seen_at_utc": "2026-11-26T05:53:53Z",
+      "first_seen_at_taipei": "2026-11-26 13:53",
+      "month": "2026-11",
+      "title": "張惠妹親自操刀新歌製作唱盡人生遺憾 建中、台積電演出行程曝光",
+      "url": "https://tw.news.yahoo.com/%E5%BC%B5%E6%83%A0%E5%A6%B9%E8%A6%AA%E8%87%AA%E6%93%8D%E5%88%80%E6%96%B0%E6%AD%8C%E8%A3%BD%E4%BD%9C%E5%94%B1%E7%9B%A1%E4%BA%BA%E7%94%9F%E9%81%BA%E6%86%BE-%E5%BB%BA%E4%B8%AD-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%BC%94%E5%87%BA%E8%A1%8C%E7%A8%8B%E6%9B%9D%E5%85%89-054122704.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%BC%B5%E6%83%A0%E5%A6%B9%E8%A6%AA%E8%87%AA%E6%93%8D%E5%88%80%E6%96%B0%E6%AD%8C%E8%A3%BD%E4%BD%9C%E5%94%B1%E7%9B%A1%E4%BA%BA%E7%94%9F%E9%81%BA%E6%86%BE-%E5%BB%BA%E4%B8%AD-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%BC%94%E5%87%BA%E8%A1%8C%E7%A8%8B%E6%9B%9D%E5%85%89-054122704.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：合作",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-a1ce255027",
       "issue": "2026-11-26-AM",
       "published_at_utc": "2026-11-26T05:30:38Z",
@@ -1367,6 +1490,42 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-721dbbfdcc",
+      "issue": "2026-11-26-AM",
+      "published_at_utc": "2026-11-26T05:29:00Z",
+      "published_at_taipei": "2026-11-26 13:29",
+      "published_at_taipei_iso": "2026-11-26T13:29:00+08:00",
+      "first_seen_at_utc": "2026-11-26T05:53:53Z",
+      "first_seen_at_taipei": "2026-11-26 13:53",
+      "month": "2026-11",
+      "title": "台幣貶破33元、台股跌逾23％落底了？ 專家揭築底4訊號",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E5%B9%A3%E8%B2%B6%E7%A0%B433%E5%85%83-%E5%8F%B0%E8%82%A1%E8%B7%8C%E9%80%BE23-%E8%90%BD%E5%BA%95%E4%BA%86-%E5%B0%88%E5%AE%B6%E6%8F%AD%E7%AF%89%E5%BA%954%E8%A8%8A%E8%99%9F-052900985.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E5%B9%A3%E8%B2%B6%E7%A0%B433%E5%85%83-%E5%8F%B0%E8%82%A1%E8%B7%8C%E9%80%BE23-%E8%90%BD%E5%BA%95%E4%BA%86-%E5%B0%88%E5%AE%B6%E6%8F%AD%E7%AF%89%E5%BA%954%E8%A8%8A%E8%99%9F-052900985.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-b9252c351a",
       "issue": "2026-11-26-AM",
       "published_at_utc": "2026-11-26T05:23:27Z",
@@ -1399,6 +1558,48 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "2603"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-2afdb28bee",
+      "issue": "2026-11-26-AM",
+      "published_at_utc": "2026-11-26T05:20:02Z",
+      "published_at_taipei": "2026-11-26 13:20",
+      "published_at_taipei_iso": "2026-11-26T13:20:02+08:00",
+      "first_seen_at_utc": "2026-11-26T05:53:53Z",
+      "first_seen_at_taipei": "2026-11-26 13:53",
+      "month": "2026-11",
+      "title": "2 Ways Anthropic's IPO Pays Off for Alphabet Investors",
+      "url": "https://www.fool.com/investing/2026/11/26/2-ways-anthropic-s-ipo-pays-off-for-alphabet-investors/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/26/2-ways-anthropic-s-ipo-pays-off-for-alphabet-investors?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-e4bbbbeebe",
+        "issue": "2026-11-25-PM",
+        "title": "Anthropic’s Chip Choices Could Change the Nvidia Story. Here’s How.",
+        "published_at_taipei": "2026-11-26 04:53",
+        "url": "https://www.fool.com/investing/2026/11/25/anthropic-s-chip-choices-could-change-the-nvidia-story-here-s-how/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
       ],
       "sentiment_method": "rule"
     },
@@ -6306,6 +6507,87 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261126-b71136ddb6",
+      "issue": "2026-11-26-AM",
+      "published_at_utc": "2026-11-26T05:46:00Z",
+      "published_at_taipei": "2026-11-26 13:46",
+      "published_at_taipei_iso": "2026-11-26T13:46:00+08:00",
+      "first_seen_at_utc": "2026-11-26T05:53:53Z",
+      "first_seen_at_taipei": "2026-11-26 13:53",
+      "month": "2026-11",
+      "title": "台股收盤／台積電跌5元！台股大漲956點 PCB族群領軍反攻",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%94%B6%E7%9B%A4-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E8%B7%8C5%E5%85%83-%E5%8F%B0%E8%82%A1%E5%A4%A7%E6%BC%B2956%E9%BB%9E-pcb%E6%97%8F%E7%BE%A4%E9%A0%98%E8%BB%8D%E5%8F%8D%E6%94%BB-054600223.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%94%B6%E7%9B%A4-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E8%B7%8C5%E5%85%83-%E5%8F%B0%E8%82%A1%E5%A4%A7%E6%BC%B2956%E9%BB%9E-pcb%E6%97%8F%E7%BE%A4%E9%A0%98%E8%BB%8D%E5%8F%8D%E6%94%BB-054600223.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-c9f7dd8e9d",
+        "issue": "2026-11-25-AM",
+        "title": "台股收盤／台積電重挫80元！台股殺1926點寫第6大收盤跌點 各類股慘綠",
+        "published_at_taipei": "2026-11-25 13:53",
+        "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%94%B6%E7%9B%A4-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E9%87%8D%E6%8C%AB80%E5%85%83-%E5%8F%B0%E8%82%A1%E6%AE%BA1926%E9%BB%9E%E5%AF%AB%E7%AC%AC6%E5%A4%A7%E6%94%B6%E7%9B%A4%E8%B7%8C%E9%BB%9E-%E5%90%84%E9%A1%9E%E8%82%A1%E6%85%98%E7%B6%A0-055300829.html"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 3,
+      "sentiment_reason": "命中：大漲；命中：反彈",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-f67ee3a12d",
+      "issue": "2026-11-26-AM",
+      "published_at_utc": "2026-11-26T05:41:22Z",
+      "published_at_taipei": "2026-11-26 13:41",
+      "published_at_taipei_iso": "2026-11-26T13:41:22+08:00",
+      "first_seen_at_utc": "2026-11-26T05:53:53Z",
+      "first_seen_at_taipei": "2026-11-26 13:53",
+      "month": "2026-11",
+      "title": "張惠妹親自操刀新歌製作唱盡人生遺憾 建中、台積電演出行程曝光",
+      "url": "https://tw.news.yahoo.com/%E5%BC%B5%E6%83%A0%E5%A6%B9%E8%A6%AA%E8%87%AA%E6%93%8D%E5%88%80%E6%96%B0%E6%AD%8C%E8%A3%BD%E4%BD%9C%E5%94%B1%E7%9B%A1%E4%BA%BA%E7%94%9F%E9%81%BA%E6%86%BE-%E5%BB%BA%E4%B8%AD-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%BC%94%E5%87%BA%E8%A1%8C%E7%A8%8B%E6%9B%9D%E5%85%89-054122704.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%BC%B5%E6%83%A0%E5%A6%B9%E8%A6%AA%E8%87%AA%E6%93%8D%E5%88%80%E6%96%B0%E6%AD%8C%E8%A3%BD%E4%BD%9C%E5%94%B1%E7%9B%A1%E4%BA%BA%E7%94%9F%E9%81%BA%E6%86%BE-%E5%BB%BA%E4%B8%AD-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%BC%94%E5%87%BA%E8%A1%8C%E7%A8%8B%E6%9B%9D%E5%85%89-054122704.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：合作",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-f096be019f",
       "issue": "2026-11-26-AM",
       "published_at_utc": "2026-11-26T05:35:58Z",
@@ -6416,6 +6698,42 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261126-721dbbfdcc",
+      "issue": "2026-11-26-AM",
+      "published_at_utc": "2026-11-26T05:29:00Z",
+      "published_at_taipei": "2026-11-26 13:29",
+      "published_at_taipei_iso": "2026-11-26T13:29:00+08:00",
+      "first_seen_at_utc": "2026-11-26T05:53:53Z",
+      "first_seen_at_taipei": "2026-11-26 13:53",
+      "month": "2026-11",
+      "title": "台幣貶破33元、台股跌逾23％落底了？ 專家揭築底4訊號",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E5%B9%A3%E8%B2%B6%E7%A0%B433%E5%85%83-%E5%8F%B0%E8%82%A1%E8%B7%8C%E9%80%BE23-%E8%90%BD%E5%BA%95%E4%BA%86-%E5%B0%88%E5%AE%B6%E6%8F%AD%E7%AF%89%E5%BA%954%E8%A8%8A%E8%99%9F-052900985.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E5%B9%A3%E8%B2%B6%E7%A0%B433%E5%85%83-%E5%8F%B0%E8%82%A1%E8%B7%8C%E9%80%BE23-%E8%90%BD%E5%BA%95%E4%BA%86-%E5%B0%88%E5%AE%B6%E6%8F%AD%E7%AF%89%E5%BA%954%E8%A8%8A%E8%99%9F-052900985.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261126-b9252c351a",
       "issue": "2026-11-26-AM",
       "published_at_utc": "2026-11-26T05:23:27Z",
@@ -6448,6 +6766,48 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "2603"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-2afdb28bee",
+      "issue": "2026-11-26-AM",
+      "published_at_utc": "2026-11-26T05:20:02Z",
+      "published_at_taipei": "2026-11-26 13:20",
+      "published_at_taipei_iso": "2026-11-26T13:20:02+08:00",
+      "first_seen_at_utc": "2026-11-26T05:53:53Z",
+      "first_seen_at_taipei": "2026-11-26 13:53",
+      "month": "2026-11",
+      "title": "2 Ways Anthropic's IPO Pays Off for Alphabet Investors",
+      "url": "https://www.fool.com/investing/2026/11/26/2-ways-anthropic-s-ipo-pays-off-for-alphabet-investors/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/26/2-ways-anthropic-s-ipo-pays-off-for-alphabet-investors?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-e4bbbbeebe",
+        "issue": "2026-11-25-PM",
+        "title": "Anthropic’s Chip Choices Could Change the Nvidia Story. Here’s How.",
+        "published_at_taipei": "2026-11-26 04:53",
+        "url": "https://www.fool.com/investing/2026/11/25/anthropic-s-chip-choices-could-change-the-nvidia-story-here-s-how/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
       ],
       "sentiment_method": "rule"
     },
@@ -6598,6 +6958,48 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261126-ed5b0e1156",
+      "issue": "2026-11-26-AM",
+      "published_at_utc": "2026-11-26T04:57:44Z",
+      "published_at_taipei": "2026-11-26 12:57",
+      "published_at_taipei_iso": "2026-11-26T12:57:44+08:00",
+      "first_seen_at_utc": "2026-11-26T05:53:53Z",
+      "first_seen_at_taipei": "2026-11-26 13:53",
+      "month": "2026-11",
+      "title": "LIVE – Crypto News Today: Is Bitcoin Bottoming Out? BTC Bounces Back After PCE Shock",
+      "url": "https://cryptonews.com/news/bitcoin-crypto-news-btc-bottom-pce-rebound/?.tsrc=rss",
+      "canonical_url": "https://cryptonews.com/news/bitcoin-crypto-news-btc-bottom-pce-rebound?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "鏈上資金",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（pce）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-b0fa9d898a",
+        "issue": "2026-11-23-AM",
+        "title": "LIVE Crypto News – Bitcoin and Ethereum Bounce Back: Market Finally Turning?",
+        "published_at_taipei": "2026-11-23 15:12",
+        "url": "https://cryptonews.com/news/crypto-news-bitcoin-ethereum-recovery/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "反轉：通膨／就業升溫（hotter）；命中：outflows；命中：bearish",
+      "sentiment_targets": [
+        "BTCUSDT"
       ],
       "sentiment_method": "rule"
     },
@@ -131860,9 +132262,9 @@
       "month": "2026-11",
       "date": "2026-11-26",
       "half": "AM",
-      "updated_at_taipei": "2026-11-26 13:38",
-      "count": 155,
-      "star3_count": 27,
+      "updated_at_taipei": "2026-11-26 13:53",
+      "count": 160,
+      "star3_count": 28,
       "failed_sources": [
         {
           "id": "binance_derivatives",
