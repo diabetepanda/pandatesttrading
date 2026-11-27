@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-27-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-27T19:34:06Z",
-  "updated_at_taipei": "2026-11-28 03:34",
-  "last_updated_utc": "2026-11-27T19:34:06Z",
-  "last_updated_taipei": "2026-11-28 03:34",
-  "next_update_hint": "約台北時間 03:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-27T19:49:11Z",
+  "updated_at_taipei": "2026-11-28 03:49",
+  "last_updated_utc": "2026-11-27T19:49:11Z",
+  "last_updated_taipei": "2026-11-28 03:49",
+  "next_update_hint": "約台北時間 04:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 19.093,
+    "total_elapsed_sec": 14.433,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 6,
+    "new_items_added": 1,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.245,
+        "elapsed_sec": 0.065,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.09,
+        "elapsed_sec": 0.185,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.123,
+        "elapsed_sec": 0.159,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.355,
+        "elapsed_sec": 0.12,
         "raw_count": 18,
         "items_kept": 16,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.257,
+        "elapsed_sec": 0.148,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.113,
+        "elapsed_sec": 0.083,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.091,
+        "elapsed_sec": 0.33,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.09,
+        "elapsed_sec": 0.074,
         "raw_count": 34,
         "items_kept": 15,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.363,
+        "elapsed_sec": 0.288,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.334,
+        "elapsed_sec": 0.307,
         "raw_count": 20,
         "items_kept": 18,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.279,
+        "elapsed_sec": 0.286,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.618,
+        "elapsed_sec": 0.632,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.659,
+        "elapsed_sec": 0.493,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.202,
+        "elapsed_sec": 0.419,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.129,
+        "elapsed_sec": 0.078,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 2.371,
+        "elapsed_sec": 1.044,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.073,
+        "elapsed_sec": 0.809,
         "raw_count": 1378,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.353,
+        "elapsed_sec": 1.3,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.334,
+        "elapsed_sec": 0.333,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.03,
+        "elapsed_sec": 0.99,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.358,
+        "elapsed_sec": 0.332,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.544,
+        "elapsed_sec": 1.22,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.094,
+        "elapsed_sec": 0.092,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.453,
+        "elapsed_sec": 0.472,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.296,
+        "elapsed_sec": 0.306,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -378.6,
+      "net_flow_usd_m": -379.0,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0013,
-        "oi_usd_b": 1.92
+        "funding_rate_pct": 0.0015,
+        "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0038,
-        "oi_usd_b": 1.13
+        "funding_rate_pct": -0.0035,
+        "oi_usd_b": 1.14
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 3,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 35.1,
-      "tx_count": 75109,
+      "mempool_vsize_mb": 35.2,
+      "tx_count": 75168,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -630,6 +630,48 @@
       "sentiment_label": "利空",
       "sentiment_score": -3,
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-c8401688de",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T19:46:02Z",
+      "published_at_taipei": "2026-11-28 03:46",
+      "published_at_taipei_iso": "2026-11-28T03:46:02+08:00",
+      "first_seen_at_utc": "2026-11-27T19:49:11Z",
+      "first_seen_at_taipei": "2026-11-28 03:49",
+      "month": "2026-11",
+      "title": "4 Scary Bitcoin Charts That Suggest This Bear Market Is Different",
+      "url": "https://decrypt.co/384177/bitcoin-4-scary-charts-crypto-winter-bear-market",
+      "canonical_url": "https://decrypt.co/384177/bitcoin-4-scary-charts-crypto-winter-bear-market",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-cef477cb89",
+        "issue": "2026-11-26-AM",
+        "title": "Spot bitcoin ETFs on track for worst month on record as bear market drags on",
+        "published_at_taipei": "2026-11-26 16:50",
+        "url": "https://www.theblock.co/news/markets/2026-11-26-spot-bitcoin-etfs-worst-month-november-446814"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
       ],
@@ -8685,6 +8727,48 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261128-c8401688de",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T19:46:02Z",
+      "published_at_taipei": "2026-11-28 03:46",
+      "published_at_taipei_iso": "2026-11-28T03:46:02+08:00",
+      "first_seen_at_utc": "2026-11-27T19:49:11Z",
+      "first_seen_at_taipei": "2026-11-28 03:49",
+      "month": "2026-11",
+      "title": "4 Scary Bitcoin Charts That Suggest This Bear Market Is Different",
+      "url": "https://decrypt.co/384177/bitcoin-4-scary-charts-crypto-winter-bear-market",
+      "canonical_url": "https://decrypt.co/384177/bitcoin-4-scary-charts-crypto-winter-bear-market",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-cef477cb89",
+        "issue": "2026-11-26-AM",
+        "title": "Spot bitcoin ETFs on track for worst month on record as bear market drags on",
+        "published_at_taipei": "2026-11-26 16:50",
+        "url": "https://www.theblock.co/news/markets/2026-11-26-spot-bitcoin-etfs-worst-month-november-446814"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-5ced41c9e6",
       "issue": "2026-11-27-PM",
@@ -167974,48 +168058,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261121-818425a6b7",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-20T19:38:05Z",
-      "published_at_taipei": "2026-11-21 03:38",
-      "published_at_taipei_iso": "2026-11-21T03:38:05+08:00",
-      "month": "2026-11",
-      "title": "AI推論｜範式智能API營收增逾15倍，貢獻四成新增營收",
-      "url": "https://news.cnyes.com/news/id/6669646",
-      "canonical_url": "https://news.cnyes.com/news/id/6669646",
-      "source": "鉅亨網（總經）",
-      "source_id": "cnyes_macro",
-      "category": "總經",
-      "symbols": [],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "市場重點（營收）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-76bc9360fc",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-20T19:37:27Z",
-      "published_at_taipei": "2026-11-21 03:37",
-      "published_at_taipei_iso": "2026-11-21T03:37:27+08:00",
-      "month": "2026-11",
-      "title": "Wrapped Monero token crashes 99.8% amid suspected $13.5M exploit",
-      "url": "https://cointelegraph.com/news/wrapped-monero-token-crashes-998-amid-suspected-135m-exploit?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "canonical_url": "https://cointelegraph.com/news/wrapped-monero-token-crashes-998-amid-suspected-135m-exploit",
-      "source": "Cointelegraph",
-      "source_id": "cointelegraph",
-      "category": "安全事件",
-      "symbols": [],
-      "importance": 3,
-      "importance_stars": "★★★",
-      "importance_reason": "分類規則（安全事件）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -168024,8 +168066,8 @@
       "month": "2026-11",
       "date": "2026-11-27",
       "half": "PM",
-      "updated_at_taipei": "2026-11-28 03:34",
-      "count": 211,
+      "updated_at_taipei": "2026-11-28 03:49",
+      "count": 212,
       "star3_count": 8,
       "failed_sources": [
         {
