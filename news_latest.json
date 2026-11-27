@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-27-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-27T17:03:23Z",
-  "updated_at_taipei": "2026-11-28 01:03",
-  "last_updated_utc": "2026-11-27T17:03:23Z",
-  "last_updated_taipei": "2026-11-28 01:03",
-  "next_update_hint": "約台北時間 01:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-27T17:18:37Z",
+  "updated_at_taipei": "2026-11-28 01:18",
+  "last_updated_utc": "2026-11-27T17:18:37Z",
+  "last_updated_taipei": "2026-11-28 01:18",
+  "next_update_hint": "約台北時間 01:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 18.869,
+    "total_elapsed_sec": 25.556,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 8,
+    "new_items_added": 11,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.11,
+        "elapsed_sec": 0.081,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.205,
+        "elapsed_sec": 0.289,
         "raw_count": 30,
         "items_kept": 8,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.188,
+        "elapsed_sec": 0.595,
         "raw_count": 30,
         "items_kept": 5,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.092,
+        "elapsed_sec": 0.104,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -73,15 +73,15 @@
         "kind": "rss",
         "status": "ok",
         "elapsed_sec": 0.272,
-        "raw_count": 19,
-        "items_kept": 16,
+        "raw_count": 20,
+        "items_kept": 18,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.203,
+        "elapsed_sec": 0.201,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.15,
+        "elapsed_sec": 0.199,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.12,
+        "elapsed_sec": 0.128,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.12,
+        "elapsed_sec": 0.119,
         "raw_count": 34,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.534,
+        "elapsed_sec": 0.521,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.321,
+        "elapsed_sec": 0.418,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.306,
+        "elapsed_sec": 0.272,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.777,
+        "elapsed_sec": 0.802,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.482,
+        "elapsed_sec": 0.664,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.243,
+        "elapsed_sec": 0.352,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.132,
+        "elapsed_sec": 0.258,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.252,
+        "elapsed_sec": 3.623,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.102,
+        "elapsed_sec": 0.092,
         "raw_count": 1378,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.211,
+        "elapsed_sec": 1.216,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.303,
+        "elapsed_sec": 0.495,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.176,
+        "elapsed_sec": 1.025,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.339,
+        "elapsed_sec": 0.455,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.581,
+        "elapsed_sec": 0.515,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.13,
+        "elapsed_sec": 0.265,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.537,
+        "elapsed_sec": 0.393,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.293,
+        "elapsed_sec": 0.357,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -270,9 +270,9 @@
   },
   "data_metrics_snapshot": {
     "stablecoins": {
-      "total_usd_b": 283.65,
-      "change_1d_usd_m": -324.2,
-      "change_1d_pct": -0.11,
+      "total_usd_b": 283.7,
+      "change_1d_usd_m": -282.1,
+      "change_1d_pct": -0.1,
       "alert_key": "stablecoins_supply:down"
     },
     "chains_tvl": {
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -379.0,
+      "net_flow_usd_m": -378.8,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": -0.0005,
-        "oi_usd_b": 1.9
+        "funding_rate_pct": -0.0002,
+        "oi_usd_b": 1.91
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0033,
-        "oi_usd_b": 1.14
+        "funding_rate_pct": -0.0038,
+        "oi_usd_b": 1.15
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 6,
-      "half_hour_fee_sat_vb": 5,
-      "mempool_vsize_mb": 36.4,
-      "tx_count": 85508,
+      "fastest_fee_sat_vb": 4,
+      "half_hour_fee_sat_vb": 4,
+      "mempool_vsize_mb": 34.2,
+      "tx_count": 76463,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -562,6 +562,248 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-133ecdbef6",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T17:05:25Z",
+      "published_at_taipei": "2026-11-28 01:05",
+      "published_at_taipei_iso": "2026-11-28T01:05:25+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Gold Suffers Worst 60-Day Loss Since the 1980s. Bitcoin’s Collapse Exposes an Even Bigger Problem.",
+      "url": "https://247wallst.com/investing/2026/11/27/gold-suffers-worst-60-day-loss-since-the-1980s-bitcoins-collapse-exposes-an-even-bigger-problem/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/27/gold-suffers-worst-60-day-loss-since-the-1980s-bitcoins-collapse-exposes-an-even-bigger-problem?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-9c1915999b",
+        "issue": "2026-11-24-AM",
+        "title": "Bitcoin dips back under $60K as gold seals worst 60-day loss since 1980s",
+        "published_at_taipei": "2026-11-24 17:25",
+        "url": "https://cointelegraph.com/markets/bitcoin-dips-60k-gold-worst-60-day-loss-1980s?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-251ad78018",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T17:04:16Z",
+      "published_at_taipei": "2026-11-28 01:04",
+      "published_at_taipei_iso": "2026-11-28T01:04:16+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Tesla Rallies 5% Amid SpaceX Merger Speculation; Rivian and SpaceX Rise 3%: Is Tesla’s 439x P/E a Warning Sign?",
+      "url": "https://247wallst.com/investing/2026/11/27/tesla-rallies-5-amid-spacex-merger-speculation-rivian-and-spacex-rise-3-is-teslas-439x-p-e-a-warning-sign/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/27/tesla-rallies-5-amid-spacex-merger-speculation-rivian-and-spacex-rise-3-is-teslas-439x-p-e-a-warning-sign?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rallies",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-881ec76d7f",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T17:03:33Z",
+      "published_at_taipei": "2026-11-28 01:03",
+      "published_at_taipei_iso": "2026-11-28T01:03:33+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "台股半導體ETF受益人10月來增逾4成",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8D%8A%E5%B0%8E%E9%AB%94etf%E5%8F%97%E7%9B%8A%E4%BA%BA10%E6%9C%88%E4%BE%86%E5%A2%9E%E9%80%BE4%E6%88%90-170333301.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8D%8A%E5%B0%8E%E9%AB%94etf%E5%8F%97%E7%9B%8A%E4%BA%BA10%E6%9C%88%E4%BE%86%E5%A2%9E%E9%80%BE4%E6%88%90-170333301.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261127-11ac5934d0",
+        "issue": "2026-11-27-AM",
+        "title": "川普晶片關稅未明反成契機？台股半導體ETF受益人10月來增逾四成",
+        "published_at_taipei": "2026-11-27 12:38",
+        "url": "https://tw.stock.yahoo.com/news/%E5%B7%9D%E6%99%AE%E6%99%B6%E7%89%87%E9%97%9C%E7%A8%85%E6%9C%AA%E6%98%8E%E5%8F%8D%E6%88%90%E5%A5%91%E6%A9%9F-%E5%8F%B0%E8%82%A1%E5%8D%8A%E5%B0%8E%E9%AB%94etf%E5%8F%97%E7%9B%8A%E4%BA%BA10%E6%9C%88%E4%BE%86%E5%A2%9E%E9%80%BE%E5%9B%9B%E6%88%90-043847067.html"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：關稅",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-79eed23efe",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T17:02:38Z",
+      "published_at_taipei": "2026-11-28 01:02",
+      "published_at_taipei_iso": "2026-11-28T01:02:38+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Billionaire Paul Tudor Jones’ Firm Nearly Doubled Its Bitcoin ETF Shares to 1.36 Million",
+      "url": "https://247wallst.com/investing/2026/11/27/billionaire-paul-tudor-jones-firm-nearly-doubled-its-bitcoin-etf-shares-to-1-36-million/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/27/billionaire-paul-tudor-jones-firm-nearly-doubled-its-bitcoin-etf-shares-to-1-36-million?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-81ff5a1566",
+        "issue": "2026-11-26-PM",
+        "title": "Billionaire Investor Paul Tudor Jones Just Doubled Down on Bitcoin. What Does He Know That the Market Doesn't?",
+        "published_at_taipei": "2026-11-26 20:20",
+        "url": "https://www.fool.com/investing/2026/11/26/billionaire-investor-paul-tudor-jones-just-doubled-down-on-bitcoin-what-does-he-know-that-you-dont/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-b8a4d181d1",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:57:00Z",
+      "published_at_taipei": "2026-11-28 00:57",
+      "published_at_taipei_iso": "2026-11-28T00:57:00+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "How much GOOGL stock does Alphabet CEO Sundar Pichai own?",
+      "url": "https://www.thestreet.com/personalities/how-much-alphabet-googl-stock-does-sundar-pichai-own?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/personalities/how-much-alphabet-googl-stock-does-sundar-pichai-own?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-3a52a70868",
+        "issue": "2026-11-23-PM",
+        "title": "How major US stock indexes fared Monday 11/23/2026",
+        "published_at_taipei": "2026-11-24 05:30",
+        "url": "https://finance.yahoo.com/markets/world-indices/articles/major-us-stock-indexes-fared-213053319.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-f5522490e7",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:49:30Z",
+      "published_at_taipei": "2026-11-28 00:49",
+      "published_at_taipei_iso": "2026-11-28T00:49:30+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Dual AI Growth Catalysts Position Advanced Micro Devices (AMD) for Revenue Acceleration",
+      "url": "https://finance.yahoo.com/technology/ai/articles/dual-ai-growth-catalysts-position-164930131.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/dual-ai-growth-catalysts-position-164930131.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-58930f5992",
       "issue": "2026-11-27-PM",
       "published_at_utc": "2026-11-27T16:48:51Z",
@@ -601,6 +843,93 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-b844eb5782",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:44:12Z",
+      "published_at_taipei": "2026-11-28 00:44",
+      "published_at_taipei_iso": "2026-11-28T00:44:12+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "10 Cheap Stocks With Explosive Growth Potential Heading into 2027",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/10-cheap-stocks-explosive-growth-164412420.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/10-cheap-stocks-explosive-growth-164412420.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-0c00b42008",
+        "issue": "2026-11-24-PM",
+        "title": "5 Dirt-Cheap Stocks Positioned to Soar in 2027",
+        "published_at_taipei": "2026-11-25 05:50",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/5-dirt-cheap-stocks-positioned-215028978.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：tariffs；命中：rally）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-8fa56d2484",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:41:01Z",
+      "published_at_taipei": "2026-11-28 00:41",
+      "published_at_taipei_iso": "2026-11-28T00:41:01+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Baron Fund Reestablishes Position in ServiceNow (NOW) Following Attractive Valuation Pullback",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/baron-fund-reestablishes-position-servicenow-164101736.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/baron-fund-reestablishes-position-servicenow-164101736.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-e867cb1fa3",
+        "issue": "2026-11-25-PM",
+        "title": "Update: Equities Mostly Down Intraday Following Hot Inflation Report",
+        "published_at_taipei": "2026-11-26 02:59",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/equities-mostly-down-intraday-following-185947099.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -4243,6 +4572,126 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-61a8edb9b3",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T17:05:52Z",
+      "published_at_taipei": "2026-11-28 01:05",
+      "published_at_taipei_iso": "2026-11-28T01:05:52+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Stocks gain as tech rebound holds, but Nvidia dips",
+      "url": "https://finance.yahoo.com/markets/world-indices/articles/asian-stocks-mostly-rise-markets-025702679.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/world-indices/articles/asian-stocks-mostly-rise-markets-025702679.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-3f70f94e7f",
+        "issue": "2026-11-26-AM",
+        "title": "FTSE 100 today: Stocks rise as tech rebound offsets tariff worries",
+        "published_at_taipei": "2026-11-26 16:50",
+        "url": "https://finance.yahoo.com/markets/world-indices/articles/ftse-100-today-stocks-rise-085009588.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-911abe2123",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:45:37Z",
+      "published_at_taipei": "2026-11-28 00:45",
+      "published_at_taipei_iso": "2026-11-28T00:45:37+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Skyworks (SWKS) Stock Is Up 6.5% Today Along With Chip Rally",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/skyworks-swks-stock-6-5-164537166.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/skyworks-swks-stock-6-5-164537166.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-b83a160f67",
+        "issue": "2026-11-24-PM",
+        "title": "Skyworks Solutions (SWKS) Stock Is Up 7.9% Today Without Company News",
+        "published_at_taipei": "2026-11-25 02:00",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/skyworks-solutions-swks-stock-7-180027915.html?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-bdeae7b36c",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:45:36Z",
+      "published_at_taipei": "2026-11-28 00:45",
+      "published_at_taipei_iso": "2026-11-28T00:45:36+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Bladex (BLX) Stock Is Up 4.4% Today as Latin America Names Rally",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/bladex-blx-stock-4-4-164536104.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/bladex-blx-stock-4-4-164536104.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-fe36373802",
+        "issue": "2026-11-25-PM",
+        "title": "EQT (EQT) Stock Is Up 4.8% Today as Energy Stocks Rally",
+        "published_at_taipei": "2026-11-26 03:15",
+        "url": "https://finance.yahoo.com/energy/articles/eqt-eqt-stock-4-8-191517165.html?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-6bb4b92e9a",
       "issue": "2026-11-27-PM",
       "published_at_utc": "2026-11-27T16:33:19Z",
@@ -6442,6 +6891,288 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261128-61a8edb9b3",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T17:05:52Z",
+      "published_at_taipei": "2026-11-28 01:05",
+      "published_at_taipei_iso": "2026-11-28T01:05:52+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Stocks gain as tech rebound holds, but Nvidia dips",
+      "url": "https://finance.yahoo.com/markets/world-indices/articles/asian-stocks-mostly-rise-markets-025702679.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/world-indices/articles/asian-stocks-mostly-rise-markets-025702679.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-3f70f94e7f",
+        "issue": "2026-11-26-AM",
+        "title": "FTSE 100 today: Stocks rise as tech rebound offsets tariff worries",
+        "published_at_taipei": "2026-11-26 16:50",
+        "url": "https://finance.yahoo.com/markets/world-indices/articles/ftse-100-today-stocks-rise-085009588.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-133ecdbef6",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T17:05:25Z",
+      "published_at_taipei": "2026-11-28 01:05",
+      "published_at_taipei_iso": "2026-11-28T01:05:25+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Gold Suffers Worst 60-Day Loss Since the 1980s. Bitcoin’s Collapse Exposes an Even Bigger Problem.",
+      "url": "https://247wallst.com/investing/2026/11/27/gold-suffers-worst-60-day-loss-since-the-1980s-bitcoins-collapse-exposes-an-even-bigger-problem/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/27/gold-suffers-worst-60-day-loss-since-the-1980s-bitcoins-collapse-exposes-an-even-bigger-problem?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-9c1915999b",
+        "issue": "2026-11-24-AM",
+        "title": "Bitcoin dips back under $60K as gold seals worst 60-day loss since 1980s",
+        "published_at_taipei": "2026-11-24 17:25",
+        "url": "https://cointelegraph.com/markets/bitcoin-dips-60k-gold-worst-60-day-loss-1980s?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-251ad78018",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T17:04:16Z",
+      "published_at_taipei": "2026-11-28 01:04",
+      "published_at_taipei_iso": "2026-11-28T01:04:16+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Tesla Rallies 5% Amid SpaceX Merger Speculation; Rivian and SpaceX Rise 3%: Is Tesla’s 439x P/E a Warning Sign?",
+      "url": "https://247wallst.com/investing/2026/11/27/tesla-rallies-5-amid-spacex-merger-speculation-rivian-and-spacex-rise-3-is-teslas-439x-p-e-a-warning-sign/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/27/tesla-rallies-5-amid-spacex-merger-speculation-rivian-and-spacex-rise-3-is-teslas-439x-p-e-a-warning-sign?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rallies",
+      "sentiment_targets": [
+        "TSLA",
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-881ec76d7f",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T17:03:33Z",
+      "published_at_taipei": "2026-11-28 01:03",
+      "published_at_taipei_iso": "2026-11-28T01:03:33+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "台股半導體ETF受益人10月來增逾4成",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8D%8A%E5%B0%8E%E9%AB%94etf%E5%8F%97%E7%9B%8A%E4%BA%BA10%E6%9C%88%E4%BE%86%E5%A2%9E%E9%80%BE4%E6%88%90-170333301.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%8D%8A%E5%B0%8E%E9%AB%94etf%E5%8F%97%E7%9B%8A%E4%BA%BA10%E6%9C%88%E4%BE%86%E5%A2%9E%E9%80%BE4%E6%88%90-170333301.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261127-11ac5934d0",
+        "issue": "2026-11-27-AM",
+        "title": "川普晶片關稅未明反成契機？台股半導體ETF受益人10月來增逾四成",
+        "published_at_taipei": "2026-11-27 12:38",
+        "url": "https://tw.stock.yahoo.com/news/%E5%B7%9D%E6%99%AE%E6%99%B6%E7%89%87%E9%97%9C%E7%A8%85%E6%9C%AA%E6%98%8E%E5%8F%8D%E6%88%90%E5%A5%91%E6%A9%9F-%E5%8F%B0%E8%82%A1%E5%8D%8A%E5%B0%8E%E9%AB%94etf%E5%8F%97%E7%9B%8A%E4%BA%BA10%E6%9C%88%E4%BE%86%E5%A2%9E%E9%80%BE%E5%9B%9B%E6%88%90-043847067.html"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：關稅",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-79eed23efe",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T17:02:38Z",
+      "published_at_taipei": "2026-11-28 01:02",
+      "published_at_taipei_iso": "2026-11-28T01:02:38+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Billionaire Paul Tudor Jones’ Firm Nearly Doubled Its Bitcoin ETF Shares to 1.36 Million",
+      "url": "https://247wallst.com/investing/2026/11/27/billionaire-paul-tudor-jones-firm-nearly-doubled-its-bitcoin-etf-shares-to-1-36-million/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/27/billionaire-paul-tudor-jones-firm-nearly-doubled-its-bitcoin-etf-shares-to-1-36-million?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-81ff5a1566",
+        "issue": "2026-11-26-PM",
+        "title": "Billionaire Investor Paul Tudor Jones Just Doubled Down on Bitcoin. What Does He Know That the Market Doesn't?",
+        "published_at_taipei": "2026-11-26 20:20",
+        "url": "https://www.fool.com/investing/2026/11/26/billionaire-investor-paul-tudor-jones-just-doubled-down-on-bitcoin-what-does-he-know-that-you-dont/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-b8a4d181d1",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:57:00Z",
+      "published_at_taipei": "2026-11-28 00:57",
+      "published_at_taipei_iso": "2026-11-28T00:57:00+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "How much GOOGL stock does Alphabet CEO Sundar Pichai own?",
+      "url": "https://www.thestreet.com/personalities/how-much-alphabet-googl-stock-does-sundar-pichai-own?.tsrc=rss",
+      "canonical_url": "https://thestreet.com/personalities/how-much-alphabet-googl-stock-does-sundar-pichai-own?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-3a52a70868",
+        "issue": "2026-11-23-PM",
+        "title": "How major US stock indexes fared Monday 11/23/2026",
+        "published_at_taipei": "2026-11-24 05:30",
+        "url": "https://finance.yahoo.com/markets/world-indices/articles/major-us-stock-indexes-fared-213053319.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-f5522490e7",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:49:30Z",
+      "published_at_taipei": "2026-11-28 00:49",
+      "published_at_taipei_iso": "2026-11-28T00:49:30+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Dual AI Growth Catalysts Position Advanced Micro Devices (AMD) for Revenue Acceleration",
+      "url": "https://finance.yahoo.com/technology/ai/articles/dual-ai-growth-catalysts-position-164930131.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/dual-ai-growth-catalysts-position-164930131.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-58930f5992",
       "issue": "2026-11-27-PM",
       "published_at_utc": "2026-11-27T16:48:51Z",
@@ -6481,6 +7212,173 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-911abe2123",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:45:37Z",
+      "published_at_taipei": "2026-11-28 00:45",
+      "published_at_taipei_iso": "2026-11-28T00:45:37+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Skyworks (SWKS) Stock Is Up 6.5% Today Along With Chip Rally",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/skyworks-swks-stock-6-5-164537166.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/skyworks-swks-stock-6-5-164537166.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-b83a160f67",
+        "issue": "2026-11-24-PM",
+        "title": "Skyworks Solutions (SWKS) Stock Is Up 7.9% Today Without Company News",
+        "published_at_taipei": "2026-11-25 02:00",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/skyworks-solutions-swks-stock-7-180027915.html?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-bdeae7b36c",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:45:36Z",
+      "published_at_taipei": "2026-11-28 00:45",
+      "published_at_taipei_iso": "2026-11-28T00:45:36+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Bladex (BLX) Stock Is Up 4.4% Today as Latin America Names Rally",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/bladex-blx-stock-4-4-164536104.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/bladex-blx-stock-4-4-164536104.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-fe36373802",
+        "issue": "2026-11-25-PM",
+        "title": "EQT (EQT) Stock Is Up 4.8% Today as Energy Stocks Rally",
+        "published_at_taipei": "2026-11-26 03:15",
+        "url": "https://finance.yahoo.com/energy/articles/eqt-eqt-stock-4-8-191517165.html?.tsrc=rss"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：rally",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-b844eb5782",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:44:12Z",
+      "published_at_taipei": "2026-11-28 00:44",
+      "published_at_taipei_iso": "2026-11-28T00:44:12+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "10 Cheap Stocks With Explosive Growth Potential Heading into 2027",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/10-cheap-stocks-explosive-growth-164412420.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/10-cheap-stocks-explosive-growth-164412420.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "NAS100",
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-0c00b42008",
+        "issue": "2026-11-24-PM",
+        "title": "5 Dirt-Cheap Stocks Positioned to Soar in 2027",
+        "published_at_taipei": "2026-11-25 05:50",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/5-dirt-cheap-stocks-positioned-215028978.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：tariffs；命中：rally）",
+      "sentiment_targets": [
+        "NAS100",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-8fa56d2484",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T16:41:01Z",
+      "published_at_taipei": "2026-11-28 00:41",
+      "published_at_taipei_iso": "2026-11-28T00:41:01+08:00",
+      "first_seen_at_utc": "2026-11-27T17:18:37Z",
+      "first_seen_at_taipei": "2026-11-28 01:18",
+      "month": "2026-11",
+      "title": "Baron Fund Reestablishes Position in ServiceNow (NOW) Following Attractive Valuation Pullback",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/baron-fund-reestablishes-position-servicenow-164101736.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/baron-fund-reestablishes-position-servicenow-164101736.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-e867cb1fa3",
+        "issue": "2026-11-25-PM",
+        "title": "Update: Equities Mostly Down Intraday Following Hot Inflation Report",
+        "published_at_taipei": "2026-11-26 02:59",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/equities-mostly-down-intraday-following-185947099.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -163800,8 +164698,8 @@
       "month": "2026-11",
       "date": "2026-11-27",
       "half": "PM",
-      "updated_at_taipei": "2026-11-28 01:03",
-      "count": 155,
+      "updated_at_taipei": "2026-11-28 01:18",
+      "count": 166,
       "star3_count": 6,
       "failed_sources": [
         {
