@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-27-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-27T18:03:40Z",
-  "updated_at_taipei": "2026-11-28 02:03",
-  "last_updated_utc": "2026-11-27T18:03:40Z",
-  "last_updated_taipei": "2026-11-28 02:03",
-  "next_update_hint": "約台北時間 02:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-27T18:18:51Z",
+  "updated_at_taipei": "2026-11-28 02:18",
+  "last_updated_utc": "2026-11-27T18:18:51Z",
+  "last_updated_taipei": "2026-11-28 02:18",
+  "next_update_hint": "約台北時間 02:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 21.234,
+    "total_elapsed_sec": 14.863,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 11,
+    "new_items_added": 3,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.079,
+        "elapsed_sec": 0.072,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 1.04,
+        "elapsed_sec": 0.258,
         "raw_count": 30,
         "items_kept": 8,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.926,
+        "elapsed_sec": 0.215,
         "raw_count": 30,
         "items_kept": 5,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.131,
+        "elapsed_sec": 0.053,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.253,
+        "elapsed_sec": 0.274,
         "raw_count": 19,
         "items_kept": 14,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.161,
+        "elapsed_sec": 0.122,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.113,
+        "elapsed_sec": 0.086,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.119,
+        "elapsed_sec": 0.08,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.114,
+        "elapsed_sec": 0.098,
         "raw_count": 34,
         "items_kept": 15,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.426,
+        "elapsed_sec": 0.382,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.455,
+        "elapsed_sec": 0.416,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.348,
+        "elapsed_sec": 0.252,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.717,
+        "elapsed_sec": 0.74,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.819,
+        "elapsed_sec": 0.528,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.376,
+        "elapsed_sec": 0.321,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.247,
+        "elapsed_sec": 0.071,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.705,
+        "elapsed_sec": 0.494,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.073,
+        "elapsed_sec": 0.062,
         "raw_count": 1378,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.27,
+        "elapsed_sec": 1.357,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.46,
+        "elapsed_sec": 0.328,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.052,
+        "elapsed_sec": 0.956,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.385,
+        "elapsed_sec": 0.348,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.667,
+        "elapsed_sec": 1.316,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.363,
+        "elapsed_sec": 0.12,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.426,
+        "elapsed_sec": 0.403,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.343,
+        "elapsed_sec": 0.301,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -270,8 +270,8 @@
   },
   "data_metrics_snapshot": {
     "stablecoins": {
-      "total_usd_b": 283.7,
-      "change_1d_usd_m": -282.1,
+      "total_usd_b": 283.69,
+      "change_1d_usd_m": -288.6,
       "change_1d_pct": -0.1,
       "alert_key": "stablecoins_supply:down"
     },
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -377.5,
+      "net_flow_usd_m": -378.2,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0012,
+        "funding_rate_pct": 0.0014,
         "oi_usd_b": 1.91
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.005,
+        "funding_rate_pct": -0.0049,
         "oi_usd_b": 1.13
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 5,
-      "half_hour_fee_sat_vb": 4,
-      "mempool_vsize_mb": 34.9,
-      "tx_count": 77509,
+      "fastest_fee_sat_vb": 7,
+      "half_hour_fee_sat_vb": 6,
+      "mempool_vsize_mb": 36.7,
+      "tx_count": 84073,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -595,6 +595,126 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-f7ef76b6b0",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T18:16:03Z",
+      "published_at_taipei": "2026-11-28 02:16",
+      "published_at_taipei_iso": "2026-11-28T02:16:03+08:00",
+      "first_seen_at_utc": "2026-11-27T18:18:51Z",
+      "first_seen_at_taipei": "2026-11-28 02:18",
+      "month": "2026-11",
+      "title": "$7 Billion in Bitcoin Options Just Expired: Here’s What It Means",
+      "url": "https://decrypt.co/384154/7-billion-bitcoin-options-just-expired-what-it-means",
+      "canonical_url": "https://decrypt.co/384154/7-billion-bitcoin-options-just-expired-what-it-means",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-dabaea2df0",
+        "issue": "2026-11-23-AM",
+        "title": "Bitcoin breaks a record streak of 'lower highs.' Here's what it means",
+        "published_at_taipei": "2026-11-23 18:31",
+        "url": "https://www.coindesk.com/markets/2026/11/23/bitcoin-breaks-a-record-streak-of-lower-highs-here-s-what-it-means"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-d5b29f100b",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T18:13:45Z",
+      "published_at_taipei": "2026-11-28 02:13",
+      "published_at_taipei_iso": "2026-11-28T02:13:45+08:00",
+      "first_seen_at_utc": "2026-11-27T18:18:51Z",
+      "first_seen_at_taipei": "2026-11-28 02:18",
+      "month": "2026-11",
+      "title": "CryptoQuant says bitcoin price recovery needs USDT supply growth",
+      "url": "https://www.theblock.co/news/markets/2026-11-27-cryptoquant-bitcoin-price-recovery-usdt-supply-growth-447560",
+      "canonical_url": "https://theblock.co/news/markets/2026-11-27-cryptoquant-bitcoin-price-recovery-usdt-supply-growth-447560",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-6f509584b9",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T18:00:23Z",
+      "published_at_taipei": "2026-11-28 02:00",
+      "published_at_taipei_iso": "2026-11-28T02:00:23+08:00",
+      "first_seen_at_utc": "2026-11-27T18:18:51Z",
+      "first_seen_at_taipei": "2026-11-28 02:18",
+      "month": "2026-11",
+      "title": "Franklin Templeton Flags Hidden Risk in S&P 500 Investing",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/franklin-templeton-flags-hidden-risk-180023148.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/franklin-templeton-flags-hidden-risk-180023148.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-51c37a08f8",
+        "issue": "2026-11-25-PM",
+        "title": "Franklin Templeton Adds Hyperliquid's HYPE to Its Crypto Index ETF",
+        "published_at_taipei": "2026-11-26 02:15",
+        "url": "https://www.cryptoprowl.com/releases/franklin-templeton-adds-hyperliquids-hype-to-its-crypto-index-etf-8076?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -7851,6 +7971,126 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261128-f7ef76b6b0",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T18:16:03Z",
+      "published_at_taipei": "2026-11-28 02:16",
+      "published_at_taipei_iso": "2026-11-28T02:16:03+08:00",
+      "first_seen_at_utc": "2026-11-27T18:18:51Z",
+      "first_seen_at_taipei": "2026-11-28 02:18",
+      "month": "2026-11",
+      "title": "$7 Billion in Bitcoin Options Just Expired: Here’s What It Means",
+      "url": "https://decrypt.co/384154/7-billion-bitcoin-options-just-expired-what-it-means",
+      "canonical_url": "https://decrypt.co/384154/7-billion-bitcoin-options-just-expired-what-it-means",
+      "source": "Decrypt",
+      "source_id": "decrypt",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-dabaea2df0",
+        "issue": "2026-11-23-AM",
+        "title": "Bitcoin breaks a record streak of 'lower highs.' Here's what it means",
+        "published_at_taipei": "2026-11-23 18:31",
+        "url": "https://www.coindesk.com/markets/2026/11/23/bitcoin-breaks-a-record-streak-of-lower-highs-here-s-what-it-means"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-d5b29f100b",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T18:13:45Z",
+      "published_at_taipei": "2026-11-28 02:13",
+      "published_at_taipei_iso": "2026-11-28T02:13:45+08:00",
+      "first_seen_at_utc": "2026-11-27T18:18:51Z",
+      "first_seen_at_taipei": "2026-11-28 02:18",
+      "month": "2026-11",
+      "title": "CryptoQuant says bitcoin price recovery needs USDT supply growth",
+      "url": "https://www.theblock.co/news/markets/2026-11-27-cryptoquant-bitcoin-price-recovery-usdt-supply-growth-447560",
+      "canonical_url": "https://theblock.co/news/markets/2026-11-27-cryptoquant-bitcoin-price-recovery-usdt-supply-growth-447560",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-6f509584b9",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T18:00:23Z",
+      "published_at_taipei": "2026-11-28 02:00",
+      "published_at_taipei_iso": "2026-11-28T02:00:23+08:00",
+      "first_seen_at_utc": "2026-11-27T18:18:51Z",
+      "first_seen_at_taipei": "2026-11-28 02:18",
+      "month": "2026-11",
+      "title": "Franklin Templeton Flags Hidden Risk in S&P 500 Investing",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/franklin-templeton-flags-hidden-risk-180023148.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/franklin-templeton-flags-hidden-risk-180023148.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-51c37a08f8",
+        "issue": "2026-11-25-PM",
+        "title": "Franklin Templeton Adds Hyperliquid's HYPE to Its Crypto Index ETF",
+        "published_at_taipei": "2026-11-26 02:15",
+        "url": "https://www.cryptoprowl.com/releases/franklin-templeton-adds-hyperliquids-hype-to-its-crypto-index-etf-8076?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-1353588133",
       "issue": "2026-11-27-PM",
@@ -166522,75 +166762,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261121-8d0a4d393e",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-20T18:17:39Z",
-      "published_at_taipei": "2026-11-21 02:17",
-      "published_at_taipei_iso": "2026-11-21T02:17:39+08:00",
-      "month": "2026-11",
-      "title": "JPMorgan says bitcoin price correction widens gap to estimated $86,000 production cost",
-      "url": "https://www.theblock.co/news/markets/2026-11-20-jpmorgan-bitcoin-price-correction-gap-86000-production-cost-444763",
-      "canonical_url": "https://theblock.co/news/markets/2026-11-20-jpmorgan-bitcoin-price-correction-gap-86000-production-cost-444763",
-      "source": "The Block",
-      "source_id": "theblock",
-      "category": "加密貨幣",
-      "symbols": [
-        "BTCUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-1d723ba2e4",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-20T18:16:02Z",
-      "published_at_taipei": "2026-11-21 02:16",
-      "published_at_taipei_iso": "2026-11-21T02:16:02+08:00",
-      "month": "2026-11",
-      "title": "Google Gives Gemini Control of Mac Apps, But Its New AI Agent Comes With Risks",
-      "url": "https://decrypt.co/383733/google-gives-gemini-control-mac-apps-ai-agent",
-      "canonical_url": "https://decrypt.co/383733/google-gives-gemini-control-mac-apps-ai-agent",
-      "source": "Decrypt",
-      "source_id": "decrypt",
-      "category": "美股",
-      "symbols": [
-        "GOOGL"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "追蹤標的相關",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-de0e9da352",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-20T18:13:52Z",
-      "published_at_taipei": "2026-11-21 02:13",
-      "published_at_taipei_iso": "2026-11-21T02:13:52+08:00",
-      "month": "2026-11",
-      "title": "Bitcoin plunges below $59,000 as rush to cash puts new bear market lows back in play",
-      "url": "https://www.coindesk.com/markets/2026/11/20/bitcoin-plunges-below-usd59-000-as-rush-to-cash-puts-new-bear-market-lows-back-in-play",
-      "canonical_url": "https://coindesk.com/markets/2026/11/20/bitcoin-plunges-below-usd59-000-as-rush-to-cash-puts-new-bear-market-lows-back-in-play",
-      "source": "CoinDesk",
-      "source_id": "coindesk",
-      "category": "聯準會",
-      "symbols": [
-        "BTCUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -166599,8 +166770,8 @@
       "month": "2026-11",
       "date": "2026-11-27",
       "half": "PM",
-      "updated_at_taipei": "2026-11-28 02:03",
-      "count": 190,
+      "updated_at_taipei": "2026-11-28 02:18",
+      "count": 193,
       "star3_count": 7,
       "failed_sources": [
         {
