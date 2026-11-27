@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-27-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-27T05:30:22Z",
-  "updated_at_taipei": "2026-11-27 13:30",
-  "last_updated_utc": "2026-11-27T05:30:22Z",
-  "last_updated_taipei": "2026-11-27 13:30",
-  "next_update_hint": "約台北時間 13:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-27T05:45:17Z",
+  "updated_at_taipei": "2026-11-27 13:45",
+  "last_updated_utc": "2026-11-27T05:45:17Z",
+  "last_updated_taipei": "2026-11-27 13:45",
+  "next_update_hint": "約台北時間 13:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 20.519,
+    "total_elapsed_sec": 19.238,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 6,
+    "new_items_added": 4,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.064,
+        "elapsed_sec": 0.089,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.233,
+        "elapsed_sec": 0.167,
         "raw_count": 30,
         "items_kept": 11,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.125,
+        "elapsed_sec": 0.11,
         "raw_count": 30,
         "items_kept": 6,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.058,
+        "elapsed_sec": 0.146,
         "raw_count": 10,
         "items_kept": 1,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.256,
+        "elapsed_sec": 0.206,
         "raw_count": 19,
         "items_kept": 15,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.164,
+        "elapsed_sec": 0.281,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.117,
+        "elapsed_sec": 0.098,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.081,
+        "elapsed_sec": 0.118,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.086,
+        "elapsed_sec": 0.112,
         "raw_count": 35,
         "items_kept": 17,
         "error": null
@@ -117,16 +117,16 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.547,
+        "elapsed_sec": 0.691,
         "raw_count": 20,
-        "items_kept": 12,
+        "items_kept": 13,
         "error": null
       },
       "cnyes_us_stock": {
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.462,
+        "elapsed_sec": 0.391,
         "raw_count": 20,
         "items_kept": 16,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.328,
+        "elapsed_sec": 0.57,
         "raw_count": 20,
         "items_kept": 5,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.744,
+        "elapsed_sec": 0.785,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.379,
+        "elapsed_sec": 0.442,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.403,
+        "elapsed_sec": 0.569,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.632,
+        "elapsed_sec": 0.129,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.895,
+        "elapsed_sec": 1.764,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.037,
+        "elapsed_sec": 0.237,
         "raw_count": 1378,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.317,
+        "elapsed_sec": 1.639,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.382,
+        "elapsed_sec": 0.497,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.4,
+        "elapsed_sec": 1.49,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.438,
+        "elapsed_sec": 0.46,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.638,
+        "elapsed_sec": 0.658,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.183,
+        "elapsed_sec": 0.254,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.531,
+        "elapsed_sec": 0.49,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.379,
+        "elapsed_sec": 0.386,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -389.4,
+      "net_flow_usd_m": -389.5,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0095,
+        "funding_rate_pct": 0.0094,
         "oi_usd_b": 2.01
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0062,
-        "oi_usd_b": 1.17
+        "funding_rate_pct": 0.0064,
+        "oi_usd_b": 1.16
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 3,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 33.1,
-      "tx_count": 73382,
+      "mempool_vsize_mb": 30.1,
+      "tx_count": 68515,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -882,6 +882,86 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-c2f668f8f0",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T05:42:17Z",
+      "published_at_taipei": "2026-11-27 13:42",
+      "published_at_taipei_iso": "2026-11-27T13:42:17+08:00",
+      "first_seen_at_utc": "2026-11-27T05:45:17Z",
+      "first_seen_at_taipei": "2026-11-27 13:45",
+      "month": "2026-11",
+      "title": "〈台股盤後〉尾盤強拉197點由黑翻紅 收漲156點守3萬9 PCB、光通訊股走弱",
+      "url": "https://news.cnyes.com/news/id/6673677",
+      "canonical_url": "https://news.cnyes.com/news/id/6673677",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330",
+        "2454",
+        "2317",
+        "2382"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII",
+        "2330",
+        "2454",
+        "2317",
+        "2382"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-7ade9fea7d",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T05:40:04Z",
+      "published_at_taipei": "2026-11-27 13:40",
+      "published_at_taipei_iso": "2026-11-27T13:40:04+08:00",
+      "first_seen_at_utc": "2026-11-27T05:45:17Z",
+      "first_seen_at_taipei": "2026-11-27 13:45",
+      "month": "2026-11",
+      "title": "Neuralink腦機介面獲FDA放行關鍵性臨床試驗 衝刺漸凍症患者上市前驗證",
+      "url": "https://news.cnyes.com/news/id/6673655",
+      "canonical_url": "https://news.cnyes.com/news/id/6673655",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "LINKUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "LINKUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-5c07fbbcd4",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T05:30:09Z",
@@ -920,6 +1000,78 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-5d3bdf7503",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T05:30:05Z",
+      "published_at_taipei": "2026-11-27 13:30",
+      "published_at_taipei_iso": "2026-11-27T13:30:05+08:00",
+      "first_seen_at_utc": "2026-11-27T05:45:17Z",
+      "first_seen_at_taipei": "2026-11-27 13:45",
+      "month": "2026-11",
+      "title": "川普預計黃仁勳國會聽證結束後 赴鳳凰城參加台積電擴建動土典禮",
+      "url": "https://tw.news.yahoo.com/%E5%B7%9D%E6%99%AE%E9%A0%90%E8%A8%88%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9C%8B%E6%9C%83%E8%81%BD%E8%AD%89%E7%B5%90%E6%9D%9F%E5%BE%8C-%E8%B5%B4%E9%B3%B3%E5%87%B0%E5%9F%8E%E5%8F%83%E5%8A%A0%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%93%B4%E5%BB%BA%E5%8B%95%E5%9C%9F%E5%85%B8%E7%A6%AE-053005064.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%B7%9D%E6%99%AE%E9%A0%90%E8%A8%88%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9C%8B%E6%9C%83%E8%81%BD%E8%AD%89%E7%B5%90%E6%9D%9F%E5%BE%8C-%E8%B5%B4%E9%B3%B3%E5%87%B0%E5%9F%8E%E5%8F%83%E5%8A%A0%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%93%B4%E5%BB%BA%E5%8B%95%E5%9C%9F%E5%85%B8%E7%A6%AE-053005064.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-91c4dc749b",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T05:30:00Z",
+      "published_at_taipei": "2026-11-27 13:30",
+      "published_at_taipei_iso": "2026-11-27T13:30:00+08:00",
+      "first_seen_at_utc": "2026-11-27T05:45:17Z",
+      "first_seen_at_taipei": "2026-11-27 13:45",
+      "month": "2026-11",
+      "title": "台股震盪多空雙賺！他曬對帳單「3檔ETF」短線狂撈2495萬 進出轉折全曝光",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%A4%9A%E7%A9%BA%E9%9B%99%E8%B3%BA-%E4%BB%96%E6%9B%AC%E5%B0%8D%E5%B8%B3%E5%96%AE-3%E6%AA%94etf-%E7%9F%AD%E7%B7%9A%E7%8B%82%E6%92%882495%E8%90%AC-%E9%80%B2%E5%87%BA%E8%BD%89%E6%8A%98%E5%85%A8%E6%9B%9D%E5%85%89-053000847.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%A4%9A%E7%A9%BA%E9%9B%99%E8%B3%BA-%E4%BB%96%E6%9B%AC%E5%B0%8D%E5%B8%B3%E5%96%AE-3%E6%AA%94etf-%E7%9F%AD%E7%B7%9A%E7%8B%82%E6%92%882495%E8%90%AC-%E9%80%B2%E5%87%BA%E8%BD%89%E6%8A%98%E5%85%A8%E6%9B%9D%E5%85%89-053000847.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -5087,6 +5239,86 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261127-c2f668f8f0",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T05:42:17Z",
+      "published_at_taipei": "2026-11-27 13:42",
+      "published_at_taipei_iso": "2026-11-27T13:42:17+08:00",
+      "first_seen_at_utc": "2026-11-27T05:45:17Z",
+      "first_seen_at_taipei": "2026-11-27 13:45",
+      "month": "2026-11",
+      "title": "〈台股盤後〉尾盤強拉197點由黑翻紅 收漲156點守3萬9 PCB、光通訊股走弱",
+      "url": "https://news.cnyes.com/news/id/6673677",
+      "canonical_url": "https://news.cnyes.com/news/id/6673677",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330",
+        "2454",
+        "2317",
+        "2382"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII",
+        "2330",
+        "2454",
+        "2317",
+        "2382"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-7ade9fea7d",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T05:40:04Z",
+      "published_at_taipei": "2026-11-27 13:40",
+      "published_at_taipei_iso": "2026-11-27T13:40:04+08:00",
+      "first_seen_at_utc": "2026-11-27T05:45:17Z",
+      "first_seen_at_taipei": "2026-11-27 13:45",
+      "month": "2026-11",
+      "title": "Neuralink腦機介面獲FDA放行關鍵性臨床試驗 衝刺漸凍症患者上市前驗證",
+      "url": "https://news.cnyes.com/news/id/6673655",
+      "canonical_url": "https://news.cnyes.com/news/id/6673655",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "LINKUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "LINKUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-5c07fbbcd4",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T05:30:09Z",
@@ -5125,6 +5357,78 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-5d3bdf7503",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T05:30:05Z",
+      "published_at_taipei": "2026-11-27 13:30",
+      "published_at_taipei_iso": "2026-11-27T13:30:05+08:00",
+      "first_seen_at_utc": "2026-11-27T05:45:17Z",
+      "first_seen_at_taipei": "2026-11-27 13:45",
+      "month": "2026-11",
+      "title": "川普預計黃仁勳國會聽證結束後 赴鳳凰城參加台積電擴建動土典禮",
+      "url": "https://tw.news.yahoo.com/%E5%B7%9D%E6%99%AE%E9%A0%90%E8%A8%88%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9C%8B%E6%9C%83%E8%81%BD%E8%AD%89%E7%B5%90%E6%9D%9F%E5%BE%8C-%E8%B5%B4%E9%B3%B3%E5%87%B0%E5%9F%8E%E5%8F%83%E5%8A%A0%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%93%B4%E5%BB%BA%E5%8B%95%E5%9C%9F%E5%85%B8%E7%A6%AE-053005064.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%B7%9D%E6%99%AE%E9%A0%90%E8%A8%88%E9%BB%83%E4%BB%81%E5%8B%B3%E5%9C%8B%E6%9C%83%E8%81%BD%E8%AD%89%E7%B5%90%E6%9D%9F%E5%BE%8C-%E8%B5%B4%E9%B3%B3%E5%87%B0%E5%9F%8E%E5%8F%83%E5%8A%A0%E5%8F%B0%E7%A9%8D%E9%9B%BB%E6%93%B4%E5%BB%BA%E5%8B%95%E5%9C%9F%E5%85%B8%E7%A6%AE-053005064.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-91c4dc749b",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T05:30:00Z",
+      "published_at_taipei": "2026-11-27 13:30",
+      "published_at_taipei_iso": "2026-11-27T13:30:00+08:00",
+      "first_seen_at_utc": "2026-11-27T05:45:17Z",
+      "first_seen_at_taipei": "2026-11-27 13:45",
+      "month": "2026-11",
+      "title": "台股震盪多空雙賺！他曬對帳單「3檔ETF」短線狂撈2495萬 進出轉折全曝光",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%A4%9A%E7%A9%BA%E9%9B%99%E8%B3%BA-%E4%BB%96%E6%9B%AC%E5%B0%8D%E5%B8%B3%E5%96%AE-3%E6%AA%94etf-%E7%9F%AD%E7%B7%9A%E7%8B%82%E6%92%882495%E8%90%AC-%E9%80%B2%E5%87%BA%E8%BD%89%E6%8A%98%E5%85%A8%E6%9B%9D%E5%85%89-053000847.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E9%9C%87%E7%9B%AA%E5%A4%9A%E7%A9%BA%E9%9B%99%E8%B3%BA-%E4%BB%96%E6%9B%AC%E5%B0%8D%E5%B8%B3%E5%96%AE-3%E6%AA%94etf-%E7%9F%AD%E7%B7%9A%E7%8B%82%E6%92%882495%E8%90%AC-%E9%80%B2%E5%87%BA%E8%BD%89%E6%8A%98%E5%85%A8%E6%9B%9D%E5%85%89-053000847.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -150478,52 +150782,6 @@
         "BTCUSDT"
       ],
       "sentiment_method": "rule"
-    },
-    {
-      "id": "news-20261120-126b9127c6",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-20T05:40:00Z",
-      "published_at_taipei": "2026-11-20 13:40",
-      "published_at_taipei_iso": "2026-11-20T13:40:00+08:00",
-      "month": "2026-11",
-      "title": "CFTC Chair on Hyperliquid and onchain venues, Ripple CLO doubts Elizabeth Warren will set crypto policy, and more",
-      "url": "https://www.theblock.co/newsletters/the-daily/2026-11-20-cftc-chair-hyperliquid-ripple-clo-elizabeth-warren-crypto-policy-more-news-444143",
-      "canonical_url": "https://theblock.co/newsletters/the-daily/2026-11-20-cftc-chair-hyperliquid-ripple-clo-elizabeth-warren-crypto-policy-more-news-444143",
-      "source": "The Block",
-      "source_id": "theblock",
-      "category": "加密貨幣",
-      "symbols": [
-        "XRPUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "追蹤標的相關",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261120-b1f3989af9",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-20T05:32:25Z",
-      "published_at_taipei": "2026-11-20 13:32",
-      "published_at_taipei_iso": "2026-11-20T13:32:25+08:00",
-      "month": "2026-11",
-      "title": "This Bitcoin miner sold 267 BTC to clear $22 million debt. It still may not survive",
-      "url": "https://www.coindesk.com/markets/2026/11/20/this-bitcoin-miner-sold-267-btc-to-clear-usd22-million-debt-it-still-may-not-survive",
-      "canonical_url": "https://coindesk.com/markets/2026/11/20/this-bitcoin-miner-sold-267-btc-to-clear-usd22-million-debt-it-still-may-not-survive",
-      "source": "CoinDesk",
-      "source_id": "coindesk",
-      "category": "加密貨幣",
-      "symbols": [
-        "BTCUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -150532,8 +150790,8 @@
       "month": "2026-11",
       "date": "2026-11-27",
       "half": "AM",
-      "updated_at_taipei": "2026-11-27 13:30",
-      "count": 124,
+      "updated_at_taipei": "2026-11-27 13:45",
+      "count": 128,
       "star3_count": 15,
       "failed_sources": [
         {
