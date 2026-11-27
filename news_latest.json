@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-27-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-27T02:44:39Z",
-  "updated_at_taipei": "2026-11-27 10:44",
-  "last_updated_utc": "2026-11-27T02:44:39Z",
-  "last_updated_taipei": "2026-11-27 10:44",
-  "next_update_hint": "約台北時間 10:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-27T02:59:31Z",
+  "updated_at_taipei": "2026-11-27 10:59",
+  "last_updated_utc": "2026-11-27T02:59:31Z",
+  "last_updated_taipei": "2026-11-27 10:59",
+  "next_update_hint": "約台北時間 11:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 15.033,
+    "total_elapsed_sec": 20.054,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 7,
+    "new_items_added": 4,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.047,
+        "elapsed_sec": 0.106,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.061,
+        "elapsed_sec": 0.154,
         "raw_count": 30,
         "items_kept": 11,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.076,
+        "elapsed_sec": 0.109,
         "raw_count": 30,
         "items_kept": 6,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.023,
+        "elapsed_sec": 0.157,
         "raw_count": 10,
         "items_kept": 0,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.136,
+        "elapsed_sec": 0.304,
         "raw_count": 18,
         "items_kept": 17,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.083,
+        "elapsed_sec": 0.285,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.064,
+        "elapsed_sec": 0.147,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.065,
+        "elapsed_sec": 0.123,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.062,
+        "elapsed_sec": 0.142,
         "raw_count": 35,
         "items_kept": 17,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.419,
+        "elapsed_sec": 0.528,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.437,
+        "elapsed_sec": 0.345,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.254,
+        "elapsed_sec": 0.511,
         "raw_count": 20,
         "items_kept": 5,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.439,
+        "elapsed_sec": 0.785,
         "raw_count": 15,
         "items_kept": 10,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.406,
+        "elapsed_sec": 0.409,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.388,
+        "elapsed_sec": 1.196,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.049,
+        "elapsed_sec": 0.169,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.205,
+        "elapsed_sec": 1.075,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.056,
+        "elapsed_sec": 0.083,
         "raw_count": 1378,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.55,
+        "elapsed_sec": 1.443,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.282,
+        "elapsed_sec": 0.615,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.305,
+        "elapsed_sec": 1.392,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.283,
+        "elapsed_sec": 0.499,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 1.354,
+        "elapsed_sec": 0.595,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.037,
+        "elapsed_sec": 0.335,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.553,
+        "elapsed_sec": 1.045,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.278,
+        "elapsed_sec": 0.419,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,54 +277,88 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.78,
-        "change_1d_pct": 0.68
-      },
-      "Base": {
-        "tvl_b": 4.66,
-        "change_1d_pct": -8.63
+        "tvl_b": 36.8,
+        "change_1d_pct": 0.75
       },
       "Solana": {
-        "tvl_b": 4.63,
-        "change_1d_pct": 0.71
+        "tvl_b": 4.64,
+        "change_1d_pct": 1.3
+      },
+      "Base": {
+        "tvl_b": 4.65,
+        "change_1d_pct": -8.78
       },
       "Tron": {
         "tvl_b": 4.41,
-        "change_1d_pct": -0.13
+        "change_1d_pct": -0.11
       },
       "BSC": {
-        "tvl_b": 4.31,
-        "change_1d_pct": -0.22
+        "tvl_b": 4.33,
+        "change_1d_pct": 0.31
       },
-      "Hyperliquid L1": {
+      "Bitcoin": {
         "tvl_b": 2.26,
-        "change_1d_pct": 1.48
+        "change_1d_pct": -0.18
       }
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -388.9,
+      "net_flow_usd_m": -387.1,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0071,
+        "funding_rate_pct": 0.0078,
         "oi_usd_b": 1.97
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0062,
+        "funding_rate_pct": 0.0059,
         "oi_usd_b": 1.13
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 2,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.5,
-      "tx_count": 64313,
+      "mempool_vsize_mb": 29.5,
+      "tx_count": 65241,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261127-297e01d40f",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T02:45:34Z",
+      "published_at_taipei": "2026-11-27 10:45",
+      "published_at_taipei_iso": "2026-11-27T10:45:34+08:00",
+      "first_seen_at_utc": "2026-11-27T02:59:31Z",
+      "first_seen_at_taipei": "2026-11-27 10:59",
+      "month": "2026-11",
+      "title": "關稅恐跳至25%！美點名韓光州-全羅半導體聚落 三星、海力士擴產踩雷",
+      "url": "https://news.cnyes.com/news/id/6673555",
+      "canonical_url": "https://news.cnyes.com/news/id/6673555",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（關稅）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：擴產；命中：關稅",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261127-1d0d677eb3",
       "issue": "2026-11-27-AM",
@@ -655,6 +689,48 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-1023eec9fa",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T02:40:15Z",
+      "published_at_taipei": "2026-11-27 10:40",
+      "published_at_taipei_iso": "2026-11-27T10:40:15+08:00",
+      "first_seen_at_utc": "2026-11-27T02:59:31Z",
+      "first_seen_at_taipei": "2026-11-27 10:59",
+      "month": "2026-11",
+      "title": "Oil set for first weekly gain in November as Gulf attacks threaten supply recovery",
+      "url": "https://finance.yahoo.com/energy/articles/oil-set-first-weekly-gain-024015834.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/oil-set-first-weekly-gain-024015834.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-3a8ae4e183",
+        "issue": "2026-11-26-AM",
+        "title": "Oil Prices Rise as Renewed Middle East Attacks Threaten Persian Gulf Supply Recovery",
+        "published_at_taipei": "2026-11-26 17:54",
+        "url": "https://investorshub.advfn.com/market-news/article/40749/oil-prices-rise-as-renewed-middle-east-attacks-threaten-persian-gulf-supply-recovery?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
       ],
       "sentiment_method": "rule"
     },
@@ -1245,6 +1321,44 @@
       "sentiment_targets": [
         "TSLA",
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-27bf5925ef",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T01:30:07Z",
+      "published_at_taipei": "2026-11-27 09:30",
+      "published_at_taipei_iso": "2026-11-27T09:30:07+08:00",
+      "first_seen_at_utc": "2026-11-27T02:59:31Z",
+      "first_seen_at_taipei": "2026-11-27 10:59",
+      "month": "2026-11",
+      "title": "‘How Can TSLA Compete With Waymo?’ Gary Black Questions Tesla’s Robotaxi Strategy, Predicts Waymo Will Lead in Miles and Trips",
+      "url": "https://finance.yahoo.com/technology/articles/tsla-compete-waymo-gary-black-013007370.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/articles/tsla-compete-waymo-gary-black-013007370.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：bullish",
+      "sentiment_targets": [
+        "TSLA",
+        "GOOGL"
       ],
       "sentiment_method": "rule"
     },
@@ -2623,6 +2737,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-5f0a84e3dd",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T02:52:11Z",
+      "published_at_taipei": "2026-11-27 10:52",
+      "published_at_taipei_iso": "2026-11-27T10:52:11+08:00",
+      "first_seen_at_utc": "2026-11-27T02:59:31Z",
+      "first_seen_at_taipei": "2026-11-27 10:59",
+      "month": "2026-11",
+      "title": "美AI晶片禁令升級！惠譽示警亞太AIDC融資趨緊 這類業者壓力最大",
+      "url": "https://news.cnyes.com/news/id/6673563",
+      "canonical_url": "https://news.cnyes.com/news/id/6673563",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：禁令",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-7d2c7c3a5d",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T02:32:37Z",
@@ -2915,6 +3063,116 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261127-5f0a84e3dd",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T02:52:11Z",
+      "published_at_taipei": "2026-11-27 10:52",
+      "published_at_taipei_iso": "2026-11-27T10:52:11+08:00",
+      "first_seen_at_utc": "2026-11-27T02:59:31Z",
+      "first_seen_at_taipei": "2026-11-27 10:59",
+      "month": "2026-11",
+      "title": "美AI晶片禁令升級！惠譽示警亞太AIDC融資趨緊 這類業者壓力最大",
+      "url": "https://news.cnyes.com/news/id/6673563",
+      "canonical_url": "https://news.cnyes.com/news/id/6673563",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：禁令",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-297e01d40f",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T02:45:34Z",
+      "published_at_taipei": "2026-11-27 10:45",
+      "published_at_taipei_iso": "2026-11-27T10:45:34+08:00",
+      "first_seen_at_utc": "2026-11-27T02:59:31Z",
+      "first_seen_at_taipei": "2026-11-27 10:59",
+      "month": "2026-11",
+      "title": "關稅恐跳至25%！美點名韓光州-全羅半導體聚落 三星、海力士擴產踩雷",
+      "url": "https://news.cnyes.com/news/id/6673555",
+      "canonical_url": "https://news.cnyes.com/news/id/6673555",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（關稅）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：擴產；命中：關稅",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-1023eec9fa",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T02:40:15Z",
+      "published_at_taipei": "2026-11-27 10:40",
+      "published_at_taipei_iso": "2026-11-27T10:40:15+08:00",
+      "first_seen_at_utc": "2026-11-27T02:59:31Z",
+      "first_seen_at_taipei": "2026-11-27 10:59",
+      "month": "2026-11",
+      "title": "Oil set for first weekly gain in November as Gulf attacks threaten supply recovery",
+      "url": "https://finance.yahoo.com/energy/articles/oil-set-first-weekly-gain-024015834.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/oil-set-first-weekly-gain-024015834.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-3a8ae4e183",
+        "issue": "2026-11-26-AM",
+        "title": "Oil Prices Rise as Renewed Middle East Attacks Threaten Persian Gulf Supply Recovery",
+        "published_at_taipei": "2026-11-26 17:54",
+        "url": "https://investorshub.advfn.com/market-news/article/40749/oil-prices-rise-as-renewed-middle-east-attacks-threaten-persian-gulf-supply-recovery?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261127-7d2c7c3a5d",
       "issue": "2026-11-27-AM",
@@ -3680,6 +3938,44 @@
       "sentiment_targets": [
         "TSLA",
         "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-27bf5925ef",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T01:30:07Z",
+      "published_at_taipei": "2026-11-27 09:30",
+      "published_at_taipei_iso": "2026-11-27T09:30:07+08:00",
+      "first_seen_at_utc": "2026-11-27T02:59:31Z",
+      "first_seen_at_taipei": "2026-11-27 10:59",
+      "month": "2026-11",
+      "title": "‘How Can TSLA Compete With Waymo?’ Gary Black Questions Tesla’s Robotaxi Strategy, Predicts Waymo Will Lead in Miles and Trips",
+      "url": "https://finance.yahoo.com/technology/articles/tsla-compete-waymo-gary-black-013007370.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/articles/tsla-compete-waymo-gary-black-013007370.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA",
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：bullish",
+      "sentiment_targets": [
+        "TSLA",
+        "GOOGL"
       ],
       "sentiment_method": "rule"
     },
@@ -146329,9 +146625,9 @@
       "month": "2026-11",
       "date": "2026-11-27",
       "half": "AM",
-      "updated_at_taipei": "2026-11-27 10:44",
-      "count": 67,
-      "star3_count": 9,
+      "updated_at_taipei": "2026-11-27 10:59",
+      "count": 71,
+      "star3_count": 10,
       "failed_sources": [
         {
           "id": "binance_derivatives",
