@@ -158,7 +158,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261127b" in index_html
+    assert "?v=20261127c" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -891,7 +891,7 @@ def test_in_depth_research_json_and_rendering() -> None:
         rel_chart = ch["src"].lstrip("./")
         assert (root / rel_chart).exists(), f"Article 8 chart image missing: {rel_chart}"
     art8_json_str = json.dumps(art8, ensure_ascii=False)
-    for kw in ("46%", "8%", "30%", "40%", "4%", "3.5%", "CSPX", "VGIT", "這次補了哪些漏洞" if False else "最終建議" if False else "1966"):
+    for kw in ("46%", "8%", "30%", "40%", "4%", "3.5%", "VOO", "VGIT", "這次補了哪些漏洞" if False else "最終建議" if False else "1966"):
         assert kw in art8_json_str, f"Article 8 missing key number: {kw}"
     assert len(art8["risk_tier_cards"]) == 3
     assert len(art8["verdict_rows"]) == 5
@@ -1052,7 +1052,7 @@ def test_in_depth_research_json_and_rendering() -> None:
         }}
 
         // Verify Article 8 content (Peak Recovery, Robustness & Final Check)
-        if (!html.includes('最終建議（照表執行定案版）') || !html.includes('這次補了哪些漏洞') || !html.includes('CSPX') || !html.includes('VGIT') || !html.includes('先存 6 個月生活費當緊急預備金') || !html.includes('46%') || !html.includes('8%') || !html.includes('30%') || !html.includes('40%') || !html.includes('4%') || !html.includes('3.5%')) {{
+        if (!html.includes('最終建議（照表執行定案版）') || !html.includes('這次補了哪些漏洞') || !html.includes('VOO') || !html.includes('VGIT') || !html.includes('先存 6 個月生活費當緊急預備金') || !html.includes('46%') || !html.includes('8%') || !html.includes('30%') || !html.includes('40%') || !html.includes('4%') || !html.includes('3.5%')) {{
           throw new Error('renderResearchHtml missing Article 8 key numbers, final card, or loopholes section');
         }}
         for (const imgName of [

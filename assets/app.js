@@ -4028,6 +4028,7 @@
           <div class="callout callout-takeaway prr-hero-callout">
             <p>💡 <strong>一句話結論：</strong>${escapeHtml(art.takeaway || "")}</p>
           </div>
+          ${art.estate_tax_note ? `<div class="prr-gray-note" style="margin-top: 8px;">📌 <strong>遺產稅備註：</strong>${escapeHtml(art.estate_tax_note)}</div>` : ""}
 
           <!-- 2. 普通人的具體執行表 -->
           <div class="research-section">
@@ -4069,7 +4070,7 @@
                   <tr>
                     <th>年齡</th>
                     <th>0050（或 006208）</th>
-                    <th>${escapeHtml(plan.transition_us_col || "CSPX（或 VOO）")}</th>
+                    <th>${escapeHtml(plan.transition_us_col || "VOO")}</th>
                     <th>${escapeHtml(plan.transition_bond_col || "VGIT（3–10 年美債）")}</th>
                   </tr>
                 </thead>
@@ -4347,7 +4348,7 @@
           <!-- 9. 退休提領：債券不是越多越安全 -->
           <div class="research-section">
             <h2>八、退休提領：債券不是越多越安全</h2>
-            <p>假設 60 歲存到 1,000 萬台幣，連續提領 30 年（到 90 歲）。測試結果顛覆直覺：<strong>前十年最怕大跌（序列風險），後二十年最怕通膨</strong>。債券配到 70%（30/70）雖然前 20 年穩如泰山，但低利率環境下成長追不上通膨，80 歲後反而容易把老本啃光；反而是 60/40 股債（30% 0050 + 30% CSPX + 40% VGIT）同時擋住早年股災與晚年通膨，30 年資金用完機率最低。</p>
+            <p>假設 60 歲存到 1,000 萬台幣，連續提領 30 年（到 90 歲）。測試結果顛覆直覺：<strong>前十年最怕大跌（序列風險），後二十年最怕通膨</strong>。債券配到 70%（30/70）雖然前 20 年穩如泰山，但低利率環境下成長追不上通膨，80 歲後反而容易把老本啃光；反而是 60/40 股債（30% 0050 + 30% VOO + 40% VGIT）同時擋住早年股災與晚年通膨，30 年資金用完機率最低。</p>
             <div class="table-wrap table-responsive" style="margin-top: 10px;">
               <table class="data-table mobile-cards lev-table">
                 <thead>

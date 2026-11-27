@@ -1745,7 +1745,7 @@ def build_research_dict() -> dict:
             "verdict_badge": "推翻舊規則（取消濾網）",
             "summary": (
                 f"舊文文字寫「跌破 200 日線全部賣出（規則 B）」，但舊回測只跑「僅新扣款切換（規則 A）」。"
-                f"本次補測完整積極組合（40% 0050 + 10% 00631L + 50% CSPX）後發現：不用濾網、每年 1 月再平衡的規則 C "
+                f"本次補測完整積極組合（40% 0050 + 10% 00631L + 50% VOO；註：以下規則比較數字以 CSPX 計算，VOO 2010–2026 年化約低 0.11 個百分點〔13.52% 對 13.63%〕）後發現：不用濾網、每年 1 月再平衡的規則 C "
                 f"全歷史 XIRR {t1_fc['rule_C']['full_history']['xirr_pct']:.2f}%、滾動 10 年中位 XIRR {t1_fc['rule_C']['rolling_10y']['median_xirr_pct']:.2f}%、"
                 f"MDD {t1_fc['rule_C']['full_history']['mdd_pct']:.2f}%（Bootstrap 破 −60% 僅 {t1_fb['rule_C']['prob_mdd_lt_60pct']:.2f}%），"
                 f"勝過規則 A（滾動 {t1_fc['rule_A']['rolling_10y']['median_xirr_pct']:.2f}%）與規則 B（滾動 {t1_fc['rule_B']['rolling_10y']['median_xirr_pct']:.2f}%、"
@@ -1755,15 +1755,14 @@ def build_research_dict() -> dict:
         },
         {
             "num": "2",
-            "title": "美國遺產稅與 ETF 註冊地（SPY/VOO vs CSPX）",
+            "title": "美股 ETF 選擇（SPY / VOO vs CSPX）與購買管道",
             "changed": True,
-            "verdict_badge": "推翻舊標的（改推 CSPX）",
+            "verdict_badge": "改推 VOO（以可近性為優先）",
             "summary": (
-                f"2010–2026 真實價格驗證 CSPX.L 美元年化 {t2_ov['cspx_real_usd_cagr_pct']:.2f}%，贏過扣 30% 稅之 VOO（{t2_ov['voo_net30_usd_cagr_pct']:.2f}%）與 SPY（{t2_ov['spy_net30_usd_cagr_pct']:.2f}%）。"
-                f"更關鍵的是美國非居民遺產稅（超過 USD 60,000 課 18%–40%）：月投 1 萬者 60/75/90 歲過世時，僅美股 30% 買 SPY/VOO 就會被扣 "
-                f"{t2_es10['60']['us_equity_only']['spy_voo_estate_tax_twd']/10000:.0f} 萬 / {t2_es10['75']['us_equity_only']['spy_voo_estate_tax_twd']/10000:.0f} 萬 / {t2_es10['90']['us_equity_only']['spy_voo_estate_tax_twd']/10000:.0f} 萬"
-                f"（佔總資產 {t2_es10['60']['us_equity_only']['spy_voo_tax_pct_of_total_port']:.2f}%～{t2_es10['90']['us_equity_only']['spy_voo_tax_pct_of_total_port']:.2f}%）；"
-                f"因此美股主推薦正式改為愛爾蘭累積型 CSPX（費率 0.07%、股息稅 15%、免美國遺產稅），僅台灣無英股複委託且美資產低於 USD 60,000 者改用 VOO（0.03%）。0050（約 0.22%）與 006208（約 0.23%）打平並列。"
+                f"測了 CSPX 與 VOO（2010–2026 真實價格年化 CSPX.L 為 {t2_ov['cspx_real_usd_cagr_pct']:.2f}%、扣 30% 稅之 VOO 為 {t2_ov['voo_net30_usd_cagr_pct']:.2f}%、SPY 為 {t2_ov['spy_net30_usd_cagr_pct']:.2f}%；"
+                f"1997–2026 台美 50/50 XIRR 分別為 {t2_dca['CSPX_15wh']['port_50_50_xirr_pct']:.2f}% vs {t2_dca['VOO_30wh']['port_50_50_xirr_pct']:.2f}%），"
+                f"報酬差距只有約 0.11 個百分點；因為本文不考慮遺產，且 VOO（費用率 0.03%、配息預扣 30%）透過台灣券商複委託即可定期定額、一般人較容易購買，最後主推 VOO。"
+                f"台股維持 0050（約 0.22%）與 006208（約 0.23%）打平並列。"
             ),
         },
         {
@@ -1785,7 +1784,7 @@ def build_research_dict() -> dict:
             "summary": (
                 f"同一筆資產自 30 歲月投 1 萬（總投入 360 萬）→ 55–59 歲每年實際加 8% {sel_bond} 滑降 → 60–90 歲連續提領。"
                 f"近代台美 3,000 條路徑：60 歲資產 P10 {t4_mod_p['age60_p10_twd']/10000:.0f} 萬 / P50 {t4_mod_p['age60_p50_twd']/10000:.0f} 萬（{t4_mod_p['age60_p50_multiple']:.2f} 倍） / P90 {t4_mod_p['age60_p90_twd']/10000:.0f} 萬；"
-                f"90 歲前破產率 0.00%（保護版）/ {t4_mod_f['ruin_prob_pct']:.2f}%（固定 4%+2%），90 歲中位剩餘 {t4_mod_p['age90_p50_twd']/10000:.0f} 萬。"
+                f"90 歲前破產率 0.00%（保護版）/ {t4_mod_f['ruin_prob_pct']:.2f}%（固定 4%+2%），90 歲中位剩餘 {t4_mod_p['age90_p50_twd']/10000:.0f} 萬（此數字以 CSPX 計算；VOO 2010–2026 年化約低 0.11 個百分點〔13.52% 對 13.63%〕）。"
                 f"Shiller 1871–1966 共 {t4_sh_p['cohort_count']} 條真實 60 年歷史路徑亦全數通過（保護版破產率 0.00%、固定 4%+CPI {t4_sh_f['ruin_prob_pct']:.2f}%），刪去舊文「中間各年未回測」備註。"
             ),
         },
@@ -1830,8 +1829,8 @@ def build_research_dict() -> dict:
             "changed": True,
             "verdict_badge": "補齊實測＋新增分齡表",
             "summary": (
-                f"保守型 25% 0050 + 25% CSPX + 50% {sel_bond} 獨立實測全歷史 XIRR {t8_cons['cons_25_25_50']['full_history_xirr_pct']:.2f}%、MDD {t8_cons['cons_25_25_50']['full_history_mdd_pct']:.2f}%、破 −30% 機率 0.00%，正式取代「未回測」。"
-                f"年齡實測顯示 25 歲（60 歲中位 {t8_pers['age_25']['fixed_10k']['age60_p50_twd']/10000:.0f} 萬）與 30 歲（{t8_pers['age_30']['fixed_10k']['age60_p50_twd']/10000:.0f} 萬）完全適用；"
+                f"保守型 25% 0050 + 25% VOO + 50% {sel_bond} 獨立實測全歷史 XIRR {t8_cons['cons_25_25_50']['full_history_xirr_pct']:.2f}%、MDD {t8_cons['cons_25_25_50']['full_history_mdd_pct']:.2f}%、破 −30% 機率 0.00%（此數字以 CSPX 計算；VOO 2010–2026 年化約低 0.11 個百分點〔13.52% 對 13.63%〕），正式取代「未回測」。"
+                f"年齡實測顯示 25 歲（60 歲中位 {t8_pers['age_25']['fixed_10k']['age60_p50_twd']/10000:.0f} 萬）與 30 歲（{t8_pers['age_30']['fixed_10k']['age60_p50_twd']/10000:.0f} 萬）完全適用（年齡實測數字以 CSPX 計算；VOO 2010–2026 年化約低 0.11 個百分點〔13.52% 對 13.63%〕）；"
                 f"45 歲起跑只靠月扣 1 萬、60 歲退中位僅 {t8_pers['age_45']['fixed_10k']['age60_p50_twd']/10000:.0f} 萬（月領 {t8_pers['age_45']['fixed_10k']['retire_yr1_monthly_wd_p50_twd']:,.0f} 元），判定不適用，改提供「月扣提至 2.7–3 萬」、「延至 65 歲退」或「35/35/30 減震＋加碼」三套具體解方。"
             ),
         },
@@ -1877,9 +1876,10 @@ def build_research_dict() -> dict:
         "title": "普通人該怎麼投資：從歷史高點回本到八關壓力測試",
         "subtitle": "整合歷史高點回本（peak_recovery）、八關穩健性壓力測試（robustness_check）與 8 項最終邏輯補強（final_check），給非工程師普通人的定案執行手冊",
         "takeaway": (
-            f"先存 6 個月生活費當緊急預備金，累積期每月定期定額 0050（或 006208）50% + 愛爾蘭註冊 CSPX 50%（免美國遺產稅、美股股息預扣 15%），每年 1 月第一個交易日再平衡；"
+            f"先存 6 個月生活費當緊急預備金，累積期每月定期定額 0050（或 006208）50% + VOO 50%（費用率 0.03%、配息預扣 30%，透過台灣券商複委託購買，可用美股定期定額），每年 1 月第一個交易日再平衡；"
             f"55–59 歲每年 1 月按表加 8% {sel_bond}（3–10 年美債 ETF）至 30/30/40；60 歲退休首選初始 3.5% 隨實際 CPI 提領（155 年 0.00% 破產），若首年必領 4.0% 須強制加 20%/3.5% 保護規則。"
         ),
+        "estate_tax_note": "本文以投資人自己的報酬為準，不考慮身後遺產。若在意美國遺產稅（非美國居民持有美國資產超過 6 萬美元的部分最高課 40%），可改用愛爾蘭註冊的 CSPX，需開海外券商或英股複委託，回測年化與 VOO 相近。",
         "badge": "最終定案（含 8 項補強）",
         "updated_at": "2026-11",
         "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/final_check/report.md",
@@ -1894,8 +1894,8 @@ def build_research_dict() -> dict:
                 {
                     "title": "2. 累積期配置與商品代號（至 55 歲）",
                     "body": (
-                        "每月固定扣款：0050（約 0.22%，可並列 006208 約 0.23%）50% ＋ 愛爾蘭註冊累積型 S&P 500 ETF「CSPX」（費用率 0.07%、股息稅 15%、免美國遺產稅；可透過 IBKR 或永豐／富邦英股複委託）50%。"
-                        "若只用無英股之台灣複委託且美國資產總額低於 USD 60,000（約 192 萬台幣），美股改用 VOO（0.03%）。"
+                        "每月固定扣款：0050（約 0.22%，可並列 006208 約 0.23%）50% ＋ 美國註冊 S&P 500 ETF「VOO」（費用率 0.03%、配息預扣 30%）50%。"
+                        "購買管道：台灣券商複委託（多數提供美股定期定額）。"
                     ),
                 },
                 {
@@ -1905,8 +1905,7 @@ def build_research_dict() -> dict:
                 {
                     "title": f"4. 滑降期逐年比例（55–59 歲，債券代號 {sel_bond}）",
                     "body": (
-                        f"每年 1 月調倉（0050 / CSPX / {sel_bond}，{sel_bond} 費用率 0.03%）：55 歲 46/46/8 → 56 歲 42/42/16 → 57 歲 38/38/24 → 58 歲 34/34/32 → 59 歲起 30/30/40。"
-                        f"（註：{sel_bond} 屬美國註冊 ETF，總美元資產逾 USD 60,000 且重視身後免遺產稅者可改愛爾蘭註冊美債 ETF，但該類商品本輪「未回測」，以上為 {sel_bond} 實測數據。）"
+                        f"每年 1 月調倉（0050 / VOO / {sel_bond}，{sel_bond} 費用率 0.03%）：55 歲 46/46/8 → 56 歲 42/42/16 → 57 歲 38/38/24 → 58 歲 34/34/32 → 59 歲起 30/30/40。"
                     ),
                 },
                 {
@@ -1919,9 +1918,9 @@ def build_research_dict() -> dict:
                 {
                     "title": "6. 保守／積極與 40–45 歲晚起跑調整",
                     "body": (
-                        f"保守型：25% 0050 + 25% CSPX + 50% {sel_bond} 年平衡（XIRR {t8_cons['cons_25_25_50']['full_history_xirr_pct']:.2f}%、MDD {t8_cons['cons_25_25_50']['full_history_mdd_pct']:.2f}%）。"
-                        f"積極型：40% 0050 + 10% 00631L + 50% CSPX，不用 200 日線濾網、每年 1 月再平衡，50 歲 1 月出清 00631L（XIRR {t1_fc['rule_C']['full_history']['xirr_pct']:.2f}%、MDD {t1_fc['rule_C']['full_history']['mdd_pct']:.2f}%）。"
-                        f"45 歲起跑者月扣 1 萬 60 歲退中位僅 374 萬，須改月扣 2.7–3 萬、延至 65 歲退，或採 35/35/30 減震並加碼。"
+                        f"保守型：25% 0050 + 25% VOO + 50% {sel_bond} 年平衡（XIRR {t8_cons['cons_25_25_50']['full_history_xirr_pct']:.2f}%、MDD {t8_cons['cons_25_25_50']['full_history_mdd_pct']:.2f}%；此數字以 CSPX 計算，VOO 2010–2026 年化約低 0.11 個百分點〔13.52% 對 13.63%〕）。"
+                        f"積極型：40% 0050 + 10% 00631L + 50% VOO，不用 200 日線濾網、每年 1 月再平衡，50 歲 1 月出清 00631L（XIRR {t1_fc['rule_C']['full_history']['xirr_pct']:.2f}%、MDD {t1_fc['rule_C']['full_history']['mdd_pct']:.2f}%；此數字以 CSPX 計算，VOO 2010–2026 年化約低 0.11 個百分點〔13.52% 對 13.63%〕）。"
+                        f"45 歲起跑者月扣 1 萬 60 歲退中位僅 374 萬（此數字以 CSPX 計算），須改月扣 2.7–3 萬、延至 65 歲退，或採 35/35/30 減震並加碼。"
                     ),
                 },
             ],
@@ -1929,9 +1928,9 @@ def build_research_dict() -> dict:
         "execution_plan": {
             "saving_phase": [
                 "先存滿 6 個月生活費當緊急預備金（台幣活存或定存），存滿前不進場投資。",
-                "每月固定日期扣款：0050（或同指數 006208）50% ＋ 愛爾蘭註冊累積型 S&P 500 ETF「CSPX」（費用率 0.07%、股息稅 15%、免美國遺產稅）50%；若僅使用不支援英股之台灣複委託且美國境內資產低於 USD 60,000，美股改買 VOO（費用率 0.03%）。",
+                "每月固定日期扣款：0050（或同指數 006208）50% ＋ VOO（費用率 0.03%、配息預扣 30%）50%，透過台灣券商複委託購買，可用美股定期定額。",
                 "每年 1 月第一個交易日調回各 50%：賣多的那邊、買少的那邊，其他時間不動。",
-                "使用定期定額免低消券商（IBKR 或永豐／富邦議價後英股複委託；美股複委託選免低消券商）；若單筆最低手續費 USD 15，改成每季扣款一次。",
+                "使用定期定額免低消之台灣券商複委託；若單筆最低手續費 USD 15，改成每季扣款一次。",
             ],
             "transition_table": [
                 {"age": "55", "tw0050": "46%", "spy": "46%", "bond": "8%"},
@@ -1941,7 +1940,7 @@ def build_research_dict() -> dict:
                 {"age": "59", "tw0050": "30%", "spy": "30%", "bond": "40%"},
                 {"age": "60 歲以後", "tw0050": "30%", "spy": "30%", "bond": "40%"},
             ],
-            "transition_us_col": "CSPX（或 VOO）",
+            "transition_us_col": "VOO",
             "transition_bond_col": f"{sel_bond}（3–10 年美債）",
             "withdrawal_phase": [
                 "【穩健首選】第一年提領退休當時總資產的 3.5%，之後每年提領金額依當年實際 CPI（物價通膨率，常態約 2%）調整；1871–2026 共 1,508 條 30 年路徑與五大歷史危機年破產率均為 0.00%，生活費 100% 不縮水。",
@@ -1950,44 +1949,45 @@ def build_research_dict() -> dict:
             "transition_note": (
                 f"已於最終補強（測試 4）實際逐年連續模擬 30→90 歲：30 歲月投 1 萬（總投入 360 萬）經 55–59 歲逐年加 8% {sel_bond} 滑降，"
                 f"60 歲中位資產 {t4_mod_p['age60_p50_twd']/10000:.0f} 萬（P10 {t4_mod_p['age60_p10_twd']/10000:.0f} 萬 / P90 {t4_mod_p['age60_p90_twd']/10000:.0f} 萬），"
-                f"90 歲前破產率 0.00%（保護版）/ {t4_mod_f['ruin_prob_pct']:.2f}%（固定 4%+2%），90 歲剩餘中位數 {t4_mod_p['age90_p50_twd']/10000:.0f} 萬。"
+                f"90 歲前破產率 0.00%（保護版）/ {t4_mod_f['ruin_prob_pct']:.2f}%（固定 4%+2%），90 歲剩餘中位數 {t4_mod_p['age90_p50_twd']/10000:.0f} 萬（此數字以 CSPX 計算；VOO 2010–2026 年化約低 0.11 個百分點〔13.52% 對 13.63%〕）。"
             ),
         },
         "risk_tier_cards": [
             {
                 "tier": "保守（最多忍受 −30%）",
                 "badge": "防禦型（已實測）",
-                "allocation": f"0050 25% + CSPX 25% + {sel_bond} 50%，每年 1 月再平衡",
+                "allocation": f"0050 25% + VOO 25% + {sel_bond} 50%，每年 1 月再平衡",
                 "mdd_label": f"{t8_cons['cons_25_25_50']['full_history_mdd_pct']:.2f}%（滾動 10 年最差 {t8_cons['cons_25_25_50']['rolling_10y_worst_mdd_pct']:.2f}%、破 −30% 機率 0.00%）",
                 "xirr_label": f"{t8_cons['cons_25_25_50']['full_history_xirr_pct']:.2f}%（滾動 10 年中位 {t8_cons['cons_25_25_50']['rolling_10y_median_xirr_pct']:.2f}%）",
                 "details": (
-                    f"本次以真實商品 {sel_bond} 與 CSPX 獨立回測 1997–2026 全歷史，最大回撤僅 {t8_cons['cons_25_25_50']['full_history_mdd_pct']:.2f}%，"
-                    f"比原先壓在 −28.77% 刀鋒邊緣的 60/40 純台股方案多出 16 個百分點安全緩衝，且 233 個滾動 10 年梯次零次跌破 −30%。"
+                    f"本次以真實商品 {sel_bond} 獨立回測 1997–2026 全歷史，最大回撤僅 {t8_cons['cons_25_25_50']['full_history_mdd_pct']:.2f}%，"
+                    f"比原先壓在 −28.77% 刀鋒邊緣的 60/40 純台股方案多出 16 個百分點安全緩衝，且 233 個滾動 10 年梯次零次跌破 −30%（此數字以 CSPX 計算；VOO 2010–2026 年化約低 0.11 個百分點〔13.52% 對 13.63%〕）。"
                 ),
-                "gray_note": f"同條件對照：30/30/40（{sel_bond}）全歷史 XIRR {t8_cons['bal_30_30_40']['full_history_xirr_pct']:.2f}%、MDD {t8_cons['bal_30_30_40']['full_history_mdd_pct']:.2f}%。",
+                "gray_note": f"同條件對照：30/30/40（{sel_bond}）全歷史 XIRR {t8_cons['bal_30_30_40']['full_history_xirr_pct']:.2f}%、MDD {t8_cons['bal_30_30_40']['full_history_mdd_pct']:.2f}%（此數字以 CSPX 計算；VOO 2010–2026 年化約低 0.11 個百分點〔13.52% 對 13.63%〕）。",
             },
             {
                 "tier": "一般（最多忍受 −50%）",
                 "badge": "多數人首選",
-                "allocation": "0050 50% + CSPX 50%（每年 1 月第一個交易日再平衡）",
-                "mdd_label": f"{t8_cons['eq_50_50']['full_history_mdd_pct']:.2f}%（滾動 10 年最差 {t8_cons['eq_50_50']['rolling_10y_worst_mdd_pct']:.2f}%、破 −50% 機率 0.00%）",
-                "xirr_label": f"{t8_cons['eq_50_50']['full_history_xirr_pct']:.2f}%（滾動 10 年中位 {t8_cons['eq_50_50']['rolling_10y_median_xirr_pct']:.2f}%）",
+                "allocation": "0050 50% + VOO 50%（每年 1 月第一個交易日再平衡）",
+                "mdd_label": f"{t2_dca['VOO_30wh']['port_50_50_mdd_pct']:.2f}%（滾動 10 年最差 {t8_cons['eq_50_50']['rolling_10y_worst_mdd_pct']:.2f}%、破 −50% 機率 0.00%*）",
+                "xirr_label": f"{t2_dca['VOO_30wh']['port_50_50_xirr_pct']:.2f}%（滾動 10 年中位 {t8_cons['eq_50_50']['rolling_10y_median_xirr_pct']:.2f}%*）",
                 "details": (
-                    f"改用愛爾蘭註冊 CSPX 後，美股股息預扣稅由 30% 降至 15%，全歷史 XIRR 較 SPY 版（{t2_dca['SPY_30wh']['port_50_50_xirr_pct']:.2f}%）高 +0.09%，"
-                    f"且徹底免除 60/75/90 歲過世時 {t2_es10['60']['us_equity_only']['spy_voo_estate_tax_twd']/10000:.0f} 萬～{t2_es10['90']['us_equity_only']['spy_voo_estate_tax_twd']/10000:.0f} 萬美國遺產稅（月投 1 萬基準）。"
+                    f"以 VOO（費用率 0.03%、配息預扣 30%，台灣券商複委託定期定額即可購買）搭配 0050，1997–2026 全歷史 XIRR 實測為 {t2_dca['VOO_30wh']['port_50_50_xirr_pct']:.2f}%、MDD {t2_dca['VOO_30wh']['port_50_50_mdd_pct']:.2f}%，"
+                    f"略勝 SPY 版（{t2_dca['SPY_30wh']['port_50_50_xirr_pct']:.2f}%），且與愛爾蘭 CSPX（{t2_dca['CSPX_15wh']['port_50_50_xirr_pct']:.2f}%）僅差 0.07 個百分點。"
                 ),
-                "gray_note": f"若僅能買美股且美國總資產 < USD 60,000，改用 VOO 實測全歷史 XIRR {t2_dca['VOO_30wh']['port_50_50_xirr_pct']:.2f}%、MDD {t2_dca['VOO_30wh']['port_50_50_mdd_pct']:.2f}%。",
+                "gray_note": "*註：上列「滾動 10 年」數字以 CSPX 計算；VOO 2010–2026 年化約低 0.11 個百分點（13.52% 對 13.63%）。",
             },
             {
                 "tier": "積極（最多忍受 −60%）",
                 "badge": "取消濾網（規則 C）",
-                "allocation": "0050 40% + 00631L 10% + CSPX 50%，不用濾網、每年 1 月再平衡；50 歲 1 月出清 00631L",
+                "allocation": "0050 40% + 00631L 10% + VOO 50%，不用濾網、每年 1 月再平衡；50 歲 1 月出清 00631L",
                 "mdd_label": f"{t1_fc['rule_C']['full_history']['mdd_pct']:.2f}%（滾動 10 年破 −60% 為 0.00%、Bootstrap {t1_fb['rule_C']['prob_mdd_lt_60pct']:.2f}%）",
                 "xirr_label": f"{t1_fc['rule_C']['full_history']['xirr_pct']:.2f}%（滾動 10 年中位 {t1_fc['rule_C']['rolling_10y']['median_xirr_pct']:.2f}%、年換手 0.99 次）",
                 "details": (
                     f"測試 1 證實：在台美各半架構下（台股內 80% 0050 + 20% 00631L），不用 200 日線濾網的規則 C 報酬高於規則 A（{t1_fc['rule_A']['rolling_10y']['median_xirr_pct']:.2f}%）"
                     f"與規則 B（{t1_fc['rule_B']['rolling_10y']['median_xirr_pct']:.2f}%），且省下規則 B 每年 {t1_fc['rule_B']['full_history']['switches_per_year']:.2f} 次換手與 {t1_fc['rule_B']['full_history']['total_fees_twd']:,.0f} 元交易成本。"
                     f"50 歲 1 月出清 00631L 經 2,000 條路徑實測，能將 50–60 歲 P10 最差回撤由 {t1_a50['sell_at_55_glidepath']['dd_50_60_p10_worst_pct']:.2f}% 壓進 {t1_a50['sell_at_50']['dd_50_60_p10_worst_pct']:.2f}%。"
+                    f"（此數字以 CSPX 計算；VOO 2010–2026 年化約低 0.11 個百分點〔13.52% 對 13.63%〕。）"
                 ),
                 "gray_note": f"對照：若只買純台股 80/20（不配美股），規則 C 全歷史 MDD {fc_t1['tw_only_0band']['rule_C']['full_history']['mdd_pct']:.2f}% 會微破 −60%，故不建議單押純台股加正二。",
             },
@@ -2160,8 +2160,8 @@ def build_research_dict() -> dict:
         "data_limitations": [
             "0050.TW Yahoo Finance 歷史資料只從 2009-01-02 開始（缺漏 2003–2008 年真實成交紀錄），且存在 2009 年初超過 ±7% 漲跌幅限制的錯價（單日最高 +16.55%）、2014-01-02 因 2025 年一拆四分割未回溯造成的 −75.06% 假崩盤，以及 2009–2014 年配息漏算；本研究已全數清洗修補，2009-03-10 以前則以 ^TWII 日報酬加計每年 3.0% 估計股息推算（並以 2000 年即掛牌的美股 EWT 交叉核對）。",
             "00631L（2015-08-25 前）與 TQQQ（2010-02-11 前）上市前均為公式模擬資料；與真實上市後重疊期比對顯示，模擬版未計入交換合約利差與轉倉價差，年化報酬比真實 ETF 偏樂觀約 0.8%～2.4%。",
-            "測試 2（愛爾蘭註冊 CSPX）：2010-09-15 前由 SPY 含息報酬調整 15% 預扣稅與 0.07% 費率推算，2010–2026 與真實 CSPX.L 月報酬相關係數 0.9644。台灣複委託（永豐／富邦）英股手續費與低消為議價制，開戶前須自行確認；0050（約 0.22%）與 006208（約 0.23%）為 2025–2026 規模遞減費率估算值，查詢日期 2026-11-27。",
-            "測試 3（真實美債 ETF）：SHY/IEF 上市於 2002-07、VGIT 上市於 2009-11，上市前以 ^IRX/^FVX/^TNX 存續期＋凸性公式推算（重疊月相關 0.8356～0.9895）；VGIT 為美國註冊 ETF，總美元資產逾 USD 60,000 者仍有美國遺產稅曝險（愛爾蘭註冊美債 UCITS ETF 本輪未單獨回測，明標「未回測」）。",
+            "測試 2（SPY / VOO vs 愛爾蘭註冊 CSPX）：CSPX 在 2010-09-15 前由 SPY 含息報酬調整 15% 預扣稅與 0.07% 費率推算，2010–2026 與真實 CSPX.L 月報酬相關係數 0.9644（CSPX.L 年化 13.63% vs VOO 扣 30% 稅 13.52%）。0050（約 0.22%）與 006208（約 0.23%）為 2025–2026 規模遞減費率估算值，查詢日期 2026-11-27。",
+            "測試 3（真實美債 ETF）：SHY/IEF 上市於 2002-07、VGIT 上市於 2009-11，上市前以 ^IRX/^FVX/^TNX 存續期＋凸性公式推算（重疊月相關 0.8356～0.9895）。",
             "測試 4–6（Shiller 1871–2026 長歷史）：1871–1997 無台股資料，長歷史模擬以美股 S&P 500 含息報酬作為台股代理資料，10 年期公債殖利率推算債券報酬；公開 Shiller CSV 股息與 CPI 至 2023-06，2023-07～2026-10 以 Yahoo ^SP500TR、^TNX 與 FRED CPIAUCSL 銜接；2000 退休路徑實測 26 年、2008 退休路徑實測 18 年（未滿 30 年）。",
             "台股加權指數 ^TWII 在 Yahoo Finance 僅自 1997-07-02 開始，缺漏 1990–1997 年（未涵蓋 1990 年暴跌 −80.4%）；匯率 TWD=X 僅自 2004-03-24 起，更早期間延用 32.0230。",
         ],
