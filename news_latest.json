@@ -2,13 +2,23 @@
   "version": 1,
   "latest_issue": "2026-11-27-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-27T09:16:07Z",
-  "updated_at_taipei": "2026-11-27 17:16",
-  "last_updated_utc": "2026-11-27T09:16:07Z",
-  "last_updated_taipei": "2026-11-27 17:16",
-  "next_update_hint": "約台北時間 17:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-27T09:31:45Z",
+  "updated_at_taipei": "2026-11-27 17:31",
+  "last_updated_utc": "2026-11-27T09:31:45Z",
+  "last_updated_taipei": "2026-11-27 17:31",
+  "next_update_hint": "約台北時間 17:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
+    {
+      "id": "marketwatch_top",
+      "name": "MarketWatch",
+      "error": "HTTPSConnectionPool(host='feeds.content.dowjones.io', port=443): Max retries exceeded with url: /public/rss/mw_topstories (Caused by NameResolutionError(\"HTTPSConnection(host='feeds.content.dowjones.io', port=443): Failed to resolve 'feeds.content.dowjones.io' ([Errno -3] Temporary failure in name resolution)\"))"
+    },
+    {
+      "id": "udn_money_stock",
+      "name": "經濟日報",
+      "error": "HTTPSConnectionPool(host='money.udn.com', port=443): Max retries exceeded with url: /rssfeed/news/1001/5590/5710?ch=money (Caused by NameResolutionError(\"HTTPSConnection(host='money.udn.com', port=443): Failed to resolve 'money.udn.com' ([Errno -3] Temporary failure in name resolution)\"))"
+    },
     {
       "id": "binance_derivatives",
       "name": "Binance 永續合約",
@@ -20,23 +30,28 @@
       "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
     },
     {
+      "id": "binance_announcements",
+      "name": "Binance 公告",
+      "error": "HTTPSConnectionPool(host='www.binance.com', port=443): Max retries exceeded with url: /bapi/composite/v1/public/cms/article/list/query?type=1&catalogId=48&pageNo=1&pageSize=10 (Caused by NameResolutionError(\"HTTPSConnection(host='www.binance.com', port=443): Failed to resolve 'www.binance.com' ([Errno -3] Temporary failure in name resolution)\"))"
+    },
+    {
       "id": "bybit_announcements",
       "name": "Bybit 公告",
       "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 18.37,
-    "sources_ok": 23,
-    "sources_failed": 3,
-    "new_items_added": 4,
+    "total_elapsed_sec": 106.939,
+    "sources_ok": 20,
+    "sources_failed": 6,
+    "new_items_added": 13,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.131,
+        "elapsed_sec": 0.074,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +60,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.171,
+        "elapsed_sec": 0.134,
         "raw_count": 30,
         "items_kept": 12,
         "error": null
@@ -54,7 +69,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.118,
+        "elapsed_sec": 0.127,
         "raw_count": 30,
         "items_kept": 6,
         "error": null
@@ -62,18 +77,18 @@
       "marketwatch_top": {
         "name": "MarketWatch",
         "kind": "rss",
-        "status": "ok",
-        "elapsed_sec": 0.16,
-        "raw_count": 10,
-        "items_kept": 1,
-        "error": null
+        "status": "failed",
+        "elapsed_sec": 30.302,
+        "raw_count": 0,
+        "items_kept": 0,
+        "error": "HTTPSConnectionPool(host='feeds.content.dowjones.io', port=443): Max retries exceeded with url: /public/rss/mw_topstories (Caused by NameResolutionError(\"HTTPSConnection(host='feeds.content.dowjones.io', port=443): Failed to resolve 'feeds.content.dowjones.io' ([Errno -3] Temporary failure in name resolution)\"))"
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.444,
-        "raw_count": 20,
+        "elapsed_sec": 0.314,
+        "raw_count": 19,
         "items_kept": 18,
         "error": null
       },
@@ -81,7 +96,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.232,
+        "elapsed_sec": 0.196,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +105,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.169,
+        "elapsed_sec": 0.124,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +114,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.224,
+        "elapsed_sec": 0.153,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +123,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.118,
+        "elapsed_sec": 0.128,
         "raw_count": 35,
         "items_kept": 17,
         "error": null
@@ -117,7 +132,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.581,
+        "elapsed_sec": 0.558,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -126,7 +141,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.557,
+        "elapsed_sec": 0.336,
         "raw_count": 20,
         "items_kept": 16,
         "error": null
@@ -135,34 +150,34 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.457,
+        "elapsed_sec": 0.271,
         "raw_count": 20,
-        "items_kept": 8,
+        "items_kept": 9,
         "error": null
       },
       "cnyes_crypto": {
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.825,
+        "elapsed_sec": 0.978,
         "raw_count": 15,
-        "items_kept": 5,
+        "items_kept": 6,
         "error": null
       },
       "udn_money_stock": {
         "name": "經濟日報",
         "kind": "rss",
-        "status": "ok",
-        "elapsed_sec": 0.401,
-        "raw_count": 20,
-        "items_kept": 12,
-        "error": null
+        "status": "failed",
+        "elapsed_sec": 20.288,
+        "raw_count": 0,
+        "items_kept": 0,
+        "error": "HTTPSConnectionPool(host='money.udn.com', port=443): Max retries exceeded with url: /rssfeed/news/1001/5590/5710?ch=money (Caused by NameResolutionError(\"HTTPSConnection(host='money.udn.com', port=443): Failed to resolve 'money.udn.com' ([Errno -3] Temporary failure in name resolution)\"))"
       },
       "yahoo_tw_stock": {
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.446,
+        "elapsed_sec": 0.397,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +186,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.102,
+        "elapsed_sec": 0.274,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +195,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.411,
+        "elapsed_sec": 3.296,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +204,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.057,
+        "elapsed_sec": 0.063,
         "raw_count": 1378,
         "items_kept": 0,
         "error": null
@@ -198,7 +213,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.222,
+        "elapsed_sec": 1.301,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +222,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.572,
+        "elapsed_sec": 0.497,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +231,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.379,
+        "elapsed_sec": 0.965,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +240,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.529,
+        "elapsed_sec": 0.409,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +249,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.664,
+        "elapsed_sec": 0.805,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -242,17 +257,17 @@
       "binance_announcements": {
         "name": "Binance 公告",
         "kind": "binance_announcements",
-        "status": "ok",
-        "elapsed_sec": 0.289,
-        "raw_count": 20,
-        "items_kept": 3,
-        "error": null
+        "status": "failed",
+        "elapsed_sec": 25.283,
+        "raw_count": 0,
+        "items_kept": 0,
+        "error": "HTTPSConnectionPool(host='www.binance.com', port=443): Max retries exceeded with url: /bapi/composite/v1/public/cms/article/list/query?type=1&catalogId=48&pageNo=1&pageSize=10 (Caused by NameResolutionError(\"HTTPSConnection(host='www.binance.com', port=443): Failed to resolve 'www.binance.com' ([Errno -3] Temporary failure in name resolution)\"))"
       },
       "okx_announcements": {
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.564,
+        "elapsed_sec": 0.425,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +276,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.403,
+        "elapsed_sec": 0.378,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,28 +318,62 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -390.1,
+      "net_flow_usd_m": -389.6,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0018,
+        "funding_rate_pct": 0.0012,
         "oi_usd_b": 1.98
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0075,
+        "funding_rate_pct": 0.0074,
         "oi_usd_b": 1.18
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.9,
-      "tx_count": 67879,
+      "mempool_vsize_mb": 29.2,
+      "tx_count": 62842,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261127-b148b2c488",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:30:06Z",
+      "published_at_taipei": "2026-11-27 17:30",
+      "published_at_taipei_iso": "2026-11-27T17:30:06+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "東京11月核心CPI微幅低於預期 日本央行12月升息機率仍高",
+      "url": "https://news.cnyes.com/news/id/6673732",
+      "canonical_url": "https://news.cnyes.com/news/id/6673732",
+      "source": "鉅亨網（總經）",
+      "source_id": "cnyes_macro",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（cpi）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "反轉：通膨／就業降溫（低於市場預期）；命中：低於預期；命中：升息",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261127-2e537d3f10",
       "issue": "2026-11-27-AM",
@@ -1027,6 +1076,264 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-285c035931",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:30:07Z",
+      "published_at_taipei": "2026-11-27 17:30",
+      "published_at_taipei_iso": "2026-11-27T17:30:07+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "Jeff Park：這是我經歷過最艱難的比特幣周期",
+      "url": "https://news.cnyes.com/news/id/6673896",
+      "canonical_url": "https://news.cnyes.com/news/id/6673896",
+      "source": "鉅亨網（加密）",
+      "source_id": "cnyes_crypto",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-9abf8e8af5",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:30:07Z",
+      "published_at_taipei": "2026-11-27 17:30",
+      "published_at_taipei_iso": "2026-11-27T17:30:07+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "以太坊基金會賣幣：不影響以太坊的基本面",
+      "url": "https://news.cnyes.com/news/id/6673895",
+      "canonical_url": "https://news.cnyes.com/news/id/6673895",
+      "source": "鉅亨網（加密）",
+      "source_id": "cnyes_crypto",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "ETHUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-af8b64a0fc",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:30:03Z",
+      "published_at_taipei": "2026-11-27 17:30",
+      "published_at_taipei_iso": "2026-11-27T17:30:03+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "特斯拉人形機器人布局有新動作？擬收購德國工具機廠EMAG",
+      "url": "https://news.cnyes.com/news/id/6673892",
+      "canonical_url": "https://news.cnyes.com/news/id/6673892",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-360bef23ec",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:29:26Z",
+      "published_at_taipei": "2026-11-27 17:29",
+      "published_at_taipei_iso": "2026-11-27T17:29:26+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "台股3萬9千點暗藏變盤訊號？下一波主流?!",
+      "url": "https://news.cnyes.com/news/id/6673891",
+      "canonical_url": "https://news.cnyes.com/news/id/6673891",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330",
+        "2317"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：買超；命中：賣超）",
+      "sentiment_targets": [
+        "TWII",
+        "2330",
+        "2317"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-13df7be9f2",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:25:23Z",
+      "published_at_taipei": "2026-11-27 17:25",
+      "published_at_taipei_iso": "2026-11-27T17:25:23+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "〈國泰金法說〉看到「00981A違約交割上億」嚇一跳 李長庚急查：國泰證實虧僅1157元",
+      "url": "https://news.cnyes.com/news/id/6673726",
+      "canonical_url": "https://news.cnyes.com/news/id/6673726",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2882"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：違約",
+      "sentiment_targets": [
+        "2882"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-30426f0215",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:23:22Z",
+      "published_at_taipei": "2026-11-27 17:23",
+      "published_at_taipei_iso": "2026-11-27T17:23:22+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "選前最後一盤神山發力台股翻紅守3萬9！權值股各走各的 衛星股10顆紅燈搶風頭 ｜Yahoo財經掃描",
+      "url": "https://tw.stock.yahoo.com/news/%E9%81%B8%E5%89%8D%E6%9C%80%E5%BE%8C%E4%B8%80%E7%9B%A4%E7%A5%9E%E5%B1%B1%E7%99%BC%E5%8A%9B%E5%8F%B0%E8%82%A1%E7%BF%BB%E7%B4%85%E5%AE%883%E8%90%AC9%EF%BC%81%E6%AC%8A%E5%80%BC%E8%82%A1%E5%90%84%E8%B5%B0%E5%90%84%E7%9A%84-%E8%A1%9B%E6%98%9F%E8%82%A110%E9%A1%86%E7%B4%85%E7%87%88%E6%90%B6%E9%A2%A8%E9%A0%AD-%EF%BD%9Cyahoo%E8%B2%A1%E7%B6%93%E6%8E%83%E6%8F%8F-092322357.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E9%81%B8%E5%89%8D%E6%9C%80%E5%BE%8C%E4%B8%80%E7%9B%A4%E7%A5%9E%E5%B1%B1%E7%99%BC%E5%8A%9B%E5%8F%B0%E8%82%A1%E7%BF%BB%E7%B4%85%E5%AE%883%E8%90%AC9%EF%BC%81%E6%AC%8A%E5%80%BC%E8%82%A1%E5%90%84%E8%B5%B0%E5%90%84%E7%9A%84-%E8%A1%9B%E6%98%9F%E8%82%A110%E9%A1%86%E7%B4%85%E7%87%88%E6%90%B6%E9%A2%A8%E9%A0%AD-%EF%BD%9Cyahoo%E8%B2%A1%E7%B6%93%E6%8E%83%E6%8F%8F-092322357.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-6242ff47b7",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:19:54Z",
+      "published_at_taipei": "2026-11-27 17:19",
+      "published_at_taipei_iso": "2026-11-27T17:19:54+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "時間讓小麥更茁壯、鎖定被錯殺的成長飆股",
+      "url": "https://news.cnyes.com/news/id/6673888",
+      "canonical_url": "https://news.cnyes.com/news/id/6673888",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：關稅",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-03877ea1da",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T09:11:52Z",
@@ -1067,6 +1374,44 @@
       "sentiment_targets": [
         "NAS100",
         "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-4ccf649976",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:10:00Z",
+      "published_at_taipei": "2026-11-27 17:10",
+      "published_at_taipei_iso": "2026-11-27T17:10:00+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "外資續賣296億！ 買正2、反1再砍台積電 網傻眼：真會玩",
+      "url": "https://tw.stock.yahoo.com/news/%E5%A4%96%E8%B3%87%E7%BA%8C%E8%B3%A3296%E5%84%84-%E8%B2%B7%E6%AD%A32-%E5%8F%8D1%E5%86%8D%E7%A0%8D%E5%8F%B0%E7%A9%8D%E9%9B%BB-%E7%B6%B2%E5%82%BB%E7%9C%BC-%E7%9C%9F%E6%9C%83%E7%8E%A9-091000943.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%A4%96%E8%B3%87%E7%BA%8C%E8%B3%A3296%E5%84%84-%E8%B2%B7%E6%AD%A32-%E5%8F%8D1%E5%86%8D%E7%A0%8D%E5%8F%B0%E7%A9%8D%E9%9B%BB-%E7%B6%B2%E5%82%BB%E7%9C%BC-%E7%9C%9F%E6%9C%83%E7%8E%A9-091000943.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（外資）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
       ],
       "sentiment_method": "rule"
     },
@@ -1520,6 +1865,48 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-3a60fe1872",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T08:30:00Z",
+      "published_at_taipei": "2026-11-27 16:30",
+      "published_at_taipei_iso": "2026-11-27T16:30:00+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "Iraq Delays Up to 30 Million Barrels of Crude Oil Shipments",
+      "url": "https://finance.yahoo.com/energy/articles/iraq-delays-30-million-barrels-083000983.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/iraq-delays-30-million-barrels-083000983.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-2ea8411e01",
+        "issue": "2026-11-24-PM",
+        "title": "Sinda Ltd. Authorizes Up to $50 Million Share Repurchase Program",
+        "published_at_taipei": "2026-11-24 22:36",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/sinda-ltd-authorizes-50-million-143600802.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-60924328ac",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T08:26:42Z",
@@ -1774,6 +2161,42 @@
       "sentiment_reason": "命中：賣超",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-d7a084fc82",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T08:13:00Z",
+      "published_at_taipei": "2026-11-27 16:13",
+      "published_at_taipei_iso": "2026-11-27T16:13:00+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "鴻海續攜手海洋大學 推生態復育/循環加值應用",
+      "url": "https://tw.stock.yahoo.com/news/%E9%B4%BB%E6%B5%B7%E7%BA%8C%E6%94%9C%E6%89%8B%E6%B5%B7%E6%B4%8B%E5%A4%A7%E5%AD%B8-%E6%8E%A8%E7%94%9F%E6%85%8B%E5%BE%A9%E8%82%B2-%E5%BE%AA%E7%92%B0%E5%8A%A0%E5%80%BC%E6%87%89%E7%94%A8-081300733.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E9%B4%BB%E6%B5%B7%E7%BA%8C%E6%94%9C%E6%89%8B%E6%B5%B7%E6%B4%8B%E5%A4%A7%E5%AD%B8-%E6%8E%A8%E7%94%9F%E6%85%8B%E5%BE%A9%E8%82%B2-%E5%BE%AA%E7%92%B0%E5%8A%A0%E5%80%BC%E6%87%89%E7%94%A8-081300733.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2317"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：合作",
+      "sentiment_targets": [
+        "2317"
       ],
       "sentiment_method": "rule"
     },
@@ -7501,6 +7924,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-91f478c54d",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:20:34Z",
+      "published_at_taipei": "2026-11-27 17:20",
+      "published_at_taipei_iso": "2026-11-27T17:20:34+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "AI chip curbs, Musk’s giveaway and oil risks - what’s moving markets",
+      "url": "https://finance.yahoo.com/markets/articles/ai-chip-curbs-musk-giveaway-092034519.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/articles/ai-chip-curbs-musk-giveaway-092034519.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-7d79e5dea9",
+        "issue": "2026-11-25-AM",
+        "title": "AI jitters spark \"wild\" stock moves; PCE data ahead - what’s moving markets",
+        "published_at_taipei": "2026-11-25 17:33",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/ai-jitters-spark-wild-stock-093356972.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-27ed4a0f23",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T09:06:41Z",
@@ -7921,6 +8384,46 @@
       "sentiment_label": "中性",
       "sentiment_score": 0,
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-ff4dbb6b73",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T06:31:45Z",
+      "published_at_taipei": "2026-11-27 14:31",
+      "published_at_taipei_iso": "2026-11-27T14:31:45+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "Oil Stockpiling to Influence Market in 2027, Energy Aspects Says",
+      "url": "https://finance.yahoo.com/energy/articles/oil-stockpiling-influence-market-2027-063145426.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/oil-stockpiling-influence-market-2027-063145426.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-3981c11d37",
+        "issue": "2026-11-24-PM",
+        "title": "Apple Stock Has 3 Things Going for It in 2027. Here’s My Price Target",
+        "published_at_taipei": "2026-11-25 01:03",
+        "url": "https://247wallst.com/investing/2026/11/24/apple-stock-has-3-things-going-for-it-in-2027-heres-my-price-target/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：tightening",
       "sentiment_targets": [
         "NAS100"
       ],
@@ -8618,6 +9121,338 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261127-285c035931",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:30:07Z",
+      "published_at_taipei": "2026-11-27 17:30",
+      "published_at_taipei_iso": "2026-11-27T17:30:07+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "Jeff Park：這是我經歷過最艱難的比特幣周期",
+      "url": "https://news.cnyes.com/news/id/6673896",
+      "canonical_url": "https://news.cnyes.com/news/id/6673896",
+      "source": "鉅亨網（加密）",
+      "source_id": "cnyes_crypto",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-9abf8e8af5",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:30:07Z",
+      "published_at_taipei": "2026-11-27 17:30",
+      "published_at_taipei_iso": "2026-11-27T17:30:07+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "以太坊基金會賣幣：不影響以太坊的基本面",
+      "url": "https://news.cnyes.com/news/id/6673895",
+      "canonical_url": "https://news.cnyes.com/news/id/6673895",
+      "source": "鉅亨網（加密）",
+      "source_id": "cnyes_crypto",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "ETHUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "ETHUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-b148b2c488",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:30:06Z",
+      "published_at_taipei": "2026-11-27 17:30",
+      "published_at_taipei_iso": "2026-11-27T17:30:06+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "東京11月核心CPI微幅低於預期 日本央行12月升息機率仍高",
+      "url": "https://news.cnyes.com/news/id/6673732",
+      "canonical_url": "https://news.cnyes.com/news/id/6673732",
+      "source": "鉅亨網（總經）",
+      "source_id": "cnyes_macro",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（cpi）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "反轉：通膨／就業降溫（低於市場預期）；命中：低於預期；命中：升息",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-af8b64a0fc",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:30:03Z",
+      "published_at_taipei": "2026-11-27 17:30",
+      "published_at_taipei_iso": "2026-11-27T17:30:03+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "特斯拉人形機器人布局有新動作？擬收購德國工具機廠EMAG",
+      "url": "https://news.cnyes.com/news/id/6673892",
+      "canonical_url": "https://news.cnyes.com/news/id/6673892",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-360bef23ec",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:29:26Z",
+      "published_at_taipei": "2026-11-27 17:29",
+      "published_at_taipei_iso": "2026-11-27T17:29:26+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "台股3萬9千點暗藏變盤訊號？下一波主流?!",
+      "url": "https://news.cnyes.com/news/id/6673891",
+      "canonical_url": "https://news.cnyes.com/news/id/6673891",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330",
+        "2317"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：買超；命中：賣超）",
+      "sentiment_targets": [
+        "TWII",
+        "2330",
+        "2317"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-13df7be9f2",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:25:23Z",
+      "published_at_taipei": "2026-11-27 17:25",
+      "published_at_taipei_iso": "2026-11-27T17:25:23+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "〈國泰金法說〉看到「00981A違約交割上億」嚇一跳 李長庚急查：國泰證實虧僅1157元",
+      "url": "https://news.cnyes.com/news/id/6673726",
+      "canonical_url": "https://news.cnyes.com/news/id/6673726",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2882"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：違約",
+      "sentiment_targets": [
+        "2882"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-30426f0215",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:23:22Z",
+      "published_at_taipei": "2026-11-27 17:23",
+      "published_at_taipei_iso": "2026-11-27T17:23:22+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "選前最後一盤神山發力台股翻紅守3萬9！權值股各走各的 衛星股10顆紅燈搶風頭 ｜Yahoo財經掃描",
+      "url": "https://tw.stock.yahoo.com/news/%E9%81%B8%E5%89%8D%E6%9C%80%E5%BE%8C%E4%B8%80%E7%9B%A4%E7%A5%9E%E5%B1%B1%E7%99%BC%E5%8A%9B%E5%8F%B0%E8%82%A1%E7%BF%BB%E7%B4%85%E5%AE%883%E8%90%AC9%EF%BC%81%E6%AC%8A%E5%80%BC%E8%82%A1%E5%90%84%E8%B5%B0%E5%90%84%E7%9A%84-%E8%A1%9B%E6%98%9F%E8%82%A110%E9%A1%86%E7%B4%85%E7%87%88%E6%90%B6%E9%A2%A8%E9%A0%AD-%EF%BD%9Cyahoo%E8%B2%A1%E7%B6%93%E6%8E%83%E6%8F%8F-092322357.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E9%81%B8%E5%89%8D%E6%9C%80%E5%BE%8C%E4%B8%80%E7%9B%A4%E7%A5%9E%E5%B1%B1%E7%99%BC%E5%8A%9B%E5%8F%B0%E8%82%A1%E7%BF%BB%E7%B4%85%E5%AE%883%E8%90%AC9%EF%BC%81%E6%AC%8A%E5%80%BC%E8%82%A1%E5%90%84%E8%B5%B0%E5%90%84%E7%9A%84-%E8%A1%9B%E6%98%9F%E8%82%A110%E9%A1%86%E7%B4%85%E7%87%88%E6%90%B6%E9%A2%A8%E9%A0%AD-%EF%BD%9Cyahoo%E8%B2%A1%E7%B6%93%E6%8E%83%E6%8F%8F-092322357.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：大漲",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-91f478c54d",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:20:34Z",
+      "published_at_taipei": "2026-11-27 17:20",
+      "published_at_taipei_iso": "2026-11-27T17:20:34+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "AI chip curbs, Musk’s giveaway and oil risks - what’s moving markets",
+      "url": "https://finance.yahoo.com/markets/articles/ai-chip-curbs-musk-giveaway-092034519.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/articles/ai-chip-curbs-musk-giveaway-092034519.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-7d79e5dea9",
+        "issue": "2026-11-25-AM",
+        "title": "AI jitters spark \"wild\" stock moves; PCE data ahead - what’s moving markets",
+        "published_at_taipei": "2026-11-25 17:33",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/ai-jitters-spark-wild-stock-093356972.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-6242ff47b7",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:19:54Z",
+      "published_at_taipei": "2026-11-27 17:19",
+      "published_at_taipei_iso": "2026-11-27T17:19:54+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "時間讓小麥更茁壯、鎖定被錯殺的成長飆股",
+      "url": "https://news.cnyes.com/news/id/6673888",
+      "canonical_url": "https://news.cnyes.com/news/id/6673888",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：關稅",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-03877ea1da",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T09:11:52Z",
@@ -8658,6 +9493,44 @@
       "sentiment_targets": [
         "NAS100",
         "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-4ccf649976",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:10:00Z",
+      "published_at_taipei": "2026-11-27 17:10",
+      "published_at_taipei_iso": "2026-11-27T17:10:00+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "外資續賣296億！ 買正2、反1再砍台積電 網傻眼：真會玩",
+      "url": "https://tw.stock.yahoo.com/news/%E5%A4%96%E8%B3%87%E7%BA%8C%E8%B3%A3296%E5%84%84-%E8%B2%B7%E6%AD%A32-%E5%8F%8D1%E5%86%8D%E7%A0%8D%E5%8F%B0%E7%A9%8D%E9%9B%BB-%E7%B6%B2%E5%82%BB%E7%9C%BC-%E7%9C%9F%E6%9C%83%E7%8E%A9-091000943.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%A4%96%E8%B3%87%E7%BA%8C%E8%B3%A3296%E5%84%84-%E8%B2%B7%E6%AD%A32-%E5%8F%8D1%E5%86%8D%E7%A0%8D%E5%8F%B0%E7%A9%8D%E9%9B%BB-%E7%B6%B2%E5%82%BB%E7%9C%BC-%E7%9C%9F%E6%9C%83%E7%8E%A9-091000943.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（外資）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
       ],
       "sentiment_method": "rule"
     },
@@ -9213,6 +10086,48 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-3a60fe1872",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T08:30:00Z",
+      "published_at_taipei": "2026-11-27 16:30",
+      "published_at_taipei_iso": "2026-11-27T16:30:00+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "Iraq Delays Up to 30 Million Barrels of Crude Oil Shipments",
+      "url": "https://finance.yahoo.com/energy/articles/iraq-delays-30-million-barrels-083000983.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/iraq-delays-30-million-barrels-083000983.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-2ea8411e01",
+        "issue": "2026-11-24-PM",
+        "title": "Sinda Ltd. Authorizes Up to $50 Million Share Repurchase Program",
+        "published_at_taipei": "2026-11-24 22:36",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/sinda-ltd-authorizes-50-million-143600802.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-60924328ac",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T08:26:42Z",
@@ -9603,6 +10518,42 @@
       "sentiment_reason": "命中：賣超",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-d7a084fc82",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T08:13:00Z",
+      "published_at_taipei": "2026-11-27 16:13",
+      "published_at_taipei_iso": "2026-11-27T16:13:00+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "鴻海續攜手海洋大學 推生態復育/循環加值應用",
+      "url": "https://tw.stock.yahoo.com/news/%E9%B4%BB%E6%B5%B7%E7%BA%8C%E6%94%9C%E6%89%8B%E6%B5%B7%E6%B4%8B%E5%A4%A7%E5%AD%B8-%E6%8E%A8%E7%94%9F%E6%85%8B%E5%BE%A9%E8%82%B2-%E5%BE%AA%E7%92%B0%E5%8A%A0%E5%80%BC%E6%87%89%E7%94%A8-081300733.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E9%B4%BB%E6%B5%B7%E7%BA%8C%E6%94%9C%E6%89%8B%E6%B5%B7%E6%B4%8B%E5%A4%A7%E5%AD%B8-%E6%8E%A8%E7%94%9F%E6%85%8B%E5%BE%A9%E8%82%B2-%E5%BE%AA%E7%92%B0%E5%8A%A0%E5%80%BC%E6%87%89%E7%94%A8-081300733.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2317"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：合作",
+      "sentiment_targets": [
+        "2317"
       ],
       "sentiment_method": "rule"
     },
@@ -10940,6 +11891,46 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-ff4dbb6b73",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T06:31:45Z",
+      "published_at_taipei": "2026-11-27 14:31",
+      "published_at_taipei_iso": "2026-11-27T14:31:45+08:00",
+      "first_seen_at_utc": "2026-11-27T09:31:45Z",
+      "first_seen_at_taipei": "2026-11-27 17:31",
+      "month": "2026-11",
+      "title": "Oil Stockpiling to Influence Market in 2027, Energy Aspects Says",
+      "url": "https://finance.yahoo.com/energy/articles/oil-stockpiling-influence-market-2027-063145426.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/oil-stockpiling-influence-market-2027-063145426.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-3981c11d37",
+        "issue": "2026-11-24-PM",
+        "title": "Apple Stock Has 3 Things Going for It in 2027. Here’s My Price Target",
+        "published_at_taipei": "2026-11-25 01:03",
+        "url": "https://247wallst.com/investing/2026/11/24/apple-stock-has-3-things-going-for-it-in-2027-heres-my-price-target/?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "命中：tightening",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -157338,10 +158329,20 @@
       "month": "2026-11",
       "date": "2026-11-27",
       "half": "AM",
-      "updated_at_taipei": "2026-11-27 17:16",
-      "count": 217,
-      "star3_count": 19,
+      "updated_at_taipei": "2026-11-27 17:31",
+      "count": 230,
+      "star3_count": 20,
       "failed_sources": [
+        {
+          "id": "marketwatch_top",
+          "name": "MarketWatch",
+          "error": "HTTPSConnectionPool(host='feeds.content.dowjones.io', port=443): Max retries exceeded with url: /public/rss/mw_topstories (Caused by NameResolutionError(\"HTTPSConnection(host='feeds.content.dowjones.io', port=443): Failed to resolve 'feeds.content.dowjones.io' ([Errno -3] Temporary failure in name resolution)\"))"
+        },
+        {
+          "id": "udn_money_stock",
+          "name": "經濟日報",
+          "error": "HTTPSConnectionPool(host='money.udn.com', port=443): Max retries exceeded with url: /rssfeed/news/1001/5590/5710?ch=money (Caused by NameResolutionError(\"HTTPSConnection(host='money.udn.com', port=443): Failed to resolve 'money.udn.com' ([Errno -3] Temporary failure in name resolution)\"))"
+        },
         {
           "id": "binance_derivatives",
           "name": "Binance 永續合約",
@@ -157351,6 +158352,11 @@
           "id": "bybit_derivatives",
           "name": "Bybit 永續合約",
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
+        },
+        {
+          "id": "binance_announcements",
+          "name": "Binance 公告",
+          "error": "HTTPSConnectionPool(host='www.binance.com', port=443): Max retries exceeded with url: /bapi/composite/v1/public/cms/article/list/query?type=1&catalogId=48&pageNo=1&pageSize=10 (Caused by NameResolutionError(\"HTTPSConnection(host='www.binance.com', port=443): Failed to resolve 'www.binance.com' ([Errno -3] Temporary failure in name resolution)\"))"
         },
         {
           "id": "bybit_announcements",
