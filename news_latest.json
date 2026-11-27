@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-27-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-27T16:03:17Z",
-  "updated_at_taipei": "2026-11-28 00:03",
-  "last_updated_utc": "2026-11-27T16:03:17Z",
-  "last_updated_taipei": "2026-11-28 00:03",
-  "next_update_hint": "約台北時間 00:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-27T16:18:19Z",
+  "updated_at_taipei": "2026-11-28 00:18",
+  "last_updated_utc": "2026-11-27T16:18:19Z",
+  "last_updated_taipei": "2026-11-28 00:18",
+  "next_update_hint": "約台北時間 00:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 21.501,
+    "total_elapsed_sec": 15.376,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 10,
+    "new_items_added": 2,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.048,
+        "elapsed_sec": 0.05,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.083,
+        "elapsed_sec": 0.059,
         "raw_count": 30,
         "items_kept": 8,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.16,
+        "elapsed_sec": 0.038,
         "raw_count": 30,
         "items_kept": 5,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.03,
+        "elapsed_sec": 0.029,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.271,
+        "elapsed_sec": 0.163,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.099,
+        "elapsed_sec": 0.089,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.075,
+        "elapsed_sec": 0.078,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.087,
+        "elapsed_sec": 0.069,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.189,
+        "elapsed_sec": 0.067,
         "raw_count": 34,
         "items_kept": 17,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.298,
+        "elapsed_sec": 0.279,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.396,
+        "elapsed_sec": 0.403,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.336,
+        "elapsed_sec": 0.339,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.827,
+        "elapsed_sec": 0.893,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,16 +153,16 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.606,
+        "elapsed_sec": 0.347,
         "raw_count": 20,
-        "items_kept": 8,
+        "items_kept": 7,
         "error": null
       },
       "yahoo_tw_stock": {
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.103,
+        "elapsed_sec": 0.111,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.049,
+        "elapsed_sec": 0.072,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.216,
+        "elapsed_sec": 0.265,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.034,
+        "elapsed_sec": 0.063,
         "raw_count": 1378,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.676,
+        "elapsed_sec": 1.522,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.305,
+        "elapsed_sec": 0.291,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.37,
+        "elapsed_sec": 1.393,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.289,
+        "elapsed_sec": 0.284,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 1.465,
+        "elapsed_sec": 1.372,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.044,
+        "elapsed_sec": 0.045,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.536,
+        "elapsed_sec": 0.569,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.28,
+        "elapsed_sec": 0.279,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -270,8 +270,8 @@
   },
   "data_metrics_snapshot": {
     "stablecoins": {
-      "total_usd_b": 283.68,
-      "change_1d_usd_m": -302.9,
+      "total_usd_b": 283.65,
+      "change_1d_usd_m": -324.2,
       "change_1d_pct": -0.11,
       "alert_key": "stablecoins_supply:down"
     },
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -379.8,
+      "net_flow_usd_m": -379.2,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": -0.0002,
+        "funding_rate_pct": -0.0004,
         "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.001,
-        "oi_usd_b": 1.16
+        "funding_rate_pct": -0.0015,
+        "oi_usd_b": 1.15
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 5,
-      "half_hour_fee_sat_vb": 4,
-      "mempool_vsize_mb": 34.9,
-      "tx_count": 82061,
+      "fastest_fee_sat_vb": 6,
+      "half_hour_fee_sat_vb": 5,
+      "mempool_vsize_mb": 35.7,
+      "tx_count": 84901,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -3704,6 +3704,74 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-fc7d1f95b3",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T15:57:39Z",
+      "published_at_taipei": "2026-11-27 23:57",
+      "published_at_taipei_iso": "2026-11-27T23:57:39+08:00",
+      "first_seen_at_utc": "2026-11-27T16:18:19Z",
+      "first_seen_at_taipei": "2026-11-28 00:18",
+      "month": "2026-11",
+      "title": "智邦按讚明年 AI 商機 布局系統及機櫃方案",
+      "url": "https://money.udn.com/money/story/5710/9906498",
+      "canonical_url": "https://money.udn.com/money/story/5710/9906498",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-8f7de4cfc7",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T15:54:50Z",
+      "published_at_taipei": "2026-11-27 23:54",
+      "published_at_taipei_iso": "2026-11-27T23:54:50+08:00",
+      "first_seen_at_utc": "2026-11-27T16:18:19Z",
+      "first_seen_at_taipei": "2026-11-28 00:18",
+      "month": "2026-11",
+      "title": "星通獲美國航管急單",
+      "url": "https://money.udn.com/money/story/5710/9906501",
+      "canonical_url": "https://money.udn.com/money/story/5710/9906501",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-8fc587f825",
       "issue": "2026-11-27-PM",
       "published_at_utc": "2026-11-27T15:52:00Z",
@@ -5634,6 +5702,74 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261127-fc7d1f95b3",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T15:57:39Z",
+      "published_at_taipei": "2026-11-27 23:57",
+      "published_at_taipei_iso": "2026-11-27T23:57:39+08:00",
+      "first_seen_at_utc": "2026-11-27T16:18:19Z",
+      "first_seen_at_taipei": "2026-11-28 00:18",
+      "month": "2026-11",
+      "title": "智邦按讚明年 AI 商機 布局系統及機櫃方案",
+      "url": "https://money.udn.com/money/story/5710/9906498",
+      "canonical_url": "https://money.udn.com/money/story/5710/9906498",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-8f7de4cfc7",
+      "issue": "2026-11-27-PM",
+      "published_at_utc": "2026-11-27T15:54:50Z",
+      "published_at_taipei": "2026-11-27 23:54",
+      "published_at_taipei_iso": "2026-11-27T23:54:50+08:00",
+      "first_seen_at_utc": "2026-11-27T16:18:19Z",
+      "first_seen_at_taipei": "2026-11-28 00:18",
+      "month": "2026-11",
+      "title": "星通獲美國航管急單",
+      "url": "https://money.udn.com/money/story/5710/9906501",
+      "canonical_url": "https://money.udn.com/money/story/5710/9906501",
+      "source": "經濟日報",
+      "source_id": "udn_money_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261127-8fc587f825",
       "issue": "2026-11-27-PM",
@@ -162225,48 +162361,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261121-36a3ba43b5",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-20T16:11:22Z",
-      "published_at_taipei": "2026-11-21 00:11",
-      "published_at_taipei_iso": "2026-11-21T00:11:22+08:00",
-      "month": "2026-11",
-      "title": "Wagyu’s XMR1 wrapped Monero plunges 99% after $13 million hack as founder promises refunds",
-      "url": "https://www.theblock.co/news/defi/2026-11-20-wagyus-xmr1-wrapped-monero-plunges-99-after-13-million-hack-founder-promises-refunds-444747",
-      "canonical_url": "https://theblock.co/news/defi/2026-11-20-wagyus-xmr1-wrapped-monero-plunges-99-after-13-million-hack-founder-promises-refunds-444747",
-      "source": "The Block",
-      "source_id": "theblock",
-      "category": "安全事件",
-      "symbols": [],
-      "importance": 3,
-      "importance_stars": "★★★",
-      "importance_reason": "分類規則（安全事件）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-87f787e049",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-20T16:10:36Z",
-      "published_at_taipei": "2026-11-21 00:10",
-      "published_at_taipei_iso": "2026-11-21T00:10:36+08:00",
-      "month": "2026-11",
-      "title": "益登年營收拚新高 擴展資安、智慧醫療業務",
-      "url": "https://money.udn.com/money/story/5710/9892093",
-      "canonical_url": "https://money.udn.com/money/story/5710/9892093",
-      "source": "經濟日報",
-      "source_id": "udn_money_stock",
-      "category": "台股",
-      "symbols": [],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "市場重點（營收）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -162275,8 +162369,8 @@
       "month": "2026-11",
       "date": "2026-11-27",
       "half": "PM",
-      "updated_at_taipei": "2026-11-28 00:03",
-      "count": 135,
+      "updated_at_taipei": "2026-11-28 00:18",
+      "count": 137,
       "star3_count": 6,
       "failed_sources": [
         {
