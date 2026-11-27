@@ -1,0 +1,5258 @@
+{
+  "meta": {
+    "study_id": "robustness_check",
+    "study_title": "定期定額與高點回本推薦方案（R1–R5）八關穩健性驗證研究",
+    "generated_date": "2026-11-27",
+    "common_end_date": "2026-11-25",
+    "quick_mode": false,
+    "bootstrap_paths_per_scheme": 5000,
+    "execution_time_seconds": 142.05,
+    "peak_memory_mb": 318.53,
+    "charts": {
+      "verdict_heatmap": "verdict_heatmap.png",
+      "intl_crash_equity_curves": "intl_crash_equity_curves.png",
+      "behavior_xirr_loss_bars": "behavior_xirr_loss_bars.png",
+      "withdrawal_ruin_prob": "withdrawal_ruin_prob.png"
+    }
+  },
+  "data_sources": [
+    {
+      "symbol": "0050.TW",
+      "name": "元大台灣50 ETF",
+      "market": "TW",
+      "currency": "TWD",
+      "start_date": "2009-03-10",
+      "end_date": "2026-11-24",
+      "rows": 4339,
+      "source": "reused:research/dca_allocation_grid/cache/yf_raw_data.pkl",
+      "note": "2009-03-10 起真實日線；更早以 ^TWII+3%/年推算"
+    },
+    {
+      "symbol": "00631L.TW",
+      "name": "元大台灣50正2 (2x)",
+      "market": "TW",
+      "currency": "TWD",
+      "start_date": "1997-07-02",
+      "end_date": "2026-11-25",
+      "rows": 7629,
+      "source": "reused:research/dca_allocation_grid/cache/yf_raw_data.pkl",
+      "note": "2015-08-25 起真實日線；更早以 2×0050-1.16% 推算"
+    },
+    {
+      "symbol": "^TWII",
+      "name": "台灣加權股價指數",
+      "market": "TW",
+      "currency": "TWD",
+      "start_date": "1997-07-02",
+      "end_date": "2026-11-25",
+      "rows": 7204,
+      "source": "reused:research/dca_allocation_grid/cache/yf_raw_data.pkl",
+      "note": "Yahoo 日線自 1997-07-02 起（不含息）"
+    },
+    {
+      "symbol": "SPY",
+      "name": "SPDR S&P 500 ETF",
+      "market": "US",
+      "currency": "USD",
+      "start_date": "1993-01-29",
+      "end_date": "2026-11-25",
+      "rows": 8515,
+      "source": "reused:research/dca_allocation_grid/cache/yf_raw_data.pkl",
+      "note": "1993-01-29 起真實日線（1990–1993 以 ^SP500TR 銜接）"
+    },
+    {
+      "symbol": "QQQ",
+      "name": "Invesco QQQ Trust",
+      "market": "US",
+      "currency": "USD",
+      "start_date": "1999-03-10",
+      "end_date": "2026-11-25",
+      "rows": 6973,
+      "source": "reused:research/dca_allocation_grid/cache/yf_raw_data.pkl",
+      "note": "1999-03-10 起真實日線（1990–1999 以 ^NDX+0.4%息銜接）"
+    },
+    {
+      "symbol": "TQQQ",
+      "name": "ProShares UltraPro QQQ (3x)",
+      "market": "US",
+      "currency": "USD",
+      "start_date": "1997-07-02",
+      "end_date": "2026-11-25",
+      "rows": 7629,
+      "source": "reused:research/dca_allocation_grid/cache/yf_raw_data.pkl",
+      "note": "2010-02-11 起真實日線；更早以 3×QQQ-0.88%-2×^IRX 推算"
+    },
+    {
+      "symbol": "TWD=X",
+      "name": "美元兌台幣即期匯率",
+      "market": "FX",
+      "currency": "TWD/USD",
+      "start_date": "1997-07-02",
+      "end_date": "2026-11-25",
+      "rows": 7629,
+      "source": "reused:research/dca_allocation_grid/cache/yf_raw_data.pkl",
+      "note": "2004-03-24 起真實日線（清除 2011/2014 壞點）；更早回填 32.023"
+    },
+    {
+      "symbol": "^IRX",
+      "name": "美國 13 週國庫券殖利率",
+      "market": "US",
+      "currency": "USD",
+      "start_date": "1997-07-02",
+      "end_date": "2026-11-25",
+      "rows": 7629,
+      "source": "reused:research/dca_allocation_grid/cache/yf_raw_data.pkl",
+      "note": "1990-01-02 起真實短債利率"
+    },
+    {
+      "symbol": "^SP500TR",
+      "name": "S&P 500 含息總報酬指數",
+      "market": "US",
+      "currency": "USD",
+      "start_date": "1989-01-03",
+      "end_date": "2026-11-25",
+      "rows": 9546,
+      "source": "reused:research/peak_recovery/cache/long_indices_yf.pkl",
+      "note": "1988-01-04 起含息指數"
+    },
+    {
+      "symbol": "^GSPC",
+      "name": "S&P 500 價格指數",
+      "market": "US",
+      "currency": "USD",
+      "start_date": "1989-01-03",
+      "end_date": "2026-11-25",
+      "rows": 9546,
+      "source": "reused:research/peak_recovery/cache/long_indices_yf.pkl",
+      "note": "1927-12-30 起價格指數"
+    },
+    {
+      "symbol": "^N225",
+      "name": "日本日經 225 指數",
+      "market": "JP",
+      "currency": "JPY",
+      "start_date": "1965-01-05",
+      "end_date": "2026-11-27",
+      "rows": 15215,
+      "source": "cached:research/robustness_check/cache/intl_indices_yf.pkl",
+      "note": "價格指數（第 3 關外加保守股息假設 +1.5%/年）"
+    },
+    {
+      "symbol": "^GDAXI",
+      "name": "德國 DAX 指數",
+      "market": "DE",
+      "currency": "EUR",
+      "start_date": "1987-12-30",
+      "end_date": "2026-11-26",
+      "rows": 9841,
+      "source": "cached:research/robustness_check/cache/intl_indices_yf.pkl",
+      "note": "價格指數（第 3 關外加保守股息假設 +2.5%/年）"
+    },
+    {
+      "symbol": "^FTSE",
+      "name": "英國富時 100 指數",
+      "market": "UK",
+      "currency": "GBP",
+      "start_date": "1984-01-03",
+      "end_date": "2026-11-26",
+      "rows": 10839,
+      "source": "cached:research/robustness_check/cache/intl_indices_yf.pkl",
+      "note": "價格指數（第 3 關外加保守股息假設 +3.5%/年）"
+    },
+    {
+      "symbol": "000001.SS",
+      "name": "中國上證綜合指數",
+      "market": "CN",
+      "currency": "CNY",
+      "start_date": "1997-07-02",
+      "end_date": "2026-11-27",
+      "rows": 7124,
+      "source": "cached:research/robustness_check/cache/intl_indices_yf.pkl",
+      "note": "價格指數（第 3 關外加保守股息假設 +2.0%/年）"
+    }
+  ],
+  "data_issues": [
+    {
+      "id": "ISSUE-01",
+      "symbol": "0050.TW",
+      "severity": "HIGH_FIXED_AND_FLAGGED",
+      "finding": "0050 實際於 2003-06-30 掛牌上市，但 Yahoo Finance 的 0050.TW 日線僅自 2009-01-02 開始（缺漏 2003-06-30 ～ 2008-12-31 共 5.5 年真實市價），且 2009-01-02 ～ 2009-03-09 有超過台股 ±7% 漲跌幅限制之錯價（最高 +16.55%），2014-01-02 更有 2025 年 1拆4 分割未溯及既往造成的 -75.06% 假崩盤與 2009–2014 配息漏計。",
+      "handling": "已修補分割斷層與 2009–2014 官方配息，真實乾淨序列自 2009-03-10 起；2009-03-10 以前（含 2008 金融海嘯與 2000 網路泡沫）實際上均以 ^TWII 日報酬 + 3.0%/年殖利率推算，另以美股掛牌之 EWT（iShares MSCI Taiwan ETF，2000-06 起真實交易）獨立交叉驗證。"
+    },
+    {
+      "id": "ISSUE-02",
+      "symbol": "00631L.TW",
+      "severity": "HIGH_FIXED_AND_FLAGGED",
+      "finding": "Yahoo Finance 的 00631L.TW 在 2015-01-05 出現 -95.44% 假斷層（2026-03 1拆22 分割未回溯），2015-08-24 前呈反向錯價（-33.64% 跳空）；另含 5 個週六補班交易日（2016-01-30、2016-06-04、2016-09-10、2017-02-18、2017-06-03），而 0050.TW 與 ^TWII 在 Yahoo 上未收錄這 5 個週六。",
+      "handling": "剔除 2015-08-24 前錯價，2015-08-25 前以 2×0050 - 1.16% 費率推算（注意：模擬版年化比真實版偏樂觀 +2.37%/年）；週六補班日以 tw_dates 對齊處理，無價格斷層。"
+    },
+    {
+      "id": "ISSUE-03",
+      "symbol": "TWD=X",
+      "severity": "HIGH_FIXED",
+      "finding": "TWD=X 在 2011-10-25（1.8015，單日 -93.84% / 隔日 +1571.39%）與 2014-12-31（3.6700，單日 -88.15% / 隔日 +761.72%）出現小數點錯植壞點，2015–2016 年另有 16 筆單日異常跳點；且最早資料僅自 2004-03-24（32.0230）起，缺漏 1990–2004 亞洲金融風暴與網路泡沫期間匯率。",
+      "handling": "已清除所有錯價壞點（清洗後單日最大波動僅 4.61%）；2004-03-24 前回填 32.0230，並於第 4 關進行 ±2%/年匯率十年壓力測試。"
+    },
+    {
+      "id": "ISSUE-04",
+      "symbol": "^TWII",
+      "severity": "MEDIUM_FLAGGED",
+      "finding": "Yahoo Finance 台股加權指數 ^TWII 日線僅自 1997-07-02 開始，缺漏 1990-01 ～ 1997-06（包含 1990 年 12,682 點暴跌 -80.4% 至 2,485 點之歷史最大崩盤）。",
+      "handling": "第 2 關 1990–2005 訓練期在台美股聯合網格實質涵蓋 1997-07-02 ～ 2005-12-30（另附純美股 1990-01-02 ～ 2005-12-30 完整 16 年檢驗），並於第 3 關納入日本 1989 泡沫崩盤（-82%）補足台股 1990 級別泡沫情境。"
+    },
+    {
+      "id": "ISSUE-05",
+      "symbol": "^GDAXI / 000001.SS",
+      "severity": "MEDIUM_FLAGGED",
+      "finding": "德國 ^GDAXI（DAX Performance-Index）在編製規則上本身已含股息再投資（總報酬指數），與純價格指數 ^N225、^FTSE、000001.SS 不同；另外 000001.SS（上證）Yahoo 日線自 1997-07-02 起（缺 1990–1997 早期資料）。",
+      "handling": "第 3 關主表嚴格依題目指示對 ^GDAXI 加計 +2.5% 股息假設，同時於報告與 JSON 明確標記此會使德國情境多算一次股息，並附不額外加息之對照值。"
+    },
+    {
+      "id": "ISSUE-06",
+      "symbol": "^IRX",
+      "severity": "LOW_HANDLED",
+      "finding": "美國 13 週國庫券殖利率 ^IRX 在 2008 雷曼風暴與 2015/2020 零利率期間有 7 個交易日收盤 <= 0（最低 -0.01%），屬真實市場搶購短債現象。",
+      "handling": "殖利率序列非價格序列，計算短債日息時以 max(0, ^IRX) 處理。"
+    }
+  ],
+  "gate_1_data": {
+    "raw_series_audit": {
+      "000001.SS": {
+        "start_date": "1997-07-02",
+        "end_date": "2026-11-27",
+        "rows": 7124,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "0050.TW": {
+        "start_date": "2009-01-02",
+        "end_date": "2026-11-26",
+        "rows": 4380,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 1,
+        "jumps_ge_25pct": [
+          {
+            "date": "2014-01-02",
+            "ret_pct": -75.06
+          }
+        ]
+      },
+      "00631L.TW": {
+        "start_date": "2014-10-23",
+        "end_date": "2026-11-26",
+        "rows": 2948,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 5,
+        "weekend_bars_dates": [
+          "2016-01-30",
+          "2016-06-04",
+          "2016-09-10",
+          "2017-02-18",
+          "2017-06-03"
+        ],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 2,
+        "jumps_ge_25pct": [
+          {
+            "date": "2015-01-05",
+            "ret_pct": -95.44
+          },
+          {
+            "date": "2015-08-24",
+            "ret_pct": -33.64
+          }
+        ]
+      },
+      "EWT": {
+        "start_date": "2000-06-23",
+        "end_date": "2026-11-25",
+        "rows": 6646,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "QLD": {
+        "start_date": "2006-06-21",
+        "end_date": "2026-11-25",
+        "rows": 5141,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "QQQ": {
+        "start_date": "1999-03-10",
+        "end_date": "2026-11-25",
+        "rows": 6973,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "SPY": {
+        "start_date": "1993-01-29",
+        "end_date": "2026-11-25",
+        "rows": 8515,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "SSO": {
+        "start_date": "2006-06-21",
+        "end_date": "2026-11-25",
+        "rows": 5141,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "TQQQ": {
+        "start_date": "2010-02-11",
+        "end_date": "2026-11-25",
+        "rows": 4224,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 4,
+        "jumps_ge_25pct": [
+          {
+            "date": "2020-03-12",
+            "ret_pct": -27.41
+          },
+          {
+            "date": "2020-03-13",
+            "ret_pct": 26.99
+          },
+          {
+            "date": "2020-03-16",
+            "ret_pct": -34.47
+          },
+          {
+            "date": "2025-04-09",
+            "ret_pct": 35.24
+          }
+        ]
+      },
+      "TWD=X": {
+        "start_date": "2004-03-24",
+        "end_date": "2026-11-26",
+        "rows": 5470,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 4,
+        "jumps_ge_25pct": [
+          {
+            "date": "2011-10-25",
+            "ret_pct": -93.84
+          },
+          {
+            "date": "2011-10-26",
+            "ret_pct": 1571.39
+          },
+          {
+            "date": "2014-12-31",
+            "ret_pct": -88.15
+          },
+          {
+            "date": "2015-01-01",
+            "ret_pct": 761.72
+          }
+        ]
+      },
+      "UPRO": {
+        "start_date": "2009-06-25",
+        "end_date": "2026-11-25",
+        "rows": 4383,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 5,
+        "jumps_ge_25pct": [
+          {
+            "date": "2020-03-12",
+            "ret_pct": -29.01
+          },
+          {
+            "date": "2020-03-13",
+            "ret_pct": 27.76
+          },
+          {
+            "date": "2020-03-16",
+            "ret_pct": -34.95
+          },
+          {
+            "date": "2020-03-24",
+            "ret_pct": 27.97
+          },
+          {
+            "date": "2025-04-09",
+            "ret_pct": 27.96
+          }
+        ]
+      },
+      "^FTSE": {
+        "start_date": "1984-01-03",
+        "end_date": "2026-11-26",
+        "rows": 10839,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "^GDAXI": {
+        "start_date": "1987-12-30",
+        "end_date": "2026-11-26",
+        "rows": 9841,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "^GSPC": {
+        "start_date": "1927-12-30",
+        "end_date": "2026-11-25",
+        "rows": 24844,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "^IRX": {
+        "start_date": "1990-01-02",
+        "end_date": "2026-11-25",
+        "rows": 9263,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 7,
+        "jumps_ge_25pct_count": 515,
+        "jumps_ge_25pct": [
+          {
+            "date": "2008-03-19",
+            "ret_pct": -27.78
+          },
+          {
+            "date": "2008-03-24",
+            "ret_pct": 103.0
+          },
+          {
+            "date": "2008-09-15",
+            "ret_pct": -44.52
+          },
+          {
+            "date": "2008-09-17",
+            "ret_pct": -97.67
+          },
+          {
+            "date": "2008-09-18",
+            "ret_pct": 250.0
+          },
+          {
+            "date": "2008-09-19",
+            "ret_pct": 1214.29
+          },
+          {
+            "date": "2008-09-24",
+            "ret_pct": -45.0
+          },
+          {
+            "date": "2008-09-25",
+            "ret_pct": 61.36
+          },
+          {
+            "date": "2008-09-29",
+            "ret_pct": -45.78
+          },
+          {
+            "date": "2008-09-30",
+            "ret_pct": 100.0
+          },
+          {
+            "date": "2008-10-02",
+            "ret_pct": -26.25
+          },
+          {
+            "date": "2008-10-07",
+            "ret_pct": 91.46
+          }
+        ]
+      },
+      "^IXIC": {
+        "start_date": "1971-02-05",
+        "end_date": "2026-11-25",
+        "rows": 14070,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "^N225": {
+        "start_date": "1965-01-05",
+        "end_date": "2026-11-27",
+        "rows": 15215,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "^NDX": {
+        "start_date": "1985-10-01",
+        "end_date": "2026-11-25",
+        "rows": 10369,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "^SP500TR": {
+        "start_date": "1988-01-04",
+        "end_date": "2026-11-25",
+        "rows": 9799,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      },
+      "^TWII": {
+        "start_date": "1997-07-02",
+        "end_date": "2026-11-25",
+        "rows": 7204,
+        "duplicate_dates": 0,
+        "weekend_bars_count": 0,
+        "weekend_bars_dates": [],
+        "non_positive_closes": 0,
+        "jumps_ge_25pct_count": 0,
+        "jumps_ge_25pct": []
+      }
+    },
+    "dividend_yield_checks": {
+      "tw_0050_real_2009_2026": {
+        "period": "2009-03-10 ~ 2026-11-25",
+        "years": 17.71,
+        "total_return_cagr_pct": 18.26,
+        "price_cagr_pct": 14.75,
+        "annualized_div_gap_pct": 3.52,
+        "expected_band_pct": [
+          3.0,
+          5.0
+        ],
+        "in_reasonable_band": true
+      },
+      "tw_0050_vs_twii_2009_2026": {
+        "period": "2009-03-10 ~ 2026-11-25",
+        "years": 17.71,
+        "total_return_cagr_pct": 18.26,
+        "price_cagr_pct": 12.6,
+        "annualized_div_gap_pct": 5.67
+      },
+      "tw_0050_imputed_1997_2009": {
+        "period": "1997-07-02 ~ 2009-03-10",
+        "years": 11.69,
+        "total_return_cagr_pct": -2.65,
+        "price_cagr_pct": -5.45,
+        "annualized_div_gap_pct": 2.81,
+        "expected_band_pct": [
+          3.0,
+          5.0
+        ],
+        "in_reasonable_band": false
+      },
+      "us_sp500tr_vs_gspc_1988_2026": {
+        "period": "1989-01-03 ~ 2026-11-25",
+        "years": 37.89,
+        "total_return_cagr_pct": 11.23,
+        "price_cagr_pct": 8.99,
+        "annualized_div_gap_pct": 2.24,
+        "expected_band_pct": [
+          1.5,
+          2.5
+        ],
+        "in_reasonable_band": true
+      },
+      "us_spy_gross_1993_2026": {
+        "period": "1993-01-29 ~ 2026-11-25",
+        "years": 33.82,
+        "total_return_cagr_pct": 10.56,
+        "price_cagr_pct": 8.61,
+        "annualized_div_gap_pct": 1.95,
+        "expected_band_pct": [
+          1.5,
+          2.5
+        ],
+        "in_reasonable_band": true
+      },
+      "us_spy_net30_tax_1997_2026": {
+        "period": "1997-07-02 ~ 2026-11-25",
+        "years": 29.4,
+        "total_return_cagr_pct": 8.57,
+        "price_cagr_pct": 7.28,
+        "annualized_div_gap_pct": 1.29,
+        "note": "扣 30% 美股預扣稅後之實拿股息增益（約為稅前 70%）"
+      },
+      "us_qqq_gross_1999_2026": {
+        "period": "1999-03-10 ~ 2026-11-25",
+        "years": 27.71,
+        "total_return_cagr_pct": 10.2,
+        "price_cagr_pct": 9.52,
+        "annualized_div_gap_pct": 0.68,
+        "note": "Nasdaq 100 科技成長股配息率天生低於標普 500（約 0.6%～0.8%），非漏算股息"
+      },
+      "ewt_vs_imputed_0050_2003_2009_crosscheck": {
+        "imputed_0050_cagr_pct": 2.22,
+        "real_ewt_twd_cagr_pct": 0.68,
+        "annual_diff_pct": 1.54,
+        "note": "EWT 內扣費約 0.59% 且扣 30% 預扣稅，推算版 0050 與真實 EWT 台幣總報酬高度吻合"
+      }
+    },
+    "subperiod_comparison": {
+      "imputed_early_1999_2009": {
+        "label": "推算主導期（1999-03 ～ 2009-03，含 2000 與 2008 雙股災）",
+        "strategies": {
+          "R1": {
+            "xirr_pct": -5.36,
+            "max_drawdown_pct": -48.92
+          },
+          "R2": {
+            "xirr_pct": 1.2,
+            "max_drawdown_pct": -28.77
+          },
+          "R3_M3b": {
+            "xirr_pct": -10.06,
+            "max_drawdown_pct": -59.77
+          },
+          "R3_M3a": {
+            "xirr_pct": -3.86,
+            "max_drawdown_pct": -58.45
+          },
+          "R4_M4": {
+            "xirr_pct": -11.86,
+            "max_drawdown_pct": -82.34
+          },
+          "R4_M5": {
+            "xirr_pct": -28.1,
+            "max_drawdown_pct": -87.72
+          },
+          "M2a": {
+            "xirr_pct": -2.59,
+            "max_drawdown_pct": -53.35
+          }
+        },
+        "r5_0050_bear_episodes_recovered": 2,
+        "r5_0050_bear_median_months": 46.2
+      },
+      "post_0050_listing_2003_2026": {
+        "label": "0050 掛牌後期間（2003-06-30 ～ 2026-11-25）",
+        "strategies": {
+          "R1": {
+            "xirr_pct": 14.14,
+            "max_drawdown_pct": -44.64
+          },
+          "R2": {
+            "xirr_pct": 11.31,
+            "max_drawdown_pct": -25.56
+          },
+          "R3_M3b": {
+            "xirr_pct": 20.74,
+            "max_drawdown_pct": -56.09
+          },
+          "R3_M3a": {
+            "xirr_pct": 18.72,
+            "max_drawdown_pct": -58.34
+          },
+          "R4_M4": {
+            "xirr_pct": 24.92,
+            "max_drawdown_pct": -80.72
+          },
+          "R4_M5": {
+            "xirr_pct": 29.3,
+            "max_drawdown_pct": -84.96
+          },
+          "M2a": {
+            "xirr_pct": 15.81,
+            "max_drawdown_pct": -51.18
+          }
+        },
+        "r5_0050_bear_episodes_recovered": 7,
+        "r5_0050_bear_median_months": 15.41
+      },
+      "pure_real_0050_2009_2026": {
+        "label": "0050 真實日線期（2009-03-10 ～ 2026-11-25）",
+        "strategies": {
+          "R1": {
+            "xirr_pct": 16.81,
+            "max_drawdown_pct": -28.51
+          },
+          "R2": {
+            "xirr_pct": 13.28,
+            "max_drawdown_pct": -18.36
+          },
+          "R3_M3b": {
+            "xirr_pct": 24.33,
+            "max_drawdown_pct": -36.39
+          },
+          "R3_M3a": {
+            "xirr_pct": 22.87,
+            "max_drawdown_pct": -40.22
+          },
+          "R4_M4": {
+            "xirr_pct": 30.83,
+            "max_drawdown_pct": -54.94
+          },
+          "R4_M5": {
+            "xirr_pct": 36.25,
+            "max_drawdown_pct": -70.82
+          },
+          "M2a": {
+            "xirr_pct": 18.92,
+            "max_drawdown_pct": -32.22
+          }
+        },
+        "r5_0050_bear_episodes_recovered": 6,
+        "r5_0050_bear_median_months": 10.85
+      },
+      "pure_real_all_etfs_2015_2026": {
+        "label": "全 ETF 真實日線期（2015-08-25 ～ 2026-11-25，00631L 上市後）",
+        "strategies": {
+          "R1": {
+            "xirr_pct": 20.41,
+            "max_drawdown_pct": -27.42
+          },
+          "R2": {
+            "xirr_pct": 17.19,
+            "max_drawdown_pct": -18.23
+          },
+          "R3_M3b": {
+            "xirr_pct": 26.2,
+            "max_drawdown_pct": -35.29
+          },
+          "R3_M3a": {
+            "xirr_pct": 28.18,
+            "max_drawdown_pct": -36.58
+          },
+          "R4_M4": {
+            "xirr_pct": 39.24,
+            "max_drawdown_pct": -54.43
+          },
+          "R4_M5": {
+            "xirr_pct": 32.81,
+            "max_drawdown_pct": -69.04
+          },
+          "M2a": {
+            "xirr_pct": 24.54,
+            "max_drawdown_pct": -29.33
+          }
+        },
+        "r5_0050_bear_episodes_recovered": 4,
+        "r5_0050_bear_median_months": 6.12
+      }
+    },
+    "data_reliance_classification": {
+      "R1": {
+        "reliance_tag": "主要靠真實資料",
+        "real_share_note": "SPY 為 100% 真實日線（1993 起）；0050 在 2009-03 後為真實日線（佔 27.7 年樣本的 64%），僅 2000/2008 台股端靠 ^TWII+3% 推算（且與真實 EWT 吻合）。"
+      },
+      "R2": {
+        "reliance_tag": "主要靠真實資料",
+        "real_share_note": "^IRX 美國短債為 100% 真實利率序列（1990 起），TWD=X 自 2004 起為真實匯率（涵蓋 2008 海嘯美元避險效應）。"
+      },
+      "R3": {
+        "reliance_tag": "主要靠推算資料（股災尾端風險段）",
+        "real_share_note": "極關鍵發現：TQQQ 2010-02 才上市、00631L 真實乾淨日線 2015-08 才開始！因此 M3b 與 M3a 在 2000 泡沫與 2008 海嘯是否守住 -60% 上限，100% 依賴上市前公式推算（且槓桿模擬年化比真實 ETF 偏樂觀 +1.57%～+2.37%）。"
+      },
+      "R4": {
+        "reliance_tag": "主要靠真實資料（推算段與真實段一致成立）",
+        "real_share_note": "即使只看 2015-08 後 100% 真實槓桿 ETF 日線，00631L (-55.1%)、SSO (-58.2%)、QLD (-56.0%)、TQQQ (-81.7%) 依然全數跌破 -50%！"
+      },
+      "R5": {
+        "reliance_tag": "半數靠推算資料（且兩段差距顯著）",
+        "real_share_note": "全樣本 8 次已回本熊市中，2009-03 前推算段佔 4 次（1997、2000、2002、2007，中位數高達 73.95 個月），2009-03 後真實 0050 段佔 4 次（2011、2015、2020、2022，中位數僅 6.28 個月）；2003 掛牌後 5 次中位數為 10.85 個月。"
+      }
+    },
+    "post_2003_rolling_10y_check": {
+      "cohort_count": 162,
+      "pure_real_2009_cohort_count": 92,
+      "r1_prob_mdd_lt_50pct": 0.0,
+      "r2_prob_mdd_lt_30pct": 0.0,
+      "r3_m3b_prob_mdd_lt_60pct": 0.0,
+      "r3_m3a_prob_mdd_lt_60pct": 0.0,
+      "r4_2x_plus_prob_mdd_lt_50pct": 86.73
+    },
+    "r1_pool_stability": {
+      "candidate_count": 15,
+      "r1_median_regret_pp": 3.12,
+      "r1_max_regret_pp": 7.44,
+      "r1_rank": 6,
+      "r1_rank_pct": 40.0,
+      "top_3_candidates": [
+        {
+          "id": "W_100_0",
+          "median_xirr_pct": 17.36
+        },
+        {
+          "id": "W_90_10",
+          "median_xirr_pct": 17.02
+        },
+        {
+          "id": "W_80_20",
+          "median_xirr_pct": 16.66
+        }
+      ]
+    },
+    "r5_real_vs_imputed_bear_months": {
+      "baseline_full_1997_2026_median": 20.24,
+      "post_2003_listing_median": 10.85,
+      "pure_real_2009_2026_median": 6.28,
+      "pre_2009_imputed_median": 73.95
+    }
+  },
+  "gate_2_walk_forward": {
+    "folds": {
+      "fold_1": {
+        "label": "1990–2005 選股 → 2006–2015 考試",
+        "train_period": "1997-07-02 ~ 2005-12-30",
+        "test_period": "2006-01-02 ~ 2015-12-31",
+        "tiers": {
+          "conservative_30": {
+            "drawdown_cap_pct": -30.0,
+            "in_sample_winner": {
+              "train_metrics": {
+                "combo_idx": 15303,
+                "weights": {
+                  "00631L": 10,
+                  "TQQQ": 20,
+                  "US_TBILL": 70
+                },
+                "effective_leverage": 0.8,
+                "rebalance": "quarterly",
+                "filter": "sma200_buf2",
+                "xirr_pct": 8.23,
+                "max_drawdown_pct": -28.6
+              },
+              "oos_test_metrics": {
+                "combo_idx": 15303,
+                "weights": {
+                  "00631L": 10,
+                  "TQQQ": 20,
+                  "US_TBILL": 70
+                },
+                "effective_leverage": 0.8,
+                "rebalance": "quarterly",
+                "filter": "sma200_buf2",
+                "xirr_pct": 9.73,
+                "max_drawdown_pct": -12.95
+              },
+              "oos_cap_breached": false
+            },
+            "true_oos_winner": {
+              "combo_idx": 15,
+              "weights": {
+                "QQQ": 10,
+                "TQQQ": 40,
+                "US_TBILL": 50
+              },
+              "effective_leverage": 1.3,
+              "rebalance": "none",
+              "filter": "none",
+              "xirr_pct": 22.73,
+              "max_drawdown_pct": -27.54
+            },
+            "our_recommendations": {
+              "R2": {
+                "in_sample": {
+                  "combo_idx": 8883,
+                  "weights": {
+                    "0050": 60,
+                    "US_TBILL": 40
+                  },
+                  "effective_leverage": 0.6,
+                  "rebalance": "annual",
+                  "filter": "none",
+                  "xirr_pct": 4.39,
+                  "max_drawdown_pct": -19.02
+                },
+                "out_of_sample": {
+                  "combo_idx": 8883,
+                  "weights": {
+                    "0050": 60,
+                    "US_TBILL": 40
+                  },
+                  "effective_leverage": 0.6,
+                  "rebalance": "annual",
+                  "filter": "none",
+                  "xirr_pct": 4.27,
+                  "max_drawdown_pct": -17.79
+                },
+                "oos_cap_respected": true,
+                "oos_xirr_vs_is_winner_diff_pp": -5.45
+              }
+            }
+          },
+          "general_50": {
+            "drawdown_cap_pct": -50.0,
+            "in_sample_winner": {
+              "train_metrics": {
+                "combo_idx": 16019,
+                "weights": {
+                  "0050": 10,
+                  "TQQQ": 30,
+                  "US_TBILL": 60
+                },
+                "effective_leverage": 1.0,
+                "rebalance": "quarterly",
+                "filter": "sma200_buf2",
+                "xirr_pct": 9.74,
+                "max_drawdown_pct": -45.62
+              },
+              "oos_test_metrics": {
+                "combo_idx": 16019,
+                "weights": {
+                  "0050": 10,
+                  "TQQQ": 30,
+                  "US_TBILL": 60
+                },
+                "effective_leverage": 1.0,
+                "rebalance": "quarterly",
+                "filter": "sma200_buf2",
+                "xirr_pct": 13.03,
+                "max_drawdown_pct": -17.88
+              },
+              "oos_cap_breached": false
+            },
+            "true_oos_winner": {
+              "combo_idx": 6,
+              "weights": {
+                "TQQQ": 60,
+                "US_TBILL": 40
+              },
+              "effective_leverage": 1.8,
+              "rebalance": "none",
+              "filter": "none",
+              "xirr_pct": 27.44,
+              "max_drawdown_pct": -46.14
+            },
+            "our_recommendations": {
+              "R1": {
+                "in_sample": {
+                  "combo_idx": 2806,
+                  "weights": {
+                    "0050": 50,
+                    "SPY": 50
+                  },
+                  "effective_leverage": 1.0,
+                  "rebalance": "none",
+                  "filter": "none",
+                  "xirr_pct": 4.05,
+                  "max_drawdown_pct": -25.89
+                },
+                "out_of_sample": {
+                  "combo_idx": 2806,
+                  "weights": {
+                    "0050": 50,
+                    "SPY": 50
+                  },
+                  "effective_leverage": 1.0,
+                  "rebalance": "none",
+                  "filter": "none",
+                  "xirr_pct": 7.82,
+                  "max_drawdown_pct": -37.44
+                },
+                "oos_cap_respected": true,
+                "oos_xirr_vs_is_winner_diff_pp": -5.21
+              }
+            }
+          },
+          "aggressive_60": {
+            "drawdown_cap_pct": -60.0,
+            "in_sample_winner": {
+              "train_metrics": {
+                "combo_idx": 15019,
+                "weights": {
+                  "TQQQ": 40,
+                  "US_TBILL": 60
+                },
+                "effective_leverage": 1.2,
+                "rebalance": "quarterly",
+                "filter": "sma200_buf2",
+                "xirr_pct": 10.77,
+                "max_drawdown_pct": -57.8
+              },
+              "oos_test_metrics": {
+                "combo_idx": 15019,
+                "weights": {
+                  "TQQQ": 40,
+                  "US_TBILL": 60
+                },
+                "effective_leverage": 1.2,
+                "rebalance": "quarterly",
+                "filter": "sma200_buf2",
+                "xirr_pct": 16.18,
+                "max_drawdown_pct": -21.48
+              },
+              "oos_cap_breached": false
+            },
+            "true_oos_winner": {
+              "combo_idx": 7,
+              "weights": {
+                "TQQQ": 70,
+                "US_TBILL": 30
+              },
+              "effective_leverage": 2.1,
+              "rebalance": "none",
+              "filter": "none",
+              "xirr_pct": 29.64,
+              "max_drawdown_pct": -58.19
+            },
+            "our_recommendations": {
+              "R3_M3b": {
+                "in_sample": {
+                  "combo_idx": 8571,
+                  "weights": {
+                    "0050": 40,
+                    "QQQ": 40,
+                    "TQQQ": 20
+                  },
+                  "effective_leverage": 1.4,
+                  "rebalance": "annual",
+                  "filter": "none",
+                  "xirr_pct": 4.24,
+                  "max_drawdown_pct": -73.89
+                },
+                "out_of_sample": {
+                  "combo_idx": 8571,
+                  "weights": {
+                    "0050": 40,
+                    "QQQ": 40,
+                    "TQQQ": 20
+                  },
+                  "effective_leverage": 1.4,
+                  "rebalance": "annual",
+                  "filter": "none",
+                  "xirr_pct": 16.77,
+                  "max_drawdown_pct": -47.76
+                },
+                "oos_cap_respected": true,
+                "oos_xirr_vs_is_winner_diff_pp": 0.59
+              },
+              "R3_M3a": {
+                "in_sample": {
+                  "combo_idx": 5984,
+                  "weights": {
+                    "0050": 70,
+                    "00631L": 30
+                  },
+                  "effective_leverage": 1.3,
+                  "rebalance": "none",
+                  "filter": "sma200_buf2",
+                  "xirr_pct": 3.93,
+                  "max_drawdown_pct": -48.22
+                },
+                "out_of_sample": {
+                  "combo_idx": 5984,
+                  "weights": {
+                    "0050": 70,
+                    "00631L": 30
+                  },
+                  "effective_leverage": 1.3,
+                  "rebalance": "none",
+                  "filter": "sma200_buf2",
+                  "xirr_pct": 5.85,
+                  "max_drawdown_pct": -52.46
+                },
+                "oos_cap_respected": true,
+                "oos_xirr_vs_is_winner_diff_pp": -10.34
+              }
+            }
+          }
+        },
+        "r4_2x_plus_oos_mdd_lt_50_pct": 97.22,
+        "r5_oos_bear_episodes": [
+          {
+            "peak_date": "2007-10-29",
+            "trough_date": "2008-11-20",
+            "recovery_date": "2013-12-27",
+            "recovered": true,
+            "max_drawdown_pct": -56.97,
+            "underwater_months": 73.95
+          },
+          {
+            "peak_date": "2015-04-27",
+            "trough_date": "2015-08-24",
+            "recovery_date": "至今未回",
+            "recovered": false,
+            "max_drawdown_pct": -20.96,
+            "underwater_months": null,
+            "elapsed_months": 8.15
+          }
+        ]
+      },
+      "fold_2": {
+        "label": "1990–2015 選股 → 2016–今天 考試",
+        "train_period": "1997-07-02 ~ 2015-12-31",
+        "test_period": "2016-01-04 ~ 2026-11-25",
+        "tiers": {
+          "conservative_30": {
+            "drawdown_cap_pct": -30.0,
+            "in_sample_winner": {
+              "train_metrics": {
+                "combo_idx": 6129,
+                "weights": {
+                  "SPY": 20,
+                  "TQQQ": 20,
+                  "US_TBILL": 60
+                },
+                "effective_leverage": 0.8,
+                "rebalance": "annual",
+                "filter": "none",
+                "xirr_pct": 9.2,
+                "max_drawdown_pct": -29.63
+              },
+              "oos_test_metrics": {
+                "combo_idx": 6129,
+                "weights": {
+                  "SPY": 20,
+                  "TQQQ": 20,
+                  "US_TBILL": 60
+                },
+                "effective_leverage": 0.8,
+                "rebalance": "annual",
+                "filter": "none",
+                "xirr_pct": 15.63,
+                "max_drawdown_pct": -21.83
+              },
+              "oos_cap_breached": false
+            },
+            "true_oos_winner": {
+              "combo_idx": 14877,
+              "weights": {
+                "0050": 50,
+                "00631L": 30,
+                "QQQ": 10,
+                "US_TBILL": 10
+              },
+              "effective_leverage": 1.2,
+              "rebalance": "quarterly",
+              "filter": "none",
+              "xirr_pct": 27.66,
+              "max_drawdown_pct": -29.94
+            },
+            "our_recommendations": {
+              "R2": {
+                "in_sample": {
+                  "combo_idx": 8883,
+                  "weights": {
+                    "0050": 60,
+                    "US_TBILL": 40
+                  },
+                  "effective_leverage": 0.6,
+                  "rebalance": "annual",
+                  "filter": "none",
+                  "xirr_pct": 4.59,
+                  "max_drawdown_pct": -29.6
+                },
+                "out_of_sample": {
+                  "combo_idx": 8883,
+                  "weights": {
+                    "0050": 60,
+                    "US_TBILL": 40
+                  },
+                  "effective_leverage": 0.6,
+                  "rebalance": "annual",
+                  "filter": "none",
+                  "xirr_pct": 17.52,
+                  "max_drawdown_pct": -18.22
+                },
+                "oos_cap_respected": true,
+                "oos_xirr_vs_is_winner_diff_pp": 1.89
+              }
+            }
+          },
+          "general_50": {
+            "drawdown_cap_pct": -50.0,
+            "in_sample_winner": {
+              "train_metrics": {
+                "combo_idx": 9079,
+                "weights": {
+                  "SPY": 10,
+                  "TQQQ": 40,
+                  "US_TBILL": 50
+                },
+                "effective_leverage": 1.3,
+                "rebalance": "annual",
+                "filter": "sma200_buf2",
+                "xirr_pct": 11.64,
+                "max_drawdown_pct": -49.81
+              },
+              "oos_test_metrics": {
+                "combo_idx": 9079,
+                "weights": {
+                  "SPY": 10,
+                  "TQQQ": 40,
+                  "US_TBILL": 50
+                },
+                "effective_leverage": 1.3,
+                "rebalance": "annual",
+                "filter": "sma200_buf2",
+                "xirr_pct": 18.16,
+                "max_drawdown_pct": -34.06
+              },
+              "oos_cap_breached": false
+            },
+            "true_oos_winner": {
+              "combo_idx": 7718,
+              "weights": {
+                "0050": 10,
+                "00631L": 80,
+                "TQQQ": 10
+              },
+              "effective_leverage": 2.0,
+              "rebalance": "annual",
+              "filter": "none",
+              "xirr_pct": 38.53,
+              "max_drawdown_pct": -49.69
+            },
+            "our_recommendations": {
+              "R1": {
+                "in_sample": {
+                  "combo_idx": 2806,
+                  "weights": {
+                    "0050": 50,
+                    "SPY": 50
+                  },
+                  "effective_leverage": 1.0,
+                  "rebalance": "none",
+                  "filter": "none",
+                  "xirr_pct": 5.95,
+                  "max_drawdown_pct": -49.58
+                },
+                "out_of_sample": {
+                  "combo_idx": 2806,
+                  "weights": {
+                    "0050": 50,
+                    "SPY": 50
+                  },
+                  "effective_leverage": 1.0,
+                  "rebalance": "none",
+                  "filter": "none",
+                  "xirr_pct": 20.7,
+                  "max_drawdown_pct": -27.31
+                },
+                "oos_cap_respected": true,
+                "oos_xirr_vs_is_winner_diff_pp": 2.54
+              }
+            }
+          },
+          "aggressive_60": {
+            "drawdown_cap_pct": -60.0,
+            "in_sample_winner": {
+              "train_metrics": {
+                "combo_idx": 9014,
+                "weights": {
+                  "TQQQ": 50,
+                  "US_TBILL": 50
+                },
+                "effective_leverage": 1.5,
+                "rebalance": "annual",
+                "filter": "sma200_buf2",
+                "xirr_pct": 12.94,
+                "max_drawdown_pct": -59.94
+              },
+              "oos_test_metrics": {
+                "combo_idx": 9014,
+                "weights": {
+                  "TQQQ": 50,
+                  "US_TBILL": 50
+                },
+                "effective_leverage": 1.5,
+                "rebalance": "annual",
+                "filter": "sma200_buf2",
+                "xirr_pct": 20.04,
+                "max_drawdown_pct": -38.23
+              },
+              "oos_cap_breached": false
+            },
+            "true_oos_winner": {
+              "combo_idx": 6994,
+              "weights": {
+                "00631L": 80,
+                "TQQQ": 20
+              },
+              "effective_leverage": 2.2,
+              "rebalance": "annual",
+              "filter": "none",
+              "xirr_pct": 39.87,
+              "max_drawdown_pct": -52.51
+            },
+            "our_recommendations": {
+              "R3_M3b": {
+                "in_sample": {
+                  "combo_idx": 8571,
+                  "weights": {
+                    "0050": 40,
+                    "QQQ": 40,
+                    "TQQQ": 20
+                  },
+                  "effective_leverage": 1.4,
+                  "rebalance": "annual",
+                  "filter": "none",
+                  "xirr_pct": 11.08,
+                  "max_drawdown_pct": -73.89
+                },
+                "out_of_sample": {
+                  "combo_idx": 8571,
+                  "weights": {
+                    "0050": 40,
+                    "QQQ": 40,
+                    "TQQQ": 20
+                  },
+                  "effective_leverage": 1.4,
+                  "rebalance": "annual",
+                  "filter": "none",
+                  "xirr_pct": 26.38,
+                  "max_drawdown_pct": -35.19
+                },
+                "oos_cap_respected": true,
+                "oos_xirr_vs_is_winner_diff_pp": 6.34
+              },
+              "R3_M3a": {
+                "in_sample": {
+                  "combo_idx": 5984,
+                  "weights": {
+                    "0050": 70,
+                    "00631L": 30
+                  },
+                  "effective_leverage": 1.3,
+                  "rebalance": "none",
+                  "filter": "sma200_buf2",
+                  "xirr_pct": 5.4,
+                  "max_drawdown_pct": -58.63
+                },
+                "out_of_sample": {
+                  "combo_idx": 5984,
+                  "weights": {
+                    "0050": 70,
+                    "00631L": 30
+                  },
+                  "effective_leverage": 1.3,
+                  "rebalance": "none",
+                  "filter": "sma200_buf2",
+                  "xirr_pct": 29.04,
+                  "max_drawdown_pct": -37.08
+                },
+                "oos_cap_respected": true,
+                "oos_xirr_vs_is_winner_diff_pp": 9.0
+              }
+            }
+          }
+        },
+        "r4_2x_plus_oos_mdd_lt_50_pct": 87.04,
+        "r5_oos_bear_episodes": [
+          {
+            "peak_date": "2020-01-14",
+            "trough_date": "2020-03-19",
+            "recovery_date": "2020-07-13",
+            "recovered": true,
+            "max_drawdown_pct": -28.22,
+            "underwater_months": 5.95
+          },
+          {
+            "peak_date": "2022-01-17",
+            "trough_date": "2022-10-25",
+            "recovery_date": "2024-02-15",
+            "recovered": true,
+            "max_drawdown_pct": -33.83,
+            "underwater_months": 24.94
+          },
+          {
+            "peak_date": "2024-07-11",
+            "trough_date": "2024-08-05",
+            "recovery_date": "2025-01-06",
+            "recovered": true,
+            "max_drawdown_pct": -21.3,
+            "underwater_months": 5.88
+          },
+          {
+            "peak_date": "2025-01-07",
+            "trough_date": "2025-04-09",
+            "recovery_date": "2025-07-17",
+            "recovered": true,
+            "max_drawdown_pct": -27.48,
+            "underwater_months": 6.28
+          },
+          {
+            "peak_date": "2026-10-06",
+            "trough_date": "2026-11-20",
+            "recovery_date": "至今未回",
+            "recovered": false,
+            "max_drawdown_pct": -27.51,
+            "underwater_months": null,
+            "elapsed_months": 1.64
+          }
+        ]
+      }
+    },
+    "us_1990_2005_supplement": {
+      "SPY_100": {
+        "train_1990_2005_xirr_pct": 8.94,
+        "train_1990_2005_mdd_pct": -43.19,
+        "test_2006_2015_xirr_pct": 9.84,
+        "test_2006_2015_mdd_pct": -32.96
+      },
+      "SPY60_TBILL40": {
+        "train_1990_2005_xirr_pct": 7.06,
+        "train_1990_2005_mdd_pct": -21.62,
+        "test_2006_2015_xirr_pct": 6.49,
+        "test_2006_2015_mdd_pct": -14.04
+      },
+      "SPY50_QQQ50": {
+        "train_1990_2005_xirr_pct": 11.17,
+        "train_1990_2005_mdd_pct": -66.67,
+        "test_2006_2015_xirr_pct": 12.54,
+        "test_2006_2015_mdd_pct": -34.76
+      }
+    },
+    "summary_metrics": {
+      "r1_oos_median_regret_pp": 10.44,
+      "r1_oos_mean_rank_pct": 45.35,
+      "r1_oos_prob_mdd_lt_50pct": 0.0,
+      "r2_oos_prob_mdd_lt_30pct": 0.0,
+      "r3_m3b_oos_prob_mdd_lt_60pct": 0.0,
+      "r3_m3a_oos_prob_mdd_lt_60pct": 0.0,
+      "r4_2x_plus_oos_prob_mdd_lt_50pct": 92.13,
+      "r5_oos_bear_median_months": 6.28
+    }
+  },
+  "gate_3_intl_crashes": {
+    "dividend_assumptions_pct": {
+      "^N225": 1.5,
+      "^GDAXI": 2.5,
+      "^FTSE": 3.5,
+      "000001.SS": 2.0
+    },
+    "dax_double_dividend_sensitivity": {
+      "de_2000_10y_r1_xirr_with_2_5pct_div": 6.61,
+      "de_2000_10y_r1_xirr_without_extra_div": 4.44,
+      "note": "^GDAXI 本身為含息指數，不額外加計 2.5% 時 2000 高點 10 年定投 XIRR 低約 2.5 個百分點。"
+    },
+    "spotlight_scenarios": {
+      "JP_1989_10Y_tw_only": {
+        "label": "日本 1989-12 高點 10 年（替換 0050）",
+        "symbol": "^N225",
+        "mode": "replace_0050",
+        "period": "1990-01 ~ 1999-12",
+        "months": 120,
+        "strategies": {
+          "R1": {
+            "final_value_twd": 2426571.04,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 13.5,
+            "max_drawdown_pct": -13.52
+          },
+          "R2": {
+            "final_value_twd": 1386108.54,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 2.83,
+            "max_drawdown_pct": -9.43
+          },
+          "R3_M3b": {
+            "final_value_twd": 10466849.42,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 40.67,
+            "max_drawdown_pct": -25.44
+          },
+          "R3_M3a": {
+            "final_value_twd": 1236375.74,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 0.59,
+            "max_drawdown_pct": -23.98
+          },
+          "R4_M4": {
+            "final_value_twd": 1043709.95,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": -2.79,
+            "max_drawdown_pct": -51.89
+          },
+          "R4_M5": {
+            "final_value_twd": 64090660.99,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 76.79,
+            "max_drawdown_pct": -41.47
+          }
+        }
+      },
+      "JP_1989_10Y_both": {
+        "label": "日本 1989-12 高點 10 年（同時替換台美股）",
+        "symbol": "^N225",
+        "mode": "replace_both",
+        "period": "1990-01 ~ 1999-12",
+        "months": 120,
+        "strategies": {
+          "R1": {
+            "final_value_twd": 1252685.55,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 0.85,
+            "max_drawdown_pct": -21.04
+          },
+          "R2": {
+            "final_value_twd": 1386108.54,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 2.83,
+            "max_drawdown_pct": -9.43
+          },
+          "R3_M3b": {
+            "final_value_twd": 1102600.13,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": -1.69,
+            "max_drawdown_pct": -32.67
+          },
+          "R3_M3a": {
+            "final_value_twd": 1236375.74,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 0.59,
+            "max_drawdown_pct": -23.98
+          },
+          "R4_M4": {
+            "final_value_twd": 1043709.95,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": -2.79,
+            "max_drawdown_pct": -51.89
+          },
+          "R4_M5": {
+            "final_value_twd": 722558.1,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": -10.47,
+            "max_drawdown_pct": -66.72
+          }
+        }
+      },
+      "JP_1989_20Y_tw_only": {
+        "label": "日本 1989-12 高點 20 年（替換 0050）",
+        "symbol": "^N225",
+        "mode": "replace_0050",
+        "period": "1990-01 ~ 2009-12",
+        "months": 240,
+        "strategies": {
+          "R1": {
+            "final_value_twd": 3136530.74,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": 2.59,
+            "max_drawdown_pct": -49.54
+          },
+          "R2": {
+            "final_value_twd": 2572950.51,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": 0.69,
+            "max_drawdown_pct": -31.34
+          },
+          "R3_M3b": {
+            "final_value_twd": 6009353.82,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": 8.41,
+            "max_drawdown_pct": -81.69
+          },
+          "R3_M3a": {
+            "final_value_twd": 1832021.89,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": -2.78,
+            "max_drawdown_pct": -56.53
+          },
+          "R4_M4": {
+            "final_value_twd": 957156.05,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": -10.54,
+            "max_drawdown_pct": -83.63
+          },
+          "R4_M5": {
+            "final_value_twd": 4935603.25,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": 6.71,
+            "max_drawdown_pct": -98.15
+          }
+        }
+      },
+      "JP_1989_20Y_both": {
+        "label": "日本 1989-12 高點 20 年（同時替換台美股）",
+        "symbol": "^N225",
+        "mode": "replace_both",
+        "period": "1990-01 ~ 2009-12",
+        "months": 240,
+        "strategies": {
+          "R1": {
+            "final_value_twd": 1918329.36,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": -2.29,
+            "max_drawdown_pct": -52.91
+          },
+          "R2": {
+            "final_value_twd": 2572950.51,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": 0.69,
+            "max_drawdown_pct": -31.34
+          },
+          "R3_M3b": {
+            "final_value_twd": 1511006.4,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": -4.9,
+            "max_drawdown_pct": -65.16
+          },
+          "R3_M3a": {
+            "final_value_twd": 1832021.89,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": -2.78,
+            "max_drawdown_pct": -56.53
+          },
+          "R4_M4": {
+            "final_value_twd": 957156.05,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": -10.54,
+            "max_drawdown_pct": -83.63
+          },
+          "R4_M5": {
+            "final_value_twd": 593435.59,
+            "total_invested_twd": 2400000.0,
+            "xirr_pct": -17.85,
+            "max_drawdown_pct": -88.97
+          }
+        }
+      },
+      "CN_2007_10Y_tw_only": {
+        "label": "上證 2007-10 高點 10 年（替換 0050）",
+        "symbol": "000001.SS",
+        "mode": "replace_0050",
+        "period": "2007-11 ~ 2017-10",
+        "months": 120,
+        "strategies": {
+          "R1": {
+            "final_value_twd": 1996930.31,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 9.83,
+            "max_drawdown_pct": -20.54
+          },
+          "R2": {
+            "final_value_twd": 1514614.17,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 4.56,
+            "max_drawdown_pct": -23.53
+          },
+          "R3_M3b": {
+            "final_value_twd": 3469028.69,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 20.14,
+            "max_drawdown_pct": -24.48
+          },
+          "R3_M3a": {
+            "final_value_twd": 1686115.22,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 6.62,
+            "max_drawdown_pct": -41.73
+          },
+          "R4_M4": {
+            "final_value_twd": 1773828.91,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 7.59,
+            "max_drawdown_pct": -68.31
+          },
+          "R4_M5": {
+            "final_value_twd": 10282516.33,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 40.34,
+            "max_drawdown_pct": -35.22
+          }
+        }
+      },
+      "CN_2007_10Y_us_only": {
+        "label": "上證 2007-10 高點 10 年（替換 SPY/美股）",
+        "symbol": "000001.SS",
+        "mode": "replace_spy",
+        "period": "2007-11 ~ 2017-10",
+        "months": 120,
+        "strategies": {
+          "R1": {
+            "final_value_twd": 1881628.44,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 8.71,
+            "max_drawdown_pct": -24.43
+          },
+          "R2": {
+            "final_value_twd": 1713869.74,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 6.93,
+            "max_drawdown_pct": -6.71
+          },
+          "R3_M3b": {
+            "final_value_twd": 1899515.05,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 8.89,
+            "max_drawdown_pct": -53.77
+          },
+          "R3_M3a": {
+            "final_value_twd": 2327789.07,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 12.72,
+            "max_drawdown_pct": -14.58
+          },
+          "R4_M4": {
+            "final_value_twd": 3480201.64,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 20.2,
+            "max_drawdown_pct": -37.42
+          },
+          "R4_M5": {
+            "final_value_twd": 2002263.36,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 9.88,
+            "max_drawdown_pct": -76.97
+          }
+        }
+      },
+      "CN_2007_10Y_both": {
+        "label": "上證 2007-10 高點 10 年（同時替換台美股）",
+        "symbol": "000001.SS",
+        "mode": "replace_both",
+        "period": "2007-11 ~ 2017-10",
+        "months": 120,
+        "strategies": {
+          "R1": {
+            "final_value_twd": 1665851.87,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 6.39,
+            "max_drawdown_pct": -36.93
+          },
+          "R2": {
+            "final_value_twd": 1514614.17,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 4.56,
+            "max_drawdown_pct": -23.53
+          },
+          "R3_M3b": {
+            "final_value_twd": 1687875.72,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 6.64,
+            "max_drawdown_pct": -57.7
+          },
+          "R3_M3a": {
+            "final_value_twd": 1686115.22,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 6.62,
+            "max_drawdown_pct": -41.73
+          },
+          "R4_M4": {
+            "final_value_twd": 1773828.91,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 7.59,
+            "max_drawdown_pct": -68.31
+          },
+          "R4_M5": {
+            "final_value_twd": 1574192.43,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 5.3,
+            "max_drawdown_pct": -82.61
+          }
+        }
+      },
+      "DE_2000_10Y_both": {
+        "label": "德國 DAX 2000-03 高點 10 年（同時替換台美股，+2.5%息）",
+        "symbol": "^GDAXI",
+        "mode": "replace_both",
+        "period": "2000-04 ~ 2010-03",
+        "months": 120,
+        "strategies": {
+          "R1": {
+            "final_value_twd": 1685381.4,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 6.61,
+            "max_drawdown_pct": -45.78
+          },
+          "R2": {
+            "final_value_twd": 1669710.9,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 6.43,
+            "max_drawdown_pct": -24.79
+          },
+          "R3_M3b": {
+            "final_value_twd": 1962709.71,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 9.51,
+            "max_drawdown_pct": -58.82
+          },
+          "R3_M3a": {
+            "final_value_twd": 1724840.79,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 7.05,
+            "max_drawdown_pct": -53.24
+          },
+          "R4_M4": {
+            "final_value_twd": 1827568.24,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 8.15,
+            "max_drawdown_pct": -77.95
+          },
+          "R4_M5": {
+            "final_value_twd": 1670471.01,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 6.44,
+            "max_drawdown_pct": -87.23
+          }
+        }
+      },
+      "UK_2000_10Y_both": {
+        "label": "英國 FTSE 2000-01 高點 10 年（同時替換台美股，+3.5%息）",
+        "symbol": "^FTSE",
+        "mode": "replace_both",
+        "period": "2000-01 ~ 2009-12",
+        "months": 120,
+        "strategies": {
+          "R1": {
+            "final_value_twd": 1480131.82,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 4.11,
+            "max_drawdown_pct": -32.22
+          },
+          "R2": {
+            "final_value_twd": 1482699.74,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 4.14,
+            "max_drawdown_pct": -15.12
+          },
+          "R3_M3b": {
+            "final_value_twd": 1467718.78,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 3.95,
+            "max_drawdown_pct": -45.81
+          },
+          "R3_M3a": {
+            "final_value_twd": 1508275.89,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 4.47,
+            "max_drawdown_pct": -38.7
+          },
+          "R4_M4": {
+            "final_value_twd": 1454096.57,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 3.77,
+            "max_drawdown_pct": -66.02
+          },
+          "R4_M5": {
+            "final_value_twd": 1420935.14,
+            "total_invested_twd": 1200000.0,
+            "xirr_pct": 3.32,
+            "max_drawdown_pct": -78.06
+          }
+        }
+      }
+    },
+    "rolling_10y_by_country_and_mode": {
+      "^N225": {
+        "replace_0050": {
+          "windows_tested": 109,
+          "period_covered": "1989-12 ~ 2026-11",
+          "r1_median_xirr_pct": 8.24,
+          "r1_worst_mdd_pct": -45.52,
+          "r2_median_xirr_pct": 4.85,
+          "r2_worst_mdd_pct": -24.92,
+          "r3_m3b_median_xirr_pct": 16.49,
+          "r3_m3b_worst_mdd_pct": -84.04,
+          "r3_m3a_median_xirr_pct": 6.29,
+          "r3_m3a_worst_mdd_pct": -54.89,
+          "r4_m4_median_xirr_pct": 7.64,
+          "r4_m4_worst_mdd_pct": -82.8
+        },
+        "replace_spy": {
+          "windows_tested": 78,
+          "period_covered": "1997-07 ~ 2026-11",
+          "r1_median_xirr_pct": 8.64,
+          "r1_worst_mdd_pct": -47.5,
+          "r2_median_xirr_pct": 6.29,
+          "r2_worst_mdd_pct": -27.48,
+          "r3_m3b_median_xirr_pct": 11.35,
+          "r3_m3b_worst_mdd_pct": -60.11,
+          "r3_m3a_median_xirr_pct": 9.89,
+          "r3_m3a_worst_mdd_pct": -55.15,
+          "r4_m4_median_xirr_pct": 14.84,
+          "r4_m4_worst_mdd_pct": -80.21
+        },
+        "replace_both": {
+          "windows_tested": 208,
+          "period_covered": "1965-01 ~ 2026-11",
+          "r1_median_xirr_pct": 8.91,
+          "r1_worst_mdd_pct": -50.25,
+          "r2_median_xirr_pct": 6.59,
+          "r2_worst_mdd_pct": -25.35,
+          "r3_m3b_median_xirr_pct": 10.07,
+          "r3_m3b_worst_mdd_pct": -66.53,
+          "r3_m3a_median_xirr_pct": 9.93,
+          "r3_m3a_worst_mdd_pct": -66.84,
+          "r4_m4_median_xirr_pct": 14.12,
+          "r4_m4_worst_mdd_pct": -84.02
+        }
+      },
+      "^GDAXI": {
+        "replace_0050": {
+          "windows_tested": 109,
+          "period_covered": "1989-12 ~ 2026-11",
+          "r1_median_xirr_pct": 9.94,
+          "r1_worst_mdd_pct": -46.68,
+          "r2_median_xirr_pct": 6.81,
+          "r2_worst_mdd_pct": -28.77,
+          "r3_m3b_median_xirr_pct": 17.31,
+          "r3_m3b_worst_mdd_pct": -86.28,
+          "r3_m3a_median_xirr_pct": 10.83,
+          "r3_m3a_worst_mdd_pct": -71.42,
+          "r4_m4_median_xirr_pct": 14.64,
+          "r4_m4_worst_mdd_pct": -90.48
+        },
+        "replace_spy": {
+          "windows_tested": 78,
+          "period_covered": "1997-07 ~ 2026-11",
+          "r1_median_xirr_pct": 9.18,
+          "r1_worst_mdd_pct": -45.35,
+          "r2_median_xirr_pct": 6.29,
+          "r2_worst_mdd_pct": -27.48,
+          "r3_m3b_median_xirr_pct": 11.79,
+          "r3_m3b_worst_mdd_pct": -58.68,
+          "r3_m3a_median_xirr_pct": 9.89,
+          "r3_m3a_worst_mdd_pct": -55.15,
+          "r4_m4_median_xirr_pct": 14.84,
+          "r4_m4_worst_mdd_pct": -80.21
+        },
+        "replace_both": {
+          "windows_tested": 117,
+          "period_covered": "1987-12 ~ 2026-11",
+          "r1_median_xirr_pct": 9.69,
+          "r1_worst_mdd_pct": -58.02,
+          "r2_median_xirr_pct": 7.05,
+          "r2_worst_mdd_pct": -28.77,
+          "r3_m3b_median_xirr_pct": 11.73,
+          "r3_m3b_worst_mdd_pct": -74.31,
+          "r3_m3a_median_xirr_pct": 10.96,
+          "r3_m3a_worst_mdd_pct": -71.42,
+          "r4_m4_median_xirr_pct": 15.01,
+          "r4_m4_worst_mdd_pct": -90.48
+        }
+      },
+      "^FTSE": {
+        "replace_0050": {
+          "windows_tested": 109,
+          "period_covered": "1989-12 ~ 2026-11",
+          "r1_median_xirr_pct": 8.3,
+          "r1_worst_mdd_pct": -38.19,
+          "r2_median_xirr_pct": 4.53,
+          "r2_worst_mdd_pct": -15.46,
+          "r3_m3b_median_xirr_pct": 16.62,
+          "r3_m3b_worst_mdd_pct": -83.32,
+          "r3_m3a_median_xirr_pct": 6.9,
+          "r3_m3a_worst_mdd_pct": -41.58,
+          "r4_m4_median_xirr_pct": 8.66,
+          "r4_m4_worst_mdd_pct": -67.7
+        },
+        "replace_spy": {
+          "windows_tested": 78,
+          "period_covered": "1997-07 ~ 2026-11",
+          "r1_median_xirr_pct": 7.24,
+          "r1_worst_mdd_pct": -40.33,
+          "r2_median_xirr_pct": 6.29,
+          "r2_worst_mdd_pct": -27.48,
+          "r3_m3b_median_xirr_pct": 8.23,
+          "r3_m3b_worst_mdd_pct": -51.18,
+          "r3_m3a_median_xirr_pct": 9.89,
+          "r3_m3a_worst_mdd_pct": -55.15,
+          "r4_m4_median_xirr_pct": 14.84,
+          "r4_m4_worst_mdd_pct": -80.21
+        },
+        "replace_both": {
+          "windows_tested": 132,
+          "period_covered": "1984-01 ~ 2026-11",
+          "r1_median_xirr_pct": 6.31,
+          "r1_worst_mdd_pct": -32.91,
+          "r2_median_xirr_pct": 4.96,
+          "r2_worst_mdd_pct": -18.84,
+          "r3_m3b_median_xirr_pct": 7.45,
+          "r3_m3b_worst_mdd_pct": -46.83,
+          "r3_m3a_median_xirr_pct": 7.28,
+          "r3_m3a_worst_mdd_pct": -42.18,
+          "r4_m4_median_xirr_pct": 9.76,
+          "r4_m4_worst_mdd_pct": -67.57
+        }
+      },
+      "000001.SS": {
+        "replace_0050": {
+          "windows_tested": 78,
+          "period_covered": "1997-07 ~ 2026-11",
+          "r1_median_xirr_pct": 8.17,
+          "r1_worst_mdd_pct": -59.35,
+          "r2_median_xirr_pct": 4.66,
+          "r2_worst_mdd_pct": -47.61,
+          "r3_m3b_median_xirr_pct": 16.19,
+          "r3_m3b_worst_mdd_pct": -65.64,
+          "r3_m3a_median_xirr_pct": 5.02,
+          "r3_m3a_worst_mdd_pct": -77.61,
+          "r4_m4_median_xirr_pct": 4.82,
+          "r4_m4_worst_mdd_pct": -92.64
+        },
+        "replace_spy": {
+          "windows_tested": 78,
+          "period_covered": "1997-07 ~ 2026-11",
+          "r1_median_xirr_pct": 7.99,
+          "r1_worst_mdd_pct": -61.35,
+          "r2_median_xirr_pct": 6.29,
+          "r2_worst_mdd_pct": -27.48,
+          "r3_m3b_median_xirr_pct": 10.89,
+          "r3_m3b_worst_mdd_pct": -78.47,
+          "r3_m3a_median_xirr_pct": 9.89,
+          "r3_m3a_worst_mdd_pct": -55.15,
+          "r4_m4_median_xirr_pct": 14.84,
+          "r4_m4_worst_mdd_pct": -80.21
+        },
+        "replace_both": {
+          "windows_tested": 78,
+          "period_covered": "1997-07 ~ 2026-11",
+          "r1_median_xirr_pct": 5.08,
+          "r1_worst_mdd_pct": -69.01,
+          "r2_median_xirr_pct": 4.66,
+          "r2_worst_mdd_pct": -47.61,
+          "r3_m3b_median_xirr_pct": 7.0,
+          "r3_m3b_worst_mdd_pct": -81.97,
+          "r3_m3a_median_xirr_pct": 5.02,
+          "r3_m3a_worst_mdd_pct": -77.61,
+          "r4_m4_median_xirr_pct": 4.82,
+          "r4_m4_worst_mdd_pct": -92.64
+        }
+      }
+    },
+    "intl_bear_episodes_r5": {
+      "^N225": {
+        "name": "日本日經 225 指數",
+        "assumed_dividend_pct": 1.5,
+        "start_date": "1965-01-05",
+        "end_date": "2026-11-27",
+        "recovered_count": 7,
+        "unrecovered_count": 1,
+        "median_recovered_months": 12.42,
+        "median_all_censored_months": 10.12,
+        "episodes": [
+          {
+            "peak_date": "1965-01-14",
+            "trough_date": "1965-07-12",
+            "recovery_date": "1965-09-09",
+            "recovered": true,
+            "max_drawdown_pct": -20.29,
+            "underwater_months": 7.82
+          },
+          {
+            "peak_date": "1970-04-06",
+            "trough_date": "1970-05-27",
+            "recovery_date": "1971-06-07",
+            "recovered": true,
+            "max_drawdown_pct": -23.71,
+            "underwater_months": 14.03
+          },
+          {
+            "peak_date": "1971-08-13",
+            "trough_date": "1971-08-24",
+            "recovery_date": "1971-12-28",
+            "recovered": true,
+            "max_drawdown_pct": -20.68,
+            "underwater_months": 4.5
+          },
+          {
+            "peak_date": "1973-01-24",
+            "trough_date": "1974-10-09",
+            "recovery_date": "1977-01-26",
+            "recovered": true,
+            "max_drawdown_pct": -35.81,
+            "underwater_months": 48.07
+          },
+          {
+            "peak_date": "1987-10-14",
+            "trough_date": "1987-11-11",
+            "recovery_date": "1988-04-06",
+            "recovered": true,
+            "max_drawdown_pct": -20.96,
+            "underwater_months": 5.75
+          },
+          {
+            "peak_date": "1989-12-29",
+            "trough_date": "2003-04-28",
+            "recovery_date": "2020-11-09",
+            "recovered": true,
+            "max_drawdown_pct": -76.23,
+            "underwater_months": 370.37
+          },
+          {
+            "peak_date": "2024-07-11",
+            "trough_date": "2025-04-07",
+            "recovery_date": "2025-07-24",
+            "recovered": true,
+            "max_drawdown_pct": -25.47,
+            "underwater_months": 12.42
+          },
+          {
+            "peak_date": "2026-06-25",
+            "trough_date": "2026-11-20",
+            "recovery_date": "至今未回",
+            "recovered": false,
+            "max_drawdown_pct": -21.55,
+            "underwater_months": null,
+            "elapsed_months": 5.09
+          }
+        ]
+      },
+      "^GDAXI": {
+        "name": "德國 DAX 指數",
+        "assumed_dividend_pct": 2.5,
+        "start_date": "1987-12-30",
+        "end_date": "2026-11-26",
+        "recovered_count": 9,
+        "unrecovered_count": 0,
+        "median_recovered_months": 21.36,
+        "median_all_censored_months": 21.36,
+        "episodes": [
+          {
+            "peak_date": "1990-07-19",
+            "trough_date": "1991-01-15",
+            "recovery_date": "1993-07-16",
+            "recovered": true,
+            "max_drawdown_pct": -32.06,
+            "underwater_months": 35.91
+          },
+          {
+            "peak_date": "1998-07-20",
+            "trough_date": "1998-10-08",
+            "recovery_date": "1999-12-03",
+            "recovered": true,
+            "max_drawdown_pct": -37.21,
+            "underwater_months": 16.46
+          },
+          {
+            "peak_date": "2000-03-07",
+            "trough_date": "2003-03-12",
+            "recovery_date": "2007-01-30",
+            "recovered": true,
+            "max_drawdown_pct": -70.53,
+            "underwater_months": 82.79
+          },
+          {
+            "peak_date": "2007-12-12",
+            "trough_date": "2009-03-06",
+            "recovery_date": "2011-04-28",
+            "recovered": true,
+            "max_drawdown_pct": -53.18,
+            "underwater_months": 40.51
+          },
+          {
+            "peak_date": "2011-05-02",
+            "trough_date": "2011-09-12",
+            "recovery_date": "2012-09-11",
+            "recovered": true,
+            "max_drawdown_pct": -31.98,
+            "underwater_months": 16.36
+          },
+          {
+            "peak_date": "2015-04-10",
+            "trough_date": "2016-02-11",
+            "recovery_date": "2017-01-26",
+            "recovered": true,
+            "max_drawdown_pct": -27.76,
+            "underwater_months": 21.59
+          },
+          {
+            "peak_date": "2018-01-23",
+            "trough_date": "2018-12-27",
+            "recovery_date": "2019-11-04",
+            "recovered": true,
+            "max_drawdown_pct": -21.64,
+            "underwater_months": 21.36
+          },
+          {
+            "peak_date": "2020-02-19",
+            "trough_date": "2020-03-18",
+            "recovery_date": "2020-12-16",
+            "recovered": true,
+            "max_drawdown_pct": -38.65,
+            "underwater_months": 9.89
+          },
+          {
+            "peak_date": "2022-01-05",
+            "trough_date": "2022-09-29",
+            "recovery_date": "2023-04-14",
+            "recovered": true,
+            "max_drawdown_pct": -25.01,
+            "underwater_months": 15.24
+          }
+        ]
+      },
+      "^FTSE": {
+        "name": "英國富時 100 指數",
+        "assumed_dividend_pct": 3.5,
+        "start_date": "1984-01-03",
+        "end_date": "2026-11-26",
+        "recovered_count": 5,
+        "unrecovered_count": 0,
+        "median_recovered_months": 24.11,
+        "median_all_censored_months": 24.11,
+        "episodes": [
+          {
+            "peak_date": "1987-07-16",
+            "trough_date": "1987-11-09",
+            "recovery_date": "1989-07-19",
+            "recovered": true,
+            "max_drawdown_pct": -35.21,
+            "underwater_months": 24.11
+          },
+          {
+            "peak_date": "1998-07-20",
+            "trough_date": "1998-10-05",
+            "recovery_date": "1999-01-06",
+            "recovered": true,
+            "max_drawdown_pct": -24.2,
+            "underwater_months": 5.59
+          },
+          {
+            "peak_date": "2000-09-04",
+            "trough_date": "2003-03-12",
+            "recovery_date": "2006-01-03",
+            "recovered": true,
+            "max_drawdown_pct": -47.17,
+            "underwater_months": 63.97
+          },
+          {
+            "peak_date": "2007-10-31",
+            "trough_date": "2009-03-03",
+            "recovery_date": "2011-01-04",
+            "recovered": true,
+            "max_drawdown_pct": -45.23,
+            "underwater_months": 38.14
+          },
+          {
+            "peak_date": "2020-01-17",
+            "trough_date": "2020-03-23",
+            "recovery_date": "2021-10-15",
+            "recovered": true,
+            "max_drawdown_pct": -34.51,
+            "underwater_months": 20.93
+          }
+        ]
+      },
+      "000001.SS": {
+        "name": "中國上證綜合指數",
+        "assumed_dividend_pct": 2.0,
+        "start_date": "1997-07-02",
+        "end_date": "2026-11-27",
+        "recovered_count": 3,
+        "unrecovered_count": 1,
+        "median_recovered_months": 12.35,
+        "median_all_censored_months": 38.81,
+        "episodes": [
+          {
+            "peak_date": "1998-06-03",
+            "trough_date": "1998-08-17",
+            "recovery_date": "1999-06-14",
+            "recovered": true,
+            "max_drawdown_pct": -24.3,
+            "underwater_months": 12.35
+          },
+          {
+            "peak_date": "1999-06-29",
+            "trough_date": "1999-12-27",
+            "recovery_date": "2000-03-03",
+            "recovered": true,
+            "max_drawdown_pct": -21.89,
+            "underwater_months": 8.15
+          },
+          {
+            "peak_date": "2001-06-13",
+            "trough_date": "2005-07-11",
+            "recovery_date": "2006-11-21",
+            "recovered": true,
+            "max_drawdown_pct": -51.24,
+            "underwater_months": 65.28
+          },
+          {
+            "peak_date": "2007-10-16",
+            "trough_date": "2008-11-04",
+            "recovery_date": "至今未回",
+            "recovered": false,
+            "max_drawdown_pct": -71.4,
+            "underwater_months": null,
+            "elapsed_months": 229.39
+          }
+        ]
+      }
+    },
+    "summary_metrics": {
+      "total_rolling_scenarios": 1252,
+      "r1_pool_stability": {
+        "candidate_count": 15,
+        "r1_median_regret_pp": 1.02,
+        "r1_max_regret_pp": 12.48,
+        "r1_rank": 2,
+        "r1_rank_pct": 13.33,
+        "top_3_candidates": [
+          {
+            "id": "R1_ANN",
+            "median_xirr_pct": 8.29
+          },
+          {
+            "id": "R1",
+            "median_xirr_pct": 8.16
+          },
+          {
+            "id": "W_40_60",
+            "median_xirr_pct": 8.12
+          }
+        ]
+      },
+      "r1_prob_mdd_lt_50pct": 8.15,
+      "r2_prob_mdd_lt_30pct": 4.79,
+      "r3_m3b_prob_mdd_lt_60pct": 17.25,
+      "r3_m3a_prob_mdd_lt_60pct": 8.39,
+      "r4_2x_plus_prob_mdd_lt_50pct": 69.93,
+      "r5_intl_bear_median_months_censored": 18.7
+    }
+  },
+  "gate_4_tax_fx": {
+    "scenarios": {
+      "tax_0pct__fx_hist": {
+        "tax_label": "免稅級距 (0%)",
+        "fx_label": "實際歷史 TWD=X 匯率",
+        "best_unconstrained_split": {
+          "split": "0050 0% / SPY 100%",
+          "w_0050_pct": 0,
+          "w_spy_pct": 100,
+          "median_xirr_pct": 10.83,
+          "median_mdd_pct": -32.91,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.33
+        },
+        "best_risk_capped_50pct_split": {
+          "split": "0050 0% / SPY 100%",
+          "w_0050_pct": 0,
+          "w_spy_pct": 100,
+          "median_xirr_pct": 10.83,
+          "median_mdd_pct": -32.91,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.33
+        },
+        "r1_50_50_metrics": {
+          "split": "0050 50% / SPY 50%",
+          "w_0050_pct": 50,
+          "w_spy_pct": 50,
+          "median_xirr_pct": 10.41,
+          "median_mdd_pct": -28.3,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.37
+        },
+        "splits_grid": [
+          {
+            "split": "0050 0% / SPY 100%",
+            "w_0050_pct": 0,
+            "w_spy_pct": 100,
+            "median_xirr_pct": 10.83,
+            "median_mdd_pct": -32.91,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.33
+          },
+          {
+            "split": "0050 10% / SPY 90%",
+            "w_0050_pct": 10,
+            "w_spy_pct": 90,
+            "median_xirr_pct": 10.8,
+            "median_mdd_pct": -31.98,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.34
+          },
+          {
+            "split": "0050 20% / SPY 80%",
+            "w_0050_pct": 20,
+            "w_spy_pct": 80,
+            "median_xirr_pct": 10.68,
+            "median_mdd_pct": -31.05,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.34
+          },
+          {
+            "split": "0050 30% / SPY 70%",
+            "w_0050_pct": 30,
+            "w_spy_pct": 70,
+            "median_xirr_pct": 10.63,
+            "median_mdd_pct": -30.12,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.35
+          },
+          {
+            "split": "0050 40% / SPY 60%",
+            "w_0050_pct": 40,
+            "w_spy_pct": 60,
+            "median_xirr_pct": 10.56,
+            "median_mdd_pct": -29.17,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.36
+          },
+          {
+            "split": "0050 50% / SPY 50%",
+            "w_0050_pct": 50,
+            "w_spy_pct": 50,
+            "median_xirr_pct": 10.41,
+            "median_mdd_pct": -28.3,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.37
+          },
+          {
+            "split": "0050 60% / SPY 40%",
+            "w_0050_pct": 60,
+            "w_spy_pct": 40,
+            "median_xirr_pct": 10.16,
+            "median_mdd_pct": -27.37,
+            "prob_mdd_lt_50pct": 1.85,
+            "mar_ratio": 0.37
+          },
+          {
+            "split": "0050 70% / SPY 30%",
+            "w_0050_pct": 70,
+            "w_spy_pct": 30,
+            "median_xirr_pct": 9.87,
+            "median_mdd_pct": -26.79,
+            "prob_mdd_lt_50pct": 11.11,
+            "mar_ratio": 0.37
+          },
+          {
+            "split": "0050 80% / SPY 20%",
+            "w_0050_pct": 80,
+            "w_spy_pct": 20,
+            "median_xirr_pct": 9.46,
+            "median_mdd_pct": -27.03,
+            "prob_mdd_lt_50pct": 14.81,
+            "mar_ratio": 0.35
+          },
+          {
+            "split": "0050 90% / SPY 10%",
+            "w_0050_pct": 90,
+            "w_spy_pct": 10,
+            "median_xirr_pct": 9.1,
+            "median_mdd_pct": -28.14,
+            "prob_mdd_lt_50pct": 22.22,
+            "mar_ratio": 0.32
+          },
+          {
+            "split": "0050 100% / SPY 0%",
+            "w_0050_pct": 100,
+            "w_spy_pct": 0,
+            "median_xirr_pct": 8.85,
+            "median_mdd_pct": -30.89,
+            "prob_mdd_lt_50pct": 25.93,
+            "mar_ratio": 0.29
+          }
+        ]
+      },
+      "tax_0pct__fx_twd_app_2pct": {
+        "tax_label": "免稅級距 (0%)",
+        "fx_label": "壓力測試：台幣每年升值 2% 持續 10 年（美元貶值）",
+        "best_unconstrained_split": {
+          "split": "0050 50% / SPY 50%",
+          "w_0050_pct": 50,
+          "w_spy_pct": 50,
+          "median_xirr_pct": 9.31,
+          "median_mdd_pct": -28.47,
+          "prob_mdd_lt_50pct": 3.7,
+          "mar_ratio": 0.33
+        },
+        "best_risk_capped_50pct_split": {
+          "split": "0050 50% / SPY 50%",
+          "w_0050_pct": 50,
+          "w_spy_pct": 50,
+          "median_xirr_pct": 9.31,
+          "median_mdd_pct": -28.47,
+          "prob_mdd_lt_50pct": 3.7,
+          "mar_ratio": 0.33
+        },
+        "r1_50_50_metrics": {
+          "split": "0050 50% / SPY 50%",
+          "w_0050_pct": 50,
+          "w_spy_pct": 50,
+          "median_xirr_pct": 9.31,
+          "median_mdd_pct": -28.47,
+          "prob_mdd_lt_50pct": 3.7,
+          "mar_ratio": 0.33
+        },
+        "splits_grid": [
+          {
+            "split": "0050 0% / SPY 100%",
+            "w_0050_pct": 0,
+            "w_spy_pct": 100,
+            "median_xirr_pct": 8.58,
+            "median_mdd_pct": -33.55,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.26
+          },
+          {
+            "split": "0050 10% / SPY 90%",
+            "w_0050_pct": 10,
+            "w_spy_pct": 90,
+            "median_xirr_pct": 8.72,
+            "median_mdd_pct": -32.5,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.27
+          },
+          {
+            "split": "0050 20% / SPY 80%",
+            "w_0050_pct": 20,
+            "w_spy_pct": 80,
+            "median_xirr_pct": 8.86,
+            "median_mdd_pct": -31.44,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.28
+          },
+          {
+            "split": "0050 30% / SPY 70%",
+            "w_0050_pct": 30,
+            "w_spy_pct": 70,
+            "median_xirr_pct": 9.04,
+            "median_mdd_pct": -30.44,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.3
+          },
+          {
+            "split": "0050 40% / SPY 60%",
+            "w_0050_pct": 40,
+            "w_spy_pct": 60,
+            "median_xirr_pct": 9.23,
+            "median_mdd_pct": -29.43,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.31
+          },
+          {
+            "split": "0050 50% / SPY 50%",
+            "w_0050_pct": 50,
+            "w_spy_pct": 50,
+            "median_xirr_pct": 9.31,
+            "median_mdd_pct": -28.47,
+            "prob_mdd_lt_50pct": 3.7,
+            "mar_ratio": 0.33
+          },
+          {
+            "split": "0050 60% / SPY 40%",
+            "w_0050_pct": 60,
+            "w_spy_pct": 40,
+            "median_xirr_pct": 9.23,
+            "median_mdd_pct": -27.48,
+            "prob_mdd_lt_50pct": 11.11,
+            "mar_ratio": 0.34
+          },
+          {
+            "split": "0050 70% / SPY 30%",
+            "w_0050_pct": 70,
+            "w_spy_pct": 30,
+            "median_xirr_pct": 9.07,
+            "median_mdd_pct": -27.08,
+            "prob_mdd_lt_50pct": 14.81,
+            "mar_ratio": 0.34
+          },
+          {
+            "split": "0050 80% / SPY 20%",
+            "w_0050_pct": 80,
+            "w_spy_pct": 20,
+            "median_xirr_pct": 8.92,
+            "median_mdd_pct": -28.15,
+            "prob_mdd_lt_50pct": 20.37,
+            "mar_ratio": 0.32
+          },
+          {
+            "split": "0050 90% / SPY 10%",
+            "w_0050_pct": 90,
+            "w_spy_pct": 10,
+            "median_xirr_pct": 8.84,
+            "median_mdd_pct": -29.47,
+            "prob_mdd_lt_50pct": 24.07,
+            "mar_ratio": 0.3
+          },
+          {
+            "split": "0050 100% / SPY 0%",
+            "w_0050_pct": 100,
+            "w_spy_pct": 0,
+            "median_xirr_pct": 8.85,
+            "median_mdd_pct": -30.89,
+            "prob_mdd_lt_50pct": 25.93,
+            "mar_ratio": 0.29
+          }
+        ]
+      },
+      "tax_0pct__fx_twd_dep_2pct": {
+        "tax_label": "免稅級距 (0%)",
+        "fx_label": "壓力測試：台幣每年貶值 2% 持續 10 年（美元升值）",
+        "best_unconstrained_split": {
+          "split": "0050 0% / SPY 100%",
+          "w_0050_pct": 0,
+          "w_spy_pct": 100,
+          "median_xirr_pct": 12.89,
+          "median_mdd_pct": -33.38,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.39
+        },
+        "best_risk_capped_50pct_split": {
+          "split": "0050 0% / SPY 100%",
+          "w_0050_pct": 0,
+          "w_spy_pct": 100,
+          "median_xirr_pct": 12.89,
+          "median_mdd_pct": -33.38,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.39
+        },
+        "r1_50_50_metrics": {
+          "split": "0050 50% / SPY 50%",
+          "w_0050_pct": 50,
+          "w_spy_pct": 50,
+          "median_xirr_pct": 11.67,
+          "median_mdd_pct": -28.86,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.41
+        },
+        "splits_grid": [
+          {
+            "split": "0050 0% / SPY 100%",
+            "w_0050_pct": 0,
+            "w_spy_pct": 100,
+            "median_xirr_pct": 12.89,
+            "median_mdd_pct": -33.38,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.39
+          },
+          {
+            "split": "0050 10% / SPY 90%",
+            "w_0050_pct": 10,
+            "w_spy_pct": 90,
+            "median_xirr_pct": 12.62,
+            "median_mdd_pct": -32.5,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.39
+          },
+          {
+            "split": "0050 20% / SPY 80%",
+            "w_0050_pct": 20,
+            "w_spy_pct": 80,
+            "median_xirr_pct": 12.37,
+            "median_mdd_pct": -31.63,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.39
+          },
+          {
+            "split": "0050 30% / SPY 70%",
+            "w_0050_pct": 30,
+            "w_spy_pct": 70,
+            "median_xirr_pct": 12.16,
+            "median_mdd_pct": -30.72,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.4
+          },
+          {
+            "split": "0050 40% / SPY 60%",
+            "w_0050_pct": 40,
+            "w_spy_pct": 60,
+            "median_xirr_pct": 11.88,
+            "median_mdd_pct": -29.81,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.4
+          },
+          {
+            "split": "0050 50% / SPY 50%",
+            "w_0050_pct": 50,
+            "w_spy_pct": 50,
+            "median_xirr_pct": 11.67,
+            "median_mdd_pct": -28.86,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.41
+          },
+          {
+            "split": "0050 60% / SPY 40%",
+            "w_0050_pct": 60,
+            "w_spy_pct": 40,
+            "median_xirr_pct": 11.28,
+            "median_mdd_pct": -27.93,
+            "prob_mdd_lt_50pct": 3.7,
+            "mar_ratio": 0.4
+          },
+          {
+            "split": "0050 70% / SPY 30%",
+            "w_0050_pct": 70,
+            "w_spy_pct": 30,
+            "median_xirr_pct": 10.64,
+            "median_mdd_pct": -27.05,
+            "prob_mdd_lt_50pct": 11.11,
+            "mar_ratio": 0.39
+          },
+          {
+            "split": "0050 80% / SPY 20%",
+            "w_0050_pct": 80,
+            "w_spy_pct": 20,
+            "median_xirr_pct": 9.99,
+            "median_mdd_pct": -27.26,
+            "prob_mdd_lt_50pct": 18.52,
+            "mar_ratio": 0.37
+          },
+          {
+            "split": "0050 90% / SPY 10%",
+            "w_0050_pct": 90,
+            "w_spy_pct": 10,
+            "median_xirr_pct": 9.34,
+            "median_mdd_pct": -29.0,
+            "prob_mdd_lt_50pct": 24.07,
+            "mar_ratio": 0.32
+          },
+          {
+            "split": "0050 100% / SPY 0%",
+            "w_0050_pct": 100,
+            "w_spy_pct": 0,
+            "median_xirr_pct": 8.85,
+            "median_mdd_pct": -30.89,
+            "prob_mdd_lt_50pct": 25.93,
+            "mar_ratio": 0.29
+          }
+        ]
+      },
+      "tax_12pct__fx_hist": {
+        "tax_label": "12% 所得稅級距",
+        "fx_label": "實際歷史 TWD=X 匯率",
+        "best_unconstrained_split": {
+          "split": "0050 0% / SPY 100%",
+          "w_0050_pct": 0,
+          "w_spy_pct": 100,
+          "median_xirr_pct": 10.83,
+          "median_mdd_pct": -32.91,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.33
+        },
+        "best_risk_capped_50pct_split": {
+          "split": "0050 0% / SPY 100%",
+          "w_0050_pct": 0,
+          "w_spy_pct": 100,
+          "median_xirr_pct": 10.83,
+          "median_mdd_pct": -32.91,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.33
+        },
+        "r1_50_50_metrics": {
+          "split": "0050 50% / SPY 50%",
+          "w_0050_pct": 50,
+          "w_spy_pct": 50,
+          "median_xirr_pct": 10.21,
+          "median_mdd_pct": -28.35,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.36
+        },
+        "splits_grid": [
+          {
+            "split": "0050 0% / SPY 100%",
+            "w_0050_pct": 0,
+            "w_spy_pct": 100,
+            "median_xirr_pct": 10.83,
+            "median_mdd_pct": -32.91,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.33
+          },
+          {
+            "split": "0050 10% / SPY 90%",
+            "w_0050_pct": 10,
+            "w_spy_pct": 90,
+            "median_xirr_pct": 10.76,
+            "median_mdd_pct": -31.99,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.34
+          },
+          {
+            "split": "0050 20% / SPY 80%",
+            "w_0050_pct": 20,
+            "w_spy_pct": 80,
+            "median_xirr_pct": 10.61,
+            "median_mdd_pct": -31.08,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.34
+          },
+          {
+            "split": "0050 30% / SPY 70%",
+            "w_0050_pct": 30,
+            "w_spy_pct": 70,
+            "median_xirr_pct": 10.5,
+            "median_mdd_pct": -30.16,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.35
+          },
+          {
+            "split": "0050 40% / SPY 60%",
+            "w_0050_pct": 40,
+            "w_spy_pct": 60,
+            "median_xirr_pct": 10.39,
+            "median_mdd_pct": -29.21,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.36
+          },
+          {
+            "split": "0050 50% / SPY 50%",
+            "w_0050_pct": 50,
+            "w_spy_pct": 50,
+            "median_xirr_pct": 10.21,
+            "median_mdd_pct": -28.35,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.36
+          },
+          {
+            "split": "0050 60% / SPY 40%",
+            "w_0050_pct": 60,
+            "w_spy_pct": 40,
+            "median_xirr_pct": 9.92,
+            "median_mdd_pct": -27.43,
+            "prob_mdd_lt_50pct": 1.85,
+            "mar_ratio": 0.36
+          },
+          {
+            "split": "0050 70% / SPY 30%",
+            "w_0050_pct": 70,
+            "w_spy_pct": 30,
+            "median_xirr_pct": 9.6,
+            "median_mdd_pct": -26.96,
+            "prob_mdd_lt_50pct": 11.11,
+            "mar_ratio": 0.36
+          },
+          {
+            "split": "0050 80% / SPY 20%",
+            "w_0050_pct": 80,
+            "w_spy_pct": 20,
+            "median_xirr_pct": 9.14,
+            "median_mdd_pct": -27.22,
+            "prob_mdd_lt_50pct": 14.81,
+            "mar_ratio": 0.34
+          },
+          {
+            "split": "0050 90% / SPY 10%",
+            "w_0050_pct": 90,
+            "w_spy_pct": 10,
+            "median_xirr_pct": 8.75,
+            "median_mdd_pct": -28.33,
+            "prob_mdd_lt_50pct": 22.22,
+            "mar_ratio": 0.31
+          },
+          {
+            "split": "0050 100% / SPY 0%",
+            "w_0050_pct": 100,
+            "w_spy_pct": 0,
+            "median_xirr_pct": 8.45,
+            "median_mdd_pct": -31.15,
+            "prob_mdd_lt_50pct": 27.78,
+            "mar_ratio": 0.27
+          }
+        ]
+      },
+      "tax_12pct__fx_twd_app_2pct": {
+        "tax_label": "12% 所得稅級距",
+        "fx_label": "壓力測試：台幣每年升值 2% 持續 10 年（美元貶值）",
+        "best_unconstrained_split": {
+          "split": "0050 50% / SPY 50%",
+          "w_0050_pct": 50,
+          "w_spy_pct": 50,
+          "median_xirr_pct": 9.09,
+          "median_mdd_pct": -28.53,
+          "prob_mdd_lt_50pct": 3.7,
+          "mar_ratio": 0.32
+        },
+        "best_risk_capped_50pct_split": {
+          "split": "0050 50% / SPY 50%",
+          "w_0050_pct": 50,
+          "w_spy_pct": 50,
+          "median_xirr_pct": 9.09,
+          "median_mdd_pct": -28.53,
+          "prob_mdd_lt_50pct": 3.7,
+          "mar_ratio": 0.32
+        },
+        "r1_50_50_metrics": {
+          "split": "0050 50% / SPY 50%",
+          "w_0050_pct": 50,
+          "w_spy_pct": 50,
+          "median_xirr_pct": 9.09,
+          "median_mdd_pct": -28.53,
+          "prob_mdd_lt_50pct": 3.7,
+          "mar_ratio": 0.32
+        },
+        "splits_grid": [
+          {
+            "split": "0050 0% / SPY 100%",
+            "w_0050_pct": 0,
+            "w_spy_pct": 100,
+            "median_xirr_pct": 8.58,
+            "median_mdd_pct": -33.55,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.26
+          },
+          {
+            "split": "0050 10% / SPY 90%",
+            "w_0050_pct": 10,
+            "w_spy_pct": 90,
+            "median_xirr_pct": 8.68,
+            "median_mdd_pct": -32.52,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.27
+          },
+          {
+            "split": "0050 20% / SPY 80%",
+            "w_0050_pct": 20,
+            "w_spy_pct": 80,
+            "median_xirr_pct": 8.78,
+            "median_mdd_pct": -31.47,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.28
+          },
+          {
+            "split": "0050 30% / SPY 70%",
+            "w_0050_pct": 30,
+            "w_spy_pct": 70,
+            "median_xirr_pct": 8.91,
+            "median_mdd_pct": -30.48,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.29
+          },
+          {
+            "split": "0050 40% / SPY 60%",
+            "w_0050_pct": 40,
+            "w_spy_pct": 60,
+            "median_xirr_pct": 9.04,
+            "median_mdd_pct": -29.48,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.31
+          },
+          {
+            "split": "0050 50% / SPY 50%",
+            "w_0050_pct": 50,
+            "w_spy_pct": 50,
+            "median_xirr_pct": 9.09,
+            "median_mdd_pct": -28.53,
+            "prob_mdd_lt_50pct": 3.7,
+            "mar_ratio": 0.32
+          },
+          {
+            "split": "0050 60% / SPY 40%",
+            "w_0050_pct": 60,
+            "w_spy_pct": 40,
+            "median_xirr_pct": 8.98,
+            "median_mdd_pct": -27.67,
+            "prob_mdd_lt_50pct": 11.11,
+            "mar_ratio": 0.33
+          },
+          {
+            "split": "0050 70% / SPY 30%",
+            "w_0050_pct": 70,
+            "w_spy_pct": 30,
+            "median_xirr_pct": 8.78,
+            "median_mdd_pct": -27.25,
+            "prob_mdd_lt_50pct": 14.81,
+            "mar_ratio": 0.32
+          },
+          {
+            "split": "0050 80% / SPY 20%",
+            "w_0050_pct": 80,
+            "w_spy_pct": 20,
+            "median_xirr_pct": 8.6,
+            "median_mdd_pct": -28.32,
+            "prob_mdd_lt_50pct": 20.37,
+            "mar_ratio": 0.3
+          },
+          {
+            "split": "0050 90% / SPY 10%",
+            "w_0050_pct": 90,
+            "w_spy_pct": 10,
+            "median_xirr_pct": 8.49,
+            "median_mdd_pct": -29.69,
+            "prob_mdd_lt_50pct": 24.07,
+            "mar_ratio": 0.29
+          },
+          {
+            "split": "0050 100% / SPY 0%",
+            "w_0050_pct": 100,
+            "w_spy_pct": 0,
+            "median_xirr_pct": 8.45,
+            "median_mdd_pct": -31.15,
+            "prob_mdd_lt_50pct": 27.78,
+            "mar_ratio": 0.27
+          }
+        ]
+      },
+      "tax_12pct__fx_twd_dep_2pct": {
+        "tax_label": "12% 所得稅級距",
+        "fx_label": "壓力測試：台幣每年貶值 2% 持續 10 年（美元升值）",
+        "best_unconstrained_split": {
+          "split": "0050 0% / SPY 100%",
+          "w_0050_pct": 0,
+          "w_spy_pct": 100,
+          "median_xirr_pct": 12.89,
+          "median_mdd_pct": -33.38,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.39
+        },
+        "best_risk_capped_50pct_split": {
+          "split": "0050 0% / SPY 100%",
+          "w_0050_pct": 0,
+          "w_spy_pct": 100,
+          "median_xirr_pct": 12.89,
+          "median_mdd_pct": -33.38,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.39
+        },
+        "r1_50_50_metrics": {
+          "split": "0050 50% / SPY 50%",
+          "w_0050_pct": 50,
+          "w_spy_pct": 50,
+          "median_xirr_pct": 11.48,
+          "median_mdd_pct": -28.91,
+          "prob_mdd_lt_50pct": 0.0,
+          "mar_ratio": 0.4
+        },
+        "splits_grid": [
+          {
+            "split": "0050 0% / SPY 100%",
+            "w_0050_pct": 0,
+            "w_spy_pct": 100,
+            "median_xirr_pct": 12.89,
+            "median_mdd_pct": -33.38,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.39
+          },
+          {
+            "split": "0050 10% / SPY 90%",
+            "w_0050_pct": 10,
+            "w_spy_pct": 90,
+            "median_xirr_pct": 12.58,
+            "median_mdd_pct": -32.52,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.39
+          },
+          {
+            "split": "0050 20% / SPY 80%",
+            "w_0050_pct": 20,
+            "w_spy_pct": 80,
+            "median_xirr_pct": 12.29,
+            "median_mdd_pct": -31.66,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.39
+          },
+          {
+            "split": "0050 30% / SPY 70%",
+            "w_0050_pct": 30,
+            "w_spy_pct": 70,
+            "median_xirr_pct": 12.05,
+            "median_mdd_pct": -30.76,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.39
+          },
+          {
+            "split": "0050 40% / SPY 60%",
+            "w_0050_pct": 40,
+            "w_spy_pct": 60,
+            "median_xirr_pct": 11.73,
+            "median_mdd_pct": -29.86,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.39
+          },
+          {
+            "split": "0050 50% / SPY 50%",
+            "w_0050_pct": 50,
+            "w_spy_pct": 50,
+            "median_xirr_pct": 11.48,
+            "median_mdd_pct": -28.91,
+            "prob_mdd_lt_50pct": 0.0,
+            "mar_ratio": 0.4
+          },
+          {
+            "split": "0050 60% / SPY 40%",
+            "w_0050_pct": 60,
+            "w_spy_pct": 40,
+            "median_xirr_pct": 11.05,
+            "median_mdd_pct": -27.98,
+            "prob_mdd_lt_50pct": 3.7,
+            "mar_ratio": 0.4
+          },
+          {
+            "split": "0050 70% / SPY 30%",
+            "w_0050_pct": 70,
+            "w_spy_pct": 30,
+            "median_xirr_pct": 10.38,
+            "median_mdd_pct": -27.24,
+            "prob_mdd_lt_50pct": 12.96,
+            "mar_ratio": 0.38
+          },
+          {
+            "split": "0050 80% / SPY 20%",
+            "w_0050_pct": 80,
+            "w_spy_pct": 20,
+            "median_xirr_pct": 9.68,
+            "median_mdd_pct": -27.41,
+            "prob_mdd_lt_50pct": 18.52,
+            "mar_ratio": 0.35
+          },
+          {
+            "split": "0050 90% / SPY 10%",
+            "w_0050_pct": 90,
+            "w_spy_pct": 10,
+            "median_xirr_pct": 9.0,
+            "median_mdd_pct": -29.21,
+            "prob_mdd_lt_50pct": 24.07,
+            "mar_ratio": 0.31
+          },
+          {
+            "split": "0050 100% / SPY 0%",
+            "w_0050_pct": 100,
+            "w_spy_pct": 0,
+            "median_xirr_pct": 8.45,
+            "median_mdd_pct": -31.15,
+            "prob_mdd_lt_50pct": 27.78,
+            "mar_ratio": 0.27
+          }
+        ]
+      }
+    },
+    "full_history_tax_and_min15_fee_audit": {
+      "r1_50_50_0pct_tax_03fx": {
+        "xirr_pct": 12.64,
+        "final_value_twd": 26498416.0,
+        "nhi_paid_twd": 37888.0,
+        "nhi_trigger_count": 27,
+        "us_withholding_paid_twd": 269933.0
+      },
+      "r1_50_50_12pct_tax_03fx": {
+        "xirr_pct": 12.41,
+        "final_value_twd": 25404080.0,
+        "nhi_paid_twd": 36091.0,
+        "tw_income_tax_paid_twd": 219207.0
+      },
+      "r1_50_50_with_15usd_min_fee": {
+        "xirr_pct": 12.46,
+        "xirr_loss_from_15usd_fee_pp": -0.18,
+        "final_value_twd": 25642196.0
+      },
+      "r2_60_40_with_15usd_min_fee": {
+        "no_min_fee_xirr_pct": 10.3,
+        "with_15usd_min_fee_xirr_pct": 10.01,
+        "xirr_loss_pp": -0.29
+      },
+      "r3_m3b_with_15usd_min_fee": {
+        "no_min_fee_xirr_pct": 18.16,
+        "with_15usd_min_fee_xirr_pct": 17.57,
+        "xirr_loss_pp": -0.59
+      }
+    },
+    "optimal_tw_us_split_finding": {
+      "is_50_50_still_optimal": false,
+      "best_unconstrained_split": "100% 0050 / 0% SPY（但跌破 -50% 機率高達 29.6%，違反一般人風險上限）",
+      "best_risk_compliant_split_id": "W_0_100",
+      "best_risk_compliant_median_xirr_pct": 10.74,
+      "r1_50_50_median_xirr_pct": 9.97
+    },
+    "summary_metrics": {
+      "r1_median_regret_vs_survivable_pp": 0.58,
+      "r1_median_regret_vs_unconstrained_pp": 1.48,
+      "r1_rank_survivable_pct": 85.71,
+      "r1_rank_unconstrained_pct": 54.55,
+      "r1_prob_mdd_lt_50pct": 1.23,
+      "r2_prob_mdd_lt_30pct": 11.73,
+      "r3_m3b_prob_mdd_lt_60pct": 7.72,
+      "r3_m3a_prob_mdd_lt_60pct": 0.0,
+      "r4_2x_plus_prob_mdd_lt_50pct": 87.04,
+      "r5_after_12pct_tax_bear_median_months": 20.19
+    }
+  },
+  "gate_5_behavior": {
+    "cohorts_tested": 107,
+    "summary_by_strategy": {
+      "R1": {
+        "label": "R1 一般人：50% 0050 + 50% SPY（月定投，不平衡）",
+        "control_median_xirr_pct": 10.11,
+        "control_mean_xirr_pct": 10.1,
+        "A_pause_6m": {
+          "mean_xirr_pct": 9.82,
+          "median_xirr_pct": 10.11,
+          "mean_xirr_loss_pp": -0.28,
+          "worst_xirr_loss_pp": -1.06,
+          "trigger_rate_pct": 44.86,
+          "prob_mdd_worse_cap_pct": 0.0
+        },
+        "B_panic_sell_20pct": {
+          "mean_xirr_pct": 9.82,
+          "median_xirr_pct": 10.11,
+          "mean_xirr_loss_pp": -0.28,
+          "worst_xirr_loss_pp": -1.22,
+          "trigger_rate_pct": 35.51,
+          "prob_mdd_worse_cap_pct": 0.0
+        },
+        "C_unemployed_12m_withdraw": {
+          "mean_xirr_pct": 8.71,
+          "median_xirr_pct": 9.99,
+          "mean_xirr_loss_pp": -1.39,
+          "worst_xirr_loss_pp": -5.71,
+          "trigger_rate_pct": 54.21,
+          "prob_mdd_worse_cap_pct": 54.21,
+          "shortfall_rate_pct": 31.78
+        },
+        "average_loss_across_ABC_pp": 0.65
+      },
+      "R2": {
+        "label": "R2 保守：60% 0050 + 40% 美國短債（年平衡）",
+        "control_median_xirr_pct": 6.4,
+        "control_mean_xirr_pct": 7.6,
+        "A_pause_6m": {
+          "mean_xirr_pct": 7.6,
+          "median_xirr_pct": 6.4,
+          "mean_xirr_loss_pp": 0.0,
+          "worst_xirr_loss_pp": 0.0,
+          "trigger_rate_pct": 0.0,
+          "prob_mdd_worse_cap_pct": 0.0
+        },
+        "B_panic_sell_20pct": {
+          "mean_xirr_pct": 7.6,
+          "median_xirr_pct": 6.4,
+          "mean_xirr_loss_pp": 0.0,
+          "worst_xirr_loss_pp": 0.0,
+          "trigger_rate_pct": 0.0,
+          "prob_mdd_worse_cap_pct": 0.0
+        },
+        "C_unemployed_12m_withdraw": {
+          "mean_xirr_pct": 6.79,
+          "median_xirr_pct": 5.65,
+          "mean_xirr_loss_pp": -0.81,
+          "worst_xirr_loss_pp": -3.0,
+          "trigger_rate_pct": 54.21,
+          "prob_mdd_worse_cap_pct": 54.21,
+          "shortfall_rate_pct": 28.04
+        },
+        "average_loss_across_ABC_pp": 0.27
+      },
+      "R3_M3b": {
+        "label": "R3 (M3b)：40% 0050 + 40% QQQ + 20% TQQQ（年平衡，1.4x）",
+        "control_median_xirr_pct": 18.73,
+        "control_mean_xirr_pct": 17.45,
+        "A_pause_6m": {
+          "mean_xirr_pct": 16.66,
+          "median_xirr_pct": 17.67,
+          "mean_xirr_loss_pp": -0.79,
+          "worst_xirr_loss_pp": -2.26,
+          "trigger_rate_pct": 88.79,
+          "prob_mdd_worse_cap_pct": 13.08
+        },
+        "B_panic_sell_20pct": {
+          "mean_xirr_pct": 17.18,
+          "median_xirr_pct": 18.73,
+          "mean_xirr_loss_pp": -0.27,
+          "worst_xirr_loss_pp": -1.13,
+          "trigger_rate_pct": 45.79,
+          "prob_mdd_worse_cap_pct": 0.0
+        },
+        "C_unemployed_12m_withdraw": {
+          "mean_xirr_pct": 15.2,
+          "median_xirr_pct": 17.87,
+          "mean_xirr_loss_pp": -2.25,
+          "worst_xirr_loss_pp": -8.64,
+          "trigger_rate_pct": 54.21,
+          "prob_mdd_worse_cap_pct": 54.21,
+          "shortfall_rate_pct": 33.64
+        },
+        "average_loss_across_ABC_pp": 1.1
+      },
+      "R3_M3a": {
+        "label": "R3 (M3a)：70% 0050 + 30% 00631L（200MA濾網，1.3x）",
+        "control_median_xirr_pct": 10.55,
+        "control_mean_xirr_pct": 12.59,
+        "A_pause_6m": {
+          "mean_xirr_pct": 12.07,
+          "median_xirr_pct": 10.31,
+          "mean_xirr_loss_pp": -0.51,
+          "worst_xirr_loss_pp": -1.78,
+          "trigger_rate_pct": 85.98,
+          "prob_mdd_worse_cap_pct": 12.15
+        },
+        "B_panic_sell_20pct": {
+          "mean_xirr_pct": 12.33,
+          "median_xirr_pct": 10.55,
+          "mean_xirr_loss_pp": -0.25,
+          "worst_xirr_loss_pp": -1.08,
+          "trigger_rate_pct": 44.86,
+          "prob_mdd_worse_cap_pct": 0.0
+        },
+        "C_unemployed_12m_withdraw": {
+          "mean_xirr_pct": 10.69,
+          "median_xirr_pct": 10.31,
+          "mean_xirr_loss_pp": -1.9,
+          "worst_xirr_loss_pp": -6.94,
+          "trigger_rate_pct": 54.21,
+          "prob_mdd_worse_cap_pct": 54.21,
+          "shortfall_rate_pct": 32.71
+        },
+        "average_loss_across_ABC_pp": 0.89
+      },
+      "M2a": {
+        "label": "純台股對照：100% 0050",
+        "control_median_xirr_pct": 9.02,
+        "control_mean_xirr_pct": 10.69,
+        "A_pause_6m": {
+          "mean_xirr_pct": 10.37,
+          "median_xirr_pct": 8.93,
+          "mean_xirr_loss_pp": -0.33,
+          "worst_xirr_loss_pp": -1.18,
+          "trigger_rate_pct": 57.94,
+          "prob_mdd_worse_cap_pct": 37.38
+        },
+        "B_panic_sell_20pct": {
+          "mean_xirr_pct": 10.38,
+          "median_xirr_pct": 8.75,
+          "mean_xirr_loss_pp": -0.32,
+          "worst_xirr_loss_pp": -1.27,
+          "trigger_rate_pct": 42.99,
+          "prob_mdd_worse_cap_pct": 15.89
+        },
+        "C_unemployed_12m_withdraw": {
+          "mean_xirr_pct": 9.01,
+          "median_xirr_pct": 8.57,
+          "mean_xirr_loss_pp": -1.68,
+          "worst_xirr_loss_pp": -6.01,
+          "trigger_rate_pct": 54.21,
+          "prob_mdd_worse_cap_pct": 54.21,
+          "shortfall_rate_pct": 31.78
+        },
+        "average_loss_across_ABC_pp": 0.78
+      },
+      "R4_M4": {
+        "label": "R4 對照 (M4)：100% 00631L（2.0x）",
+        "control_median_xirr_pct": 16.73,
+        "control_mean_xirr_pct": 18.44,
+        "A_pause_6m": {
+          "mean_xirr_pct": 17.13,
+          "median_xirr_pct": 15.13,
+          "mean_xirr_loss_pp": -1.31,
+          "worst_xirr_loss_pp": -4.1,
+          "trigger_rate_pct": 100.0,
+          "prob_mdd_worse_cap_pct": 91.59
+        },
+        "B_panic_sell_20pct": {
+          "mean_xirr_pct": 17.36,
+          "median_xirr_pct": 16.5,
+          "mean_xirr_loss_pp": -1.08,
+          "worst_xirr_loss_pp": -4.57,
+          "trigger_rate_pct": 91.59,
+          "prob_mdd_worse_cap_pct": 76.64
+        },
+        "C_unemployed_12m_withdraw": {
+          "mean_xirr_pct": 14.52,
+          "median_xirr_pct": 16.5,
+          "mean_xirr_loss_pp": -3.92,
+          "worst_xirr_loss_pp": -15.59,
+          "trigger_rate_pct": 54.21,
+          "prob_mdd_worse_cap_pct": 91.59,
+          "shortfall_rate_pct": 39.25
+        },
+        "average_loss_across_ABC_pp": 2.11
+      }
+    },
+    "most_human_proof_strategy": {
+      "id": "R2",
+      "label": "R2 保守：60% 0050 + 40% 美國短債（年平衡）",
+      "average_xirr_loss_pp": 0.27
+    },
+    "summary_metrics": {
+      "r1_behav_median_regret_pp": 0.33,
+      "r1_behav_rank_pct": 33.33,
+      "r1_prob_mdd_lt_50pct": 18.07,
+      "r2_prob_mdd_lt_30pct": 18.07,
+      "r3_m3b_prob_mdd_lt_60pct": 22.43,
+      "r3_m3a_prob_mdd_lt_60pct": 22.12,
+      "r4_m4_prob_mdd_lt_50pct": 86.6,
+      "r5_panic_sell_20pct_bear_median_months": 10.85
+    }
+  },
+  "gate_6_bootstrap": {
+    "schemes": {
+      "block_1y": {
+        "label": "Block Bootstrap（區塊長度 1 年 = 12 個月）",
+        "n_paths": 5000,
+        "target_block_months": 12,
+        "realized_mean_block_months": 12.0,
+        "r1_median_xirr_pct": 10.15,
+        "r1_prob_mdd_lt_50pct": 2.58,
+        "r1_median_regret_pp": 2.53,
+        "r1_rank_pct": 46.67,
+        "r2_median_xirr_pct": 8.08,
+        "r2_prob_mdd_lt_30pct": 4.4,
+        "r3_m3b_median_xirr_pct": 14.53,
+        "r3_m3b_prob_mdd_lt_60pct": 19.92,
+        "r3_m3a_median_xirr_pct": 12.72,
+        "r3_m3a_prob_mdd_lt_60pct": 13.38,
+        "r4_2x_plus_prob_mdd_lt_50pct": 91.65,
+        "r5_bear_median_months": 12.68,
+        "top_5_unleveraged_ranking": [
+          {
+            "id": "W_100_0",
+            "median_xirr_pct": 11.41
+          },
+          {
+            "id": "W_90_10",
+            "median_xirr_pct": 11.2
+          },
+          {
+            "id": "W_80_20",
+            "median_xirr_pct": 10.99
+          },
+          {
+            "id": "W_70_30",
+            "median_xirr_pct": 10.72
+          },
+          {
+            "id": "W_60_40",
+            "median_xirr_pct": 10.43
+          }
+        ]
+      },
+      "block_3y": {
+        "label": "Block Bootstrap（區塊長度 3 年 = 36 個月）",
+        "n_paths": 5000,
+        "target_block_months": 36,
+        "realized_mean_block_months": 30.0,
+        "r1_median_xirr_pct": 9.81,
+        "r1_prob_mdd_lt_50pct": 1.44,
+        "r1_median_regret_pp": 1.93,
+        "r1_rank_pct": 46.67,
+        "r2_median_xirr_pct": 7.22,
+        "r2_prob_mdd_lt_30pct": 4.38,
+        "r3_m3b_median_xirr_pct": 14.84,
+        "r3_m3b_prob_mdd_lt_60pct": 23.6,
+        "r3_m3a_median_xirr_pct": 11.61,
+        "r3_m3a_prob_mdd_lt_60pct": 14.56,
+        "r4_2x_plus_prob_mdd_lt_50pct": 87.53,
+        "r5_bear_median_months": 15.64,
+        "top_5_unleveraged_ranking": [
+          {
+            "id": "W_100_0",
+            "median_xirr_pct": 10.24
+          },
+          {
+            "id": "W_90_10",
+            "median_xirr_pct": 10.15
+          },
+          {
+            "id": "W_80_20",
+            "median_xirr_pct": 10.07
+          },
+          {
+            "id": "W_70_30",
+            "median_xirr_pct": 9.98
+          },
+          {
+            "id": "W_60_40",
+            "median_xirr_pct": 9.93
+          }
+        ]
+      },
+      "block_5y": {
+        "label": "Block Bootstrap（區塊長度 5 年 = 60 個月）",
+        "n_paths": 5000,
+        "target_block_months": 60,
+        "realized_mean_block_months": 60.0,
+        "r1_median_xirr_pct": 10.45,
+        "r1_prob_mdd_lt_50pct": 1.12,
+        "r1_median_regret_pp": 1.6,
+        "r1_rank_pct": 26.67,
+        "r2_median_xirr_pct": 7.13,
+        "r2_prob_mdd_lt_30pct": 1.62,
+        "r3_m3b_median_xirr_pct": 16.65,
+        "r3_m3b_prob_mdd_lt_60pct": 21.08,
+        "r3_m3a_median_xirr_pct": 12.05,
+        "r3_m3a_prob_mdd_lt_60pct": 16.82,
+        "r4_2x_plus_prob_mdd_lt_50pct": 85.46,
+        "r5_bear_median_months": 19.34,
+        "top_5_unleveraged_ranking": [
+          {
+            "id": "W_30_70",
+            "median_xirr_pct": 10.5
+          },
+          {
+            "id": "W_40_60",
+            "median_xirr_pct": 10.49
+          },
+          {
+            "id": "R1_ANN",
+            "median_xirr_pct": 10.47
+          },
+          {
+            "id": "R1",
+            "median_xirr_pct": 10.45
+          },
+          {
+            "id": "W_20_80",
+            "median_xirr_pct": 10.41
+          }
+        ]
+      },
+      "stationary_3y": {
+        "label": "Stationary Bootstrap（幾何隨機區塊，平均長度 3 年 = 36 個月）",
+        "n_paths": 5000,
+        "target_block_months": 36,
+        "realized_mean_block_months": 25.66,
+        "r1_median_xirr_pct": 10.35,
+        "r1_prob_mdd_lt_50pct": 3.64,
+        "r1_median_regret_pp": 2.26,
+        "r1_rank_pct": 46.67,
+        "r2_median_xirr_pct": 8.03,
+        "r2_prob_mdd_lt_30pct": 11.52,
+        "r3_m3b_median_xirr_pct": 15.55,
+        "r3_m3b_prob_mdd_lt_60pct": 32.66,
+        "r3_m3a_median_xirr_pct": 12.65,
+        "r3_m3a_prob_mdd_lt_60pct": 24.68,
+        "r4_2x_plus_prob_mdd_lt_50pct": 90.93,
+        "r5_bear_median_months": 12.32,
+        "top_5_unleveraged_ranking": [
+          {
+            "id": "W_100_0",
+            "median_xirr_pct": 11.12
+          },
+          {
+            "id": "W_90_10",
+            "median_xirr_pct": 10.97
+          },
+          {
+            "id": "W_80_20",
+            "median_xirr_pct": 10.82
+          },
+          {
+            "id": "W_70_30",
+            "median_xirr_pct": 10.66
+          },
+          {
+            "id": "W_60_40",
+            "median_xirr_pct": 10.48
+          }
+        ]
+      }
+    },
+    "multiple_comparison_90ci": {
+      "aggressive_60_top5": {
+        "rank_1_id": "AGG_1_M3b",
+        "rank_1_label": "第1名：0050 40% + QQQ 40% + TQQQ 20% (年平衡)",
+        "rank_1_median_xirr_pct": 15.55,
+        "comparisons_2_to_5": [
+          {
+            "rank": 2,
+            "id": "AGG_2",
+            "label": "第2名：0050 30% + QQQ 50% + TQQQ 20% (年平衡)",
+            "median_xirr_pct": 15.56,
+            "median_diff_vs_rank1_pp": 0.08,
+            "ci90_low_pp": -0.87,
+            "ci90_high_pp": 1.63,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          },
+          {
+            "rank": 3,
+            "id": "AGG_3",
+            "label": "第3名：0050 20% + QQQ 60% + TQQQ 20% (年平衡)",
+            "median_xirr_pct": 15.56,
+            "median_diff_vs_rank1_pp": 0.18,
+            "ci90_low_pp": -1.73,
+            "ci90_high_pp": 3.35,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          },
+          {
+            "rank": 4,
+            "id": "AGG_4",
+            "label": "第4名：00631L 10% + SPY 10% + QQQ 60% + TQQQ 20% (季+濾網)",
+            "median_xirr_pct": 15.87,
+            "median_diff_vs_rank1_pp": -0.37,
+            "ci90_low_pp": -2.9,
+            "ci90_high_pp": 2.99,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          },
+          {
+            "rank": 5,
+            "id": "AGG_5",
+            "label": "第5名：00631L 30% + SPY 10% + QQQ 40% + TQQQ 20% (濾網)",
+            "median_xirr_pct": 14.87,
+            "median_diff_vs_rank1_pp": -0.06,
+            "ci90_low_pp": -7.31,
+            "ci90_high_pp": 3.55,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          }
+        ],
+        "practically_equal_group": [
+          "第1名：0050 40% + QQQ 40% + TQQQ 20% (年平衡)",
+          "第2名：0050 30% + QQQ 50% + TQQQ 20% (年平衡)",
+          "第3名：0050 20% + QQQ 60% + TQQQ 20% (年平衡)",
+          "第4名：00631L 10% + SPY 10% + QQQ 60% + TQQQ 20% (季+濾網)",
+          "第5名：00631L 30% + SPY 10% + QQQ 40% + TQQQ 20% (濾網)"
+        ]
+      },
+      "general_50_grid_top5": {
+        "rank_1_id": "GEN_1_QQQ_MIX",
+        "rank_1_label": "網格-50%第1名：0050 10% + SPY 10% + QQQ 70% + TQQQ 10% (濾網)",
+        "rank_1_median_xirr_pct": 12.69,
+        "comparisons_2_to_5": [
+          {
+            "rank": 2,
+            "id": "GEN_2",
+            "label": "網格-50%第2名：SPY 20% + QQQ 70% + TQQQ 10% (濾網)",
+            "median_xirr_pct": 12.33,
+            "median_diff_vs_rank1_pp": 0.3,
+            "ci90_low_pp": -0.34,
+            "ci90_high_pp": 1.8,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          },
+          {
+            "rank": 3,
+            "id": "GEN_3",
+            "label": "網格-50%第3名：0050 10% + SPY 20% + QQQ 60% + TQQQ 10% (濾網)",
+            "median_xirr_pct": 12.39,
+            "median_diff_vs_rank1_pp": 0.32,
+            "ci90_low_pp": -0.65,
+            "ci90_high_pp": 0.73,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          },
+          {
+            "rank": 4,
+            "id": "GEN_4",
+            "label": "網格-50%第4名：00631L 10% + QQQ 90% (季+濾網)",
+            "median_xirr_pct": 13.43,
+            "median_diff_vs_rank1_pp": -0.55,
+            "ci90_low_pp": -2.02,
+            "ci90_high_pp": 4.5,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          },
+          {
+            "rank": 5,
+            "id": "GEN_5_R1",
+            "label": "穩健推薦 R1：0050 50% + SPY 50% (不平衡)",
+            "median_xirr_pct": 10.35,
+            "median_diff_vs_rank1_pp": 1.88,
+            "ci90_low_pp": -7.86,
+            "ci90_high_pp": 12.0,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          }
+        ],
+        "practically_equal_group": [
+          "網格-50%第1名：0050 10% + SPY 10% + QQQ 70% + TQQQ 10% (濾網)",
+          "網格-50%第2名：SPY 20% + QQQ 70% + TQQQ 10% (濾網)",
+          "網格-50%第3名：0050 10% + SPY 20% + QQQ 60% + TQQQ 10% (濾網)",
+          "網格-50%第4名：00631L 10% + QQQ 90% (季+濾網)",
+          "穩健推薦 R1：0050 50% + SPY 50% (不平衡)"
+        ]
+      },
+      "pure_1x_tw_us_splits_top5": {
+        "rank_1_id": "W_100_0",
+        "rank_1_label": "第1名：100% 0050",
+        "rank_1_median_xirr_pct": 11.12,
+        "comparisons_2_to_5": [
+          {
+            "rank": 2,
+            "id": "W_90_10",
+            "label": "第2名：90% 0050 + 10% SPY",
+            "median_xirr_pct": 10.97,
+            "median_diff_vs_rank1_pp": 0.33,
+            "ci90_low_pp": -0.53,
+            "ci90_high_pp": 1.06,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          },
+          {
+            "rank": 3,
+            "id": "W_80_20",
+            "label": "第3名：80% 0050 + 20% SPY",
+            "median_xirr_pct": 10.82,
+            "median_diff_vs_rank1_pp": 0.66,
+            "ci90_low_pp": -1.04,
+            "ci90_high_pp": 2.17,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          },
+          {
+            "rank": 4,
+            "id": "W_70_30",
+            "label": "第4名：70% 0050 + 30% SPY",
+            "median_xirr_pct": 10.66,
+            "median_diff_vs_rank1_pp": 1.0,
+            "ci90_low_pp": -1.55,
+            "ci90_high_pp": 3.36,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          },
+          {
+            "rank": 5,
+            "id": "R1",
+            "label": "第5名對照：50% 0050 + 50% SPY (R1)",
+            "median_xirr_pct": 10.35,
+            "median_diff_vs_rank1_pp": 1.69,
+            "ci90_low_pp": -2.51,
+            "ci90_high_pp": 6.01,
+            "statistically_indistinguishable_90ci": true,
+            "conclusion": "與第1名差距落在 90% 信賴區間內，實質上一樣好"
+          }
+        ],
+        "practically_equal_group": [
+          "第1名：100% 0050",
+          "第2名：90% 0050 + 10% SPY",
+          "第3名：80% 0050 + 20% SPY",
+          "第4名：70% 0050 + 30% SPY",
+          "第5名對照：50% 0050 + 50% SPY (R1)"
+        ]
+      }
+    },
+    "summary_metrics": {
+      "r1_max_median_regret_pp": 2.53,
+      "r1_worst_rank_pct": 46.67,
+      "r1_max_prob_mdd_lt_50pct": 3.64,
+      "r2_max_prob_mdd_lt_30pct": 11.52,
+      "r3_m3b_max_prob_mdd_lt_60pct": 32.66,
+      "r3_m3a_max_prob_mdd_lt_60pct": 24.68,
+      "r4_min_prob_mdd_lt_50pct": 85.46,
+      "r5_bootstrap_median_months": 14.16
+    }
+  },
+  "gate_7_sensitivity": {
+    "perturbations": {
+      "R1": [
+        {
+          "variant": "基準：50/50・不平衡・月初",
+          "xirr_pct": 12.69,
+          "max_drawdown_pct": -48.92
+        },
+        {
+          "variant": "比例 +10% 台股：60% 0050 + 40% SPY",
+          "xirr_pct": 13.02,
+          "max_drawdown_pct": -49.87
+        },
+        {
+          "variant": "比例 -10% 台股：40% 0050 + 60% SPY",
+          "xirr_pct": 12.33,
+          "max_drawdown_pct": -48.03
+        },
+        {
+          "variant": "再平衡：每月再平衡",
+          "xirr_pct": 12.69,
+          "max_drawdown_pct": -48.25
+        },
+        {
+          "variant": "再平衡：每季再平衡",
+          "xirr_pct": 12.65,
+          "max_drawdown_pct": -48.14
+        },
+        {
+          "variant": "再平衡：每年再平衡",
+          "xirr_pct": 12.64,
+          "max_drawdown_pct": -48.55
+        },
+        {
+          "variant": "扣款日：月中（15日）",
+          "xirr_pct": 12.7,
+          "max_drawdown_pct": -48.64
+        },
+        {
+          "variant": "扣款日：月底（最後交易日）",
+          "xirr_pct": 12.72,
+          "max_drawdown_pct": -48.88
+        }
+      ],
+      "R2": [
+        {
+          "variant": "基準：60/40・每年再平衡・月初",
+          "xirr_pct": 10.31,
+          "max_drawdown_pct": -28.77
+        },
+        {
+          "variant": "比例 +10% 股票：70% 0050 + 30% 短債",
+          "xirr_pct": 11.38,
+          "max_drawdown_pct": -35.25
+        },
+        {
+          "variant": "比例 -10% 股票：50% 0050 + 50% 短債",
+          "xirr_pct": 9.17,
+          "max_drawdown_pct": -22.05
+        },
+        {
+          "variant": "再平衡：每月再平衡",
+          "xirr_pct": 10.03,
+          "max_drawdown_pct": -31.88
+        },
+        {
+          "variant": "再平衡：每季再平衡",
+          "xirr_pct": 10.18,
+          "max_drawdown_pct": -31.03
+        },
+        {
+          "variant": "再平衡：不再平衡",
+          "xirr_pct": 11.84,
+          "max_drawdown_pct": -32.9
+        },
+        {
+          "variant": "扣款日：月中（15日）",
+          "xirr_pct": 10.43,
+          "max_drawdown_pct": -28.31
+        },
+        {
+          "variant": "扣款日：月底（最後交易日）",
+          "xirr_pct": 10.35,
+          "max_drawdown_pct": -30.08
+        }
+      ],
+      "R3_M3b": [
+        {
+          "variant": "基準：40/40/20・每年再平衡・無濾網・月初",
+          "xirr_pct": 18.18,
+          "max_drawdown_pct": -59.77
+        },
+        {
+          "variant": "TQQQ +10%：35% 0050 + 35% QQQ + 30% TQQQ",
+          "xirr_pct": 19.75,
+          "max_drawdown_pct": -64.45
+        },
+        {
+          "variant": "TQQQ -10%：45% 0050 + 45% QQQ + 10% TQQQ",
+          "xirr_pct": 16.4,
+          "max_drawdown_pct": -54.85
+        },
+        {
+          "variant": "台美微調：50% 0050 + 30% QQQ + 20% TQQQ",
+          "xirr_pct": 18.19,
+          "max_drawdown_pct": -60.31
+        },
+        {
+          "variant": "台美微調：30% 0050 + 50% QQQ + 20% TQQQ",
+          "xirr_pct": 18.15,
+          "max_drawdown_pct": -59.22
+        },
+        {
+          "variant": "再平衡：每月再平衡",
+          "xirr_pct": 17.71,
+          "max_drawdown_pct": -63.22
+        },
+        {
+          "variant": "再平衡：每季再平衡",
+          "xirr_pct": 17.78,
+          "max_drawdown_pct": -62.26
+        },
+        {
+          "variant": "再平衡：不再平衡（⚠️脆弱度關鍵測試）",
+          "xirr_pct": 18.32,
+          "max_drawdown_pct": -66.71
+        },
+        {
+          "variant": "扣款日：月中（15日）",
+          "xirr_pct": 17.94,
+          "max_drawdown_pct": -60.37
+        },
+        {
+          "variant": "扣款日：月底（最後交易日）",
+          "xirr_pct": 17.76,
+          "max_drawdown_pct": -61.37
+        },
+        {
+          "variant": "加開 150 日線濾網",
+          "xirr_pct": 17.19,
+          "max_drawdown_pct": -59.46
+        },
+        {
+          "variant": "加開 200 日線濾網",
+          "xirr_pct": 17.12,
+          "max_drawdown_pct": -59.38
+        },
+        {
+          "variant": "加開 250 日線濾網",
+          "xirr_pct": 17.11,
+          "max_drawdown_pct": -59.31
+        }
+      ],
+      "R3_M3a": [
+        {
+          "variant": "基準：70/30・不平衡・200日線・月初",
+          "xirr_pct": 16.18,
+          "max_drawdown_pct": -58.45
+        },
+        {
+          "variant": "正二 +10%：60% 0050 + 40% 00631L (200MA)",
+          "xirr_pct": 16.71,
+          "max_drawdown_pct": -60.09
+        },
+        {
+          "variant": "正二 -10%：80% 0050 + 20% 00631L (200MA)",
+          "xirr_pct": 15.6,
+          "max_drawdown_pct": -56.75
+        },
+        {
+          "variant": "再平衡：每月再平衡",
+          "xirr_pct": 16.64,
+          "max_drawdown_pct": -62.71
+        },
+        {
+          "variant": "再平衡：每季再平衡",
+          "xirr_pct": 16.71,
+          "max_drawdown_pct": -61.94
+        },
+        {
+          "variant": "再平衡：每年再平衡",
+          "xirr_pct": 16.51,
+          "max_drawdown_pct": -62.84
+        },
+        {
+          "variant": "扣款日：月中（15日）",
+          "xirr_pct": 16.33,
+          "max_drawdown_pct": -58.81
+        },
+        {
+          "variant": "扣款日：月底（最後交易日）",
+          "xirr_pct": 16.22,
+          "max_drawdown_pct": -58.5
+        },
+        {
+          "variant": "濾網改 150 日線",
+          "xirr_pct": 16.23,
+          "max_drawdown_pct": -58.76
+        },
+        {
+          "variant": "濾網改 250 日線",
+          "xirr_pct": 16.22,
+          "max_drawdown_pct": -58.88
+        },
+        {
+          "variant": "關閉濾網（無濾網）",
+          "xirr_pct": 17.76,
+          "max_drawdown_pct": -64.64
+        }
+      ]
+    },
+    "fragility_warnings": [
+      "R2 在微調參數時跌破 -30% 風控上限之情境：['比例 +10% 股票：70% 0050 + 30% 短債', '再平衡：每月再平衡', '再平衡：每季再平衡', '再平衡：不再平衡', '扣款日：月底（最後交易日）']",
+      "R2 對參數敏感：XIRR 全距達 2.67 個百分點（9.17% ～ 11.84%）",
+      "R3_M3b 在微調參數時跌破 -60% 風控上限之情境：['TQQQ +10%：35% 0050 + 35% QQQ + 30% TQQQ', '台美微調：50% 0050 + 30% QQQ + 20% TQQQ', '再平衡：每月再平衡', '再平衡：每季再平衡', '再平衡：不再平衡（⚠️脆弱度關鍵測試）', '扣款日：月中（15日）', '扣款日：月底（最後交易日）']",
+      "R3_M3b 對參數敏感：XIRR 全距達 3.35 個百分點（16.40% ～ 19.75%）",
+      "R3_M3a 在微調參數時跌破 -60% 風控上限之情境：['正二 +10%：60% 0050 + 40% 00631L (200MA)', '再平衡：每月再平衡', '再平衡：每季再平衡', '再平衡：每年再平衡', '關閉濾網（無濾網）']",
+      "R3_M3a 對參數敏感：XIRR 全距達 2.16 個百分點（15.60% ～ 17.76%）"
+    ],
+    "r5_threshold_sensitivity": [
+      {
+        "param": "熊市門檻 -18%",
+        "median_months": 20.18
+      },
+      {
+        "param": "熊市門檻 -20%",
+        "median_months": 20.18
+      },
+      {
+        "param": "熊市門檻 -22%",
+        "median_months": 26.98
+      }
+    ],
+    "summary_metrics": {
+      "r1_pool_stability": {
+        "candidate_count": 15,
+        "r1_median_regret_pp": 1.5,
+        "r1_max_regret_pp": 1.5,
+        "r1_rank": 7,
+        "r1_rank_pct": 46.67,
+        "top_3_candidates": [
+          {
+            "id": "W_100_0",
+            "median_xirr_pct": 14.19
+          },
+          {
+            "id": "W_90_10",
+            "median_xirr_pct": 13.93
+          },
+          {
+            "id": "W_80_20",
+            "median_xirr_pct": 13.64
+          }
+        ]
+      },
+      "r1_prob_mdd_lt_50pct": 0.0,
+      "r2_prob_mdd_lt_30pct": 62.5,
+      "r3_m3b_prob_mdd_lt_60pct": 53.85,
+      "r3_m3a_prob_mdd_lt_60pct": 45.45,
+      "r4_2x_plus_prob_mdd_lt_50pct": 100.0,
+      "r5_median_months_across_thresholds": 20.18
+    }
+  },
+  "gate_8_life_stage": {
+    "lump_sum_vs_dca_1m_twd": {
+      "historical_rolling_10y": {
+        "R1": {
+          "label": "R1 (50% 0050 + 50% SPY)",
+          "cohorts_count": 213,
+          "lump_sum_beats_12m_pct": 68.08,
+          "lump_sum_beats_24m_pct": 69.48,
+          "schedules": {
+            "lump_sum_1m": {
+              "label": "一次全部投入",
+              "median_cagr_pct": 7.9,
+              "p5_worst_cagr_pct": 0.51,
+              "median_final_twd": 2139305.0,
+              "worst_mdd_pct": -50.52,
+              "median_mdd_pct": -45.48
+            },
+            "dca_12m": {
+              "label": "分 12 個月投入",
+              "median_cagr_pct": 8.18,
+              "p5_worst_cagr_pct": 1.12,
+              "median_final_twd": 2194521.0,
+              "worst_mdd_pct": -50.52,
+              "median_mdd_pct": -35.31
+            },
+            "dca_24m": {
+              "label": "分 24 個月投入",
+              "median_cagr_pct": 9.16,
+              "p5_worst_cagr_pct": 2.5,
+              "median_final_twd": 2401543.0,
+              "worst_mdd_pct": -50.52,
+              "median_mdd_pct": -21.37
+            }
+          }
+        },
+        "R2": {
+          "label": "R2 (60% 0050 + 40% 短債)",
+          "cohorts_count": 213,
+          "lump_sum_beats_12m_pct": 66.2,
+          "lump_sum_beats_24m_pct": 66.67,
+          "schedules": {
+            "lump_sum_1m": {
+              "label": "一次全部投入",
+              "median_cagr_pct": 5.96,
+              "p5_worst_cagr_pct": 3.01,
+              "median_final_twd": 1783689.0,
+              "worst_mdd_pct": -39.98,
+              "median_mdd_pct": -29.07
+            },
+            "dca_12m": {
+              "label": "分 12 個月投入",
+              "median_cagr_pct": 5.77,
+              "p5_worst_cagr_pct": 3.5,
+              "median_final_twd": 1752295.0,
+              "worst_mdd_pct": -38.99,
+              "median_mdd_pct": -21.25
+            },
+            "dca_24m": {
+              "label": "分 24 個月投入",
+              "median_cagr_pct": 5.5,
+              "p5_worst_cagr_pct": 3.31,
+              "median_final_twd": 1708941.0,
+              "worst_mdd_pct": -33.21,
+              "median_mdd_pct": -12.56
+            }
+          }
+        },
+        "R3_M3b": {
+          "label": "R3b (40/40/20 1.4x)",
+          "cohorts_count": 213,
+          "lump_sum_beats_12m_pct": 62.44,
+          "lump_sum_beats_24m_pct": 72.3,
+          "schedules": {
+            "lump_sum_1m": {
+              "label": "一次全部投入",
+              "median_cagr_pct": 14.94,
+              "p5_worst_cagr_pct": -5.1,
+              "median_final_twd": 4025728.0,
+              "worst_mdd_pct": -86.02,
+              "median_mdd_pct": -54.74
+            },
+            "dca_12m": {
+              "label": "分 12 個月投入",
+              "median_cagr_pct": 17.08,
+              "p5_worst_cagr_pct": -5.08,
+              "median_final_twd": 4838915.0,
+              "worst_mdd_pct": -84.45,
+              "median_mdd_pct": -43.54
+            },
+            "dca_24m": {
+              "label": "分 24 個月投入",
+              "median_cagr_pct": 16.74,
+              "p5_worst_cagr_pct": -0.27,
+              "median_final_twd": 4702208.0,
+              "worst_mdd_pct": -79.2,
+              "median_mdd_pct": -39.44
+            }
+          }
+        }
+      },
+      "intl_crash_peaks": {
+        "JP_1989_10Y": {
+          "label": "日本 1989 高點 10 年（兩市皆走日經）",
+          "R1_schedules": {
+            "lump_sum_1m": {
+              "label": "一次全部投入",
+              "final_value_twd": 552707.0,
+              "cagr_pct": -5.76,
+              "max_drawdown_pct": -61.47
+            },
+            "dca_12m": {
+              "label": "分 12 個月投入",
+              "final_value_twd": 739124.0,
+              "cagr_pct": -2.98,
+              "max_drawdown_pct": -48.48
+            },
+            "dca_24m": {
+              "label": "分 24 個月投入",
+              "final_value_twd": 809319.0,
+              "cagr_pct": -2.09,
+              "max_drawdown_pct": -43.63
+            }
+          }
+        },
+        "JP_1989_20Y": {
+          "label": "日本 1989 高點 20 年（兩市皆走日經）",
+          "R1_schedules": {
+            "lump_sum_1m": {
+              "label": "一次全部投入",
+              "final_value_twd": 349991.0,
+              "cagr_pct": -5.11,
+              "max_drawdown_pct": -76.12
+            },
+            "dca_12m": {
+              "label": "分 12 個月投入",
+              "final_value_twd": 468035.0,
+              "cagr_pct": -3.72,
+              "max_drawdown_pct": -68.07
+            },
+            "dca_24m": {
+              "label": "分 24 個月投入",
+              "final_value_twd": 512485.0,
+              "cagr_pct": -3.29,
+              "max_drawdown_pct": -65.07
+            }
+          }
+        },
+        "CN_2007_10Y": {
+          "label": "上證 2007 高點 10 年（兩市皆走上證）",
+          "R1_schedules": {
+            "lump_sum_1m": {
+              "label": "一次全部投入",
+              "final_value_twd": 675643.0,
+              "cagr_pct": -3.85,
+              "max_drawdown_pct": -70.44
+            },
+            "dca_12m": {
+              "label": "分 12 個月投入",
+              "final_value_twd": 1153022.0,
+              "cagr_pct": 1.43,
+              "max_drawdown_pct": -49.56
+            },
+            "dca_24m": {
+              "label": "分 24 個月投入",
+              "final_value_twd": 1438304.0,
+              "cagr_pct": 3.7,
+              "max_drawdown_pct": -40.92
+            }
+          }
+        }
+      }
+    },
+    "withdrawal_30y": {
+      "initial_capital_twd": 10000000.0,
+      "initial_withdrawal_rate_pct": 4.0,
+      "inflation_rate_pct": 2.0,
+      "portfolios": {
+        "R1": {
+          "label": "R1：50% 0050 + 50% SPY（年平衡）",
+          "all_paths": {
+            "sample_count": 5000,
+            "ruin_prob_pct": 4.76,
+            "median_terminal_twd": 92001310.0,
+            "prob_mdd_worse_cap_pct": 72.4,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.96,
+              99.92,
+              99.88,
+              99.86,
+              99.68,
+              99.54,
+              99.36,
+              99.12,
+              98.94,
+              98.7,
+              98.58,
+              98.32,
+              97.92,
+              97.46,
+              97.22,
+              96.82,
+              96.46,
+              95.98,
+              95.52,
+              95.24
+            ]
+          },
+          "early_crash_paths": {
+            "sample_count": 853,
+            "ruin_prob_pct": 18.29,
+            "median_terminal_twd": 30933434.0,
+            "prob_mdd_worse_cap_pct": 90.27,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.77,
+              99.53,
+              99.3,
+              99.18,
+              98.24,
+              97.54,
+              96.72,
+              95.31,
+              94.49,
+              93.32,
+              92.61,
+              91.68,
+              90.39,
+              88.63,
+              87.81,
+              86.75,
+              85.35,
+              83.94,
+              82.65,
+              81.71
+            ]
+          }
+        },
+        "R2": {
+          "label": "R2：60% 0050 + 40% 美國短債（年平衡）",
+          "all_paths": {
+            "sample_count": 5000,
+            "ruin_prob_pct": 3.16,
+            "median_terminal_twd": 51474651.0,
+            "prob_mdd_worse_cap_pct": 90.32,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.98,
+              99.94,
+              99.92,
+              99.92,
+              99.9,
+              99.86,
+              99.74,
+              99.54,
+              99.36,
+              99.16,
+              98.92,
+              98.66,
+              98.32,
+              97.86,
+              97.52,
+              96.84
+            ]
+          },
+          "early_crash_paths": {
+            "sample_count": 853,
+            "ruin_prob_pct": 13.01,
+            "median_terminal_twd": 21678552.0,
+            "prob_mdd_worse_cap_pct": 97.54,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.88,
+              99.65,
+              99.53,
+              99.53,
+              99.41,
+              99.18,
+              98.48,
+              97.54,
+              96.6,
+              95.78,
+              94.61,
+              93.67,
+              91.91,
+              90.39,
+              89.21,
+              86.99
+            ]
+          }
+        },
+        "R3_M3b": {
+          "label": "R3 (M3b)：40% 0050 + 40% QQQ + 20% TQQQ",
+          "all_paths": {
+            "sample_count": 5000,
+            "ruin_prob_pct": 11.58,
+            "median_terminal_twd": 263071327.0,
+            "prob_mdd_worse_cap_pct": 90.84,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.96,
+              99.86,
+              99.64,
+              99.32,
+              98.82,
+              98.16,
+              97.58,
+              97.02,
+              96.42,
+              95.88,
+              95.26,
+              94.56,
+              93.86,
+              93.26,
+              92.6,
+              92.24,
+              91.72,
+              91.26,
+              90.78,
+              90.34,
+              90.06,
+              89.54,
+              89.26,
+              89.0,
+              88.7,
+              88.42
+            ]
+          },
+          "early_crash_paths": {
+            "sample_count": 853,
+            "ruin_prob_pct": 35.17,
+            "median_terminal_twd": 48218541.0,
+            "prob_mdd_worse_cap_pct": 97.19,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.77,
+              99.18,
+              97.89,
+              96.01,
+              93.43,
+              90.04,
+              87.57,
+              85.35,
+              83.24,
+              81.95,
+              80.3,
+              78.43,
+              76.79,
+              75.73,
+              73.97,
+              73.39,
+              71.98,
+              71.28,
+              69.87,
+              69.17,
+              68.58,
+              67.53,
+              66.94,
+              66.0,
+              65.42,
+              64.83
+            ]
+          }
+        },
+        "R3_M3a": {
+          "label": "R3 (M3a)：70% 0050 + 30% 00631L（濾網）",
+          "all_paths": {
+            "sample_count": 5000,
+            "ruin_prob_pct": 6.22,
+            "median_terminal_twd": 269421647.0,
+            "prob_mdd_worse_cap_pct": 89.18,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.98,
+              99.94,
+              99.88,
+              99.74,
+              99.58,
+              99.4,
+              99.2,
+              98.88,
+              98.46,
+              98.1,
+              97.82,
+              97.46,
+              97.08,
+              96.64,
+              96.22,
+              95.86,
+              95.56,
+              95.36,
+              94.92,
+              94.56,
+              94.3,
+              94.1,
+              93.96,
+              93.78
+            ]
+          },
+          "early_crash_paths": {
+            "sample_count": 853,
+            "ruin_prob_pct": 22.63,
+            "median_terminal_twd": 65407658.0,
+            "prob_mdd_worse_cap_pct": 97.89,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.88,
+              99.65,
+              99.3,
+              98.48,
+              97.54,
+              96.48,
+              95.43,
+              93.67,
+              91.68,
+              90.27,
+              89.21,
+              88.04,
+              86.99,
+              85.23,
+              84.06,
+              82.65,
+              82.06,
+              81.48,
+              80.07,
+              79.13,
+              78.78,
+              78.31,
+              77.84,
+              77.37
+            ]
+          }
+        },
+        "P_40_60": {
+          "label": "防禦配置 40/60：20% 0050 + 20% SPY + 60% 美短債",
+          "all_paths": {
+            "sample_count": 5000,
+            "ruin_prob_pct": 6.64,
+            "median_terminal_twd": 14183440.0,
+            "prob_mdd_worse_cap_pct": 47.4,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.96,
+              99.96,
+              99.94,
+              99.9,
+              99.74,
+              99.42,
+              98.98,
+              98.12,
+              97.3,
+              96.14,
+              95.02,
+              93.36
+            ]
+          },
+          "early_crash_paths": {
+            "sample_count": 853,
+            "ruin_prob_pct": 22.39,
+            "median_terminal_twd": 5828781.0,
+            "prob_mdd_worse_cap_pct": 73.97,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.77,
+              99.77,
+              99.65,
+              99.41,
+              98.48,
+              96.95,
+              94.72,
+              91.21,
+              88.39,
+              85.11,
+              82.65,
+              77.61
+            ]
+          }
+        },
+        "P_30_70": {
+          "label": "防禦配置 30/70：15% 0050 + 15% SPY + 70% 美短債",
+          "all_paths": {
+            "sample_count": 5000,
+            "ruin_prob_pct": 12.54,
+            "median_terminal_twd": 7718446.0,
+            "prob_mdd_worse_cap_pct": 62.72,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.98,
+              99.96,
+              99.88,
+              99.7,
+              99.28,
+              98.4,
+              97.04,
+              95.34,
+              92.9,
+              90.3,
+              87.46
+            ]
+          },
+          "early_crash_paths": {
+            "sample_count": 853,
+            "ruin_prob_pct": 33.29,
+            "median_terminal_twd": 2270438.0,
+            "prob_mdd_worse_cap_pct": 83.47,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.88,
+              99.77,
+              99.3,
+              98.24,
+              96.72,
+              92.97,
+              88.86,
+              83.94,
+              78.19,
+              72.22,
+              66.71
+            ]
+          }
+        },
+        "R4_M4": {
+          "label": "R4 對照：100% 00631L（2倍槓桿）",
+          "all_paths": {
+            "sample_count": 5000,
+            "ruin_prob_pct": 12.66,
+            "median_terminal_twd": 637343890.0,
+            "prob_mdd_worse_cap_pct": 97.68,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.96,
+              99.72,
+              99.28,
+              98.62,
+              98.02,
+              97.3,
+              96.66,
+              95.82,
+              94.86,
+              94.22,
+              93.54,
+              92.94,
+              92.38,
+              91.8,
+              91.16,
+              90.64,
+              90.16,
+              89.76,
+              89.36,
+              88.98,
+              88.66,
+              88.5,
+              88.14,
+              87.88,
+              87.7,
+              87.5,
+              87.34
+            ]
+          },
+          "early_crash_paths": {
+            "sample_count": 853,
+            "ruin_prob_pct": 40.8,
+            "median_terminal_twd": 33859005.0,
+            "prob_mdd_worse_cap_pct": 100.0,
+            "survival_by_year_pct": [
+              100.0,
+              100.0,
+              100.0,
+              100.0,
+              99.77,
+              98.36,
+              95.78,
+              92.15,
+              89.1,
+              85.81,
+              82.88,
+              80.07,
+              76.79,
+              74.79,
+              72.33,
+              70.46,
+              68.93,
+              68.0,
+              66.71,
+              65.06,
+              64.01,
+              63.07,
+              62.37,
+              61.9,
+              61.2,
+              61.08,
+              60.26,
+              59.79,
+              59.67,
+              59.44,
+              59.2
+            ]
+          }
+        }
+      },
+      "japan_1989_real_30y_stress": {
+        "R1": {
+          "ruined": true,
+          "depletion_years": 11.6,
+          "terminal_wealth_twd": 0.0
+        },
+        "R2": {
+          "ruined": true,
+          "depletion_years": 16.8,
+          "terminal_wealth_twd": 0.0
+        },
+        "R3_M3b": {
+          "ruined": true,
+          "depletion_years": 8.8,
+          "terminal_wealth_twd": 0.0
+        },
+        "R3_M3a": {
+          "ruined": true,
+          "depletion_years": 9.5,
+          "terminal_wealth_twd": 0.0
+        },
+        "P_40_60": {
+          "ruined": true,
+          "depletion_years": 21.0,
+          "terminal_wealth_twd": 0.0
+        },
+        "P_30_70": {
+          "ruined": true,
+          "depletion_years": 23.4,
+          "terminal_wealth_twd": 0.0
+        },
+        "R4_M4": {
+          "ruined": true,
+          "depletion_years": 5.6,
+          "terminal_wealth_twd": 0.0
+        }
+      }
+    },
+    "stage_suitability": {
+      "accumulation_stage": "適合 R1（50% 0050 + 50% SPY）或紀律再平衡之溫和槓桿；若手握單筆閒置資金，歷史近七成機率單筆勝出，但若害怕買在日股 1989 / 2000 泡沫頂點，分 12 個月投入是兼顧報酬與心理防線的最佳折衷。",
+      "withdrawal_stage": "不適合純股票 R1 或任何槓桿組合 R3（遇早年股災破產率飆升且回撤破表）！退休提領期應切換至 R2（60/40 股債）或更穩健的 40/60 股債配置（早年遇崩盤仍大幅壓低破產機率）。"
+    },
+    "summary_metrics": {
+      "r1_withdrawal_prob_mdd_lt_50pct": 72.4,
+      "r2_withdrawal_prob_mdd_lt_30pct": 90.32,
+      "r3_m3b_withdrawal_prob_mdd_lt_60pct": 90.84,
+      "r3_m3a_withdrawal_prob_mdd_lt_60pct": 89.18,
+      "r4_withdrawal_prob_mdd_lt_50pct": 97.68,
+      "r5_with_4pct_withdrawal_bear_median_months": 172.94
+    }
+  },
+  "verdicts": {
+    "criteria_file": "research/robustness_check/criteria.md",
+    "summary_table": [
+      {
+        "recommendation_id": "R1",
+        "gate_1": "有條件通過",
+        "gate_2": "不通過",
+        "gate_3": "通過",
+        "gate_4": "不通過",
+        "gate_5": "有條件通過",
+        "gate_6": "有條件通過",
+        "gate_7": "有條件通過",
+        "gate_8": "不通過",
+        "overall_verdict": "被推翻"
+      },
+      {
+        "recommendation_id": "R2",
+        "gate_1": "通過",
+        "gate_2": "通過",
+        "gate_3": "通過",
+        "gate_4": "有條件通過",
+        "gate_5": "有條件通過",
+        "gate_6": "有條件通過",
+        "gate_7": "不通過",
+        "gate_8": "不通過",
+        "overall_verdict": "被推翻"
+      },
+      {
+        "recommendation_id": "R3",
+        "gate_1": "有條件通過",
+        "gate_2": "通過",
+        "gate_3": "有條件通過",
+        "gate_4": "通過",
+        "gate_5": "有條件通過",
+        "gate_6": "不通過",
+        "gate_7": "不通過",
+        "gate_8": "不通過",
+        "overall_verdict": "被推翻"
+      },
+      {
+        "recommendation_id": "R4",
+        "gate_1": "通過",
+        "gate_2": "通過",
+        "gate_3": "通過",
+        "gate_4": "通過",
+        "gate_5": "通過",
+        "gate_6": "通過",
+        "gate_7": "通過",
+        "gate_8": "通過",
+        "overall_verdict": "站得住"
+      },
+      {
+        "recommendation_id": "R5",
+        "gate_1": "有條件通過",
+        "gate_2": "有條件通過",
+        "gate_3": "通過",
+        "gate_4": "通過",
+        "gate_5": "通過",
+        "gate_6": "通過",
+        "gate_7": "通過",
+        "gate_8": "不通過",
+        "overall_verdict": "被推翻"
+      }
+    ],
+    "by_recommendation": {
+      "R1": {
+        "gates": {
+          "gate_1": {
+            "verdict": "有條件通過",
+            "rank_stability_verdict": "有條件通過",
+            "risk_cap_verdict": "通過",
+            "median_regret_pp": 3.12,
+            "rank_pct": 40.0,
+            "prob_exceed_50pct": 0.0,
+            "short_metric": "後悔3.1%｜破限0.0%"
+          },
+          "gate_2": {
+            "verdict": "不通過",
+            "rank_stability_verdict": "不通過",
+            "risk_cap_verdict": "通過",
+            "median_regret_pp": 10.44,
+            "rank_pct": 45.35,
+            "prob_exceed_50pct": 0.0,
+            "short_metric": "後悔10.4%｜破限0.0%"
+          },
+          "gate_3": {
+            "verdict": "通過",
+            "rank_stability_verdict": "通過",
+            "risk_cap_verdict": "通過",
+            "median_regret_pp": 1.02,
+            "rank_pct": 13.33,
+            "prob_exceed_50pct": 8.15,
+            "short_metric": "後悔1.0%｜破限8.2%"
+          },
+          "gate_4": {
+            "verdict": "不通過",
+            "rank_stability_verdict": "不通過",
+            "risk_cap_verdict": "通過",
+            "median_regret_pp": 0.58,
+            "rank_pct": 85.71,
+            "prob_exceed_50pct": 1.23,
+            "short_metric": "後悔0.6%｜破限1.2%"
+          },
+          "gate_5": {
+            "verdict": "有條件通過",
+            "rank_stability_verdict": "有條件通過",
+            "risk_cap_verdict": "有條件通過",
+            "median_regret_pp": 0.33,
+            "rank_pct": 33.33,
+            "prob_exceed_50pct": 18.07,
+            "short_metric": "後悔0.3%｜破限18.1%"
+          },
+          "gate_6": {
+            "verdict": "有條件通過",
+            "rank_stability_verdict": "有條件通過",
+            "risk_cap_verdict": "通過",
+            "median_regret_pp": 2.53,
+            "rank_pct": 46.67,
+            "prob_exceed_50pct": 3.64,
+            "short_metric": "後悔2.5%｜破限3.6%"
+          },
+          "gate_7": {
+            "verdict": "有條件通過",
+            "rank_stability_verdict": "有條件通過",
+            "risk_cap_verdict": "通過",
+            "median_regret_pp": 1.5,
+            "rank_pct": 46.67,
+            "prob_exceed_50pct": 0.0,
+            "short_metric": "後悔1.5%｜破限0.0%"
+          },
+          "gate_8": {
+            "verdict": "不通過",
+            "prob_exceed_50pct": 72.4,
+            "early_crash_ruin_prob_pct": 18.29,
+            "short_metric": "提領破限72.4%｜崩盤耗盡18.3%"
+          }
+        },
+        "overall_verdict": "被推翻",
+        "counts": {
+          "pass": 1,
+          "conditional": 4,
+          "fail": 3
+        },
+        "overall_short_note": "1過 / 4有條件 / 3不過"
+      },
+      "R2": {
+        "gates": {
+          "gate_1": {
+            "verdict": "通過",
+            "prob_exceed_30pct": 0.0,
+            "short_metric": "破-30%機率 0.0%"
+          },
+          "gate_2": {
+            "verdict": "通過",
+            "prob_exceed_30pct": 0.0,
+            "short_metric": "破-30%機率 0.0%"
+          },
+          "gate_3": {
+            "verdict": "通過",
+            "prob_exceed_30pct": 4.79,
+            "short_metric": "破-30%機率 4.8%"
+          },
+          "gate_4": {
+            "verdict": "有條件通過",
+            "prob_exceed_30pct": 11.73,
+            "short_metric": "破-30%機率 11.7%"
+          },
+          "gate_5": {
+            "verdict": "有條件通過",
+            "prob_exceed_30pct": 18.07,
+            "short_metric": "破-30%機率 18.1%"
+          },
+          "gate_6": {
+            "verdict": "有條件通過",
+            "prob_exceed_30pct": 11.52,
+            "short_metric": "破-30%機率 11.5%"
+          },
+          "gate_7": {
+            "verdict": "不通過",
+            "prob_exceed_30pct": 62.5,
+            "short_metric": "破-30%機率 62.5%"
+          },
+          "gate_8": {
+            "verdict": "不通過",
+            "prob_exceed_30pct": 90.32,
+            "short_metric": "破-30%機率 90.3%"
+          }
+        },
+        "overall_verdict": "被推翻",
+        "counts": {
+          "pass": 3,
+          "conditional": 3,
+          "fail": 2
+        },
+        "overall_short_note": "3過 / 3有條件 / 2不過"
+      },
+      "R3": {
+        "gates": {
+          "gate_1": {
+            "verdict": "有條件通過",
+            "m3b_verdict": "通過",
+            "m3a_verdict": "通過",
+            "m3b_prob_exceed_60pct": 0.0,
+            "m3a_prob_exceed_60pct": 0.0,
+            "short_metric": "M3b破限0.0%｜M3a 0.0%"
+          },
+          "gate_2": {
+            "verdict": "通過",
+            "m3b_verdict": "通過",
+            "m3a_verdict": "通過",
+            "m3b_prob_exceed_60pct": 0.0,
+            "m3a_prob_exceed_60pct": 0.0,
+            "short_metric": "M3b破限0.0%｜M3a 0.0%"
+          },
+          "gate_3": {
+            "verdict": "有條件通過",
+            "m3b_verdict": "有條件通過",
+            "m3a_verdict": "通過",
+            "m3b_prob_exceed_60pct": 17.25,
+            "m3a_prob_exceed_60pct": 8.39,
+            "short_metric": "M3b破限17.2%｜M3a 8.4%"
+          },
+          "gate_4": {
+            "verdict": "通過",
+            "m3b_verdict": "通過",
+            "m3a_verdict": "通過",
+            "m3b_prob_exceed_60pct": 7.72,
+            "m3a_prob_exceed_60pct": 0.0,
+            "short_metric": "M3b破限7.7%｜M3a 0.0%"
+          },
+          "gate_5": {
+            "verdict": "有條件通過",
+            "m3b_verdict": "有條件通過",
+            "m3a_verdict": "有條件通過",
+            "m3b_prob_exceed_60pct": 22.43,
+            "m3a_prob_exceed_60pct": 22.12,
+            "short_metric": "M3b破限22.4%｜M3a 22.1%"
+          },
+          "gate_6": {
+            "verdict": "不通過",
+            "m3b_verdict": "不通過",
+            "m3a_verdict": "有條件通過",
+            "m3b_prob_exceed_60pct": 32.66,
+            "m3a_prob_exceed_60pct": 24.68,
+            "short_metric": "M3b破限32.7%｜M3a 24.7%"
+          },
+          "gate_7": {
+            "verdict": "不通過",
+            "m3b_verdict": "不通過",
+            "m3a_verdict": "不通過",
+            "m3b_prob_exceed_60pct": 53.85,
+            "m3a_prob_exceed_60pct": 45.45,
+            "short_metric": "M3b破限53.9%｜M3a 45.5%"
+          },
+          "gate_8": {
+            "verdict": "不通過",
+            "m3b_verdict": "不通過",
+            "m3a_verdict": "不通過",
+            "m3b_prob_exceed_60pct": 90.84,
+            "m3a_prob_exceed_60pct": 89.18,
+            "short_metric": "M3b破限90.8%｜M3a 89.2%"
+          }
+        },
+        "overall_verdict": "被推翻",
+        "counts": {
+          "pass": 2,
+          "conditional": 3,
+          "fail": 3
+        },
+        "overall_short_note": "2過 / 3有條件 / 3不過"
+      },
+      "R4": {
+        "gates": {
+          "gate_1": {
+            "verdict": "通過",
+            "prob_2x_mdd_lt_50pct": 86.73,
+            "short_metric": "2x腰斬率 86.7%"
+          },
+          "gate_2": {
+            "verdict": "通過",
+            "prob_2x_mdd_lt_50pct": 92.13,
+            "short_metric": "2x腰斬率 92.1%"
+          },
+          "gate_3": {
+            "verdict": "通過",
+            "prob_2x_mdd_lt_50pct": 69.93,
+            "short_metric": "2x腰斬率 69.9%"
+          },
+          "gate_4": {
+            "verdict": "通過",
+            "prob_2x_mdd_lt_50pct": 87.04,
+            "short_metric": "2x腰斬率 87.0%"
+          },
+          "gate_5": {
+            "verdict": "通過",
+            "prob_2x_mdd_lt_50pct": 86.6,
+            "short_metric": "2x腰斬率 86.6%"
+          },
+          "gate_6": {
+            "verdict": "通過",
+            "prob_2x_mdd_lt_50pct": 85.46,
+            "short_metric": "2x腰斬率 85.5%"
+          },
+          "gate_7": {
+            "verdict": "通過",
+            "prob_2x_mdd_lt_50pct": 100.0,
+            "short_metric": "2x腰斬率 100.0%"
+          },
+          "gate_8": {
+            "verdict": "通過",
+            "prob_2x_mdd_lt_50pct": 97.68,
+            "short_metric": "2x腰斬率 97.7%"
+          }
+        },
+        "overall_verdict": "站得住",
+        "counts": {
+          "pass": 8,
+          "conditional": 0,
+          "fail": 0
+        },
+        "overall_short_note": "8過 / 0有條件 / 0不過"
+      },
+      "R5": {
+        "gates": {
+          "gate_1": {
+            "verdict": "有條件通過",
+            "median_months": 6.28,
+            "change_vs_baseline_pct": -68.97,
+            "short_metric": "中位 6.3月 (-69%)"
+          },
+          "gate_2": {
+            "verdict": "有條件通過",
+            "median_months": 6.28,
+            "change_vs_baseline_pct": -68.97,
+            "short_metric": "中位 6.3月 (-69%)"
+          },
+          "gate_3": {
+            "verdict": "通過",
+            "median_months": 18.7,
+            "change_vs_baseline_pct": -7.61,
+            "short_metric": "中位 18.7月 (-8%)"
+          },
+          "gate_4": {
+            "verdict": "通過",
+            "median_months": 20.19,
+            "change_vs_baseline_pct": -0.25,
+            "short_metric": "中位 20.2月 (-0%)"
+          },
+          "gate_5": {
+            "verdict": "通過",
+            "median_months": 10.85,
+            "change_vs_baseline_pct": -46.39,
+            "short_metric": "中位 10.8月 (-46%)"
+          },
+          "gate_6": {
+            "verdict": "通過",
+            "median_months": 14.16,
+            "change_vs_baseline_pct": -30.04,
+            "short_metric": "中位 14.2月 (-30%)"
+          },
+          "gate_7": {
+            "verdict": "通過",
+            "median_months": 20.18,
+            "change_vs_baseline_pct": -0.3,
+            "short_metric": "中位 20.2月 (-0%)"
+          },
+          "gate_8": {
+            "verdict": "不通過",
+            "median_months": 172.94,
+            "change_vs_baseline_pct": 754.45,
+            "short_metric": "中位 172.9月 (+754%)"
+          }
+        },
+        "overall_verdict": "被推翻",
+        "counts": {
+          "pass": 5,
+          "conditional": 2,
+          "fail": 1
+        },
+        "overall_short_note": "5過 / 2有條件 / 1不過"
+      }
+    }
+  },
+  "revised_recommendations": {
+    "R1": {
+      "overall_verdict": "被推翻",
+      "failed_gates": [
+        "gate_2",
+        "gate_4",
+        "gate_8"
+      ],
+      "conditional_gates": [
+        "gate_1",
+        "gate_5",
+        "gate_6",
+        "gate_7"
+      ],
+      "original": "50% 0050 + 50% SPY，每月定期定額，不加槓桿（承受 -50%）",
+      "conditions_or_alternative": "【總判定：被推翻】 累積期建議改為『50% 0050 + 50% SPY 每年再平衡（或 60/40 台美再平衡）』，但必須遵守三大前提與退場替代方案： (1) 人生階段限制（第 8 關）：純股票 R1 在退休提領期遇早年股災會跌破 -50% 且耗盡風險升高，退休前 5 年起必須逐步切換為『40% 台美股 + 60% 美國短債』； (2) 跨國極端防禦（第 3 關）：若台美同時遭遇日本 1989 級泡沫崩盤，純股仍可能短暫跌破 -50%，加入每年再平衡能有效收割跨國波動； (3) 成本鐵律（第 4 關）：限用免低消美股定期定額（若誤用每筆低消 USD 15 傳統複委託且月扣 1 萬，年化報酬減損近 1 個百分點，應改為每季扣款一次或改買台灣掛牌全球/美股 ETF）。"
+    },
+    "R2": {
+      "overall_verdict": "被推翻",
+      "failed_gates": [
+        "gate_7",
+        "gate_8"
+      ],
+      "conditional_gates": [
+        "gate_4",
+        "gate_5",
+        "gate_6"
+      ],
+      "original": "60% 0050 + 40% 美國短債，每年再平衡（承受 -30%）",
+      "conditions_or_alternative": "【總判定：被推翻】 替代／修正方案：改為『40%～50% 全球分散股票（25% 0050 + 25% SPY，或 20% 0050 + 20% SPY）+ 50%～60% 美國短債，每年再平衡』。 原因：原 R2 把六成風險全部單押台股 0050，一旦台股單獨發生日本 1989 / 上證 2007 等級崩盤（第 3 關）、比例偏離至 70/30 或忘記再平衡（第 7 關）、或進入 30 年提領期（第 8 關）， 跌破 -30% 紅線的機率就會上升；將股票部位台美對半分散並把短債拉高到 50%～60%（即 40/60 或 50/50 股債），才能無懼單一國家失落二十年並穩守 -30%。"
+    },
+    "R3": {
+      "overall_verdict": "被推翻",
+      "failed_gates": [
+        "gate_6",
+        "gate_7",
+        "gate_8"
+      ],
+      "conditional_gates": [
+        "gate_1",
+        "gate_3",
+        "gate_5"
+      ],
+      "original": "M3b = 0050 40% + QQQ 40% + TQQQ 20% 年平衡；M3a = 0050 70% + 00631L 30% + 200MA 濾網（承受 -60%）",
+      "conditions_or_alternative": "【總判定：被推翻】 替代方案：淘汰含 3 倍 TQQQ 的 M3b，改推『45% 0050 + 45% QQQ + 10% 2倍槓桿(00631L/QLD)，每年再平衡 + 200日線濾網（有效槓桿 1.1x～1.2x）』，純台股戶改用『80% 0050 + 20% 00631L + 200日線濾網 + 每年再平衡』。 原因：原 M3b 看似壓在 -59.4%，實為歷史單一路徑擦邊球，且高度依賴 2010/2015 前推算資料（第 1 關）；在長區塊 Bootstrap（第 6 關）、各國崩盤（第 3 關）、忘記再平衡（第 7 關）與提領期（第 8 關）皆高機率衝破 -60%。"
+    },
+    "R4": {
+      "overall_verdict": "站得住",
+      "failed_gates": [],
+      "conditional_gates": [],
+      "original": "2 倍以上槓桿不建議",
+      "conditions_or_alternative": "【總判定：站得住】 維持『2 倍以上槓桿不建議』核心結論（僅補充說明：在單一無大海嘯的十年多頭樣本外區間，2 倍槓桿跌破 -50% 機率可能暫時低於五成，容易製造安全錯覺； 但只要拉長週期、納入跨國崩盤或進入提領期，腰斬率立刻飆回 65%～95% 以上，切勿被短期牛市迷惑）。"
+    },
+    "R5": {
+      "overall_verdict": "被推翻",
+      "failed_gates": [
+        "gate_8"
+      ],
+      "conditional_gates": [
+        "gate_1",
+        "gate_2"
+      ],
+      "original": "跌超過 20% 的熊市，0050 含息回到高點的中位數約 20 個月",
+      "conditions_or_alternative": "【總判定：被推翻】 替代結論：廢除單一『20 個月回本』口號，改採分級預期——『一般景氣循環熊市（跌幅 20%～35%）含息回本中位數約 12～30 個月； 但若遇資產泡沫破裂或結構性停滯（如日本 1989、上證 2007、2000 科技泡沫，跌幅逾 50%），即使股息再投入也需 6～24 年以上才能回前高，必須靠定期定額持續攤平或股債再平衡解套，絕不可單筆重倉硬扛』。"
+    }
+  }
+}
