@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-27-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-27T11:31:56Z",
-  "updated_at_taipei": "2026-11-27 19:31",
-  "last_updated_utc": "2026-11-27T11:31:56Z",
-  "last_updated_taipei": "2026-11-27 19:31",
-  "next_update_hint": "約台北時間 19:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-27T11:47:01Z",
+  "updated_at_taipei": "2026-11-27 19:47",
+  "last_updated_utc": "2026-11-27T11:47:01Z",
+  "last_updated_taipei": "2026-11-27 19:47",
+  "next_update_hint": "約台北時間 20:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 26.415,
+    "total_elapsed_sec": 21.932,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 11,
+    "new_items_added": 4,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.075,
+        "elapsed_sec": 0.091,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.103,
+        "elapsed_sec": 0.152,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.206,
+        "elapsed_sec": 0.112,
         "raw_count": 30,
         "items_kept": 5,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.138,
+        "elapsed_sec": 0.085,
         "raw_count": 10,
         "items_kept": 3,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.236,
+        "elapsed_sec": 0.264,
         "raw_count": 20,
         "items_kept": 20,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.19,
+        "elapsed_sec": 0.231,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.127,
+        "elapsed_sec": 0.149,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.11,
+        "elapsed_sec": 0.131,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.112,
+        "elapsed_sec": 0.128,
         "raw_count": 34,
         "items_kept": 17,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 1.978,
+        "elapsed_sec": 0.479,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.354,
+        "elapsed_sec": 0.478,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.316,
+        "elapsed_sec": 0.329,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.686,
+        "elapsed_sec": 0.793,
         "raw_count": 15,
         "items_kept": 8,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.982,
+        "elapsed_sec": 0.389,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.375,
+        "elapsed_sec": 0.506,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.084,
+        "elapsed_sec": 0.125,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 4.783,
+        "elapsed_sec": 2.713,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.066,
+        "elapsed_sec": 0.099,
         "raw_count": 1378,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.163,
+        "elapsed_sec": 1.305,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.559,
+        "elapsed_sec": 0.416,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 0.942,
+        "elapsed_sec": 1.174,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.441,
+        "elapsed_sec": 0.368,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.442,
+        "elapsed_sec": 0.593,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.247,
+        "elapsed_sec": 0.128,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.443,
+        "elapsed_sec": 0.529,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.324,
+        "elapsed_sec": 0.333,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,28 +303,62 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -389.3,
+      "net_flow_usd_m": -389.7,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": -0.0016,
+        "funding_rate_pct": -0.0017,
         "oi_usd_b": 1.98
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0079,
+        "funding_rate_pct": 0.0075,
         "oi_usd_b": 1.18
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 2,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 31.2,
-      "tx_count": 72249,
+      "mempool_vsize_mb": 29.9,
+      "tx_count": 67235,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261127-e9fac90652",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T11:44:53Z",
+      "published_at_taipei": "2026-11-27 19:44",
+      "published_at_taipei_iso": "2026-11-27T19:44:53+08:00",
+      "first_seen_at_utc": "2026-11-27T11:47:01Z",
+      "first_seen_at_taipei": "2026-11-27 19:47",
+      "month": "2026-11",
+      "title": "〈第一金法說〉央行年底升息？一銀估台灣按兵不動 惟Fed明年Q1前有望升息2次",
+      "url": "https://news.cnyes.com/news/id/6674022",
+      "canonical_url": "https://news.cnyes.com/news/id/6674022",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（升息）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "反轉：通膨／就業升溫（升溫）；命中：升息；反轉：否定「升息」",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261127-5d3189974e",
       "issue": "2026-11-27-AM",
@@ -1167,6 +1201,129 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-9d9eebf7fb",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T11:45:47Z",
+      "published_at_taipei": "2026-11-27 19:45",
+      "published_at_taipei_iso": "2026-11-27T19:45:47+08:00",
+      "first_seen_at_utc": "2026-11-27T11:47:01Z",
+      "first_seen_at_taipei": "2026-11-27 19:47",
+      "month": "2026-11",
+      "title": "Bitcoin on course to end seven-week losing streak while trailing stock rebound",
+      "url": "https://www.coindesk.com/markets/2026/11/27/bitcoin-on-course-to-end-seven-week-losing-streak-while-trailing-stock-rebound",
+      "canonical_url": "https://coindesk.com/markets/2026/11/27/bitcoin-on-course-to-end-seven-week-losing-streak-while-trailing-stock-rebound",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-19a78d5b58",
+        "issue": "2026-11-23-PM",
+        "title": "TSX Closer: The Index Closes Higher, Ends Seven-Session Losing Streak as Base Metals, Technology Stocks Surge",
+        "published_at_taipei": "2026-11-24 05:30",
+        "url": "https://finance.yahoo.com/markets/world-indices/articles/tsx-closer-index-closes-higher-213002554.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-842490d8e9",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T11:40:03Z",
+      "published_at_taipei": "2026-11-27 19:40",
+      "published_at_taipei_iso": "2026-11-27T19:40:03+08:00",
+      "first_seen_at_utc": "2026-11-27T11:47:01Z",
+      "first_seen_at_taipei": "2026-11-27 19:47",
+      "month": "2026-11",
+      "title": "不只是車廠 特斯拉獲利能力優於同業 估值指標遠甩通用與法拉利",
+      "url": "https://news.cnyes.com/news/id/6673834",
+      "canonical_url": "https://news.cnyes.com/news/id/6673834",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-7d78634d11",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T11:34:37Z",
+      "published_at_taipei": "2026-11-27 19:34",
+      "published_at_taipei_iso": "2026-11-27T19:34:37+08:00",
+      "first_seen_at_utc": "2026-11-27T11:47:01Z",
+      "first_seen_at_taipei": "2026-11-27 19:47",
+      "month": "2026-11",
+      "title": "Live news: Bitcoin rebounds above $61,000 as AI stocks lead premarket gains",
+      "url": "https://www.coindesk.com/tech/2026/11/27/live-news-bitcoin-rebounds-above-usd61-000-as-ai-stocks-lead-premarket-gains",
+      "canonical_url": "https://coindesk.com/tech/2026/11/27/live-news-bitcoin-rebounds-above-usd61-000-as-ai-stocks-lead-premarket-gains",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-061fc0524d",
+        "issue": "2026-11-23-AM",
+        "title": "Live updates: Bitcoin climbs back above $61,000 as stocks rebound from AI rout",
+        "published_at_taipei": "2026-11-23 19:29",
+        "url": "https://www.coindesk.com/markets/2026/11/23/live-updates-bitcoin-climbs-back-above-usd61-000-as-stocks-rebound-from-ai-rout"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -12034,6 +12191,163 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261127-9d9eebf7fb",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T11:45:47Z",
+      "published_at_taipei": "2026-11-27 19:45",
+      "published_at_taipei_iso": "2026-11-27T19:45:47+08:00",
+      "first_seen_at_utc": "2026-11-27T11:47:01Z",
+      "first_seen_at_taipei": "2026-11-27 19:47",
+      "month": "2026-11",
+      "title": "Bitcoin on course to end seven-week losing streak while trailing stock rebound",
+      "url": "https://www.coindesk.com/markets/2026/11/27/bitcoin-on-course-to-end-seven-week-losing-streak-while-trailing-stock-rebound",
+      "canonical_url": "https://coindesk.com/markets/2026/11/27/bitcoin-on-course-to-end-seven-week-losing-streak-while-trailing-stock-rebound",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-19a78d5b58",
+        "issue": "2026-11-23-PM",
+        "title": "TSX Closer: The Index Closes Higher, Ends Seven-Session Losing Streak as Base Metals, Technology Stocks Surge",
+        "published_at_taipei": "2026-11-24 05:30",
+        "url": "https://finance.yahoo.com/markets/world-indices/articles/tsx-closer-index-closes-higher-213002554.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-e9fac90652",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T11:44:53Z",
+      "published_at_taipei": "2026-11-27 19:44",
+      "published_at_taipei_iso": "2026-11-27T19:44:53+08:00",
+      "first_seen_at_utc": "2026-11-27T11:47:01Z",
+      "first_seen_at_taipei": "2026-11-27 19:47",
+      "month": "2026-11",
+      "title": "〈第一金法說〉央行年底升息？一銀估台灣按兵不動 惟Fed明年Q1前有望升息2次",
+      "url": "https://news.cnyes.com/news/id/6674022",
+      "canonical_url": "https://news.cnyes.com/news/id/6674022",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "聯準會",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（升息）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "反轉：通膨／就業升溫（升溫）；命中：升息；反轉：否定「升息」",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-842490d8e9",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T11:40:03Z",
+      "published_at_taipei": "2026-11-27 19:40",
+      "published_at_taipei_iso": "2026-11-27T19:40:03+08:00",
+      "first_seen_at_utc": "2026-11-27T11:47:01Z",
+      "first_seen_at_taipei": "2026-11-27 19:47",
+      "month": "2026-11",
+      "title": "不只是車廠 特斯拉獲利能力優於同業 估值指標遠甩通用與法拉利",
+      "url": "https://news.cnyes.com/news/id/6673834",
+      "canonical_url": "https://news.cnyes.com/news/id/6673834",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-7d78634d11",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T11:34:37Z",
+      "published_at_taipei": "2026-11-27 19:34",
+      "published_at_taipei_iso": "2026-11-27T19:34:37+08:00",
+      "first_seen_at_utc": "2026-11-27T11:47:01Z",
+      "first_seen_at_taipei": "2026-11-27 19:47",
+      "month": "2026-11",
+      "title": "Live news: Bitcoin rebounds above $61,000 as AI stocks lead premarket gains",
+      "url": "https://www.coindesk.com/tech/2026/11/27/live-news-bitcoin-rebounds-above-usd61-000-as-ai-stocks-lead-premarket-gains",
+      "canonical_url": "https://coindesk.com/tech/2026/11/27/live-news-bitcoin-rebounds-above-usd61-000-as-ai-stocks-lead-premarket-gains",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "美股",
+      "markets": [
+        "美股",
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-061fc0524d",
+        "issue": "2026-11-23-AM",
+        "title": "Live updates: Bitcoin climbs back above $61,000 as stocks rebound from AI rout",
+        "published_at_taipei": "2026-11-23 19:29",
+        "url": "https://www.coindesk.com/markets/2026/11/23/live-updates-bitcoin-climbs-back-above-usd61-000-as-stocks-rebound-from-ai-rout"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261127-7c4e3d361a",
       "issue": "2026-11-27-AM",
@@ -163952,29 +164266,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261120-c771bba7bb",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-20T11:42:02Z",
-      "published_at_taipei": "2026-11-20 19:42",
-      "published_at_taipei_iso": "2026-11-20T19:42:02+08:00",
-      "month": "2026-11",
-      "title": "Bitcoin drops for third straight day as Asian tech shares slide",
-      "url": "https://www.coindesk.com/markets/2026/11/20/bitcoin-drops-for-third-straight-day-as-asian-tech-shares-slide",
-      "canonical_url": "https://coindesk.com/markets/2026/11/20/bitcoin-drops-for-third-straight-day-as-asian-tech-shares-slide",
-      "source": "CoinDesk",
-      "source_id": "coindesk",
-      "category": "加密貨幣",
-      "symbols": [
-        "BTCUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -163983,9 +164274,9 @@
       "month": "2026-11",
       "date": "2026-11-27",
       "half": "AM",
-      "updated_at_taipei": "2026-11-27 19:31",
-      "count": 307,
-      "star3_count": 23,
+      "updated_at_taipei": "2026-11-27 19:47",
+      "count": 311,
+      "star3_count": 24,
       "failed_sources": [
         {
           "id": "binance_derivatives",
