@@ -2,23 +2,13 @@
   "version": 1,
   "latest_issue": "2026-11-27-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-27T09:31:45Z",
-  "updated_at_taipei": "2026-11-27 17:31",
-  "last_updated_utc": "2026-11-27T09:31:45Z",
-  "last_updated_taipei": "2026-11-27 17:31",
-  "next_update_hint": "約台北時間 17:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-27T09:46:27Z",
+  "updated_at_taipei": "2026-11-27 17:46",
+  "last_updated_utc": "2026-11-27T09:46:27Z",
+  "last_updated_taipei": "2026-11-27 17:46",
+  "next_update_hint": "約台北時間 17:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
-    {
-      "id": "marketwatch_top",
-      "name": "MarketWatch",
-      "error": "HTTPSConnectionPool(host='feeds.content.dowjones.io', port=443): Max retries exceeded with url: /public/rss/mw_topstories (Caused by NameResolutionError(\"HTTPSConnection(host='feeds.content.dowjones.io', port=443): Failed to resolve 'feeds.content.dowjones.io' ([Errno -3] Temporary failure in name resolution)\"))"
-    },
-    {
-      "id": "udn_money_stock",
-      "name": "經濟日報",
-      "error": "HTTPSConnectionPool(host='money.udn.com', port=443): Max retries exceeded with url: /rssfeed/news/1001/5590/5710?ch=money (Caused by NameResolutionError(\"HTTPSConnection(host='money.udn.com', port=443): Failed to resolve 'money.udn.com' ([Errno -3] Temporary failure in name resolution)\"))"
-    },
     {
       "id": "binance_derivatives",
       "name": "Binance 永續合約",
@@ -30,28 +20,23 @@
       "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
     },
     {
-      "id": "binance_announcements",
-      "name": "Binance 公告",
-      "error": "HTTPSConnectionPool(host='www.binance.com', port=443): Max retries exceeded with url: /bapi/composite/v1/public/cms/article/list/query?type=1&catalogId=48&pageNo=1&pageSize=10 (Caused by NameResolutionError(\"HTTPSConnection(host='www.binance.com', port=443): Failed to resolve 'www.binance.com' ([Errno -3] Temporary failure in name resolution)\"))"
-    },
-    {
       "id": "bybit_announcements",
       "name": "Bybit 公告",
       "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 106.939,
-    "sources_ok": 20,
-    "sources_failed": 6,
-    "new_items_added": 13,
+    "total_elapsed_sec": 23.086,
+    "sources_ok": 23,
+    "sources_failed": 3,
+    "new_items_added": 5,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.074,
+        "elapsed_sec": 0.114,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -60,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.134,
+        "elapsed_sec": 0.151,
         "raw_count": 30,
         "items_kept": 12,
         "error": null
@@ -69,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.127,
+        "elapsed_sec": 0.096,
         "raw_count": 30,
         "items_kept": 6,
         "error": null
@@ -77,26 +62,26 @@
       "marketwatch_top": {
         "name": "MarketWatch",
         "kind": "rss",
-        "status": "failed",
-        "elapsed_sec": 30.302,
-        "raw_count": 0,
-        "items_kept": 0,
-        "error": "HTTPSConnectionPool(host='feeds.content.dowjones.io', port=443): Max retries exceeded with url: /public/rss/mw_topstories (Caused by NameResolutionError(\"HTTPSConnection(host='feeds.content.dowjones.io', port=443): Failed to resolve 'feeds.content.dowjones.io' ([Errno -3] Temporary failure in name resolution)\"))"
+        "status": "ok",
+        "elapsed_sec": 0.127,
+        "raw_count": 10,
+        "items_kept": 1,
+        "error": null
       },
       "yahoo_finance_us": {
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.314,
+        "elapsed_sec": 0.356,
         "raw_count": 19,
-        "items_kept": 18,
+        "items_kept": 19,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.196,
+        "elapsed_sec": 0.228,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -105,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.124,
+        "elapsed_sec": 0.144,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -114,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.153,
+        "elapsed_sec": 0.113,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -123,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.128,
+        "elapsed_sec": 0.124,
         "raw_count": 35,
         "items_kept": 17,
         "error": null
@@ -132,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.558,
+        "elapsed_sec": 0.678,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -141,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.336,
+        "elapsed_sec": 0.671,
         "raw_count": 20,
         "items_kept": 16,
         "error": null
@@ -150,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.271,
+        "elapsed_sec": 0.545,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -159,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.978,
+        "elapsed_sec": 0.814,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -167,17 +152,17 @@
       "udn_money_stock": {
         "name": "經濟日報",
         "kind": "rss",
-        "status": "failed",
-        "elapsed_sec": 20.288,
-        "raw_count": 0,
-        "items_kept": 0,
-        "error": "HTTPSConnectionPool(host='money.udn.com', port=443): Max retries exceeded with url: /rssfeed/news/1001/5590/5710?ch=money (Caused by NameResolutionError(\"HTTPSConnection(host='money.udn.com', port=443): Failed to resolve 'money.udn.com' ([Errno -3] Temporary failure in name resolution)\"))"
+        "status": "ok",
+        "elapsed_sec": 0.542,
+        "raw_count": 20,
+        "items_kept": 12,
+        "error": null
       },
       "yahoo_tw_stock": {
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.397,
+        "elapsed_sec": 0.479,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -186,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.274,
+        "elapsed_sec": 0.104,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -195,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 3.296,
+        "elapsed_sec": 4.643,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -204,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.063,
+        "elapsed_sec": 0.084,
         "raw_count": 1378,
         "items_kept": 0,
         "error": null
@@ -213,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.301,
+        "elapsed_sec": 1.407,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -222,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.497,
+        "elapsed_sec": 0.4,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -231,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 0.965,
+        "elapsed_sec": 1.383,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -240,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.409,
+        "elapsed_sec": 0.464,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -249,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.805,
+        "elapsed_sec": 0.633,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -257,17 +242,17 @@
       "binance_announcements": {
         "name": "Binance 公告",
         "kind": "binance_announcements",
-        "status": "failed",
-        "elapsed_sec": 25.283,
-        "raw_count": 0,
-        "items_kept": 0,
-        "error": "HTTPSConnectionPool(host='www.binance.com', port=443): Max retries exceeded with url: /bapi/composite/v1/public/cms/article/list/query?type=1&catalogId=48&pageNo=1&pageSize=10 (Caused by NameResolutionError(\"HTTPSConnection(host='www.binance.com', port=443): Failed to resolve 'www.binance.com' ([Errno -3] Temporary failure in name resolution)\"))"
+        "status": "ok",
+        "elapsed_sec": 0.278,
+        "raw_count": 20,
+        "items_kept": 3,
+        "error": null
       },
       "okx_announcements": {
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.425,
+        "elapsed_sec": 0.559,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -276,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.378,
+        "elapsed_sec": 0.383,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -318,12 +303,12 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -389.6,
+      "net_flow_usd_m": -390.3,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0012,
+        "funding_rate_pct": 0.0006,
         "oi_usd_b": 1.98
       },
       "ETHUSDT": {
@@ -332,10 +317,10 @@
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 2,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.2,
-      "tx_count": 62842,
+      "mempool_vsize_mb": 30.4,
+      "tx_count": 68927,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -1076,6 +1061,78 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-1f4129764f",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:40:26Z",
+      "published_at_taipei": "2026-11-27 17:40",
+      "published_at_taipei_iso": "2026-11-27T17:40:26+08:00",
+      "first_seen_at_utc": "2026-11-27T09:46:27Z",
+      "first_seen_at_taipei": "2026-11-27 17:46",
+      "month": "2026-11",
+      "title": "鴻海攜海洋大學續推海洋復育，近90座魚藻礁、放流逾4萬尾原生魚苗！二期將驗證海洋復育成效",
+      "url": "https://tw.news.yahoo.com/%E9%B4%BB%E6%B5%B7%E6%94%9C%E6%B5%B7%E6%B4%8B%E5%A4%A7%E5%AD%B8%E7%BA%8C%E6%8E%A8%E6%B5%B7%E6%B4%8B%E5%BE%A9%E8%82%B2-%E8%BF%9190%E5%BA%A7%E9%AD%9A%E8%97%BB%E7%A4%81-%E6%94%BE%E6%B5%81%E9%80%BE4%E8%90%AC%E5%B0%BE%E5%8E%9F%E7%94%9F%E9%AD%9A%E8%8B%97-%E4%BA%8C%E6%9C%9F%E5%B0%87%E9%A9%97%E8%AD%89%E6%B5%B7%E6%B4%8B%E5%BE%A9%E8%82%B2%E6%88%90%E6%95%88-094026273.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%B4%BB%E6%B5%B7%E6%94%9C%E6%B5%B7%E6%B4%8B%E5%A4%A7%E5%AD%B8%E7%BA%8C%E6%8E%A8%E6%B5%B7%E6%B4%8B%E5%BE%A9%E8%82%B2-%E8%BF%9190%E5%BA%A7%E9%AD%9A%E8%97%BB%E7%A4%81-%E6%94%BE%E6%B5%81%E9%80%BE4%E8%90%AC%E5%B0%BE%E5%8E%9F%E7%94%9F%E9%AD%9A%E8%8B%97-%E4%BA%8C%E6%9C%9F%E5%B0%87%E9%A9%97%E8%AD%89%E6%B5%B7%E6%B4%8B%E5%BE%A9%E8%82%B2%E6%88%90%E6%95%88-094026273.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2317"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：合作",
+      "sentiment_targets": [
+        "2317"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-1b6892a163",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:37:40Z",
+      "published_at_taipei": "2026-11-27 17:37",
+      "published_at_taipei_iso": "2026-11-27T17:37:40+08:00",
+      "first_seen_at_utc": "2026-11-27T09:46:27Z",
+      "first_seen_at_taipei": "2026-11-27 17:46",
+      "month": "2026-11",
+      "title": "鴻海FoxBrain v2.1主權AI評測全球第二！臺灣價值觀正確率98%，31B模型可單機部署",
+      "url": "https://tw.news.yahoo.com/%E9%B4%BB%E6%B5%B7foxbrain-v2-1%E4%B8%BB%E6%AC%8Aai%E8%A9%95%E6%B8%AC%E5%85%A8%E7%90%83%E7%AC%AC%E4%BA%8C-%E8%87%BA%E7%81%A3%E5%83%B9%E5%80%BC%E8%A7%80%E6%AD%A3%E7%A2%BA%E7%8E%8798-31b%E6%A8%A1%E5%9E%8B%E5%8F%AF%E5%96%AE%E6%A9%9F%E9%83%A8%E7%BD%B2-093740932.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%B4%BB%E6%B5%B7foxbrain-v2-1%E4%B8%BB%E6%AC%8Aai%E8%A9%95%E6%B8%AC%E5%85%A8%E7%90%83%E7%AC%AC%E4%BA%8C-%E8%87%BA%E7%81%A3%E5%83%B9%E5%80%BC%E8%A7%80%E6%AD%A3%E7%A2%BA%E7%8E%8798-31b%E6%A8%A1%E5%9E%8B%E5%8F%AF%E5%96%AE%E6%A9%9F%E9%83%A8%E7%BD%B2-093740932.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2317"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2317"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-285c035931",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T09:30:07Z",
@@ -1374,6 +1431,48 @@
       "sentiment_targets": [
         "NAS100",
         "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-59855753c7",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:10:35Z",
+      "published_at_taipei": "2026-11-27 17:10",
+      "published_at_taipei_iso": "2026-11-27T17:10:35+08:00",
+      "first_seen_at_utc": "2026-11-27T09:46:27Z",
+      "first_seen_at_taipei": "2026-11-27 17:46",
+      "month": "2026-11",
+      "title": "3 Oil And Gas Stocks Investors Are Watching As Brent Nears $100",
+      "url": "https://finance.yahoo.com/energy/articles/3-oil-gas-stocks-investors-091035092.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/3-oil-gas-stocks-investors-091035092.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-39acd4644f",
+        "issue": "2026-11-22-PM",
+        "title": "Top 3 Canadian Growth Stocks To Watch In November 2026",
+        "published_at_taipei": "2026-11-23 05:07",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/top-3-canadian-growth-stocks-210758926.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
       ],
       "sentiment_method": "rule"
     },
@@ -7924,6 +8023,74 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-3dc1283f5a",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:41:03Z",
+      "published_at_taipei": "2026-11-27 17:41",
+      "published_at_taipei_iso": "2026-11-27T17:41:03+08:00",
+      "first_seen_at_utc": "2026-11-27T09:46:27Z",
+      "first_seen_at_taipei": "2026-11-27 17:46",
+      "month": "2026-11",
+      "title": "非紅供應鏈發威！國發會：高階製造回流明顯 資通訊海外生產自9成跌至7成",
+      "url": "https://news.cnyes.com/news/id/6673884",
+      "canonical_url": "https://news.cnyes.com/news/id/6673884",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：創新高",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-c83337212b",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:23:02Z",
+      "published_at_taipei": "2026-11-27 17:23",
+      "published_at_taipei_iso": "2026-11-27T17:23:02+08:00",
+      "first_seen_at_utc": "2026-11-27T09:46:27Z",
+      "first_seen_at_taipei": "2026-11-27 17:46",
+      "month": "2026-11",
+      "title": "個股評價》南亞加碼115億元擴產！搶攻AI高階玻纖布商機",
+      "url": "https://tw.news.yahoo.com/%E5%80%8B%E8%82%A1%E8%A9%95%E5%83%B9-%E5%8D%97%E4%BA%9E%E5%8A%A0%E7%A2%BC115%E5%84%84%E5%85%83%E6%93%B4%E7%94%A2-%E6%90%B6%E6%94%BBai%E9%AB%98%E9%9A%8E%E7%8E%BB%E7%BA%96%E5%B8%83%E5%95%86%E6%A9%9F-092302838.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%80%8B%E8%82%A1%E8%A9%95%E5%83%B9-%E5%8D%97%E4%BA%9E%E5%8A%A0%E7%A2%BC115%E5%84%84%E5%85%83%E6%93%B4%E7%94%A2-%E6%90%B6%E6%94%BBai%E9%AB%98%E9%9A%8E%E7%8E%BB%E7%BA%96%E5%B8%83%E5%95%86%E6%A9%9F-092302838.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：擴產",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-91f478c54d",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T09:20:34Z",
@@ -9121,6 +9288,112 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261127-3dc1283f5a",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:41:03Z",
+      "published_at_taipei": "2026-11-27 17:41",
+      "published_at_taipei_iso": "2026-11-27T17:41:03+08:00",
+      "first_seen_at_utc": "2026-11-27T09:46:27Z",
+      "first_seen_at_taipei": "2026-11-27 17:46",
+      "month": "2026-11",
+      "title": "非紅供應鏈發威！國發會：高階製造回流明顯 資通訊海外生產自9成跌至7成",
+      "url": "https://news.cnyes.com/news/id/6673884",
+      "canonical_url": "https://news.cnyes.com/news/id/6673884",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：創新高",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-1f4129764f",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:40:26Z",
+      "published_at_taipei": "2026-11-27 17:40",
+      "published_at_taipei_iso": "2026-11-27T17:40:26+08:00",
+      "first_seen_at_utc": "2026-11-27T09:46:27Z",
+      "first_seen_at_taipei": "2026-11-27 17:46",
+      "month": "2026-11",
+      "title": "鴻海攜海洋大學續推海洋復育，近90座魚藻礁、放流逾4萬尾原生魚苗！二期將驗證海洋復育成效",
+      "url": "https://tw.news.yahoo.com/%E9%B4%BB%E6%B5%B7%E6%94%9C%E6%B5%B7%E6%B4%8B%E5%A4%A7%E5%AD%B8%E7%BA%8C%E6%8E%A8%E6%B5%B7%E6%B4%8B%E5%BE%A9%E8%82%B2-%E8%BF%9190%E5%BA%A7%E9%AD%9A%E8%97%BB%E7%A4%81-%E6%94%BE%E6%B5%81%E9%80%BE4%E8%90%AC%E5%B0%BE%E5%8E%9F%E7%94%9F%E9%AD%9A%E8%8B%97-%E4%BA%8C%E6%9C%9F%E5%B0%87%E9%A9%97%E8%AD%89%E6%B5%B7%E6%B4%8B%E5%BE%A9%E8%82%B2%E6%88%90%E6%95%88-094026273.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%B4%BB%E6%B5%B7%E6%94%9C%E6%B5%B7%E6%B4%8B%E5%A4%A7%E5%AD%B8%E7%BA%8C%E6%8E%A8%E6%B5%B7%E6%B4%8B%E5%BE%A9%E8%82%B2-%E8%BF%9190%E5%BA%A7%E9%AD%9A%E8%97%BB%E7%A4%81-%E6%94%BE%E6%B5%81%E9%80%BE4%E8%90%AC%E5%B0%BE%E5%8E%9F%E7%94%9F%E9%AD%9A%E8%8B%97-%E4%BA%8C%E6%9C%9F%E5%B0%87%E9%A9%97%E8%AD%89%E6%B5%B7%E6%B4%8B%E5%BE%A9%E8%82%B2%E6%88%90%E6%95%88-094026273.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2317"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：合作",
+      "sentiment_targets": [
+        "2317"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-1b6892a163",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:37:40Z",
+      "published_at_taipei": "2026-11-27 17:37",
+      "published_at_taipei_iso": "2026-11-27T17:37:40+08:00",
+      "first_seen_at_utc": "2026-11-27T09:46:27Z",
+      "first_seen_at_taipei": "2026-11-27 17:46",
+      "month": "2026-11",
+      "title": "鴻海FoxBrain v2.1主權AI評測全球第二！臺灣價值觀正確率98%，31B模型可單機部署",
+      "url": "https://tw.news.yahoo.com/%E9%B4%BB%E6%B5%B7foxbrain-v2-1%E4%B8%BB%E6%AC%8Aai%E8%A9%95%E6%B8%AC%E5%85%A8%E7%90%83%E7%AC%AC%E4%BA%8C-%E8%87%BA%E7%81%A3%E5%83%B9%E5%80%BC%E8%A7%80%E6%AD%A3%E7%A2%BA%E7%8E%8798-31b%E6%A8%A1%E5%9E%8B%E5%8F%AF%E5%96%AE%E6%A9%9F%E9%83%A8%E7%BD%B2-093740932.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E9%B4%BB%E6%B5%B7foxbrain-v2-1%E4%B8%BB%E6%AC%8Aai%E8%A9%95%E6%B8%AC%E5%85%A8%E7%90%83%E7%AC%AC%E4%BA%8C-%E8%87%BA%E7%81%A3%E5%83%B9%E5%80%BC%E8%A7%80%E6%AD%A3%E7%A2%BA%E7%8E%8798-31b%E6%A8%A1%E5%9E%8B%E5%8F%AF%E5%96%AE%E6%A9%9F%E9%83%A8%E7%BD%B2-093740932.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2317"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2317"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-285c035931",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T09:30:07Z",
@@ -9377,6 +9650,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261127-c83337212b",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:23:02Z",
+      "published_at_taipei": "2026-11-27 17:23",
+      "published_at_taipei_iso": "2026-11-27T17:23:02+08:00",
+      "first_seen_at_utc": "2026-11-27T09:46:27Z",
+      "first_seen_at_taipei": "2026-11-27 17:46",
+      "month": "2026-11",
+      "title": "個股評價》南亞加碼115億元擴產！搶攻AI高階玻纖布商機",
+      "url": "https://tw.news.yahoo.com/%E5%80%8B%E8%82%A1%E8%A9%95%E5%83%B9-%E5%8D%97%E4%BA%9E%E5%8A%A0%E7%A2%BC115%E5%84%84%E5%85%83%E6%93%B4%E7%94%A2-%E6%90%B6%E6%94%BBai%E9%AB%98%E9%9A%8E%E7%8E%BB%E7%BA%96%E5%B8%83%E5%95%86%E6%A9%9F-092302838.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%80%8B%E8%82%A1%E8%A9%95%E5%83%B9-%E5%8D%97%E4%BA%9E%E5%8A%A0%E7%A2%BC115%E5%84%84%E5%85%83%E6%93%B4%E7%94%A2-%E6%90%B6%E6%94%BBai%E9%AB%98%E9%9A%8E%E7%8E%BB%E7%BA%96%E5%B8%83%E5%95%86%E6%A9%9F-092302838.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：擴產",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261127-91f478c54d",
       "issue": "2026-11-27-AM",
       "published_at_utc": "2026-11-27T09:20:34Z",
@@ -9493,6 +9800,48 @@
       "sentiment_targets": [
         "NAS100",
         "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261127-59855753c7",
+      "issue": "2026-11-27-AM",
+      "published_at_utc": "2026-11-27T09:10:35Z",
+      "published_at_taipei": "2026-11-27 17:10",
+      "published_at_taipei_iso": "2026-11-27T17:10:35+08:00",
+      "first_seen_at_utc": "2026-11-27T09:46:27Z",
+      "first_seen_at_taipei": "2026-11-27 17:46",
+      "month": "2026-11",
+      "title": "3 Oil And Gas Stocks Investors Are Watching As Brent Nears $100",
+      "url": "https://finance.yahoo.com/energy/articles/3-oil-gas-stocks-investors-091035092.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/3-oil-gas-stocks-investors-091035092.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-39acd4644f",
+        "issue": "2026-11-22-PM",
+        "title": "Top 3 Canadian Growth Stocks To Watch In November 2026",
+        "published_at_taipei": "2026-11-23 05:07",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/top-3-canadian-growth-stocks-210758926.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
       ],
       "sentiment_method": "rule"
     },
@@ -158329,20 +158678,10 @@
       "month": "2026-11",
       "date": "2026-11-27",
       "half": "AM",
-      "updated_at_taipei": "2026-11-27 17:31",
-      "count": 230,
+      "updated_at_taipei": "2026-11-27 17:46",
+      "count": 235,
       "star3_count": 20,
       "failed_sources": [
-        {
-          "id": "marketwatch_top",
-          "name": "MarketWatch",
-          "error": "HTTPSConnectionPool(host='feeds.content.dowjones.io', port=443): Max retries exceeded with url: /public/rss/mw_topstories (Caused by NameResolutionError(\"HTTPSConnection(host='feeds.content.dowjones.io', port=443): Failed to resolve 'feeds.content.dowjones.io' ([Errno -3] Temporary failure in name resolution)\"))"
-        },
-        {
-          "id": "udn_money_stock",
-          "name": "經濟日報",
-          "error": "HTTPSConnectionPool(host='money.udn.com', port=443): Max retries exceeded with url: /rssfeed/news/1001/5590/5710?ch=money (Caused by NameResolutionError(\"HTTPSConnection(host='money.udn.com', port=443): Failed to resolve 'money.udn.com' ([Errno -3] Temporary failure in name resolution)\"))"
-        },
         {
           "id": "binance_derivatives",
           "name": "Binance 永續合約",
@@ -158352,11 +158691,6 @@
           "id": "bybit_derivatives",
           "name": "Bybit 永續合約",
           "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
-        },
-        {
-          "id": "binance_announcements",
-          "name": "Binance 公告",
-          "error": "HTTPSConnectionPool(host='www.binance.com', port=443): Max retries exceeded with url: /bapi/composite/v1/public/cms/article/list/query?type=1&catalogId=48&pageNo=1&pageSize=10 (Caused by NameResolutionError(\"HTTPSConnection(host='www.binance.com', port=443): Failed to resolve 'www.binance.com' ([Errno -3] Temporary failure in name resolution)\"))"
         },
         {
           "id": "bybit_announcements",
