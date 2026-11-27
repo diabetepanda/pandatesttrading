@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-27-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-27T00:13:59Z",
-  "updated_at_taipei": "2026-11-27 08:13",
-  "last_updated_utc": "2026-11-27T00:13:59Z",
-  "last_updated_taipei": "2026-11-27 08:13",
-  "next_update_hint": "約台北時間 08:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-27T00:29:02Z",
+  "updated_at_taipei": "2026-11-27 08:29",
+  "last_updated_utc": "2026-11-27T00:29:02Z",
+  "last_updated_taipei": "2026-11-27 08:29",
+  "next_update_hint": "約台北時間 08:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 20.435,
+    "total_elapsed_sec": 18.555,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 9,
+    "new_items_added": 0,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.075,
+        "elapsed_sec": 0.097,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -45,16 +45,16 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.185,
+        "elapsed_sec": 0.174,
         "raw_count": 30,
-        "items_kept": 12,
+        "items_kept": 11,
         "error": null
       },
       "cnbc_economy": {
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.123,
+        "elapsed_sec": 0.055,
         "raw_count": 30,
         "items_kept": 6,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.111,
+        "elapsed_sec": 0.128,
         "raw_count": 10,
         "items_kept": 0,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.392,
+        "elapsed_sec": 0.231,
         "raw_count": 19,
         "items_kept": 15,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.222,
+        "elapsed_sec": 0.215,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.123,
+        "elapsed_sec": 0.111,
         "raw_count": 30,
         "items_kept": 20,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.118,
+        "elapsed_sec": 0.112,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.102,
+        "elapsed_sec": 0.108,
         "raw_count": 35,
         "items_kept": 17,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.381,
+        "elapsed_sec": 0.37,
         "raw_count": 20,
         "items_kept": 13,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 1.992,
+        "elapsed_sec": 0.402,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.353,
+        "elapsed_sec": 0.339,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.787,
+        "elapsed_sec": 0.855,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.417,
+        "elapsed_sec": 0.322,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.284,
+        "elapsed_sec": 0.14,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.23,
+        "elapsed_sec": 0.129,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,16 +180,16 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.689,
+        "elapsed_sec": 4.658,
         "raw_count": 6,
-        "items_kept": 2,
+        "items_kept": 0,
         "error": null
       },
       "defillama_hacks": {
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.059,
+        "elapsed_sec": 0.075,
         "raw_count": 1378,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.223,
+        "elapsed_sec": 1.745,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.507,
+        "elapsed_sec": 0.514,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 0.994,
+        "elapsed_sec": 0.981,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.461,
+        "elapsed_sec": 0.451,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.537,
+        "elapsed_sec": 0.611,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.373,
+        "elapsed_sec": 0.223,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.441,
+        "elapsed_sec": 0.481,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 2.257,
+        "elapsed_sec": 0.385,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -278,49 +278,49 @@
     "chains_tvl": {
       "Ethereum": {
         "tvl_b": 36.63,
-        "change_1d_pct": 1.71
+        "change_1d_pct": -0.0
       },
       "Solana": {
-        "tvl_b": 4.63,
-        "change_1d_pct": 2.33
+        "tvl_b": 4.62,
+        "change_1d_pct": 0.0
       },
       "Base": {
         "tvl_b": 4.65,
-        "change_1d_pct": -6.82
+        "change_1d_pct": 0.0
       },
       "Tron": {
-        "tvl_b": 4.41,
-        "change_1d_pct": -0.95
+        "tvl_b": 4.4,
+        "change_1d_pct": 0.0
       },
       "BSC": {
         "tvl_b": 4.31,
-        "change_1d_pct": 1.51
+        "change_1d_pct": 0.0
       },
       "Bitcoin": {
         "tvl_b": 2.24,
-        "change_1d_pct": -22.74
+        "change_1d_pct": 0.0
       }
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -382.1,
+      "net_flow_usd_m": -382.6,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.001,
+        "funding_rate_pct": 0.0014,
         "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.008,
+        "funding_rate_pct": 0.0081,
         "oi_usd_b": 1.1
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.8,
-      "tx_count": 66738,
+      "mempool_vsize_mb": 30.9,
+      "tx_count": 71474,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -141891,7 +141891,7 @@
       "month": "2026-11",
       "date": "2026-11-27",
       "half": "AM",
-      "updated_at_taipei": "2026-11-27 08:13",
+      "updated_at_taipei": "2026-11-27 08:29",
       "count": 9,
       "star3_count": 2,
       "failed_sources": [
