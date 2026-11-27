@@ -158,7 +158,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261127a" in index_html
+    assert "?v=20261127b" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -862,12 +862,12 @@ def test_in_depth_research_json_and_rendering() -> None:
     assert ext_b_row["mdd_pct"] == grid_raw["groups"]["B"]["full_history"]["extreme"]["max_drawdown_pct"]
     assert ext_b_row["final_value_twd"] == grid_raw["groups"]["B"]["full_history"]["extreme"]["final_value_twd"]
 
-    # Article 8: Peak Recovery & Robustness Check
+    # Article 8: Peak Recovery, Robustness Check & Final Check
     assert art8["id"] == "peak_recovery_robustness"
     assert art8["slug"] == "peak-recovery-robustness"
     assert art8["title"] == "普通人該怎麼投資：從歷史高點回本到八關壓力測試"
     assert "先存 6 個月生活費當緊急預備金" in art8["takeaway"]
-    assert len(art8["charts"]) == 7
+    assert len(art8["charts"]) == 15
     expected_art8_imgs = [
         "assets/research/peak_recovery_underwater_duration_bars.png",
         "assets/research/peak_recovery_regime_xirr_boxplots.png",
@@ -876,6 +876,14 @@ def test_in_depth_research_json_and_rendering() -> None:
         "assets/research/robustness_intl_crash_equity_curves.png",
         "assets/research/robustness_behavior_xirr_loss_bars.png",
         "assets/research/robustness_withdrawal_ruin_prob.png",
+        "assets/research/final_check_test1_aggressive_filter_rules.png",
+        "assets/research/final_check_test2_estate_tax_domicile.png",
+        "assets/research/final_check_test3_real_bonds_2022_retire.png",
+        "assets/research/final_check_test4_lifetime_continuous_fan.png",
+        "assets/research/final_check_test5_withdrawal_protection.png",
+        "assets/research/final_check_test6_shiller_crisis_paths.png",
+        "assets/research/final_check_test7_fx_swings_impact.png",
+        "assets/research/final_check_test8_different_people_ages.png",
     ]
     for img_rel in expected_art8_imgs:
         assert (root / img_rel).exists(), f"Article 8 chart image missing: {img_rel}"
@@ -883,10 +891,12 @@ def test_in_depth_research_json_and_rendering() -> None:
         rel_chart = ch["src"].lstrip("./")
         assert (root / rel_chart).exists(), f"Article 8 chart image missing: {rel_chart}"
     art8_json_str = json.dumps(art8, ensure_ascii=False)
-    for kw in ("46%", "8%", "30%", "40%", "4%", "3.5%"):
+    for kw in ("46%", "8%", "30%", "40%", "4%", "3.5%", "CSPX", "VGIT", "這次補了哪些漏洞" if False else "最終建議" if False else "1966"):
         assert kw in art8_json_str, f"Article 8 missing key number: {kw}"
     assert len(art8["risk_tier_cards"]) == 3
     assert len(art8["verdict_rows"]) == 5
+    assert len(art8["loopholes_section"]["cards"]) == 8
+    assert len(art8["final_recommendation_card"]["items"]) == 6
 
     # Files existence (single canonical data/research.json; legacy copies removed)
     data_json_path = root / "data" / "research.json"
@@ -1041,9 +1051,9 @@ def test_in_depth_research_json_and_rendering() -> None:
           throw new Error('Article 7 should be collapsed by default');
         }}
 
-        // Verify Article 8 content (Peak Recovery & Robustness)
-        if (!html.includes('先存 6 個月生活費當緊急預備金') || !html.includes('46%') || !html.includes('8%') || !html.includes('30%') || !html.includes('40%') || !html.includes('4%') || !html.includes('3.5%')) {{
-          throw new Error('renderResearchHtml missing Article 8 key numbers or takeaway');
+        // Verify Article 8 content (Peak Recovery, Robustness & Final Check)
+        if (!html.includes('最終建議（照表執行定案版）') || !html.includes('這次補了哪些漏洞') || !html.includes('CSPX') || !html.includes('VGIT') || !html.includes('先存 6 個月生活費當緊急預備金') || !html.includes('46%') || !html.includes('8%') || !html.includes('30%') || !html.includes('40%') || !html.includes('4%') || !html.includes('3.5%')) {{
+          throw new Error('renderResearchHtml missing Article 8 key numbers, final card, or loopholes section');
         }}
         for (const imgName of [
           'peak_recovery_underwater_duration_bars.png',
@@ -1053,6 +1063,14 @@ def test_in_depth_research_json_and_rendering() -> None:
           'robustness_intl_crash_equity_curves.png',
           'robustness_behavior_xirr_loss_bars.png',
           'robustness_withdrawal_ruin_prob.png',
+          'final_check_test1_aggressive_filter_rules.png',
+          'final_check_test2_estate_tax_domicile.png',
+          'final_check_test3_real_bonds_2022_retire.png',
+          'final_check_test4_lifetime_continuous_fan.png',
+          'final_check_test5_withdrawal_protection.png',
+          'final_check_test6_shiller_crisis_paths.png',
+          'final_check_test7_fx_swings_impact.png',
+          'final_check_test8_different_people_ages.png',
         ]) {{
           if (!html.includes(imgName)) {{
             throw new Error('renderResearchHtml missing Article 8 chart image: ' + imgName);

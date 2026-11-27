@@ -3944,11 +3944,17 @@
 
   function renderPeakRecoveryRobustnessArticleHtml(art) {
     if (!art) return "";
+    const finalCard = art.final_recommendation_card || {};
+    const finalItems = Array.isArray(finalCard.items) ? finalCard.items : [];
     const plan = art.execution_plan || {};
     const savingList = Array.isArray(plan.saving_phase) ? plan.saving_phase : [];
     const transRows = Array.isArray(plan.transition_table) ? plan.transition_table : [];
     const withdrawList = Array.isArray(plan.withdrawal_phase) ? plan.withdrawal_phase : [];
     const riskCards = Array.isArray(art.risk_tier_cards) ? art.risk_tier_cards : [];
+    const loopholeSec = art.loopholes_section || {};
+    const loopholeCards = Array.isArray(loopholeSec.cards) ? loopholeSec.cards : [];
+    const shillerCrisisRows = Array.isArray(loopholeSec.shiller_crisis_rows) ? loopholeSec.shiller_crisis_rows : [];
+    const agePersonaRows = Array.isArray(loopholeSec.age_persona_rows) ? loopholeSec.age_persona_rows : [];
     const recLevels = Array.isArray(art.recovery_levels) ? art.recovery_levels : [];
     const slowBear = Array.isArray(art.slow_bear_comparison) ? art.slow_bear_comparison : [];
     const gatesExp = Array.isArray(art.gates_explainer) ? art.gates_explainer : [];
@@ -3994,12 +4000,30 @@
             <p class="subtitle">${escapeHtml(art.subtitle || "")}</p>
           </div>
           <div class="article-header-actions" onclick="event.stopPropagation()">
-            <span class="badge badge-ok">${escapeHtml(art.badge || "八關壓力測試")}</span>
+            <span class="badge badge-ok">${escapeHtml(art.badge || "最終定案")}</span>
             <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-peak_recovery_robustness" onclick="toggleResearchArticle('peak_recovery_robustness')">展開閱讀</button>
           </div>
         </div>
 
         <div class="article-body collapsed" id="body-peak_recovery_robustness">
+          <!-- 0. 最終建議卡片（置頂） -->
+          ${finalItems.length ? `
+          <div class="prr-final-card">
+            <div class="prr-final-card-head">
+              <h2>🎯 最終建議（照表執行定案版）</h2>
+              <span class="badge badge-ok">${escapeHtml(finalCard.badge || "全部數字經實測")}</span>
+            </div>
+            <div class="prr-final-grid">
+              ${finalItems.map((it) => `
+                <div class="prr-final-item">
+                  <div class="prr-final-item-title">${escapeHtml(it.title || "")}</div>
+                  <div>${escapeHtml(it.body || "")}</div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+          ` : ""}
+
           <!-- 1. 一句話結論 -->
           <div class="callout callout-takeaway prr-hero-callout">
             <p>💡 <strong>一句話結論：</strong>${escapeHtml(art.takeaway || "")}</p>
@@ -4038,15 +4062,15 @@
               </table>
             </div>
 
-            <h3 style="margin-top: 16px;">轉換期（每年 1 月調整時照表執行）</h3>
+            <h3 style="margin-top: 16px;">滑降期（55–59 歲每年 1 月調倉照表執行）</h3>
             <div class="table-wrap table-responsive" style="margin-top: 8px;">
               <table class="data-table mobile-cards lev-table">
                 <thead>
                   <tr>
                     <th>年齡</th>
-                    <th>0050</th>
-                    <th>SPY</th>
-                    <th>美國短中期公債 ETF</th>
+                    <th>0050（或 006208）</th>
+                    <th>${escapeHtml(plan.transition_us_col || "CSPX（或 VOO）")}</th>
+                    <th>${escapeHtml(plan.transition_bond_col || "VGIT（3–10 年美債）")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -4054,8 +4078,8 @@
                     <tr>
                       <td data-label="年齡"><strong>${escapeHtml(r.age)}</strong></td>
                       <td data-label="0050" class="num">${escapeHtml(r.tw0050)}</td>
-                      <td data-label="SPY" class="num">${escapeHtml(r.spy)}</td>
-                      <td data-label="美國短中期公債 ETF" class="num"><strong>${escapeHtml(r.bond)}</strong></td>
+                      <td data-label="美股 ETF" class="num">${escapeHtml(r.spy)}</td>
+                      <td data-label="美債 ETF" class="num"><strong>${escapeHtml(r.bond)}</strong></td>
                     </tr>
                   `).join("")}
                 </tbody>
@@ -4067,7 +4091,7 @@
 
           <!-- 3. 依你能承受的跌幅選組合 -->
           <div class="research-section">
-            <h2>二、依你能承受的跌幅選組合</h2>
+            <h2>二、依你能承受的跌幅選組合（全部實測數字）</h2>
             <div class="prr-risk-grid">
               ${riskCards.map((c) => `
                 <div class="prr-risk-card">
@@ -4088,9 +4112,93 @@
             <p class="prr-leverage-warn">⚠️ ${escapeHtml(art.leverage_warning || "")}</p>
           </div>
 
-          <!-- 4. 從高點跌下來要多久回本 -->
+          <!-- 4. 這次補了哪些漏洞（8 項最終補強） -->
           <div class="research-section">
-            <h2>三、從高點跌下來要多久回本</h2>
+            <h2>三、這次補了哪些漏洞（8 項最終補強與翻案清單）</h2>
+            <p>${escapeHtml(loopholeSec.intro || "")}</p>
+            <div class="prr-loophole-grid">
+              ${loopholeCards.map((lc) => `
+                <div class="prr-loophole-card${lc.changed ? " changed" : ""}">
+                  <div class="prr-loophole-head">
+                    <strong>${escapeHtml(lc.num)}. ${escapeHtml(lc.title)}</strong>
+                    <span class="badge ${lc.changed ? "badge-warn" : "badge-ok"}">${escapeHtml(lc.verdict_badge || "")}</span>
+                  </div>
+                  <div>${escapeHtml(lc.summary || "")}</div>
+                </div>
+              `).join("")}
+            </div>
+
+            ${shillerCrisisRows.length ? `
+            <h3 style="margin-top: 16px;">Shiller 1871–2026 五大歷史災難年退休路徑實測（起始 1,000 萬、60/40 股債）</h3>
+            <div class="table-wrap table-responsive" style="margin-top: 8px;">
+              <table class="data-table mobile-cards">
+                <thead>
+                  <tr>
+                    <th>歷史退休起點</th>
+                    <th>固定 4% + 2%</th>
+                    <th>固定 4% + 實際 CPI</th>
+                    <th>20%/3.5% 保護 + CPI</th>
+                    <th>初始 3.5% + 實際 CPI（首選）</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${shillerCrisisRows.map((r) => `
+                    <tr>
+                      <td data-label="歷史退休起點"><strong>${escapeHtml(r.label)}</strong></td>
+                      <td data-label="固定 4% + 2%">${escapeHtml(r.fixed_4_plus_2)}</td>
+                      <td data-label="固定 4% + CPI">${escapeHtml(r.fixed_4_cpi)}</td>
+                      <td data-label="20%/3.5% 保護">${escapeHtml(r.protect_20_35_cpi)}</td>
+                      <td data-label="初始 3.5% + CPI"><strong>${escapeHtml(r.fixed_35_cpi)}</strong></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+            ` : ""}
+
+            ${agePersonaRows.length ? `
+            <h3 style="margin-top: 16px;">不同起始年齡適用表（月扣 1 萬元起，55 歲滑降、60 歲退休）</h3>
+            <div class="table-wrap table-responsive" style="margin-top: 8px;">
+              <table class="data-table mobile-cards">
+                <thead>
+                  <tr>
+                    <th>起始年齡</th>
+                    <th>固定月扣 1 萬（60 歲中位）</th>
+                    <th>每年加薪 +3%（60 歲中位）</th>
+                    <th>60 歲達 1,000 萬所需首年月扣</th>
+                    <th>適用判定與具體修正</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${agePersonaRows.map((r) => `
+                    <tr>
+                      <td data-label="起始年齡"><strong>${escapeHtml(r.age)}</strong></td>
+                      <td data-label="固定月扣 1 萬">${escapeHtml(r.fixed_p50_label)}</td>
+                      <td data-label="每年加薪 +3%">${escapeHtml(r.grow3_p50_label)}</td>
+                      <td data-label="達 1,000 萬所需月扣">${escapeHtml(r.dca_10m_label)}</td>
+                      <td data-label="適用判定與具體修正"><strong>${escapeHtml(r.verdict)}</strong></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+            ` : ""}
+
+            <div class="research-charts-grid">
+              ${renderChartFig(charts.fc_test1_filter)}
+              ${renderChartFig(charts.fc_test2_estate)}
+              ${renderChartFig(charts.fc_test3_bonds)}
+              ${renderChartFig(charts.fc_test4_lifetime)}
+              ${renderChartFig(charts.fc_test5_withdrawal)}
+              ${renderChartFig(charts.fc_test6_shiller)}
+              ${renderChartFig(charts.fc_test7_fx)}
+              ${renderChartFig(charts.fc_test8_people)}
+            </div>
+          </div>
+
+          <!-- 5. 從高點跌下來要多久回本 -->
+          <div class="research-section">
+            <h2>四、從高點跌下來要多久回本</h2>
             <div class="table-wrap table-responsive">
               <table class="data-table mobile-cards">
                 <thead>
@@ -4117,9 +4225,9 @@
             </div>
           </div>
 
-          <!-- 5. 如果之後 10 年是緩跌或盤整 -->
+          <!-- 6. 如果之後 10 年是緩跌或盤整 -->
           <div class="research-section">
-            <h2>四、如果之後 10 年是緩跌或盤整</h2>
+            <h2>五、如果之後 10 年是緩跌或盤整</h2>
             <p>很多投資人擔心「買完之後股市走十年盤整或緩跌怎麼辦？」跨國崩盤與高點進場實測顯示：<strong>分散到兩個國家加上持續定期定額扣款，在緩跌或盤整行情反而有利</strong>——因為大跌期間每個月都在低檔累積便宜股數、壓低平均成本，而且當其中一國失落時，另一國的成長能撐住整體帳戶。</p>
             <div class="table-wrap table-responsive" style="margin-top: 10px;">
               <table class="data-table mobile-cards">
@@ -4150,9 +4258,9 @@
             </div>
           </div>
 
-          <!-- 6. 八關壓力測試 -->
+          <!-- 7. 八關壓力測試 -->
           <div class="research-section">
-            <h2>五、八關壓力測試</h2>
+            <h2>六、八關壓力測試（前置檢驗）</h2>
             <p>${escapeHtml(art.gates_honest_note || "")}</p>
             <div class="table-wrap table-responsive" style="margin-top: 10px;">
               <table class="data-table mobile-cards prr-verdict-table">
@@ -4199,9 +4307,9 @@
             </details>
           </div>
 
-          <!-- 7. 最容易害普通人虧錢的三件事 -->
+          <!-- 8. 最容易害普通人虧錢的三件事 -->
           <div class="research-section">
-            <h2>六、最容易害普通人虧錢的三件事</h2>
+            <h2>七、最容易害普通人虧錢的三件事</h2>
             <ul class="research-strat-list">
               ${behMistakes.map((m) => `<li><strong>${escapeHtml(m.title)}：</strong>${escapeHtml(m.desc)}</li>`).join("")}
             </ul>
@@ -4236,10 +4344,10 @@
             </div>
           </div>
 
-          <!-- 8. 退休提領：債券不是越多越安全 -->
+          <!-- 9. 退休提領：債券不是越多越安全 -->
           <div class="research-section">
-            <h2>七、退休提領：債券不是越多越安全</h2>
-            <p>假設 60 歲存到 1,000 萬台幣，第一年領 4%（40 萬），之後每年隨 2% 通膨調高提領額並持續 30 年（到 90 歲）。測試結果顛覆直覺：<strong>前十年最怕大跌（序列風險），後二十年最怕通膨</strong>。債券配到 70%（30/70）雖然前 20 年穩如泰山，但低利率環境下成長追不上通膨，80 歲後反而容易把老本啃光；反而是 60/40 股債同時擋住早年股災與晚年通膨，30 年資金用完機率最低。</p>
+            <h2>八、退休提領：債券不是越多越安全</h2>
+            <p>假設 60 歲存到 1,000 萬台幣，連續提領 30 年（到 90 歲）。測試結果顛覆直覺：<strong>前十年最怕大跌（序列風險），後二十年最怕通膨</strong>。債券配到 70%（30/70）雖然前 20 年穩如泰山，但低利率環境下成長追不上通膨，80 歲後反而容易把老本啃光；反而是 60/40 股債（30% 0050 + 30% CSPX + 40% VGIT）同時擋住早年股災與晚年通膨，30 年資金用完機率最低。</p>
             <div class="table-wrap table-responsive" style="margin-top: 10px;">
               <table class="data-table mobile-cards lev-table">
                 <thead>
@@ -4271,13 +4379,13 @@
             </div>
           </div>
 
-          <!-- 9. 排名前五的組合，統計上差不多一樣好 -->
+          <!-- 10. 排名前五的組合，統計上差不多一樣好 -->
           <div class="research-section">
-            <h2>八、排名前五的組合，統計上差不多一樣好</h2>
+            <h2>九、排名前五的組合，統計上差不多一樣好</h2>
             <p>${escapeHtml(art.top5_stat_note || "")}</p>
           </div>
 
-          <!-- 10. 資料限制（灰色小字區塊） -->
+          <!-- 11. 資料限制（灰色小字區塊） -->
           <div class="research-section prr-limitations-box">
             <h3>資料限制與透明揭露</h3>
             <ul>

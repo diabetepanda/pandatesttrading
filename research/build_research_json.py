@@ -1702,22 +1702,236 @@ def build_research_dict() -> dict:
     g6_agg_c2 = (g6_mc.get("aggressive_60_top5", {}).get("comparisons_2_to_5") or [{}])[0]
     g6_stat_m3b_prob = rc_g6.get("schemes", {}).get("stationary_avg3y", {}).get("r3_m3b_prob_mdd_lt_60pct", 32.66)
 
+    # Load final_check results (8 loophole checks)
+    fc_path = repo_root / "research" / "final_check" / "results.json"
+    fc_raw = json.loads(fc_path.read_text(encoding="utf-8"))
+    fc_t1 = fc_raw["test_1_aggressive_filter"]
+    fc_t2 = fc_raw["test_2_estate_tax_domicile"]
+    fc_t3 = fc_raw["test_3_real_bonds"]
+    fc_t4 = fc_raw["test_4_lifetime_continuous"]
+    fc_t5 = fc_raw["test_5_withdrawal_protection"]
+    fc_t6 = fc_raw["test_6_shiller_inflation"]
+    fc_t7 = fc_raw["test_7_fx_swings"]
+    fc_t8 = fc_raw["test_8_different_people"]
+
+    t1_fc = fc_t1["full_port_0band"]
+    t1_fb = fc_t1["bootstrap_full_port"]
+    t1_a50 = fc_t1["age50_exit_comparison"]
+    t2_ov = fc_t2["overlap_validation_2010_2026"]
+    t2_dca = fc_t2["full_history_dca_comparison"]
+    t2_es10 = fc_t2["estate_tax_by_death_age"]["dca_10k_per_month"]
+    t2_es30 = fc_t2["estate_tax_by_death_age"]["dca_30k_per_month"]
+    t3_22 = fc_t3["selloff_2022_and_history"]
+    t3_r30 = fc_t3["retirement_30y_comparison"]
+    sel_bond = fc_t3["selected_bond_etf"]
+    t4_mod_p = fc_t4["modern_tw_us_bootstrap"]["protect_20_35_plus_2"]
+    t4_mod_f = fc_t4["modern_tw_us_bootstrap"]["fixed_4_plus_2"]
+    t4_sh_p = fc_t4["shiller_1871_rolling"]["protect_20_35_cpi"]
+    t4_sh_f = fc_t4["shiller_1871_rolling"]["fixed_4_cpi"]
+    t5_mod = fc_t5["modern_30y_bootstrap"]
+    t5_sh = fc_t5["shiller_30y_rolling"]
+    t6_roll = fc_t6["rolling_30y_summary"]
+    t6_five = fc_t6["five_crisis_paths"]
+    t7_sc = fc_t7["scenarios"]
+    t8_cons = fc_t8["conservative_comparison"]
+    t8_pers = fc_t8["personas_by_start_age"]
+    t8_alts = fc_t8["late_starter_alternatives"]
+
+    loophole_cards = [
+        {
+            "num": "1",
+            "title": "積極型濾網規則二選一與 50 歲出清",
+            "changed": True,
+            "verdict_badge": "推翻舊規則（取消濾網）",
+            "summary": (
+                f"舊文文字寫「跌破 200 日線全部賣出（規則 B）」，但舊回測只跑「僅新扣款切換（規則 A）」。"
+                f"本次補測完整積極組合（40% 0050 + 10% 00631L + 50% CSPX）後發現：不用濾網、每年 1 月再平衡的規則 C "
+                f"全歷史 XIRR {t1_fc['rule_C']['full_history']['xirr_pct']:.2f}%、滾動 10 年中位 XIRR {t1_fc['rule_C']['rolling_10y']['median_xirr_pct']:.2f}%、"
+                f"MDD {t1_fc['rule_C']['full_history']['mdd_pct']:.2f}%（Bootstrap 破 −60% 僅 {t1_fb['rule_C']['prob_mdd_lt_60pct']:.2f}%），"
+                f"勝過規則 A（滾動 {t1_fc['rule_A']['rolling_10y']['median_xirr_pct']:.2f}%）與規則 B（滾動 {t1_fc['rule_B']['rolling_10y']['median_xirr_pct']:.2f}%、"
+                f"年換手 {t1_fc['rule_B']['full_history']['switches_per_year']:.2f} 次、摩擦費 {t1_fc['rule_B']['full_history']['total_fees_twd']:,.0f} 元）。"
+                f"另實測 50 歲 1 月出清 00631L 可將 50–60 歲最差 10% 回撤由 {t1_a50['sell_at_55_glidepath']['dd_50_60_p10_worst_pct']:.2f}% 壓至 {t1_a50['sell_at_50']['dd_50_60_p10_worst_pct']:.2f}%，故維持 50 歲出清。"
+            ),
+        },
+        {
+            "num": "2",
+            "title": "美國遺產稅與 ETF 註冊地（SPY/VOO vs CSPX）",
+            "changed": True,
+            "verdict_badge": "推翻舊標的（改推 CSPX）",
+            "summary": (
+                f"2010–2026 真實價格驗證 CSPX.L 美元年化 {t2_ov['cspx_real_usd_cagr_pct']:.2f}%，贏過扣 30% 稅之 VOO（{t2_ov['voo_net30_usd_cagr_pct']:.2f}%）與 SPY（{t2_ov['spy_net30_usd_cagr_pct']:.2f}%）。"
+                f"更關鍵的是美國非居民遺產稅（超過 USD 60,000 課 18%–40%）：月投 1 萬者 60/75/90 歲過世時，僅美股 30% 買 SPY/VOO 就會被扣 "
+                f"{t2_es10['60']['us_equity_only']['spy_voo_estate_tax_twd']/10000:.0f} 萬 / {t2_es10['75']['us_equity_only']['spy_voo_estate_tax_twd']/10000:.0f} 萬 / {t2_es10['90']['us_equity_only']['spy_voo_estate_tax_twd']/10000:.0f} 萬"
+                f"（佔總資產 {t2_es10['60']['us_equity_only']['spy_voo_tax_pct_of_total_port']:.2f}%～{t2_es10['90']['us_equity_only']['spy_voo_tax_pct_of_total_port']:.2f}%）；"
+                f"因此美股主推薦正式改為愛爾蘭累積型 CSPX（費率 0.07%、股息稅 15%、免美國遺產稅），僅台灣無英股複委託且美資產低於 USD 60,000 者改用 VOO（0.03%）。0050（約 0.22%）與 006208（約 0.23%）打平並列。"
+            ),
+        },
+        {
+            "num": "3",
+            "title": "債券改用真實商品（SHY / VGIT / IEF）",
+            "changed": True,
+            "verdict_badge": f"具名升級（選定 {sel_bond}）",
+            "summary": (
+                f"舊研究用不可買進的 ^IRX 國庫券代表債券。改用真實公債 ETF 實測 2022 股債雙殺：SHY 單獨美元回撤 {t3_22['SHY']['bond_2022_mdd_usd_pct']:.2f}%（30/30/40 組合台幣 MDD {t3_22['SHY']['port_30_30_40_2022_mdd_twd_pct']:.2f}%）、"
+                f"VGIT 單獨 {t3_22['VGIT']['bond_2022_mdd_usd_pct']:.2f}%（組合 {t3_22['VGIT']['port_30_30_40_2022_mdd_twd_pct']:.2f}%，僅深 2.43pp）、IEF 單獨 {t3_22['IEF']['bond_2022_mdd_usd_pct']:.2f}%（組合 {t3_22['IEF']['port_30_30_40_2022_mdd_twd_pct']:.2f}%）。"
+                f"30 年退休模擬中，VGIT 破產率 {t3_r30['VGIT']['ruin_prob_pct']:.2f}%（剛退休遇大跌 {t3_r30['VGIT']['early_crash_ruin_prob_pct']:.2f}%、90 歲中位 {t3_r30['VGIT']['median_terminal_twd']/10000:.0f} 萬）大幅優於 SHY（{t3_r30['SHY']['ruin_prob_pct']:.2f}% / {t3_r30['SHY']['early_crash_ruin_prob_pct']:.2f}% / {t3_r30['SHY']['median_terminal_twd']/10000:.0f} 萬）且費用率僅 0.03%，正式選定 VGIT。"
+            ),
+        },
+        {
+            "num": "4",
+            "title": "30 歲一路跑到 90 歲的一生連續模擬",
+            "changed": False,
+            "verdict_badge": "通過驗證（補齊實測）",
+            "summary": (
+                f"同一筆資產自 30 歲月投 1 萬（總投入 360 萬）→ 55–59 歲每年實際加 8% {sel_bond} 滑降 → 60–90 歲連續提領。"
+                f"近代台美 3,000 條路徑：60 歲資產 P10 {t4_mod_p['age60_p10_twd']/10000:.0f} 萬 / P50 {t4_mod_p['age60_p50_twd']/10000:.0f} 萬（{t4_mod_p['age60_p50_multiple']:.2f} 倍） / P90 {t4_mod_p['age60_p90_twd']/10000:.0f} 萬；"
+                f"90 歲前破產率 0.00%（保護版）/ {t4_mod_f['ruin_prob_pct']:.2f}%（固定 4%+2%），90 歲中位剩餘 {t4_mod_p['age90_p50_twd']/10000:.0f} 萬。"
+                f"Shiller 1871–1966 共 {t4_sh_p['cohort_count']} 條真實 60 年歷史路徑亦全數通過（保護版破產率 0.00%、固定 4%+CPI {t4_sh_f['ruin_prob_pct']:.2f}%），刪去舊文「中間各年未回測」備註。"
+            ),
+        },
+        {
+            "num": "5",
+            "title": "提領保護規則與最低生活費壓力測試",
+            "changed": True,
+            "verdict_badge": "修正為雙軌提領規則",
+            "summary": (
+                f"20%/3.5% 保護規則雖將 Shiller 實際 CPI 破產率由 {t5_sh['fixed_4_cpi']['ruin_prob_pct']:.2f}% 壓至 0.00%（平均觸發 {t5_sh['protect_20_35_cpi']['avg_protection_years']:.2f} 年），"
+                f"卻暴露高通膨熊市年份最低一年實質生活費 P10 跌至 {t5_sh['protect_20_35_cpi']['min_spending_real_p10_pct']:.2f}%（低於 60% 警戒線）；"
+                f"而完全不調通膨的固定 4% 第 30 年實質購買力縮水 {fc_t5['decision']['flat_4_real_purchasing_power_loss_30y_pct']:.2f}%（淘汰）。"
+                f"依事前標準改推雙軌：穩健首選「初始 3.5% 隨實際 CPI 調整」（155 年 0.00% 破產、生活費 100% 不打折）；首年必領 4.0% 者再強制配 20%/3.5% 保護。"
+            ),
+        },
+        {
+            "num": "6",
+            "title": "1871–2026 長歷史高通膨與五大災難年",
+            "changed": True,
+            "verdict_badge": "改依實際 CPI 調整",
+            "summary": (
+                f"Shiller 1,508 條 30 年路徑顯示，1966（年化 CPI {t6_five['1966']['realized_cpi_cagr_pct']:.2f}%）與 1973（{t6_five['1973']['realized_cpi_cagr_pct']:.2f}%）高通膨年代若死守「每年固定 +2%」，"
+                f"實質生活費將縮水至 {t6_five['1966']['modes']['fixed_4_plus_2']['min_real_spending_pct']:.1f}%～{t6_five['1973']['modes']['fixed_4_plus_2']['min_real_spending_pct']:.1f}%；"
+                f"若改按實際 CPI 調整，1966 年固定 4% 會在第 {t6_five['1966']['modes']['fixed_4_cpi']['ruin_year_offset']:.1f} 年破產，1929 年固定 4%+2% 則在第 {t6_five['1929']['modes']['fixed_4_plus_2']['ruin_year_offset']:.1f} 年破產。"
+                f"唯有「初始 3.5% + 實際 CPI」在 1929 / 1966 / 1973 / 2000（26年） / 2008（18年）五大危機年全數 100% 過關且生活費不打折。"
+            ),
+        },
+        {
+            "num": "7",
+            "title": "台幣 5 年急升至 25 / 急貶至 40 匯率壓力",
+            "changed": False,
+            "verdict_badge": "維持 30/30/40（揭露縮水幅）",
+            "summary": (
+                f"退休前 5 年升值至 25 元會讓 60 歲資產與首年台幣提領額縮水 {fc_t7['decision']['pre25_year1_wd_drop_vs_base_pct']:.2f}%（由 64.0 萬降至 54.9 萬/年），但破產率仍僅 {t7_sc['pre_retire_to_25']['rules']['fixed_4_plus_2']['ruin_prob_pct']:.2f}%（保護版 0.00%）。"
+                f"退休後前 5 年升值至 25 元使固定 4%+2% 破產率升至 {t7_sc['post_retire_to_25']['rules']['fixed_4_plus_2']['ruin_prob_pct']:.2f}%（保護版 0.00%）；"
+                f"反直覺的是，改換 20% 台幣定存（1.5%）做 50/50 幣別避險，因少賺 30 年美債複利，固定提領破產率反而升至 {t7_sc['post_retire_to_25_twd20_hedge']['rules']['fixed_4_plus_2']['ruin_prob_pct']:.2f}%，故維持 30/30/40。"
+            ),
+        },
+        {
+            "num": "8",
+            "title": "不同起跑年齡（25–45 歲）與保守型 25/25/50 獨立實測",
+            "changed": True,
+            "verdict_badge": "補齊實測＋新增分齡表",
+            "summary": (
+                f"保守型 25% 0050 + 25% CSPX + 50% {sel_bond} 獨立實測全歷史 XIRR {t8_cons['cons_25_25_50']['full_history_xirr_pct']:.2f}%、MDD {t8_cons['cons_25_25_50']['full_history_mdd_pct']:.2f}%、破 −30% 機率 0.00%，正式取代「未回測」。"
+                f"年齡實測顯示 25 歲（60 歲中位 {t8_pers['age_25']['fixed_10k']['age60_p50_twd']/10000:.0f} 萬）與 30 歲（{t8_pers['age_30']['fixed_10k']['age60_p50_twd']/10000:.0f} 萬）完全適用；"
+                f"45 歲起跑只靠月扣 1 萬、60 歲退中位僅 {t8_pers['age_45']['fixed_10k']['age60_p50_twd']/10000:.0f} 萬（月領 {t8_pers['age_45']['fixed_10k']['retire_yr1_monthly_wd_p50_twd']:,.0f} 元），判定不適用，改提供「月扣提至 2.7–3 萬」、「延至 65 歲退」或「35/35/30 減震＋加碼」三套具體解方。"
+            ),
+        },
+    ]
+
+    shiller_crisis_rows = []
+    for yr_k in ("1929", "1966", "1973", "2000", "2008"):
+        c = t6_five[yr_k]
+        m = c["modes"]
+        def _fmt_mode(md: dict[str, Any]) -> str:
+            if md["ruined"]:
+                return f"第 {md['ruin_year_offset']:.1f} 年破產"
+            return f"存活（實質剩 {md['end_real_twd']/10000:.0f} 萬／最低生活費 {md['min_real_spending_pct']:.1f}%）"
+        shiller_crisis_rows.append({
+            "year": yr_k,
+            "label": f"{c['label']}（{c['simulated_years']}年，CPI {c['realized_cpi_cagr_pct']:.2f}%/年）",
+            "fixed_4_plus_2": _fmt_mode(m["fixed_4_plus_2"]),
+            "fixed_4_cpi": _fmt_mode(m["fixed_4_cpi"]),
+            "protect_20_35_cpi": _fmt_mode(m["protect_20_35_cpi"]),
+            "fixed_35_cpi": _fmt_mode(m["fixed_35_cpi"]),
+        })
+
+    age_persona_rows = []
+    for age_i, verdict_txt in [
+        (25, "完全適用（月扣 1 萬即超標）"),
+        (30, "完全適用（核心基準族群）"),
+        (40, "須改月扣 14,887 元，或延至 65 歲退（中位 1,133 萬）"),
+        (45, "不適用月扣 1 萬 60 歲退：改月扣 2.7–3 萬、延至 65 歲退，或改 35/35/30＋加碼"),
+    ]:
+        pf = t8_pers[f"age_{age_i}"]["fixed_10k"]
+        pg = t8_pers[f"age_{age_i}"]["grow_3pct_yr"]
+        age_persona_rows.append({
+            "age": f"{age_i} 歲起跑（至 60 歲）",
+            "fixed_p50_label": f"{pf['age60_p50_twd']/10000:.0f} 萬（{pf['age60_p50_multiple']:.2f} 倍／月領 {pf['retire_yr1_monthly_wd_p50_twd']:,.0f} 元）",
+            "grow3_p50_label": f"{pg['age60_p50_twd']/10000:.0f} 萬（{pg['age60_p50_multiple']:.2f} 倍／月領 {pg['retire_yr1_monthly_wd_p50_twd']:,.0f} 元）",
+            "dca_10m_label": f"{pf['monthly_dca_needed_for_10m_median_twd']:,.0f} 元（+3% 版 {pg['monthly_dca_needed_for_10m_median_twd']:,.0f} 元）",
+            "verdict": verdict_txt,
+        })
+
     article_peak_recovery_robustness = {
         "id": "peak_recovery_robustness",
         "slug": "peak-recovery-robustness",
         "title": "普通人該怎麼投資：從歷史高點回本到八關壓力測試",
-        "subtitle": "合併歷史高點回本統計（peak_recovery）與八關穩健性壓力測試（robustness_check），整理給非工程師普通人的具體投資執行表",
-        "takeaway": "先存 6 個月生活費當緊急預備金，再每月定期定額 0050 和 SPY 各半，每年 1 月調回各半，不加槓桿；55 到 60 歲按表逐年加入債券。",
-        "badge": "八關壓力測試",
+        "subtitle": "整合歷史高點回本（peak_recovery）、八關穩健性壓力測試（robustness_check）與 8 項最終邏輯補強（final_check），給非工程師普通人的定案執行手冊",
+        "takeaway": (
+            f"先存 6 個月生活費當緊急預備金，累積期每月定期定額 0050（或 006208）50% + 愛爾蘭註冊 CSPX 50%（免美國遺產稅、美股股息預扣 15%），每年 1 月第一個交易日再平衡；"
+            f"55–59 歲每年 1 月按表加 8% {sel_bond}（3–10 年美債 ETF）至 30/30/40；60 歲退休首選初始 3.5% 隨實際 CPI 提領（155 年 0.00% 破產），若首年必領 4.0% 須強制加 20%/3.5% 保護規則。"
+        ),
+        "badge": "最終定案（含 8 項補強）",
         "updated_at": "2026-11",
-        "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/robustness_check/report.md",
-        "github_code": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/robustness_check",
+        "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/final_check/report.md",
+        "github_code": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/final_check",
+        "final_recommendation_card": {
+            "badge": "全部數字經實測（2026-11-27 定案）",
+            "items": [
+                {
+                    "title": "1. 緊急預備金（進場前必備）",
+                    "body": "先存滿 6 個月基本生活費（台幣活存或定存），存滿前不進場投資。",
+                },
+                {
+                    "title": "2. 累積期配置與商品代號（至 55 歲）",
+                    "body": (
+                        "每月固定扣款：0050（約 0.22%，可並列 006208 約 0.23%）50% ＋ 愛爾蘭註冊累積型 S&P 500 ETF「CSPX」（費用率 0.07%、股息稅 15%、免美國遺產稅；可透過 IBKR 或永豐／富邦英股複委託）50%。"
+                        "若只用無英股之台灣複委託且美國資產總額低於 USD 60,000（約 192 萬台幣），美股改用 VOO（0.03%）。"
+                    ),
+                },
+                {
+                    "title": "3. 再平衡與手續費紀律",
+                    "body": "每年 1 月第一個交易日將股債調回目標比例，其餘 11 個月不動作；一律使用定期定額免低消管道（若單筆低消 USD 15，改為每季扣款一次）。",
+                },
+                {
+                    "title": f"4. 滑降期逐年比例（55–59 歲，債券代號 {sel_bond}）",
+                    "body": (
+                        f"每年 1 月調倉（0050 / CSPX / {sel_bond}，{sel_bond} 費用率 0.03%）：55 歲 46/46/8 → 56 歲 42/42/16 → 57 歲 38/38/24 → 58 歲 34/34/32 → 59 歲起 30/30/40。"
+                        f"（註：{sel_bond} 屬美國註冊 ETF，總美元資產逾 USD 60,000 且重視身後免遺產稅者可改愛爾蘭註冊美債 ETF，但該類商品本輪「未回測」，以上為 {sel_bond} 實測數據。）"
+                    ),
+                },
+                {
+                    "title": "5. 提領期規則（60 歲起，維持 30/30/40 年平衡）",
+                    "body": (
+                        "【穩健首選】首年領總資產 3.5%，之後每年依實際 CPI 調整（1871–2026 共 1,508 條路徑 0.00% 破產、生活費 100% 不打折）。"
+                        "【高現金流替代】首年領 4.0% 依實際 CPI 調整，強制加 20%/3.5% 保護規則（1 月資產比退休當時低逾 20% 改領當下 3.5% 至回本；破產率 0.00%，極端高通膨年實質生活費 P10 可降至 42.99%）。"
+                    ),
+                },
+                {
+                    "title": "6. 保守／積極與 40–45 歲晚起跑調整",
+                    "body": (
+                        f"保守型：25% 0050 + 25% CSPX + 50% {sel_bond} 年平衡（XIRR {t8_cons['cons_25_25_50']['full_history_xirr_pct']:.2f}%、MDD {t8_cons['cons_25_25_50']['full_history_mdd_pct']:.2f}%）。"
+                        f"積極型：40% 0050 + 10% 00631L + 50% CSPX，不用 200 日線濾網、每年 1 月再平衡，50 歲 1 月出清 00631L（XIRR {t1_fc['rule_C']['full_history']['xirr_pct']:.2f}%、MDD {t1_fc['rule_C']['full_history']['mdd_pct']:.2f}%）。"
+                        f"45 歲起跑者月扣 1 萬 60 歲退中位僅 374 萬，須改月扣 2.7–3 萬、延至 65 歲退，或採 35/35/30 減震並加碼。"
+                    ),
+                },
+            ],
+        },
         "execution_plan": {
             "saving_phase": [
-                "先存 6 個月生活費當緊急預備金（活存或定存），存滿前不投資。",
-                "每月固定日期扣款：0050 50%、SPY（或複委託定期定額的 VOO）50%。",
+                "先存滿 6 個月生活費當緊急預備金（台幣活存或定存），存滿前不進場投資。",
+                "每月固定日期扣款：0050（或同指數 006208）50% ＋ 愛爾蘭註冊累積型 S&P 500 ETF「CSPX」（費用率 0.07%、股息稅 15%、免美國遺產稅）50%；若僅使用不支援英股之台灣複委託且美國境內資產低於 USD 60,000，美股改買 VOO（費用率 0.03%）。",
                 "每年 1 月第一個交易日調回各 50%：賣多的那邊、買少的那邊，其他時間不動。",
-                "使用定期定額不收最低手續費的券商；若只有每筆最低 USD 15 的管道，改成每季扣一次。",
+                "使用定期定額免低消券商（IBKR 或永豐／富邦議價後英股複委託；美股複委託選免低消券商）；若單筆最低手續費 USD 15，改成每季扣款一次。",
             ],
             "transition_table": [
                 {"age": "55", "tw0050": "46%", "spy": "46%", "bond": "8%"},
@@ -1727,52 +1941,66 @@ def build_research_dict() -> dict:
                 {"age": "59", "tw0050": "30%", "spy": "30%", "bond": "40%"},
                 {"age": "60 歲以後", "tw0050": "30%", "spy": "30%", "bond": "40%"},
             ],
+            "transition_us_col": "CSPX（或 VOO）",
+            "transition_bond_col": f"{sel_bond}（3–10 年美債）",
             "withdrawal_phase": [
-                "第一年領資產總額的 4%，之後每年照前一年金額加 2%（對應通膨），不看當年漲跌。",
-                "若某年 1 月資產比剛退休時少超過 20%，該年提領額改為當時總資產的 3.5%，等資產回到退休時的水準再恢復原規則。",
+                "【穩健首選】第一年提領退休當時總資產的 3.5%，之後每年提領金額依當年實際 CPI（物價通膨率，常態約 2%）調整；1871–2026 共 1,508 條 30 年路徑與五大歷史危機年破產率均為 0.00%，生活費 100% 不縮水。",
+                "【高現金流替代】若退休首年必須領到 4.0%，之後每年依實際 CPI 調整，並強制加上 20%/3.5% 保護規則：若某年 1 月資產比剛退休時低超過 20%，該年改領當下總資產的 3.5%，直到資產回到退休水準再恢復（30 年破產率 0.00%，但須接受高通膨極端年實質生活費 P10 暫降為 42.99%）。",
             ],
-            "transition_note": "55–60 歲每年加 8% 債券的路徑，是在研究實測過的起點（各半）和終點（30/30/40）之間平均拆開，中間各年未單獨回測。",
+            "transition_note": (
+                f"已於最終補強（測試 4）實際逐年連續模擬 30→90 歲：30 歲月投 1 萬（總投入 360 萬）經 55–59 歲逐年加 8% {sel_bond} 滑降，"
+                f"60 歲中位資產 {t4_mod_p['age60_p50_twd']/10000:.0f} 萬（P10 {t4_mod_p['age60_p10_twd']/10000:.0f} 萬 / P90 {t4_mod_p['age60_p90_twd']/10000:.0f} 萬），"
+                f"90 歲前破產率 0.00%（保護版）/ {t4_mod_f['ruin_prob_pct']:.2f}%（固定 4%+2%），90 歲剩餘中位數 {t4_mod_p['age90_p50_twd']/10000:.0f} 萬。"
+            ),
         },
         "risk_tier_cards": [
             {
                 "tier": "保守（最多忍受 −30%）",
-                "badge": "防禦型",
-                "allocation": "0050 25% + SPY 25% + 美國短債 50%，每年再平衡",
-                "mdd_label": f"未單獨回測（對照 50% 0050 + 50% 短債：{r2_5050.get('max_drawdown_pct', -22.05):.2f}%）",
-                "xirr_label": f"未單獨回測（對照 50% 0050 + 50% 短債：{r2_5050.get('xirr_pct', 9.17):.2f}%）",
+                "badge": "防禦型（已實測）",
+                "allocation": f"0050 25% + CSPX 25% + {sel_bond} 50%，每年 1 月再平衡",
+                "mdd_label": f"{t8_cons['cons_25_25_50']['full_history_mdd_pct']:.2f}%（滾動 10 年最差 {t8_cons['cons_25_25_50']['rolling_10y_worst_mdd_pct']:.2f}%、破 −30% 機率 0.00%）",
+                "xirr_label": f"{t8_cons['cons_25_25_50']['full_history_xirr_pct']:.2f}%（滾動 10 年中位 {t8_cons['cons_25_25_50']['rolling_10y_median_xirr_pct']:.2f}%）",
                 "details": (
-                    f"原本推薦的 60% 0050 + 40% 短債（全歷史 XIRR {r2_base.get('xirr_pct', 10.31):.2f}%、最大回撤 {r2_base.get('max_drawdown_pct', -28.77):.2f}%）"
-                    f"因為太貼近 −30% 紅線，在第 7 關參數敏感度 8 種微調裡有 5 種（62.5%）直接跌破 −30%（例如股票多 10% 變 {r2_7030.get('max_drawdown_pct', -35.25):.2f}%、忘記再平衡變 {r2_norebal.get('max_drawdown_pct', -32.90):.2f}%）而不通過，"
-                    "因此把股票降到 50% 並台美各半分散，留出更厚的安全緩衝。"
+                    f"本次以真實商品 {sel_bond} 與 CSPX 獨立回測 1997–2026 全歷史，最大回撤僅 {t8_cons['cons_25_25_50']['full_history_mdd_pct']:.2f}%，"
+                    f"比原先壓在 −28.77% 刀鋒邊緣的 60/40 純台股方案多出 16 個百分點安全緩衝，且 233 個滾動 10 年梯次零次跌破 −30%。"
                 ),
-                "gray_note": "",
+                "gray_note": f"同條件對照：30/30/40（{sel_bond}）全歷史 XIRR {t8_cons['bal_30_30_40']['full_history_xirr_pct']:.2f}%、MDD {t8_cons['bal_30_30_40']['full_history_mdd_pct']:.2f}%。",
             },
             {
                 "tier": "一般（最多忍受 −50%）",
                 "badge": "多數人首選",
-                "allocation": "0050 50% + SPY 50%（每年 1 月調回各半）",
-                "mdd_label": f"{r1_annual.get('max_drawdown_pct', -48.55):.2f}%（不平衡基準 {r1_base.get('max_drawdown_pct', -48.92):.2f}%）",
-                "xirr_label": f"{r1_annual.get('xirr_pct', 12.64):.2f}%（不平衡基準 {r1_base.get('xirr_pct', 12.69):.2f}%）",
+                "allocation": "0050 50% + CSPX 50%（每年 1 月第一個交易日再平衡）",
+                "mdd_label": f"{t8_cons['eq_50_50']['full_history_mdd_pct']:.2f}%（滾動 10 年最差 {t8_cons['eq_50_50']['rolling_10y_worst_mdd_pct']:.2f}%、破 −50% 機率 0.00%）",
+                "xirr_label": f"{t8_cons['eq_50_50']['full_history_xirr_pct']:.2f}%（滾動 10 年中位 {t8_cons['eq_50_50']['rolling_10y_median_xirr_pct']:.2f}%）",
                 "details": (
-                    "第 7 關 8 種微調（比例 ±10%、月初／月中／月底扣款、不同再平衡頻率）全數守住 −50% 防線，"
-                    "Block Bootstrap 跌破 −50% 的機率僅 1.12%～3.64%；同時具備跨國分散效果，避免單押一個國家失落二十年。"
+                    f"改用愛爾蘭註冊 CSPX 後，美股股息預扣稅由 30% 降至 15%，全歷史 XIRR 較 SPY 版（{t2_dca['SPY_30wh']['port_50_50_xirr_pct']:.2f}%）高 +0.09%，"
+                    f"且徹底免除 60/75/90 歲過世時 {t2_es10['60']['us_equity_only']['spy_voo_estate_tax_twd']/10000:.0f} 萬～{t2_es10['90']['us_equity_only']['spy_voo_estate_tax_twd']/10000:.0f} 萬美國遺產稅（月投 1 萬基準）。"
                 ),
-                "gray_note": "",
+                "gray_note": f"若僅能買美股且美國總資產 < USD 60,000，改用 VOO 實測全歷史 XIRR {t2_dca['VOO_30wh']['port_50_50_xirr_pct']:.2f}%、MDD {t2_dca['VOO_30wh']['port_50_50_mdd_pct']:.2f}%。",
             },
             {
                 "tier": "積極（最多忍受 −60%）",
-                "badge": "進階抗震型",
-                "allocation": "台股部位改為 0050 80% + 00631L 20%，加 200 日線濾網；50 歲 1 月出清正二回到一般配置",
-                "mdd_label": f"{r3a_8020.get('max_drawdown_pct', -56.75):.2f}%（第 7 關 80/20 + 200MA 濾網實測）",
-                "xirr_label": f"{r3a_8020.get('xirr_pct', 15.60):.2f}%（第 7 關 80/20 + 200MA 濾網實測）",
+                "badge": "取消濾網（規則 C）",
+                "allocation": "0050 40% + 00631L 10% + CSPX 50%，不用濾網、每年 1 月再平衡；50 歲 1 月出清 00631L",
+                "mdd_label": f"{t1_fc['rule_C']['full_history']['mdd_pct']:.2f}%（滾動 10 年破 −60% 為 0.00%、Bootstrap {t1_fb['rule_C']['prob_mdd_lt_60pct']:.2f}%）",
+                "xirr_label": f"{t1_fc['rule_C']['full_history']['xirr_pct']:.2f}%（滾動 10 年中位 {t1_fc['rule_C']['rolling_10y']['median_xirr_pct']:.2f}%、年換手 0.99 次）",
                 "details": (
-                    "執行規則：0050 收盤跌破 200 日均線的隔天，把 00631L 全部換成 0050；重新站上的隔天再換回來；50 歲那年 1 月把 00631L 全部賣掉，回到一般配置。"
-                    f"原本 70% 0050 + 30% 00631L（基準回撤 {r3a_base.get('max_drawdown_pct', -58.45):.2f}%、關掉濾網衝至 {r3a_nofilter.get('max_drawdown_pct', -64.64):.2f}%）、"
-                    f"以及含 20% TQQQ 的組合（基準回撤 {r3b_base.get('max_drawdown_pct', -59.77):.2f}%、忘記再平衡 {r3b_norebal.get('max_drawdown_pct', -66.71):.2f}%、Stationary Bootstrap 破 −60% 機率 {g6_stat_m3b_prob:.2f}%），已在八關測試中被下修。"
+                    f"測試 1 證實：在台美各半架構下（台股內 80% 0050 + 20% 00631L），不用 200 日線濾網的規則 C 報酬高於規則 A（{t1_fc['rule_A']['rolling_10y']['median_xirr_pct']:.2f}%）"
+                    f"與規則 B（{t1_fc['rule_B']['rolling_10y']['median_xirr_pct']:.2f}%），且省下規則 B 每年 {t1_fc['rule_B']['full_history']['switches_per_year']:.2f} 次換手與 {t1_fc['rule_B']['full_history']['total_fees_twd']:,.0f} 元交易成本。"
+                    f"50 歲 1 月出清 00631L 經 2,000 條路徑實測，能將 50–60 歲 P10 最差回撤由 {t1_a50['sell_at_55_glidepath']['dd_50_60_p10_worst_pct']:.2f}% 壓進 {t1_a50['sell_at_50']['dd_50_60_p10_worst_pct']:.2f}%。"
                 ),
-                "gray_note": "50 歲出清正二，是依『退休前 5–10 年不持有槓桿』換算的時間點，未單獨回測。",
+                "gray_note": f"對照：若只買純台股 80/20（不配美股），規則 C 全歷史 MDD {fc_t1['tw_only_0band']['rule_C']['full_history']['mdd_pct']:.2f}% 會微破 −60%，故不建議單押純台股加正二。",
             },
         ],
+        "loopholes_section": {
+            "intro": (
+                "前兩輪研究完成後，我們整理出 8 個最可能讓實戰翻車的邏輯漏洞，先在程式執行前將「何種數字會推翻舊建議」寫死並鎖進 Git（final_check/criteria.md），"
+                "再逐一補跑完整實證。結果共有 6 項促成具體修改或升級、2 項通過驗證維持原案："
+            ),
+            "cards": loophole_cards,
+            "shiller_crisis_rows": shiller_crisis_rows,
+            "age_persona_rows": age_persona_rows,
+        },
         "leverage_warning": f"2 倍以上槓桿（如 100% 正二或 TQQQ）在八關測試中全部確認不建議，各關跌破 −50% 的機率高達 {r4_prob_min:.1f}%～{r4_prob_max:.1f}%（報告摘要 70%～100%）。",
         "recovery_levels": [
             {
@@ -1827,7 +2055,7 @@ def build_research_dict() -> dict:
             "其餘 R1、R2、R3、R5 依標準全部被判「被推翻」。其中一般人組合 R1（50% 0050 + 50% SPY）在風險控制上其實非常穩（破 −50% 機率幾乎為 0%），"
             "不通過的主因有三點：(1) 第 2 關樣本外排名標準很嚴，單一 10 年裡台美各半必輸給事後最強的那單一市場（後悔差距 10.44 個百分點）；"
             "(2) 第 4 關若誤用每筆最低手續費 USD 15 的傳統複委託會大幅吃掉報酬，且在部分稅率匯率情境排名落後純美股；"
-            "(3) 第 8 關證實純股票不適合直接帶進 60 歲後的退休提領期。因此我們把所有教訓整合成第 2 節的「分階段具體執行表」。"
+            "(3) 第 8 關證實純股票不適合直接帶進 60 歲後的退休提領期。後續我們再透過 8 項最終補強把商品代號、遺產稅、真實美債與高通膨提領規則全數定案。"
         ),
         "verdict_rows": verdict_rows,
         "behavior_rows": behavior_rows,
@@ -1842,7 +2070,7 @@ def build_research_dict() -> dict:
             },
             {
                 "title": "3. 只押一個國家（賭單一國運）",
-                "desc": "純買台股 0050 在 5,000 次模擬中跌破 −50% 的機率高達 19.38%，只要一半換成 SPY 就暴降到 2.68%；若單押的國家不幸走上日本 1989 失落 20 年，單押 2 倍正二投入 240 萬只剩 95.7 萬，而台美各半靠另一半美股撐腰仍能滾出 313.7 萬。",
+                "desc": "純買台股 0050 在 5,000 次模擬中跌破 −50% 的機率高達 19.38%，只要一半換成美股就暴降到 2.68%；若單押的國家不幸走上日本 1989 失落 20 年，單押 2 倍正二投入 240 萬只剩 95.7 萬，而台美各半靠另一半美股撐腰仍能滾出 313.7 萬。",
             },
         ],
         "withdrawal_rows": withdrawal_rows,
@@ -1876,7 +2104,7 @@ def build_research_dict() -> dict:
             "verdict_heatmap": {
                 "title": "R1–R5 八關穩健性壓力測試判定總表熱力圖",
                 "src": "./assets/research/robustness_verdict_heatmap.png",
-                "caption": "依事先寫死的嚴格標準，僅 R4（2 倍以上槓桿不建議）八關全數通過；其餘四項均依弱點修正為第 2 節執行表與第 3 節方案。",
+                "caption": "依事先寫死的嚴格標準，僅 R4（2 倍以上槓桿不建議）八關全數通過；其餘四項均依弱點修正為定案執行手冊。",
             },
             "behavior_loss": {
                 "title": "三種真人行為錯誤造成的平均年化報酬（XIRR）損失",
@@ -1888,27 +2116,73 @@ def build_research_dict() -> dict:
                 "src": "./assets/research/robustness_withdrawal_ruin_prob.png",
                 "caption": "呈現明顯的 U 型曲線：債券太多（30/70）80 歲後被通膨啃光、股票或槓桿太高（1.4x/2x）前十年被股災砍死，60/40 股債破產率最低。",
             },
+            "fc_test1_filter": {
+                "title": "補強測試 1：積極型濾網規則 A / B / C 與 50 歲出清 00631L 對比",
+                "src": "./assets/research/final_check_test1_aggressive_filter_rules.png",
+                "caption": "在台美各半架構下，取消濾網的規則 C 報酬最高且零盯盤換手；50 歲 1 月出清 00631L 可把 50–60 歲 P10 最差回撤壓進 −47.63%。",
+            },
+            "fc_test2_estate": {
+                "title": "補強測試 2：美國遺產稅（SPY/VOO vs 愛爾蘭 CSPX）60 / 75 / 90 歲實拿差距",
+                "src": "./assets/research/final_check_test2_estate_tax_domicile.png",
+                "caption": "月投 1 萬者在 60/75/90 歲過世時，僅美股買 SPY/VOO 就會被課 105 萬～637 萬美國遺產稅；月投 3 萬更高達 474 萬～2,288 萬。",
+            },
+            "fc_test3_bonds": {
+                "title": "補強測試 3：真實美債 ETF（SHY / VGIT / IEF）2022 股債雙殺與 30 年退休表現",
+                "src": "./assets/research/final_check_test3_real_bonds_2022_retire.png",
+                "caption": "VGIT 雖在 2022 單獨回撤 −12.60%，但組合台幣回撤 −12.51% 僅比 SHY 深 2.43pp，卻將 30 年破產率從 3.00% 壓至 0.97% 且費用率僅 0.03%。",
+            },
+            "fc_test4_lifetime": {
+                "title": "補強測試 4：30→90 歲一生連續模擬資產分佈（含 55–59 歲逐年加 8% VGIT）",
+                "src": "./assets/research/final_check_test4_lifetime_continuous_fan.png",
+                "caption": "同一筆資產連續跑完 60 年：30 歲月投 1 萬至 60 歲中位數 1,830 萬（P10 885 萬 / P90 3,976 萬），90 歲前破產率 0.00%（保護版）。",
+            },
+            "fc_test5_withdrawal": {
+                "title": "補強測試 5：三種提領規則破產率與實質生活費對比",
+                "src": "./assets/research/final_check_test5_withdrawal_protection.png",
+                "caption": "固定 4% 不調通膨第 30 年實質購買力腰斬至 45.2%；20%/3.5% 保護雖 0% 破產但高通膨年 P10 實質生活費降至 43.0%，促成新增 3.5%+CPI 穩健首選。",
+            },
+            "fc_test6_shiller": {
+                "title": "補強測試 6：Shiller 1871–2026 五大歷史災難年退休實質資產路徑",
+                "src": "./assets/research/final_check_test6_shiller_crisis_paths.png",
+                "caption": "1929（固定4%+2% 第 21.2 年破產）與 1966（固定4%+CPI 第 26.7 年破產）是最殘酷試金石；改為 3.5%+CPI 或 4%+20%/3.5% 保護後五條路徑全數存活。",
+            },
+            "fc_test7_fx": {
+                "title": "補強測試 7：台幣 5 年急升至 25 / 急貶至 40 對退休破產率與台幣生活費衝擊",
+                "src": "./assets/research/final_check_test7_fx_swings_impact.png",
+                "caption": "退休前升至 25 元使首年台幣生活費縮水 14.2%；退休後升至 25 元固定提領破產率升至 5.13%，若改配 20% 台幣定存反而因低息升至 7.63%。",
+            },
+            "fc_test8_people": {
+                "title": "補強測試 8：不同起始年齡（25/30/40/45 歲）60 歲資產與保守型 25/25/50 實測",
+                "src": "./assets/research/final_check_test8_different_people_ages.png",
+                "caption": "25/30 歲起跑完全適用，45 歲只扣 1 萬 60 歲退中位僅 374 萬（須加碼至 2.7–3 萬或延至 65 歲退）；保守型 25/25/50 實測 MDD 僅 −13.99%。",
+            },
         },
         "data_limitations": [
             "0050.TW Yahoo Finance 歷史資料只從 2009-01-02 開始（缺漏 2003–2008 年真實成交紀錄），且存在 2009 年初超過 ±7% 漲跌幅限制的錯價（單日最高 +16.55%）、2014-01-02 因 2025 年一拆四分割未回溯造成的 −75.06% 假崩盤，以及 2009–2014 年配息漏算；本研究已全數清洗修補，2009-03-10 以前則以 ^TWII 日報酬加計每年 3.0% 估計股息推算（並以 2000 年即掛牌的美股 EWT 交叉核對）。",
-            "00631L（2015-08-25 前）與 TQQQ（2010-02-11 前）上市前均為公式模擬資料；與真實上市後重疊期比對顯示，模擬版未計入交換合約利差與轉倉價差，年化報酬比真實 ETF 微幅偏樂觀約 0.8%～2.4%。",
-            "第 3 關跨國崩盤測試的股息殖利率為研究假設值（日本 +1.5%、德國 +2.5%、英國 +3.5%、上證 +2.0%）；其中德國指數 ^GDAXI 編製本身已含股息再投資，額外加計 +2.5% 會多算一次股息（對照不加息組後結論方向不變）。",
-            "台股加權指數 ^TWII 在 Yahoo Finance 僅自 1997-07-02 開始，缺漏 1990–1997 年（未涵蓋 1990 年 12,682 點暴跌 −80.4% 的歷史最大崩盤）；匯率 TWD=X 亦僅自 2004-03-24 起，更早期間延用 32.0230。",
+            "00631L（2015-08-25 前）與 TQQQ（2010-02-11 前）上市前均為公式模擬資料；與真實上市後重疊期比對顯示，模擬版未計入交換合約利差與轉倉價差，年化報酬比真實 ETF 偏樂觀約 0.8%～2.4%。",
+            "測試 2（愛爾蘭註冊 CSPX）：2010-09-15 前由 SPY 含息報酬調整 15% 預扣稅與 0.07% 費率推算，2010–2026 與真實 CSPX.L 月報酬相關係數 0.9644。台灣複委託（永豐／富邦）英股手續費與低消為議價制，開戶前須自行確認；0050（約 0.22%）與 006208（約 0.23%）為 2025–2026 規模遞減費率估算值，查詢日期 2026-11-27。",
+            "測試 3（真實美債 ETF）：SHY/IEF 上市於 2002-07、VGIT 上市於 2009-11，上市前以 ^IRX/^FVX/^TNX 存續期＋凸性公式推算（重疊月相關 0.8356～0.9895）；VGIT 為美國註冊 ETF，總美元資產逾 USD 60,000 者仍有美國遺產稅曝險（愛爾蘭註冊美債 UCITS ETF 本輪未單獨回測，明標「未回測」）。",
+            "測試 4–6（Shiller 1871–2026 長歷史）：1871–1997 無台股資料，長歷史模擬以美股 S&P 500 含息報酬作為台股代理資料，10 年期公債殖利率推算債券報酬；公開 Shiller CSV 股息與 CPI 至 2023-06，2023-07～2026-10 以 Yahoo ^SP500TR、^TNX 與 FRED CPIAUCSL 銜接；2000 退休路徑實測 26 年、2008 退休路徑實測 18 年（未滿 30 年）。",
+            "台股加權指數 ^TWII 在 Yahoo Finance 僅自 1997-07-02 開始，缺漏 1990–1997 年（未涵蓋 1990 年暴跌 −80.4%）；匯率 TWD=X 僅自 2004-03-24 起，更早期間延用 32.0230。",
         ],
         "disclaimer": {
             "text": "本研究僅供量化回測與歷史實證參考，過去績效不代表未來表現，亦不構成任何個人化投資建議。",
             "github_links": [
                 {
-                    "title": "高點回本研究完整報告 (peak_recovery/report.md)",
-                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/peak_recovery/report.md",
+                    "title": "最終 8 項邏輯補強報告 (final_check/report.md)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/final_check/report.md",
+                },
+                {
+                    "title": "最終補強事前判斷標準 (final_check/criteria.md)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/final_check/criteria.md",
                 },
                 {
                     "title": "八關穩健性壓力測試報告 (robustness_check/report.md)",
                     "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/robustness_check/report.md",
                 },
                 {
-                    "title": "事先鎖定之八關判定標準 (robustness_check/criteria.md)",
-                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/robustness_check/criteria.md",
+                    "title": "高點回本研究完整報告 (peak_recovery/report.md)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/peak_recovery/report.md",
                 },
             ],
         },
