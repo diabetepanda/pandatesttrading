@@ -158,7 +158,7 @@ def test_frontend_ui_optimizations_and_mobile_css() -> None:
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
 
     # Cache-busting version bumped and legacy (A)/(B) labels removed
-    assert "?v=20261126a" in index_html
+    assert "?v=20261127a" in index_html
     assert "simple-open-now-grid" in index_html
     assert "simple-copy-all-btn" in index_html
     assert "simple-tp-explainer" in index_html
@@ -714,9 +714,9 @@ def test_in_depth_research_json_and_rendering() -> None:
     root = Path(__file__).resolve().parent.parent
     data = build_research_dict()
 
-    # 1. Articles structure validation (Chronological order: short_term -> combo -> exam_sensitivity -> flow_signals -> dca_compare -> leverage_study -> dca_allocation_grid)
-    assert len(data["articles"]) == 7
-    art1, art2, art3, art4, art5, art6, art7 = (
+    # 1. Articles structure validation (Chronological order: short_term -> combo -> exam_sensitivity -> flow_signals -> dca_compare -> leverage_study -> dca_allocation_grid -> peak_recovery_robustness)
+    assert len(data["articles"]) == 8
+    art1, art2, art3, art4, art5, art6, art7, art8 = (
         data["articles"][0],
         data["articles"][1],
         data["articles"][2],
@@ -724,6 +724,7 @@ def test_in_depth_research_json_and_rendering() -> None:
         data["articles"][4],
         data["articles"][5],
         data["articles"][6],
+        data["articles"][7],
     )
 
     # Article 1: Contest short-term (Earliest research)
@@ -861,15 +862,45 @@ def test_in_depth_research_json_and_rendering() -> None:
     assert ext_b_row["mdd_pct"] == grid_raw["groups"]["B"]["full_history"]["extreme"]["max_drawdown_pct"]
     assert ext_b_row["final_value_twd"] == grid_raw["groups"]["B"]["full_history"]["extreme"]["final_value_twd"]
 
+    # Article 8: Peak Recovery & Robustness Check
+    assert art8["id"] == "peak_recovery_robustness"
+    assert art8["slug"] == "peak-recovery-robustness"
+    assert art8["title"] == "普通人該怎麼投資：從歷史高點回本到八關壓力測試"
+    assert "先存 6 個月生活費當緊急預備金" in art8["takeaway"]
+    assert len(art8["charts"]) == 7
+    expected_art8_imgs = [
+        "assets/research/peak_recovery_underwater_duration_bars.png",
+        "assets/research/peak_recovery_regime_xirr_boxplots.png",
+        "assets/research/peak_recovery_peak_2000_2008_equity_curves.png",
+        "assets/research/robustness_verdict_heatmap.png",
+        "assets/research/robustness_intl_crash_equity_curves.png",
+        "assets/research/robustness_behavior_xirr_loss_bars.png",
+        "assets/research/robustness_withdrawal_ruin_prob.png",
+    ]
+    for img_rel in expected_art8_imgs:
+        assert (root / img_rel).exists(), f"Article 8 chart image missing: {img_rel}"
+    for ch in art8["charts"].values():
+        rel_chart = ch["src"].lstrip("./")
+        assert (root / rel_chart).exists(), f"Article 8 chart image missing: {rel_chart}"
+    art8_json_str = json.dumps(art8, ensure_ascii=False)
+    for kw in ("46%", "8%", "30%", "40%", "4%", "3.5%"):
+        assert kw in art8_json_str, f"Article 8 missing key number: {kw}"
+    assert len(art8["risk_tier_cards"]) == 3
+    assert len(art8["verdict_rows"]) == 5
+
     # Files existence (single canonical data/research.json; legacy copies removed)
     data_json_path = root / "data" / "research.json"
     assert data_json_path.exists()
+    persisted_json = json.loads(data_json_path.read_text(encoding="utf-8"))
+    assert len(persisted_json["articles"]) == 8
     assert not (root / "assets" / "research.json").exists()
     assert not (root / "data" / "contest_research.json").exists()
     assert not (root / "assets" / "contest_research.json").exists()
 
     # 2. JS rendering test via Node / JSC
     app_js = (root / "assets" / "app.js").read_text(encoding="utf-8")
+    assert "renderPeakRecoveryRobustnessArticleHtml" in app_js
+    assert "peak-recovery-robustness" in app_js
     js_bin = shutil.which("node")
     if not js_bin:
         jsc_path = Path("/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc")
@@ -949,11 +980,11 @@ def test_in_depth_research_json_and_rendering() -> None:
         if (!html.includes('research-toc')) {{
           throw new Error('renderResearchHtml missing research-toc');
         }}
-        if (!html.includes('第 1 篇') || !html.includes('第 2 篇') || !html.includes('第 3 篇') || !html.includes('第 4 篇') || !html.includes('第 5 篇') || !html.includes('第 6 篇') || !html.includes('第 7 篇')) {{
+        if (!html.includes('第 1 篇') || !html.includes('第 2 篇') || !html.includes('第 3 篇') || !html.includes('第 4 篇') || !html.includes('第 5 篇') || !html.includes('第 6 篇') || !html.includes('第 7 篇') || !html.includes('第 8 篇')) {{
           throw new Error('renderResearchHtml missing TOC article markers');
         }}
 
-        // Verify TOC order: short_term (1) -> combo (2) -> exam_sensitivity (3) -> flow_signals (4) -> dca_compare (5) -> leverage_study (6) -> dca_allocation_grid (7)
+        // Verify TOC order: short_term (1) -> combo (2) -> exam_sensitivity (3) -> flow_signals (4) -> dca_compare (5) -> leverage_study (6) -> dca_allocation_grid (7) -> peak_recovery_robustness (8)
         const tocShort = html.indexOf("scrollToResearchArticle('short_term')");
         const tocCombo = html.indexOf("scrollToResearchArticle('combo')");
         const tocExam = html.indexOf("scrollToResearchArticle('exam_sensitivity')");
@@ -961,9 +992,10 @@ def test_in_depth_research_json_and_rendering() -> None:
         const tocDca = html.indexOf("scrollToResearchArticle('dca_compare')");
         const tocLev = html.indexOf("scrollToResearchArticle('leverage_study')");
         const tocGrid = html.indexOf("scrollToResearchArticle('dca_allocation_grid')");
-        if (tocShort === -1 || tocCombo === -1 || tocExam === -1 || tocFlow === -1 || tocDca === -1 || tocLev === -1 || tocGrid === -1 ||
-            tocShort >= tocCombo || tocCombo >= tocExam || tocExam >= tocFlow || tocFlow >= tocDca || tocDca >= tocLev || tocLev >= tocGrid) {{
-          throw new Error('TOC cards not in chronological order (short_term -> combo -> exam_sensitivity -> flow_signals -> dca_compare -> leverage_study -> dca_allocation_grid)');
+        const tocPeakRob = html.indexOf("scrollToResearchArticle('peak_recovery_robustness')");
+        if (tocShort === -1 || tocCombo === -1 || tocExam === -1 || tocFlow === -1 || tocDca === -1 || tocLev === -1 || tocGrid === -1 || tocPeakRob === -1 ||
+            tocShort >= tocCombo || tocCombo >= tocExam || tocExam >= tocFlow || tocFlow >= tocDca || tocDca >= tocLev || tocLev >= tocGrid || tocGrid >= tocPeakRob) {{
+          throw new Error('TOC cards not in chronological order (1..8)');
         }}
 
         // Verify article headers order and numbering
@@ -974,9 +1006,10 @@ def test_in_depth_research_json_and_rendering() -> None:
         const idx5 = html.indexOf('第 5 篇：定期定額 vs 單筆買進 vs 六種策略（10 年實證）');
         const idx6 = html.indexOf('第 6 篇：美股與台股槓桿實證：倍率甜蜜點、借貸利率紅線與跌深加碼（20～34 年）');
         const idx7 = html.indexOf('第 7 篇：每月 1 萬台幣定期定額：台美股與槓桿 ETF 全組合最佳配置（約 27～29 年）');
-        if (idx1 === -1 || idx2 === -1 || idx3 === -1 || idx4 === -1 || idx5 === -1 || idx6 === -1 || idx7 === -1 ||
-            idx1 >= idx2 || idx2 >= idx3 || idx3 >= idx4 || idx4 >= idx5 || idx5 >= idx6 || idx6 >= idx7) {{
-          throw new Error('Article sections not rendered in chronological order (1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7)');
+        const idx8 = html.indexOf('第 8 篇：普通人該怎麼投資：從歷史高點回本到八關壓力測試');
+        if (idx1 === -1 || idx2 === -1 || idx3 === -1 || idx4 === -1 || idx5 === -1 || idx6 === -1 || idx7 === -1 || idx8 === -1 ||
+            idx1 >= idx2 || idx2 >= idx3 || idx3 >= idx4 || idx4 >= idx5 || idx5 >= idx6 || idx6 >= idx7 || idx7 >= idx8) {{
+          throw new Error('Article sections not rendered in chronological order (1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8)');
         }}
 
         // Verify Article 4 content (Flow Signals)
@@ -1006,6 +1039,27 @@ def test_in_depth_research_json_and_rendering() -> None:
         }}
         if (!html.includes('class="article-body collapsed" id="body-dca_allocation_grid"') && !html.includes('id="body-dca_allocation_grid" class="article-body collapsed"')) {{
           throw new Error('Article 7 should be collapsed by default');
+        }}
+
+        // Verify Article 8 content (Peak Recovery & Robustness)
+        if (!html.includes('先存 6 個月生活費當緊急預備金') || !html.includes('46%') || !html.includes('8%') || !html.includes('30%') || !html.includes('40%') || !html.includes('4%') || !html.includes('3.5%')) {{
+          throw new Error('renderResearchHtml missing Article 8 key numbers or takeaway');
+        }}
+        for (const imgName of [
+          'peak_recovery_underwater_duration_bars.png',
+          'peak_recovery_regime_xirr_boxplots.png',
+          'peak_recovery_peak_2000_2008_equity_curves.png',
+          'robustness_verdict_heatmap.png',
+          'robustness_intl_crash_equity_curves.png',
+          'robustness_behavior_xirr_loss_bars.png',
+          'robustness_withdrawal_ruin_prob.png',
+        ]) {{
+          if (!html.includes(imgName)) {{
+            throw new Error('renderResearchHtml missing Article 8 chart image: ' + imgName);
+          }}
+        }}
+        if (!html.includes('class="article-body collapsed" id="body-peak_recovery_robustness"') && !html.includes('id="body-peak_recovery_robustness" class="article-body collapsed"')) {{
+          throw new Error('Article 8 should be collapsed by default');
         }}
 
         // Verify default expansion: Article 1 expanded, Articles 2, 3, 4, 5 collapsed
@@ -1085,6 +1139,10 @@ def test_in_depth_research_json_and_rendering() -> None:
         window.location.hash = '#/research/dca-allocation-grid';
         u.applyRoute();
         window.location.hash = '#/research/dca_allocation_grid';
+        u.applyRoute();
+        window.location.hash = '#/research/peak-recovery-robustness';
+        u.applyRoute();
+        window.location.hash = '#/research/peak_recovery_robustness';
         u.applyRoute();
     """
     with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as tf:

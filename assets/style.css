@@ -3923,3 +3923,148 @@ tr.ta-detail-row > td.ta-detail-cell {
   font-size: 0.90rem;
   color: var(--accent, #58a6ff);
 }
+
+/* Article 8: Peak Recovery & Robustness */
+.prr-hero-callout {
+  border-left-width: 4px;
+  font-size: 1.02rem;
+}
+
+.prr-inline-list {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.65;
+}
+
+.prr-gray-note {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: rgba(139, 148, 158, 0.08);
+  border: 1px solid var(--border, #30363d);
+  border-radius: 8px;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--muted, #8b949e);
+}
+
+.prr-gray-note-sm {
+  margin-top: 8px;
+  padding: 8px 10px;
+  font-size: 0.78rem;
+}
+
+.prr-risk-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.prr-risk-card {
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border, #30363d);
+  border-radius: 10px;
+}
+
+.prr-risk-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.prr-risk-head h3 {
+  margin: 0;
+  font-size: 0.96rem;
+}
+
+.prr-risk-alloc {
+  font-size: 0.90rem;
+  font-weight: 600;
+  color: var(--accent, #58a6ff);
+  margin-bottom: 8px;
+  line-height: 1.45;
+}
+
+.prr-risk-metrics {
+  font-size: 0.83rem;
+  line-height: 1.55;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+}
+
+.prr-risk-desc {
+  margin: 0;
+  font-size: 0.83rem;
+  line-height: 1.55;
+  color: var(--text, #c9d1d9);
+}
+
+.prr-leverage-warn {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(248, 81, 73, 0.08);
+  border: 1px solid rgba(248, 81, 73, 0.35);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.prr-verdict-table th,
+.prr-verdict-table td {
+  text-align: center;
+  font-size: 0.82rem;
+}
+
+.prr-verdict-table th:first-child,
+.prr-verdict-table td:first-child {
+  text-align: left;
+}
+
+.prr-verdict-pass {
+  color: var(--up, #3fb950);
+  font-weight: 600;
+}
+
+.prr-verdict-cond {
+  color: var(--warn, #d29922);
+  font-weight: 600;
+}
+
+.prr-verdict-fail {
+  color: var(--down, #f85149);
+  font-weight: 600;
+}
+
+.prr-limitations-box {
+  padding: 12px 16px;
+  background: rgba(139, 148, 158, 0.07);
+  border: 1px solid var(--border, #30363d);
+  border-radius: 8px;
+  font-size: 0.80rem;
+  line-height: 1.6;
+  color: var(--muted, #8b949e);
+}
+
+.prr-limitations-box h3 {
+  margin: 0 0 6px;
+  font-size: 0.88rem;
+  color: var(--muted, #8b949e);
+}
+
+.prr-limitations-box ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+@media (max-width: 960px) {
+  .prr-risk-grid {
+    grid-template-columns: 1fr;
+  }
+}

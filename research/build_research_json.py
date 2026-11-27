@@ -1576,12 +1576,359 @@ def build_research_dict() -> dict:
         },
     }
 
+    # -------------------------------------------------------------
+    # Article 8: 普通人該怎麼投資：從歷史高點回本到八關壓力測試
+    # -------------------------------------------------------------
+    pr_res_path = repo_root / "research" / "peak_recovery" / "results.json"
+    rc_res_path = repo_root / "research" / "robustness_check" / "results.json"
+    pr_res = json.loads(pr_res_path.read_text(encoding="utf-8")) if pr_res_path.exists() else {}
+    rc_res = json.loads(rc_res_path.read_text(encoding="utf-8")) if rc_res_path.exists() else {}
+
+    rc_g3 = rc_res.get("gate_3_intl_crashes", {})
+    rc_g5 = rc_res.get("gate_5_behavior", {}).get("summary_by_strategy", {})
+    rc_g6 = rc_res.get("gate_6_bootstrap", {})
+    rc_g7 = rc_res.get("gate_7_sensitivity", {}).get("perturbations", {})
+    rc_g8 = rc_res.get("gate_8_life_stage", {})
+    rc_verdicts = rc_res.get("verdicts", {})
+
+    def _find_pert(group_key: str, substr: str) -> dict:
+        for item in rc_g7.get(group_key, []):
+            if substr in str(item.get("variant", "")):
+                return item
+        return {}
+
+    r1_annual = _find_pert("R1", "每年再平衡")
+    r1_base = _find_pert("R1", "基準")
+    r2_base = _find_pert("R2", "基準")
+    r2_5050 = _find_pert("R2", "50% 0050 + 50% 短債")
+    r2_7030 = _find_pert("R2", "70% 0050")
+    r2_norebal = _find_pert("R2", "不再平衡")
+    r3a_base = _find_pert("R3_M3a", "基準")
+    r3a_8020 = _find_pert("R3_M3a", "80% 0050 + 20% 00631L")
+    r3a_nofilter = _find_pert("R3_M3a", "關閉濾網")
+    r3b_base = _find_pert("R3_M3b", "基準")
+    r3b_norebal = _find_pert("R3_M3b", "不再平衡")
+
+    r4_gates = rc_verdicts.get("by_recommendation", {}).get("R4", {}).get("gates", {})
+    r4_probs = [
+        float(v["prob_2x_mdd_lt_50pct"])
+        for v in r4_gates.values()
+        if isinstance(v, dict) and v.get("prob_2x_mdd_lt_50pct") is not None
+    ]
+    r4_prob_min = min(r4_probs) if r4_probs else 69.93
+    r4_prob_max = max(r4_probs) if r4_probs else 100.0
+
+    # Build verdict summary rows directly from robustness_check/results.json
+    verdict_label_map = {
+        "R1": "R1 一般人（50% 0050 + 50% SPY，承受 −50%）",
+        "R2": "R2 保守族（60% 0050 + 40% 短債，承受 −30%）",
+        "R3": "R3 積極族（M3b 1.4x / M3a 1.3x，承受 −60%）",
+        "R4": "R4 高槓桿戒律（2 倍以上槓桿不建議）",
+        "R5": "R5 熊市回本預期（0050 含息中位數約 20 個月）",
+    }
+    verdict_rows = []
+    for row in rc_verdicts.get("summary_table", []):
+        rid = row.get("recommendation_id", "")
+        verdict_rows.append({
+            "id": rid,
+            "label": verdict_label_map.get(rid, rid),
+            "gate_1": row.get("gate_1", "—"),
+            "gate_2": row.get("gate_2", "—"),
+            "gate_3": row.get("gate_3", "—"),
+            "gate_4": row.get("gate_4", "—"),
+            "gate_5": row.get("gate_5", "—"),
+            "gate_6": row.get("gate_6", "—"),
+            "gate_7": row.get("gate_7", "—"),
+            "gate_8": row.get("gate_8", "—"),
+            "overall_verdict": row.get("overall_verdict", "—"),
+        })
+
+    # Retirement withdrawal table from gate_8_life_stage.withdrawal_30y
+    w30_ports = rc_g8.get("withdrawal_30y", {}).get("portfolios", {})
+    w30_order = [
+        ("30_70", "30/70 股債（30% 台美股 + 70% 短債）", "撐 23.4 年（83.4 歲）", "前 20 年極安全，但七成短債在低利率下抗通膨不足，82 歲後易把老本啃光。"),
+        ("40_60", "40/60 股債（40% 台美股 + 60% 短債）", "撐 21.0 年（81.0 歲）", "前 19 年 100% 存活，穩健平衡，適合極怕波動的高齡退休族。"),
+        ("R2", "60/40 股債（R2，60% 股 + 40% 短債）", "撐 16.8 年", "全場破產率最低的甜蜜點：四成短債擋住前十年大跌，六成股票打贏後二十年通膨。"),
+        ("R1", "50/50 純股（R1，台美各半）", "撐 11.6 年", "全股票遇到剛退休大跌，邊跌邊賣失血快，72.4% 機率回撤破 −50%。"),
+        ("R3_M3a", "1.3x 小槓桿（M3a，70/30 + 200MA 濾網）", "撐 9.5 年", "波動放大，早年遇熊市邊跌邊賣失血過快。"),
+        ("R3_M3b", "1.4x 小槓桿（M3b，40/40/20 年平衡）", "撐 8.8 年（68.8 歲）", "剛退休遇大跌超過三分之一機率破產，絕不可帶進退休期。"),
+        ("R4_M4", "2.0x 槓桿（正二對照）", "撐 5.6 年（65.6 歲）", "60 歲退休遇日股崩盤，65 歲半就身無分文。"),
+    ]
+    withdrawal_rows = []
+    for pkey, plabel, jp_note, comment in w30_order:
+        p = w30_ports.get(pkey, {})
+        all_p = p.get("all_paths", {})
+        early_p = p.get("early_crash_paths", {})
+        if not all_p:
+            continue
+        withdrawal_rows.append({
+            "id": pkey,
+            "label": plabel,
+            "all_ruin_pct": all_p.get("ruin_prob_pct"),
+            "early_crash_ruin_pct": early_p.get("ruin_prob_pct"),
+            "early_crash_median_twd_label": _fmt_twd_wan(early_p.get("median_terminal_twd")),
+            "japan_1989_note": jp_note,
+            "comment": comment,
+        })
+
+    # Behavior error summary rows from gate_5_behavior
+    beh_order = [
+        ("R2", "R2 保守（60/40 股債）"),
+        ("R1", "R1 一般（50/50 台美）"),
+        ("M2a_0050", "對照：100% 0050"),
+        ("R3_M3a", "R3（M3a，1.3x + 濾網）"),
+        ("R3_M3b", "R3（M3b，1.4x 年平衡）"),
+        ("R4_M4", "對照：100% 正二（2.0x）"),
+    ]
+    behavior_rows = []
+    for bkey, blabel in beh_order:
+        b = rc_g5.get(bkey, {})
+        if not b:
+            continue
+        behavior_rows.append({
+            "label": blabel,
+            "control_mean_xirr": b.get("control_mean_xirr_pct"),
+            "a_loss": b.get("A_pause_6m", {}).get("mean_xirr_loss_pp"),
+            "a_trigger": b.get("A_pause_6m", {}).get("trigger_rate_pct"),
+            "b_loss": b.get("B_panic_sell_20pct", {}).get("mean_xirr_loss_pp"),
+            "b_trigger": b.get("B_panic_sell_20pct", {}).get("trigger_rate_pct"),
+            "c_loss": b.get("C_unemployed_12m_withdraw", {}).get("mean_xirr_loss_pp"),
+            "c_worst": b.get("C_unemployed_12m_withdraw", {}).get("worst_xirr_loss_pp"),
+            "avg_loss": b.get("average_loss_across_ABC_pp"),
+        })
+
+    # Gate 6 multiple comparison summary
+    g6_mc = rc_g6.get("multiple_comparison_90ci", {})
+    g6_agg_c2 = (g6_mc.get("aggressive_60_top5", {}).get("comparisons_2_to_5") or [{}])[0]
+    g6_stat_m3b_prob = rc_g6.get("schemes", {}).get("stationary_avg3y", {}).get("r3_m3b_prob_mdd_lt_60pct", 32.66)
+
+    article_peak_recovery_robustness = {
+        "id": "peak_recovery_robustness",
+        "slug": "peak-recovery-robustness",
+        "title": "普通人該怎麼投資：從歷史高點回本到八關壓力測試",
+        "subtitle": "合併歷史高點回本統計（peak_recovery）與八關穩健性壓力測試（robustness_check），整理給非工程師普通人的具體投資執行表",
+        "takeaway": "先存 6 個月生活費當緊急預備金，再每月定期定額 0050 和 SPY 各半，每年 1 月調回各半，不加槓桿；55 到 60 歲按表逐年加入債券。",
+        "badge": "八關壓力測試",
+        "updated_at": "2026-11",
+        "github_report": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/robustness_check/report.md",
+        "github_code": "https://github.com/diabetepanda/pandatesttrading/tree/main/research/robustness_check",
+        "execution_plan": {
+            "saving_phase": [
+                "先存 6 個月生活費當緊急預備金（活存或定存），存滿前不投資。",
+                "每月固定日期扣款：0050 50%、SPY（或複委託定期定額的 VOO）50%。",
+                "每年 1 月第一個交易日調回各 50%：賣多的那邊、買少的那邊，其他時間不動。",
+                "使用定期定額不收最低手續費的券商；若只有每筆最低 USD 15 的管道，改成每季扣一次。",
+            ],
+            "transition_table": [
+                {"age": "55", "tw0050": "46%", "spy": "46%", "bond": "8%"},
+                {"age": "56", "tw0050": "42%", "spy": "42%", "bond": "16%"},
+                {"age": "57", "tw0050": "38%", "spy": "38%", "bond": "24%"},
+                {"age": "58", "tw0050": "34%", "spy": "34%", "bond": "32%"},
+                {"age": "59", "tw0050": "30%", "spy": "30%", "bond": "40%"},
+                {"age": "60 歲以後", "tw0050": "30%", "spy": "30%", "bond": "40%"},
+            ],
+            "withdrawal_phase": [
+                "第一年領資產總額的 4%，之後每年照前一年金額加 2%（對應通膨），不看當年漲跌。",
+                "若某年 1 月資產比剛退休時少超過 20%，該年提領額改為當時總資產的 3.5%，等資產回到退休時的水準再恢復原規則。",
+            ],
+            "transition_note": "55–60 歲每年加 8% 債券的路徑，是在研究實測過的起點（各半）和終點（30/30/40）之間平均拆開，中間各年未單獨回測。",
+        },
+        "risk_tier_cards": [
+            {
+                "tier": "保守（最多忍受 −30%）",
+                "badge": "防禦型",
+                "allocation": "0050 25% + SPY 25% + 美國短債 50%，每年再平衡",
+                "mdd_label": f"未單獨回測（對照 50% 0050 + 50% 短債：{r2_5050.get('max_drawdown_pct', -22.05):.2f}%）",
+                "xirr_label": f"未單獨回測（對照 50% 0050 + 50% 短債：{r2_5050.get('xirr_pct', 9.17):.2f}%）",
+                "details": (
+                    f"原本推薦的 60% 0050 + 40% 短債（全歷史 XIRR {r2_base.get('xirr_pct', 10.31):.2f}%、最大回撤 {r2_base.get('max_drawdown_pct', -28.77):.2f}%）"
+                    f"因為太貼近 −30% 紅線，在第 7 關參數敏感度 8 種微調裡有 5 種（62.5%）直接跌破 −30%（例如股票多 10% 變 {r2_7030.get('max_drawdown_pct', -35.25):.2f}%、忘記再平衡變 {r2_norebal.get('max_drawdown_pct', -32.90):.2f}%）而不通過，"
+                    "因此把股票降到 50% 並台美各半分散，留出更厚的安全緩衝。"
+                ),
+                "gray_note": "",
+            },
+            {
+                "tier": "一般（最多忍受 −50%）",
+                "badge": "多數人首選",
+                "allocation": "0050 50% + SPY 50%（每年 1 月調回各半）",
+                "mdd_label": f"{r1_annual.get('max_drawdown_pct', -48.55):.2f}%（不平衡基準 {r1_base.get('max_drawdown_pct', -48.92):.2f}%）",
+                "xirr_label": f"{r1_annual.get('xirr_pct', 12.64):.2f}%（不平衡基準 {r1_base.get('xirr_pct', 12.69):.2f}%）",
+                "details": (
+                    "第 7 關 8 種微調（比例 ±10%、月初／月中／月底扣款、不同再平衡頻率）全數守住 −50% 防線，"
+                    "Block Bootstrap 跌破 −50% 的機率僅 1.12%～3.64%；同時具備跨國分散效果，避免單押一個國家失落二十年。"
+                ),
+                "gray_note": "",
+            },
+            {
+                "tier": "積極（最多忍受 −60%）",
+                "badge": "進階抗震型",
+                "allocation": "台股部位改為 0050 80% + 00631L 20%，加 200 日線濾網；50 歲 1 月出清正二回到一般配置",
+                "mdd_label": f"{r3a_8020.get('max_drawdown_pct', -56.75):.2f}%（第 7 關 80/20 + 200MA 濾網實測）",
+                "xirr_label": f"{r3a_8020.get('xirr_pct', 15.60):.2f}%（第 7 關 80/20 + 200MA 濾網實測）",
+                "details": (
+                    "執行規則：0050 收盤跌破 200 日均線的隔天，把 00631L 全部換成 0050；重新站上的隔天再換回來；50 歲那年 1 月把 00631L 全部賣掉，回到一般配置。"
+                    f"原本 70% 0050 + 30% 00631L（基準回撤 {r3a_base.get('max_drawdown_pct', -58.45):.2f}%、關掉濾網衝至 {r3a_nofilter.get('max_drawdown_pct', -64.64):.2f}%）、"
+                    f"以及含 20% TQQQ 的組合（基準回撤 {r3b_base.get('max_drawdown_pct', -59.77):.2f}%、忘記再平衡 {r3b_norebal.get('max_drawdown_pct', -66.71):.2f}%、Stationary Bootstrap 破 −60% 機率 {g6_stat_m3b_prob:.2f}%），已在八關測試中被下修。"
+                ),
+                "gray_note": "50 歲出清正二，是依『退休前 5–10 年不持有槓桿』換算的時間點，未單獨回測。",
+            },
+        ],
+        "leverage_warning": f"2 倍以上槓桿（如 100% 正二或 TQQQ）在八關測試中全部確認不建議，各關跌破 −50% 的機率高達 {r4_prob_min:.1f}%～{r4_prob_max:.1f}%（報告摘要 70%～100%）。",
+        "recovery_levels": [
+            {
+                "level": "一般修正（跌 10%～20%）",
+                "median": "約 2.5～6.9 個月",
+                "examples": "台股 0050 含息中位數 2.5 個月、美股 SPY 台幣 4.1 個月、S&P 500 含息 4.9 個月、S&P 500 價格 6.9 個月，多數半年內自動站回新高。",
+            },
+            {
+                "level": "熊市（跌 20%～50%）",
+                "median": "含息約 1.7～3.2 年（20～39 個月）",
+                "examples": "0050 含息跌逾 20% 中位數 20.2 個月（1.7 年）、S&P 500 含息 38.5 個月（3.2 年）；2022 升息熊市 0050 跌 −33.83% 花 24.9 個月回本，SPY 台幣因美元升值僅跌 −18.85%、14.3 個月回本。",
+            },
+            {
+                "level": "泡沫破裂（跌超過 50%）",
+                "median": "含息約 4.5～15.2 年（跨國最久逾 30 年）",
+                "examples": "台股 2000 泡沫（^TWII 價格 17.3 年 / 0050 含息 7.2 年）、那斯達克 2000 泡沫（^NDX 價格 15.6 年 / QQQ 含息 15.2 年）、日經 1989 泡沫（含 +1.5% 假設股息仍花 30.9 年）、上證 2007 高點（逾 19.1 年仍未回本）、1929 美國大蕭條（^GSPC 價格 25.0 年）。",
+            },
+        ],
+        "dividend_diff_note": "含息與不含息差非常多：新聞常說台股 2000 年套牢 17.3 年（207.6 個月），指的是「不含息」的加權價格指數 ^TWII；若把每年約 3%～4% 股息再投入買 0050，其實 7.2 年（86.0 個月）就回本，足足省下 10.1 年！美股 S&P 500 在 2008 海嘯含息版也比價格版提早約 1 年回本（4.5 年 vs 5.5 年）。",
+        "slow_bear_comparison": [
+            {
+                "scenario": "上證 2007-10 泡沫頂點（持有 10 年）",
+                "lump_sum": "單筆 100 萬 → 67.6 萬（−3.85%/年，MDD −70.44%）",
+                "dca_24m": "分 24 個月投入 100 萬 → 143.8 萬（+3.70%/年，MDD −40.92%）",
+                "dca_monthly": "每月定期定額 R1（本金 120 萬）→ 166.6 萬（+6.39%/年，MDD −36.93%）",
+            },
+            {
+                "scenario": "日本 1989-12 泡沫頂點（台美同時走日股，10 年）",
+                "lump_sum": "單筆 100 萬 → 55.3 萬（−5.76%/年，MDD −61.47%）",
+                "dca_24m": "分 24 個月投入 100 萬 → 80.9 萬（−2.09%/年，MDD −43.63%）",
+                "dca_monthly": "每月定期定額 R1（本金 120 萬）→ 125.3 萬（+0.85%/年，MDD −21.04%）",
+            },
+            {
+                "scenario": "只有台股走日本 1989 失落行情、美股正常（台美各半 R1）",
+                "lump_sum": "單押台灣正二 20 年（本金 240 萬）→ 僅剩 95.7 萬（−10.54%/年，MDD −83.63%）",
+                "dca_24m": "台美各半 R1 10 年（本金 120 萬）→ 242.7 萬（+13.50%/年，MDD −13.52%）",
+                "dca_monthly": "台美各半 R1 20 年（本金 240 萬）→ 313.7 萬（+2.59%/年，MDD −49.54%）",
+            },
+        ],
+        "gates_explainer": [
+            {"gate": "第 1 關：資料體檢", "desc": "檢查原始股價、拆股、配息與匯率有沒有錯價，並拆解哪些結論是靠真實 ETF 成交紀錄、哪些是靠上市前公式推算。"},
+            {"gate": "第 2 關：樣本外測試", "desc": "只看過去年份（1997–2005、1997–2015）挑出當時冠軍，拿去考「當初沒看過的下一個 10 年」，檢驗是不是事後諸葛。"},
+            {"gate": "第 3 關：各國崩盤情境", "desc": "把台股或美股換成日本 1989、上證 2007、英國、德國等歷史路徑（共 1,252 個滾動 10 年），測試遇上他國失落年代能不能活下來。"},
+            {"gate": "第 4 關：稅金、匯率與低消", "desc": "加上 30% 美股股息稅、0.3% 換匯價差、2.11% 二代健保、12% 綜所稅、台幣連升／連貶 10 年，以及 USD 15 傳統複委託低消。"},
+            {"gate": "第 5 關：真人行為錯誤", "desc": "模擬一般人遇到大跌會做的三件事：跌逾 30% 停扣半年、跌逾 40% 恐慌賣出 20%、以及股災剛好失業停扣 1 年並領 18 萬生活費。"},
+            {"gate": "第 6 關：統計與抽樣檢定", "desc": "改用 1 年、3 年、5 年與 Stationary Bootstrap 區塊重抽樣各跑 5,000 條路徑，並用 90% 信賴區間檢驗前五名是不是只是運氣差距。"},
+            {"gate": "第 7 關：參數敏感度", "desc": "把比例微調 ±10%、扣款日改月初／月中／月底、換再平衡頻率與均線天數，看策略會不會一微調就破防。"},
+            {"gate": "第 8 關：人生階段測試", "desc": "實測手上有 100 萬該一次投還是分批、以及 60 歲存到 1,000 萬每年領 4%（加 2% 通膨）連續領 30 年會不會把錢花光。"},
+        ],
+        "gates_honest_note": (
+            "誠實交代結果：在動手跑程式前我們先把嚴格及格標準寫死（criteria.md），結果五項原推薦裡只有 R4（2 倍以上槓桿不建議）八關全數通過；"
+            "其餘 R1、R2、R3、R5 依標準全部被判「被推翻」。其中一般人組合 R1（50% 0050 + 50% SPY）在風險控制上其實非常穩（破 −50% 機率幾乎為 0%），"
+            "不通過的主因有三點：(1) 第 2 關樣本外排名標準很嚴，單一 10 年裡台美各半必輸給事後最強的那單一市場（後悔差距 10.44 個百分點）；"
+            "(2) 第 4 關若誤用每筆最低手續費 USD 15 的傳統複委託會大幅吃掉報酬，且在部分稅率匯率情境排名落後純美股；"
+            "(3) 第 8 關證實純股票不適合直接帶進 60 歲後的退休提領期。因此我們把所有教訓整合成第 2 節的「分階段具體執行表」。"
+        ),
+        "verdict_rows": verdict_rows,
+        "behavior_rows": behavior_rows,
+        "behavior_three_mistakes": [
+            {
+                "title": "1. 大跌時嚇到停扣（跌逾 30% 停扣半年）",
+                "desc": "對 R1（50/50 台美）平均讓 XIRR 少 0.28 個百分點、對 M3b（1.4x）少 0.79 個百分點、對 2 倍正二少 1.31 個百分點；在最需要買便宜股數的時候停手，反而拉長回本時間。",
+            },
+            {
+                "title": "2. 恐慌殺低與沒預備金被迫賣股",
+                "desc": "跌逾 40% 賣出 20% 持股等回前高再買回，讓 R1 平均少 0.28 個百分點、正二少 1.08 個百分點；更致命的是沒存緊急預備金、股災失業被迫停扣 1 年並領 18 萬生活費，會讓 R1 平均少 1.39 個百分點（最慘 −5.71%）、M3b 少 2.25 個百分點（最慘 −8.64%）、正二少 3.92 個百分點（最慘 −15.59%），傷害是單純停扣的 3～5 倍。",
+            },
+            {
+                "title": "3. 只押一個國家（賭單一國運）",
+                "desc": "純買台股 0050 在 5,000 次模擬中跌破 −50% 的機率高達 19.38%，只要一半換成 SPY 就暴降到 2.68%；若單押的國家不幸走上日本 1989 失落 20 年，單押 2 倍正二投入 240 萬只剩 95.7 萬，而台美各半靠另一半美股撐腰仍能滾出 313.7 萬。",
+            },
+        ],
+        "withdrawal_rows": withdrawal_rows,
+        "top5_stat_note": (
+            f"第 6 關用 90% 信賴區間做多重比較修正後發現：積極組（−60% 上限）第 1 名到第 5 名的報酬差距中位數僅 −0.37%～+0.18%，"
+            f"例如第 1 名對第 2 名的 90% 信賴區間是 [{g6_agg_c2.get('ci90_low_pp', -0.87):+.2f}%, {g6_agg_c2.get('ci90_high_pp', 1.63):+.2f}%]，全部橫跨 0%；"
+            "一般 1 倍台美比例組（100% 0050 到 50/50）的 90% 信賴區間為 [−2.51%, +6.01%]，同樣橫跨 0%。"
+            "白話說：排名前五的組合在統計上根本分不出高下、實質上一樣好。挑投資組合應該看「規則簡不簡單、最壞情況能不能撐過去」，不要去追回測表上小數點後兩位的微弱差距。"
+        ),
+        "charts": {
+            "underwater": {
+                "title": "歷史主要股災水下期對照（不含息價格版 vs 含息總報酬）",
+                "src": "./assets/research/peak_recovery_underwater_duration_bars.png",
+                "caption": "跌幅超過 50% 時水下期呈指數型拉長；把股息再投入能把台股 2000 泡沫回本時間從 17.3 年砍到 7.2 年。",
+            },
+            "peak_curves": {
+                "title": "2000 網路泡沫與 2007/2008 金融海嘯高點進場：10 年帳戶市值曲線",
+                "src": "./assets/research/peak_recovery_peak_2000_2008_equity_curves.png",
+                "caption": "2000 年高點單筆買進要套牢近 7 年，每月定期定額把回本時間縮到約 1.7～2 年；2 倍以上槓桿在 2008 年腰斬再腰斬（−82%～−88%）。",
+            },
+            "regime_boxplots": {
+                "title": "未來 10 年「上漲、盤整、下跌」三種行情下的 XIRR 分佈（5,000 次模擬）",
+                "src": "./assets/research/peak_recovery_regime_xirr_boxplots.png",
+                "caption": "在盤整與下跌十年裡，2 倍以上槓桿中位數轉負且大幅虧損；台美各半 1 倍（M2c）與股債 60/40（M8）在三種行情都最穩。",
+            },
+            "intl_crash": {
+                "title": "跨國崩盤壓力測試：日本 1989 與上證 2007 高點進場資產曲線",
+                "src": "./assets/research/robustness_intl_crash_equity_curves.png",
+                "caption": "上證指數 19 年未創新高，持續定投 10 年反而賺到 +6.39%/年；若只有台股變日本，台美各半仍靠美股撐住正報酬。",
+            },
+            "verdict_heatmap": {
+                "title": "R1–R5 八關穩健性壓力測試判定總表熱力圖",
+                "src": "./assets/research/robustness_verdict_heatmap.png",
+                "caption": "依事先寫死的嚴格標準，僅 R4（2 倍以上槓桿不建議）八關全數通過；其餘四項均依弱點修正為第 2 節執行表與第 3 節方案。",
+            },
+            "behavior_loss": {
+                "title": "三種真人行為錯誤造成的平均年化報酬（XIRR）損失",
+                "src": "./assets/research/robustness_behavior_xirr_loss_bars.png",
+                "caption": "股災失業被迫賣股（情境 C）的傷害是單純停扣的 3～5 倍；波動越大的高槓桿組合，人性損失越慘重。",
+            },
+            "withdrawal_ruin": {
+                "title": "退休提領 30 年資金用完（破產）機率與存活曲線",
+                "src": "./assets/research/robustness_withdrawal_ruin_prob.png",
+                "caption": "呈現明顯的 U 型曲線：債券太多（30/70）80 歲後被通膨啃光、股票或槓桿太高（1.4x/2x）前十年被股災砍死，60/40 股債破產率最低。",
+            },
+        },
+        "data_limitations": [
+            "0050.TW Yahoo Finance 歷史資料只從 2009-01-02 開始（缺漏 2003–2008 年真實成交紀錄），且存在 2009 年初超過 ±7% 漲跌幅限制的錯價（單日最高 +16.55%）、2014-01-02 因 2025 年一拆四分割未回溯造成的 −75.06% 假崩盤，以及 2009–2014 年配息漏算；本研究已全數清洗修補，2009-03-10 以前則以 ^TWII 日報酬加計每年 3.0% 估計股息推算（並以 2000 年即掛牌的美股 EWT 交叉核對）。",
+            "00631L（2015-08-25 前）與 TQQQ（2010-02-11 前）上市前均為公式模擬資料；與真實上市後重疊期比對顯示，模擬版未計入交換合約利差與轉倉價差，年化報酬比真實 ETF 微幅偏樂觀約 0.8%～2.4%。",
+            "第 3 關跨國崩盤測試的股息殖利率為研究假設值（日本 +1.5%、德國 +2.5%、英國 +3.5%、上證 +2.0%）；其中德國指數 ^GDAXI 編製本身已含股息再投資，額外加計 +2.5% 會多算一次股息（對照不加息組後結論方向不變）。",
+            "台股加權指數 ^TWII 在 Yahoo Finance 僅自 1997-07-02 開始，缺漏 1990–1997 年（未涵蓋 1990 年 12,682 點暴跌 −80.4% 的歷史最大崩盤）；匯率 TWD=X 亦僅自 2004-03-24 起，更早期間延用 32.0230。",
+        ],
+        "disclaimer": {
+            "text": "本研究僅供量化回測與歷史實證參考，過去績效不代表未來表現，亦不構成任何個人化投資建議。",
+            "github_links": [
+                {
+                    "title": "高點回本研究完整報告 (peak_recovery/report.md)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/peak_recovery/report.md",
+                },
+                {
+                    "title": "八關穩健性壓力測試報告 (robustness_check/report.md)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/robustness_check/report.md",
+                },
+                {
+                    "title": "事先鎖定之八關判定標準 (robustness_check/criteria.md)",
+                    "url": "https://github.com/diabetepanda/pandatesttrading/blob/main/research/robustness_check/criteria.md",
+                },
+            ],
+        },
+    }
+
     full_payload = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "title": "深度研究 (In-Depth Research)",
         "subtitle": "Signal Desk 策略量化實證、多週期盲測與組合實驗報告",
         "disclaimer": "研究結果僅供參考，過去表現不代表未來，不構成投資建議。",
-        "articles": [article_short, article_combo, article_exam, article_flow, article_dca, article_leverage, article_dca_grid],
+        "articles": [
+            article_short,
+            article_combo,
+            article_exam,
+            article_flow,
+            article_dca,
+            article_leverage,
+            article_dca_grid,
+            article_peak_recovery_robustness,
+        ],
     }
     return full_payload
 

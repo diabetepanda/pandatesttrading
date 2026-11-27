@@ -3942,6 +3942,360 @@
     `;
   }
 
+  function renderPeakRecoveryRobustnessArticleHtml(art) {
+    if (!art) return "";
+    const plan = art.execution_plan || {};
+    const savingList = Array.isArray(plan.saving_phase) ? plan.saving_phase : [];
+    const transRows = Array.isArray(plan.transition_table) ? plan.transition_table : [];
+    const withdrawList = Array.isArray(plan.withdrawal_phase) ? plan.withdrawal_phase : [];
+    const riskCards = Array.isArray(art.risk_tier_cards) ? art.risk_tier_cards : [];
+    const recLevels = Array.isArray(art.recovery_levels) ? art.recovery_levels : [];
+    const slowBear = Array.isArray(art.slow_bear_comparison) ? art.slow_bear_comparison : [];
+    const gatesExp = Array.isArray(art.gates_explainer) ? art.gates_explainer : [];
+    const verdictRows = Array.isArray(art.verdict_rows) ? art.verdict_rows : [];
+    const behMistakes = Array.isArray(art.behavior_three_mistakes) ? art.behavior_three_mistakes : [];
+    const behRows = Array.isArray(art.behavior_rows) ? art.behavior_rows : [];
+    const withdrawRows = Array.isArray(art.withdrawal_rows) ? art.withdrawal_rows : [];
+    const charts = art.charts || {};
+    const limitations = Array.isArray(art.data_limitations) ? art.data_limitations : [];
+    const disc = art.disclaimer || {};
+    const ghLinks = Array.isArray(disc.github_links) ? disc.github_links : [];
+
+    const fmtPct = (v) => (v == null || !Number.isFinite(Number(v)) ? "—" : `${Number(v).toFixed(2)}%`);
+    const fmtSignedPp = (v) => {
+      if (v == null || !Number.isFinite(Number(v))) return "—";
+      const n = Number(v);
+      return `${n > 0 ? "+" : ""}${n.toFixed(2)}%`;
+    };
+
+    const renderChartFig = (ch) => {
+      if (!ch || !ch.src) return "";
+      return `
+        <figure class="research-chart-fig">
+          <div class="research-chart-title">${escapeHtml(ch.title || "")}</div>
+          <img src="${escapeHtml(ch.src)}" alt="${escapeHtml(ch.title || "")}" class="research-chart-img" loading="lazy" />
+          <figcaption class="research-chart-cap">${escapeHtml(ch.caption || "")}</figcaption>
+        </figure>
+      `;
+    };
+
+    const verdictCellClass = (v) => {
+      if (v === "通過" || v === "站得住") return "prr-verdict-pass";
+      if (v === "有條件通過" || v === "有條件成立") return "prr-verdict-cond";
+      if (v === "不通過" || v === "被推翻") return "prr-verdict-fail";
+      return "";
+    };
+
+    return `
+      <section class="card research-article" id="article-peak_recovery_robustness">
+        <div class="section-header article-header" onclick="toggleResearchArticle('peak_recovery_robustness')">
+          <div>
+            <h2>第 8 篇：${escapeHtml(art.title || "普通人該怎麼投資：從歷史高點回本到八關壓力測試")}</h2>
+            <p class="subtitle">${escapeHtml(art.subtitle || "")}</p>
+          </div>
+          <div class="article-header-actions" onclick="event.stopPropagation()">
+            <span class="badge badge-ok">${escapeHtml(art.badge || "八關壓力測試")}</span>
+            <button type="button" class="btn btn-sm article-toggle-btn" id="toggle-btn-peak_recovery_robustness" onclick="toggleResearchArticle('peak_recovery_robustness')">展開閱讀</button>
+          </div>
+        </div>
+
+        <div class="article-body collapsed" id="body-peak_recovery_robustness">
+          <!-- 1. 一句話結論 -->
+          <div class="callout callout-takeaway prr-hero-callout">
+            <p>💡 <strong>一句話結論：</strong>${escapeHtml(art.takeaway || "")}</p>
+          </div>
+
+          <!-- 2. 普通人的具體執行表 -->
+          <div class="research-section">
+            <h2>一、普通人的具體執行表</h2>
+
+            <div class="table-wrap table-responsive">
+              <table class="data-table mobile-cards prr-plan-table">
+                <thead>
+                  <tr>
+                    <th style="width: 190px;">人生階段</th>
+                    <th>具體執行規則</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-label="人生階段"><strong>存錢期（到 55 歲）</strong></td>
+                    <td data-label="具體執行規則">
+                      <ul class="prr-inline-list">
+                        ${savingList.map((it) => `<li>${escapeHtml(it)}</li>`).join("")}
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td data-label="人生階段"><strong>提領期（60 歲起）</strong></td>
+                    <td data-label="具體執行規則">
+                      <ul class="prr-inline-list">
+                        ${withdrawList.map((it) => `<li>${escapeHtml(it)}</li>`).join("")}
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 style="margin-top: 16px;">轉換期（每年 1 月調整時照表執行）</h3>
+            <div class="table-wrap table-responsive" style="margin-top: 8px;">
+              <table class="data-table mobile-cards lev-table">
+                <thead>
+                  <tr>
+                    <th>年齡</th>
+                    <th>0050</th>
+                    <th>SPY</th>
+                    <th>美國短中期公債 ETF</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${transRows.map((r) => `
+                    <tr>
+                      <td data-label="年齡"><strong>${escapeHtml(r.age)}</strong></td>
+                      <td data-label="0050" class="num">${escapeHtml(r.tw0050)}</td>
+                      <td data-label="SPY" class="num">${escapeHtml(r.spy)}</td>
+                      <td data-label="美國短中期公債 ETF" class="num"><strong>${escapeHtml(r.bond)}</strong></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+
+            <div class="prr-gray-note">${escapeHtml(plan.transition_note || "")}</div>
+          </div>
+
+          <!-- 3. 依你能承受的跌幅選組合 -->
+          <div class="research-section">
+            <h2>二、依你能承受的跌幅選組合</h2>
+            <div class="prr-risk-grid">
+              ${riskCards.map((c) => `
+                <div class="prr-risk-card">
+                  <div class="prr-risk-head">
+                    <h3>${escapeHtml(c.tier)}</h3>
+                    <span class="badge badge-ok">${escapeHtml(c.badge || "")}</span>
+                  </div>
+                  <div class="prr-risk-alloc">${escapeHtml(c.allocation)}</div>
+                  <div class="prr-risk-metrics">
+                    <div><span class="muted">歷史最大回撤：</span><strong class="chg-down">${escapeHtml(c.mdd_label)}</strong></div>
+                    <div><span class="muted">年化報酬（XIRR）：</span><strong class="chg-up">${escapeHtml(c.xirr_label)}</strong></div>
+                  </div>
+                  <p class="prr-risk-desc">${escapeHtml(c.details)}</p>
+                  ${c.gray_note ? `<div class="prr-gray-note prr-gray-note-sm">${escapeHtml(c.gray_note)}</div>` : ""}
+                </div>
+              `).join("")}
+            </div>
+            <p class="prr-leverage-warn">⚠️ ${escapeHtml(art.leverage_warning || "")}</p>
+          </div>
+
+          <!-- 4. 從高點跌下來要多久回本 -->
+          <div class="research-section">
+            <h2>三、從高點跌下來要多久回本</h2>
+            <div class="table-wrap table-responsive">
+              <table class="data-table mobile-cards">
+                <thead>
+                  <tr>
+                    <th style="width: 190px;">跌幅等級</th>
+                    <th style="width: 210px;">中位數回本時間</th>
+                    <th>歷史實例</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${recLevels.map((lv) => `
+                    <tr>
+                      <td data-label="跌幅等級"><strong>${escapeHtml(lv.level)}</strong></td>
+                      <td data-label="中位數回本時間"><strong>${escapeHtml(lv.median)}</strong></td>
+                      <td data-label="歷史實例">${escapeHtml(lv.examples)}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top: 10px;">${escapeHtml(art.dividend_diff_note || "")}</p>
+            <div class="research-charts-grid">
+              ${renderChartFig(charts.underwater)}
+            </div>
+          </div>
+
+          <!-- 5. 如果之後 10 年是緩跌或盤整 -->
+          <div class="research-section">
+            <h2>四、如果之後 10 年是緩跌或盤整</h2>
+            <p>很多投資人擔心「買完之後股市走十年盤整或緩跌怎麼辦？」跨國崩盤與高點進場實測顯示：<strong>分散到兩個國家加上持續定期定額扣款，在緩跌或盤整行情反而有利</strong>——因為大跌期間每個月都在低檔累積便宜股數、壓低平均成本，而且當其中一國失落時，另一國的成長能撐住整體帳戶。</p>
+            <div class="table-wrap table-responsive" style="margin-top: 10px;">
+              <table class="data-table mobile-cards">
+                <thead>
+                  <tr>
+                    <th>歷史緩跌／泡沫情境</th>
+                    <th>單筆投入 / 單押對照</th>
+                    <th>分 24 個月投入 / 10 年結果</th>
+                    <th>持續定期定額 / 20 年結果</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${slowBear.map((r) => `
+                    <tr>
+                      <td data-label="歷史緩跌／泡沫情境"><strong>${escapeHtml(r.scenario)}</strong></td>
+                      <td data-label="單筆投入 / 單押對照">${escapeHtml(r.lump_sum)}</td>
+                      <td data-label="分 24 個月投入 / 10 年結果">${escapeHtml(r.dca_24m)}</td>
+                      <td data-label="持續定期定額 / 20 年結果"><strong>${escapeHtml(r.dca_monthly)}</strong></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+            <div class="research-charts-grid">
+              ${renderChartFig(charts.intl_crash)}
+              ${renderChartFig(charts.peak_curves)}
+              ${renderChartFig(charts.regime_boxplots)}
+            </div>
+          </div>
+
+          <!-- 6. 八關壓力測試 -->
+          <div class="research-section">
+            <h2>五、八關壓力測試</h2>
+            <p>${escapeHtml(art.gates_honest_note || "")}</p>
+            <div class="table-wrap table-responsive" style="margin-top: 10px;">
+              <table class="data-table mobile-cards prr-verdict-table">
+                <thead>
+                  <tr>
+                    <th>原推薦項目</th>
+                    <th>第 1 關<br>資料體檢</th>
+                    <th>第 2 關<br>樣本外</th>
+                    <th>第 3 關<br>各國崩盤</th>
+                    <th>第 4 關<br>稅金匯率</th>
+                    <th>第 5 關<br>真人行為</th>
+                    <th>第 6 關<br>統計檢定</th>
+                    <th>第 7 關<br>參數敏感</th>
+                    <th>第 8 關<br>人生階段</th>
+                    <th>總判定</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${verdictRows.map((r) => `
+                    <tr>
+                      <td data-label="原推薦項目"><strong>${escapeHtml(r.label)}</strong></td>
+                      <td data-label="第 1 關" class="${verdictCellClass(r.gate_1)}">${escapeHtml(r.gate_1)}</td>
+                      <td data-label="第 2 關" class="${verdictCellClass(r.gate_2)}">${escapeHtml(r.gate_2)}</td>
+                      <td data-label="第 3 關" class="${verdictCellClass(r.gate_3)}">${escapeHtml(r.gate_3)}</td>
+                      <td data-label="第 4 關" class="${verdictCellClass(r.gate_4)}">${escapeHtml(r.gate_4)}</td>
+                      <td data-label="第 5 關" class="${verdictCellClass(r.gate_5)}">${escapeHtml(r.gate_5)}</td>
+                      <td data-label="第 6 關" class="${verdictCellClass(r.gate_6)}">${escapeHtml(r.gate_6)}</td>
+                      <td data-label="第 7 關" class="${verdictCellClass(r.gate_7)}">${escapeHtml(r.gate_7)}</td>
+                      <td data-label="第 8 關" class="${verdictCellClass(r.gate_8)}">${escapeHtml(r.gate_8)}</td>
+                      <td data-label="總判定" class="${verdictCellClass(r.overall_verdict)}"><strong>${escapeHtml(r.overall_verdict)}</strong></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+            <div class="research-charts-grid">
+              ${renderChartFig(charts.verdict_heatmap)}
+            </div>
+            <details class="research-details" style="margin-top: 8px;">
+              <summary class="cursor-pointer" style="font-weight: 600; color: var(--accent); padding: 6px 0;">白話看懂八道關卡分別測什麼 ▼</summary>
+              <ul class="research-strat-list" style="margin-top: 6px;">
+                ${gatesExp.map((g) => `<li><strong>${escapeHtml(g.gate)}：</strong>${escapeHtml(g.desc)}</li>`).join("")}
+              </ul>
+            </details>
+          </div>
+
+          <!-- 7. 最容易害普通人虧錢的三件事 -->
+          <div class="research-section">
+            <h2>六、最容易害普通人虧錢的三件事</h2>
+            <ul class="research-strat-list">
+              ${behMistakes.map((m) => `<li><strong>${escapeHtml(m.title)}：</strong>${escapeHtml(m.desc)}</li>`).join("")}
+            </ul>
+            <div class="table-wrap table-responsive" style="margin-top: 10px;">
+              <table class="data-table mobile-cards lev-table">
+                <thead>
+                  <tr>
+                    <th>投資策略</th>
+                    <th>完美扣款平均 XIRR</th>
+                    <th>跌逾 30% 停扣半年<br>平均少賺</th>
+                    <th>跌逾 40% 賣出 20%<br>平均少賺</th>
+                    <th>股災失業停扣 1 年+領 18 萬<br>平均少賺（最慘）</th>
+                    <th>三情境平均損失</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${behRows.map((r) => `
+                    <tr>
+                      <td data-label="投資策略"><strong>${escapeHtml(r.label)}</strong></td>
+                      <td data-label="完美扣款平均 XIRR" class="num">${fmtPct(r.control_mean_xirr)}</td>
+                      <td data-label="跌逾 30% 停扣半年" class="num chg-down">${fmtSignedPp(r.a_loss)}</td>
+                      <td data-label="跌逾 40% 賣出 20%" class="num chg-down">${fmtSignedPp(r.b_loss)}</td>
+                      <td data-label="股災失業" class="num chg-down">${fmtSignedPp(r.c_loss)}（${fmtSignedPp(r.c_worst)}）</td>
+                      <td data-label="三情境平均損失" class="num"><strong>${fmtPct(r.avg_loss)}</strong></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+            <div class="research-charts-grid">
+              ${renderChartFig(charts.behavior_loss)}
+            </div>
+          </div>
+
+          <!-- 8. 退休提領：債券不是越多越安全 -->
+          <div class="research-section">
+            <h2>七、退休提領：債券不是越多越安全</h2>
+            <p>假設 60 歲存到 1,000 萬台幣，第一年領 4%（40 萬），之後每年隨 2% 通膨調高提領額並持續 30 年（到 90 歲）。測試結果顛覆直覺：<strong>前十年最怕大跌（序列風險），後二十年最怕通膨</strong>。債券配到 70%（30/70）雖然前 20 年穩如泰山，但低利率環境下成長追不上通膨，80 歲後反而容易把老本啃光；反而是 60/40 股債同時擋住早年股災與晚年通膨，30 年資金用完機率最低。</p>
+            <div class="table-wrap table-responsive" style="margin-top: 10px;">
+              <table class="data-table mobile-cards lev-table">
+                <thead>
+                  <tr>
+                    <th>退休資產配置</th>
+                    <th>全體 5,000 條路徑<br>30 年用完機率</th>
+                    <th>剛退休前 3 年遇大跌<br>30 年用完機率</th>
+                    <th>早年遇大跌<br>90 歲剩餘中位數</th>
+                    <th>日本 1989 30 年</th>
+                    <th>評語</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${withdrawRows.map((r) => `
+                    <tr>
+                      <td data-label="退休資產配置"><strong>${escapeHtml(r.label)}</strong></td>
+                      <td data-label="全體用完機率" class="num">${fmtPct(r.all_ruin_pct)}</td>
+                      <td data-label="早年大跌用完機率" class="num chg-down"><strong>${fmtPct(r.early_crash_ruin_pct)}</strong></td>
+                      <td data-label="90 歲剩餘中位數" class="num">${escapeHtml(r.early_crash_median_twd_label)}</td>
+                      <td data-label="日本 1989 30 年">${escapeHtml(r.japan_1989_note)}</td>
+                      <td data-label="評語">${escapeHtml(r.comment)}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+            <div class="research-charts-grid">
+              ${renderChartFig(charts.withdrawal_ruin)}
+            </div>
+          </div>
+
+          <!-- 9. 排名前五的組合，統計上差不多一樣好 -->
+          <div class="research-section">
+            <h2>八、排名前五的組合，統計上差不多一樣好</h2>
+            <p>${escapeHtml(art.top5_stat_note || "")}</p>
+          </div>
+
+          <!-- 10. 資料限制（灰色小字區塊） -->
+          <div class="research-section prr-limitations-box">
+            <h3>資料限制與透明揭露</h3>
+            <ul>
+              ${limitations.map((it) => `<li>${escapeHtml(it)}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="research-section disclaimer-box">
+            <p>⚠️ <strong>免責聲明</strong>：${escapeHtml(disc.text || "本研究僅供量化回測與歷史實證參考，過去績效不代表未來表現，不構成投資建議。")}</p>
+            <div class="github-links">
+              ${ghLinks.map((g) => `<a href="${escapeHtml(g.url)}" target="_blank" rel="noopener noreferrer" class="ext-link">🔗 ${escapeHtml(g.title)}</a>`).join("")}
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
   function renderResearchHtml(data) {
     if (!data) return '<p class="muted">深度研究資料為空。</p>';
     if (!data.articles && data.strategies_intro) {
@@ -3955,6 +4309,7 @@
     const dcaArt = articles.find((a) => a.id === "dca_compare") || articles[4];
     const levArt = articles.find((a) => a.id === "leverage_study") || articles[5];
     const dcaGridArt = articles.find((a) => a.id === "dca_allocation_grid") || articles[6];
+    const peakRobArt = articles.find((a) => a.id === "peak_recovery_robustness") || articles[7];
 
     return `
       <section class="card">
@@ -4043,6 +4398,18 @@
             <div class="toc-action">點擊展開閱讀 ➔</div>
           </div>
           ` : ""}
+
+          ${peakRobArt ? `
+          <div class="research-toc-card" onclick="scrollToResearchArticle('peak_recovery_robustness')">
+            <div class="toc-card-header">
+              <span class="badge badge-ok">${escapeHtml(peakRobArt.badge || "八關壓力測試")}</span>
+              <span class="toc-num">第 8 篇</span>
+            </div>
+            <h3 class="toc-title">${escapeHtml(peakRobArt.title || "普通人該怎麼投資：從歷史高點回本到八關壓力測試")}</h3>
+            <p class="toc-takeaway">${escapeHtml(peakRobArt.takeaway || "")}</p>
+            <div class="toc-action">點擊展開閱讀 ➔</div>
+          </div>
+          ` : ""}
         </div>
       </section>
 
@@ -4068,6 +4435,7 @@
       ${renderDcaCompareArticleHtml(dcaArt)}
       ${renderLeverageStudyArticleHtml(levArt)}
       ${renderDcaAllocationGridArticleHtml(dcaGridArt)}
+      ${renderPeakRecoveryRobustnessArticleHtml(peakRobArt)}
     `;
   }
 
@@ -4813,6 +5181,10 @@
     if (art7) {
       g.scanContainers(art7, ".callout-takeaway, .lev-highlight-card, .research-section p, .research-section li");
     }
+    const art8 = document.getElementById("article-peak_recovery_robustness");
+    if (art8) {
+      g.scanContainers(art8, ".callout-takeaway, .prr-risk-card, .research-section p, .research-section li");
+    }
   }
 
   function renderFlowTwSlot() {
@@ -4916,6 +5288,7 @@
       if (targetArt === "flow-signals" || targetArt === "flow_signals") targetArt = "flow_signals";
       if (targetArt === "leverage-study" || targetArt === "leverage_study") targetArt = "leverage_study";
       if (targetArt === "dca-allocation-grid" || targetArt === "dca_allocation_grid") targetArt = "dca_allocation_grid";
+      if (targetArt === "peak-recovery-robustness" || targetArt === "peak_recovery_robustness") targetArt = "peak_recovery_robustness";
       pendingResearchArticleId = targetArt;
       document.getElementById("view-research")?.classList.remove("hidden");
       document.querySelector('.nav-link[data-route="research"]')?.classList.add("active");
