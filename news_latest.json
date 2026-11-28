@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-28-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T05:36:13Z",
-  "updated_at_taipei": "2026-11-28 13:36",
-  "last_updated_utc": "2026-11-28T05:36:13Z",
-  "last_updated_taipei": "2026-11-28 13:36",
-  "next_update_hint": "約台北時間 13:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T05:51:33Z",
+  "updated_at_taipei": "2026-11-28 13:51",
+  "last_updated_utc": "2026-11-28T05:51:33Z",
+  "last_updated_taipei": "2026-11-28 13:51",
+  "next_update_hint": "約台北時間 14:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 14.091,
+    "total_elapsed_sec": 16.886,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 1,
+    "new_items_added": 3,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.071,
+        "elapsed_sec": 0.094,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.145,
+        "elapsed_sec": 0.112,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.073,
+        "elapsed_sec": 0.053,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.091,
+        "elapsed_sec": 0.044,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.182,
+        "elapsed_sec": 0.281,
         "raw_count": 20,
-        "items_kept": 18,
+        "items_kept": 19,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.153,
+        "elapsed_sec": 0.133,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.109,
+        "elapsed_sec": 0.126,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.087,
+        "elapsed_sec": 0.093,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.083,
+        "elapsed_sec": 0.095,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.404,
+        "elapsed_sec": 0.406,
         "raw_count": 20,
         "items_kept": 12,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.424,
+        "elapsed_sec": 0.383,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.355,
+        "elapsed_sec": 0.294,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.498,
+        "elapsed_sec": 0.495,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.489,
+        "elapsed_sec": 0.411,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.576,
+        "elapsed_sec": 0.461,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.257,
+        "elapsed_sec": 0.068,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.299,
+        "elapsed_sec": 1.828,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.065,
+        "elapsed_sec": 0.044,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.513,
+        "elapsed_sec": 1.215,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.509,
+        "elapsed_sec": 0.349,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,16 +216,16 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.461,
+        "elapsed_sec": 1.004,
         "raw_count": 6,
-        "items_kept": 1,
+        "items_kept": 0,
         "error": null
       },
       "bybit_derivatives": {
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.399,
+        "elapsed_sec": 0.363,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.787,
+        "elapsed_sec": 0.426,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.201,
+        "elapsed_sec": 0.074,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.534,
+        "elapsed_sec": 0.454,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.344,
+        "elapsed_sec": 0.295,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,28 +303,71 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -377.2,
+      "net_flow_usd_m": -377.0,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0054,
+        "funding_rate_pct": 0.0053,
         "oi_usd_b": 1.92
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0008,
+        "funding_rate_pct": 0.0009,
         "oi_usd_b": 1.13
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.0,
-      "tx_count": 64871,
+      "mempool_vsize_mb": 29.5,
+      "tx_count": 61368,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261128-3c639f6dd3",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T05:15:04Z",
+      "published_at_taipei": "2026-11-28 13:15",
+      "published_at_taipei_iso": "2026-11-28T13:15:04+08:00",
+      "first_seen_at_utc": "2026-11-28T05:51:33Z",
+      "first_seen_at_taipei": "2026-11-28 13:51",
+      "month": "2026-11",
+      "title": "Tesla Stock And Other Tariff Protected Manufacturers Investors Are Watching",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-stock-other-tariff-protected-051504941.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/tesla-stock-other-tariff-protected-051504941.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-721dc98bc7",
+        "issue": "2026-11-23-AM",
+        "title": "Ur Energy And 2 Other Canadian Uranium Stocks To Watch",
+        "published_at_taipei": "2026-11-23 16:09",
+        "url": "https://finance.yahoo.com/energy/articles/ur-energy-2-other-canadian-080926353.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：tariffs；命中：tariff",
+      "sentiment_targets": [
+        "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-8a741e9a23",
       "issue": "2026-11-28-AM",
@@ -595,6 +638,84 @@
       "sentiment_reason": "數據：未平倉量劇烈變動（方向中性）",
       "sentiment_targets": [
         "XRPUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-a578223210",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T05:32:55Z",
+      "published_at_taipei": "2026-11-28 13:32",
+      "published_at_taipei_iso": "2026-11-28T13:32:55+08:00",
+      "first_seen_at_utc": "2026-11-28T05:51:33Z",
+      "first_seen_at_taipei": "2026-11-28 13:51",
+      "month": "2026-11",
+      "title": "China’s import logistics demand falls 0.6% in January-October",
+      "url": "https://finance.yahoo.com/economy/articles/china-import-logistics-demand-falls-053255400.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/economy/articles/china-import-logistics-demand-falls-053255400.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-0039c1ac85",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T05:18:47Z",
+      "published_at_taipei": "2026-11-28 13:18",
+      "published_at_taipei_iso": "2026-11-28T13:18:47+08:00",
+      "first_seen_at_utc": "2026-11-28T05:51:33Z",
+      "first_seen_at_taipei": "2026-11-28 13:51",
+      "month": "2026-11",
+      "title": "Coinbase CEO Brian Armstrong Scales Back Bitcoin Prediction, Still Sees Nearly 7x Upside By 2030",
+      "url": "https://stocktwits.com/news-articles/markets/cryptocurrency/coinbase-ceo-brian-armstrong-scales-back-bitcoin-prediction-still-sees-nearly-7x-upside-by-2030/cNRRYbqR9Vo?.tsrc=rss",
+      "canonical_url": "https://stocktwits.com/news-articles/markets/cryptocurrency/coinbase-ceo-brian-armstrong-scales-back-bitcoin-prediction-still-sees-nearly-7x-upside-by-2030/cNRRYbqR9Vo?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261128-45f4d5ea52",
+        "issue": "2026-11-27-PM",
+        "title": "Coinbase CEO issues bullish Bitcoin prediction as inflation fears grow",
+        "published_at_taipei": "2026-11-28 02:14",
+        "url": "https://www.thestreet.com/crypto/markets/coinbase-ceo-issues-bullish-bitcoin-warning-as-inflation-fears-grow?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
       ],
       "sentiment_method": "rule"
     },
@@ -2427,6 +2548,127 @@
       "sentiment_reason": "數據：未平倉量劇烈變動（方向中性）",
       "sentiment_targets": [
         "XRPUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-a578223210",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T05:32:55Z",
+      "published_at_taipei": "2026-11-28 13:32",
+      "published_at_taipei_iso": "2026-11-28T13:32:55+08:00",
+      "first_seen_at_utc": "2026-11-28T05:51:33Z",
+      "first_seen_at_taipei": "2026-11-28 13:51",
+      "month": "2026-11",
+      "title": "China’s import logistics demand falls 0.6% in January-October",
+      "url": "https://finance.yahoo.com/economy/articles/china-import-logistics-demand-falls-053255400.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/economy/articles/china-import-logistics-demand-falls-053255400.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "總經"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-0039c1ac85",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T05:18:47Z",
+      "published_at_taipei": "2026-11-28 13:18",
+      "published_at_taipei_iso": "2026-11-28T13:18:47+08:00",
+      "first_seen_at_utc": "2026-11-28T05:51:33Z",
+      "first_seen_at_taipei": "2026-11-28 13:51",
+      "month": "2026-11",
+      "title": "Coinbase CEO Brian Armstrong Scales Back Bitcoin Prediction, Still Sees Nearly 7x Upside By 2030",
+      "url": "https://stocktwits.com/news-articles/markets/cryptocurrency/coinbase-ceo-brian-armstrong-scales-back-bitcoin-prediction-still-sees-nearly-7x-upside-by-2030/cNRRYbqR9Vo?.tsrc=rss",
+      "canonical_url": "https://stocktwits.com/news-articles/markets/cryptocurrency/coinbase-ceo-brian-armstrong-scales-back-bitcoin-prediction-still-sees-nearly-7x-upside-by-2030/cNRRYbqR9Vo?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261128-45f4d5ea52",
+        "issue": "2026-11-27-PM",
+        "title": "Coinbase CEO issues bullish Bitcoin prediction as inflation fears grow",
+        "published_at_taipei": "2026-11-28 02:14",
+        "url": "https://www.thestreet.com/crypto/markets/coinbase-ceo-issues-bullish-bitcoin-warning-as-inflation-fears-grow?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-3c639f6dd3",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T05:15:04Z",
+      "published_at_taipei": "2026-11-28 13:15",
+      "published_at_taipei_iso": "2026-11-28T13:15:04+08:00",
+      "first_seen_at_utc": "2026-11-28T05:51:33Z",
+      "first_seen_at_taipei": "2026-11-28 13:51",
+      "month": "2026-11",
+      "title": "Tesla Stock And Other Tariff Protected Manufacturers Investors Are Watching",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-stock-other-tariff-protected-051504941.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/tesla-stock-other-tariff-protected-051504941.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "總經",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "TSLA"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（tariff）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-721dc98bc7",
+        "issue": "2026-11-23-AM",
+        "title": "Ur Energy And 2 Other Canadian Uranium Stocks To Watch",
+        "published_at_taipei": "2026-11-23 16:09",
+        "url": "https://finance.yahoo.com/energy/articles/ur-energy-2-other-canadian-080926353.html?.tsrc=rss"
+      },
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "命中：tariffs；命中：tariff",
+      "sentiment_targets": [
+        "TSLA"
       ],
       "sentiment_method": "rule"
     },
@@ -163019,122 +163261,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261121-57ff90353e",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T05:48:01Z",
-      "published_at_taipei": "2026-11-21 13:48",
-      "published_at_taipei_iso": "2026-11-21T13:48:01+08:00",
-      "month": "2026-11",
-      "title": "〈熱門股〉宣德低軌衛星業務明年估增3成 無懼大盤逆風飆漲停周漲15%",
-      "url": "https://news.cnyes.com/news/id/6669740",
-      "canonical_url": "https://news.cnyes.com/news/id/6669740",
-      "source": "鉅亨網（台股）",
-      "source_id": "cnyes_tw_stock",
-      "category": "台股",
-      "symbols": [
-        "TWII"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-cb7d10d8f5",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T05:43:35Z",
-      "published_at_taipei": "2026-11-21 13:43",
-      "published_at_taipei_iso": "2026-11-21T13:43:35+08:00",
-      "month": "2026-11",
-      "title": "台股連續重挫！蔡家蓁慘賠近300萬 崩潰喊：要去撿回收了",
-      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%80%A3%E7%BA%8C%E9%87%8D%E6%8C%AB-%E8%94%A1%E5%AE%B6%E8%93%81%E6%85%98%E8%B3%A0%E8%BF%91300%E8%90%AC-%E5%B4%A9%E6%BD%B0%E5%96%8A-%E8%A6%81%E5%8E%BB%E6%92%BF%E5%9B%9E%E6%94%B6%E4%BA%86-054335398.html",
-      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E9%80%A3%E7%BA%8C%E9%87%8D%E6%8C%AB-%E8%94%A1%E5%AE%B6%E8%93%81%E6%85%98%E8%B3%A0%E8%BF%91300%E8%90%AC-%E5%B4%A9%E6%BD%B0%E5%96%8A-%E8%A6%81%E5%8E%BB%E6%92%BF%E5%9B%9E%E6%94%B6%E4%BA%86-054335398.html",
-      "source": "Yahoo奇摩股市",
-      "source_id": "yahoo_tw_stock",
-      "category": "台股",
-      "symbols": [
-        "TWII"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "追蹤標的相關",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-4a73ffea3f",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T05:42:48Z",
-      "published_at_taipei": "2026-11-21 13:42",
-      "published_at_taipei_iso": "2026-11-21T13:42:48+08:00",
-      "month": "2026-11",
-      "title": "台股何時止跌，現金為王？阮慕驊揭全球資產瘋狂拋售原因：現在基本面一文不值",
-      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E4%BD%95%E6%99%82%E6%AD%A2%E8%B7%8C-%E7%8F%BE%E9%87%91%E7%82%BA%E7%8E%8B-%E9%98%AE%E6%85%95%E9%A9%8A%E6%8F%AD%E5%85%A8%E7%90%83%E8%B3%87%E7%94%A2%E7%98%8B%E7%8B%82%E6%8B%8B%E5%94%AE%E5%8E%9F%E5%9B%A0-%E7%8F%BE%E5%9C%A8%E5%9F%BA%E6%9C%AC%E9%9D%A2-%E6%96%87%E4%B8%8D%E5%80%BC-054248711.html",
-      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E4%BD%95%E6%99%82%E6%AD%A2%E8%B7%8C-%E7%8F%BE%E9%87%91%E7%82%BA%E7%8E%8B-%E9%98%AE%E6%85%95%E9%A9%8A%E6%8F%AD%E5%85%A8%E7%90%83%E8%B3%87%E7%94%A2%E7%98%8B%E7%8B%82%E6%8B%8B%E5%94%AE%E5%8E%9F%E5%9B%A0-%E7%8F%BE%E5%9C%A8%E5%9F%BA%E6%9C%AC%E9%9D%A2-%E6%96%87%E4%B8%8D%E5%80%BC-054248711.html",
-      "source": "Yahoo奇摩股市",
-      "source_id": "yahoo_tw_stock",
-      "category": "台股",
-      "symbols": [
-        "XAUUSD",
-        "XAGUSD",
-        "TWII"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "追蹤標的相關",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-bf1398446a",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T05:40:35Z",
-      "published_at_taipei": "2026-11-21 13:40",
-      "published_at_taipei_iso": "2026-11-21T13:40:35+08:00",
-      "month": "2026-11",
-      "title": "Hong Kong pushes to bring crypto custodians, advisers under licensing rules",
-      "url": "https://cointelegraph.com/news/hong-kong-crypto-custody-advisory-licensing-bill?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-      "canonical_url": "https://cointelegraph.com/news/hong-kong-crypto-custody-advisory-licensing-bill",
-      "source": "Cointelegraph",
-      "source_id": "cointelegraph",
-      "category": "加密貨幣",
-      "symbols": [],
-      "importance": 1,
-      "importance_stars": "★",
-      "importance_reason": "一般交易消息",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-3e455ec1a8",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T05:37:00Z",
-      "published_at_taipei": "2026-11-21 13:37",
-      "published_at_taipei_iso": "2026-11-21T13:37:00+08:00",
-      "month": "2026-11",
-      "title": "台股爆發失速列車！系統性殺盤、台積電險跌破2千…杜金龍曝「合理價」 再喊加碼2檔甜甜價",
-      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E7%88%86%E7%99%BC%E5%A4%B1%E9%80%9F%E5%88%97%E8%BB%8A-%E7%B3%BB%E7%B5%B1%E6%80%A7%E6%AE%BA%E7%9B%A4-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E9%9A%AA%E8%B7%8C%E7%A0%B42%E5%8D%83-%E6%9D%9C%E9%87%91%E9%BE%8D%E6%9B%9D-%E5%90%88%E7%90%86%E5%83%B9-053700001.html",
-      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E7%88%86%E7%99%BC%E5%A4%B1%E9%80%9F%E5%88%97%E8%BB%8A-%E7%B3%BB%E7%B5%B1%E6%80%A7%E6%AE%BA%E7%9B%A4-%E5%8F%B0%E7%A9%8D%E9%9B%BB%E9%9A%AA%E8%B7%8C%E7%A0%B42%E5%8D%83-%E6%9D%9C%E9%87%91%E9%BE%8D%E6%9B%9D-%E5%90%88%E7%90%86%E5%83%B9-053700001.html",
-      "source": "Yahoo奇摩股市",
-      "source_id": "yahoo_tw_stock",
-      "category": "台股",
-      "symbols": [
-        "TWII",
-        "2330"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "追蹤標的相關",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -163143,9 +163269,9 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "AM",
-      "updated_at_taipei": "2026-11-28 13:36",
-      "count": 53,
-      "star3_count": 6,
+      "updated_at_taipei": "2026-11-28 13:51",
+      "count": 56,
+      "star3_count": 7,
       "failed_sources": [
         {
           "id": "binance_derivatives",
