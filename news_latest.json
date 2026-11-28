@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-28-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T02:05:38Z",
-  "updated_at_taipei": "2026-11-28 10:05",
-  "last_updated_utc": "2026-11-28T02:05:38Z",
-  "last_updated_taipei": "2026-11-28 10:05",
-  "next_update_hint": "約台北時間 10:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T02:20:46Z",
+  "updated_at_taipei": "2026-11-28 10:20",
+  "last_updated_utc": "2026-11-28T02:20:46Z",
+  "last_updated_taipei": "2026-11-28 10:20",
+  "next_update_hint": "約台北時間 10:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 16.219,
+    "total_elapsed_sec": 15.136,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 0,
+    "new_items_added": 5,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.053,
+        "elapsed_sec": 0.061,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.101,
+        "elapsed_sec": 0.182,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.385,
+        "elapsed_sec": 0.045,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.131,
+        "elapsed_sec": 0.106,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.2,
+        "elapsed_sec": 0.19,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.11,
+        "elapsed_sec": 0.185,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.097,
+        "elapsed_sec": 0.104,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.085,
+        "elapsed_sec": 0.087,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -117,16 +117,16 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.795,
+        "elapsed_sec": 0.418,
         "raw_count": 20,
-        "items_kept": 15,
+        "items_kept": 13,
         "error": null
       },
       "cnyes_us_stock": {
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.458,
+        "elapsed_sec": 0.512,
         "raw_count": 20,
         "items_kept": 18,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.378,
+        "elapsed_sec": 0.372,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.922,
+        "elapsed_sec": 0.95,
         "raw_count": 15,
         "items_kept": 6,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.596,
+        "elapsed_sec": 0.364,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.359,
+        "elapsed_sec": 0.4,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.151,
+        "elapsed_sec": 0.171,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.415,
+        "elapsed_sec": 0.277,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.045,
+        "elapsed_sec": 0.047,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.502,
+        "elapsed_sec": 1.364,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.45,
+        "elapsed_sec": 0.467,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.383,
+        "elapsed_sec": 1.468,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.456,
+        "elapsed_sec": 0.414,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.762,
+        "elapsed_sec": 0.786,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.12,
+        "elapsed_sec": 0.105,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.482,
+        "elapsed_sec": 0.531,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.362,
+        "elapsed_sec": 0.3,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -308,7 +308,7 @@
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0056,
+        "funding_rate_pct": 0.0055,
         "oi_usd_b": 1.93
       },
       "ETHUSDT": {
@@ -317,14 +317,93 @@
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 3,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.1,
-      "tx_count": 65560,
+      "mempool_vsize_mb": 30.2,
+      "tx_count": 66668,
       "alert_key": "btc_mempool:congested"
     }
   },
   "latest_items": [
+    {
+      "id": "news-20261128-c6d5df37e2",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T02:00:45Z",
+      "published_at_taipei": "2026-11-28 10:00",
+      "published_at_taipei_iso": "2026-11-28T10:00:45+08:00",
+      "first_seen_at_utc": "2026-11-28T02:20:46Z",
+      "first_seen_at_taipei": "2026-11-28 10:20",
+      "month": "2026-11",
+      "title": "金色早報丨OKX Star闢謠交易所被盜 比特幣與黃金相關性今年創歷史新高",
+      "url": "https://news.cnyes.com/news/id/6674346",
+      "canonical_url": "https://news.cnyes.com/news/id/6674346",
+      "source": "鉅亨網（加密）",
+      "source_id": "cnyes_crypto",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "XAUUSD"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "XAUUSD"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-8c7102d795",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T02:00:06Z",
+      "published_at_taipei": "2026-11-28 10:00",
+      "published_at_taipei_iso": "2026-11-28T10:00:06+08:00",
+      "first_seen_at_utc": "2026-11-28T02:20:46Z",
+      "first_seen_at_taipei": "2026-11-28 10:20",
+      "month": "2026-11",
+      "title": "前高盛策略師警告：風險資產將全面崩跌 逼得Fed 12月放棄升息",
+      "url": "https://news.cnyes.com/news/id/6673731",
+      "canonical_url": "https://news.cnyes.com/news/id/6673731",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "XAUUSD",
+        "WTI",
+        "SP500"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（升息）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "反轉：否定「升息」；命中：升息",
+      "sentiment_targets": [
+        "XAUUSD",
+        "WTI",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-6f2ee106b3",
       "issue": "2026-11-28-AM",
@@ -400,6 +479,45 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-6a4b075e19",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T02:05:00Z",
+      "published_at_taipei": "2026-11-28 10:05",
+      "published_at_taipei_iso": "2026-11-28T10:05:00+08:00",
+      "first_seen_at_utc": "2026-11-28T02:20:46Z",
+      "first_seen_at_taipei": "2026-11-28 10:20",
+      "month": "2026-11",
+      "title": "蘋果投入矽光子研發 進補台股14檔",
+      "url": "https://tw.news.yahoo.com/%E8%98%8B%E6%9E%9C%E6%8A%95%E5%85%A5%E7%9F%BD%E5%85%89%E5%AD%90%E7%A0%94%E7%99%BC-%E9%80%B2%E8%A3%9C%E5%8F%B0%E8%82%A114%E6%AA%94-020500337.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E8%98%8B%E6%9E%9C%E6%8A%95%E5%85%A5%E7%9F%BD%E5%85%89%E5%AD%90%E7%A0%94%E7%99%BC-%E9%80%B2%E8%A3%9C%E5%8F%B0%E8%82%A114%E6%AA%94-020500337.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII",
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII",
+        "AAPL"
       ],
       "sentiment_method": "rule"
     },
@@ -829,6 +947,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-56ab8c6ede",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T00:11:15Z",
+      "published_at_taipei": "2026-11-28 08:11",
+      "published_at_taipei_iso": "2026-11-28T08:11:15+08:00",
+      "first_seen_at_utc": "2026-11-28T02:20:46Z",
+      "first_seen_at_taipei": "2026-11-28 10:20",
+      "month": "2026-11",
+      "title": "鉅亨速報 - Factset 最新調查：國泰金(2882-TW)EPS預估下修至8.9元，預估目標價為127.1元",
+      "url": "https://news.cnyes.com/news/id/6674323",
+      "canonical_url": "https://news.cnyes.com/news/id/6674323",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2882"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2882"
       ],
       "sentiment_method": "rule"
     },
@@ -1234,6 +1388,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-7cee2ab1c7",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T00:43:13Z",
+      "published_at_taipei": "2026-11-28 08:43",
+      "published_at_taipei_iso": "2026-11-28T08:43:13+08:00",
+      "first_seen_at_utc": "2026-11-28T02:20:46Z",
+      "first_seen_at_taipei": "2026-11-28 10:20",
+      "month": "2026-11",
+      "title": "荷蘭抵制美國新規！反對擴大半導體曝光設備對中出口管制",
+      "url": "https://news.cnyes.com/news/id/6674316",
+      "canonical_url": "https://news.cnyes.com/news/id/6674316",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-d7ac011004",
       "issue": "2026-11-28-AM",
       "published_at_utc": "2026-11-28T00:12:52Z",
@@ -1309,6 +1497,124 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261128-6a4b075e19",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T02:05:00Z",
+      "published_at_taipei": "2026-11-28 10:05",
+      "published_at_taipei_iso": "2026-11-28T10:05:00+08:00",
+      "first_seen_at_utc": "2026-11-28T02:20:46Z",
+      "first_seen_at_taipei": "2026-11-28 10:20",
+      "month": "2026-11",
+      "title": "蘋果投入矽光子研發 進補台股14檔",
+      "url": "https://tw.news.yahoo.com/%E8%98%8B%E6%9E%9C%E6%8A%95%E5%85%A5%E7%9F%BD%E5%85%89%E5%AD%90%E7%A0%94%E7%99%BC-%E9%80%B2%E8%A3%9C%E5%8F%B0%E8%82%A114%E6%AA%94-020500337.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E8%98%8B%E6%9E%9C%E6%8A%95%E5%85%A5%E7%9F%BD%E5%85%89%E5%AD%90%E7%A0%94%E7%99%BC-%E9%80%B2%E8%A3%9C%E5%8F%B0%E8%82%A114%E6%AA%94-020500337.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII",
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII",
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-c6d5df37e2",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T02:00:45Z",
+      "published_at_taipei": "2026-11-28 10:00",
+      "published_at_taipei_iso": "2026-11-28T10:00:45+08:00",
+      "first_seen_at_utc": "2026-11-28T02:20:46Z",
+      "first_seen_at_taipei": "2026-11-28 10:20",
+      "month": "2026-11",
+      "title": "金色早報丨OKX Star闢謠交易所被盜 比特幣與黃金相關性今年創歷史新高",
+      "url": "https://news.cnyes.com/news/id/6674346",
+      "canonical_url": "https://news.cnyes.com/news/id/6674346",
+      "source": "鉅亨網（加密）",
+      "source_id": "cnyes_crypto",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT",
+        "XAUUSD"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT",
+        "XAUUSD"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-8c7102d795",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T02:00:06Z",
+      "published_at_taipei": "2026-11-28 10:00",
+      "published_at_taipei_iso": "2026-11-28T10:00:06+08:00",
+      "first_seen_at_utc": "2026-11-28T02:20:46Z",
+      "first_seen_at_taipei": "2026-11-28 10:20",
+      "month": "2026-11",
+      "title": "前高盛策略師警告：風險資產將全面崩跌 逼得Fed 12月放棄升息",
+      "url": "https://news.cnyes.com/news/id/6673731",
+      "canonical_url": "https://news.cnyes.com/news/id/6673731",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "聯準會",
+      "markets": [
+        "美股",
+        "總經"
+      ],
+      "symbols": [
+        "XAUUSD",
+        "WTI",
+        "SP500"
+      ],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "重大關鍵字（升息）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -1,
+      "sentiment_reason": "反轉：否定「升息」；命中：升息",
+      "sentiment_targets": [
+        "XAUUSD",
+        "WTI",
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-0012bd2ff1",
       "issue": "2026-11-28-AM",
@@ -1498,6 +1804,40 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-7cee2ab1c7",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T00:43:13Z",
+      "published_at_taipei": "2026-11-28 08:43",
+      "published_at_taipei_iso": "2026-11-28T08:43:13+08:00",
+      "first_seen_at_utc": "2026-11-28T02:20:46Z",
+      "first_seen_at_taipei": "2026-11-28 10:20",
+      "month": "2026-11",
+      "title": "荷蘭抵制美國新規！反對擴大半導體曝光設備對中出口管制",
+      "url": "https://news.cnyes.com/news/id/6674316",
+      "canonical_url": "https://news.cnyes.com/news/id/6674316",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -1775,6 +2115,42 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-56ab8c6ede",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T00:11:15Z",
+      "published_at_taipei": "2026-11-28 08:11",
+      "published_at_taipei_iso": "2026-11-28T08:11:15+08:00",
+      "first_seen_at_utc": "2026-11-28T02:20:46Z",
+      "first_seen_at_taipei": "2026-11-28 10:20",
+      "month": "2026-11",
+      "title": "鉅亨速報 - Factset 最新調查：國泰金(2882-TW)EPS預估下修至8.9元，預估目標價為127.1元",
+      "url": "https://news.cnyes.com/news/id/6674323",
+      "canonical_url": "https://news.cnyes.com/news/id/6674323",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2882"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2882"
       ],
       "sentiment_method": "rule"
     },
@@ -161613,53 +161989,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261121-bd7a281fa0",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T02:10:03Z",
-      "published_at_taipei": "2026-11-21 10:10",
-      "published_at_taipei_iso": "2026-11-21T10:10:03+08:00",
-      "month": "2026-11",
-      "title": "〈熱門股〉資安股接棒成大盤中流砥柱 中華資安周漲逾9% 創1年來新高價",
-      "url": "https://news.cnyes.com/news/id/6669585",
-      "canonical_url": "https://news.cnyes.com/news/id/6669585",
-      "source": "鉅亨網（台股）",
-      "source_id": "cnyes_tw_stock",
-      "category": "台股",
-      "symbols": [
-        "TWII"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-dae753268f",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T02:07:07Z",
-      "published_at_taipei": "2026-11-21 10:07",
-      "published_at_taipei_iso": "2026-11-21T10:07:07+08:00",
-      "month": "2026-11",
-      "title": "台股單周重挫7641點！上市櫃市值蒸發逾27兆元 全球市值排名退居第7",
-      "url": "https://news.cnyes.com/news/id/6669711",
-      "canonical_url": "https://news.cnyes.com/news/id/6669711",
-      "source": "鉅亨網（台股）",
-      "source_id": "cnyes_tw_stock",
-      "category": "台股",
-      "symbols": [
-        "TWII",
-        "2330"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -161668,9 +161997,9 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "AM",
-      "updated_at_taipei": "2026-11-28 10:05",
-      "count": 25,
-      "star3_count": 2,
+      "updated_at_taipei": "2026-11-28 10:20",
+      "count": 30,
+      "star3_count": 4,
       "failed_sources": [
         {
           "id": "binance_derivatives",
