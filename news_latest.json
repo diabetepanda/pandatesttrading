@@ -2,28 +2,13 @@
   "version": 1,
   "latest_issue": "2026-11-28-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T01:50:30Z",
-  "updated_at_taipei": "2026-11-28 09:50",
-  "last_updated_utc": "2026-11-28T01:50:30Z",
-  "last_updated_taipei": "2026-11-28 09:50",
-  "next_update_hint": "約台北時間 10:02（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T02:05:38Z",
+  "updated_at_taipei": "2026-11-28 10:05",
+  "last_updated_utc": "2026-11-28T02:05:38Z",
+  "last_updated_taipei": "2026-11-28 10:05",
+  "next_update_hint": "約台北時間 10:17（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
-    {
-      "id": "cnyes_us_stock",
-      "name": "鉅亨網（美股）",
-      "error": "500 Server Error: Internal Server Error for url: https://api.cnyes.com/media/api/v1/newslist/category/us_stock?limit=20"
-    },
-    {
-      "id": "cnyes_macro",
-      "name": "鉅亨網（總經）",
-      "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
-    },
-    {
-      "id": "cnyes_crypto",
-      "name": "鉅亨網（加密）",
-      "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
-    },
     {
       "id": "binance_derivatives",
       "name": "Binance 永續合約",
@@ -41,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 38.983,
-    "sources_ok": 20,
-    "sources_failed": 6,
-    "new_items_added": 2,
+    "total_elapsed_sec": 16.219,
+    "sources_ok": 23,
+    "sources_failed": 3,
+    "new_items_added": 0,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.049,
+        "elapsed_sec": 0.053,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -60,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.089,
+        "elapsed_sec": 0.101,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -69,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.039,
+        "elapsed_sec": 0.385,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -78,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.026,
+        "elapsed_sec": 0.131,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -87,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.151,
+        "elapsed_sec": 0.2,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -96,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.093,
+        "elapsed_sec": 0.11,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -105,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.078,
+        "elapsed_sec": 0.097,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -114,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.056,
+        "elapsed_sec": 0.085,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -123,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.057,
+        "elapsed_sec": 0.087,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -132,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.363,
+        "elapsed_sec": 0.795,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -140,35 +125,35 @@
       "cnyes_us_stock": {
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
-        "status": "failed",
-        "elapsed_sec": 0.689,
-        "raw_count": 0,
-        "items_kept": 0,
-        "error": "500 Server Error: Internal Server Error for url: https://api.cnyes.com/media/api/v1/newslist/category/us_stock?limit=20"
+        "status": "ok",
+        "elapsed_sec": 0.458,
+        "raw_count": 20,
+        "items_kept": 18,
+        "error": null
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
-        "status": "failed",
-        "elapsed_sec": 8.487,
-        "raw_count": 0,
-        "items_kept": 0,
-        "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
+        "status": "ok",
+        "elapsed_sec": 0.378,
+        "raw_count": 20,
+        "items_kept": 11,
+        "error": null
       },
       "cnyes_crypto": {
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
-        "status": "failed",
-        "elapsed_sec": 16.295,
-        "raw_count": 0,
-        "items_kept": 0,
-        "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
+        "status": "ok",
+        "elapsed_sec": 0.922,
+        "raw_count": 15,
+        "items_kept": 6,
+        "error": null
       },
       "udn_money_stock": {
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.471,
+        "elapsed_sec": 0.596,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -177,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.349,
+        "elapsed_sec": 0.359,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -186,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.077,
+        "elapsed_sec": 0.151,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -195,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.874,
+        "elapsed_sec": 0.415,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -204,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.06,
+        "elapsed_sec": 0.045,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -213,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.558,
+        "elapsed_sec": 1.502,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -222,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.284,
+        "elapsed_sec": 0.45,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -231,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.359,
+        "elapsed_sec": 1.383,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -240,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.284,
+        "elapsed_sec": 0.456,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -249,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 1.508,
+        "elapsed_sec": 0.762,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -258,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.046,
+        "elapsed_sec": 0.12,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -267,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.574,
+        "elapsed_sec": 0.482,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -276,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.279,
+        "elapsed_sec": 0.362,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -285,35 +270,35 @@
   },
   "data_metrics_snapshot": {
     "stablecoins": {
-      "total_usd_b": 283.92,
-      "change_1d_usd_m": 224.9,
-      "change_1d_pct": 0.08,
+      "total_usd_b": 283.91,
+      "change_1d_usd_m": 295.6,
+      "change_1d_pct": 0.1,
       "alert_key": "stablecoins_supply:up"
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.28,
-        "change_1d_pct": -0.0
+        "tvl_b": 36.32,
+        "change_1d_pct": -0.67
       },
       "Solana": {
-        "tvl_b": 4.61,
-        "change_1d_pct": -0.0
+        "tvl_b": 4.6,
+        "change_1d_pct": -0.18
       },
       "Base": {
-        "tvl_b": 4.62,
-        "change_1d_pct": -0.0
+        "tvl_b": 4.63,
+        "change_1d_pct": -0.26
       },
       "Tron": {
         "tvl_b": 4.32,
-        "change_1d_pct": 0.0
+        "change_1d_pct": -1.77
       },
       "BSC": {
         "tvl_b": 4.29,
-        "change_1d_pct": -0.0
+        "change_1d_pct": -0.23
       },
       "Hyperliquid L1": {
         "tvl_b": 2.25,
-        "change_1d_pct": 0.0
+        "change_1d_pct": -0.06
       }
     },
     "btc_spot_etf": {
@@ -327,15 +312,15 @@
         "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0005,
+        "funding_rate_pct": 0.0006,
         "oi_usd_b": 1.13
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 3,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.3,
-      "tx_count": 67143,
+      "mempool_vsize_mb": 30.1,
+      "tx_count": 65560,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -161683,25 +161668,10 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "AM",
-      "updated_at_taipei": "2026-11-28 09:50",
+      "updated_at_taipei": "2026-11-28 10:05",
       "count": 25,
       "star3_count": 2,
       "failed_sources": [
-        {
-          "id": "cnyes_us_stock",
-          "name": "鉅亨網（美股）",
-          "error": "500 Server Error: Internal Server Error for url: https://api.cnyes.com/media/api/v1/newslist/category/us_stock?limit=20"
-        },
-        {
-          "id": "cnyes_macro",
-          "name": "鉅亨網（總經）",
-          "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
-        },
-        {
-          "id": "cnyes_crypto",
-          "name": "鉅亨網（加密）",
-          "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
-        },
         {
           "id": "binance_derivatives",
           "name": "Binance 永續合約",
