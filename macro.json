@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "updated_at_utc": "2026-11-27T08:20:11Z",
-  "updated_at_taipei": "2026-11-27 16:20",
+  "updated_at_utc": "2026-11-28T00:20:56Z",
+  "updated_at_taipei": "2026-11-28 08:20",
   "status": "ok",
   "updating_indicators": [],
   "fetch_report": {
-    "total_elapsed_sec": 22.409,
+    "total_elapsed_sec": 27.628,
     "fred_aborted": true,
     "fred_abort_reason": "HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=8)",
     "sources": {
       "FRED": {
         "status": "failed",
-        "elapsed_sec": 16.234,
+        "elapsed_sec": 16.215,
         "attempts": 1,
         "aborted": true,
         "series_ok": [],
@@ -48,7 +48,7 @@
       },
       "US_TREASURY": {
         "status": "ok",
-        "elapsed_sec": 2.437,
+        "elapsed_sec": 4.745,
         "series_ok": [
           "DGS2",
           "DGS10"
@@ -58,7 +58,7 @@
       },
       "BLS_API_V1": {
         "status": "ok",
-        "elapsed_sec": 0.143,
+        "elapsed_sec": 0.428,
         "series_ok": [
           "CPI",
           "CORE_CPI",
@@ -73,7 +73,7 @@
       },
       "DBNOMICS_BEA": {
         "status": "ok",
-        "elapsed_sec": 1.282,
+        "elapsed_sec": 2.778,
         "series_ok": [
           "PCE",
           "CORE_PCE",
@@ -84,7 +84,7 @@
       },
       "CENSUS_MRTS": {
         "status": "ok",
-        "elapsed_sec": 0.054,
+        "elapsed_sec": 0.132,
         "series_ok": [
           "RETAIL_SALES"
         ],
@@ -93,7 +93,7 @@
       },
       "DOL_TE_ICSA": {
         "status": "ok",
-        "elapsed_sec": 0.154,
+        "elapsed_sec": 0.638,
         "series_ok": [
           "ICSA"
         ],
@@ -102,7 +102,7 @@
       },
       "TE_ISM": {
         "status": "ok",
-        "elapsed_sec": 0.712,
+        "elapsed_sec": 1.271,
         "series_ok": [
           "ISM_MFG",
           "ISM_SVC"
@@ -113,7 +113,7 @@
       "YFINANCE_FEDWATCH": {
         "status": "ok",
         "source_used": "yfinance (CBOT ZQ)",
-        "elapsed_sec": 0.275,
+        "elapsed_sec": 0.263,
         "contracts": [
           "ZQG27.CBT",
           "ZQZ26.CBT"
@@ -122,7 +122,7 @@
       },
       "YFINANCE_SNAPSHOT": {
         "status": "ok",
-        "elapsed_sec": 0.403,
+        "elapsed_sec": 0.296,
         "series_ok": [
           "DXY",
           "USDTWD",
@@ -225,7 +225,7 @@
     "fedwatch": {
       "status": "ok",
       "source_used": "yfinance (CBOT ZQ)",
-      "elapsed_sec": 0.275,
+      "elapsed_sec": 0.263,
       "contracts": [
         "ZQG27.CBT",
         "ZQZ26.CBT"
@@ -234,7 +234,7 @@
     },
     "market_snapshot": {
       "status": "ok",
-      "elapsed_sec": 0.403,
+      "elapsed_sec": 0.296,
       "series_ok": [
         "DXY",
         "USDTWD",
@@ -264,56 +264,56 @@
   "overview": {
     "stance": "偏鷹 · 利率高檔承壓",
     "stance_cls": "bear",
-    "stance_desc": "目前聯邦基金利率位於 3.75%–4.00%，CPI（2026年10月）+0.35%（指數 337.476），10 年期美債殖利率 4.85%。在通膨未明顯回落前，緊縮預期對高估值科技股與加密貨幣偏逆風。",
+    "stance_desc": "目前聯邦基金利率位於 3.75%–4.00%，CPI（2026年10月）+0.35%（指數 337.476），10 年期美債殖利率 4.94%。在通膨未明顯回落前，緊縮預期對高估值科技股與加密貨幣偏逆風。",
     "asset_impacts": [
       {
         "asset": "美股",
         "sub": "標普 500 · 那斯達克 100",
         "cls": "bear",
         "tag": "偏空",
-        "note": "10 年期殖利率 4.85%、CPI 環比 +0.35%、市場押注 12/10 會議：升 1 碼 98.5%｜升 2 碼以上 1.5%、JOLTS 7.5 百萬個；估值倍數承壓、高敏感科技股波動放大。"
+        "note": "10 年期殖利率 4.94%、CPI 環比 +0.35%、市場押注 12/10 會議：升 1 碼 98.5%｜升 2 碼以上 1.5%、JOLTS 7.5 百萬個；估值倍數承壓、高敏感科技股波動放大。"
       },
       {
         "asset": "台股",
         "sub": "加權指數 · 電子權值股",
         "cls": "bear",
         "tag": "偏空",
-        "note": "美元／台幣現報 32.93（近 20 日 +1.11%），美元指數近 20 日 +1.67%，10Y 殖利率 4.85%，外資匯出與權值股調節壓力偏高。"
+        "note": "美元／台幣現報 32.92（近 20 日 +1.08%），美元指數近 20 日 +1.93%，10Y 殖利率 4.94%，外資匯出與權值股調節壓力偏高。"
       },
       {
         "asset": "加密貨幣",
         "sub": "BTC · 主流幣",
         "cls": "bear",
         "tag": "偏空",
-        "note": "美元指數近 20 日 +1.67%（現報 103.75）、基準利率 3.75%–4.00%、市場押注 12/10 會議：升 1 碼 98.5%｜升 2 碼以上 1.5%；美元流動性偏緊易放大短線回檔。"
+        "note": "美元指數近 20 日 +1.93%（現報 104.01）、基準利率 3.75%–4.00%、市場押注 12/10 會議：升 1 碼 98.5%｜升 2 碼以上 1.5%；美元流動性偏緊易放大短線回檔。"
       },
       {
         "asset": "美債",
         "sub": "2Y / 10Y 美債殖利率（債價視角）",
         "cls": "bear",
         "tag": "偏空",
-        "note": "2Y 4.61% / 10Y 4.85%、10Y 近 20 日 -0.14 個百分點、CPI +0.35%；通膨與緊縮預期壓抑債價（殖利率高檔）。"
+        "note": "2Y 4.69% / 10Y 4.94%、10Y 近 20 日 -0.11 個百分點、CPI +0.35%；通膨與緊縮預期壓抑債價（殖利率高檔）。"
       },
       {
         "asset": "黃金",
         "sub": "COMEX 黃金期貨",
         "cls": "bear",
         "tag": "偏空",
-        "note": "黃金現報 3,690.8 美元（近 20 日 -8.45%、一年區間 10%）、美元指數近 20 日 +1.67%、10Y 殖利率 4.85%；強美元或高利率壓抑無息資產表現。"
+        "note": "黃金現報 3,668.5 美元（近 20 日 -9.00%、一年區間 8%）、美元指數近 20 日 +1.93%、10Y 殖利率 4.94%；強美元或高利率壓抑無息資產表現。"
       },
       {
         "asset": "原油",
         "sub": "WTI 西德州原油",
         "cls": "bear",
         "tag": "偏空",
-        "note": "WTI 原油現報 86.20 美元（近 20 日 -15.49%、一年區間 54%）、ISM 製造業 PMI 55.5；供給寬鬆或高利率壓抑能源需求預期。"
+        "note": "WTI 原油現報 83.08 美元（近 20 日 -18.55%、一年區間 48%）、ISM 製造業 PMI 55.5；供給寬鬆或高利率壓抑能源需求預期。"
       },
       {
         "asset": "美元／台幣",
         "sub": "USD/TWD 匯率（台幣升貶視角）",
         "cls": "bear",
         "tag": "偏空",
-        "note": "美元／台幣現報 32.93（近 20 日 +1.11%）、美元指數近 20 日 +1.67%；台幣偏貶反映外資匯出與美元強勢壓力。"
+        "note": "美元／台幣現報 32.92（近 20 日 +1.08%）、美元指數近 20 日 +1.93%；台幣偏貶反映外資匯出與美元強勢壓力。"
       }
     ]
   },
@@ -339,7 +339,7 @@
         },
         "summary_text": "市場押注 12/10 會議：升 1 碼 98.5%｜升 2 碼以上 1.5%",
         "source_used": "yfinance (CBOT ZQ)",
-        "as_of_taipei": "2026-11-27 16:20"
+        "as_of_taipei": "2026-11-28 08:20"
       },
       {
         "period": "2027-01",
@@ -361,33 +361,33 @@
         },
         "summary_text": "市場押注 1/28 會議：升 2 碼以上 66%｜升 1 碼 34%",
         "source_used": "yfinance (CBOT ZQ)",
-        "as_of_taipei": "2026-11-27 16:20"
+        "as_of_taipei": "2026-11-28 08:20"
       }
     ],
     "current_range": "3.75%–4.00%",
     "current_mid": 3.875,
     "source_used": "yfinance (CBOT ZQ)",
-    "as_of_taipei": "2026-11-27 16:20",
+    "as_of_taipei": "2026-11-28 08:20",
     "data_status": "ok",
     "updating": false,
     "disclaimer": "機率由聯邦基金期貨價格推算，方法同 CME FedWatch；僅代表市場押注，不是預測。"
   },
   "market_snapshot": {
-    "as_of_taipei": "2026-11-27 16:20",
-    "hhmm_taipei": "16:20",
+    "as_of_taipei": "2026-11-28 08:20",
+    "hhmm_taipei": "08:20",
     "items": [
       {
         "id": "DXY",
         "symbol": "DX-Y.NYB",
         "name_zh": "美元指數",
         "unit": "",
-        "last": 103.75,
-        "last_str": "103.75",
-        "chg_1d_pct": 0.08,
-        "chg_20d_pct": 1.67,
+        "last": 104.01,
+        "last_str": "104.01",
+        "chg_1d_pct": 0.33,
+        "chg_20d_pct": 1.93,
         "chg_1d_pp": null,
         "chg_20d_pp": null,
-        "range_1y_pos_pct": 93.0,
+        "range_1y_pos_pct": 96.2,
         "range_1y_low": 96.22,
         "range_1y_high": 104.32,
         "closes_90d": [
@@ -480,15 +480,15 @@
           104.32,
           103.81,
           103.67,
-          103.75
+          104.01
         ],
         "verdict": "bear",
         "verdict_tag": "🔴 偏空（美元轉強）",
-        "verdict_reason": "美元指數近 20 日上漲 +1.67%（超過 +1.5% 門檻），美元轉強易對台股外資與加密貨幣流動性構成壓力。",
+        "verdict_reason": "美元指數近 20 日上漲 +1.93%（超過 +1.5% 門檻），美元轉強易對台股外資與加密貨幣流動性構成壓力。",
         "what_is": "美元指數衡量美元對六大貨幣強弱；美元走強通常不利新興市場股市與台幣、對黃金與比特幣偏壓力；走弱相反。",
         "rule_rationale": "近 20 日美元指數上漲超過 1.5% 代表美元轉強，抽離新興市場與風險資產流動性，對台股與加密貨幣偏空；下跌超過 1.5% 代表美元轉弱，有利資金回流，標偏多。",
         "as_of_date": "2026-11-27",
-        "as_of_taipei": "2026-11-27 16:20",
+        "as_of_taipei": "2026-11-28 08:20",
         "source_used": "yfinance (DX-Y.NYB)",
         "data_status": "ok",
         "updating": false
@@ -498,13 +498,13 @@
         "symbol": "TWD=X",
         "name_zh": "美元／台幣",
         "unit": "",
-        "last": 32.93,
-        "last_str": "32.93",
-        "chg_1d_pct": -0.79,
-        "chg_20d_pct": 1.11,
+        "last": 32.92,
+        "last_str": "32.92",
+        "chg_1d_pct": -0.82,
+        "chg_20d_pct": 1.08,
         "chg_1d_pp": null,
         "chg_20d_pp": null,
-        "range_1y_pos_pct": 87.6,
+        "range_1y_pos_pct": 87.2,
         "range_1y_low": 31.08,
         "range_1y_high": 33.19,
         "closes_90d": [
@@ -597,15 +597,15 @@
           32.85,
           32.92,
           33.19,
-          32.93
+          32.92
         ],
         "verdict": "bear",
         "verdict_tag": "🔴 偏空（台幣貶值）",
-        "verdict_reason": "美元／台幣近 20 日上漲 +1.11%（台幣貶值逾 1.0%），反映外資匯出壓力，對台股偏空。",
+        "verdict_reason": "美元／台幣近 20 日上漲 +1.08%（台幣貶值逾 1.0%），反映外資匯出壓力，對台股偏空。",
         "what_is": "台幣升值（數字變小）通常代表外資匯入，對台股偏多；台幣貶值代表外資匯出，偏空。",
         "rule_rationale": "近 20 日美元／台幣下跌超過 1.0%（台幣升值）反映外資匯入動能，對台股偏多；上漲超過 1.0%（台幣貶值）反映外資匯出壓力，偏空。",
         "as_of_date": "2026-11-27",
-        "as_of_taipei": "2026-11-27 16:20",
+        "as_of_taipei": "2026-11-28 08:20",
         "source_used": "yfinance (TWD=X)",
         "data_status": "ok",
         "updating": false
@@ -615,16 +615,17 @@
         "symbol": "^HSI",
         "name_zh": "恒生指數",
         "unit": "點",
-        "last": 22688.7,
-        "last_str": "22,688.7",
-        "chg_1d_pct": 2.08,
-        "chg_20d_pct": -2.6,
+        "last": 22226.9,
+        "last_str": "22,226.9",
+        "chg_1d_pct": 1.19,
+        "chg_20d_pct": -3.19,
         "chg_1d_pp": null,
         "chg_20d_pp": null,
-        "range_1y_pos_pct": 12.0,
+        "range_1y_pos_pct": 4.3,
         "range_1y_low": 21966.0,
         "range_1y_high": 27968.1,
         "closes_90d": [
+          24892.7,
           25210.8,
           24963.2,
           25207.2,
@@ -713,16 +714,15 @@
           22383.7,
           22219.7,
           21966.0,
-          22226.9,
-          22688.7
+          22226.9
         ],
-        "verdict": "neut",
-        "verdict_tag": "🟡 中性",
-        "verdict_reason": "恒生指數近 20 日變動 -2.60%，處於 ±3.0% 中性區間。",
+        "verdict": "bear",
+        "verdict_tag": "🔴 偏空（亞股轉弱）",
+        "verdict_reason": "恒生指數近 20 日下跌 -3.19%（低於 -3.0% 門檻），反映亞洲風險情緒承壓，需留意對台股與亞股氣氛的拖累。",
         "what_is": "恒生指數是香港股市主要指數，成分股以大型陸資與香港企業為主，可以看出中國經濟與亞洲資金的情緒；恒生走強通常代表亞洲風險偏好回升，對台股偏正面。",
         "rule_rationale": "以對台股、亞洲風險情緒為視角：近 20 日恒生指數上漲超過 3.0% 標「偏多（亞股轉強）」，下跌超過 3.0% 標「偏空（亞股轉弱）」，其餘介於 ±3.0% 間標「中性」。",
-        "as_of_date": "2026-11-27",
-        "as_of_taipei": "2026-11-27 16:20",
+        "as_of_date": "2026-11-26",
+        "as_of_taipei": "2026-11-28 08:20",
         "source_used": "yfinance (^HSI)",
         "data_status": "ok",
         "updating": false
@@ -732,13 +732,13 @@
         "symbol": "GC=F",
         "name_zh": "黃金",
         "unit": "美元",
-        "last": 3690.8,
-        "last_str": "3,690.8",
-        "chg_1d_pct": 4.38,
-        "chg_20d_pct": -8.45,
+        "last": 3668.5,
+        "last_str": "3,668.5",
+        "chg_1d_pct": 3.75,
+        "chg_20d_pct": -9.0,
         "chg_1d_pp": null,
         "chg_20d_pp": null,
-        "range_1y_pos_pct": 9.7,
+        "range_1y_pos_pct": 8.5,
         "range_1y_low": 3515.4,
         "range_1y_high": 5318.4,
         "closes_90d": [
@@ -831,15 +831,15 @@
           3651.4,
           3561.9,
           3535.8,
-          3690.8
+          3668.5
         ],
         "verdict": "bear",
         "verdict_tag": "🔴 偏空（強美元承壓）",
-        "verdict_reason": "黃金近 20 日下跌 -8.45%（低於 -3.0%），反映實質利率上行或美元走強壓抑無息資產。",
+        "verdict_reason": "黃金近 20 日下跌 -9.00%（低於 -3.0%），反映實質利率上行或美元走強壓抑無息資產。",
         "what_is": "黃金為無息避險與抗通膨資產；美元走弱或實質利率下降時通常走強，急漲時亦反映市場避險需求升溫。",
         "rule_rationale": "近 20 日金價上漲超過 3.0% 反映實質利率下行預期或避險買盤（與無主權資產題材共振，對風險資產偏多但須留意避險升溫）；下跌超過 3.0% 通常伴隨強美元或高利率壓抑，偏空。",
         "as_of_date": "2026-11-27",
-        "as_of_taipei": "2026-11-27 16:20",
+        "as_of_taipei": "2026-11-28 08:20",
         "source_used": "yfinance (GC=F)",
         "data_status": "ok",
         "updating": false
@@ -849,13 +849,13 @@
         "symbol": "CL=F",
         "name_zh": "原油 (WTI)",
         "unit": "美元",
-        "last": 86.2,
-        "last_str": "86.20",
-        "chg_1d_pct": 3.01,
-        "chg_20d_pct": -15.49,
+        "last": 83.08,
+        "last_str": "83.08",
+        "chg_1d_pct": -0.72,
+        "chg_20d_pct": -18.55,
         "chg_1d_pp": null,
         "chg_20d_pp": null,
-        "range_1y_pos_pct": 53.6,
+        "range_1y_pos_pct": 48.2,
         "range_1y_low": 55.27,
         "range_1y_high": 112.95,
         "closes_90d": [
@@ -948,15 +948,15 @@
           80.17,
           82.05,
           83.68,
-          86.2
+          83.08
         ],
         "verdict": "bull",
         "verdict_tag": "🟢 偏多（通膨舒緩）",
-        "verdict_reason": "WTI 原油近 20 日下跌 -15.49%（低於 -5.0%），油價回落有助通膨降溫，舒緩緊縮預期。",
+        "verdict_reason": "WTI 原油近 20 日下跌 -18.55%（低於 -5.0%），油價回落有助通膨降溫，舒緩緊縮預期。",
         "what_is": "西德州原油期貨反映全球景氣需求與能源通膨壓力；油價急漲易推升通膨預期並壓抑聯準會降息空間。",
         "rule_rationale": "近 20 日油價上漲超過 5.0% 易引發能源通膨回溫與鷹派利率定價，對股市與加密貨幣偏空；下跌超過 5.0% 有助舒緩通膨壓力，偏多。",
         "as_of_date": "2026-11-27",
-        "as_of_taipei": "2026-11-27 16:20",
+        "as_of_taipei": "2026-11-28 08:20",
         "source_used": "yfinance (CL=F)",
         "data_status": "ok",
         "updating": false
@@ -966,17 +966,16 @@
         "symbol": "^TNX",
         "name_zh": "美國 10 年期殖利率",
         "unit": "%",
-        "last": 4.85,
-        "last_str": "4.85%",
-        "chg_1d_pct": -1.22,
-        "chg_20d_pct": -2.81,
-        "chg_1d_pp": -0.06,
-        "chg_20d_pp": -0.14,
-        "range_1y_pos_pct": 65.7,
+        "last": 4.94,
+        "last_str": "4.94%",
+        "chg_1d_pct": 1.86,
+        "chg_20d_pct": -2.18,
+        "chg_1d_pp": 0.09,
+        "chg_20d_pp": -0.11,
+        "range_1y_pos_pct": 72.4,
         "range_1y_low": 3.97,
         "range_1y_high": 5.31,
         "closes_90d": [
-          4.6,
           4.63,
           4.67,
           4.71,
@@ -1065,15 +1064,16 @@
           4.92,
           4.92,
           4.91,
-          4.85
+          4.85,
+          4.94
         ],
         "verdict": "neut",
         "verdict_tag": "🟡 中性",
-        "verdict_reason": "10 年期殖利率近 20 日變動 -0.14 個百分點（最新 4.85%），短期波動於 ±0.25 個百分點內。",
+        "verdict_reason": "10 年期殖利率近 20 日變動 -0.11 個百分點（最新 4.94%），短期波動於 ±0.25 個百分點內。",
         "what_is": "10 年期美債殖利率是全球風險資產的定價錨；殖利率走高壓縮科技股估值並推升資金成本，回落則相反。",
         "rule_rationale": "10 年期殖利率近 20 日上升超過 0.25 個百分點代表無風險資金成本急升，對股市與加密貨幣偏空；下降超過 0.25 個百分點則舒緩估值壓力，偏多。",
-        "as_of_date": "2026-11-25",
-        "as_of_taipei": "2026-11-27 16:20",
+        "as_of_date": "2026-11-27",
+        "as_of_taipei": "2026-11-28 08:20",
         "source_used": "沿用 DGS10（美國財政部（備用））",
         "data_status": "ok",
         "updating": false
@@ -1865,18 +1865,18 @@
       "category": "rates",
       "name": "2 年期美債殖利率",
       "code": "DGS2",
-      "period": "2026-11-25",
-      "value_str": "4.61%",
-      "value_num": 4.61,
+      "period": "2026-11-27",
+      "value_str": "4.69%",
+      "value_num": 4.69,
       "unit": "",
-      "prev_str": "4.63%（2026-11-24）",
-      "change_str": "-0.02 個百分點",
-      "change_dir": "down",
-      "release_date_taipei": "2026-11-26 04:30",
+      "prev_str": "4.61%（2026-11-25）",
+      "change_str": "+0.08 個百分點",
+      "change_dir": "up",
+      "release_date_taipei": "2026-11-28 04:30",
       "sub_info": "每日美債市場殖利率（H.15 日收盤，美東 15:30 定盤）",
       "consensus_str": null,
       "consensus_source": null,
-      "surprise": "低於前值",
+      "surprise": "高於前值",
       "surprise_basis": "prev",
       "verdict": "bear",
       "verdict_text": "🔴 偏高承壓",
@@ -1904,7 +1904,7 @@
         4.34,
         4.88,
         4.56,
-        4.61
+        4.69
       ],
       "chart_label": "近 24 個月月末殖利率（%）",
       "next_release": null,
@@ -1916,6 +1916,28 @@
       "modal_title": "2 年期美債殖利率（近 24 個交易日）",
       "modal_foot_extra": "美債殖利率為交易日日頻利率，無固定公布預期值；本表統計最近 24 個交易日殖利率上升／下降當日與隔日市場表現。",
       "history_rows": [
+        {
+          "period": "2026-11-27",
+          "period_zh": "2026-11-27",
+          "release_taipei": "2026-11-28 04:30",
+          "release_utc": "2026-11-27T20:30:00Z",
+          "actual_str": "4.69%",
+          "actual_num": 4.69,
+          "prev_str": "4.61%",
+          "prev_num": 4.61,
+          "consensus_str": null,
+          "consensus_source": null,
+          "surprise": "高於前值",
+          "surprise_basis": "prev",
+          "prev_cmp": "高於前值",
+          "reactions": {
+            "NAS100": 2.61,
+            "SP500": 1.6,
+            "TWII": null,
+            "BTCUSDT": -1.08
+          },
+          "note": ""
+        },
         {
           "period": "2026-11-25",
           "period_zh": "2026-11-25",
@@ -2421,28 +2443,6 @@
             "BTCUSDT": -0.28
           },
           "note": ""
-        },
-        {
-          "period": "2026-10-22",
-          "period_zh": "2026-10-22",
-          "release_taipei": "2026-10-23 03:30",
-          "release_utc": "2026-10-22T19:30:00Z",
-          "actual_str": "4.65%",
-          "actual_num": 4.65,
-          "prev_str": "4.81%",
-          "prev_num": 4.81,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "低於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -2.9,
-            "SP500": -1.21,
-            "TWII": 0.12,
-            "BTCUSDT": -3.18
-          },
-          "note": ""
         }
       ],
       "history_stats": {
@@ -2453,19 +2453,19 @@
         "by_prev": [
           {
             "group": "高於前值",
-            "n_rows": 9,
+            "n_rows": 10,
             "assets": {
               "NAS100": {
                 "label": "那指 100",
-                "n": 9,
-                "avg_pct": 0.36,
-                "up_prob_pct": 44.0
+                "n": 10,
+                "avg_pct": 0.58,
+                "up_prob_pct": 50.0
               },
               "SP500": {
                 "label": "標普 500",
-                "n": 9,
-                "avg_pct": 0.16,
-                "up_prob_pct": 44.0
+                "n": 10,
+                "avg_pct": 0.31,
+                "up_prob_pct": 50.0
               },
               "TWII": {
                 "label": "台股加權",
@@ -2475,39 +2475,39 @@
               },
               "BTCUSDT": {
                 "label": "BTC",
-                "n": 9,
+                "n": 10,
                 "avg_pct": -1.11,
-                "up_prob_pct": 33.0
+                "up_prob_pct": 30.0
               }
             }
           },
           {
             "group": "低於前值",
-            "n_rows": 12,
+            "n_rows": 11,
             "assets": {
               "NAS100": {
                 "label": "那指 100",
-                "n": 12,
-                "avg_pct": -1.95,
-                "up_prob_pct": 25.0
+                "n": 11,
+                "avg_pct": -1.86,
+                "up_prob_pct": 27.0
               },
               "SP500": {
                 "label": "標普 500",
-                "n": 12,
+                "n": 11,
                 "avg_pct": -1.17,
-                "up_prob_pct": 25.0
+                "up_prob_pct": 27.0
               },
               "TWII": {
                 "label": "台股加權",
-                "n": 12,
-                "avg_pct": -1.3,
-                "up_prob_pct": 42.0
+                "n": 11,
+                "avg_pct": -1.43,
+                "up_prob_pct": 36.0
               },
               "BTCUSDT": {
                 "label": "BTC",
-                "n": 12,
-                "avg_pct": -1.27,
-                "up_prob_pct": 33.0
+                "n": 11,
+                "avg_pct": -1.1,
+                "up_prob_pct": 36.0
               }
             }
           }
@@ -2519,18 +2519,18 @@
       "category": "rates",
       "name": "10 年期美債殖利率",
       "code": "DGS10",
-      "period": "2026-11-25",
-      "value_str": "4.85%",
-      "value_num": 4.85,
+      "period": "2026-11-27",
+      "value_str": "4.94%",
+      "value_num": 4.94,
       "unit": "",
-      "prev_str": "4.91%（2026-11-24）",
-      "change_str": "-0.06 個百分點",
-      "change_dir": "down",
-      "release_date_taipei": "2026-11-26 04:30",
+      "prev_str": "4.85%（2026-11-25）",
+      "change_str": "+0.09 個百分點",
+      "change_dir": "up",
+      "release_date_taipei": "2026-11-28 04:30",
       "sub_info": "每日美債市場殖利率（H.15 日收盤，美東 15:30 定盤）",
       "consensus_str": null,
       "consensus_source": null,
-      "surprise": "低於前值",
+      "surprise": "高於前值",
       "surprise_basis": "prev",
       "verdict": "bear",
       "verdict_text": "🔴 偏高承壓",
@@ -2558,7 +2558,7 @@
         4.75,
         5.29,
         4.94,
-        4.85
+        4.94
       ],
       "chart_label": "近 24 個月月末殖利率（%）",
       "next_release": null,
@@ -2570,6 +2570,28 @@
       "modal_title": "10 年期美債殖利率（近 24 個交易日）",
       "modal_foot_extra": "美債殖利率為交易日日頻利率，無固定公布預期值；本表統計最近 24 個交易日殖利率上升／下降當日與隔日市場表現。",
       "history_rows": [
+        {
+          "period": "2026-11-27",
+          "period_zh": "2026-11-27",
+          "release_taipei": "2026-11-28 04:30",
+          "release_utc": "2026-11-27T20:30:00Z",
+          "actual_str": "4.94%",
+          "actual_num": 4.94,
+          "prev_str": "4.85%",
+          "prev_num": 4.85,
+          "consensus_str": null,
+          "consensus_source": null,
+          "surprise": "高於前值",
+          "surprise_basis": "prev",
+          "prev_cmp": "高於前值",
+          "reactions": {
+            "NAS100": 2.61,
+            "SP500": 1.6,
+            "TWII": null,
+            "BTCUSDT": -1.08
+          },
+          "note": ""
+        },
         {
           "period": "2026-11-25",
           "period_zh": "2026-11-25",
@@ -3075,28 +3097,6 @@
             "BTCUSDT": -0.28
           },
           "note": ""
-        },
-        {
-          "period": "2026-10-22",
-          "period_zh": "2026-10-22",
-          "release_taipei": "2026-10-23 03:30",
-          "release_utc": "2026-10-22T19:30:00Z",
-          "actual_str": "4.96%",
-          "actual_num": 4.96,
-          "prev_str": "5.13%",
-          "prev_num": 5.13,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "低於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -2.9,
-            "SP500": -1.21,
-            "TWII": 0.12,
-            "BTCUSDT": -3.18
-          },
-          "note": ""
         }
       ],
       "history_stats": {
@@ -3107,19 +3107,19 @@
         "by_prev": [
           {
             "group": "高於前值",
-            "n_rows": 8,
+            "n_rows": 9,
             "assets": {
               "NAS100": {
                 "label": "那指 100",
-                "n": 8,
-                "avg_pct": 0.48,
-                "up_prob_pct": 50.0
+                "n": 9,
+                "avg_pct": 0.72,
+                "up_prob_pct": 56.0
               },
               "SP500": {
                 "label": "標普 500",
-                "n": 8,
-                "avg_pct": 0.21,
-                "up_prob_pct": 50.0
+                "n": 9,
+                "avg_pct": 0.36,
+                "up_prob_pct": 56.0
               },
               "TWII": {
                 "label": "台股加權",
@@ -3129,39 +3129,39 @@
               },
               "BTCUSDT": {
                 "label": "BTC",
-                "n": 8,
+                "n": 9,
                 "avg_pct": -1.06,
-                "up_prob_pct": 38.0
+                "up_prob_pct": 33.0
               }
             }
           },
           {
             "group": "低於前值",
-            "n_rows": 14,
+            "n_rows": 13,
             "assets": {
               "NAS100": {
                 "label": "那指 100",
-                "n": 14,
-                "avg_pct": -1.91,
-                "up_prob_pct": 21.0
+                "n": 13,
+                "avg_pct": -1.83,
+                "up_prob_pct": 23.0
               },
               "SP500": {
                 "label": "標普 500",
-                "n": 14,
-                "avg_pct": -1.12,
-                "up_prob_pct": 14.0
+                "n": 13,
+                "avg_pct": -1.11,
+                "up_prob_pct": 15.0
               },
               "TWII": {
                 "label": "台股加權",
-                "n": 14,
-                "avg_pct": -1.79,
-                "up_prob_pct": 36.0
+                "n": 13,
+                "avg_pct": -1.94,
+                "up_prob_pct": 31.0
               },
               "BTCUSDT": {
                 "label": "BTC",
-                "n": 14,
-                "avg_pct": -1.58,
-                "up_prob_pct": 29.0
+                "n": 13,
+                "avg_pct": -1.45,
+                "up_prob_pct": 31.0
               }
             }
           }
