@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-28-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T04:05:55Z",
-  "updated_at_taipei": "2026-11-28 12:05",
-  "last_updated_utc": "2026-11-28T04:05:55Z",
-  "last_updated_taipei": "2026-11-28 12:05",
-  "next_update_hint": "約台北時間 12:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T04:21:12Z",
+  "updated_at_taipei": "2026-11-28 12:21",
+  "last_updated_utc": "2026-11-28T04:21:12Z",
+  "last_updated_taipei": "2026-11-28 12:21",
+  "next_update_hint": "約台北時間 12:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 22.585,
+    "total_elapsed_sec": 19.856,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 1,
+    "new_items_added": 4,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.11,
+        "elapsed_sec": 0.107,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.168,
+        "elapsed_sec": 0.137,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.104,
+        "elapsed_sec": 0.119,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.098,
+        "elapsed_sec": 0.066,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.257,
+        "elapsed_sec": 0.464,
         "raw_count": 20,
-        "items_kept": 17,
+        "items_kept": 18,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.188,
+        "elapsed_sec": 0.224,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.093,
+        "elapsed_sec": 0.143,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.104,
+        "elapsed_sec": 0.129,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.109,
+        "elapsed_sec": 0.137,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.527,
+        "elapsed_sec": 0.412,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.907,
+        "elapsed_sec": 0.373,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.388,
+        "elapsed_sec": 0.353,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.841,
+        "elapsed_sec": 0.642,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.525,
+        "elapsed_sec": 0.385,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.845,
+        "elapsed_sec": 0.465,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.706,
+        "elapsed_sec": 0.425,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 5.133,
+        "elapsed_sec": 1.988,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.201,
+        "elapsed_sec": 0.085,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.297,
+        "elapsed_sec": 1.394,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.684,
+        "elapsed_sec": 0.366,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.46,
+        "elapsed_sec": 1.15,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.56,
+        "elapsed_sec": 0.364,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.581,
+        "elapsed_sec": 0.412,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.317,
+        "elapsed_sec": 0.475,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.508,
+        "elapsed_sec": 0.519,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.409,
+        "elapsed_sec": 0.309,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,12 +303,12 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -379.0,
+      "net_flow_usd_m": -379.1,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.007,
+        "funding_rate_pct": 0.0068,
         "oi_usd_b": 1.93
       },
       "ETHUSDT": {
@@ -317,10 +317,10 @@
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 2,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.6,
-      "tx_count": 65881,
+      "mempool_vsize_mb": 30.4,
+      "tx_count": 64878,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -551,6 +551,120 @@
       "sentiment_label": "利空",
       "sentiment_score": -3,
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-ed2fb4d00d",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T04:11:00Z",
+      "published_at_taipei": "2026-11-28 12:11",
+      "published_at_taipei_iso": "2026-11-28T12:11:00+08:00",
+      "first_seen_at_utc": "2026-11-28T04:21:12Z",
+      "first_seen_at_taipei": "2026-11-28 12:21",
+      "month": "2026-11",
+      "title": "Bitcoin recovery needs USDT supply growth: CryptoQuant, K33 weighs AI threat to Bitcoin, and more",
+      "url": "https://www.theblock.co/newsletters/the-daily/2026-11-27-bitcoin-recovery-usdt-supply-ai-threat-bitcoin-more-crypto-news-447571",
+      "canonical_url": "https://theblock.co/newsletters/the-daily/2026-11-27-bitcoin-recovery-usdt-supply-ai-threat-bitcoin-more-crypto-news-447571",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261128-d5b29f100b",
+        "issue": "2026-11-27-PM",
+        "title": "CryptoQuant says bitcoin price recovery needs USDT supply growth",
+        "published_at_taipei": "2026-11-28 02:13",
+        "url": "https://www.theblock.co/news/markets/2026-11-27-cryptoquant-bitcoin-price-recovery-usdt-supply-growth-447560"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-715a5b214a",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T04:10:05Z",
+      "published_at_taipei": "2026-11-28 12:10",
+      "published_at_taipei_iso": "2026-11-28T12:10:05+08:00",
+      "first_seen_at_utc": "2026-11-28T04:21:12Z",
+      "first_seen_at_taipei": "2026-11-28 12:21",
+      "month": "2026-11",
+      "title": "OpenAI反擊蘋果！控施壓供應商、限制員工跳槽 阻撓進軍AI硬體市場",
+      "url": "https://news.cnyes.com/news/id/6674380",
+      "canonical_url": "https://news.cnyes.com/news/id/6674380",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：合作；命中：竊取）",
+      "sentiment_targets": [
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-49df959149",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T04:00:03Z",
+      "published_at_taipei": "2026-11-28 12:00",
+      "published_at_taipei_iso": "2026-11-28T12:00:03+08:00",
+      "first_seen_at_utc": "2026-11-28T04:21:12Z",
+      "first_seen_at_taipei": "2026-11-28 12:21",
+      "month": "2026-11",
+      "title": "Chamath Palihapitiya Warns AI’s ‘Alien Mathematics’ Could Break Bitcoin As AI Tackles 167-Year-Old Riemann Hypothesis",
+      "url": "https://stocktwits.com/news-articles/markets/cryptocurrency/chamath-palihapitiya-ai-alien-mathematics-bitcoin-riemann-hypothesis/cNRRnyYR9VN?.tsrc=rss",
+      "canonical_url": "https://stocktwits.com/news-articles/markets/cryptocurrency/chamath-palihapitiya-ai-alien-mathematics-bitcoin-riemann-hypothesis/cNRRnyYR9VN?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "BTCUSDT"
       ],
@@ -993,6 +1107,48 @@
       "sentiment_targets": [
         "TWII",
         "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-bd4a9c68f1",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T02:00:10Z",
+      "published_at_taipei": "2026-11-28 10:00",
+      "published_at_taipei_iso": "2026-11-28T10:00:10+08:00",
+      "first_seen_at_utc": "2026-11-28T04:21:12Z",
+      "first_seen_at_taipei": "2026-11-28 12:21",
+      "month": "2026-11",
+      "title": "Wall Street stages major comeback during Thanksgiving-shortened trading week",
+      "url": "https://www.foxbusiness.com/markets/wall-street-stages-major-comeback-thanksgiving-shortened-trading-week?.tsrc=rss",
+      "canonical_url": "https://foxbusiness.com/markets/wall-street-stages-major-comeback-thanksgiving-shortened-trading-week?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-f4dc1eb8d3",
+        "issue": "2026-11-23-AM",
+        "title": "U.S. inflation, Thanksgiving trading: Crypto Week Ahead",
+        "published_at_taipei": "2026-11-23 17:40",
+        "url": "https://www.coindesk.com/markets/2026/11/23/u-s-inflation-thanksgiving-trading-crypto-week-ahead"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -2007,6 +2163,120 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261128-ed2fb4d00d",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T04:11:00Z",
+      "published_at_taipei": "2026-11-28 12:11",
+      "published_at_taipei_iso": "2026-11-28T12:11:00+08:00",
+      "first_seen_at_utc": "2026-11-28T04:21:12Z",
+      "first_seen_at_taipei": "2026-11-28 12:21",
+      "month": "2026-11",
+      "title": "Bitcoin recovery needs USDT supply growth: CryptoQuant, K33 weighs AI threat to Bitcoin, and more",
+      "url": "https://www.theblock.co/newsletters/the-daily/2026-11-27-bitcoin-recovery-usdt-supply-ai-threat-bitcoin-more-crypto-news-447571",
+      "canonical_url": "https://theblock.co/newsletters/the-daily/2026-11-27-bitcoin-recovery-usdt-supply-ai-threat-bitcoin-more-crypto-news-447571",
+      "source": "The Block",
+      "source_id": "theblock",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261128-d5b29f100b",
+        "issue": "2026-11-27-PM",
+        "title": "CryptoQuant says bitcoin price recovery needs USDT supply growth",
+        "published_at_taipei": "2026-11-28 02:13",
+        "url": "https://www.theblock.co/news/markets/2026-11-27-cryptoquant-bitcoin-price-recovery-usdt-supply-growth-447560"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-715a5b214a",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T04:10:05Z",
+      "published_at_taipei": "2026-11-28 12:10",
+      "published_at_taipei_iso": "2026-11-28T12:10:05+08:00",
+      "first_seen_at_utc": "2026-11-28T04:21:12Z",
+      "first_seen_at_taipei": "2026-11-28 12:21",
+      "month": "2026-11",
+      "title": "OpenAI反擊蘋果！控施壓供應商、限制員工跳槽 阻撓進軍AI硬體市場",
+      "url": "https://news.cnyes.com/news/id/6674380",
+      "canonical_url": "https://news.cnyes.com/news/id/6674380",
+      "source": "鉅亨網（美股）",
+      "source_id": "cnyes_us_stock",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：合作；命中：竊取）",
+      "sentiment_targets": [
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-49df959149",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T04:00:03Z",
+      "published_at_taipei": "2026-11-28 12:00",
+      "published_at_taipei_iso": "2026-11-28T12:00:03+08:00",
+      "first_seen_at_utc": "2026-11-28T04:21:12Z",
+      "first_seen_at_taipei": "2026-11-28 12:21",
+      "month": "2026-11",
+      "title": "Chamath Palihapitiya Warns AI’s ‘Alien Mathematics’ Could Break Bitcoin As AI Tackles 167-Year-Old Riemann Hypothesis",
+      "url": "https://stocktwits.com/news-articles/markets/cryptocurrency/chamath-palihapitiya-ai-alien-mathematics-bitcoin-riemann-hypothesis/cNRRnyYR9VN?.tsrc=rss",
+      "canonical_url": "https://stocktwits.com/news-articles/markets/cryptocurrency/chamath-palihapitiya-ai-alien-mathematics-bitcoin-riemann-hypothesis/cNRRnyYR9VN?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-bde0b38517",
       "issue": "2026-11-28-AM",
       "published_at_utc": "2026-11-28T03:49:00Z",
@@ -2589,6 +2859,48 @@
       "sentiment_targets": [
         "BTCUSDT",
         "XAUUSD"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-bd4a9c68f1",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T02:00:10Z",
+      "published_at_taipei": "2026-11-28 10:00",
+      "published_at_taipei_iso": "2026-11-28T10:00:10+08:00",
+      "first_seen_at_utc": "2026-11-28T04:21:12Z",
+      "first_seen_at_taipei": "2026-11-28 12:21",
+      "month": "2026-11",
+      "title": "Wall Street stages major comeback during Thanksgiving-shortened trading week",
+      "url": "https://www.foxbusiness.com/markets/wall-street-stages-major-comeback-thanksgiving-shortened-trading-week?.tsrc=rss",
+      "canonical_url": "https://foxbusiness.com/markets/wall-street-stages-major-comeback-thanksgiving-shortened-trading-week?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-f4dc1eb8d3",
+        "issue": "2026-11-23-AM",
+        "title": "U.S. inflation, Thanksgiving trading: Crypto Week Ahead",
+        "published_at_taipei": "2026-11-23 17:40",
+        "url": "https://www.coindesk.com/markets/2026/11/23/u-s-inflation-thanksgiving-trading-crypto-week-ahead"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -162619,146 +162931,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261121-fcec8bc4e2",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T04:20:42Z",
-      "published_at_taipei": "2026-11-21 12:20",
-      "published_at_taipei_iso": "2026-11-21T12:20:42+08:00",
-      "month": "2026-11",
-      "title": "台股慘遭血洗！杜金龍逆勢布局揭「止穩時機」",
-      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%85%98%E9%81%AD%E8%A1%80%E6%B4%97-%E6%9D%9C%E9%87%91%E9%BE%8D%E9%80%86%E5%8B%A2%E5%B8%83%E5%B1%80%E6%8F%AD-%E6%AD%A2%E7%A9%A9%E6%99%82%E6%A9%9F-042042925.html",
-      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%85%98%E9%81%AD%E8%A1%80%E6%B4%97-%E6%9D%9C%E9%87%91%E9%BE%8D%E9%80%86%E5%8B%A2%E5%B8%83%E5%B1%80%E6%8F%AD-%E6%AD%A2%E7%A9%A9%E6%99%82%E6%A9%9F-042042925.html",
-      "source": "Yahoo奇摩股市",
-      "source_id": "yahoo_tw_stock",
-      "category": "台股",
-      "symbols": [
-        "TWII"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "追蹤標的相關",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-79643e9b09",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T04:20:04Z",
-      "published_at_taipei": "2026-11-21 12:20",
-      "published_at_taipei_iso": "2026-11-21T12:20:04+08:00",
-      "month": "2026-11",
-      "title": "特斯拉、SpaceX最快12月合併？HSBC：馬斯克持股將達60%、爲股東帶來33%溢價",
-      "url": "https://news.cnyes.com/news/id/6669706",
-      "canonical_url": "https://news.cnyes.com/news/id/6669706",
-      "source": "鉅亨網（美股）",
-      "source_id": "cnyes_us_stock",
-      "category": "美股",
-      "symbols": [
-        "TSLA",
-        "SPCX"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "追蹤標的相關",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-7292212424",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T04:19:37Z",
-      "published_at_taipei": "2026-11-21 12:19",
-      "published_at_taipei_iso": "2026-11-21T12:19:37+08:00",
-      "month": "2026-11",
-      "title": "ARK Invest Adds More Anthropic Shares While Trimming Crypto Stocks As Bitcoin Slides",
-      "url": "https://stocktwits.com/news-articles/markets/equity/cathie-wood-sells-crypto-bets-piles-into-anthropic-after-ai-firm-s-market-debut/cNbm9L8R910?.tsrc=rss",
-      "canonical_url": "https://stocktwits.com/news-articles/markets/equity/cathie-wood-sells-crypto-bets-piles-into-anthropic-after-ai-firm-s-market-debut/cNbm9L8R910?.tsrc=rss",
-      "source": "Yahoo Finance",
-      "source_id": "yahoo_finance_us",
-      "category": "加密貨幣",
-      "symbols": [
-        "BTCUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-b0bd4f9b1a",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T04:18:00Z",
-      "published_at_taipei": "2026-11-21 12:18",
-      "published_at_taipei_iso": "2026-11-21T12:18:00+08:00",
-      "month": "2026-11",
-      "title": "台股剉咧等！「AI逃命潮」輝達慘崩14% 台積電ADR瀉近10%",
-      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%89%89%E5%92%A7%E7%AD%89-ai%E9%80%83%E5%91%BD%E6%BD%AE-%E8%BC%9D%E9%81%94%E6%85%98%E5%B4%A914-%E5%8F%B0%E7%A9%8D%E9%9B%BBadr%E7%80%89%E8%BF%9110-041800864.html",
-      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%89%89%E5%92%A7%E7%AD%89-ai%E9%80%83%E5%91%BD%E6%BD%AE-%E8%BC%9D%E9%81%94%E6%85%98%E5%B4%A914-%E5%8F%B0%E7%A9%8D%E9%9B%BBadr%E7%80%89%E8%BF%9110-041800864.html",
-      "source": "Yahoo奇摩股市",
-      "source_id": "yahoo_tw_stock",
-      "category": "台股",
-      "symbols": [
-        "TWII",
-        "2330"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "追蹤標的相關",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-cae77aa16b",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T04:10:08Z",
-      "published_at_taipei": "2026-11-21 12:10",
-      "published_at_taipei_iso": "2026-11-21T12:10:08+08:00",
-      "month": "2026-11",
-      "title": "台股本周跌7641點35年來最慘、金管會祭「有條件禁空令」、外銷訂單連21紅 本周大事回顧",
-      "url": "https://news.cnyes.com/news/id/6669536",
-      "canonical_url": "https://news.cnyes.com/news/id/6669536",
-      "source": "鉅亨網（台股）",
-      "source_id": "cnyes_tw_stock",
-      "category": "台股",
-      "symbols": [
-        "TWII"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-120e1b9b56",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T04:10:07Z",
-      "published_at_taipei": "2026-11-21 12:10",
-      "published_at_taipei_iso": "2026-11-21T12:10:07+08:00",
-      "month": "2026-11",
-      "title": "Bitcoin tanks below $57,000 for the first time in two years, and its not alone",
-      "url": "https://www.coindesk.com/markets/2026/11/21/bitcoin-tanks-below-usd57-000-for-the-first-time-in-two-years-and-its-not-alone",
-      "canonical_url": "https://coindesk.com/markets/2026/11/21/bitcoin-tanks-below-usd57-000-for-the-first-time-in-two-years-and-its-not-alone",
-      "source": "CoinDesk",
-      "source_id": "coindesk",
-      "category": "加密貨幣",
-      "symbols": [
-        "BTCUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -162767,8 +162939,8 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "AM",
-      "updated_at_taipei": "2026-11-28 12:05",
-      "count": 43,
+      "updated_at_taipei": "2026-11-28 12:21",
+      "count": 47,
       "star3_count": 6,
       "failed_sources": [
         {
