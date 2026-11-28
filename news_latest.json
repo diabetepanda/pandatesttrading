@@ -2,18 +2,13 @@
   "version": 1,
   "latest_issue": "2026-11-28-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T01:05:20Z",
-  "updated_at_taipei": "2026-11-28 09:05",
-  "last_updated_utc": "2026-11-28T01:05:20Z",
-  "last_updated_taipei": "2026-11-28 09:05",
-  "next_update_hint": "約台北時間 09:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T01:20:27Z",
+  "updated_at_taipei": "2026-11-28 09:20",
+  "last_updated_utc": "2026-11-28T01:20:27Z",
+  "last_updated_taipei": "2026-11-28 09:20",
+  "next_update_hint": "約台北時間 09:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
-    {
-      "id": "cnyes_macro",
-      "name": "鉅亨網（總經）",
-      "error": "502 Server Error: Bad Gateway for url: https://api.cnyes.com/media/api/v1/newslist/category/wd_macro?limit=20"
-    },
     {
       "id": "cnyes_crypto",
       "name": "鉅亨網（加密）",
@@ -36,17 +31,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 43.199,
-    "sources_ok": 21,
-    "sources_failed": 5,
-    "new_items_added": 2,
+    "total_elapsed_sec": 33.95,
+    "sources_ok": 22,
+    "sources_failed": 4,
+    "new_items_added": 4,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.086,
+        "elapsed_sec": 0.105,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -55,7 +50,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.938,
+        "elapsed_sec": 0.105,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -64,7 +59,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 1.198,
+        "elapsed_sec": 0.126,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -73,7 +68,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.113,
+        "elapsed_sec": 0.087,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -82,7 +77,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.391,
+        "elapsed_sec": 0.305,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -91,7 +86,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.213,
+        "elapsed_sec": 0.17,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -100,7 +95,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.132,
+        "elapsed_sec": 0.122,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -109,7 +104,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.11,
+        "elapsed_sec": 0.106,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -118,7 +113,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.097,
+        "elapsed_sec": 0.113,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -127,7 +122,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.424,
+        "elapsed_sec": 0.431,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -136,7 +131,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 8.639,
+        "elapsed_sec": 0.908,
         "raw_count": 20,
         "items_kept": 18,
         "error": null
@@ -144,17 +139,17 @@
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
-        "status": "failed",
-        "elapsed_sec": 8.544,
-        "raw_count": 0,
-        "items_kept": 0,
-        "error": "502 Server Error: Bad Gateway for url: https://api.cnyes.com/media/api/v1/newslist/category/wd_macro?limit=20"
+        "status": "ok",
+        "elapsed_sec": 0.37,
+        "raw_count": 20,
+        "items_kept": 11,
+        "error": null
       },
       "cnyes_crypto": {
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "failed",
-        "elapsed_sec": 8.648,
+        "elapsed_sec": 16.418,
         "raw_count": 0,
         "items_kept": 0,
         "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
@@ -163,7 +158,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.323,
+        "elapsed_sec": 0.335,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -172,7 +167,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.162,
+        "elapsed_sec": 0.42,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -181,7 +176,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.241,
+        "elapsed_sec": 0.273,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -190,7 +185,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.816,
+        "elapsed_sec": 0.685,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -199,7 +194,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.053,
+        "elapsed_sec": 0.064,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -208,7 +203,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.455,
+        "elapsed_sec": 1.422,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -217,7 +212,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.597,
+        "elapsed_sec": 0.765,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -226,7 +221,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.052,
+        "elapsed_sec": 1.418,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -235,7 +230,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.564,
+        "elapsed_sec": 0.392,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -244,7 +239,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.45,
+        "elapsed_sec": 0.821,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -253,7 +248,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.318,
+        "elapsed_sec": 0.246,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -262,7 +257,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.483,
+        "elapsed_sec": 0.545,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -271,7 +266,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.377,
+        "elapsed_sec": 0.32,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -313,24 +308,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -378.1,
+      "net_flow_usd_m": -379.2,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0056,
+        "funding_rate_pct": 0.0055,
         "oi_usd_b": 1.92
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0006,
-        "oi_usd_b": 1.12
+        "funding_rate_pct": 0.0004,
+        "oi_usd_b": 1.13
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 3,
+      "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 31.1,
-      "tx_count": 69620,
+      "mempool_vsize_mb": 29.2,
+      "tx_count": 62533,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -410,6 +405,42 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-452644e112",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T01:00:00Z",
+      "published_at_taipei": "2026-11-28 09:00",
+      "published_at_taipei_iso": "2026-11-28T09:00:00+08:00",
+      "first_seen_at_utc": "2026-11-28T01:20:27Z",
+      "first_seen_at_taipei": "2026-11-28 09:20",
+      "month": "2026-11",
+      "title": "OpenAI says a spy handed Apple secret plans for AI devices that could 'outcompete' the iPhone maker on its 'own turf'",
+      "url": "https://finance.yahoo.com/technology/ai/articles/openai-says-spy-handed-apple-010000370.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/openai-says-spy-handed-apple-010000370.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "AAPL"
       ],
       "sentiment_method": "rule"
     },
@@ -810,6 +841,78 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-266b5241f1",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-27T23:21:23Z",
+      "published_at_taipei": "2026-11-28 07:21",
+      "published_at_taipei_iso": "2026-11-28T07:21:23+08:00",
+      "first_seen_at_utc": "2026-11-28T01:20:27Z",
+      "first_seen_at_taipei": "2026-11-28 09:20",
+      "month": "2026-11",
+      "title": "Warning for Alphabet Investors: MScience Data Show Q4 Search Revenue Tracking Below Consensus",
+      "url": "https://www.tikr.com/blog/warning-for-alphabet-investors-mscience-data-show-q4-search-revenue-tracking-below-consensus?ref=yahoofinance&tlnk=yf-261127-64qqmx2j&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/warning-for-alphabet-investors-mscience-data-show-q4-search-revenue-tracking-below-consensus?tlnk=yf-261127-64qqmx2j&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-eaa3cfbffb",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-27T23:20:02Z",
+      "published_at_taipei": "2026-11-28 07:20",
+      "published_at_taipei_iso": "2026-11-28T07:20:02+08:00",
+      "first_seen_at_utc": "2026-11-28T01:20:27Z",
+      "first_seen_at_taipei": "2026-11-28 09:20",
+      "month": "2026-11",
+      "title": "Texas Is Racing to Approve SpaceX’s $24 Billion Starbase Data Center Before Its New Governor Can Halt It",
+      "url": "https://www.tikr.com/blog/texas-is-racing-to-approve-spacexs-24-billion-starbase-data-center-before-its-new-governor-can-halt-it?ref=yahoofinance&tlnk=yf-261127-5cjgmqwx&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/texas-is-racing-to-approve-spacexs-24-billion-starbase-data-center-before-its-new-governor-can-halt-it?tlnk=yf-261127-5cjgmqwx&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-d96aa521e7",
       "issue": "2026-11-28-AM",
       "published_at_utc": "2026-11-27T22:18:30Z",
@@ -1018,9 +1121,79 @@
         "NAS100"
       ],
       "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-7bc1689285",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-27T23:23:55Z",
+      "published_at_taipei": "2026-11-28 07:23",
+      "published_at_taipei_iso": "2026-11-28T07:23:55+08:00",
+      "first_seen_at_utc": "2026-11-28T01:20:27Z",
+      "first_seen_at_taipei": "2026-11-28 09:20",
+      "month": "2026-11",
+      "title": "Plot Twist: Nvidia’s Vera Rubin Gets 2-6.5x GB300’s Tokens per Dollar. Amazon’s Trainium Edge Was Against the Old Chip",
+      "url": "https://www.tikr.com/blog/plot-twist-nvidias-vera-rubin-gets-2-6-5x-gb300s-tokens-per-dollar-amazons-trainium-edge-was-against-the-old-chip?ref=yahoofinance&tlnk=yf-261127-2mxwqf36&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/plot-twist-nvidias-vera-rubin-gets-2-6-5x-gb300s-tokens-per-dollar-amazons-trainium-edge-was-against-the-old-chip?tlnk=yf-261127-2mxwqf36&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261128-452644e112",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T01:00:00Z",
+      "published_at_taipei": "2026-11-28 09:00",
+      "published_at_taipei_iso": "2026-11-28T09:00:00+08:00",
+      "first_seen_at_utc": "2026-11-28T01:20:27Z",
+      "first_seen_at_taipei": "2026-11-28 09:20",
+      "month": "2026-11",
+      "title": "OpenAI says a spy handed Apple secret plans for AI devices that could 'outcompete' the iPhone maker on its 'own turf'",
+      "url": "https://finance.yahoo.com/technology/ai/articles/openai-says-spy-handed-apple-010000370.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/ai/articles/openai-says-spy-handed-apple-010000370.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-cc8f5fc328",
       "issue": "2026-11-28-AM",
@@ -1488,6 +1661,112 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-7bc1689285",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-27T23:23:55Z",
+      "published_at_taipei": "2026-11-28 07:23",
+      "published_at_taipei_iso": "2026-11-28T07:23:55+08:00",
+      "first_seen_at_utc": "2026-11-28T01:20:27Z",
+      "first_seen_at_taipei": "2026-11-28 09:20",
+      "month": "2026-11",
+      "title": "Plot Twist: Nvidia’s Vera Rubin Gets 2-6.5x GB300’s Tokens per Dollar. Amazon’s Trainium Edge Was Against the Old Chip",
+      "url": "https://www.tikr.com/blog/plot-twist-nvidias-vera-rubin-gets-2-6-5x-gb300s-tokens-per-dollar-amazons-trainium-edge-was-against-the-old-chip?ref=yahoofinance&tlnk=yf-261127-2mxwqf36&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/plot-twist-nvidias-vera-rubin-gets-2-6-5x-gb300s-tokens-per-dollar-amazons-trainium-edge-was-against-the-old-chip?tlnk=yf-261127-2mxwqf36&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-266b5241f1",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-27T23:21:23Z",
+      "published_at_taipei": "2026-11-28 07:21",
+      "published_at_taipei_iso": "2026-11-28T07:21:23+08:00",
+      "first_seen_at_utc": "2026-11-28T01:20:27Z",
+      "first_seen_at_taipei": "2026-11-28 09:20",
+      "month": "2026-11",
+      "title": "Warning for Alphabet Investors: MScience Data Show Q4 Search Revenue Tracking Below Consensus",
+      "url": "https://www.tikr.com/blog/warning-for-alphabet-investors-mscience-data-show-q4-search-revenue-tracking-below-consensus?ref=yahoofinance&tlnk=yf-261127-64qqmx2j&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/warning-for-alphabet-investors-mscience-data-show-q4-search-revenue-tracking-below-consensus?tlnk=yf-261127-64qqmx2j&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-eaa3cfbffb",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-27T23:20:02Z",
+      "published_at_taipei": "2026-11-28 07:20",
+      "published_at_taipei_iso": "2026-11-28T07:20:02+08:00",
+      "first_seen_at_utc": "2026-11-28T01:20:27Z",
+      "first_seen_at_taipei": "2026-11-28 09:20",
+      "month": "2026-11",
+      "title": "Texas Is Racing to Approve SpaceX’s $24 Billion Starbase Data Center Before Its New Governor Can Halt It",
+      "url": "https://www.tikr.com/blog/texas-is-racing-to-approve-spacexs-24-billion-starbase-data-center-before-its-new-governor-can-halt-it?ref=yahoofinance&tlnk=yf-261127-5cjgmqwx&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/texas-is-racing-to-approve-spacexs-24-billion-starbase-data-center-before-its-new-governor-can-halt-it?tlnk=yf-261127-5cjgmqwx&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SPCX"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SPCX"
       ],
       "sentiment_method": "rule"
     },
@@ -161118,50 +161397,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261121-8a5d1b74a9",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T01:20:03Z",
-      "published_at_taipei": "2026-11-21 09:20",
-      "published_at_taipei_iso": "2026-11-21T09:20:03+08:00",
-      "month": "2026-11",
-      "title": "高盛恐慌指標飆至9分！高盛：美股未跌完 系統化資金撤退 下波賣壓恐更猛烈",
-      "url": "https://news.cnyes.com/news/id/6669698",
-      "canonical_url": "https://news.cnyes.com/news/id/6669698",
-      "source": "鉅亨網（美股）",
-      "source_id": "cnyes_us_stock",
-      "category": "美股",
-      "symbols": [
-        "NAS100"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-36956bb713",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T01:10:05Z",
-      "published_at_taipei": "2026-11-21 09:10",
-      "published_at_taipei_iso": "2026-11-21T09:10:05+08:00",
-      "month": "2026-11",
-      "title": "〈熱門股〉視陽矽水膠產品展望正面 外資連4買本周抗跌",
-      "url": "https://news.cnyes.com/news/id/6669517",
-      "canonical_url": "https://news.cnyes.com/news/id/6669517",
-      "source": "鉅亨網（台股）",
-      "source_id": "cnyes_tw_stock",
-      "category": "台股",
-      "symbols": [],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "市場重點（外資）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -161170,15 +161405,10 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "AM",
-      "updated_at_taipei": "2026-11-28 09:05",
-      "count": 17,
+      "updated_at_taipei": "2026-11-28 09:20",
+      "count": 21,
       "star3_count": 2,
       "failed_sources": [
-        {
-          "id": "cnyes_macro",
-          "name": "鉅亨網（總經）",
-          "error": "502 Server Error: Bad Gateway for url: https://api.cnyes.com/media/api/v1/newslist/category/wd_macro?limit=20"
-        },
         {
           "id": "cnyes_crypto",
           "name": "鉅亨網（加密）",
