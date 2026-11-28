@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-28-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T12:53:06Z",
-  "updated_at_taipei": "2026-11-28 20:53",
-  "last_updated_utc": "2026-11-28T12:53:06Z",
-  "last_updated_taipei": "2026-11-28 20:53",
-  "next_update_hint": "約台北時間 21:02（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T13:08:16Z",
+  "updated_at_taipei": "2026-11-28 21:08",
+  "last_updated_utc": "2026-11-28T13:08:16Z",
+  "last_updated_taipei": "2026-11-28 21:08",
+  "next_update_hint": "約台北時間 21:17（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 14.754,
+    "total_elapsed_sec": 17.557,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 0,
+    "new_items_added": 4,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.076,
+        "elapsed_sec": 0.063,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.099,
+        "elapsed_sec": 0.097,
         "raw_count": 30,
         "items_kept": 8,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.064,
+        "elapsed_sec": 0.05,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.04,
+        "elapsed_sec": 0.034,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.295,
+        "elapsed_sec": 0.26,
         "raw_count": 19,
         "items_kept": 18,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.154,
+        "elapsed_sec": 0.169,
         "raw_count": 25,
         "items_kept": 25,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.142,
+        "elapsed_sec": 0.103,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.083,
+        "elapsed_sec": 0.087,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.091,
+        "elapsed_sec": 0.098,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.413,
+        "elapsed_sec": 0.426,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.685,
+        "elapsed_sec": 0.485,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.276,
+        "elapsed_sec": 0.263,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.65,
+        "elapsed_sec": 0.677,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.375,
+        "elapsed_sec": 0.134,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.513,
+        "elapsed_sec": 0.405,
         "raw_count": 50,
         "items_kept": 23,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.117,
+        "elapsed_sec": 0.15,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.05,
+        "elapsed_sec": 0.383,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.038,
+        "elapsed_sec": 0.066,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.223,
+        "elapsed_sec": 1.115,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.346,
+        "elapsed_sec": 0.381,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 0.965,
+        "elapsed_sec": 1.012,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.338,
+        "elapsed_sec": 0.321,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.568,
+        "elapsed_sec": 0.544,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.071,
+        "elapsed_sec": 0.086,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.455,
+        "elapsed_sec": 0.386,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.299,
+        "elapsed_sec": 0.3,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -271,56 +271,56 @@
   "data_metrics_snapshot": {
     "stablecoins": {
       "total_usd_b": 283.14,
-      "change_1d_usd_m": -482.4,
+      "change_1d_usd_m": -480.5,
       "change_1d_pct": -0.17,
       "alert_key": "stablecoins_supply:down"
     },
     "chains_tvl": {
       "Ethereum": {
         "tvl_b": 36.14,
-        "change_1d_pct": -1.19
+        "change_1d_pct": -1.17
+      },
+      "Base": {
+        "tvl_b": 4.61,
+        "change_1d_pct": -0.87
       },
       "Solana": {
         "tvl_b": 4.57,
         "change_1d_pct": -1.23
       },
-      "Base": {
-        "tvl_b": 4.59,
-        "change_1d_pct": -1.18
-      },
       "Tron": {
-        "tvl_b": 4.29,
-        "change_1d_pct": -2.48
+        "tvl_b": 4.28,
+        "change_1d_pct": -2.64
       },
       "BSC": {
         "tvl_b": 4.26,
-        "change_1d_pct": -1.18
+        "change_1d_pct": -1.24
       },
       "Hyperliquid L1": {
         "tvl_b": 2.24,
-        "change_1d_pct": -0.24
+        "change_1d_pct": 0.08
       }
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -373.8,
+      "net_flow_usd_m": -373.9,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0063,
+        "funding_rate_pct": 0.0064,
         "oi_usd_b": 1.92
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0015,
+        "funding_rate_pct": -0.0013,
         "oi_usd_b": 1.15
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 2,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 27.2,
-      "tx_count": 47926,
+      "mempool_vsize_mb": 28.6,
+      "tx_count": 53590,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -403,6 +403,132 @@
         "2330",
         "2382",
         "2308"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-2d442f2bb0",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T13:02:18Z",
+      "published_at_taipei": "2026-11-28 21:02",
+      "published_at_taipei_iso": "2026-11-28T21:02:18+08:00",
+      "first_seen_at_utc": "2026-11-28T13:08:16Z",
+      "first_seen_at_taipei": "2026-11-28 21:08",
+      "month": "2026-11",
+      "title": "Bitcoin not delivering: The bear market has digital asset veteran questioning BTC's value",
+      "url": "https://www.coindesk.com/markets/2026/11/28/bitcoin-not-delivering-the-bear-market-has-digital-asset-veteran-questioning-btc-s-value",
+      "canonical_url": "https://coindesk.com/markets/2026/11/28/bitcoin-not-delivering-the-bear-market-has-digital-asset-veteran-questioning-btc-s-value",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-408586830c",
+        "issue": "2026-11-25-AM",
+        "title": "Bitcoin Oversold in Longest Bear Market on Record, but AI Risks Threaten Recovery",
+        "published_at_taipei": "2026-11-25 18:02",
+        "url": "https://www.ccn.com/news/crypto/bitcoin-oversold-record-bear-market-ai-risks/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-18ed7b5c93",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:55:02Z",
+      "published_at_taipei": "2026-11-28 20:55",
+      "published_at_taipei_iso": "2026-11-28T20:55:02+08:00",
+      "first_seen_at_utc": "2026-11-28T13:08:16Z",
+      "first_seen_at_taipei": "2026-11-28 21:08",
+      "month": "2026-11",
+      "title": "3 Tech Stocks to Buy and Hold for 10 Years",
+      "url": "https://www.fool.com/investing/2026/11/28/3-tech-stocks-to-buy-and-hold-for-10-years/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/28/3-tech-stocks-to-buy-and-hold-for-10-years?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-cf7cafd83b",
+        "issue": "2026-11-25-PM",
+        "title": "3 Glorious AI Stocks to Buy Hand Over Fist If the Stock Market Crashes",
+        "published_at_taipei": "2026-11-26 04:02",
+        "url": "https://www.fool.com/investing/2026/11/25/3-glorious-ai-stocks-to-buy-hand-over-fist-if-the-stock-market-crashes/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-b8e498cccd",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:38:39Z",
+      "published_at_taipei": "2026-11-28 20:38",
+      "published_at_taipei_iso": "2026-11-28T20:38:39+08:00",
+      "first_seen_at_utc": "2026-11-28T13:08:16Z",
+      "first_seen_at_taipei": "2026-11-28 21:08",
+      "month": "2026-11",
+      "title": "One Day Left: The S&P 500 Needs a Huge Monday to Avoid Its Worst November Since 2008",
+      "url": "https://247wallst.com/investing/2026/11/28/one-day-left-the-sp-500-needs-a-huge-monday-to-avoid-its-worst-november-since-2008/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/28/one-day-left-the-sp-500-needs-a-huge-monday-to-avoid-its-worst-november-since-2008?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-6fa1ad415a",
+        "issue": "2026-11-25-PM",
+        "title": "Gold Is Having Its Worst November Since at Least 2000",
+        "published_at_taipei": "2026-11-26 01:42",
+        "url": "https://247wallst.com/investing/2026/11/25/gold-is-having-its-worst-november-since-at-least-2000/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
       ],
       "sentiment_method": "rule"
     },
@@ -641,6 +767,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-d3ba216546",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:50:46Z",
+      "published_at_taipei": "2026-11-28 20:50",
+      "published_at_taipei_iso": "2026-11-28T20:50:46+08:00",
+      "first_seen_at_utc": "2026-11-28T13:08:16Z",
+      "first_seen_at_taipei": "2026-11-28 21:08",
+      "month": "2026-11",
+      "title": "From bonds to gold: UBS outlines how to build resilient portfolios for 2027",
+      "url": "https://finance.yahoo.com/markets/articles/bonds-gold-ubs-outlines-build-125046295.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/articles/bonds-gold-ubs-outlines-build-125046295.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-b4c4cabd2e",
       "issue": "2026-11-28-PM",
       "published_at_utc": "2026-11-28T12:10:10Z",
@@ -802,6 +962,166 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261128-2d442f2bb0",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T13:02:18Z",
+      "published_at_taipei": "2026-11-28 21:02",
+      "published_at_taipei_iso": "2026-11-28T21:02:18+08:00",
+      "first_seen_at_utc": "2026-11-28T13:08:16Z",
+      "first_seen_at_taipei": "2026-11-28 21:08",
+      "month": "2026-11",
+      "title": "Bitcoin not delivering: The bear market has digital asset veteran questioning BTC's value",
+      "url": "https://www.coindesk.com/markets/2026/11/28/bitcoin-not-delivering-the-bear-market-has-digital-asset-veteran-questioning-btc-s-value",
+      "canonical_url": "https://coindesk.com/markets/2026/11/28/bitcoin-not-delivering-the-bear-market-has-digital-asset-veteran-questioning-btc-s-value",
+      "source": "CoinDesk",
+      "source_id": "coindesk",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261125-408586830c",
+        "issue": "2026-11-25-AM",
+        "title": "Bitcoin Oversold in Longest Bear Market on Record, but AI Risks Threaten Recovery",
+        "published_at_taipei": "2026-11-25 18:02",
+        "url": "https://www.ccn.com/news/crypto/bitcoin-oversold-record-bear-market-ai-risks/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-18ed7b5c93",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:55:02Z",
+      "published_at_taipei": "2026-11-28 20:55",
+      "published_at_taipei_iso": "2026-11-28T20:55:02+08:00",
+      "first_seen_at_utc": "2026-11-28T13:08:16Z",
+      "first_seen_at_taipei": "2026-11-28 21:08",
+      "month": "2026-11",
+      "title": "3 Tech Stocks to Buy and Hold for 10 Years",
+      "url": "https://www.fool.com/investing/2026/11/28/3-tech-stocks-to-buy-and-hold-for-10-years/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/28/3-tech-stocks-to-buy-and-hold-for-10-years?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-cf7cafd83b",
+        "issue": "2026-11-25-PM",
+        "title": "3 Glorious AI Stocks to Buy Hand Over Fist If the Stock Market Crashes",
+        "published_at_taipei": "2026-11-26 04:02",
+        "url": "https://www.fool.com/investing/2026/11/25/3-glorious-ai-stocks-to-buy-hand-over-fist-if-the-stock-market-crashes/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-d3ba216546",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:50:46Z",
+      "published_at_taipei": "2026-11-28 20:50",
+      "published_at_taipei_iso": "2026-11-28T20:50:46+08:00",
+      "first_seen_at_utc": "2026-11-28T13:08:16Z",
+      "first_seen_at_taipei": "2026-11-28 21:08",
+      "month": "2026-11",
+      "title": "From bonds to gold: UBS outlines how to build resilient portfolios for 2027",
+      "url": "https://finance.yahoo.com/markets/articles/bonds-gold-ubs-outlines-build-125046295.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/articles/bonds-gold-ubs-outlines-build-125046295.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-b8e498cccd",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:38:39Z",
+      "published_at_taipei": "2026-11-28 20:38",
+      "published_at_taipei_iso": "2026-11-28T20:38:39+08:00",
+      "first_seen_at_utc": "2026-11-28T13:08:16Z",
+      "first_seen_at_taipei": "2026-11-28 21:08",
+      "month": "2026-11",
+      "title": "One Day Left: The S&P 500 Needs a Huge Monday to Avoid Its Worst November Since 2008",
+      "url": "https://247wallst.com/investing/2026/11/28/one-day-left-the-sp-500-needs-a-huge-monday-to-avoid-its-worst-november-since-2008/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/28/one-day-left-the-sp-500-needs-a-huge-monday-to-avoid-its-worst-november-since-2008?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "SP500"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-6fa1ad415a",
+        "issue": "2026-11-25-PM",
+        "title": "Gold Is Having Its Worst November Since at Least 2000",
+        "published_at_taipei": "2026-11-26 01:42",
+        "url": "https://247wallst.com/investing/2026/11/25/gold-is-having-its-worst-november-since-at-least-2000/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "SP500"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-33d8e5e89e",
       "issue": "2026-11-28-PM",
@@ -162381,8 +162701,8 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "PM",
-      "updated_at_taipei": "2026-11-28 20:53",
-      "count": 12,
+      "updated_at_taipei": "2026-11-28 21:08",
+      "count": 16,
       "star3_count": 2,
       "failed_sources": [
         {
