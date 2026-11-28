@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-28-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T15:23:53Z",
-  "updated_at_taipei": "2026-11-28 23:23",
-  "last_updated_utc": "2026-11-28T15:23:53Z",
-  "last_updated_taipei": "2026-11-28 23:23",
-  "next_update_hint": "約台北時間 23:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T15:38:49Z",
+  "updated_at_taipei": "2026-11-28 23:38",
+  "last_updated_utc": "2026-11-28T15:38:49Z",
+  "last_updated_taipei": "2026-11-28 23:38",
+  "next_update_hint": "約台北時間 23:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 21.835,
+    "total_elapsed_sec": 20.714,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 4,
+    "new_items_added": 1,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.079,
+        "elapsed_sec": 0.118,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.289,
+        "elapsed_sec": 0.168,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.335,
+        "elapsed_sec": 0.134,
         "raw_count": 30,
         "items_kept": 3,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.151,
+        "elapsed_sec": 0.056,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.309,
+        "elapsed_sec": 0.461,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.241,
+        "elapsed_sec": 0.176,
         "raw_count": 25,
         "items_kept": 25,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.172,
+        "elapsed_sec": 0.109,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.125,
+        "elapsed_sec": 0.607,
         "raw_count": 20,
         "items_kept": 18,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.123,
+        "elapsed_sec": 0.118,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -117,16 +117,16 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.385,
+        "elapsed_sec": 0.502,
         "raw_count": 20,
-        "items_kept": 9,
+        "items_kept": 10,
         "error": null
       },
       "cnyes_us_stock": {
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.479,
+        "elapsed_sec": 0.598,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.296,
+        "elapsed_sec": 0.354,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.743,
+        "elapsed_sec": 0.82,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.327,
+        "elapsed_sec": 0.419,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.534,
+        "elapsed_sec": 0.607,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.305,
+        "elapsed_sec": 0.108,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 3.953,
+        "elapsed_sec": 3.334,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.071,
+        "elapsed_sec": 0.073,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.341,
+        "elapsed_sec": 1.853,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.555,
+        "elapsed_sec": 0.396,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 0.956,
+        "elapsed_sec": 1.113,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.501,
+        "elapsed_sec": 0.335,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.629,
+        "elapsed_sec": 0.552,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.191,
+        "elapsed_sec": 0.512,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.478,
+        "elapsed_sec": 0.47,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.385,
+        "elapsed_sec": 0.283,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -374.8,
+      "net_flow_usd_m": -374.0,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0048,
-        "oi_usd_b": 1.93
+        "funding_rate_pct": 0.0047,
+        "oi_usd_b": 1.92
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0006,
+        "funding_rate_pct": 0.0009,
         "oi_usd_b": 1.14
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 3,
       "half_hour_fee_sat_vb": 3,
-      "mempool_vsize_mb": 32.3,
-      "tx_count": 74525,
+      "mempool_vsize_mb": 32.1,
+      "tx_count": 71629,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -519,6 +519,45 @@
         "2330",
         "2382",
         "2308"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-84cafffd6e",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T15:30:03Z",
+      "published_at_taipei": "2026-11-28 23:30",
+      "published_at_taipei_iso": "2026-11-28T23:30:03+08:00",
+      "first_seen_at_utc": "2026-11-28T15:38:49Z",
+      "first_seen_at_taipei": "2026-11-28 23:38",
+      "month": "2026-11",
+      "title": "Google第10代TPU傳採客製HBM5聯發科被點名為底層晶片設計候選",
+      "url": "https://news.cnyes.com/news/id/6674598",
+      "canonical_url": "https://news.cnyes.com/news/id/6674598",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "2454",
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2454",
+        "GOOGL"
       ],
       "sentiment_method": "rule"
     },
@@ -1901,6 +1940,45 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261128-84cafffd6e",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T15:30:03Z",
+      "published_at_taipei": "2026-11-28 23:30",
+      "published_at_taipei_iso": "2026-11-28T23:30:03+08:00",
+      "first_seen_at_utc": "2026-11-28T15:38:49Z",
+      "first_seen_at_taipei": "2026-11-28 23:38",
+      "month": "2026-11",
+      "title": "Google第10代TPU傳採客製HBM5聯發科被點名為底層晶片設計候選",
+      "url": "https://news.cnyes.com/news/id/6674598",
+      "canonical_url": "https://news.cnyes.com/news/id/6674598",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "2454",
+        "GOOGL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2454",
+        "GOOGL"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-12a29bbcfe",
       "issue": "2026-11-28-PM",
@@ -163579,78 +163657,6 @@
         "TWII"
       ],
       "sentiment_method": "rule"
-    },
-    {
-      "id": "news-20261121-28a3672a0f",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T15:32:31Z",
-      "published_at_taipei": "2026-11-21 23:32",
-      "published_at_taipei_iso": "2026-11-21T23:32:31+08:00",
-      "first_seen_at_utc": "2026-11-21T15:40:05Z",
-      "first_seen_at_taipei": "2026-11-21 23:40",
-      "month": "2026-11",
-      "title": "Anthropic Is Now Worth More Than Bitcoin: Could Bitcoin Pass It by 2030?",
-      "url": "https://247wallst.com/investing/cryptocurrency/2026/11/21/anthropic-is-now-worth-more-than-bitcoin-could-bitcoin-pass-it-by-2030/?.tsrc=rss",
-      "canonical_url": "https://247wallst.com/investing/cryptocurrency/2026/11/21/anthropic-is-now-worth-more-than-bitcoin-could-bitcoin-pass-it-by-2030?.tsrc=rss",
-      "source": "Yahoo Finance",
-      "source_id": "yahoo_finance_us",
-      "category": "鏈上資金",
-      "markets": [
-        "加密貨幣"
-      ],
-      "symbols": [
-        "BTCUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null,
-      "sentiment": "bearish",
-      "sentiment_label": "利空",
-      "sentiment_score": -1,
-      "sentiment_reason": "命中：outflows",
-      "sentiment_targets": [
-        "BTCUSDT"
-      ],
-      "sentiment_method": "rule"
-    },
-    {
-      "id": "news-20261121-c63470010f",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T15:28:29Z",
-      "published_at_taipei": "2026-11-21 23:28",
-      "published_at_taipei_iso": "2026-11-21T23:28:29+08:00",
-      "first_seen_at_utc": "2026-11-21T15:40:05Z",
-      "first_seen_at_taipei": "2026-11-21 23:40",
-      "month": "2026-11",
-      "title": "Wall Street’s Fear Index Just Hit 9.7. History Says the S&P 500 Could Rally 10.5% in 3 Weeks",
-      "url": "https://247wallst.com/investing/2026/11/21/wall-streets-fear-index-just-hit-9-7-history-says-the-sp-500-could-rally-10-5-in-3-weeks/?.tsrc=rss",
-      "canonical_url": "https://247wallst.com/investing/2026/11/21/wall-streets-fear-index-just-hit-9-7-history-says-the-sp-500-could-rally-10-5-in-3-weeks?.tsrc=rss",
-      "source": "Yahoo Finance",
-      "source_id": "yahoo_finance_us",
-      "category": "美股",
-      "markets": [
-        "美股"
-      ],
-      "symbols": [
-        "SP500"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null,
-      "sentiment": "neutral",
-      "sentiment_label": "中性",
-      "sentiment_score": 0,
-      "sentiment_reason": "多空訊號抵銷（命中：selloff；命中：rally）",
-      "sentiment_targets": [
-        "SP500"
-      ],
-      "sentiment_method": "rule"
     }
   ],
   "recent_issues": [
@@ -163659,8 +163665,8 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "PM",
-      "updated_at_taipei": "2026-11-28 23:23",
-      "count": 40,
+      "updated_at_taipei": "2026-11-28 23:38",
+      "count": 41,
       "star3_count": 5,
       "failed_sources": [
         {
