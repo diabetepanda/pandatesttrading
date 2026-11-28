@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-28-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T15:08:38Z",
-  "updated_at_taipei": "2026-11-28 23:08",
-  "last_updated_utc": "2026-11-28T15:08:38Z",
-  "last_updated_taipei": "2026-11-28 23:08",
-  "next_update_hint": "約台北時間 23:17（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T15:23:53Z",
+  "updated_at_taipei": "2026-11-28 23:23",
+  "last_updated_utc": "2026-11-28T15:23:53Z",
+  "last_updated_taipei": "2026-11-28 23:23",
+  "next_update_hint": "約台北時間 23:32（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 18.621,
+    "total_elapsed_sec": 21.835,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 0,
+    "new_items_added": 4,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.138,
+        "elapsed_sec": 0.079,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.112,
+        "elapsed_sec": 0.289,
         "raw_count": 30,
         "items_kept": 9,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.144,
+        "elapsed_sec": 0.335,
         "raw_count": 30,
         "items_kept": 3,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.105,
+        "elapsed_sec": 0.151,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.344,
+        "elapsed_sec": 0.309,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -81,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.173,
+        "elapsed_sec": 0.241,
         "raw_count": 25,
         "items_kept": 25,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.156,
+        "elapsed_sec": 0.172,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,16 +99,16 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.11,
+        "elapsed_sec": 0.125,
         "raw_count": 20,
-        "items_kept": 19,
+        "items_kept": 18,
         "error": null
       },
       "decrypt": {
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.124,
+        "elapsed_sec": 0.123,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.522,
+        "elapsed_sec": 0.385,
         "raw_count": 20,
         "items_kept": 9,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.336,
+        "elapsed_sec": 0.479,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.358,
+        "elapsed_sec": 0.296,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 1.029,
+        "elapsed_sec": 0.743,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.289,
+        "elapsed_sec": 0.327,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.139,
+        "elapsed_sec": 0.534,
         "raw_count": 50,
         "items_kept": 24,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.229,
+        "elapsed_sec": 0.305,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 4.806,
+        "elapsed_sec": 3.953,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.058,
+        "elapsed_sec": 0.071,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.586,
+        "elapsed_sec": 0.555,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 0.947,
+        "elapsed_sec": 0.956,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.464,
+        "elapsed_sec": 0.501,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.584,
+        "elapsed_sec": 0.629,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.253,
+        "elapsed_sec": 0.191,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.45,
+        "elapsed_sec": 0.478,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.378,
+        "elapsed_sec": 0.385,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -277,16 +277,16 @@
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.09,
-        "change_1d_pct": -1.32
+        "tvl_b": 36.08,
+        "change_1d_pct": -1.34
       },
       "Base": {
-        "tvl_b": 4.59,
-        "change_1d_pct": -1.38
+        "tvl_b": 4.6,
+        "change_1d_pct": -1.06
       },
       "Solana": {
         "tvl_b": 4.55,
-        "change_1d_pct": -1.62
+        "change_1d_pct": -1.63
       },
       "Tron": {
         "tvl_b": 4.29,
@@ -298,29 +298,29 @@
       },
       "Hyperliquid L1": {
         "tvl_b": 2.24,
-        "change_1d_pct": -0.03
+        "change_1d_pct": 0.09
       }
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -374.3,
+      "net_flow_usd_m": -374.8,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0051,
-        "oi_usd_b": 1.92
+        "funding_rate_pct": 0.0048,
+        "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0004,
+        "funding_rate_pct": 0.0006,
         "oi_usd_b": 1.14
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 5,
-      "half_hour_fee_sat_vb": 4,
-      "mempool_vsize_mb": 33.7,
-      "tx_count": 78664,
+      "fastest_fee_sat_vb": 3,
+      "half_hour_fee_sat_vb": 3,
+      "mempool_vsize_mb": 32.3,
+      "tx_count": 74525,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -519,6 +519,127 @@
         "2330",
         "2382",
         "2308"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-12a29bbcfe",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T15:15:29Z",
+      "published_at_taipei": "2026-11-28 23:15",
+      "published_at_taipei_iso": "2026-11-28T23:15:29+08:00",
+      "first_seen_at_utc": "2026-11-28T15:23:53Z",
+      "first_seen_at_taipei": "2026-11-28 23:23",
+      "month": "2026-11",
+      "title": "台股周漲逾9% 0050、00878等24檔台股 ETF 受益人數續飆新高",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8%E6%BC%B2%E9%80%BE9-0050-00878%E7%AD%8924%E6%AA%94%E5%8F%B0%E8%82%A1-etf-%E5%8F%97%E7%9B%8A%E4%BA%BA%E6%95%B8%E7%BA%8C%E9%A3%86%E6%96%B0%E9%AB%98-151529063.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8%E6%BC%B2%E9%80%BE9-0050-00878%E7%AD%8924%E6%AA%94%E5%8F%B0%E8%82%A1-etf-%E5%8F%97%E7%9B%8A%E4%BA%BA%E6%95%B8%E7%BA%8C%E9%A3%86%E6%96%B0%E9%AB%98-151529063.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 3,
+      "sentiment_reason": "命中：國安基金護盤；命中：大漲；命中：反彈",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-fab47ccb9e",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T15:15:29Z",
+      "published_at_taipei": "2026-11-28 23:15",
+      "published_at_taipei_iso": "2026-11-28T23:15:29+08:00",
+      "first_seen_at_utc": "2026-11-28T15:23:53Z",
+      "first_seen_at_taipei": "2026-11-28 23:23",
+      "month": "2026-11",
+      "title": "台積電第3季大手筆發出419億元員工分紅 年輕工程師年薪上看400萬元",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E7%AC%AC3%E5%AD%A3%E5%A4%A7%E6%89%8B%E7%AD%86%E7%99%BC%E5%87%BA419%E5%84%84%E5%85%83%E5%93%A1%E5%B7%A5%E5%88%86%E7%B4%85-%E5%B9%B4%E8%BC%95%E5%B7%A5%E7%A8%8B%E5%B8%AB%E5%B9%B4%E8%96%AA%E4%B8%8A%E7%9C%8B400%E8%90%AC%E5%85%83-151529255.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E7%AC%AC3%E5%AD%A3%E5%A4%A7%E6%89%8B%E7%AD%86%E7%99%BC%E5%87%BA419%E5%84%84%E5%85%83%E5%93%A1%E5%B7%A5%E5%88%86%E7%B4%85-%E5%B9%B4%E8%BC%95%E5%B7%A5%E7%A8%8B%E5%B8%AB%E5%B9%B4%E8%96%AA%E4%B8%8A%E7%9C%8B400%E8%90%AC%E5%85%83-151529255.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261128-82e86fce39",
+        "issue": "2026-11-28-AM",
+        "title": "台積電Q3分紅開獎！菜鳥工程師年薪破400萬、經理級上看1500萬",
+        "published_at_taipei": "2026-11-28 14:18",
+        "url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BBq3%E5%88%86%E7%B4%85%E9%96%8B%E7%8D%8E-%E8%8F%9C%E9%B3%A5%E5%B7%A5%E7%A8%8B%E5%B8%AB%E5%B9%B4%E8%96%AA%E7%A0%B4400%E8%90%AC-%E7%B6%93%E7%90%86%E7%B4%9A%E4%B8%8A%E7%9C%8B1500%E8%90%AC-061852353.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-dc452a0777",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T14:32:01Z",
+      "published_at_taipei": "2026-11-28 22:32",
+      "published_at_taipei_iso": "2026-11-28T22:32:01+08:00",
+      "first_seen_at_utc": "2026-11-28T15:23:53Z",
+      "first_seen_at_taipei": "2026-11-28 23:23",
+      "month": "2026-11",
+      "title": "Strategy Just Dropped 42% in a Month. Saylor’s “Gentle, Continuous Auction” Comes at a Price",
+      "url": "https://www.tikr.com/blog/strategy-just-dropped-42-in-a-month-saylors-gentle-continuous-auction-comes-at-a-price?ref=yahoofinance&tlnk=yf-261128-w5hq2gm8&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/strategy-just-dropped-42-in-a-month-saylors-gentle-continuous-auction-comes-at-a-price?tlnk=yf-261128-w5hq2gm8&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-896ebdb6ad",
+        "issue": "2026-11-23-PM",
+        "title": "Strategy Is Still Down 45% in a Month: Can MSTR Stock Revisit $150 as Bitcoin Holds $60,000?",
+        "published_at_taipei": "2026-11-24 03:54",
+        "url": "https://247wallst.com/investing/2026/11/23/strategy-is-still-down-45-in-a-month-can-mstr-stock-revisit-150-as-bitcoin-holds-60000/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
       ],
       "sentiment_method": "rule"
     },
@@ -1350,6 +1471,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-7d284ba1c1",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T15:10:11Z",
+      "published_at_taipei": "2026-11-28 23:10",
+      "published_at_taipei_iso": "2026-11-28T23:10:11+08:00",
+      "first_seen_at_utc": "2026-11-28T15:23:53Z",
+      "first_seen_at_taipei": "2026-11-28 23:23",
+      "month": "2026-11",
+      "title": "Does Fortuna Mining (TSX:FVI) Trade Below Fair Value After Its 187% Rise?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/does-fortuna-mining-tsx-fvi-151011027.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/does-fortuna-mining-tsx-fvi-151011027.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-94666abd3f",
+        "issue": "2026-11-24-AM",
+        "title": "Endeavour Mining (TSX:EDV) Stock May Be Below Fair Value Following Its $1.2B Mine Bet",
+        "published_at_taipei": "2026-11-24 10:15",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/endeavour-mining-tsx-edv-stock-021544701.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-9c33e01bc6",
       "issue": "2026-11-28-PM",
       "published_at_utc": "2026-11-28T14:26:10Z",
@@ -1740,6 +1901,167 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261128-12a29bbcfe",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T15:15:29Z",
+      "published_at_taipei": "2026-11-28 23:15",
+      "published_at_taipei_iso": "2026-11-28T23:15:29+08:00",
+      "first_seen_at_utc": "2026-11-28T15:23:53Z",
+      "first_seen_at_taipei": "2026-11-28 23:23",
+      "month": "2026-11",
+      "title": "台股周漲逾9% 0050、00878等24檔台股 ETF 受益人數續飆新高",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8%E6%BC%B2%E9%80%BE9-0050-00878%E7%AD%8924%E6%AA%94%E5%8F%B0%E8%82%A1-etf-%E5%8F%97%E7%9B%8A%E4%BA%BA%E6%95%B8%E7%BA%8C%E9%A3%86%E6%96%B0%E9%AB%98-151529063.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%91%A8%E6%BC%B2%E9%80%BE9-0050-00878%E7%AD%8924%E6%AA%94%E5%8F%B0%E8%82%A1-etf-%E5%8F%97%E7%9B%8A%E4%BA%BA%E6%95%B8%E7%BA%8C%E9%A3%86%E6%96%B0%E9%AB%98-151529063.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股",
+        "美股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 3,
+      "sentiment_reason": "命中：國安基金護盤；命中：大漲；命中：反彈",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-fab47ccb9e",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T15:15:29Z",
+      "published_at_taipei": "2026-11-28 23:15",
+      "published_at_taipei_iso": "2026-11-28T23:15:29+08:00",
+      "first_seen_at_utc": "2026-11-28T15:23:53Z",
+      "first_seen_at_taipei": "2026-11-28 23:23",
+      "month": "2026-11",
+      "title": "台積電第3季大手筆發出419億元員工分紅 年輕工程師年薪上看400萬元",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E7%AC%AC3%E5%AD%A3%E5%A4%A7%E6%89%8B%E7%AD%86%E7%99%BC%E5%87%BA419%E5%84%84%E5%85%83%E5%93%A1%E5%B7%A5%E5%88%86%E7%B4%85-%E5%B9%B4%E8%BC%95%E5%B7%A5%E7%A8%8B%E5%B8%AB%E5%B9%B4%E8%96%AA%E4%B8%8A%E7%9C%8B400%E8%90%AC%E5%85%83-151529255.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E7%AC%AC3%E5%AD%A3%E5%A4%A7%E6%89%8B%E7%AD%86%E7%99%BC%E5%87%BA419%E5%84%84%E5%85%83%E5%93%A1%E5%B7%A5%E5%88%86%E7%B4%85-%E5%B9%B4%E8%BC%95%E5%B7%A5%E7%A8%8B%E5%B8%AB%E5%B9%B4%E8%96%AA%E4%B8%8A%E7%9C%8B400%E8%90%AC%E5%85%83-151529255.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261128-82e86fce39",
+        "issue": "2026-11-28-AM",
+        "title": "台積電Q3分紅開獎！菜鳥工程師年薪破400萬、經理級上看1500萬",
+        "published_at_taipei": "2026-11-28 14:18",
+        "url": "https://tw.news.yahoo.com/%E5%8F%B0%E7%A9%8D%E9%9B%BBq3%E5%88%86%E7%B4%85%E9%96%8B%E7%8D%8E-%E8%8F%9C%E9%B3%A5%E5%B7%A5%E7%A8%8B%E5%B8%AB%E5%B9%B4%E8%96%AA%E7%A0%B4400%E8%90%AC-%E7%B6%93%E7%90%86%E7%B4%9A%E4%B8%8A%E7%9C%8B1500%E8%90%AC-061852353.html"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-7d284ba1c1",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T15:10:11Z",
+      "published_at_taipei": "2026-11-28 23:10",
+      "published_at_taipei_iso": "2026-11-28T23:10:11+08:00",
+      "first_seen_at_utc": "2026-11-28T15:23:53Z",
+      "first_seen_at_taipei": "2026-11-28 23:23",
+      "month": "2026-11",
+      "title": "Does Fortuna Mining (TSX:FVI) Trade Below Fair Value After Its 187% Rise?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/does-fortuna-mining-tsx-fvi-151011027.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/does-fortuna-mining-tsx-fvi-151011027.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-94666abd3f",
+        "issue": "2026-11-24-AM",
+        "title": "Endeavour Mining (TSX:EDV) Stock May Be Below Fair Value Following Its $1.2B Mine Bet",
+        "published_at_taipei": "2026-11-24 10:15",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/endeavour-mining-tsx-edv-stock-021544701.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-dc452a0777",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T14:32:01Z",
+      "published_at_taipei": "2026-11-28 22:32",
+      "published_at_taipei_iso": "2026-11-28T22:32:01+08:00",
+      "first_seen_at_utc": "2026-11-28T15:23:53Z",
+      "first_seen_at_taipei": "2026-11-28 23:23",
+      "month": "2026-11",
+      "title": "Strategy Just Dropped 42% in a Month. Saylor’s “Gentle, Continuous Auction” Comes at a Price",
+      "url": "https://www.tikr.com/blog/strategy-just-dropped-42-in-a-month-saylors-gentle-continuous-auction-comes-at-a-price?ref=yahoofinance&tlnk=yf-261128-w5hq2gm8&.tsrc=rss",
+      "canonical_url": "https://tikr.com/blog/strategy-just-dropped-42-in-a-month-saylors-gentle-continuous-auction-comes-at-a-price?tlnk=yf-261128-w5hq2gm8&.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-896ebdb6ad",
+        "issue": "2026-11-23-PM",
+        "title": "Strategy Is Still Down 45% in a Month: Can MSTR Stock Revisit $150 as Bitcoin Holds $60,000?",
+        "published_at_taipei": "2026-11-24 03:54",
+        "url": "https://247wallst.com/investing/2026/11/23/strategy-is-still-down-45-in-a-month-can-mstr-stock-revisit-150-as-bitcoin-holds-60000/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-9c33e01bc6",
       "issue": "2026-11-28-PM",
@@ -163329,77 +163651,6 @@
         "SP500"
       ],
       "sentiment_method": "rule"
-    },
-    {
-      "id": "news-20261121-8319816455",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T15:20:02Z",
-      "published_at_taipei": "2026-11-21 23:20",
-      "published_at_taipei_iso": "2026-11-21T23:20:02+08:00",
-      "first_seen_at_utc": "2026-11-21T15:40:05Z",
-      "first_seen_at_taipei": "2026-11-21 23:40",
-      "month": "2026-11",
-      "title": "After the Midterm Elections, VanEck's Matthew Sigel Is Still Bullish on Bitcoin. Here's Why He's Right.",
-      "url": "https://www.fool.com/investing/2026/11/21/after-the-midterm-elections-vanecks-matthew-sigel-is-still-bullish-on-bitcoin-heres-why-hes-rightwrong/?.tsrc=rss",
-      "canonical_url": "https://fool.com/investing/2026/11/21/after-the-midterm-elections-vanecks-matthew-sigel-is-still-bullish-on-bitcoin-heres-why-hes-rightwrong?.tsrc=rss",
-      "source": "Yahoo Finance",
-      "source_id": "yahoo_finance_us",
-      "category": "加密貨幣",
-      "markets": [
-        "加密貨幣"
-      ],
-      "symbols": [
-        "BTCUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null,
-      "sentiment": "bullish",
-      "sentiment_label": "利多",
-      "sentiment_score": 1,
-      "sentiment_reason": "命中：bullish",
-      "sentiment_targets": [
-        "BTCUSDT"
-      ],
-      "sentiment_method": "rule"
-    },
-    {
-      "id": "news-20261121-1447ef03b0",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T15:17:17Z",
-      "published_at_taipei": "2026-11-21 23:17",
-      "published_at_taipei_iso": "2026-11-21T23:17:17+08:00",
-      "first_seen_at_utc": "2026-11-21T15:40:05Z",
-      "first_seen_at_taipei": "2026-11-21 23:40",
-      "month": "2026-11",
-      "title": "This Stock Market Selloff Could Block the Fed’s Rate Hikes",
-      "url": "https://247wallst.com/investing/2026/11/21/this-stock-market-selloff-could-block-the-feds-rate-hikes/?.tsrc=rss",
-      "canonical_url": "https://247wallst.com/investing/2026/11/21/this-stock-market-selloff-could-block-the-feds-rate-hikes?.tsrc=rss",
-      "source": "Yahoo Finance",
-      "source_id": "yahoo_finance_us",
-      "category": "聯準會",
-      "markets": [
-        "美股",
-        "總經"
-      ],
-      "symbols": [],
-      "importance": 3,
-      "importance_stars": "★★★",
-      "importance_reason": "重大關鍵字（rate hike）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null,
-      "sentiment": "bearish",
-      "sentiment_label": "利空",
-      "sentiment_score": -2,
-      "sentiment_reason": "命中：rate hikes；命中：selloff",
-      "sentiment_targets": [
-        "NAS100"
-      ],
-      "sentiment_method": "rule"
     }
   ],
   "recent_issues": [
@@ -163408,8 +163659,8 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "PM",
-      "updated_at_taipei": "2026-11-28 23:08",
-      "count": 36,
+      "updated_at_taipei": "2026-11-28 23:23",
+      "count": 40,
       "star3_count": 5,
       "failed_sources": [
         {
