@@ -2,13 +2,28 @@
   "version": 1,
   "latest_issue": "2026-11-28-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T01:35:26Z",
-  "updated_at_taipei": "2026-11-28 09:35",
-  "last_updated_utc": "2026-11-28T01:35:26Z",
-  "last_updated_taipei": "2026-11-28 09:35",
-  "next_update_hint": "約台北時間 09:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T01:50:30Z",
+  "updated_at_taipei": "2026-11-28 09:50",
+  "last_updated_utc": "2026-11-28T01:50:30Z",
+  "last_updated_taipei": "2026-11-28 09:50",
+  "next_update_hint": "約台北時間 10:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
+    {
+      "id": "cnyes_us_stock",
+      "name": "鉅亨網（美股）",
+      "error": "500 Server Error: Internal Server Error for url: https://api.cnyes.com/media/api/v1/newslist/category/us_stock?limit=20"
+    },
+    {
+      "id": "cnyes_macro",
+      "name": "鉅亨網（總經）",
+      "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
+    },
+    {
+      "id": "cnyes_crypto",
+      "name": "鉅亨網（加密）",
+      "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
+    },
     {
       "id": "binance_derivatives",
       "name": "Binance 永續合約",
@@ -26,9 +41,9 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 14.235,
-    "sources_ok": 23,
-    "sources_failed": 3,
+    "total_elapsed_sec": 38.983,
+    "sources_ok": 20,
+    "sources_failed": 6,
     "new_items_added": 2,
     "reactions_computed": 40,
     "sources": {
@@ -36,7 +51,7 @@
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.051,
+        "elapsed_sec": 0.049,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +60,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.062,
+        "elapsed_sec": 0.089,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -54,7 +69,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.041,
+        "elapsed_sec": 0.039,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -63,7 +78,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.028,
+        "elapsed_sec": 0.026,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -81,7 +96,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.076,
+        "elapsed_sec": 0.093,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +105,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.066,
+        "elapsed_sec": 0.078,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +114,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.067,
+        "elapsed_sec": 0.056,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +123,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.065,
+        "elapsed_sec": 0.057,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -117,7 +132,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.299,
+        "elapsed_sec": 0.363,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -125,35 +140,35 @@
       "cnyes_us_stock": {
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
-        "status": "ok",
-        "elapsed_sec": 0.348,
-        "raw_count": 20,
-        "items_kept": 18,
-        "error": null
+        "status": "failed",
+        "elapsed_sec": 0.689,
+        "raw_count": 0,
+        "items_kept": 0,
+        "error": "500 Server Error: Internal Server Error for url: https://api.cnyes.com/media/api/v1/newslist/category/us_stock?limit=20"
       },
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
-        "status": "ok",
-        "elapsed_sec": 0.331,
-        "raw_count": 20,
-        "items_kept": 11,
-        "error": null
+        "status": "failed",
+        "elapsed_sec": 8.487,
+        "raw_count": 0,
+        "items_kept": 0,
+        "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
       },
       "cnyes_crypto": {
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
-        "status": "ok",
-        "elapsed_sec": 0.841,
-        "raw_count": 15,
-        "items_kept": 6,
-        "error": null
+        "status": "failed",
+        "elapsed_sec": 16.295,
+        "raw_count": 0,
+        "items_kept": 0,
+        "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
       },
       "udn_money_stock": {
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.063,
+        "elapsed_sec": 0.471,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +177,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.552,
+        "elapsed_sec": 0.349,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +186,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.054,
+        "elapsed_sec": 0.077,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +195,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 1.466,
+        "elapsed_sec": 0.874,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +204,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.08,
+        "elapsed_sec": 0.06,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -198,7 +213,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.311,
+        "elapsed_sec": 1.558,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +222,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.279,
+        "elapsed_sec": 0.284,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +231,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.318,
+        "elapsed_sec": 1.359,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +240,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.276,
+        "elapsed_sec": 0.284,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +249,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 1.37,
+        "elapsed_sec": 1.508,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +258,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.042,
+        "elapsed_sec": 0.046,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +267,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.52,
+        "elapsed_sec": 0.574,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +276,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.276,
+        "elapsed_sec": 0.279,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,7 +318,7 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -379.4,
+      "net_flow_usd_m": -379.9,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
@@ -312,7 +327,7 @@
         "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0004,
+        "funding_rate_pct": 0.0005,
         "oi_usd_b": 1.13
       }
     },
@@ -320,7 +335,7 @@
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
       "mempool_vsize_mb": 30.3,
-      "tx_count": 67731,
+      "tx_count": 67143,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -446,6 +461,50 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-dbb1f23f89",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T01:19:10Z",
+      "published_at_taipei": "2026-11-28 09:19",
+      "published_at_taipei_iso": "2026-11-28T09:19:10+08:00",
+      "first_seen_at_utc": "2026-11-28T01:50:30Z",
+      "first_seen_at_taipei": "2026-11-28 09:50",
+      "month": "2026-11",
+      "title": "Apple Is Beating the Rest of the \"Magnificent Seven\" in 2026. Can It Do It Again in 2027?",
+      "url": "https://www.fool.com/investing/2026/11/27/apple-is-beating-the-rest-of-the-magnificent-seven-in-2026-can-it-do-it-again-in-2027/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/27/apple-is-beating-the-rest-of-the-magnificent-seven-in-2026-can-it-do-it-again-in-2027?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL",
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-a30e31486f",
+        "issue": "2026-11-24-PM",
+        "title": "Not Apple. Not Microsoft. This Is the \"Magnificent Seven\" Stock I’d Buy for a 10-Year Hold.",
+        "published_at_taipei": "2026-11-24 20:02",
+        "url": "https://www.fool.com/investing/2026/11/24/not-apple-not-microsoft-this-is-the-magnificent-seven-stock-id-buy-for-a-10-year-hold/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL",
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-d00eafb6f0",
       "issue": "2026-11-28-AM",
       "published_at_utc": "2026-11-28T01:18:00Z",
@@ -478,6 +537,40 @@
       "sentiment_reason": "命中：買超",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-2b66b41fc9",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T01:09:02Z",
+      "published_at_taipei": "2026-11-28 09:09",
+      "published_at_taipei_iso": "2026-11-28T09:09:02+08:00",
+      "first_seen_at_utc": "2026-11-28T01:50:30Z",
+      "first_seen_at_taipei": "2026-11-28 09:50",
+      "month": "2026-11",
+      "title": "Vanguard's Growth ETF Has 3 Stocks Making Up More Than a Third of It. Only 1 Has Held Up in the Tech Sell-Off.",
+      "url": "https://www.fool.com/investing/2026/11/27/vanguard-s-growth-etf-has-3-stocks-making-up-more-than-a-third-of-it-only-1-has-held-up-in-the-tech-sell-off/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/27/vanguard-s-growth-etf-has-3-stocks-making-up-more-than-a-third-of-it-only-1-has-held-up-in-the-tech-sell-off?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -1274,6 +1367,50 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-dbb1f23f89",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T01:19:10Z",
+      "published_at_taipei": "2026-11-28 09:19",
+      "published_at_taipei_iso": "2026-11-28T09:19:10+08:00",
+      "first_seen_at_utc": "2026-11-28T01:50:30Z",
+      "first_seen_at_taipei": "2026-11-28 09:50",
+      "month": "2026-11",
+      "title": "Apple Is Beating the Rest of the \"Magnificent Seven\" in 2026. Can It Do It Again in 2027?",
+      "url": "https://www.fool.com/investing/2026/11/27/apple-is-beating-the-rest-of-the-magnificent-seven-in-2026-can-it-do-it-again-in-2027/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/27/apple-is-beating-the-rest-of-the-magnificent-seven-in-2026-can-it-do-it-again-in-2027?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "GOOGL",
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-a30e31486f",
+        "issue": "2026-11-24-PM",
+        "title": "Not Apple. Not Microsoft. This Is the \"Magnificent Seven\" Stock I’d Buy for a 10-Year Hold.",
+        "published_at_taipei": "2026-11-24 20:02",
+        "url": "https://www.fool.com/investing/2026/11/24/not-apple-not-microsoft-this-is-the-magnificent-seven-stock-id-buy-for-a-10-year-hold/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "GOOGL",
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-d00eafb6f0",
       "issue": "2026-11-28-AM",
       "published_at_utc": "2026-11-28T01:18:00Z",
@@ -1306,6 +1443,40 @@
       "sentiment_reason": "命中：買超",
       "sentiment_targets": [
         "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-2b66b41fc9",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T01:09:02Z",
+      "published_at_taipei": "2026-11-28 09:09",
+      "published_at_taipei_iso": "2026-11-28T09:09:02+08:00",
+      "first_seen_at_utc": "2026-11-28T01:50:30Z",
+      "first_seen_at_taipei": "2026-11-28 09:50",
+      "month": "2026-11",
+      "title": "Vanguard's Growth ETF Has 3 Stocks Making Up More Than a Third of It. Only 1 Has Held Up in the Tech Sell-Off.",
+      "url": "https://www.fool.com/investing/2026/11/27/vanguard-s-growth-etf-has-3-stocks-making-up-more-than-a-third-of-it-only-1-has-held-up-in-the-tech-sell-off/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/27/vanguard-s-growth-etf-has-3-stocks-making-up-more-than-a-third-of-it-only-1-has-held-up-in-the-tech-sell-off?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（etf）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -161504,50 +161675,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261121-5c34afcb31",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T01:50:03Z",
-      "published_at_taipei": "2026-11-21 09:50",
-      "published_at_taipei_iso": "2026-11-21T09:50:03+08:00",
-      "month": "2026-11",
-      "title": "440億美元史上最大GPU融資！就算是SpaceX也得支付「AI溢價」",
-      "url": "https://news.cnyes.com/news/id/6669700",
-      "canonical_url": "https://news.cnyes.com/news/id/6669700",
-      "source": "鉅亨網（美股）",
-      "source_id": "cnyes_us_stock",
-      "category": "總經",
-      "symbols": [
-        "SPCX"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "追蹤標的相關",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
-    },
-    {
-      "id": "news-20261121-eb53b898f6",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T01:41:36Z",
-      "published_at_taipei": "2026-11-21 09:41",
-      "published_at_taipei_iso": "2026-11-21T09:41:36+08:00",
-      "month": "2026-11",
-      "title": "〈熱門股〉松川獲投信首度建倉 營收成長吸引買盤爆量站上5日線",
-      "url": "https://news.cnyes.com/news/id/6669702",
-      "canonical_url": "https://news.cnyes.com/news/id/6669702",
-      "source": "鉅亨網（台股）",
-      "source_id": "cnyes_tw_stock",
-      "category": "台股",
-      "symbols": [],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "市場重點（營收）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -161556,10 +161683,25 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "AM",
-      "updated_at_taipei": "2026-11-28 09:35",
-      "count": 23,
+      "updated_at_taipei": "2026-11-28 09:50",
+      "count": 25,
       "star3_count": 2,
       "failed_sources": [
+        {
+          "id": "cnyes_us_stock",
+          "name": "鉅亨網（美股）",
+          "error": "500 Server Error: Internal Server Error for url: https://api.cnyes.com/media/api/v1/newslist/category/us_stock?limit=20"
+        },
+        {
+          "id": "cnyes_macro",
+          "name": "鉅亨網（總經）",
+          "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
+        },
+        {
+          "id": "cnyes_crypto",
+          "name": "鉅亨網（加密）",
+          "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
+        },
         {
           "id": "binance_derivatives",
           "name": "Binance 永續合約",
