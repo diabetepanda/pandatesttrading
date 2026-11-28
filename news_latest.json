@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-28-PM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T12:22:56Z",
-  "updated_at_taipei": "2026-11-28 20:22",
-  "last_updated_utc": "2026-11-28T12:22:56Z",
-  "last_updated_taipei": "2026-11-28 20:22",
-  "next_update_hint": "約台北時間 20:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T12:38:01Z",
+  "updated_at_taipei": "2026-11-28 20:38",
+  "last_updated_utc": "2026-11-28T12:38:01Z",
+  "last_updated_taipei": "2026-11-28 20:38",
+  "next_update_hint": "約台北時間 20:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 16.546,
+    "total_elapsed_sec": 17.682,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 1,
+    "new_items_added": 5,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.047,
+        "elapsed_sec": 0.162,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.201,
+        "elapsed_sec": 0.105,
         "raw_count": 30,
         "items_kept": 8,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.24,
+        "elapsed_sec": 0.056,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.029,
+        "elapsed_sec": 0.038,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.144,
+        "elapsed_sec": 0.401,
         "raw_count": 19,
-        "items_kept": 17,
+        "items_kept": 18,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.094,
+        "elapsed_sec": 0.126,
         "raw_count": 25,
         "items_kept": 25,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.064,
+        "elapsed_sec": 0.082,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.062,
+        "elapsed_sec": 0.096,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.064,
+        "elapsed_sec": 0.077,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.253,
+        "elapsed_sec": 0.362,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.341,
+        "elapsed_sec": 0.551,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.394,
+        "elapsed_sec": 0.299,
         "raw_count": 20,
         "items_kept": 8,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.813,
+        "elapsed_sec": 0.701,
         "raw_count": 15,
         "items_kept": 9,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.399,
+        "elapsed_sec": 0.376,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.357,
+        "elapsed_sec": 0.268,
         "raw_count": 50,
         "items_kept": 23,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.043,
+        "elapsed_sec": 0.822,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.194,
+        "elapsed_sec": 1.762,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.052,
+        "elapsed_sec": 0.058,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.515,
+        "elapsed_sec": 1.157,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.287,
+        "elapsed_sec": 0.344,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.429,
+        "elapsed_sec": 0.942,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.287,
+        "elapsed_sec": 0.33,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 3.359,
+        "elapsed_sec": 1.156,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.04,
+        "elapsed_sec": 0.088,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.483,
+        "elapsed_sec": 0.468,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.279,
+        "elapsed_sec": 0.306,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,12 +303,12 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -374.3,
+      "net_flow_usd_m": -374.1,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0065,
+        "funding_rate_pct": 0.0064,
         "oi_usd_b": 1.92
       },
       "ETHUSDT": {
@@ -319,8 +319,8 @@
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 27.8,
-      "tx_count": 49316,
+      "mempool_vsize_mb": 28.1,
+      "tx_count": 51227,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -403,6 +403,120 @@
         "2330",
         "2382",
         "2308"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-33d8e5e89e",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:30:05Z",
+      "published_at_taipei": "2026-11-28 20:30",
+      "published_at_taipei_iso": "2026-11-28T20:30:05+08:00",
+      "first_seen_at_utc": "2026-11-28T12:38:01Z",
+      "first_seen_at_taipei": "2026-11-28 20:38",
+      "month": "2026-11",
+      "title": "台達電跌破千、萬金股慘遭腰斬！基本面失靈真相曝光？老先覺杜金龍：股價領先4個月，長多只剩這3檔資優生！",
+      "url": "https://news.cnyes.com/news/id/6674568",
+      "canonical_url": "https://news.cnyes.com/news/id/6674568",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2308"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2308"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-fcef11c67c",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:20:33Z",
+      "published_at_taipei": "2026-11-28 20:20",
+      "published_at_taipei_iso": "2026-11-28T20:20:33+08:00",
+      "first_seen_at_utc": "2026-11-28T12:38:01Z",
+      "first_seen_at_taipei": "2026-11-28 20:38",
+      "month": "2026-11",
+      "title": "Peter Brandt Says BTC's Four-Year Cycle Is 'Out The Window,' Warns A Slide To The Low $30,000s Would Be 'The Doom Of Bitcoin'",
+      "url": "https://stocktwits.com/news-articles/markets/cryptocurrency/peter-brandt-says-btc-s-four-year-cycle-is-out-the-window-warns-a-slide-to-the-low-30-000s-would-be-the-doom-of-bitcoin/cNRR69rR9nE?.tsrc=rss",
+      "canonical_url": "https://stocktwits.com/news-articles/markets/cryptocurrency/peter-brandt-says-btc-s-four-year-cycle-is-out-the-window-warns-a-slide-to-the-low-30-000s-would-be-the-doom-of-bitcoin/cNRR69rR9nE?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：bullish",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-6a5dd1bfd1",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:18:37Z",
+      "published_at_taipei": "2026-11-28 20:18",
+      "published_at_taipei_iso": "2026-11-28T20:18:37+08:00",
+      "first_seen_at_utc": "2026-11-28T12:38:01Z",
+      "first_seen_at_taipei": "2026-11-28 20:38",
+      "month": "2026-11",
+      "title": "Apple’s COO Has Now Filed to Sell $39 Million of Stock in 3 Days",
+      "url": "https://247wallst.com/investing/2026/11/28/apples-coo-has-now-filed-to-sell-39-million-of-stock-in-3-days/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/28/apples-coo-has-now-filed-to-sell-39-million-of-stock-in-3-days?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-c171921b73",
+        "issue": "2026-11-26-PM",
+        "title": "An Apple Executive Just Filed to Sell $19 Million of Apple Stock With Shares a Hair Below Their Record",
+        "published_at_taipei": "2026-11-26 20:57",
+        "url": "https://247wallst.com/investing/2026/11/26/an-apple-executive-just-filed-to-sell-19-million-of-apple-stock-with-shares-a-hair-below-their-record/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：record high；命中：fine）",
+      "sentiment_targets": [
+        "AAPL"
       ],
       "sentiment_method": "rule"
     },
@@ -527,6 +641,46 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-b4c4cabd2e",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:10:10Z",
+      "published_at_taipei": "2026-11-28 20:10",
+      "published_at_taipei_iso": "2026-11-28T20:10:10+08:00",
+      "first_seen_at_utc": "2026-11-28T12:38:01Z",
+      "first_seen_at_taipei": "2026-11-28 20:38",
+      "month": "2026-11",
+      "title": "Dorchester Minerals And 2 Other Top Energy Stocks To Watch",
+      "url": "https://finance.yahoo.com/energy/articles/dorchester-minerals-2-other-top-121010371.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/dorchester-minerals-2-other-top-121010371.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261127-0d1b2612bc",
+        "issue": "2026-11-27-AM",
+        "title": "Birchcliff Energy And 2 More Canadian Energy Stocks To Watch",
+        "published_at_taipei": "2026-11-27 19:10",
+        "url": "https://finance.yahoo.com/energy/articles/birchcliff-energy-2-more-canadian-111032749.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-b75bfdaf6f",
       "issue": "2026-11-28-PM",
       "published_at_utc": "2026-11-28T12:05:24Z",
@@ -556,6 +710,46 @@
         "title": "Stock Market Today: Markets Off to a Strong Black Friday Start",
         "published_at_taipei": "2026-11-27 23:03",
         "url": "https://247wallst.com/investing/2026/11/27/stock-market-today-markets-off-to-a-strong-black-friday-start/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-4fdceb5483",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T11:39:00Z",
+      "published_at_taipei": "2026-11-28 19:39",
+      "published_at_taipei_iso": "2026-11-28T19:39:00+08:00",
+      "first_seen_at_utc": "2026-11-28T12:38:01Z",
+      "first_seen_at_taipei": "2026-11-28 20:38",
+      "month": "2026-11",
+      "title": "BCA Research Awaits Sustained US Dollar Peak Before Returning to Gold",
+      "url": "https://investorshub.advfn.com/market-news/article/40810/bca-research-awaits-sustained-us-dollar-peak-before-returning-to-gold?.tsrc=rss",
+      "canonical_url": "https://investorshub.advfn.com/market-news/article/40810/bca-research-awaits-sustained-us-dollar-peak-before-returning-to-gold?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-98f622d48c",
+        "issue": "2026-11-23-PM",
+        "title": "Nvidia’s stock is surging again. What to know before chasing the AI rally.",
+        "published_at_taipei": "2026-11-24 06:04",
+        "url": "https://www.marketwatch.com/story/nvidias-stock-is-surging-again-what-to-know-before-chasing-the-ai-rally-226688d7?mod=mw_rss_topstories"
       },
       "sentiment": "neutral",
       "sentiment_label": "中性",
@@ -608,6 +802,160 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261128-33d8e5e89e",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:30:05Z",
+      "published_at_taipei": "2026-11-28 20:30",
+      "published_at_taipei_iso": "2026-11-28T20:30:05+08:00",
+      "first_seen_at_utc": "2026-11-28T12:38:01Z",
+      "first_seen_at_taipei": "2026-11-28 20:38",
+      "month": "2026-11",
+      "title": "台達電跌破千、萬金股慘遭腰斬！基本面失靈真相曝光？老先覺杜金龍：股價領先4個月，長多只剩這3檔資優生！",
+      "url": "https://news.cnyes.com/news/id/6674568",
+      "canonical_url": "https://news.cnyes.com/news/id/6674568",
+      "source": "鉅亨網（台股）",
+      "source_id": "cnyes_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2308"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2308"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-fcef11c67c",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:20:33Z",
+      "published_at_taipei": "2026-11-28 20:20",
+      "published_at_taipei_iso": "2026-11-28T20:20:33+08:00",
+      "first_seen_at_utc": "2026-11-28T12:38:01Z",
+      "first_seen_at_taipei": "2026-11-28 20:38",
+      "month": "2026-11",
+      "title": "Peter Brandt Says BTC's Four-Year Cycle Is 'Out The Window,' Warns A Slide To The Low $30,000s Would Be 'The Doom Of Bitcoin'",
+      "url": "https://stocktwits.com/news-articles/markets/cryptocurrency/peter-brandt-says-btc-s-four-year-cycle-is-out-the-window-warns-a-slide-to-the-low-30-000s-would-be-the-doom-of-bitcoin/cNRR69rR9nE?.tsrc=rss",
+      "canonical_url": "https://stocktwits.com/news-articles/markets/cryptocurrency/peter-brandt-says-btc-s-four-year-cycle-is-out-the-window-warns-a-slide-to-the-low-30-000s-would-be-the-doom-of-bitcoin/cNRR69rR9nE?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [
+        "BTCUSDT"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：bullish",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-6a5dd1bfd1",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:18:37Z",
+      "published_at_taipei": "2026-11-28 20:18",
+      "published_at_taipei_iso": "2026-11-28T20:18:37+08:00",
+      "first_seen_at_utc": "2026-11-28T12:38:01Z",
+      "first_seen_at_taipei": "2026-11-28 20:38",
+      "month": "2026-11",
+      "title": "Apple’s COO Has Now Filed to Sell $39 Million of Stock in 3 Days",
+      "url": "https://247wallst.com/investing/2026/11/28/apples-coo-has-now-filed-to-sell-39-million-of-stock-in-3-days/?.tsrc=rss",
+      "canonical_url": "https://247wallst.com/investing/2026/11/28/apples-coo-has-now-filed-to-sell-39-million-of-stock-in-3-days?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261126-c171921b73",
+        "issue": "2026-11-26-PM",
+        "title": "An Apple Executive Just Filed to Sell $19 Million of Apple Stock With Shares a Hair Below Their Record",
+        "published_at_taipei": "2026-11-26 20:57",
+        "url": "https://247wallst.com/investing/2026/11/26/an-apple-executive-just-filed-to-sell-19-million-of-apple-stock-with-shares-a-hair-below-their-record/?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "多空訊號抵銷（命中：record high；命中：fine）",
+      "sentiment_targets": [
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-b4c4cabd2e",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T12:10:10Z",
+      "published_at_taipei": "2026-11-28 20:10",
+      "published_at_taipei_iso": "2026-11-28T20:10:10+08:00",
+      "first_seen_at_utc": "2026-11-28T12:38:01Z",
+      "first_seen_at_taipei": "2026-11-28 20:38",
+      "month": "2026-11",
+      "title": "Dorchester Minerals And 2 Other Top Energy Stocks To Watch",
+      "url": "https://finance.yahoo.com/energy/articles/dorchester-minerals-2-other-top-121010371.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/dorchester-minerals-2-other-top-121010371.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261127-0d1b2612bc",
+        "issue": "2026-11-27-AM",
+        "title": "Birchcliff Energy And 2 More Canadian Energy Stocks To Watch",
+        "published_at_taipei": "2026-11-27 19:10",
+        "url": "https://finance.yahoo.com/energy/articles/birchcliff-energy-2-more-canadian-111032749.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-26205af407",
       "issue": "2026-11-28-PM",
@@ -848,6 +1196,46 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "TSLA"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-4fdceb5483",
+      "issue": "2026-11-28-PM",
+      "published_at_utc": "2026-11-28T11:39:00Z",
+      "published_at_taipei": "2026-11-28 19:39",
+      "published_at_taipei_iso": "2026-11-28T19:39:00+08:00",
+      "first_seen_at_utc": "2026-11-28T12:38:01Z",
+      "first_seen_at_taipei": "2026-11-28 20:38",
+      "month": "2026-11",
+      "title": "BCA Research Awaits Sustained US Dollar Peak Before Returning to Gold",
+      "url": "https://investorshub.advfn.com/market-news/article/40810/bca-research-awaits-sustained-us-dollar-peak-before-returning-to-gold?.tsrc=rss",
+      "canonical_url": "https://investorshub.advfn.com/market-news/article/40810/bca-research-awaits-sustained-us-dollar-peak-before-returning-to-gold?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261124-98f622d48c",
+        "issue": "2026-11-23-PM",
+        "title": "Nvidia’s stock is surging again. What to know before chasing the AI rally.",
+        "published_at_taipei": "2026-11-24 06:04",
+        "url": "https://www.marketwatch.com/story/nvidias-stock-is-surging-again-what-to-know-before-chasing-the-ai-rally-226688d7?mod=mw_rss_topstories"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
       ],
       "sentiment_method": "rule"
     },
@@ -162021,42 +162409,6 @@
         "TWII"
       ],
       "sentiment_method": "rule"
-    },
-    {
-      "id": "news-20261121-53d3e41adf",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T12:30:00Z",
-      "published_at_taipei": "2026-11-21 20:30",
-      "published_at_taipei_iso": "2026-11-21T20:30:00+08:00",
-      "first_seen_at_utc": "2026-11-21T15:40:05Z",
-      "first_seen_at_taipei": "2026-11-21 23:40",
-      "month": "2026-11",
-      "title": "Ether treasury firm BTCS warns SEC its $54 million Aave loan could be liquidated",
-      "url": "https://www.coindesk.com/markets/2026/11/21/ether-treasury-firm-btcs-warns-sec-its-usd54-million-aave-loan-could-be-liquidated",
-      "canonical_url": "https://coindesk.com/markets/2026/11/21/ether-treasury-firm-btcs-warns-sec-its-usd54-million-aave-loan-could-be-liquidated",
-      "source": "CoinDesk",
-      "source_id": "coindesk",
-      "category": "加密貨幣",
-      "markets": [
-        "加密貨幣"
-      ],
-      "symbols": [
-        "ETHUSDT"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "市場重點（treasury）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null,
-      "sentiment": "bearish",
-      "sentiment_label": "利空",
-      "sentiment_score": -1,
-      "sentiment_reason": "命中：liquidated",
-      "sentiment_targets": [
-        "ETHUSDT"
-      ],
-      "sentiment_method": "rule"
     }
   ],
   "recent_issues": [
@@ -162065,8 +162417,8 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "PM",
-      "updated_at_taipei": "2026-11-28 20:22",
-      "count": 7,
+      "updated_at_taipei": "2026-11-28 20:38",
+      "count": 12,
       "star3_count": 2,
       "failed_sources": [
         {
