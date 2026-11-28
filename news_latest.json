@@ -2,13 +2,23 @@
   "version": 1,
   "latest_issue": "2026-11-28-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T00:50:07Z",
-  "updated_at_taipei": "2026-11-28 08:50",
-  "last_updated_utc": "2026-11-28T00:50:07Z",
-  "last_updated_taipei": "2026-11-28 08:50",
-  "next_update_hint": "約台北時間 09:02（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T01:05:20Z",
+  "updated_at_taipei": "2026-11-28 09:05",
+  "last_updated_utc": "2026-11-28T01:05:20Z",
+  "last_updated_taipei": "2026-11-28 09:05",
+  "next_update_hint": "約台北時間 09:17（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
+    {
+      "id": "cnyes_macro",
+      "name": "鉅亨網（總經）",
+      "error": "502 Server Error: Bad Gateway for url: https://api.cnyes.com/media/api/v1/newslist/category/wd_macro?limit=20"
+    },
+    {
+      "id": "cnyes_crypto",
+      "name": "鉅亨網（加密）",
+      "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
+    },
     {
       "id": "binance_derivatives",
       "name": "Binance 永續合約",
@@ -26,17 +36,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 14.283,
-    "sources_ok": 23,
-    "sources_failed": 3,
-    "new_items_added": 4,
+    "total_elapsed_sec": 43.199,
+    "sources_ok": 21,
+    "sources_failed": 5,
+    "new_items_added": 2,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.085,
+        "elapsed_sec": 0.086,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +55,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.112,
+        "elapsed_sec": 0.938,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -54,7 +64,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.064,
+        "elapsed_sec": 1.198,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -63,7 +73,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.151,
+        "elapsed_sec": 0.113,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,16 +82,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.179,
+        "elapsed_sec": 0.391,
         "raw_count": 20,
-        "items_kept": 16,
+        "items_kept": 15,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.177,
+        "elapsed_sec": 0.213,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +100,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.107,
+        "elapsed_sec": 0.132,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +109,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.109,
+        "elapsed_sec": 0.11,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +118,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.093,
+        "elapsed_sec": 0.097,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -117,7 +127,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.596,
+        "elapsed_sec": 0.424,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -126,7 +136,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.508,
+        "elapsed_sec": 8.639,
         "raw_count": 20,
         "items_kept": 18,
         "error": null
@@ -134,26 +144,26 @@
       "cnyes_macro": {
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
-        "status": "ok",
-        "elapsed_sec": 0.365,
-        "raw_count": 20,
-        "items_kept": 11,
-        "error": null
+        "status": "failed",
+        "elapsed_sec": 8.544,
+        "raw_count": 0,
+        "items_kept": 0,
+        "error": "502 Server Error: Bad Gateway for url: https://api.cnyes.com/media/api/v1/newslist/category/wd_macro?limit=20"
       },
       "cnyes_crypto": {
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
-        "status": "ok",
-        "elapsed_sec": 0.876,
-        "raw_count": 15,
-        "items_kept": 6,
-        "error": null
+        "status": "failed",
+        "elapsed_sec": 8.648,
+        "raw_count": 0,
+        "items_kept": 0,
+        "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
       },
       "udn_money_stock": {
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.301,
+        "elapsed_sec": 0.323,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +172,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.114,
+        "elapsed_sec": 0.162,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +181,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.178,
+        "elapsed_sec": 0.241,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,16 +190,16 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.859,
+        "elapsed_sec": 1.816,
         "raw_count": 6,
-        "items_kept": 1,
+        "items_kept": 0,
         "error": null
       },
       "defillama_hacks": {
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.048,
+        "elapsed_sec": 0.053,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -198,7 +208,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.307,
+        "elapsed_sec": 1.455,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +217,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.501,
+        "elapsed_sec": 0.597,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +226,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.291,
+        "elapsed_sec": 1.052,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +235,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.375,
+        "elapsed_sec": 0.564,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +244,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.665,
+        "elapsed_sec": 0.45,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +253,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.12,
+        "elapsed_sec": 0.318,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -252,7 +262,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.513,
+        "elapsed_sec": 0.483,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +271,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.309,
+        "elapsed_sec": 0.377,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -270,57 +280,57 @@
   },
   "data_metrics_snapshot": {
     "stablecoins": {
-      "total_usd_b": 283.69,
-      "change_1d_usd_m": -287.1,
-      "change_1d_pct": -0.1,
-      "alert_key": "stablecoins_supply:down"
+      "total_usd_b": 283.92,
+      "change_1d_usd_m": 224.9,
+      "change_1d_pct": 0.08,
+      "alert_key": "stablecoins_supply:up"
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.27,
-        "change_1d_pct": -0.52
+        "tvl_b": 36.28,
+        "change_1d_pct": -0.0
       },
       "Solana": {
         "tvl_b": 4.61,
-        "change_1d_pct": 0.56
+        "change_1d_pct": -0.0
       },
       "Base": {
         "tvl_b": 4.62,
-        "change_1d_pct": -9.31
+        "change_1d_pct": -0.0
       },
       "Tron": {
-        "tvl_b": 4.31,
-        "change_1d_pct": -2.23
+        "tvl_b": 4.32,
+        "change_1d_pct": 0.0
       },
       "BSC": {
-        "tvl_b": 4.28,
-        "change_1d_pct": -0.7
+        "tvl_b": 4.29,
+        "change_1d_pct": -0.0
       },
       "Hyperliquid L1": {
         "tvl_b": 2.25,
-        "change_1d_pct": 1.09
+        "change_1d_pct": 0.0
       }
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -378.7,
+      "net_flow_usd_m": -378.1,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0053,
-        "oi_usd_b": 1.91
+        "funding_rate_pct": 0.0056,
+        "oi_usd_b": 1.92
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0008,
+        "funding_rate_pct": 0.0006,
         "oi_usd_b": 1.12
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 1,
+      "fastest_fee_sat_vb": 3,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.5,
-      "tx_count": 61828,
+      "mempool_vsize_mb": 31.1,
+      "tx_count": 69620,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -446,6 +456,44 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-938340e736",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T00:33:22Z",
+      "published_at_taipei": "2026-11-28 08:33",
+      "published_at_taipei_iso": "2026-11-28T08:33:22+08:00",
+      "first_seen_at_utc": "2026-11-28T01:05:20Z",
+      "first_seen_at_taipei": "2026-11-28 09:05",
+      "month": "2026-11",
+      "title": "2027 smartphone market outlook: Apple to outperform as shipments fall 5%",
+      "url": "https://finance.yahoo.com/technology/articles/2027-smartphone-market-outlook-apple-003322633.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/articles/2027-smartphone-market-outlook-apple-003322633.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-2fef6bc727",
       "issue": "2026-11-28-AM",
       "published_at_utc": "2026-11-28T00:30:00Z",
@@ -521,6 +569,48 @@
       "sentiment_reason": "命中：反彈",
       "sentiment_targets": [
         "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-3d759f8197",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T00:15:07Z",
+      "published_at_taipei": "2026-11-28 08:15",
+      "published_at_taipei_iso": "2026-11-28T08:15:07+08:00",
+      "first_seen_at_utc": "2026-11-28T01:05:20Z",
+      "first_seen_at_taipei": "2026-11-28 09:05",
+      "month": "2026-11",
+      "title": "NIO And 2 Other Top EV Stocks",
+      "url": "https://finance.yahoo.com/energy/articles/nio-2-other-top-ev-001507883.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/nio-2-other-top-ev-001507883.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-721dc98bc7",
+        "issue": "2026-11-23-AM",
+        "title": "Ur Energy And 2 Other Canadian Uranium Stocks To Watch",
+        "published_at_taipei": "2026-11-23 16:09",
+        "url": "https://finance.yahoo.com/energy/articles/ur-energy-2-other-canadian-080926353.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
       ],
       "sentiment_method": "rule"
     },
@@ -974,6 +1064,44 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-938340e736",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T00:33:22Z",
+      "published_at_taipei": "2026-11-28 08:33",
+      "published_at_taipei_iso": "2026-11-28T08:33:22+08:00",
+      "first_seen_at_utc": "2026-11-28T01:05:20Z",
+      "first_seen_at_taipei": "2026-11-28 09:05",
+      "month": "2026-11",
+      "title": "2027 smartphone market outlook: Apple to outperform as shipments fall 5%",
+      "url": "https://finance.yahoo.com/technology/articles/2027-smartphone-market-outlook-apple-003322633.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/technology/articles/2027-smartphone-market-outlook-apple-003322633.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "NAS100",
+        "AAPL"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "核心追蹤標的",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100",
+        "AAPL"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-2fef6bc727",
       "issue": "2026-11-28-AM",
       "published_at_utc": "2026-11-28T00:30:00Z",
@@ -1049,6 +1177,48 @@
       "sentiment_reason": "命中：反彈",
       "sentiment_targets": [
         "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-3d759f8197",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T00:15:07Z",
+      "published_at_taipei": "2026-11-28 08:15",
+      "published_at_taipei_iso": "2026-11-28T08:15:07+08:00",
+      "first_seen_at_utc": "2026-11-28T01:05:20Z",
+      "first_seen_at_taipei": "2026-11-28 09:05",
+      "month": "2026-11",
+      "title": "NIO And 2 Other Top EV Stocks",
+      "url": "https://finance.yahoo.com/energy/articles/nio-2-other-top-ev-001507883.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/nio-2-other-top-ev-001507883.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261123-721dc98bc7",
+        "issue": "2026-11-23-AM",
+        "title": "Ur Energy And 2 Other Canadian Uranium Stocks To Watch",
+        "published_at_taipei": "2026-11-23 16:09",
+        "url": "https://finance.yahoo.com/energy/articles/ur-energy-2-other-canadian-080926353.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
       ],
       "sentiment_method": "rule"
     },
@@ -160992,30 +161162,6 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null
-    },
-    {
-      "id": "news-20261121-bc8bfdd4bc",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T01:00:04Z",
-      "published_at_taipei": "2026-11-21 09:00",
-      "published_at_taipei_iso": "2026-11-21T09:00:04+08:00",
-      "month": "2026-11",
-      "title": "AI疑慮引爆美股重挫！標普、道瓊雙雙陷入修正區間 那斯達克抹去全年漲幅",
-      "url": "https://news.cnyes.com/news/id/6669685",
-      "canonical_url": "https://news.cnyes.com/news/id/6669685",
-      "source": "鉅亨網（美股）",
-      "source_id": "cnyes_us_stock",
-      "category": "美股",
-      "symbols": [
-        "NAS100",
-        "SP500"
-      ],
-      "importance": 2,
-      "importance_stars": "★★",
-      "importance_reason": "核心追蹤標的",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null
     }
   ],
   "recent_issues": [
@@ -161024,10 +161170,20 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "AM",
-      "updated_at_taipei": "2026-11-28 08:50",
-      "count": 15,
+      "updated_at_taipei": "2026-11-28 09:05",
+      "count": 17,
       "star3_count": 2,
       "failed_sources": [
+        {
+          "id": "cnyes_macro",
+          "name": "鉅亨網（總經）",
+          "error": "502 Server Error: Bad Gateway for url: https://api.cnyes.com/media/api/v1/newslist/category/wd_macro?limit=20"
+        },
+        {
+          "id": "cnyes_crypto",
+          "name": "鉅亨網（加密）",
+          "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
+        },
         {
           "id": "binance_derivatives",
           "name": "Binance 永續合約",

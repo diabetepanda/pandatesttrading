@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "updated_at_utc": "2026-11-28T00:50:07Z",
-  "updated_at_taipei": "2026-11-28 08:50",
+  "updated_at_utc": "2026-11-28T01:05:20Z",
+  "updated_at_taipei": "2026-11-28 09:05",
   "latest_issue": "2026-11-28-AM",
   "months": [
     {
       "month": "2026-11",
       "file": "news/2026-11.jsonl",
-      "count": 4373
+      "count": 4375
     }
   ],
   "issues": [
@@ -16,10 +16,20 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "AM",
-      "updated_at_taipei": "2026-11-28 08:50",
-      "count": 15,
+      "updated_at_taipei": "2026-11-28 09:05",
+      "count": 17,
       "star3_count": 2,
       "failed_sources": [
+        {
+          "id": "cnyes_macro",
+          "name": "鉅亨網（總經）",
+          "error": "502 Server Error: Bad Gateway for url: https://api.cnyes.com/media/api/v1/newslist/category/wd_macro?limit=20"
+        },
+        {
+          "id": "cnyes_crypto",
+          "name": "鉅亨網（加密）",
+          "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
+        },
         {
           "id": "binance_derivatives",
           "name": "Binance 永續合約",
