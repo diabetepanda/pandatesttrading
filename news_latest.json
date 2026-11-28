@@ -2,18 +2,13 @@
   "version": 1,
   "latest_issue": "2026-11-28-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T01:20:27Z",
-  "updated_at_taipei": "2026-11-28 09:20",
-  "last_updated_utc": "2026-11-28T01:20:27Z",
-  "last_updated_taipei": "2026-11-28 09:20",
-  "next_update_hint": "約台北時間 09:32（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T01:35:26Z",
+  "updated_at_taipei": "2026-11-28 09:35",
+  "last_updated_utc": "2026-11-28T01:35:26Z",
+  "last_updated_taipei": "2026-11-28 09:35",
+  "next_update_hint": "約台北時間 09:47（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
-    {
-      "id": "cnyes_crypto",
-      "name": "鉅亨網（加密）",
-      "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
-    },
     {
       "id": "binance_derivatives",
       "name": "Binance 永續合約",
@@ -31,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 33.95,
-    "sources_ok": 22,
-    "sources_failed": 4,
-    "new_items_added": 4,
+    "total_elapsed_sec": 14.235,
+    "sources_ok": 23,
+    "sources_failed": 3,
+    "new_items_added": 2,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.105,
+        "elapsed_sec": 0.051,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -50,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.105,
+        "elapsed_sec": 0.062,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -59,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.126,
+        "elapsed_sec": 0.041,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -68,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.087,
+        "elapsed_sec": 0.028,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -77,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.305,
+        "elapsed_sec": 0.151,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -86,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.17,
+        "elapsed_sec": 0.076,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -95,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.122,
+        "elapsed_sec": 0.066,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -104,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.106,
+        "elapsed_sec": 0.067,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -113,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.113,
+        "elapsed_sec": 0.065,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -122,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.431,
+        "elapsed_sec": 0.299,
         "raw_count": 20,
         "items_kept": 15,
         "error": null
@@ -131,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.908,
+        "elapsed_sec": 0.348,
         "raw_count": 20,
         "items_kept": 18,
         "error": null
@@ -140,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.37,
+        "elapsed_sec": 0.331,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -148,17 +143,17 @@
       "cnyes_crypto": {
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
-        "status": "failed",
-        "elapsed_sec": 16.418,
-        "raw_count": 0,
-        "items_kept": 0,
-        "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
+        "status": "ok",
+        "elapsed_sec": 0.841,
+        "raw_count": 15,
+        "items_kept": 6,
+        "error": null
       },
       "udn_money_stock": {
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.335,
+        "elapsed_sec": 0.063,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -167,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.42,
+        "elapsed_sec": 0.552,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -176,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.273,
+        "elapsed_sec": 0.054,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -185,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.685,
+        "elapsed_sec": 1.466,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -194,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.064,
+        "elapsed_sec": 0.08,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -203,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.422,
+        "elapsed_sec": 1.311,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -212,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.765,
+        "elapsed_sec": 0.279,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -221,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.418,
+        "elapsed_sec": 1.318,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -230,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.392,
+        "elapsed_sec": 0.276,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -239,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.821,
+        "elapsed_sec": 1.37,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -248,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.246,
+        "elapsed_sec": 0.042,
         "raw_count": 20,
         "items_kept": 3,
         "error": null
@@ -257,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.545,
+        "elapsed_sec": 0.52,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -266,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.32,
+        "elapsed_sec": 0.276,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -308,13 +303,13 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -379.2,
+      "net_flow_usd_m": -379.4,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0055,
-        "oi_usd_b": 1.92
+        "funding_rate_pct": 0.0056,
+        "oi_usd_b": 1.93
       },
       "ETHUSDT": {
         "funding_rate_pct": 0.0004,
@@ -324,8 +319,8 @@
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 29.2,
-      "tx_count": 62533,
+      "mempool_vsize_mb": 30.3,
+      "tx_count": 67731,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -405,6 +400,84 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-0012bd2ff1",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T01:31:00Z",
+      "published_at_taipei": "2026-11-28 09:31",
+      "published_at_taipei_iso": "2026-11-28T09:31:00+08:00",
+      "first_seen_at_utc": "2026-11-28T01:35:26Z",
+      "first_seen_at_taipei": "2026-11-28 09:35",
+      "month": "2026-11",
+      "title": "台股本週飆升3,274點！多方帶「他」漲21.76%",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9C%AC%E9%80%B1%E9%A3%86%E5%8D%873-274%E9%BB%9E-%E5%A4%9A%E6%96%B9%E5%B8%B6-%E4%BB%96-%E6%BC%B221-013100938.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9C%AC%E9%80%B1%E9%A3%86%E5%8D%873-274%E9%BB%9E-%E5%A4%9A%E6%96%B9%E5%B8%B6-%E4%BB%96-%E6%BC%B221-013100938.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261127-f0f1814413",
+        "issue": "2026-11-27-AM",
+        "title": "台股本週漲3274點 市值回升10.7兆至128.8兆元",
+        "published_at_taipei": "2026-11-27 17:55",
+        "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9C%AC%E9%80%B1%E6%BC%B23274%E9%BB%9E-%E5%B8%82%E5%80%BC%E5%9B%9E%E5%8D%8710-7%E5%85%86%E8%87%B3128-8%E5%85%86%E5%85%83-095517252.html"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：大漲；命中：反彈",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-d00eafb6f0",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T01:18:00Z",
+      "published_at_taipei": "2026-11-28 09:18",
+      "published_at_taipei_iso": "2026-11-28T09:18:00+08:00",
+      "first_seen_at_utc": "2026-11-28T01:35:26Z",
+      "first_seen_at_taipei": "2026-11-28 09:35",
+      "month": "2026-11",
+      "title": "台股守穩3萬9！「19檔」跟著國家隊區間攻防",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%AE%88%E7%A9%A93%E8%90%AC9-19%E6%AA%94-%E8%B7%9F%E8%91%97%E5%9C%8B%E5%AE%B6%E9%9A%8A%E5%8D%80%E9%96%93%E6%94%BB%E9%98%B2-011800846.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%AE%88%E7%A9%A93%E8%90%AC9-19%E6%AA%94-%E8%B7%9F%E8%91%97%E5%9C%8B%E5%AE%B6%E9%9A%8A%E5%8D%80%E9%96%93%E6%94%BB%E9%98%B2-011800846.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：買超",
+      "sentiment_targets": [
+        "TWII"
       ],
       "sentiment_method": "rule"
     },
@@ -1158,6 +1231,84 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261128-0012bd2ff1",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T01:31:00Z",
+      "published_at_taipei": "2026-11-28 09:31",
+      "published_at_taipei_iso": "2026-11-28T09:31:00+08:00",
+      "first_seen_at_utc": "2026-11-28T01:35:26Z",
+      "first_seen_at_taipei": "2026-11-28 09:35",
+      "month": "2026-11",
+      "title": "台股本週飆升3,274點！多方帶「他」漲21.76%",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9C%AC%E9%80%B1%E9%A3%86%E5%8D%873-274%E9%BB%9E-%E5%A4%9A%E6%96%B9%E5%B8%B6-%E4%BB%96-%E6%BC%B221-013100938.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E6%9C%AC%E9%80%B1%E9%A3%86%E5%8D%873-274%E9%BB%9E-%E5%A4%9A%E6%96%B9%E5%B8%B6-%E4%BB%96-%E6%BC%B221-013100938.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261127-f0f1814413",
+        "issue": "2026-11-27-AM",
+        "title": "台股本週漲3274點 市值回升10.7兆至128.8兆元",
+        "published_at_taipei": "2026-11-27 17:55",
+        "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E6%9C%AC%E9%80%B1%E6%BC%B23274%E9%BB%9E-%E5%B8%82%E5%80%BC%E5%9B%9E%E5%8D%8710-7%E5%85%86%E8%87%B3128-8%E5%85%86%E5%85%83-095517252.html"
+      },
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 2,
+      "sentiment_reason": "命中：大漲；命中：反彈",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-d00eafb6f0",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T01:18:00Z",
+      "published_at_taipei": "2026-11-28 09:18",
+      "published_at_taipei_iso": "2026-11-28T09:18:00+08:00",
+      "first_seen_at_utc": "2026-11-28T01:35:26Z",
+      "first_seen_at_taipei": "2026-11-28 09:35",
+      "month": "2026-11",
+      "title": "台股守穩3萬9！「19檔」跟著國家隊區間攻防",
+      "url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%AE%88%E7%A9%A93%E8%90%AC9-19%E6%AA%94-%E8%B7%9F%E8%91%97%E5%9C%8B%E5%AE%B6%E9%9A%8A%E5%8D%80%E9%96%93%E6%94%BB%E9%98%B2-011800846.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E5%8F%B0%E8%82%A1%E5%AE%88%E7%A9%A93%E8%90%AC9-19%E6%AA%94-%E8%B7%9F%E8%91%97%E5%9C%8B%E5%AE%B6%E9%9A%8A%E5%8D%80%E9%96%93%E6%94%BB%E9%98%B2-011800846.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bullish",
+      "sentiment_label": "利多",
+      "sentiment_score": 1,
+      "sentiment_reason": "命中：買超",
+      "sentiment_targets": [
+        "TWII"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-452644e112",
       "issue": "2026-11-28-AM",
@@ -161405,15 +161556,10 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "AM",
-      "updated_at_taipei": "2026-11-28 09:20",
-      "count": 21,
+      "updated_at_taipei": "2026-11-28 09:35",
+      "count": 23,
       "star3_count": 2,
       "failed_sources": [
-        {
-          "id": "cnyes_crypto",
-          "name": "鉅亨網（加密）",
-          "error": "HTTPSConnectionPool(host='api.cnyes.com', port=443): Read timed out. (read timeout=8)"
-        },
         {
           "id": "binance_derivatives",
           "name": "Binance 永續合約",
