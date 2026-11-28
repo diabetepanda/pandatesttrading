@@ -2,18 +2,13 @@
   "version": 1,
   "latest_issue": "2026-11-28-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T07:52:06Z",
-  "updated_at_taipei": "2026-11-28 15:52",
-  "last_updated_utc": "2026-11-28T07:52:06Z",
-  "last_updated_taipei": "2026-11-28 15:52",
-  "next_update_hint": "約台北時間 16:02（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T08:07:03Z",
+  "updated_at_taipei": "2026-11-28 16:07",
+  "last_updated_utc": "2026-11-28T08:07:03Z",
+  "last_updated_taipei": "2026-11-28 16:07",
+  "next_update_hint": "約台北時間 16:17（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
-    {
-      "id": "fed_press",
-      "name": "Federal Reserve",
-      "error": "404 Client Error: Not Found for url: https://www.federalreserve.gov/feeds/press_all.xml"
-    },
     {
       "id": "binance_derivatives",
       "name": "Binance 永續合約",
@@ -31,26 +26,26 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 15.93,
-    "sources_ok": 22,
-    "sources_failed": 4,
-    "new_items_added": 3,
+    "total_elapsed_sec": 13.682,
+    "sources_ok": 23,
+    "sources_failed": 3,
+    "new_items_added": 2,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
-        "status": "failed",
-        "elapsed_sec": 0.33,
-        "raw_count": 0,
-        "items_kept": 0,
-        "error": "404 Client Error: Not Found for url: https://www.federalreserve.gov/feeds/press_all.xml"
+        "status": "ok",
+        "elapsed_sec": 0.062,
+        "raw_count": 20,
+        "items_kept": 2,
+        "error": null
       },
       "cnbc_top": {
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.144,
+        "elapsed_sec": 0.147,
         "raw_count": 30,
         "items_kept": 8,
         "error": null
@@ -59,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.1,
+        "elapsed_sec": 0.049,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -68,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.044,
+        "elapsed_sec": 0.038,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -77,7 +72,7 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.3,
+        "elapsed_sec": 0.129,
         "raw_count": 20,
         "items_kept": 20,
         "error": null
@@ -86,7 +81,7 @@
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.162,
+        "elapsed_sec": 0.114,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -95,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.127,
+        "elapsed_sec": 0.081,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -104,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.098,
+        "elapsed_sec": 0.1,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -113,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.088,
+        "elapsed_sec": 0.068,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -122,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.52,
+        "elapsed_sec": 0.26,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -131,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.39,
+        "elapsed_sec": 0.242,
         "raw_count": 20,
         "items_kept": 18,
         "error": null
@@ -140,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.456,
+        "elapsed_sec": 0.434,
         "raw_count": 20,
         "items_kept": 10,
         "error": null
@@ -149,16 +144,16 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.553,
+        "elapsed_sec": 0.659,
         "raw_count": 15,
-        "items_kept": 7,
+        "items_kept": 8,
         "error": null
       },
       "udn_money_stock": {
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.157,
+        "elapsed_sec": 0.316,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -167,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.447,
+        "elapsed_sec": 0.479,
         "raw_count": 50,
         "items_kept": 23,
         "error": null
@@ -176,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.077,
+        "elapsed_sec": 0.067,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -185,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.318,
+        "elapsed_sec": 1.016,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -194,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.072,
+        "elapsed_sec": 0.052,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -203,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.547,
+        "elapsed_sec": 1.295,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -212,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.389,
+        "elapsed_sec": 0.347,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -221,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 0.975,
+        "elapsed_sec": 0.945,
         "raw_count": 6,
         "items_kept": 1,
         "error": null
@@ -230,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.306,
+        "elapsed_sec": 0.322,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -239,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.52,
+        "elapsed_sec": 1.269,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -248,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.086,
+        "elapsed_sec": 0.057,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -257,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.436,
+        "elapsed_sec": 0.43,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -266,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.293,
+        "elapsed_sec": 0.305,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -275,15 +270,15 @@
   },
   "data_metrics_snapshot": {
     "stablecoins": {
-      "total_usd_b": 283.09,
-      "change_1d_usd_m": -538.2,
+      "total_usd_b": 283.08,
+      "change_1d_usd_m": -544.9,
       "change_1d_pct": -0.19,
       "alert_key": "stablecoins_supply:down"
     },
     "chains_tvl": {
       "Ethereum": {
-        "tvl_b": 36.27,
-        "change_1d_pct": -0.84
+        "tvl_b": 36.26,
+        "change_1d_pct": -0.86
       },
       "Base": {
         "tvl_b": 4.62,
@@ -295,37 +290,37 @@
       },
       "Tron": {
         "tvl_b": 4.3,
-        "change_1d_pct": -2.3
+        "change_1d_pct": -2.31
       },
       "BSC": {
         "tvl_b": 4.27,
-        "change_1d_pct": -0.84
+        "change_1d_pct": -0.87
       },
       "Hyperliquid L1": {
         "tvl_b": 2.24,
-        "change_1d_pct": -0.02
+        "change_1d_pct": -0.07
       }
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -377.6,
+      "net_flow_usd_m": -377.4,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0039,
-        "oi_usd_b": 1.92
+        "funding_rate_pct": 0.0035,
+        "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": -0.0001,
+        "funding_rate_pct": -0.0006,
         "oi_usd_b": 1.13
       }
     },
     "mempool": {
-      "fastest_fee_sat_vb": 4,
-      "half_hour_fee_sat_vb": 3,
-      "mempool_vsize_mb": 31.6,
-      "tx_count": 69755,
+      "fastest_fee_sat_vb": 2,
+      "half_hour_fee_sat_vb": 1,
+      "mempool_vsize_mb": 31.3,
+      "tx_count": 67987,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -2427,6 +2422,44 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-b9b114a12a",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T00:01:16Z",
+      "published_at_taipei": "2026-11-28 08:01",
+      "published_at_taipei_iso": "2026-11-28T08:01:16+08:00",
+      "first_seen_at_utc": "2026-11-28T08:07:03Z",
+      "first_seen_at_taipei": "2026-11-28 16:07",
+      "month": "2026-11",
+      "title": "解析 CoreWeave、Nebius 與 Oracle 的資本支出分化，對台系伺服器 ODM（鴻海、廣達、緯穎）與散熱／電源供應商的訂單能見度與應收帳款風險？",
+      "url": "https://tw.news.yahoo.com/%E8%A7%A3%E6%9E%90-coreweave-nebius-%E8%88%87-oracle-174924389.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E8%A7%A3%E6%9E%90-coreweave-nebius-%E8%88%87-oracle-174924389.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2317",
+        "2382"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2317",
+        "2382"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-ee475624bf",
       "issue": "2026-11-28-AM",
       "published_at_utc": "2026-11-28T00:00:00Z",
@@ -2871,6 +2904,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-d6197678f5",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T08:00:31Z",
+      "published_at_taipei": "2026-11-28 16:00",
+      "published_at_taipei_iso": "2026-11-28T16:00:31+08:00",
+      "first_seen_at_utc": "2026-11-28T08:07:03Z",
+      "first_seen_at_taipei": "2026-11-28 16:07",
+      "month": "2026-11",
+      "title": "GCSA威脅情報: 惡意MCP軟體包竊取AI代理密鑰, Drupal站點接管漏洞已遭在野利用",
+      "url": "https://news.cnyes.com/news/id/6674488",
+      "canonical_url": "https://news.cnyes.com/news/id/6674488",
+      "source": "鉅亨網（加密）",
+      "source_id": "cnyes_crypto",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：漏洞；命中：竊取",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-0a0d4c18db",
       "issue": "2026-11-28-AM",
       "published_at_utc": "2026-11-28T07:43:00Z",
@@ -3156,6 +3223,40 @@
     }
   ],
   "recent_7d_items": [
+    {
+      "id": "news-20261128-d6197678f5",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T08:00:31Z",
+      "published_at_taipei": "2026-11-28 16:00",
+      "published_at_taipei_iso": "2026-11-28T16:00:31+08:00",
+      "first_seen_at_utc": "2026-11-28T08:07:03Z",
+      "first_seen_at_taipei": "2026-11-28 16:07",
+      "month": "2026-11",
+      "title": "GCSA威脅情報: 惡意MCP軟體包竊取AI代理密鑰, Drupal站點接管漏洞已遭在野利用",
+      "url": "https://news.cnyes.com/news/id/6674488",
+      "canonical_url": "https://news.cnyes.com/news/id/6674488",
+      "source": "鉅亨網（加密）",
+      "source_id": "cnyes_crypto",
+      "category": "加密貨幣",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -2,
+      "sentiment_reason": "命中：漏洞；命中：竊取",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
     {
       "id": "news-20261128-0a0d4c18db",
       "issue": "2026-11-28-AM",
@@ -5421,6 +5522,44 @@
       "sentiment_reason": "未命中明確多空關鍵字（中性）",
       "sentiment_targets": [
         "2882"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-b9b114a12a",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T00:01:16Z",
+      "published_at_taipei": "2026-11-28 08:01",
+      "published_at_taipei_iso": "2026-11-28T08:01:16+08:00",
+      "first_seen_at_utc": "2026-11-28T08:07:03Z",
+      "first_seen_at_taipei": "2026-11-28 16:07",
+      "month": "2026-11",
+      "title": "解析 CoreWeave、Nebius 與 Oracle 的資本支出分化，對台系伺服器 ODM（鴻海、廣達、緯穎）與散熱／電源供應商的訂單能見度與應收帳款風險？",
+      "url": "https://tw.news.yahoo.com/%E8%A7%A3%E6%9E%90-coreweave-nebius-%E8%88%87-oracle-174924389.html",
+      "canonical_url": "https://tw.news.yahoo.com/%E8%A7%A3%E6%9E%90-coreweave-nebius-%E8%88%87-oracle-174924389.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "2317",
+        "2382"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "2317",
+        "2382"
       ],
       "sentiment_method": "rule"
     },
@@ -163983,42 +164122,6 @@
         "XAUUSD"
       ],
       "sentiment_method": "rule"
-    },
-    {
-      "id": "news-20261121-6374a4ed36",
-      "issue": "2026-11-21-PM",
-      "published_at_utc": "2026-11-21T07:58:46Z",
-      "published_at_taipei": "2026-11-21 15:58",
-      "published_at_taipei_iso": "2026-11-21T15:58:46+08:00",
-      "first_seen_at_utc": "2026-11-21T15:40:05Z",
-      "first_seen_at_taipei": "2026-11-21 23:40",
-      "month": "2026-11",
-      "title": "台股血崩7641點下周守住35000！國安基金急派「定心丸」喊話4大撐盤亮點",
-      "url": "https://news.cnyes.com/news/id/6669743",
-      "canonical_url": "https://news.cnyes.com/news/id/6669743",
-      "source": "鉅亨網（台股）",
-      "source_id": "cnyes_tw_stock",
-      "category": "台股",
-      "markets": [
-        "台股"
-      ],
-      "symbols": [
-        "TWII"
-      ],
-      "importance": 3,
-      "importance_stars": "★★★",
-      "importance_reason": "重大關鍵字（國安基金）",
-      "is_data_alert": false,
-      "metrics": null,
-      "followup_of": null,
-      "sentiment": "bearish",
-      "sentiment_label": "利空",
-      "sentiment_score": -1,
-      "sentiment_reason": "命中：外資賣超",
-      "sentiment_targets": [
-        "TWII"
-      ],
-      "sentiment_method": "rule"
     }
   ],
   "recent_issues": [
@@ -164027,15 +164130,10 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "AM",
-      "updated_at_taipei": "2026-11-28 15:52",
-      "count": 73,
+      "updated_at_taipei": "2026-11-28 16:07",
+      "count": 75,
       "star3_count": 8,
       "failed_sources": [
-        {
-          "id": "fed_press",
-          "name": "Federal Reserve",
-          "error": "404 Client Error: Not Found for url: https://www.federalreserve.gov/feeds/press_all.xml"
-        },
         {
           "id": "binance_derivatives",
           "name": "Binance 永續合約",
