@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "updated_at_utc": "2026-11-28T00:20:56Z",
-  "updated_at_taipei": "2026-11-28 08:20",
+  "updated_at_utc": "2026-11-28T07:41:27Z",
+  "updated_at_taipei": "2026-11-28 15:41",
   "status": "ok",
   "updating_indicators": [],
   "fetch_report": {
-    "total_elapsed_sec": 27.628,
+    "total_elapsed_sec": 23.822,
     "fred_aborted": true,
     "fred_abort_reason": "HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=8)",
     "sources": {
       "FRED": {
         "status": "failed",
-        "elapsed_sec": 16.215,
+        "elapsed_sec": 16.214,
         "attempts": 1,
         "aborted": true,
         "series_ok": [],
@@ -48,7 +48,7 @@
       },
       "US_TREASURY": {
         "status": "ok",
-        "elapsed_sec": 4.745,
+        "elapsed_sec": 2.657,
         "series_ok": [
           "DGS2",
           "DGS10"
@@ -58,7 +58,7 @@
       },
       "BLS_API_V1": {
         "status": "ok",
-        "elapsed_sec": 0.428,
+        "elapsed_sec": 0.283,
         "series_ok": [
           "CPI",
           "CORE_CPI",
@@ -73,7 +73,7 @@
       },
       "DBNOMICS_BEA": {
         "status": "ok",
-        "elapsed_sec": 2.778,
+        "elapsed_sec": 1.91,
         "series_ok": [
           "PCE",
           "CORE_PCE",
@@ -84,7 +84,7 @@
       },
       "CENSUS_MRTS": {
         "status": "ok",
-        "elapsed_sec": 0.132,
+        "elapsed_sec": 0.06,
         "series_ok": [
           "RETAIL_SALES"
         ],
@@ -93,7 +93,7 @@
       },
       "DOL_TE_ICSA": {
         "status": "ok",
-        "elapsed_sec": 0.638,
+        "elapsed_sec": 0.2,
         "series_ok": [
           "ICSA"
         ],
@@ -102,7 +102,7 @@
       },
       "TE_ISM": {
         "status": "ok",
-        "elapsed_sec": 1.271,
+        "elapsed_sec": 0.92,
         "series_ok": [
           "ISM_MFG",
           "ISM_SVC"
@@ -113,7 +113,7 @@
       "YFINANCE_FEDWATCH": {
         "status": "ok",
         "source_used": "yfinance (CBOT ZQ)",
-        "elapsed_sec": 0.263,
+        "elapsed_sec": 0.312,
         "contracts": [
           "ZQG27.CBT",
           "ZQZ26.CBT"
@@ -122,7 +122,7 @@
       },
       "YFINANCE_SNAPSHOT": {
         "status": "ok",
-        "elapsed_sec": 0.296,
+        "elapsed_sec": 0.407,
         "series_ok": [
           "DXY",
           "USDTWD",
@@ -192,7 +192,7 @@
         "status": "ok"
       },
       "ICSA": {
-        "source_used": "DOL / TradingEconomics（備用）",
+        "source_used": "TradingEconomics（備用）",
         "fallback_used": true,
         "status": "ok"
       },
@@ -225,7 +225,7 @@
     "fedwatch": {
       "status": "ok",
       "source_used": "yfinance (CBOT ZQ)",
-      "elapsed_sec": 0.263,
+      "elapsed_sec": 0.312,
       "contracts": [
         "ZQG27.CBT",
         "ZQZ26.CBT"
@@ -234,7 +234,7 @@
     },
     "market_snapshot": {
       "status": "ok",
-      "elapsed_sec": 0.296,
+      "elapsed_sec": 0.407,
       "series_ok": [
         "DXY",
         "USDTWD",
@@ -299,7 +299,7 @@
         "sub": "COMEX 黃金期貨",
         "cls": "bear",
         "tag": "偏空",
-        "note": "黃金現報 3,668.5 美元（近 20 日 -9.00%、一年區間 8%）、美元指數近 20 日 +1.93%、10Y 殖利率 4.94%；強美元或高利率壓抑無息資產表現。"
+        "note": "黃金現報 3,639.6 美元（近 20 日 -9.72%、一年區間 7%）、美元指數近 20 日 +1.93%、10Y 殖利率 4.94%；強美元或高利率壓抑無息資產表現。"
       },
       {
         "asset": "原油",
@@ -339,7 +339,7 @@
         },
         "summary_text": "市場押注 12/10 會議：升 1 碼 98.5%｜升 2 碼以上 1.5%",
         "source_used": "yfinance (CBOT ZQ)",
-        "as_of_taipei": "2026-11-28 08:20"
+        "as_of_taipei": "2026-11-28 15:41"
       },
       {
         "period": "2027-01",
@@ -361,20 +361,20 @@
         },
         "summary_text": "市場押注 1/28 會議：升 2 碼以上 66%｜升 1 碼 34%",
         "source_used": "yfinance (CBOT ZQ)",
-        "as_of_taipei": "2026-11-28 08:20"
+        "as_of_taipei": "2026-11-28 15:41"
       }
     ],
     "current_range": "3.75%–4.00%",
     "current_mid": 3.875,
     "source_used": "yfinance (CBOT ZQ)",
-    "as_of_taipei": "2026-11-28 08:20",
+    "as_of_taipei": "2026-11-28 15:41",
     "data_status": "ok",
     "updating": false,
     "disclaimer": "機率由聯邦基金期貨價格推算，方法同 CME FedWatch；僅代表市場押注，不是預測。"
   },
   "market_snapshot": {
-    "as_of_taipei": "2026-11-28 08:20",
-    "hhmm_taipei": "08:20",
+    "as_of_taipei": "2026-11-28 15:41",
+    "hhmm_taipei": "15:41",
     "items": [
       {
         "id": "DXY",
@@ -488,7 +488,7 @@
         "what_is": "美元指數衡量美元對六大貨幣強弱；美元走強通常不利新興市場股市與台幣、對黃金與比特幣偏壓力；走弱相反。",
         "rule_rationale": "近 20 日美元指數上漲超過 1.5% 代表美元轉強，抽離新興市場與風險資產流動性，對台股與加密貨幣偏空；下跌超過 1.5% 代表美元轉弱，有利資金回流，標偏多。",
         "as_of_date": "2026-11-27",
-        "as_of_taipei": "2026-11-28 08:20",
+        "as_of_taipei": "2026-11-28 15:41",
         "source_used": "yfinance (DX-Y.NYB)",
         "data_status": "ok",
         "updating": false
@@ -605,7 +605,7 @@
         "what_is": "台幣升值（數字變小）通常代表外資匯入，對台股偏多；台幣貶值代表外資匯出，偏空。",
         "rule_rationale": "近 20 日美元／台幣下跌超過 1.0%（台幣升值）反映外資匯入動能，對台股偏多；上漲超過 1.0%（台幣貶值）反映外資匯出壓力，偏空。",
         "as_of_date": "2026-11-27",
-        "as_of_taipei": "2026-11-28 08:20",
+        "as_of_taipei": "2026-11-28 15:41",
         "source_used": "yfinance (TWD=X)",
         "data_status": "ok",
         "updating": false
@@ -615,17 +615,16 @@
         "symbol": "^HSI",
         "name_zh": "恒生指數",
         "unit": "點",
-        "last": 22226.9,
-        "last_str": "22,226.9",
-        "chg_1d_pct": 1.19,
-        "chg_20d_pct": -3.19,
+        "last": 22694.8,
+        "last_str": "22,694.8",
+        "chg_1d_pct": 2.11,
+        "chg_20d_pct": -2.57,
         "chg_1d_pp": null,
         "chg_20d_pp": null,
-        "range_1y_pos_pct": 4.3,
+        "range_1y_pos_pct": 12.1,
         "range_1y_low": 21966.0,
         "range_1y_high": 27968.1,
         "closes_90d": [
-          24892.7,
           25210.8,
           24963.2,
           25207.2,
@@ -714,15 +713,16 @@
           22383.7,
           22219.7,
           21966.0,
-          22226.9
+          22226.9,
+          22694.8
         ],
-        "verdict": "bear",
-        "verdict_tag": "🔴 偏空（亞股轉弱）",
-        "verdict_reason": "恒生指數近 20 日下跌 -3.19%（低於 -3.0% 門檻），反映亞洲風險情緒承壓，需留意對台股與亞股氣氛的拖累。",
+        "verdict": "neut",
+        "verdict_tag": "🟡 中性",
+        "verdict_reason": "恒生指數近 20 日變動 -2.57%，處於 ±3.0% 中性區間。",
         "what_is": "恒生指數是香港股市主要指數，成分股以大型陸資與香港企業為主，可以看出中國經濟與亞洲資金的情緒；恒生走強通常代表亞洲風險偏好回升，對台股偏正面。",
         "rule_rationale": "以對台股、亞洲風險情緒為視角：近 20 日恒生指數上漲超過 3.0% 標「偏多（亞股轉強）」，下跌超過 3.0% 標「偏空（亞股轉弱）」，其餘介於 ±3.0% 間標「中性」。",
-        "as_of_date": "2026-11-26",
-        "as_of_taipei": "2026-11-28 08:20",
+        "as_of_date": "2026-11-27",
+        "as_of_taipei": "2026-11-28 15:41",
         "source_used": "yfinance (^HSI)",
         "data_status": "ok",
         "updating": false
@@ -732,13 +732,13 @@
         "symbol": "GC=F",
         "name_zh": "黃金",
         "unit": "美元",
-        "last": 3668.5,
-        "last_str": "3,668.5",
-        "chg_1d_pct": 3.75,
-        "chg_20d_pct": -9.0,
+        "last": 3639.6,
+        "last_str": "3,639.6",
+        "chg_1d_pct": 2.94,
+        "chg_20d_pct": -9.72,
         "chg_1d_pp": null,
         "chg_20d_pp": null,
-        "range_1y_pos_pct": 8.5,
+        "range_1y_pos_pct": 6.9,
         "range_1y_low": 3515.4,
         "range_1y_high": 5318.4,
         "closes_90d": [
@@ -831,15 +831,15 @@
           3651.4,
           3561.9,
           3535.8,
-          3668.5
+          3639.6
         ],
         "verdict": "bear",
         "verdict_tag": "🔴 偏空（強美元承壓）",
-        "verdict_reason": "黃金近 20 日下跌 -9.00%（低於 -3.0%），反映實質利率上行或美元走強壓抑無息資產。",
+        "verdict_reason": "黃金近 20 日下跌 -9.72%（低於 -3.0%），反映實質利率上行或美元走強壓抑無息資產。",
         "what_is": "黃金為無息避險與抗通膨資產；美元走弱或實質利率下降時通常走強，急漲時亦反映市場避險需求升溫。",
         "rule_rationale": "近 20 日金價上漲超過 3.0% 反映實質利率下行預期或避險買盤（與無主權資產題材共振，對風險資產偏多但須留意避險升溫）；下跌超過 3.0% 通常伴隨強美元或高利率壓抑，偏空。",
         "as_of_date": "2026-11-27",
-        "as_of_taipei": "2026-11-28 08:20",
+        "as_of_taipei": "2026-11-28 15:41",
         "source_used": "yfinance (GC=F)",
         "data_status": "ok",
         "updating": false
@@ -956,7 +956,7 @@
         "what_is": "西德州原油期貨反映全球景氣需求與能源通膨壓力；油價急漲易推升通膨預期並壓抑聯準會降息空間。",
         "rule_rationale": "近 20 日油價上漲超過 5.0% 易引發能源通膨回溫與鷹派利率定價，對股市與加密貨幣偏空；下跌超過 5.0% 有助舒緩通膨壓力，偏多。",
         "as_of_date": "2026-11-27",
-        "as_of_taipei": "2026-11-28 08:20",
+        "as_of_taipei": "2026-11-28 15:41",
         "source_used": "yfinance (CL=F)",
         "data_status": "ok",
         "updating": false
@@ -1073,7 +1073,7 @@
         "what_is": "10 年期美債殖利率是全球風險資產的定價錨；殖利率走高壓縮科技股估值並推升資金成本，回落則相反。",
         "rule_rationale": "10 年期殖利率近 20 日上升超過 0.25 個百分點代表無風險資金成本急升，對股市與加密貨幣偏空；下降超過 0.25 個百分點則舒緩估值壓力，偏多。",
         "as_of_date": "2026-11-27",
-        "as_of_taipei": "2026-11-28 08:20",
+        "as_of_taipei": "2026-11-28 15:41",
         "source_used": "沿用 DGS10（美國財政部（備用））",
         "data_status": "ok",
         "updating": false
@@ -1094,7 +1094,7 @@
       "change_str": "0 bp（維持不變）",
       "change_dir": "flat",
       "release_date_taipei": "2026-10-29 02:00",
-      "sub_info": "FOMC 決議目標區間（截至 2026-11-27）｜維持 3.75%–4.00%（10–2，兩人主張升息）",
+      "sub_info": "FOMC 決議目標區間（截至 2026-11-28）｜維持 3.75%–4.00%（10–2，兩人主張升息）",
       "consensus_str": "不變約 93%",
       "consensus_source": "CME FedWatch",
       "surprise": "符合預期",
@@ -9213,27 +9213,6 @@
       "verdict": "neut",
       "verdict_text": "🟡 就業仍穩",
       "chart_values": [
-        22.7,
-        21.6,
-        21.7,
-        21.7,
-        20.9,
-        18.9,
-        19.8,
-        20.0,
-        21.2,
-        20.7,
-        20.4,
-        20.7,
-        20.7,
-        19.8,
-        19.8,
-        19.9,
-        19.8,
-        20.0,
-        19.5,
-        19.5,
-        19.1,
         20.2,
         20.2,
         18.9
@@ -9249,12 +9228,12 @@
         "consensus_source": null
       },
       "why": "每週公布的高頻就業指標。人數溫和上升顯示裁員增加與就業降溫，高利率期反而舒緩緊縮壓力；暴增則反映衰退風險。",
-      "source": "DOL OUI r539cy XML ＋ TradingEconomics（備用）",
-      "source_used": "DOL / TradingEconomics（備用）",
+      "source": "TradingEconomics 公開頁面（備用）",
+      "source_used": "TradingEconomics（備用）",
       "data_status": "ok",
       "updating": false,
       "modal_title": "初領失業金人數",
-      "modal_foot_extra": "歷史實際值以 DOL / TradingEconomics（備用） 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
+      "modal_foot_extra": "歷史實際值以 TradingEconomics（備用） 最新官方序列為基準；部分前期經官方修正之項目於備註標示公布當下初值與意外比較。",
       "history_rows": [
         {
           "period": "2026-11-21",
@@ -9299,496 +9278,12 @@
             "BTCUSDT": -1.71
           },
           "note": "FRED 修正後最新值 20.2 萬人"
-        },
-        {
-          "period": "2026-11-07",
-          "period_zh": "11/7當週",
-          "release_taipei": "2026-11-12 21:30",
-          "release_utc": "2026-11-12T13:30:00Z",
-          "actual_str": "20.0 萬人",
-          "actual_num": 20.0,
-          "prev_str": "19.1 萬人",
-          "prev_num": 19.1,
-          "consensus_str": "19.5 萬人",
-          "consensus_source": "TradingEconomics / Investing",
-          "surprise": "符合預期",
-          "surprise_basis": "consensus",
-          "prev_cmp": "高於前值",
-          "reactions": {
-            "NAS100": -0.3,
-            "SP500": -0.35,
-            "TWII": 1.35,
-            "BTCUSDT": -3.45
-          },
-          "note": "FRED 修正後最新值 20.2 萬人"
-        },
-        {
-          "period": "2026-10-31",
-          "period_zh": "10/31當週",
-          "release_taipei": "2026-11-05 21:30",
-          "release_utc": "2026-11-05T13:30:00Z",
-          "actual_str": "18.9 萬人",
-          "actual_num": 18.9,
-          "prev_str": "19.5 萬人",
-          "prev_num": 19.5,
-          "consensus_str": "19.6 萬人",
-          "consensus_source": "TradingEconomics / Investing",
-          "surprise": "符合預期",
-          "surprise_basis": "consensus",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -6.36,
-            "SP500": -4.36,
-            "TWII": -4.51,
-            "BTCUSDT": -5.49
-          },
-          "note": "FRED 修正後最新值 19.1 萬人"
-        },
-        {
-          "period": "2026-10-24",
-          "period_zh": "10/24當週",
-          "release_taipei": "2026-10-29 20:30",
-          "release_utc": "2026-10-29T12:30:00Z",
-          "actual_str": "19.4 萬人",
-          "actual_num": 19.4,
-          "prev_str": "19.5 萬人",
-          "prev_num": 19.5,
-          "consensus_str": "19.9 萬人",
-          "consensus_source": "TradingEconomics / Investing",
-          "surprise": "符合預期",
-          "surprise_basis": "consensus",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -1.38,
-            "SP500": -0.3,
-            "TWII": -2.49,
-            "BTCUSDT": -4.12
-          },
-          "note": "FRED 修正後最新值 19.5 萬人"
-        },
-        {
-          "period": "2026-10-17",
-          "period_zh": "10/17當週",
-          "release_taipei": "2026-10-22 20:30",
-          "release_utc": "2026-10-22T12:30:00Z",
-          "actual_str": "19.4 萬人",
-          "actual_num": 19.4,
-          "prev_str": "20.0 萬人",
-          "prev_num": 20.0,
-          "consensus_str": "20.0 萬人",
-          "consensus_source": "TradingEconomics / Investing",
-          "surprise": "符合預期",
-          "surprise_basis": "consensus",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -2.9,
-            "SP500": -1.21,
-            "TWII": 0.12,
-            "BTCUSDT": -3.18
-          },
-          "note": "FRED 修正後最新值 19.5 萬人"
-        },
-        {
-          "period": "2026-10-10",
-          "period_zh": "10/10當週",
-          "release_taipei": "2026-10-15 20:30",
-          "release_utc": "2026-10-15T12:30:00Z",
-          "actual_str": "19.9 萬人",
-          "actual_num": 19.9,
-          "prev_str": "19.8 萬人",
-          "prev_num": 19.8,
-          "consensus_str": "20.0 萬人",
-          "consensus_source": "TradingEconomics / Investing",
-          "surprise": "符合預期",
-          "surprise_basis": "consensus",
-          "prev_cmp": "高於前值",
-          "reactions": {
-            "NAS100": -0.05,
-            "SP500": 0.33,
-            "TWII": 0.3,
-            "BTCUSDT": 0.69
-          },
-          "note": "FRED 修正後最新值 20.0 萬人"
-        },
-        {
-          "period": "2026-10-03",
-          "period_zh": "10/3當週",
-          "release_taipei": "2026-10-08 20:30",
-          "release_utc": "2026-10-08T12:30:00Z",
-          "actual_str": "19.7 萬人",
-          "actual_num": 19.7,
-          "prev_str": "19.9 萬人",
-          "prev_num": 19.9,
-          "consensus_str": "20.0 萬人",
-          "consensus_source": "TradingEconomics / Investing",
-          "surprise": "符合預期",
-          "surprise_basis": "consensus",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -1.39,
-            "SP500": -0.47,
-            "TWII": -0.02,
-            "BTCUSDT": -1.88
-          },
-          "note": "FRED 修正後最新值 19.8 萬人"
-        },
-        {
-          "period": "2026-09-26",
-          "period_zh": "9/26當週",
-          "release_taipei": "2026-10-01 20:30",
-          "release_utc": "2026-10-01T12:30:00Z",
-          "actual_str": "19.7 萬人",
-          "actual_num": 19.7,
-          "prev_str": "19.8 萬人",
-          "prev_num": 19.8,
-          "consensus_str": "20.0 萬人",
-          "consensus_source": "TradingEconomics / Investing",
-          "surprise": "符合預期",
-          "surprise_basis": "consensus",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": 0.31,
-            "SP500": 0.19,
-            "TWII": 0.25,
-            "BTCUSDT": 1.5
-          },
-          "note": "FRED 修正後最新值 19.9 萬人"
-        },
-        {
-          "period": "2026-09-19",
-          "period_zh": "9/19當週",
-          "release_taipei": "2026-09-24 20:30",
-          "release_utc": "2026-09-24T12:30:00Z",
-          "actual_str": "19.7 萬人",
-          "actual_num": 19.7,
-          "prev_str": "19.8 萬人",
-          "prev_num": 19.8,
-          "consensus_str": "20.1 萬人",
-          "consensus_source": "TradingEconomics / Investing",
-          "surprise": "符合預期",
-          "surprise_basis": "consensus",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": 0.03,
-            "SP500": -0.02,
-            "TWII": -0.82,
-            "BTCUSDT": 0.01
-          },
-          "note": "FRED 修正後最新值 19.8 萬人"
-        },
-        {
-          "period": "2026-09-12",
-          "period_zh": "9/12當週",
-          "release_taipei": "2026-09-17 20:30",
-          "release_utc": "2026-09-17T12:30:00Z",
-          "actual_str": "19.6 萬人",
-          "actual_num": 19.6,
-          "prev_str": "20.7 萬人",
-          "prev_num": 20.7,
-          "consensus_str": "20.8 萬人",
-          "consensus_source": "TradingEconomics / Investing",
-          "surprise": "低於預期",
-          "surprise_basis": "consensus",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": 1.73,
-            "SP500": 1.14,
-            "TWII": 1.93,
-            "BTCUSDT": 0.28
-          },
-          "note": "FRED 修正後最新值 19.8 萬人"
-        },
-        {
-          "period": "2026-09-05",
-          "period_zh": "9/5當週",
-          "release_taipei": "2026-09-10 20:30",
-          "release_utc": "2026-09-10T12:30:00Z",
-          "actual_str": "20.6 萬人",
-          "actual_num": 20.6,
-          "prev_str": "20.7 萬人",
-          "prev_num": 20.7,
-          "consensus_str": "20.5 萬人",
-          "consensus_source": "TradingEconomics / Investing",
-          "surprise": "符合預期",
-          "surprise_basis": "consensus",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -1.08,
-            "SP500": -0.58,
-            "TWII": -1.61,
-            "BTCUSDT": -2.22
-          },
-          "note": "FRED 修正後最新值 20.7 萬人"
-        },
-        {
-          "period": "2026-08-29",
-          "period_zh": "8/29當週",
-          "release_taipei": "2026-09-03 20:30",
-          "release_utc": "2026-09-03T12:30:00Z",
-          "actual_str": "20.6 萬人",
-          "actual_num": 20.6,
-          "prev_str": "20.4 萬人",
-          "prev_num": 20.4,
-          "consensus_str": "20.5 萬人",
-          "consensus_source": "TradingEconomics / Investing",
-          "surprise": "符合預期",
-          "surprise_basis": "consensus",
-          "prev_cmp": "高於前值",
-          "reactions": {
-            "NAS100": 1.16,
-            "SP500": 1.06,
-            "TWII": 1.51,
-            "BTCUSDT": 5.08
-          },
-          "note": "FRED 修正後最新值 20.7 萬人"
-        },
-        {
-          "period": "2026-08-22",
-          "period_zh": "8/22當週",
-          "release_taipei": "2026-08-27 20:30",
-          "release_utc": "2026-08-27T12:30:00Z",
-          "actual_str": "20.4 萬人",
-          "actual_num": 20.4,
-          "prev_str": "20.7 萬人",
-          "prev_num": 20.7,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "低於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": 1.43,
-            "SP500": 0.72,
-            "TWII": 0.77,
-            "BTCUSDT": 1.55
-          },
-          "note": ""
-        },
-        {
-          "period": "2026-08-15",
-          "period_zh": "8/15當週",
-          "release_taipei": "2026-08-20 20:30",
-          "release_utc": "2026-08-20T12:30:00Z",
-          "actual_str": "20.7 萬人",
-          "actual_num": 20.7,
-          "prev_str": "21.2 萬人",
-          "prev_num": 21.2,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "低於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -0.72,
-            "SP500": -0.87,
-            "TWII": 0.65,
-            "BTCUSDT": 5.32
-          },
-          "note": ""
-        },
-        {
-          "period": "2026-08-08",
-          "period_zh": "8/8當週",
-          "release_taipei": "2026-08-13 20:30",
-          "release_utc": "2026-08-13T12:30:00Z",
-          "actual_str": "21.2 萬人",
-          "actual_num": 21.2,
-          "prev_str": "20.0 萬人",
-          "prev_num": 20.0,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "高於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "高於前值",
-          "reactions": {
-            "NAS100": 1.15,
-            "SP500": 0.65,
-            "TWII": -0.46,
-            "BTCUSDT": 0.02
-          },
-          "note": ""
-        },
-        {
-          "period": "2026-08-01",
-          "period_zh": "8/1當週",
-          "release_taipei": "2026-08-06 20:30",
-          "release_utc": "2026-08-06T12:30:00Z",
-          "actual_str": "20.0 萬人",
-          "actual_num": 20.0,
-          "prev_str": "19.8 萬人",
-          "prev_num": 19.8,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "高於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "高於前值",
-          "reactions": {
-            "NAS100": -0.39,
-            "SP500": -0.18,
-            "TWII": -0.38,
-            "BTCUSDT": -0.53
-          },
-          "note": ""
-        },
-        {
-          "period": "2026-07-25",
-          "period_zh": "7/25當週",
-          "release_taipei": "2026-07-30 20:30",
-          "release_utc": "2026-07-30T12:30:00Z",
-          "actual_str": "19.8 萬人",
-          "actual_num": 19.8,
-          "prev_str": "18.9 萬人",
-          "prev_num": 18.9,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "高於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "高於前值",
-          "reactions": {
-            "NAS100": 3.36,
-            "SP500": 1.66,
-            "TWII": 7.98,
-            "BTCUSDT": 1.24
-          },
-          "note": ""
-        },
-        {
-          "period": "2026-07-18",
-          "period_zh": "7/18當週",
-          "release_taipei": "2026-07-23 20:30",
-          "release_utc": "2026-07-23T12:30:00Z",
-          "actual_str": "18.9 萬人",
-          "actual_num": 18.9,
-          "prev_str": "20.9 萬人",
-          "prev_num": 20.9,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "低於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -1.87,
-            "SP500": -1.21,
-            "TWII": -2.67,
-            "BTCUSDT": -1.54
-          },
-          "note": ""
-        },
-        {
-          "period": "2026-07-11",
-          "period_zh": "7/11當週",
-          "release_taipei": "2026-07-16 20:30",
-          "release_utc": "2026-07-16T12:30:00Z",
-          "actual_str": "20.9 萬人",
-          "actual_num": 20.9,
-          "prev_str": "21.7 萬人",
-          "prev_num": 21.7,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "低於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": -1.62,
-            "SP500": -0.51,
-            "TWII": -6.47,
-            "BTCUSDT": -1.43
-          },
-          "note": ""
-        },
-        {
-          "period": "2026-07-04",
-          "period_zh": "7/4當週",
-          "release_taipei": "2026-07-09 20:30",
-          "release_utc": "2026-07-09T12:30:00Z",
-          "actual_str": "21.7 萬人",
-          "actual_num": 21.7,
-          "prev_str": "21.7 萬人",
-          "prev_num": 21.7,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "持平前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "持平前值",
-          "reactions": {
-            "NAS100": 1.62,
-            "SP500": 0.81,
-            "TWII": 0.06,
-            "BTCUSDT": 1.51
-          },
-          "note": ""
-        },
-        {
-          "period": "2026-06-27",
-          "period_zh": "6/27當週",
-          "release_taipei": "2026-07-02 20:30",
-          "release_utc": "2026-07-02T12:30:00Z",
-          "actual_str": "21.7 萬人",
-          "actual_num": 21.7,
-          "prev_str": "21.6 萬人",
-          "prev_num": 21.6,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "高於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "高於前值",
-          "reactions": {
-            "NAS100": -1.61,
-            "SP500": 0.0,
-            "TWII": 0.08,
-            "BTCUSDT": 2.56
-          },
-          "note": ""
-        },
-        {
-          "period": "2026-06-20",
-          "period_zh": "6/20當週",
-          "release_taipei": "2026-06-25 20:30",
-          "release_utc": "2026-06-25T12:30:00Z",
-          "actual_str": "21.6 萬人",
-          "actual_num": 21.6,
-          "prev_str": "22.7 萬人",
-          "prev_num": 22.7,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "低於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": 0.75,
-            "SP500": -0.01,
-            "TWII": -3.64,
-            "BTCUSDT": -2.1
-          },
-          "note": ""
-        },
-        {
-          "period": "2026-06-13",
-          "period_zh": "6/13當週",
-          "release_taipei": "2026-06-18 20:30",
-          "release_utc": "2026-06-18T12:30:00Z",
-          "actual_str": "22.7 萬人",
-          "actual_num": 22.7,
-          "prev_str": "23.0 萬人",
-          "prev_num": 23.0,
-          "consensus_str": null,
-          "consensus_source": null,
-          "surprise": "低於前值",
-          "surprise_basis": "prev",
-          "prev_cmp": "低於前值",
-          "reactions": {
-            "NAS100": 2.48,
-            "SP500": 1.08,
-            "TWII": 2.75,
-            "BTCUSDT": -2.4
-          },
-          "note": ""
         }
       ],
       "history_stats": {
-        "primary_grouping": "consensus",
-        "consensus_rows_count": 12,
-        "total_rows_count": 24,
+        "primary_grouping": "prev",
+        "consensus_rows_count": 1,
+        "total_rows_count": 2,
         "by_consensus": [
           {
             "group": "高於預期",
@@ -9822,61 +9317,61 @@
           },
           {
             "group": "符合預期",
-            "n_rows": 11,
-            "assets": {
-              "NAS100": {
-                "label": "那指 100",
-                "n": 11,
-                "avg_pct": -1.29,
-                "up_prob_pct": 27.0
-              },
-              "SP500": {
-                "label": "標普 500",
-                "n": 11,
-                "avg_pct": -0.7,
-                "up_prob_pct": 27.0
-              },
-              "TWII": {
-                "label": "台股加權",
-                "n": 11,
-                "avg_pct": -1.1,
-                "up_prob_pct": 45.0
-              },
-              "BTCUSDT": {
-                "label": "BTC",
-                "n": 11,
-                "avg_pct": -1.34,
-                "up_prob_pct": 36.0
-              }
-            }
-          },
-          {
-            "group": "低於預期",
             "n_rows": 1,
             "assets": {
               "NAS100": {
                 "label": "那指 100",
                 "n": 1,
-                "avg_pct": 1.73,
-                "up_prob_pct": 100.0
+                "avg_pct": -2.21,
+                "up_prob_pct": 0.0
               },
               "SP500": {
                 "label": "標普 500",
                 "n": 1,
-                "avg_pct": 1.14,
-                "up_prob_pct": 100.0
+                "avg_pct": -2.02,
+                "up_prob_pct": 0.0
               },
               "TWII": {
                 "label": "台股加權",
                 "n": 1,
-                "avg_pct": 1.93,
-                "up_prob_pct": 100.0
+                "avg_pct": -6.23,
+                "up_prob_pct": 0.0
               },
               "BTCUSDT": {
                 "label": "BTC",
                 "n": 1,
-                "avg_pct": 0.28,
-                "up_prob_pct": 100.0
+                "avg_pct": -1.71,
+                "up_prob_pct": 0.0
+              }
+            }
+          },
+          {
+            "group": "低於預期",
+            "n_rows": 0,
+            "assets": {
+              "NAS100": {
+                "label": "那指 100",
+                "n": 0,
+                "avg_pct": null,
+                "up_prob_pct": null
+              },
+              "SP500": {
+                "label": "標普 500",
+                "n": 0,
+                "avg_pct": null,
+                "up_prob_pct": null
+              },
+              "TWII": {
+                "label": "台股加權",
+                "n": 0,
+                "avg_pct": null,
+                "up_prob_pct": null
+              },
+              "BTCUSDT": {
+                "label": "BTC",
+                "n": 0,
+                "avg_pct": null,
+                "up_prob_pct": null
               }
             }
           }
@@ -9884,61 +9379,61 @@
         "by_prev": [
           {
             "group": "高於前值",
-            "n_rows": 8,
+            "n_rows": 1,
             "assets": {
               "NAS100": {
                 "label": "那指 100",
-                "n": 8,
-                "avg_pct": 0.14,
-                "up_prob_pct": 38.0
+                "n": 1,
+                "avg_pct": -2.21,
+                "up_prob_pct": 0.0
               },
               "SP500": {
                 "label": "標普 500",
-                "n": 8,
-                "avg_pct": 0.14,
-                "up_prob_pct": 50.0
+                "n": 1,
+                "avg_pct": -2.02,
+                "up_prob_pct": 0.0
               },
               "TWII": {
                 "label": "台股加權",
-                "n": 8,
-                "avg_pct": 0.52,
-                "up_prob_pct": 62.0
+                "n": 1,
+                "avg_pct": -6.23,
+                "up_prob_pct": 0.0
               },
               "BTCUSDT": {
                 "label": "BTC",
-                "n": 8,
-                "avg_pct": 0.49,
-                "up_prob_pct": 62.0
+                "n": 1,
+                "avg_pct": -1.71,
+                "up_prob_pct": 0.0
               }
             }
           },
           {
             "group": "低於前值",
-            "n_rows": 15,
+            "n_rows": 1,
             "assets": {
               "NAS100": {
                 "label": "那指 100",
-                "n": 15,
-                "avg_pct": -0.75,
-                "up_prob_pct": 40.0
+                "n": 1,
+                "avg_pct": -0.64,
+                "up_prob_pct": 0.0
               },
               "SP500": {
                 "label": "標普 500",
-                "n": 15,
-                "avg_pct": -0.44,
-                "up_prob_pct": 27.0
+                "n": 1,
+                "avg_pct": -0.25,
+                "up_prob_pct": 0.0
               },
               "TWII": {
                 "label": "台股加權",
-                "n": 15,
-                "avg_pct": -0.88,
-                "up_prob_pct": 47.0
+                "n": 1,
+                "avg_pct": 2.5,
+                "up_prob_pct": 100.0
               },
               "BTCUSDT": {
                 "label": "BTC",
-                "n": 15,
-                "avg_pct": -0.98,
-                "up_prob_pct": 40.0
+                "n": 1,
+                "avg_pct": 1.05,
+                "up_prob_pct": 100.0
               }
             }
           }
@@ -13611,22 +13106,6 @@
   "calendar": {
     "upcoming": [
       {
-        "id": "fomc-blackout-2026-12",
-        "title": "聯準會靜默期開始（2026年12月 FOMC）",
-        "indicator_id": "FED_RATE",
-        "period": "2026-12-blackout",
-        "period_zh": "2026-12-blackout",
-        "stars": 1,
-        "time_utc": "2026-11-28T05:00:00Z",
-        "time_taipei": "2026-11-28 13:00",
-        "time_taipei_iso": "2026-11-28T13:00:00+08:00",
-        "date_taipei": "2026-11-28",
-        "short_taipei": "11/28（六）13:00",
-        "consensus_str": null,
-        "consensus_source": null,
-        "note": "靜默期內聯準會官員不公開談貨幣政策，市場消息來源變少"
-      },
-      {
         "id": "ism_mfg-2026-11",
         "title": "ISM 製造業 PMI（2026年11月）",
         "indicator_id": "ISM_MFG",
@@ -16141,30 +15620,6 @@
         "note": ""
       },
       {
-        "id": "icsa-2026-11-07",
-        "title": "初領失業金人數（11/7當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-11-07",
-        "stars": 2,
-        "time_utc": "2026-11-12T13:30:00Z",
-        "time_taipei": "2026-11-12 21:30",
-        "time_taipei_iso": "2026-11-12T21:30:00+08:00",
-        "short_taipei": "11/12（四）21:30",
-        "actual_str": "20.0 萬人",
-        "prev_str": "19.1 萬人",
-        "consensus_str": "19.5 萬人",
-        "consensus_source": "TradingEconomics / Investing",
-        "surprise": "符合預期",
-        "surprise_basis": "consensus",
-        "reactions": {
-          "NAS100": -0.3,
-          "SP500": -0.35,
-          "TWII": 1.35,
-          "BTCUSDT": -3.45
-        },
-        "note": "FRED 修正後最新值 20.2 萬人"
-      },
-      {
         "id": "cpi-2026-10",
         "title": "CPI 消費者物價（2026年10月）",
         "indicator_id": "CPI",
@@ -16211,30 +15666,6 @@
           "BTCUSDT": -0.32
         },
         "note": ""
-      },
-      {
-        "id": "icsa-2026-10-31",
-        "title": "初領失業金人數（10/31當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-10-31",
-        "stars": 2,
-        "time_utc": "2026-11-05T13:30:00Z",
-        "time_taipei": "2026-11-05 21:30",
-        "time_taipei_iso": "2026-11-05T21:30:00+08:00",
-        "short_taipei": "11/05（四）21:30",
-        "actual_str": "18.9 萬人",
-        "prev_str": "19.5 萬人",
-        "consensus_str": "19.6 萬人",
-        "consensus_source": "TradingEconomics / Investing",
-        "surprise": "符合預期",
-        "surprise_basis": "consensus",
-        "reactions": {
-          "NAS100": -6.36,
-          "SP500": -4.36,
-          "TWII": -4.51,
-          "BTCUSDT": -5.49
-        },
-        "note": "FRED 修正後最新值 19.1 萬人"
       },
       {
         "id": "ism_svc-2026-10",
@@ -16333,30 +15764,6 @@
         "note": ""
       },
       {
-        "id": "icsa-2026-10-24",
-        "title": "初領失業金人數（10/24當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-10-24",
-        "stars": 2,
-        "time_utc": "2026-10-29T12:30:00Z",
-        "time_taipei": "2026-10-29 20:30",
-        "time_taipei_iso": "2026-10-29T20:30:00+08:00",
-        "short_taipei": "10/29（四）20:30",
-        "actual_str": "19.4 萬人",
-        "prev_str": "19.5 萬人",
-        "consensus_str": "19.9 萬人",
-        "consensus_source": "TradingEconomics / Investing",
-        "surprise": "符合預期",
-        "surprise_basis": "consensus",
-        "reactions": {
-          "NAS100": -1.38,
-          "SP500": -0.3,
-          "TWII": -2.49,
-          "BTCUSDT": -4.12
-        },
-        "note": "FRED 修正後最新值 19.5 萬人"
-      },
-      {
         "id": "gdp-2026-Q3",
         "title": "GDP 成長率（2026 Q3）",
         "indicator_id": "GDP",
@@ -16405,30 +15812,6 @@
         "note": ""
       },
       {
-        "id": "icsa-2026-10-17",
-        "title": "初領失業金人數（10/17當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-10-17",
-        "stars": 2,
-        "time_utc": "2026-10-22T12:30:00Z",
-        "time_taipei": "2026-10-22 20:30",
-        "time_taipei_iso": "2026-10-22T20:30:00+08:00",
-        "short_taipei": "10/22（四）20:30",
-        "actual_str": "19.4 萬人",
-        "prev_str": "20.0 萬人",
-        "consensus_str": "20.0 萬人",
-        "consensus_source": "TradingEconomics / Investing",
-        "surprise": "符合預期",
-        "surprise_basis": "consensus",
-        "reactions": {
-          "NAS100": -2.9,
-          "SP500": -1.21,
-          "TWII": 0.12,
-          "BTCUSDT": -3.18
-        },
-        "note": "FRED 修正後最新值 19.5 萬人"
-      },
-      {
         "id": "ppi-2026-09",
         "title": "PPI 生產者物價（2026年9月）",
         "indicator_id": "PPI",
@@ -16451,30 +15834,6 @@
           "BTCUSDT": 0.69
         },
         "note": "同日另有初領失業金公布；FRED 修正後最新值 +1.41%"
-      },
-      {
-        "id": "icsa-2026-10-10",
-        "title": "初領失業金人數（10/10當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-10-10",
-        "stars": 2,
-        "time_utc": "2026-10-15T12:30:00Z",
-        "time_taipei": "2026-10-15 20:30",
-        "time_taipei_iso": "2026-10-15T20:30:00+08:00",
-        "short_taipei": "10/15（四）20:30",
-        "actual_str": "19.9 萬人",
-        "prev_str": "19.8 萬人",
-        "consensus_str": "20.0 萬人",
-        "consensus_source": "TradingEconomics / Investing",
-        "surprise": "符合預期",
-        "surprise_basis": "consensus",
-        "reactions": {
-          "NAS100": -0.05,
-          "SP500": 0.33,
-          "TWII": 0.3,
-          "BTCUSDT": 0.69
-        },
-        "note": "FRED 修正後最新值 20.0 萬人"
       },
       {
         "id": "retail_sales-2026-09",
@@ -16523,30 +15882,6 @@
           "BTCUSDT": -1.79
         },
         "note": ""
-      },
-      {
-        "id": "icsa-2026-10-03",
-        "title": "初領失業金人數（10/3當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-10-03",
-        "stars": 2,
-        "time_utc": "2026-10-08T12:30:00Z",
-        "time_taipei": "2026-10-08 20:30",
-        "time_taipei_iso": "2026-10-08T20:30:00+08:00",
-        "short_taipei": "10/08（四）20:30",
-        "actual_str": "19.7 萬人",
-        "prev_str": "19.9 萬人",
-        "consensus_str": "20.0 萬人",
-        "consensus_source": "TradingEconomics / Investing",
-        "surprise": "符合預期",
-        "surprise_basis": "consensus",
-        "reactions": {
-          "NAS100": -1.39,
-          "SP500": -0.47,
-          "TWII": -0.02,
-          "BTCUSDT": -1.88
-        },
-        "note": "FRED 修正後最新值 19.8 萬人"
       },
       {
         "id": "jolts-2026-08",
@@ -16645,30 +15980,6 @@
         "note": ""
       },
       {
-        "id": "icsa-2026-09-26",
-        "title": "初領失業金人數（9/26當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-09-26",
-        "stars": 2,
-        "time_utc": "2026-10-01T12:30:00Z",
-        "time_taipei": "2026-10-01 20:30",
-        "time_taipei_iso": "2026-10-01T20:30:00+08:00",
-        "short_taipei": "10/01（四）20:30",
-        "actual_str": "19.7 萬人",
-        "prev_str": "19.8 萬人",
-        "consensus_str": "20.0 萬人",
-        "consensus_source": "TradingEconomics / Investing",
-        "surprise": "符合預期",
-        "surprise_basis": "consensus",
-        "reactions": {
-          "NAS100": 0.31,
-          "SP500": 0.19,
-          "TWII": 0.25,
-          "BTCUSDT": 1.5
-        },
-        "note": "FRED 修正後最新值 19.9 萬人"
-      },
-      {
         "id": "pce-2026-08",
         "title": "PCE 物價指數（2026年8月）",
         "indicator_id": "PCE",
@@ -16691,54 +16002,6 @@
           "BTCUSDT": -0.05
         },
         "note": ""
-      },
-      {
-        "id": "icsa-2026-09-19",
-        "title": "初領失業金人數（9/19當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-09-19",
-        "stars": 2,
-        "time_utc": "2026-09-24T12:30:00Z",
-        "time_taipei": "2026-09-24 20:30",
-        "time_taipei_iso": "2026-09-24T20:30:00+08:00",
-        "short_taipei": "09/24（四）20:30",
-        "actual_str": "19.7 萬人",
-        "prev_str": "19.8 萬人",
-        "consensus_str": "20.1 萬人",
-        "consensus_source": "TradingEconomics / Investing",
-        "surprise": "符合預期",
-        "surprise_basis": "consensus",
-        "reactions": {
-          "NAS100": 0.03,
-          "SP500": -0.02,
-          "TWII": -0.82,
-          "BTCUSDT": 0.01
-        },
-        "note": "FRED 修正後最新值 19.8 萬人"
-      },
-      {
-        "id": "icsa-2026-09-12",
-        "title": "初領失業金人數（9/12當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-09-12",
-        "stars": 2,
-        "time_utc": "2026-09-17T12:30:00Z",
-        "time_taipei": "2026-09-17 20:30",
-        "time_taipei_iso": "2026-09-17T20:30:00+08:00",
-        "short_taipei": "09/17（四）20:30",
-        "actual_str": "19.6 萬人",
-        "prev_str": "20.7 萬人",
-        "consensus_str": "20.8 萬人",
-        "consensus_source": "TradingEconomics / Investing",
-        "surprise": "低於預期",
-        "surprise_basis": "consensus",
-        "reactions": {
-          "NAS100": 1.73,
-          "SP500": 1.14,
-          "TWII": 1.93,
-          "BTCUSDT": 0.28
-        },
-        "note": "FRED 修正後最新值 19.8 萬人"
       },
       {
         "id": "fomc-2026-09",
@@ -16837,30 +16100,6 @@
         "note": ""
       },
       {
-        "id": "icsa-2026-09-05",
-        "title": "初領失業金人數（9/5當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-09-05",
-        "stars": 2,
-        "time_utc": "2026-09-10T12:30:00Z",
-        "time_taipei": "2026-09-10 20:30",
-        "time_taipei_iso": "2026-09-10T20:30:00+08:00",
-        "short_taipei": "09/10（四）20:30",
-        "actual_str": "20.6 萬人",
-        "prev_str": "20.7 萬人",
-        "consensus_str": "20.5 萬人",
-        "consensus_source": "TradingEconomics / Investing",
-        "surprise": "符合預期",
-        "surprise_basis": "consensus",
-        "reactions": {
-          "NAS100": -1.08,
-          "SP500": -0.58,
-          "TWII": -1.61,
-          "BTCUSDT": -2.22
-        },
-        "note": "FRED 修正後最新值 20.7 萬人"
-      },
-      {
         "id": "nfp-2026-08",
         "title": "非農就業新增（2026年8月）",
         "indicator_id": "NFP",
@@ -16907,30 +16146,6 @@
           "BTCUSDT": 5.08
         },
         "note": ""
-      },
-      {
-        "id": "icsa-2026-08-29",
-        "title": "初領失業金人數（8/29當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-08-29",
-        "stars": 2,
-        "time_utc": "2026-09-03T12:30:00Z",
-        "time_taipei": "2026-09-03 20:30",
-        "time_taipei_iso": "2026-09-03T20:30:00+08:00",
-        "short_taipei": "09/03（四）20:30",
-        "actual_str": "20.6 萬人",
-        "prev_str": "20.4 萬人",
-        "consensus_str": "20.5 萬人",
-        "consensus_source": "TradingEconomics / Investing",
-        "surprise": "符合預期",
-        "surprise_basis": "consensus",
-        "reactions": {
-          "NAS100": 1.16,
-          "SP500": 1.06,
-          "TWII": 1.51,
-          "BTCUSDT": 5.08
-        },
-        "note": "FRED 修正後最新值 20.7 萬人"
       },
       {
         "id": "jolts-2026-07",
@@ -16981,30 +16196,6 @@
         "note": ""
       },
       {
-        "id": "icsa-2026-08-22",
-        "title": "初領失業金人數（8/22當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-08-22",
-        "stars": 2,
-        "time_utc": "2026-08-27T12:30:00Z",
-        "time_taipei": "2026-08-27 20:30",
-        "time_taipei_iso": "2026-08-27T20:30:00+08:00",
-        "short_taipei": "08/27（四）20:30",
-        "actual_str": "20.4 萬人",
-        "prev_str": "20.7 萬人",
-        "consensus_str": null,
-        "consensus_source": null,
-        "surprise": "低於前值",
-        "surprise_basis": "prev",
-        "reactions": {
-          "NAS100": 1.43,
-          "SP500": 0.72,
-          "TWII": 0.77,
-          "BTCUSDT": 1.55
-        },
-        "note": ""
-      },
-      {
         "id": "pce-2026-07",
         "title": "PCE 物價指數（2026年7月）",
         "indicator_id": "PCE",
@@ -17025,30 +16216,6 @@
           "SP500": -0.02,
           "TWII": 0.31,
           "BTCUSDT": 0.62
-        },
-        "note": ""
-      },
-      {
-        "id": "icsa-2026-08-15",
-        "title": "初領失業金人數（8/15當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-08-15",
-        "stars": 2,
-        "time_utc": "2026-08-20T12:30:00Z",
-        "time_taipei": "2026-08-20 20:30",
-        "time_taipei_iso": "2026-08-20T20:30:00+08:00",
-        "short_taipei": "08/20（四）20:30",
-        "actual_str": "20.7 萬人",
-        "prev_str": "21.2 萬人",
-        "consensus_str": null,
-        "consensus_source": null,
-        "surprise": "低於前值",
-        "surprise_basis": "prev",
-        "reactions": {
-          "NAS100": -0.72,
-          "SP500": -0.87,
-          "TWII": 0.65,
-          "BTCUSDT": 5.32
         },
         "note": ""
       },
@@ -17101,30 +16268,6 @@
         "note": "同日另有初領失業金公布；FRED 修正後最新值 +0.10%"
       },
       {
-        "id": "icsa-2026-08-08",
-        "title": "初領失業金人數（8/8當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-08-08",
-        "stars": 2,
-        "time_utc": "2026-08-13T12:30:00Z",
-        "time_taipei": "2026-08-13 20:30",
-        "time_taipei_iso": "2026-08-13T20:30:00+08:00",
-        "short_taipei": "08/13（四）20:30",
-        "actual_str": "21.2 萬人",
-        "prev_str": "20.0 萬人",
-        "consensus_str": null,
-        "consensus_source": null,
-        "surprise": "高於前值",
-        "surprise_basis": "prev",
-        "reactions": {
-          "NAS100": 1.15,
-          "SP500": 0.65,
-          "TWII": -0.46,
-          "BTCUSDT": 0.02
-        },
-        "note": ""
-      },
-      {
         "id": "cpi-2026-07",
         "title": "CPI 消費者物價（2026年7月）",
         "indicator_id": "CPI",
@@ -17171,30 +16314,6 @@
           "BTCUSDT": 0.93
         },
         "note": "FRED 修正後最新值 -1.0 萬人"
-      },
-      {
-        "id": "icsa-2026-08-01",
-        "title": "初領失業金人數（8/1當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-08-01",
-        "stars": 2,
-        "time_utc": "2026-08-06T12:30:00Z",
-        "time_taipei": "2026-08-06 20:30",
-        "time_taipei_iso": "2026-08-06T20:30:00+08:00",
-        "short_taipei": "08/06（四）20:30",
-        "actual_str": "20.0 萬人",
-        "prev_str": "19.8 萬人",
-        "consensus_str": null,
-        "consensus_source": null,
-        "surprise": "高於前值",
-        "surprise_basis": "prev",
-        "reactions": {
-          "NAS100": -0.39,
-          "SP500": -0.18,
-          "TWII": -0.38,
-          "BTCUSDT": -0.53
-        },
-        "note": ""
       },
       {
         "id": "ism_svc-2026-07",
@@ -17293,30 +16412,6 @@
         "note": ""
       },
       {
-        "id": "icsa-2026-07-25",
-        "title": "初領失業金人數（7/25當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-07-25",
-        "stars": 2,
-        "time_utc": "2026-07-30T12:30:00Z",
-        "time_taipei": "2026-07-30 20:30",
-        "time_taipei_iso": "2026-07-30T20:30:00+08:00",
-        "short_taipei": "07/30（四）20:30",
-        "actual_str": "19.8 萬人",
-        "prev_str": "18.9 萬人",
-        "consensus_str": null,
-        "consensus_source": null,
-        "surprise": "高於前值",
-        "surprise_basis": "prev",
-        "reactions": {
-          "NAS100": 3.36,
-          "SP500": 1.66,
-          "TWII": 7.98,
-          "BTCUSDT": 1.24
-        },
-        "note": ""
-      },
-      {
         "id": "gdp-2026-Q2",
         "title": "GDP 成長率（2026 Q2）",
         "indicator_id": "GDP",
@@ -17361,54 +16456,6 @@
           "SP500": -1.52,
           "TWII": -0.26,
           "BTCUSDT": 0.11
-        },
-        "note": ""
-      },
-      {
-        "id": "icsa-2026-07-18",
-        "title": "初領失業金人數（7/18當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-07-18",
-        "stars": 2,
-        "time_utc": "2026-07-23T12:30:00Z",
-        "time_taipei": "2026-07-23 20:30",
-        "time_taipei_iso": "2026-07-23T20:30:00+08:00",
-        "short_taipei": "07/23（四）20:30",
-        "actual_str": "18.9 萬人",
-        "prev_str": "20.9 萬人",
-        "consensus_str": null,
-        "consensus_source": null,
-        "surprise": "低於前值",
-        "surprise_basis": "prev",
-        "reactions": {
-          "NAS100": -1.87,
-          "SP500": -1.21,
-          "TWII": -2.67,
-          "BTCUSDT": -1.54
-        },
-        "note": ""
-      },
-      {
-        "id": "icsa-2026-07-11",
-        "title": "初領失業金人數（7/11當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-07-11",
-        "stars": 2,
-        "time_utc": "2026-07-16T12:30:00Z",
-        "time_taipei": "2026-07-16 20:30",
-        "time_taipei_iso": "2026-07-16T20:30:00+08:00",
-        "short_taipei": "07/16（四）20:30",
-        "actual_str": "20.9 萬人",
-        "prev_str": "21.7 萬人",
-        "consensus_str": null,
-        "consensus_source": null,
-        "surprise": "低於前值",
-        "surprise_basis": "prev",
-        "reactions": {
-          "NAS100": -1.62,
-          "SP500": -0.51,
-          "TWII": -6.47,
-          "BTCUSDT": -1.43
         },
         "note": ""
       },
@@ -17485,30 +16532,6 @@
         "note": ""
       },
       {
-        "id": "icsa-2026-07-04",
-        "title": "初領失業金人數（7/4當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-07-04",
-        "stars": 2,
-        "time_utc": "2026-07-09T12:30:00Z",
-        "time_taipei": "2026-07-09 20:30",
-        "time_taipei_iso": "2026-07-09T20:30:00+08:00",
-        "short_taipei": "07/09（四）20:30",
-        "actual_str": "21.7 萬人",
-        "prev_str": "21.7 萬人",
-        "consensus_str": null,
-        "consensus_source": null,
-        "surprise": "持平前值",
-        "surprise_basis": "prev",
-        "reactions": {
-          "NAS100": 1.62,
-          "SP500": 0.81,
-          "TWII": 0.06,
-          "BTCUSDT": 1.51
-        },
-        "note": ""
-      },
-      {
         "id": "jolts-2026-05",
         "title": "JOLTS 職位空缺（2026年5月）",
         "indicator_id": "JOLTS",
@@ -17581,30 +16604,6 @@
         "note": "FRED 修正後最新值 +3.1 萬人"
       },
       {
-        "id": "icsa-2026-06-27",
-        "title": "初領失業金人數（6/27當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-06-27",
-        "stars": 2,
-        "time_utc": "2026-07-02T12:30:00Z",
-        "time_taipei": "2026-07-02 20:30",
-        "time_taipei_iso": "2026-07-02T20:30:00+08:00",
-        "short_taipei": "07/02（四）20:30",
-        "actual_str": "21.7 萬人",
-        "prev_str": "21.6 萬人",
-        "consensus_str": null,
-        "consensus_source": null,
-        "surprise": "高於前值",
-        "surprise_basis": "prev",
-        "reactions": {
-          "NAS100": -1.61,
-          "SP500": 0.0,
-          "TWII": 0.08,
-          "BTCUSDT": 2.56
-        },
-        "note": ""
-      },
-      {
         "id": "ism_mfg-2026-06",
         "title": "ISM 製造業 PMI（2026年6月）",
         "indicator_id": "ISM_MFG",
@@ -17649,54 +16648,6 @@
           "SP500": -0.01,
           "TWII": -3.64,
           "BTCUSDT": -2.1
-        },
-        "note": ""
-      },
-      {
-        "id": "icsa-2026-06-20",
-        "title": "初領失業金人數（6/20當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-06-20",
-        "stars": 2,
-        "time_utc": "2026-06-25T12:30:00Z",
-        "time_taipei": "2026-06-25 20:30",
-        "time_taipei_iso": "2026-06-25T20:30:00+08:00",
-        "short_taipei": "06/25（四）20:30",
-        "actual_str": "21.6 萬人",
-        "prev_str": "22.7 萬人",
-        "consensus_str": null,
-        "consensus_source": null,
-        "surprise": "低於前值",
-        "surprise_basis": "prev",
-        "reactions": {
-          "NAS100": 0.75,
-          "SP500": -0.01,
-          "TWII": -3.64,
-          "BTCUSDT": -2.1
-        },
-        "note": ""
-      },
-      {
-        "id": "icsa-2026-06-13",
-        "title": "初領失業金人數（6/13當週）",
-        "indicator_id": "ICSA",
-        "period": "2026-06-13",
-        "stars": 2,
-        "time_utc": "2026-06-18T12:30:00Z",
-        "time_taipei": "2026-06-18 20:30",
-        "time_taipei_iso": "2026-06-18T20:30:00+08:00",
-        "short_taipei": "06/18（四）20:30",
-        "actual_str": "22.7 萬人",
-        "prev_str": "23.0 萬人",
-        "consensus_str": null,
-        "consensus_source": null,
-        "surprise": "低於前值",
-        "surprise_basis": "prev",
-        "reactions": {
-          "NAS100": 2.48,
-          "SP500": 1.08,
-          "TWII": 2.75,
-          "BTCUSDT": -2.4
         },
         "note": ""
       },
