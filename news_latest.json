@@ -2,11 +2,11 @@
   "version": 1,
   "latest_issue": "2026-11-28-AM",
   "is_current_issue_updating": true,
-  "updated_at_utc": "2026-11-28T03:35:58Z",
-  "updated_at_taipei": "2026-11-28 11:35",
-  "last_updated_utc": "2026-11-28T03:35:58Z",
-  "last_updated_taipei": "2026-11-28 11:35",
-  "next_update_hint": "約台北時間 11:47（每 15 分鐘更新）",
+  "updated_at_utc": "2026-11-28T03:50:57Z",
+  "updated_at_taipei": "2026-11-28 11:50",
+  "last_updated_utc": "2026-11-28T03:50:57Z",
+  "last_updated_taipei": "2026-11-28 11:50",
+  "next_update_hint": "約台北時間 12:02（每 15 分鐘更新）",
   "status": "partial",
   "failed_sources": [
     {
@@ -26,17 +26,17 @@
     }
   ],
   "fetch_report": {
-    "total_elapsed_sec": 16.607,
+    "total_elapsed_sec": 15.889,
     "sources_ok": 23,
     "sources_failed": 3,
-    "new_items_added": 1,
+    "new_items_added": 4,
     "reactions_computed": 40,
     "sources": {
       "fed_press": {
         "name": "Federal Reserve",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.101,
+        "elapsed_sec": 0.073,
         "raw_count": 20,
         "items_kept": 2,
         "error": null
@@ -45,7 +45,7 @@
         "name": "CNBC",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.118,
+        "elapsed_sec": 0.141,
         "raw_count": 30,
         "items_kept": 7,
         "error": null
@@ -54,7 +54,7 @@
         "name": "CNBC Economy",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.058,
+        "elapsed_sec": 0.076,
         "raw_count": 30,
         "items_kept": 4,
         "error": null
@@ -63,7 +63,7 @@
         "name": "MarketWatch",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 1.009,
+        "elapsed_sec": 0.15,
         "raw_count": 10,
         "items_kept": 2,
         "error": null
@@ -72,16 +72,16 @@
         "name": "Yahoo Finance",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.201,
+        "elapsed_sec": 0.213,
         "raw_count": 20,
-        "items_kept": 15,
+        "items_kept": 17,
         "error": null
       },
       "coindesk": {
         "name": "CoinDesk",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.186,
+        "elapsed_sec": 0.106,
         "raw_count": 25,
         "items_kept": 24,
         "error": null
@@ -90,7 +90,7 @@
         "name": "Cointelegraph",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.13,
+        "elapsed_sec": 0.132,
         "raw_count": 30,
         "items_kept": 19,
         "error": null
@@ -99,7 +99,7 @@
         "name": "The Block",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.113,
+        "elapsed_sec": 0.089,
         "raw_count": 20,
         "items_kept": 19,
         "error": null
@@ -108,7 +108,7 @@
         "name": "Decrypt",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.116,
+        "elapsed_sec": 0.089,
         "raw_count": 35,
         "items_kept": 16,
         "error": null
@@ -117,7 +117,7 @@
         "name": "鉅亨網（台股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 1.326,
+        "elapsed_sec": 0.39,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -126,7 +126,7 @@
         "name": "鉅亨網（美股）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.417,
+        "elapsed_sec": 0.326,
         "raw_count": 20,
         "items_kept": 17,
         "error": null
@@ -135,7 +135,7 @@
         "name": "鉅亨網（總經）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.475,
+        "elapsed_sec": 0.435,
         "raw_count": 20,
         "items_kept": 11,
         "error": null
@@ -144,7 +144,7 @@
         "name": "鉅亨網（加密）",
         "kind": "cnyes",
         "status": "ok",
-        "elapsed_sec": 0.793,
+        "elapsed_sec": 0.719,
         "raw_count": 15,
         "items_kept": 7,
         "error": null
@@ -153,7 +153,7 @@
         "name": "經濟日報",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.386,
+        "elapsed_sec": 0.456,
         "raw_count": 20,
         "items_kept": 7,
         "error": null
@@ -162,7 +162,7 @@
         "name": "Yahoo奇摩股市",
         "kind": "rss",
         "status": "ok",
-        "elapsed_sec": 0.452,
+        "elapsed_sec": 0.401,
         "raw_count": 50,
         "items_kept": 25,
         "error": null
@@ -171,7 +171,7 @@
         "name": "DefiLlama 穩定幣",
         "kind": "defillama_stablecoins",
         "status": "ok",
-        "elapsed_sec": 0.207,
+        "elapsed_sec": 0.099,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -180,7 +180,7 @@
         "name": "DefiLlama 公鏈 TVL",
         "kind": "defillama_chains",
         "status": "ok",
-        "elapsed_sec": 0.341,
+        "elapsed_sec": 0.327,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -189,7 +189,7 @@
         "name": "DefiLlama 安全事件",
         "kind": "defillama_hacks",
         "status": "ok",
-        "elapsed_sec": 0.056,
+        "elapsed_sec": 0.059,
         "raw_count": 1380,
         "items_kept": 0,
         "error": null
@@ -198,7 +198,7 @@
         "name": "Bitbo BTC 現貨 ETF",
         "kind": "bitbo_btc_etf",
         "status": "ok",
-        "elapsed_sec": 1.248,
+        "elapsed_sec": 1.637,
         "raw_count": 1,
         "items_kept": 1,
         "error": null
@@ -207,7 +207,7 @@
         "name": "Binance 永續合約",
         "kind": "binance_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.441,
+        "elapsed_sec": 0.493,
         "raw_count": 0,
         "items_kept": 0,
         "error": "451 Client Error:  for url: https://fapi.binance.com/fapi/v1/premiumIndex"
@@ -216,7 +216,7 @@
         "name": "OKX 永續合約",
         "kind": "okx_derivatives",
         "status": "ok",
-        "elapsed_sec": 1.462,
+        "elapsed_sec": 1.454,
         "raw_count": 6,
         "items_kept": 0,
         "error": null
@@ -225,7 +225,7 @@
         "name": "Bybit 永續合約",
         "kind": "bybit_derivatives",
         "status": "failed",
-        "elapsed_sec": 0.453,
+        "elapsed_sec": 0.512,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/market/tickers?category=linear"
@@ -234,7 +234,7 @@
         "name": "mempool.space",
         "kind": "mempool",
         "status": "ok",
-        "elapsed_sec": 0.671,
+        "elapsed_sec": 0.745,
         "raw_count": 1,
         "items_kept": 0,
         "error": null
@@ -243,7 +243,7 @@
         "name": "Binance 公告",
         "kind": "binance_announcements",
         "status": "ok",
-        "elapsed_sec": 0.334,
+        "elapsed_sec": 0.342,
         "raw_count": 20,
         "items_kept": 1,
         "error": null
@@ -252,7 +252,7 @@
         "name": "OKX 公告",
         "kind": "okx_announcements",
         "status": "ok",
-        "elapsed_sec": 0.549,
+        "elapsed_sec": 0.558,
         "raw_count": 38,
         "items_kept": 0,
         "error": null
@@ -261,7 +261,7 @@
         "name": "Bybit 公告",
         "kind": "bybit_announcements",
         "status": "failed",
-        "elapsed_sec": 0.418,
+        "elapsed_sec": 0.435,
         "raw_count": 0,
         "items_kept": 0,
         "error": "403 Client Error: Forbidden for url: https://api.bybit.com/v5/announcements/index?locale=en-US&type=new_crypto&limit=10"
@@ -303,24 +303,24 @@
     },
     "btc_spot_etf": {
       "date": "Nov 25, 2026",
-      "net_flow_usd_m": -378.2,
+      "net_flow_usd_m": -378.3,
       "alert_key": "btc_spot_etf:outflow"
     },
     "okx_derivatives": {
       "BTCUSDT": {
-        "funding_rate_pct": 0.0068,
-        "oi_usd_b": 1.92
+        "funding_rate_pct": 0.0069,
+        "oi_usd_b": 1.93
       },
       "ETHUSDT": {
-        "funding_rate_pct": 0.0002,
+        "funding_rate_pct": 0.0004,
         "oi_usd_b": 1.13
       }
     },
     "mempool": {
       "fastest_fee_sat_vb": 1,
       "half_hour_fee_sat_vb": 1,
-      "mempool_vsize_mb": 30.1,
-      "tx_count": 66248,
+      "mempool_vsize_mb": 29.5,
+      "tx_count": 60995,
       "alert_key": "btc_mempool:congested"
     }
   },
@@ -350,6 +350,46 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-2b0f8628a4",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T03:11:07Z",
+      "published_at_taipei": "2026-11-28 11:11",
+      "published_at_taipei_iso": "2026-11-28T11:11:07+08:00",
+      "first_seen_at_utc": "2026-11-28T03:50:57Z",
+      "first_seen_at_taipei": "2026-11-28 11:50",
+      "month": "2026-11",
+      "title": "PDI Gold (ASX:PDI) Secures Final Guinea Permits, Is The Stock Cheap?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/pdi-gold-asx-pdi-secures-031107080.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/pdi-gold-asx-pdi-secures-031107080.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261127-97417a88d1",
+        "issue": "2026-11-27-PM",
+        "title": "Gold and Silver Prices Rally. Is the Bottom In?",
+        "published_at_taipei": "2026-11-27 20:55",
+        "url": "https://finance.yahoo.com/m/048b4270-c11f-35b8-8a9e-4db264703899/gold-and-silver-prices-rally..html?.tsrc=rss"
+      },
       "sentiment": "bearish",
       "sentiment_label": "利空",
       "sentiment_score": -3,
@@ -513,6 +553,86 @@
       "sentiment_reason": "數據：BTC 現貨 ETF 淨流出",
       "sentiment_targets": [
         "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-1d1161def4",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T03:45:00Z",
+      "published_at_taipei": "2026-11-28 11:45",
+      "published_at_taipei_iso": "2026-11-28T11:45:00+08:00",
+      "first_seen_at_utc": "2026-11-28T03:50:57Z",
+      "first_seen_at_taipei": "2026-11-28 11:50",
+      "month": "2026-11",
+      "title": "台股上揚檔不住國家隊大刀！「小台積電」遭放血捲走2.2億元 轉身猛砍正2教「這檔」1.5萬張",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E4%B8%8A%E6%8F%9A%E6%AA%94%E4%B8%8D%E4%BD%8F%E5%9C%8B%E5%AE%B6%E9%9A%8A%E5%A4%A7%E5%88%80-%E5%B0%8F%E5%8F%B0%E7%A9%8D%E9%9B%BB-%E9%81%AD%E6%94%BE%E8%A1%80%E6%8D%B2%E8%B5%B02-2%E5%84%84%E5%85%83-%E8%BD%89%E8%BA%AB%E7%8C%9B%E7%A0%8D%E6%AD%A32%E6%95%99-034500204.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E4%B8%8A%E6%8F%9A%E6%AA%94%E4%B8%8D%E4%BD%8F%E5%9C%8B%E5%AE%B6%E9%9A%8A%E5%A4%A7%E5%88%80-%E5%B0%8F%E5%8F%B0%E7%A9%8D%E9%9B%BB-%E9%81%AD%E6%94%BE%E8%A1%80%E6%8D%B2%E8%B5%B02-2%E5%84%84%E5%85%83-%E8%BD%89%E8%BA%AB%E7%8C%9B%E7%A0%8D%E6%AD%A32%E6%95%99-034500204.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-fb6617f624",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T03:12:46Z",
+      "published_at_taipei": "2026-11-28 11:12",
+      "published_at_taipei_iso": "2026-11-28T11:12:46+08:00",
+      "first_seen_at_utc": "2026-11-28T03:50:57Z",
+      "first_seen_at_taipei": "2026-11-28 11:50",
+      "month": "2026-11",
+      "title": "3 Hydrogen Stocks With Earnings Growth Up To 62%",
+      "url": "https://finance.yahoo.com/energy/articles/3-hydrogen-stocks-earnings-growth-031246450.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/3-hydrogen-stocks-earnings-growth-031246450.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（earnings）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-ebbc4e542c",
+        "issue": "2026-11-21-PM",
+        "title": "3 Canadian Growth Stocks With Earnings Growth Over 46%",
+        "published_at_taipei": "2026-11-21 12:23",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/3-canadian-growth-stocks-earnings-042349038.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
       ],
       "sentiment_method": "rule"
     },
@@ -1701,6 +1821,40 @@
       "sentiment_method": "rule"
     },
     {
+      "id": "news-20261128-cfc472b954",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T03:13:02Z",
+      "published_at_taipei": "2026-11-28 11:13",
+      "published_at_taipei_iso": "2026-11-28T11:13:02+08:00",
+      "first_seen_at_utc": "2026-11-28T03:50:57Z",
+      "first_seen_at_taipei": "2026-11-28 11:50",
+      "month": "2026-11",
+      "title": "Nvidia Stock Has Swung 5% or More in a Single Day 5 Times in November. Here's How Big a Position I Think Makes Sense.",
+      "url": "https://www.fool.com/investing/2026/11/27/nvidia-stock-has-swung-5-or-more-in-a-single-day-5-times-in-november-here-s-how-big-a-position-i-think-makes-sense/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/27/nvidia-stock-has-swung-5-or-more-in-a-single-day-5-times-in-november-here-s-how-big-a-position-i-think-makes-sense?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-7cee2ab1c7",
       "issue": "2026-11-28-AM",
       "published_at_utc": "2026-11-28T00:43:13Z",
@@ -1811,6 +1965,44 @@
   ],
   "recent_7d_items": [
     {
+      "id": "news-20261128-1d1161def4",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T03:45:00Z",
+      "published_at_taipei": "2026-11-28 11:45",
+      "published_at_taipei_iso": "2026-11-28T11:45:00+08:00",
+      "first_seen_at_utc": "2026-11-28T03:50:57Z",
+      "first_seen_at_taipei": "2026-11-28 11:50",
+      "month": "2026-11",
+      "title": "台股上揚檔不住國家隊大刀！「小台積電」遭放血捲走2.2億元 轉身猛砍正2教「這檔」1.5萬張",
+      "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E4%B8%8A%E6%8F%9A%E6%AA%94%E4%B8%8D%E4%BD%8F%E5%9C%8B%E5%AE%B6%E9%9A%8A%E5%A4%A7%E5%88%80-%E5%B0%8F%E5%8F%B0%E7%A9%8D%E9%9B%BB-%E9%81%AD%E6%94%BE%E8%A1%80%E6%8D%B2%E8%B5%B02-2%E5%84%84%E5%85%83-%E8%BD%89%E8%BA%AB%E7%8C%9B%E7%A0%8D%E6%AD%A32%E6%95%99-034500204.html",
+      "canonical_url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E8%82%A1%E4%B8%8A%E6%8F%9A%E6%AA%94%E4%B8%8D%E4%BD%8F%E5%9C%8B%E5%AE%B6%E9%9A%8A%E5%A4%A7%E5%88%80-%E5%B0%8F%E5%8F%B0%E7%A9%8D%E9%9B%BB-%E9%81%AD%E6%94%BE%E8%A1%80%E6%8D%B2%E8%B5%B02-2%E5%84%84%E5%85%83-%E8%BD%89%E8%BA%AB%E7%8C%9B%E7%A0%8D%E6%AD%A32%E6%95%99-034500204.html",
+      "source": "Yahoo奇摩股市",
+      "source_id": "yahoo_tw_stock",
+      "category": "台股",
+      "markets": [
+        "台股"
+      ],
+      "symbols": [
+        "TWII",
+        "2330"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "追蹤標的相關",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "TWII",
+        "2330"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
       "id": "news-20261128-8a741e9a23",
       "issue": "2026-11-28-AM",
       "published_at_utc": "2026-11-28T03:30:08Z",
@@ -1835,6 +2027,122 @@
       "is_data_alert": false,
       "metrics": null,
       "followup_of": null,
+      "sentiment": "bearish",
+      "sentiment_label": "利空",
+      "sentiment_score": -3,
+      "sentiment_reason": "安全事件一律偏空（駭客／漏洞風險）",
+      "sentiment_targets": [
+        "BTCUSDT"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-cfc472b954",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T03:13:02Z",
+      "published_at_taipei": "2026-11-28 11:13",
+      "published_at_taipei_iso": "2026-11-28T11:13:02+08:00",
+      "first_seen_at_utc": "2026-11-28T03:50:57Z",
+      "first_seen_at_taipei": "2026-11-28 11:50",
+      "month": "2026-11",
+      "title": "Nvidia Stock Has Swung 5% or More in a Single Day 5 Times in November. Here's How Big a Position I Think Makes Sense.",
+      "url": "https://www.fool.com/investing/2026/11/27/nvidia-stock-has-swung-5-or-more-in-a-single-day-5-times-in-november-here-s-how-big-a-position-i-think-makes-sense/?.tsrc=rss",
+      "canonical_url": "https://fool.com/investing/2026/11/27/nvidia-stock-has-swung-5-or-more-in-a-single-day-5-times-in-november-here-s-how-big-a-position-i-think-makes-sense?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [],
+      "importance": 1,
+      "importance_stars": "★",
+      "importance_reason": "一般交易消息",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": null,
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "NAS100"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-fb6617f624",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T03:12:46Z",
+      "published_at_taipei": "2026-11-28 11:12",
+      "published_at_taipei_iso": "2026-11-28T11:12:46+08:00",
+      "first_seen_at_utc": "2026-11-28T03:50:57Z",
+      "first_seen_at_taipei": "2026-11-28 11:50",
+      "month": "2026-11",
+      "title": "3 Hydrogen Stocks With Earnings Growth Up To 62%",
+      "url": "https://finance.yahoo.com/energy/articles/3-hydrogen-stocks-earnings-growth-031246450.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/energy/articles/3-hydrogen-stocks-earnings-growth-031246450.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "美股",
+      "markets": [
+        "美股"
+      ],
+      "symbols": [
+        "WTI"
+      ],
+      "importance": 2,
+      "importance_stars": "★★",
+      "importance_reason": "市場重點（earnings）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261121-ebbc4e542c",
+        "issue": "2026-11-21-PM",
+        "title": "3 Canadian Growth Stocks With Earnings Growth Over 46%",
+        "published_at_taipei": "2026-11-21 12:23",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/3-canadian-growth-stocks-earnings-042349038.html?.tsrc=rss"
+      },
+      "sentiment": "neutral",
+      "sentiment_label": "中性",
+      "sentiment_score": 0,
+      "sentiment_reason": "未命中明確多空關鍵字（中性）",
+      "sentiment_targets": [
+        "WTI"
+      ],
+      "sentiment_method": "rule"
+    },
+    {
+      "id": "news-20261128-2b0f8628a4",
+      "issue": "2026-11-28-AM",
+      "published_at_utc": "2026-11-28T03:11:07Z",
+      "published_at_taipei": "2026-11-28 11:11",
+      "published_at_taipei_iso": "2026-11-28T11:11:07+08:00",
+      "first_seen_at_utc": "2026-11-28T03:50:57Z",
+      "first_seen_at_taipei": "2026-11-28 11:50",
+      "month": "2026-11",
+      "title": "PDI Gold (ASX:PDI) Secures Final Guinea Permits, Is The Stock Cheap?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/pdi-gold-asx-pdi-secures-031107080.html?.tsrc=rss",
+      "canonical_url": "https://finance.yahoo.com/markets/stocks/articles/pdi-gold-asx-pdi-secures-031107080.html?.tsrc=rss",
+      "source": "Yahoo Finance",
+      "source_id": "yahoo_finance_us",
+      "category": "安全事件",
+      "markets": [
+        "加密貨幣"
+      ],
+      "symbols": [],
+      "importance": 3,
+      "importance_stars": "★★★",
+      "importance_reason": "分類規則（安全事件）",
+      "is_data_alert": false,
+      "metrics": null,
+      "followup_of": {
+        "id": "news-20261127-97417a88d1",
+        "issue": "2026-11-27-PM",
+        "title": "Gold and Silver Prices Rally. Is the Bottom In?",
+        "published_at_taipei": "2026-11-27 20:55",
+        "url": "https://finance.yahoo.com/m/048b4270-c11f-35b8-8a9e-4db264703899/gold-and-silver-prices-rally..html?.tsrc=rss"
+      },
       "sentiment": "bearish",
       "sentiment_label": "利空",
       "sentiment_score": -3,
@@ -162466,9 +162774,9 @@
       "month": "2026-11",
       "date": "2026-11-28",
       "half": "AM",
-      "updated_at_taipei": "2026-11-28 11:35",
-      "count": 38,
-      "star3_count": 5,
+      "updated_at_taipei": "2026-11-28 11:50",
+      "count": 42,
+      "star3_count": 6,
       "failed_sources": [
         {
           "id": "binance_derivatives",
